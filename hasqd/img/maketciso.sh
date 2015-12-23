@@ -38,20 +38,23 @@ exportsvn() {
 	svnversion > "$VERFILE"
 # TODO: find ":" in rev num
 	grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
-	makeexport third "${1}/third"
+	mkdir "${1}/ext"
+	makeexport "ext/jq" "${1}/ext/jq/"
 }
 
 delfolder "$WF"
-[ -d "6.x/tcz" ] || exit
+TCDIR=""
+[ -d "../ext/tc" ] && TCDIR="../ext/tc"
+[ -z "$TCDIR" ] && error "no TiniCore folder found"
 delfolder "$WF"
 echo "> exporting $WF"
-makeexport 6.x/tcz "$WF" > /dev/null || svnerror
-cp 6.x/iso/* "${WF}/"
+makeexport "$TCDIR"/tcz "$WF" > /dev/null || svnerror
+cp "$TCDIR"/iso/* "${WF}/"
 SRCDIR=""
-[ -d "../../dev/hasqd" ] && SRCDIR="../../dev/hasqd"
-[ -z "$SRCDIR" -a -d "../../hasqd" ] && SRCDIR="../../hasqd"
-[ -z "$SRCDIR" -a -d "../dev/hasqd" ] && SRCDIR="../dev/hasqd"
-[ -z "$SRCDIR" -a -d "../hasqd" ] && SRCDIR="../hasqd"
+[ -d ".." ] && SRCDIR=".."
+# [ -z "$SRCDIR" -a -d "../../hasqd" ] && SRCDIR="../../hasqd"
+# [ -z "$SRCDIR" -a -d "../dev/hasqd" ] && SRCDIR="../dev/hasqd"
+# [ -z "$SRCDIR" -a -d "../hasqd" ] && SRCDIR="../hasqd"
 [ -z "$SRCDIR" ] && error "no SRC folder found"
 cd "$SRCDIR" || exit
 delfolder "$WS"
