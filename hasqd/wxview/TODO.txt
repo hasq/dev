@@ -1,16 +1,6 @@
 
-DONE - reshetka pod svjazjami
-DONE - sdelat' strelochki raznogo cveta for better visual identification
-
-DONE - last/rec
 - edit select/unselect all
 - mouse drag - selection
-DONE - svt injector
-REJECT : Smotret direktorii - posmotret raznye DNs v baze tipa "a0*"
-
-- bazovyj port: 13131
+- base port: 13131
 - interconnect viewers (kak so strelochkami?)
-REJECT : zamenena na hint - tickbox options for comand line of starting nodes
-  - vazhno dlja opcii kogda avtomaticheski perekonnectivatsja i UDP diskovery
-	
-- servant injection okno sdelat knopku cancel i help
+- servant injection window make button cancel and help
