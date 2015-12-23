@@ -1,6 +1,6 @@
 # Hasq Technology Pty Ltd (C) 2013-2015
 
-JQUID=../../third/
+JQUID=../../ext/jq/
 JQUIF=jquery-ui-1.11.4.custom
 JQUI=$(JQUID)$(JQUIF)
 
