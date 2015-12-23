@@ -1,0 +1,4 @@
+db
+-lnqc tcp_port=$port_xy db=$db_xy
+14 8
+0
