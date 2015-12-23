@@ -1,0 +1,22 @@
+#!/bin/sh
+$1/zdb "irgetrecord test_index_data 0"
+$1/zdb "irgetrecord test_index_data -40"
+
+$1/zdb "irgetrecord test_index_data 1"
+$1/zdb "irgetrecord test_index_data -39"
+
+$1/zdb "irgetrecord test_index_data 40"
+$1/zdb "irgetrecord test_index_data -41"
+$1/zdb "irgetrecord test_index_data -45"
+
+$1/zdb "irgetrecord test_index_data 2"
+$1/zdb "irgetrecord test_index_data 3"
+$1/zdb "irgetrecord test_index_data 7"
+$1/zdb "irgetrecord test_index_data 8"
+$1/zdb "irgetrecord test_index_data 10"
+$1/zdb "irgetrecord test_index_data 16"
+$1/zdb "irgetrecord test_index_data 21"
+$1/zdb "irgetrecord test_index_data -10"
+$1/zdb "irgetrecord test_index_data -9"
+$1/zdb "irgetrecord test_index_data -8"
+$1/zdb "irgetrecord test_index_data -2"

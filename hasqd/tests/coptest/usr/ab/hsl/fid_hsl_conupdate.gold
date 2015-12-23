@@ -1,0 +1,24 @@
+<svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
+OK
+<svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ admin disable net ]
+OK
+<svt> print ex 0 DISABLED 100 tcp 127.0.0.1:14001 [ ping ]
+DISABLED
+<svt> print ex 0 OK 100 tcp self [ connect 127.0.0.1:14001 ]
+OK
+<svt> conupdate
+<svt> print ex 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+OK
+ sleeping
+<svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ admin enable net ]
+OK
+<svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
+OK
+<svt> conupdate
+<svt> sleep 100
+<svt> print ex 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+OK
+ sleeping
+<svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ quit ]
+OK
+<svt> quit 

@@ -1,0 +1,7 @@
+a = [ letter_A ]
+b = [ letter_B ]
+c = { a b }
+print c
+c = { c c }
+print c
+quit

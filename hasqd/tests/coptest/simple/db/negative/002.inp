@@ -1,0 +1,15 @@
+# test drop and load database
+
+create _md5 md5 MD5 1 [abc] 1 0
+create _s25 s25 MD5 1 [bcd] 1 0
+
+drop
+
+load
+load
+
+drop
+load
+drop
+
+erasedisk

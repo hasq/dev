@@ -1,0 +1,6 @@
+# add on wrong name
+
+create _md5 md5 MD5 1 [abc] 1 0
+load
+addpwd a_md5 0 dn password
+erasedisk

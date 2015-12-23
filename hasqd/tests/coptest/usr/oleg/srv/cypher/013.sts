@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Testing SKC encoding and decoding
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -nlqc s=$tn.inp dprn=1 dsvt=1 skcseed=a nn=mach
+
+echo "= 013in.txt ="
+cat 013in.txt
+
+echo "= 013in.txt.enc ="
+cat 013in.txt.enc | od -x
+
+echo "= 013in.txt.enc.b64 ="
+cat 013in.txt.enc.b64
+
+echo "= 013in.txt.enc.hex ="
+cat 013in.txt.enc.hex
+
+echo ""
+echo "= 013in.txt.enc.dec ="
+cat 013in.txt.enc.dec
+
+echo "= 013in.txt.enc.b64.dec ="
+cat 013in.txt.enc.b64.dec
+
+echo "= 013in.txt.enc.hex.dec ="
+cat 013in.txt.enc.hex.dec
+
+rm 013in.txt.enc*

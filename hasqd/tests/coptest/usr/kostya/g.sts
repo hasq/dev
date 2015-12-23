@@ -1,0 +1,10 @@
+#!/bin/sh
+$1/zdb erasedisk "create _wrd wrd Word 0 [] 1 0"
+$1/hasqd -lnc s=g0.inp dprn=1 dsvt=1 | grep -v sendnote
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+$1/hasqd -lnc s=g1.inp dprn=1 dsvt=1 | grep -v sendnote
+$1/zdb erasedisk "create _wrd wrd Word 3 [] 1 0"
+$1/hasqd -lnc s=g3.inp dprn=1 dsvt=1 | grep -v sendnote
+$1/zdb erasedisk "create _wrd wrd Word 10 [] 1 0"
+$1/hasqd -lnc s=g10.inp dprn=1 dsvt=1 | grep -v sendnote
+$1/zdb erasedisk

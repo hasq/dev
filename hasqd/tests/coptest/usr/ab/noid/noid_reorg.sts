@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#	IP-address of servers
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -cnqx dprn=0 dsvt=0 lock=1 nbs=2 nn=node-14001 tcp_port=14001 &
+$1/hasqd -cnqx dprn=0 dsvt=0 lock=1 nbs=2 nn=node-14002 tcp_port=14002 &
+$1/hasqd -cnqx dprn=0 dsvt=0 lock=1 nbs=2 nn=node-14003 tcp_port=14003 &
+$1/hasqd -cnqx dprn=1 dsvt=1 lock=1 nbs=2 nn=node-14000 tcp_port=14000 s=$in.inp | grep -v "<svt> conupdate\|<svt> reorg" 
+

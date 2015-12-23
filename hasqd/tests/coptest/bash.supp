@@ -1,0 +1,400 @@
+{
+   <bash1>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/bash
+   ...
+}
+{
+   <sed1>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   ...
+}
+{
+   <sed2>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/sed
+   ...
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   ...
+}
+{
+   <sed3>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   obj:*/sed
+   ...
+}
+{
+   <bash2>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:*/bash
+   obj:*/bash
+   fun:command_substitute
+   obj:*/bash
+   obj:*/bash
+   fun:expand_string_assignment
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+}
+{
+   <bash3>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:initialize_shell_variables
+   obj:*/bash
+   fun:main
+}
+{
+   <bash4>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   fun:initialize_shell_variables
+   obj:*/bash
+   fun:main
+}
+{
+   <bash5>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:make_variable_value
+   obj:*/bash
+   fun:initialize_shell_variables
+   obj:*/bash
+   fun:main
+}
+{
+   <bash6>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:*/bash
+   fun:fd_to_buffered_stream
+   fun:with_input_from_buffered_stream
+   fun:main
+}
+{
+   <bash7>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash8>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:make_variable_value
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash9>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:fd_to_buffered_stream
+   fun:with_input_from_buffered_stream
+   fun:main
+}
+{
+   <bash10>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:make_word_list
+   fun:copy_word_list
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+}
+{
+   <bash11>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:xrealloc
+   obj:*/bash
+   fun:command_substitute
+   obj:*/bash
+   obj:*/bash
+   fun:expand_string_assignment
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   fun:execute_command_internal
+}
+{
+   <bash12>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_word_desc
+   fun:make_bare_word
+   fun:copy_word_list
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+}
+{
+   <bash13>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+}
+{
+   <bash14>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:make_word_list
+   fun:make_simple_command
+   fun:yyparse
+   fun:parse_command
+   fun:read_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash15>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:make_bare_word
+   fun:copy_word_list
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+}
+{
+   <bash16>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:*/bash
+   obj:*/bash
+   fun:initialize_shell_variables
+   obj:*/bash
+   fun:main
+}
+{
+   <bash17>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:hash_create
+   fun:phash_insert
+   fun:search_for_command
+   obj:*/bash
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash18>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:*/bash
+   fun:yyparse
+   fun:parse_command
+   fun:read_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash19>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:cmd_init
+   fun:main
+}
+{
+   <bash20>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:*/bash
+   fun:bind_function
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash21>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_word_desc
+   fun:make_bare_word
+   fun:copy_word_list
+   fun:copy_command
+   fun:copy_command
+   obj:*/bash
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+   fun:copy_command
+}
+{
+   <bash22>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:copy_command
+   fun:copy_command
+   fun:bind_function
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash23>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:copy_command
+   fun:copy_command
+   fun:copy_function_def_contents
+   fun:execute_command_internal
+   fun:execute_command
+   fun:reader_loop
+   fun:main
+}
+{
+   <bash24>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   obj:*/bash
+   ...
+   obj:*/bash
+   ...
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+   obj:*/bash
+}
+{
+   <expr1>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   ...
+}
+{
+   <expr2>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   obj:*/expr
+   ...
+}
+

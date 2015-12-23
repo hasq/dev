@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CrankYsNotebook13131 ip=192.168.52.1 port=13131
+Database: OK
+Starting with threads: all
+<svt> print { recpwd _wrd 0 kostya password }
+0 19af 0000 5c61 168e
+<svt> print { recpwd _wrd 0 [ kostya ] password }
+Offensive command (exec): print { recpwd _wrd 0 [ kostya ] password }
+Error: Bad input: ]
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Testing FID_NC_NOTE
+
+in=$(basename $0)
+in=${in%.*}
+
+rm -fr db-14001
+mkdir db-14001
+cd db-14001
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+cd ..
+$1/hasqd -cnqx db=db-14001 dprn=1 dsvt=1 lock=1 tcp_port=14001 >/dev/null &
+
+rm -fr db-14000
+mkdir db-14000
+cd db-14000
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+cd ..
+
+$1/hasqd -cnqx db=db-14000 dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp  | grep -v "conupdate\|sendnote\|noterecv"  
+
+rm -fr db-14000
+rm -fr db-14001

@@ -1,0 +1,37 @@
+<svt> node0 = [ 127.0.0.1:14000 ]
+<svt> node1 = [ 127.0.0.1:14001 ]
+<svt> print ex 0 OK 100 tcp node1 [ ping ]
+OK
+<svt> print ex 0 OK 100 tcp node0 { [ connect ] node1 }
+OK
+<svt> conupdate
+<svt> print ex 0 OK 100 tcp node1 { [ connect ] node0 }
+OK
+<svt> print ex 1 127.0.0.1:14001 100 tcp node0 { [ info nbs ] sleep 30  }
+OK
+127.0.0.1:14001
+
+<svt> print ex 1 127.0.0.1:14000 100 tcp node1 { [ info nbs ] sleep 30  }
+OK
+127.0.0.1:14000
+
+<svt> print ex 0 OK 100 tcp node1 [ admin disable net ]
+OK
+<svt> print ex 0 DISABLED 100 tcp node1 [ ping ]
+DISABLED
+<svt> ex 0 OK 100 tcp node0 { [ z * _md5base 0 [rdn] [k] data0 ] }
+<svt> ex 0 OK 100 tcp node0 { [ add * _md5base 1 [rdn] [k] data1 ] }
+<svt> print ex 1 1 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+OK 1 a7c4eb7a67911d7c03fb9703168ed3e7 5f44ae667ea97e700171bc8751262ea1 f14ee6b4c4eadab4ecdd9a51d11470ee 7684bfb25807d8f2a3599082fec080da data1
+<svt> sendnote (14000) 1
+<svt> sendnote (14000) 2
+<svt> ex 0 OK 100 tcp node1 [ admin enable net ]
+<svt> ex 0 OK 100 tcp node1 [ ping ]
+<svt> sendnote _md5base 1 hash md5 [ rdn ]
+<svt> print ex 1 1 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+OK 1 a7c4eb7a67911d7c03fb9703168ed3e7 5f44ae667ea97e700171bc8751262ea1 f14ee6b4c4eadab4ecdd9a51d11470ee 7684bfb25807d8f2a3599082fec080da data1
+<svt> noterecv (14000) 3
+<svt> noterecv (14000) 4
+<svt> print ex 0 OK 100 tcp node1 [ quit ]
+OK
+<svt> quit 

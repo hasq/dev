@@ -1,0 +1,3 @@
+#!/bin/sh
+$1/hasqd -lqnc dprn=1 dsvt=1 s=@quit ban=all | grep -v sendnote
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@quit ban=all | grep -v sendnote

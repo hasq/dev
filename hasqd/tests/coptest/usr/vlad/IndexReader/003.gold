@@ -1,0 +1,143 @@
+<zdb> irgetrange test_index_data 0 0 -1
+Unrestricted: 1, restricted: 1
+0 A roza data_0
+
+<zdb> irgetrange test_index_data 0 -40 -1
+Unrestricted: 1, restricted: 1
+0 A roza data_0
+
+<zdb> irgetrange test_index_data 0 -41 -1
+Unrestricted: 0, restricted: 0
+BAD_RANGE
+<zdb> irgetrange test_index_data 0 1 -1
+Unrestricted: 2, restricted: 2
+0 A roza data_0
+1 A roza upala data_1
+
+<zdb> irgetrange test_index_data -40 1 -1
+Unrestricted: 2, restricted: 2
+0 A roza data_0
+1 A roza upala data_1
+
+<zdb> irgetrange test_index_data 0 -39 -1
+Unrestricted: 2, restricted: 2
+0 A roza data_0
+1 A roza upala data_1
+
+<zdb> irgetrange test_index_data -40 -39 -1
+Unrestricted: 2, restricted: 2
+0 A roza data_0
+1 A roza upala data_1
+
+<zdb> irgetrange test_index_data -39 -40 -1
+Unrestricted: 0, restricted: 0
+BAD_RANGE
+<zdb> irgetrange test_index_data 5 9 -1
+Unrestricted: 5, restricted: 5
+5 A data_5
+6 A roza upala na lapu Azora kdjfhgkdfjghdfkjghfkjghdkh data_6
+7 A roza upala na lapu Azora 89856 data_7
+8 A roza upala data_8
+9 A roza upala na lapu Azora data_9
+
+<zdb> irgetrange test_index_data 5 10 -1
+Unrestricted: 6, restricted: 6
+5 A data_5
+6 A roza upala na lapu Azora kdjfhgkdfjghdfkjghfkjghdkh data_6
+7 A roza upala na lapu Azora 89856 data_7
+8 A roza upala data_8
+9 A roza upala na lapu Azora data_9
+10 A roza upala lsdkjfsldkfj data_10
+
+<zdb> irgetrange test_index_data 11 17 -1
+Unrestricted: 7, restricted: 7
+11 data_11
+12 data_12
+13 A roza asdasdasdas data_13
+14 A roza upala na lapu Azora wyegfjhwec buygfahdc ueybqlhe cqiluefhqkwefjqkwef data_14
+15 A roza upala na lapu Azora hghdh dh ghfgwegfygf f wer gwf gsdh gdjfgasdjbfmansd f4r data_15
+16 A roza upala na lapu Azora data_16
+17 A roza upala na data_17
+
+<zdb> irgetrange test_index_data -2 -1 -1
+Unrestricted: 2, restricted: 2
+38 data_38
+39 A roza upala na lapu Azora data_39
+
+<zdb> irgetrange test_index_data -10 -9 -1
+Unrestricted: 2, restricted: 2
+30 data_30
+31 A roza upala na lapu Azora kdjfhkdfjgh kjhggh lwjrgurghq3875tyq5tghejvn h data_31
+
+<zdb> irgetrange test_index_data 8 -1 -1
+Unrestricted: 32, restricted: 32
+8 A roza upala data_8
+9 A roza upala na lapu Azora data_9
+10 A roza upala lsdkjfsldkfj data_10
+11 data_11
+12 data_12
+13 A roza asdasdasdas data_13
+14 A roza upala na lapu Azora wyegfjhwec buygfahdc ueybqlhe cqiluefhqkwefjqkwef data_14
+15 A roza upala na lapu Azora hghdh dh ghfgwegfygf f wer gwf gsdh gdjfgasdjbfmansd f4r data_15
+16 A roza upala na lapu Azora data_16
+17 A roza upala na data_17
+18 A roza upala na lapu Azora data_18
+19 A data_19
+20 A roza data_20
+21 A roza upala data_21
+22 A roza upala na data_22
+23 A roza upala na lapu data_23
+24 A roza upala na lapu Azora data_24
+25 A roza upala na lapu Azora lk k k k k k k k k k k k k k k k k k data_25
+26 A roza upala na lapu Azora kjshd data_26
+27 A roza upala data_27
+28 A roza upala data_28
+29 A roza upala na lapu Azora dhscbkluqwgqkuhdquwerf vhb uqrybgfjhev fwuekbv data_29
+30 data_30
+31 A roza upala na lapu Azora kdjfhkdfjgh kjhggh lwjrgurghq3875tyq5tghejvn h data_31
+32 A data_32
+33 A data_33
+34 A roza upala na lapu data_34
+35 A roza upala na lapu Azora ncvbcnvb ncb vncb nvcbncnbv data_35
+36 A roza data_36
+37 data_37
+38 data_38
+39 A roza upala na lapu Azora data_39
+
+<zdb> irgetrange test_index_data -1 -1 -1
+Unrestricted: 1, restricted: 1
+39 A roza upala na lapu Azora data_39
+
+<zdb> irgetrange test_index_data -2 -2 -1
+Unrestricted: 1, restricted: 1
+38 data_38
+
+<zdb> irgetrange test_index_data -2 -1 -1
+Unrestricted: 2, restricted: 2
+38 data_38
+39 A roza upala na lapu Azora data_39
+
+<zdb> irgetrange test_index_data 19 39 -1
+Unrestricted: 21, restricted: 21
+19 A data_19
+20 A roza data_20
+21 A roza upala data_21
+22 A roza upala na data_22
+23 A roza upala na lapu data_23
+24 A roza upala na lapu Azora data_24
+25 A roza upala na lapu Azora lk k k k k k k k k k k k k k k k k k data_25
+26 A roza upala na lapu Azora kjshd data_26
+27 A roza upala data_27
+28 A roza upala data_28
+29 A roza upala na lapu Azora dhscbkluqwgqkuhdquwerf vhb uqrybgfjhev fwuekbv data_29
+30 data_30
+31 A roza upala na lapu Azora kdjfhkdfjgh kjhggh lwjrgurghq3875tyq5tghejvn h data_31
+32 A data_32
+33 A data_33
+34 A roza upala na lapu data_34
+35 A roza upala na lapu Azora ncvbcnvb ncb vncb nvcbncnbv data_35
+36 A roza data_36
+37 data_37
+38 data_38
+39 A roza upala na lapu Azora data_39
+

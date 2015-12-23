@@ -1,0 +1,9 @@
+#!/bin/sh
+
+testname=$(basename $0)
+testname=${testname%.*}
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+#$1/hasqd -lqnc dprn=1 dsvt=1 s=$testname.inp | grep -v sendnote
+$1/hasqd -lqnc dprn=1 dsvt=1 s=$testname.inp
+$1/zdb erasedisk

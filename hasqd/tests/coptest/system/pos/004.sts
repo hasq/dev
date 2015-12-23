@@ -1,0 +1,11 @@
+#!/bin/sh
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+$1/hasqd -clnq s=004.inp p=13132
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+$1/hasqd -clnq s=004.inp dprn=1 dsvt=1 p=13133
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+$1/hasqd -clnq s=004.inp dced=1 p=13134
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+$1/hasqd -clnq s=004.inp dwkr=1  p=13135 | grep wkr | ( LC_ALL=C sort )
+$1/zdb erasedisk
+

@@ -1,0 +1,5 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrddir wrd WRD 1 [magic] 1 0
+<zdb> erasedisk
+Database on disk erased successfully

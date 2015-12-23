@@ -1,0 +1,6 @@
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd a_md5 0 dn password
+Adding record error: DB_BAD_DBNAME
+<zdb> erasedisk
+Database on disk erased successfully

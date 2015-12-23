@@ -1,0 +1,87 @@
+<htv> new canvas db 9 2
+<htv> new pub 0 1 hint iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+Cmd: -lnqc tcp_port=13140 db=db/db_0_1 iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+<htv> new pub 1 1 hint nn=v1
+Cmd: -lnqc tcp_port=13141 db=db/db_1_1 nn=v1
+<htv> new pub 2 1 hint nn=v2
+Cmd: -lnqc tcp_port=13142 db=db/db_2_1 nn=v2
+<htv> new pub 3 1 hint nn=v3
+Cmd: -lnqc tcp_port=13143 db=db/db_3_1 nn=v3
+<htv> new pub 4 1 hint nn=v4
+Cmd: -lnqc tcp_port=13144 db=db/db_4_1 nn=v4
+<htv> new pub 5 1 hint nn=v5
+Cmd: -lnqc tcp_port=13145 db=db/db_5_1 nn=v5
+<htv> new pub 6 1 hint nn=v6
+Cmd: -lnqc tcp_port=13146 db=db/db_6_1 nn=v6
+<htv> new pub 7 1 hint nn=v7
+Cmd: -lnqc tcp_port=13147 db=db/db_7_1 nn=v7
+<htv> new pub 8 1 hint nn=v8
+Cmd: -lnqc tcp_port=13148 db=db/db_8_1 nn=v8
+<htv> show
+[  --][  --][  --][  --][  --][  --][  --][  --][  --]
+[ P--][ P--][ P--][ P--][ P--][ P--][ P--][ P--][ P--]
+<htv> send 6 1 connect 127.0.0.1:13147
+Reply: OK
+<htv> expect 2 127.0.0.1:13147 10
+<htv> send 6 1 info fam
+<htv> send 5 1 connect 127.0.0.1:13146
+Reply: OK
+<htv> expect 2 127.0.0.1:13146 10
+<htv> send 5 1 info fam
+<htv> send 4 1 connect 127.0.0.1:13145
+Reply: OK
+<htv> expect 2 127.0.0.1:13145 10
+<htv> send 4 1 info fam
+<htv> send 2 1 connect 127.0.0.1:13144
+Reply: OK
+<htv> expect 2 127.0.0.1:13144 10
+<htv> send 2 1 info fam
+<htv> send 0 1 connect 127.0.0.1:13141
+Reply: OK
+<htv> send 0 1 connect 127.0.0.1:13142
+Reply: OK
+<htv> send 0 1 connect 127.0.0.1:13143
+Reply: OK
+<htv> send 0 1 connect 127.0.0.1:13148
+Reply: OK
+<htv> expect 2 127.0.0.1:13141 10
+<htv> send 0 1 info fam
+<htv> expect 7 127.0.0.1:13142 10
+<htv> send 0 1 info fam
+<htv> expect 12 127.0.0.1:13143 10
+<htv> send 0 1 info fam
+<htv> expect 17 127.0.0.1:13148 10
+<htv> send 0 1 info fam
+<htv> shut 8 1
+<htv> shut 7 1
+<htv> shut 3 1
+<htv> send 0 1 info fam
+Reply: OK
+v1 127.0.0.1:13141 N A L
+v2 127.0.0.1:13142 N A U
+v3 127.0.0.1:13143 N A U
+v8 127.0.0.1:13148 N A L
+
+<htv> reorg 0 1
+<htv> sleep 4000
+<htv> expect 17 127.0.0.1:13148 3000
+<htv> send 0 1 info fam
+<htv> send 0 1 info fam
+Reply: OK
+v1 127.0.0.1:13141 N A L
+v2 127.0.0.1:13142 N A U
+v5 127.0.0.1:13145 N A U
+v8 127.0.0.1:13148 N D L
+v3 127.0.0.1:13143 F D U
+v4 127.0.0.1:13144 F A U
+v6 127.0.0.1:13146 F A U
+
+<htv> shut 6 1
+<htv> shut 5 1
+<htv> shut 4 1
+<htv> shut 2 1
+<htv> shut 1 1
+<htv> shut 0 1
+<htv> erase db
+erasing db ok
+<htv> q

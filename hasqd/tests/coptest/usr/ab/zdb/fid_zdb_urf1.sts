@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Testing URF#1
+
+
+$1/zdb erasedisk "create _md5ng1 md5 MD5_1 1 [abc] 1 0"
+
+$1/zdb load "addurf _md5ng1 0 [rdn]0:2 [keyPwd] data0"
+$1/zdb load "getlast _md5ng1 rdn0" "getlast _md5ng1 rdn1" "getlast _md5ng1 rdn2"
+
+$1/zdb load "addurf _md5ng1 1 [rdn]0:2 [keyPwd]:3"
+$1/zdb load "getlast _md5ng1 rdn0" "getlast _md5ng1 rdn1" "getlast _md5ng1 rdn2"
+
+$1/zdb load "addurf _md5ng1 2 [rdn]0:2 [keyPwd]:3 [keyPwd(data)]:3 data2"
+$1/zdb load "getlast _md5ng1 rdn0" "getlast _md5ng1 rdn1" "getlast _md5ng1 rdn2"
+
+$1/zdb load "addurf _md5ng1 3 [rdn]0:2 [keyPwd]:1 [keyPwd]:2 data3"
+$1/zdb load "getlast _md5ng1 rdn0" "getlast _md5ng1 rdn1" "getlast _md5ng1 rdn2"
+
+$1/zdb load "addurf _md5ng1 4 [rdn]0:2 [keyPwd]:1 [keyPwd]:1 [keyPwd]:1 data4"
+$1/zdb load "getlast _md5ng1 rdn0" "getlast _md5ng1 rdn1" "getlast _md5ng1 rdn2"
+
+$1/zdb load "addurf _md5ng1 5 [rdn]0:2 [keyPwd]:1 [keyPwd]:1 [keyPwd]:2 data5"
+
+$1/zdb load "addurf _md5ng1 0 [rdn] [keyPwd] data0"
+$1/zdb load "addurf _md5ng1 1 [rdn] [keyPwd] data1"
+$1/zdb load "getlast _md5ng1 rdn"
+
+$1/zdb load "addurf _md5ng1 2 [rdn] [keyPwd] data2"
+$1/zdb load "addurf _md5ng1 3 a7c4eb7a67911d7c03fb9703168ed3e7 [keyPwd] data3"
+$1/zdb load "getlast _md5ng1 rdn"
+
+$1/zdb load "addurf _md5ng1 0 [rdn4] [k1]:1 [k2]:1 [k3]:1 data0"
+$1/zdb load "addurf _md5ng1 1 [rdn4] [k2]:1 [k3]:1 [k4]:1 data1"
+$1/zdb load "addurf _md5ng1 2 [rdn4] [k3]:1 [k4]:1 [k5]:1 data2"
+$1/zdb load "getlast _md5ng1 rdn4"
+
+$1/zdb load "addurf _md5ng1 0 [rdn5] [k1]:1 [k2] data0"
+$1/zdb load "addurf _md5ng1 1 [rdn5] [k2] data1"
+$1/zdb load "getlast _md5ng1 rdn5"
+
+
+$1/zdb erasedisk

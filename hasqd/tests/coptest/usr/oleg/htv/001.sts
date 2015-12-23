@@ -1,0 +1,6 @@
+#!/bin/sh
+$1/htview < 001.inp
+cat db1.htv
+rm db1.htv
+rm -f *.log
+

@@ -1,0 +1,2 @@
+print tcp self { [ range _wrd 2 2 ] hash wrd [ rdn ] }
+quit

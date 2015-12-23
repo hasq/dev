@@ -1,0 +1,77 @@
+<htv> include z_vars.inc
+<htv> (variable) $try = 100
+<htv> (variable) $db = db33
+<htv> (variable) $hello = Hello, world!
+<htv> (variable) $3 = 3
+<htv> (variable) $4 = 4 5
+<htv> (variable) $5 = 5 6 7
+<htv> (variable) $hash = _r16
+<htv> (variable) $dn = b48e304a5344edfe2a4e0292505bfc23b5abb694
+<htv> erase $db
+erasing db33 failed
+<htv> new canvas $db 5 5
+<htv> show
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> new db 0 0 $hash r16 RIPEMD-160 1 [] 1 0
+<htv> show
+[# --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> new pub 0 0
+Cmd: -lnqc tcp_port=13131 db=db33/db_0_0
+<htv> show
+[#P--][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> send 0 0 zero * $hash 0 $dn 0000000000000000000000000000000000000000 bc2b0e8e5c94418dc5023800da66fa77ca18ed8f bc5b7adea7b64baad6bf7d774d749d10a4c4a9f2
+Reply: OK 1000
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1000
+<htv> send 0 0 add * $hash 1 $dn 7d8c3bd3f4fed30af7a07d39dad9362f2a2499fa 222161ee89a47e63c2dd64c4264db10398c9bb8b 35aebdf5b66fa3202acadf59363f8ee4ba48ceae
+Reply: OK 1001
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1001
+<htv> send 0 0 add * $hash 2 $dn 591b50b56ce2eb8325b4ddcd0aafcf60de9d1cfb 75472562dab0fe6b01c615b4549db0119d502079 244e5722f07851ec6d3dc14b1b5d963d779c0c8f $hello
+Reply: OK 1002
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1002
+<htv> send 0 0 last $hash $dn
+Reply: OK 2 b48e304a5344edfe2a4e0292505bfc23b5abb694 591b50b56ce2eb8325b4ddcd0aafcf60de9d1cfb 75472562dab0fe6b01c615b4549db0119d502079 244e5722f07851ec6d3dc14b1b5d963d779c0c8f Hello, world!
+<htv> send 0 0 add * $hash 3 $dn f3ca8af17f726a9eef0ae2575a9f6bb1df90a175 69e0e990a18f9f6e43c90993d7b22d1b6381994f fd703f79f8154cc4386c3b314f321d8c9df14f15 $3
+Reply: OK 1003
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1003
+<htv> send 0 0 add * $hash 4 $dn 0ce100351c005d5a701b9e5e250773e0571a7994 a9da3ce10da259505924dbef7cd385cea69a4cd7 a84313db20c31201d8dfca871a58470a1ffe6be0 $4
+Reply: OK 1004
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1004
+<htv> send 0 0 add * $hash 5 $dn 3538fcf6483bb3cdc61046d3e2b27b402fa6a870 33a6ac7012449cf802b04557a3f6b44239649c59 d7e243ac5898ea1552fb90e4d1b2e829ddfc0626 $5
+Reply: OK 1005
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1005
+<htv> show
+[#P--][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> send 0 0 last $hash $dn
+Reply: OK 5 b48e304a5344edfe2a4e0292505bfc23b5abb694 3538fcf6483bb3cdc61046d3e2b27b402fa6a870 33a6ac7012449cf802b04557a3f6b44239649c59 d7e243ac5898ea1552fb90e4d1b2e829ddfc0626 5 6 7
+<htv> shut 0 0
+<htv> show
+[# --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> erase $db
+erasing db33 ok
+<htv> q

@@ -1,0 +1,26 @@
+
+begin
+define myprint A B C :
+println [ A ]
+print [ B ]
+print [ C ]
+end
+
+myprint x y z
+
+#myprint x y
+
+define print22 A B C : print [ B B ]
+
+print22 1 2 3
+
+define N : 100
+print [ N N ]
+
+define A : B C
+define B D : print [ D ]
+
+print A
+
+quit
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+$1/hasqd -c s=0001_wrd.inp dprn=1 dsvt=1 | grep -v sendnote
+$1/zdb erasedisk

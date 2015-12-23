@@ -1,0 +1,30 @@
+<zdb> irgetrecord test_index_data3 7
+7 data_7
+
+<zdb> irgetrecord test_index_data3 -1
+7 data_7
+
+<zdb> irgetrecord test_index_data3 1
+irgetrecord error
+<zdb> irgetrecord test_index_data3 -2
+irgetrecord error
+<zdb> irgetrange test_index_data3 7 7 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data3 -1 -1 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data3 7 -1 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data3 -1 7 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data3 -1 8 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+

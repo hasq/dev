@@ -1,0 +1,11 @@
+
+If you add, change name, remove source file,
+check the following lists
+
+	1. Makefile of the appropriate library
+	2.* GUI wxviewer list - check that it builds
+	3.* amalgam.mak - check that it builds actually exe
+	4.* tests/cov/result.sh - list for coverage
+	5. vc projects if necessary
+
+* - important

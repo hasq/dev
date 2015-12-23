@@ -1,0 +1,163 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<svt> print tcp self { [ zero ] hash wrd recpwd _wrd 0 kostya password [ _wrd ] recpwd _wrd 0 kostya password }
+OK 1000
+<svt> print expect 0 OK 100 tcp self [ job 1000 ]
+OK
+<svt> r1 = recpwd _wrd 1 kostya password
+<svt> print hash wrd r1
+410d
+<svt> print tcp self { [ add 5 _wrd ] r1 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 4 _wrd ] r1 }
+OK 1001
+<svt> print expect 0 OK 100 tcp self [ job 1001 ]
+OK
+<svt> r2 = recpwd _wrd 2 kostya password
+<svt> print hash wrd r2
+02bf
+<svt> print tcp self { [ add 20 _wrd ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 02 _wrd ] r2 }
+OK 1002
+<svt> print expect 0 OK 100 tcp self [ job 1002 ]
+OK
+<svt> r3 = recpwd _wrd 3 kostya password
+<svt> print hash wrd r3
+f5b3
+<svt> print tcp self { [ add 000 _wrd ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add f5b _wrd ] r3 }
+OK 1003
+<svt> print expect 0 OK 100 tcp self [ job 1003 ]
+OK
+<svt> r4 = recpwd _wrd 4 kostya password
+<svt> s4 = hash wrd r4
+<svt> print s4
+9add
+<svt> print tcp self { [ add 0000 _wrd ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 8534 _wrd ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ffff _wrd ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ] s4 [ _wrd ] r4 }
+OK 1004
+<svt> print expect 0 OK 100 tcp self [ job 1004 ]
+OK
+<svt> print tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 4 19af 960f 7740 acb1
+<svt> quit
+<zdb> create _md5 md5 md5 1 [] 1 0
+<svt> print tcp self { [ zero ] hash md5 recpwd _md5 0 kostya password [ _md5 ] recpwd _md5 0 kostya password }
+OK 1000
+<svt> print expect 0 OK 100 tcp self [ job 1000 ]
+OK
+<svt> r1 = recpwd _md5 1 kostya password
+<svt> print hash md5 r1
+2a7a26e82edefb1b25a65b5fc2ac45c5
+<svt> print tcp self { [ add 1 _md5 ] r1 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 2 _md5 ] r1 }
+OK 1001
+<svt> print expect 0 OK 100 tcp self [ job 1001 ]
+OK
+<svt> r2 = recpwd _md5 2 kostya password
+<svt> print hash md5 r2
+0a296c977ab86e6dfcf1154557f39aec
+<svt> print tcp self { [ add 0000 _md5 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 1315 _md5 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ffff _md5 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 0a29 _md5 ] r2 }
+OK 1002
+<svt> print expect 0 OK 100 tcp self [ job 1002 ]
+OK
+<svt> r3 = recpwd _md5 3 kostya password
+<svt> print hash md5 r3
+18d682bad054bd78ebcf6f93c1fee12c
+<svt> print tcp self { [ add 18d682bad054bd78ebcf6f93c1fee11 _md5 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 18d682bad054bd78ebcf6f93c1fee13 _md5 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add fffffffffffffffffffffffffffffff _md5 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 18d682bad054bd78ebcf6f93c1fee12 _md5 ] r3 }
+OK 1003
+<svt> print expect 0 OK 100 tcp self [ job 1003 ]
+OK
+<svt> r4 = recpwd _md5 4 kostya password
+<svt> s4 = hash md5 r4
+<svt> print s4
+1b5ca1876808ab3363cac7778acceaca
+<svt> print tcp self { [ add 4ff9c66ff708f82115fa2b1258b7240d _md5 ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 00000000000000000000000000000000 _md5 ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ] s4 [ _md5 ] r4 }
+OK 1004
+<svt> print expect 0 OK 100 tcp self [ job 1004 ]
+OK
+<svt> print tcp self { [ last _md5 ] hash md5 [ kostya ] }
+OK 4 19af62e899fd7e3a993a868db7389cfa 1858d295a22823a1b5c61a5161ec5e1e 4ff9c66ff708f82115fa2b1258b7240d d7bf3903a78a7e4d1780ff7f6575d789
+<svt> quit
+<zdb> create _r16 r16 r16 1 [] 1 0
+<svt> print tcp self { [ zero ] hash r16 recpwd _r16 0 kostya password [ _r16 ] recpwd _r16 0 kostya password }
+OK 1000
+<svt> print expect 0 OK 100 tcp self [ job 1000 ]
+OK
+<svt> r1 = recpwd _r16 1 kostya password
+<svt> print hash r16 r1
+15465ba32682dc7cc02ce7d02d87cfe9b02981b9
+<svt> print tcp self { [ add 2 _r16 ] r1 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 1 _r16 ] r1 }
+OK 1001
+<svt> print expect 0 OK 100 tcp self [ job 1001 ]
+OK
+<svt> r2 = recpwd _r16 2 kostya password
+<svt> print hash r16 r2
+c8a2d32f7f1914a4e2642bd3c9d25791c9402f7c
+<svt> print tcp self { [ add 0000 _r16 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 1315 _r16 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ffff _r16 ] r2 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add c8a2 _r16 ] r2 }
+OK 1002
+<svt> print expect 0 OK 100 tcp self [ job 1002 ]
+OK
+<svt> r3 = recpwd _r16 3 kostya password
+<svt> print hash r16 r3
+4cd43dd26af66524b811807d748628e3247f5174
+<svt> print tcp self { [ add 00000000000000000000000000000000000000 _r16 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add c8a2d32f7f1914a4e2642bd3c9d25791c9402f7c _r16 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ffffffffffffffffffffffffffffffffffffff _r16 ] r3 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 4cd43dd26af66524b811807d748628e3247f51 _r16 ] r3 }
+OK 1003
+<svt> print expect 0 OK 100 tcp self [ job 1003 ]
+OK
+<svt> r4 = recpwd _r16 4 kostya password
+<svt> s4 = hash r16 r4
+<svt> print s4
+26d9734a82dde650a08495b6fcbc779274ad2e26
+<svt> print tcp self { [ add 4cd43dd26af66524b811807d748628e3247f5170 _r16 ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add 0000000000000000000000000000000000000000 _r16 ] r4 }
+REQ_BAD_SIGN
+<svt> print tcp self { [ add ] s4 [ _r16 ] r4 }
+OK 1004
+<svt> print expect 0 OK 100 tcp self [ job 1004 ]
+OK
+<svt> print tcp self { [ last _r16 ] hash r16 [ kostya ] }
+OK 4 b48e304a5344edfe2a4e0292505bfc23b5abb694 0ce100351c005d5a701b9e5e250773e0571a7994 a9da3ce10da259505924dbef7cd385cea69a4cd7 a84313db20c31201d8dfca871a58470a1ffe6be0
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

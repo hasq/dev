@@ -1,0 +1,17 @@
+
+$cmd = new
+$cmd canvas db 2 1
+
+$cmd = show
+$cmd
+
+include 004.inc
+
+include
+include aaa
+
+include 004.inc
+
+erase db
+
+q

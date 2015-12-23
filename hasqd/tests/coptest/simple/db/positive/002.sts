@@ -1,0 +1,8 @@
+#!/bin/sh
+$1/zdb erasedisk
+
+$1/zdb "create _md5 wrd MD5 1 [abc] 1 0"
+$1/zdb load "addpwd _md5 0:100 dn pass" "addpwd _md5 0:1 dn:1:2 pass"
+$1/zdb load "addpwd _md5 2 dn:1:2 pass"
+
+$1/zdb erasedisk

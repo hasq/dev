@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing FID_NC_DEBUG
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1

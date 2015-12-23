@@ -1,0 +1,7 @@
+1. Check CLO ban/let working (with concrete command or 'all'). Ex: ban=info, let=all
+2. Check CLO skckey working (one or more params). Ex: skckey=abc
+3. Make test for check privileged net commands dont work when skckey used
+4. Make test for check privileged net commands work when skckey used and we use it with key
+5. Make tests for admin skc show, admin skc pop, admin skc add newkey
+
+ban,let works with all,admin,quit

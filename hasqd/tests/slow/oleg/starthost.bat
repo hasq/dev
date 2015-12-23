@@ -1,0 +1,1 @@
+..\..\..\src\_bin_msc\hasqd dsvt=1 dprn=1 tcp_port=14001

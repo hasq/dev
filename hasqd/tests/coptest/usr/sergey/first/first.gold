@@ -1,0 +1,19 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> load
+<zdb> addpwd _wrd 0:30 rdn pwd
+OK 0 a7c4 0000 76d5 5ea7
+
+OK 2 a7c4 8195 a7e2 546b
+
+OK 4 a7c4 fea6 8169 0ef3
+
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+OK 6 a7c4 fd3d 5c03 d3df
+
+<zdb> erasedisk
+Database on disk erased successfully

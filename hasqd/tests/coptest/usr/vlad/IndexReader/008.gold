@@ -1,0 +1,9 @@
+<zdb> irgetlast test_index_data6 25
+7 data_8
+<zdb> irgetrecord test_index_data6 7
+irgetrecord error
+<zdb> irgetrecord test_index_data6 -1
+irgetrecord error
+<zdb> irgetrange test_index_data6 7 8 -1
+Unrestricted: 0, restricted: 0
+irgetrange error

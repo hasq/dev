@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Testing FID_CL_QWKR
+
+$1/hasqd -qc s="@quit" dprn=1 dsvt=0 dwkr=1 qwkr=0
+$1/hasqd -qc s="@quit" dprn=1 dsvt=0 dwkr=1 qwkr=100

@@ -1,0 +1,56 @@
+ADDR = [ 127.0.0.1:14011 ]
+
+print [ Before the running of work: ] 
+print expect 0 OK -1 tcp ADDR [ info sys ]
+
+begin
+#	creates $i DN 
+	for i 1 100 {
+#			NOPREV_RECORD
+		expect 0 NOPREV_RECORD -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ add * _md5 ] recpwd _md5 i rdn:i pass } } 
+#			OK
+		expect 0 OK -1 tcp ADDR { [ z * _md5 ] recpwd _md5 0 rdn:i pass }
+#			DN_EXISTS
+		expect 0 DN_EXISTS -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ z * _md5 ] recpwd _md5 0 rdn:i pass } }
+#			NOPREV_RECORD
+		expect 0 NOPREV_RECORD -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ add * _s22 ] recpwd _s22 i rdn:i pass } } 
+#			OK
+		expect 0 OK -1 tcp ADDR { [ z * _s22 ] recpwd _s22 0 rdn:i pass }
+#			DN_EXISTS
+		expect 0 DN_EXISTS -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ add * _s22 ] recpwd _s22 0 rdn:i pass } }
+	}
+end
+
+begin
+#	creates $j entry for $i DN
+	for j 1 50000 {
+		for i 1 100 {
+#				DN_EXISTS 
+			expect 0 DN_EXISTS -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ add * _md5 ] recpwd _md5 0 rdn:i pass } }
+#				REC_INIT_BAD_N
+			expect 0 REC_INIT_BAD_N -1 tcp ADDR { [ add * _md5 ] recpwd _md50 j rdn:i pass } 
+#				REQ_HASHTYPE_BAD
+			expect 0 REQ_HASHTYPE_BAD -1 tcp ADDR { [ add * _md50 ] recpwd _md5 j rdn:i pass } 
+#				OK
+			expect 0 OK -1 tcp ADDR { [ add * _md5 ] recpwd _md5 j rdn:i pass j }
+#				DN_EXISTS
+			expect 0 DN_EXISTS -1 arg 0 tcp ADDR { [ job ] arg 1 tcp ADDR { [ add * _s22 ] recpwd _s22 0 rdn:i pass } }
+#				REC_INIT_BAD_N
+			expect 0 REC_INIT_BAD_N -1 tcp ADDR { [ add * _s22 ] recpwd _s220 j rdn:i pass } 
+#				REQ_HASHTYPE_BAD
+			expect 0 REQ_HASHTYPE_BAD -1 tcp ADDR { [ add * _s220 ] recpwd _s22 j rdn:i pass } 
+#				OK
+			expect 0 OK -1 tcp ADDR { [ add * _s22 ] recpwd _s22 j rdn:i pass j }
+		}
+                print < [ Loop: ] j >
+		print expect 0 OK -1 tcp ADDR [ info sys ]
+	}
+end
+
+sleep 100
+
+tcp ADDR [ quit ]
+
+quit
+
+

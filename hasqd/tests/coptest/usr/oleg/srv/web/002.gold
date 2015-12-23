@@ -1,0 +1,28 @@
+<svt> print tcp self [ pleb del z ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb list ]
+OK
+otherdir/
+index.html
+
+<svt> print tcp self [ pleb get z ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb del z ]
+REQ_PATH_BAD
+<svt> a = hash b64e [ #!/bin/sh\10echo\32AAA\10 ]
+<svt> print a
+IyEvYmluL3NoCmVjaG8gQUFBCg==
+<svt> print tcp self { [ pleb put otherdir/a.sh ] a }
+OK
+<svt> print tcp self [ pleb list ]
+OK
+otherdir/
+index.html
+
+<svt> print tcp self [ pleb get otherdir/z ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb del otherdir/z ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb del a.sh ]
+REQ_PATH_BAD
+<svt> quit

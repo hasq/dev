@@ -1,0 +1,26 @@
+n1 = [ 127.0.0.1:13131 ]
+
+expect 0 OK 20 tcp n1 { [ z * _wrd ] recpwd _wrd 0 rdn pass }
+expect 0 OK 20 tcp n1 { [ last _wrd fd80 ] }
+
+#for i 1 4 { print { [ a * _wrd ] recpwd _wrd i rdn pass } }
+
+begin
+for i 1 9
+{
+  {
+     print tcp n1
+     {
+        [ a * _wrd ] recpwd _wrd i rdn pass
+     }
+  }
+  expect 1 i 200 { tcp n1 { [ last _wrd ] hash wrd [ rdn ] } }
+}
+end
+
+expect 1 9 100 tcp n1 { [ last _wrd ] hash wrd [ rdn ] }
+print tcp n1 { [ last _wrd ] hash wrd [ rdn ] }
+
+tcp n1 [ quit ]
+quit
+

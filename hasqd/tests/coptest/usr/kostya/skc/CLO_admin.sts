@@ -1,0 +1,19 @@
+#!/bin/sh
+
+for z in "admin disable net" "admin enable net" "admin reorg"; do
+
+echo "Without key:"
+$1/hasqd -lqnc dprn=1 dsvt=1 s=@"print tcp self [ ${z} ]; quit" | grep -v sendnote
+
+echo "With key:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ ${z} ]; quit" | grep -v sendnote
+
+echo "With key and let:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ ${z} ]; quit" let="admin" | grep -v sendnote
+
+echo "With key and ban:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ ${z} ]; quit" ban="admin" | grep -v sendnote
+
+echo "==============="
+
+done

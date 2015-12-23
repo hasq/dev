@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Testing FID_CL_QUIT
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/hasqd -cq quit=1 lock=0 s=$in.inp dprn=1 dsvt=1
+$1/hasqd -cqx lock=0 s=$in.inp dprn=1 dsvt=1

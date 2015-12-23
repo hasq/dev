@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PORT1=14021
+PORT2=14022
+PIDFILE1=hq.$PORT1.lock
+PIDFILE2=hq.$PORT2.lock
+INPFILE=$(basename $0)
+INPFILE=${INPFILE%.*}
+DPRNSTATUS=1
+DSVTSTATUS=1
+
+[ -f $PIDFILE1 ] && rm -f $PIDFILE1
+[ -f $PIDFILE2 ] && rm -f $PIDFILE2
+[ -f $STOPFILE ] && rm -f $STOPFILE
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0" "create _md5 md5 MD5 1 [abc] 1 0"
+
+$1/hasqd -clq quit=1 lock=1 tcp_port=$PORT1 &
+
+$1/hasqd -clq quit=1 s=$INPFILE.inp lock=1 dprn=$DPRNSTATUS dsvt=$DSVTSTATUS tcp_port=$PORT2
+
+wait
+
+$1/zdb erasedisk

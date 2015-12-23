@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Testing config file
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -nlc s=$tn.inp dprn=1 dsvt=1 nn=mach
+
+echo nn=mach2 > aaa
+$1/hasqd -nlc s=$tn.inp dprn=1 dsvt=1 config=aaa
+rm aaa
+
+echo nn=mach3 > hasqd.cfg
+$1/hasqd -nlc s=$tn.inp dprn=1 dsvt=1
+rm hasqd.cfg
+
+$1/hasqd -nlc s=$tn.inp dprn=1 dsvt=1 nn=mach config=aaa
+
+
+
+
+

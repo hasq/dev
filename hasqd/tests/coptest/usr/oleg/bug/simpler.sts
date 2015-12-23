@@ -1,0 +1,29 @@
+#!/bin/sh
+
+in=$(basename $0)
+in=${in%.*} 
+
+db0=db-14000
+db1=db-14001
+
+rm -fr $db0
+mkdir $db0
+cd $db0
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"
+$1/zdb load "addpwd _md5 0:30 dn pass"
+#rm -rf index
+cd ..
+
+mkdir -p $db1
+cd $db1
+$1/hasqd -cqln dprn=1 dsvt=1 db=../$db0 s=../$in.inp
+cd ..
+rm -fr $db1
+
+echo ""
+echo "filenames without any paths"
+echo "$db0/slice/_md5/meta/0.meta.md5.txt"
+cat $db0/slice/_md5/meta/0.meta.md5.txt | cut -b10-42
+
+rm -fr $db0
+

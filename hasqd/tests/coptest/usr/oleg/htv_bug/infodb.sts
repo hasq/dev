@@ -1,0 +1,4 @@
+#!/bin/sh
+$1/htview < infodb.inp
+rm -f *.log
+

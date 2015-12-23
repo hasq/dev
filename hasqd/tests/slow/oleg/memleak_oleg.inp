@@ -1,0 +1,26 @@
+addr = [ 127.0.0.1:14001 ]
+#addr = [ 192.168.128.129:13131 ]
+
+begin
+for i 1 1000 {
+	expect 0 OK 1000 tcp addr { [ z * _md5 ] recpwd _md5 0 rdn:i pass }
+	expect 0 OK 1000 tcp addr { [ z * _s22 ] recpwd _s22 0 rdn:i pass }
+	for k 1 1000 {
+#		print { expect 0 OK -1 tcp addr { [ add * _md5 ] recpwd _md5 k rdn:i pass } }
+#		print { expect 0 OK -1 tcp addr { [ add * _s22 ] recpwd _s22 k rdn:i pass } }
+#
+#		expect 0 OK -1 print { tcp addr { [ add * _md5 ] recpwd _md5 k rdn:i pass } }
+#		expect 0 OK -1 print { tcp addr { [ add * _s22 ] recpwd _s22 k rdn:i pass } }
+#
+		expect 0 OK 1000 tcp addr { [ add * _md5 ] recpwd _md5 k rdn:i pass }
+		expect 0 OK 1000 tcp addr { [ add * _s22 ] recpwd _s22 k rdn:i pass }
+#		sleep 10
+	}
+}
+end
+
+sleep 100
+
+tcp addr [ quit ]
+
+quit

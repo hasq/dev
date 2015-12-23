@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# FIX need to reset net limits to small
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/htview < $tn.inp
+

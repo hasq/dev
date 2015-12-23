@@ -1,0 +1,4 @@
+Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.83.212 port=13131
+Error: Servant has 1 tasks: [quit]
+Error: Cannot load traits file - possibly corrupted

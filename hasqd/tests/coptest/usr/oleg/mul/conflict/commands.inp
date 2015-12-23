@@ -1,0 +1,21 @@
+node1 = [ 127.0.0.1:13131 ]
+node2 = [ 127.0.0.1:13132 ]
+
+#node1 = [ 127.0.0.1:13101 ]
+#node2 = [ 127.0.0.1:13102 ]
+
+print tcp node1 { [ connect ] node2 }
+print tcp node2 { [ connect ] node1 }
+expect 1 127.0.0.1:13102 2 tcp node1 [ info nbs ]
+expect 1 127.0.0.1:13101 2 tcp node2 [ info nbs ]
+
+print tcp node1 [ add * _wrd 2 fd80 ab51 4621 7821 ]
+
+expect 1 2 10 tcp node1 [ last _wrd fd80 ]
+
+sleep 200
+
+tcp node2 [ quit ]
+
+quit
+

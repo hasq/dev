@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo "============="
+echo "= Bad opt v ="
+echo "============="
+$1/hasqd -v
+
+echo ""
+echo "============="
+echo "= Version   ="
+echo "============="
+$1/hasqd info=ver
+
+echo ""
+echo "============="
+echo "= Logo      ="
+echo "============="
+$1/hasqd info=logo
+
+echo ""
+echo "============="
+echo "= Licence   ="
+echo "============="
+$1/hasqd info=lic
+

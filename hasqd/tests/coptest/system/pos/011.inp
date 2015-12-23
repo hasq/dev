@@ -1,0 +1,9 @@
+
+print tcp self [ f /_md5/./ ]
+print tcp self [ f /_md5/../ ]
+print tcp self [ f /_md5/../../../ ]
+print tcp self [ f /_md5\92.\92 ]
+print tcp self [ f /_md5\92..\92 ]
+
+quit
+

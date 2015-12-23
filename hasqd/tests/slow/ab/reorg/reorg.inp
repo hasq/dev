@@ -1,0 +1,84 @@
+#####################################################################################
+#
+#	(+0)	(+1)<==>(+2)<==>(+3)<==>(+4)<==>...(+N-1)<==>(+N)
+#
+#####################################################################################
+
+define QH : 10
+define ZPORT : 14030
+define SPORT : 14031
+define FPORT : 14040
+define address A P ADDR : ADDR = < A [ : ] P >
+
+IP = [ 127.0.0.1 ]
+
+
+begin
+	define printnbs ADDR :
+		print < ADDR  [ \neighbours: ] >
+		print ex 0 OK 1000 tcp ADDR [ info nbs ]
+end
+
+begin
+	define printfam ADDR :
+		print < ADDR [ \family: ] >
+		print ex 0 OK 1000 tcp ADDR [ info fam ]
+end
+
+#begin
+#	for i SPORT FPORT {  
+#		for k 1 10 {
+#			address IP i ADDR
+#			expect 0 OK 100 tcp ADDR { [ z * _md5 ] recpwd _md5 0 rdn:k pass }
+#			for l 1 10 {
+#				expect 0 OK 100 tcp ADDR { [ add * _md5 ] recpwd _md5 l rdn:k pass l }
+#			}
+#		}
+#	}
+#end
+
+print ex 0 OK -1 tcp self [ info sys ] 
+
+begin
+	for i SPORT FPORT {
+		address IP i ADDR
+		printnbs ADDR
+	}
+end
+
+
+begin
+	for k 1 10000 {
+		print < [ Loop:\ ] k >
+		print ex 0 OK -1 tcp self [ info sys ] 
+		for i SPORT FPORT {
+			address IP i ADDR1
+			ex 0 OK -1 tcp ADDR1 [ admin disable net ] 
+			ex 0 DISABLED -1 tcp ADDR1 [ ping ] 
+			print < i [ \was DISABLED ] >
+			for l SPORT FPORT {
+				address IP l ADDR2
+				ex 0 OK -1 tcp ADDR2 [ admin reorg ]
+				sleep 50 
+				print < l [ \was REORGED ] >
+				printfam ADDR2
+			}
+			ex 0 OK -1 tcp ADDR1 [ admin enable net ] 
+			ex 0 OK -1 tcp ADDR1 [ ping ]
+			print < i [ \was ENABLED ] >
+		}
+	}
+end
+
+begin
+	for i SPORT FPORT {
+		address IP i ADDR
+		ex 0 OK -1 tcp ADDR [ admin enable net ]
+		ex 0 OK -1 tcp ADDR [ ping ] 
+		print < i [ \was ENABLED ] > 
+		ex 0 OK -1 tcp ADDR [ quit ]
+	}
+end
+
+
+quit

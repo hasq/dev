@@ -1,0 +1,4 @@
+<svt> print tcp xself [ 1 ]
+Offensive command (exec): print tcp xself [ 1 ]
+Error: Bad tcp address xself, expecting ip:port
+<svt> quit

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Testing Pleb
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+rm -rf slice
+
+mkdir -p slice/home/otherdir
+echo "<html>hello</html>" > slice/home/index.html
+echo "bbb" > slice/home/otherdir/otherfile.txt
+
+$1/hasqd -nlqc s=$tn.inp dprn=1 dsvt=1 nn=mach webdir=home pleb=slice/home p=13140
+
+rm -rf slice
+
+
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+$1/zdb erasedisk
+
+$1/zdb "create _wrd wrd WRD 1 [magic] 100 0"
+$1/zdb load "addpwd _wrd 0:5 rawDn pwd Data_1" "getfirst _wrd rawDn"
+
+$1/zdb load "addpwd _wrd 6:10 rawDn pwd Data_2"
+
+cat index/_wrd/bf37 | grep Data_2 > index/_wrd/bf37_2
+rm index/_wrd/bf37
+mv index/_wrd/bf37_2 index/_wrd/bf37
+
+$1/zdb load "getfirst _wrd rawDn"
+
+$1/zdb erasedisk

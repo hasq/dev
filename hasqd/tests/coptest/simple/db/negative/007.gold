@@ -1,0 +1,22 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 md5 MD5 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _md5 0 rawDn:0:256 pass
+<zdb> load
+<zdb> getrecord _md5 rawDn0 0
+0 f8bf021c0fe7286cddeafbf76dc56f46 00000000000000000000000000000000 f64b5c390b6404e0880cd15b823d49fe e1f77f8b14544821b0325e4dd270a08c
+<zdb> getrecord _md5 rawDn1 0
+0 8e616ee6fbb2860d07792793f5a09c8b 00000000000000000000000000000000 23e6e667b6a042d26845fb7231a1cf56 ab96f91eba58addaf2a0a2f142beec42
+<zdb> load
+<zdb> getrecord _md5 rawDn0 0
+0 f8bf021c0fe7286cddeafbf76dc56f46 00000000000000000000000000000000 f64b5c390b6404e0880cd15b823d49fe e1f77f8b14544821b0325e4dd270a08c
+<zdb> getrecord _md5 rawDn1 0
+0 8e616ee6fbb2860d07792793f5a09c8b 00000000000000000000000000000000 23e6e667b6a042d26845fb7231a1cf56 ab96f91eba58addaf2a0a2f142beec42
+<zdb> load
+<zdb> getrecord _md5 rawDn0 0
+getrecord error
+<zdb> getrecord _md5 rawDn1 0
+0 8e616ee6fbb2860d07792793f5a09c8b 00000000000000000000000000000000 23e6e667b6a042d26845fb7231a1cf56 ab96f91eba58addaf2a0a2f142beec42
+<zdb> erasedisk
+Database on disk erased successfully

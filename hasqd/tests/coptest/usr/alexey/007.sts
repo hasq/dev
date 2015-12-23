@@ -1,0 +1,3 @@
+#!/bin/sh
+$1/zdb erasedisk  
+$1/hasqd -cln s=007.inp dprn=1 dsvt=1

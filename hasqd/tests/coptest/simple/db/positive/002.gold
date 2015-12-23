@@ -1,0 +1,10 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:100 dn pass
+<zdb> addpwd _md5 0:1 dn:1:2 pass
+<zdb> load
+<zdb> addpwd _md5 2 dn:1:2 pass
+<zdb> erasedisk
+Database on disk erased successfully

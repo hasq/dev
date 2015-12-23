@@ -1,0 +1,3 @@
+print { recpwd _wrd 0 kostya password }
+print { recpwd _wrd 0 [ kostya ] password }
+quit

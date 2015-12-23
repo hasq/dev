@@ -1,0 +1,64 @@
+
+# Test that network is bound with backward requests
+# 0 -> 1 -> 2 -> 0
+# 
+
+new canvas db 9 2
+new db all
+
+new pub 0 1 hint nn=v0 nbs=1
+new pub 1 1 hint nn=v1 nbs=1
+new pub 2 1 hint nn=v2 nbs=1
+
+show
+
+send 0 1 connect 127.0.0.1:13141
+send 1 1 connect 127.0.0.1:13142
+send 2 1 connect 127.0.0.1:13140
+
+expect 1 127.0.0.1:13141 10
+send 0 1 info nbs
+expect 1 127.0.0.1:13142 10
+send 1 1 info nbs
+expect 1 127.0.0.1:13140 10
+send 2 1 info nbs
+
+
+send 0 1 connect 127.0.0.1:13142
+send 1 1 connect 127.0.0.1:13140
+send 2 1 connect 127.0.0.1:13141
+
+expect 7 127.0.0.1:13142 10
+send 0 1 info fam
+expect 8 F 20
+send 0 1 info fam
+
+expect 7 127.0.0.1:13140 10
+send 1 1 info fam
+expect 8 F 20
+send 1 1 info fam
+
+expect 7 127.0.0.1:13141 10
+send 2 1 info fam
+expect 8 F 20
+send 2 1 info fam
+
+send 0 1 zero * _wrd 0 a0d0 0000 7121 bf11
+expect 0 OK 20
+send 0 1 last _wrd a0d0
+
+#sleep 1000
+send 0 1 last _wrd a0d0
+
+expect 0 OK 20
+send 1 1 last _wrd a0d0
+
+expect 0 OK 20
+send 2 1 last _wrd a0d0
+
+shut 2 1
+shut 1 1
+shut 0 1
+
+erase db
+q

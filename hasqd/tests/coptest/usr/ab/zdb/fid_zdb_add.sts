@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Testing fid_zdb_add
+
+$1/zdb erasedisk "create _wrddir wrd WRD 1 [magic] 1 0"
+
+$1/zdb load "add _wrddir 0 a7c4 0000 0c37 4d90" "add _wrddir 1 a7c4 da53 8911 998d" "add _wrddir 2 a7c4 84d1 97d6 7985" "getlast _wrddir rdn"
+
+$1/zdb erasedisk

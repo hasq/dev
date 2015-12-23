@@ -1,0 +1,5 @@
+pp = [ 127.0.0.1:13131 ]
+show
+print expect 0 OK 100 tcp pp [ info id ]
+quit
+

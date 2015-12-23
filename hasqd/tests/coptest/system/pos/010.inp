@@ -1,0 +1,19 @@
+print tcp self [ f / ]
+print tcp self [ f _md5 ]
+print tcp self [ f /_md5 ]
+print tcp self [ f /_md5/ ]
+print tcp self [ f /_md5/db.traits ]
+
+print tcp self [ h / ]
+print tcp self [ h _md5 ]
+print tcp self [ h /_md5 ]
+print tcp self [ h /_md5/ ]
+print tcp self [ h /_md5/db.traits ]
+
+print tcp self [ / ]
+print tcp self [ /_md5 ]
+print tcp self [ /_md5/ ]
+print tcp self [ /_md5/db.traits ]
+
+quit
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+$1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0" "create _md5 md5 MD5 1 [abc] 1 0"
+$1/hasqd -lncq s=009.inp dprn=1 dsvt=1 dced=1 dwkr=1 net_conntime=100 net_readtime=100 nodename=aaa > 1.log
+$1/zdb erasedisk
+
+echo "============="
+cat 1.log | grep -v "<ced>" | grep -v "<wkr>"
+echo "============="
+cat 1.log | grep "<wkr>"
+echo "============="
+cat 1.log | grep "<ced>"
+echo "============="
+
+rm 1.log

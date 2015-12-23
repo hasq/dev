@@ -1,0 +1,12 @@
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: DB_EMPTY
+Starting with threads: all
+<svt> aaa = [ abb ]
+<svt> aa1 = [ a11 ]
+<svt> aaa = { aaa aa1 aa1 [ b ] }
+<svt> print aa1
+a11
+<svt> print { { aaa } }
+abb a11 a11 b
+<svt> quit

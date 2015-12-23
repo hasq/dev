@@ -1,0 +1,3 @@
+print ex 0 OK 100 tcp self { [ data _md5 ] hash wrd [ rdn1 ] }
+quit
+

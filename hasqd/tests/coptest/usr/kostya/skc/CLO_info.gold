@@ -1,0 +1,120 @@
+Without key:
+<svt> print tcp self [ info db ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info db ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info db ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info db ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ info nbs ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info nbs ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info nbs ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info nbs ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ info fam ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info fam ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info fam ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info fam ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ info log conflict ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info log conflict ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info log conflict ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info log conflict ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ info log connect ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info log connect ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info log connect ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info log connect ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ info log critical ]
+OK
+
+<svt>  quit
+With key:
+<svt> print tcp self [ info log critical ]
+OK
+
+<svt>  quit
+With key and let:
+<svt> print tcp self [ info log critical ]
+OK
+
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ info log critical ]
+REQ_MSG_HEAD
+<svt>  quit
+===============

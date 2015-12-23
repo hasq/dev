@@ -1,0 +1,11 @@
+print ex 0 REQ_N_BAD 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -100 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 0 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 2 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 15 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 30 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 50 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 60 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -1 ] }
+print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -10 ] }
+quit
+

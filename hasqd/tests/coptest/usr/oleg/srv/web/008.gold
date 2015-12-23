@@ -1,0 +1,37 @@
+<svt> print expect 0 <html>hello</html> 100 http_get self [ home/index.html ]
+<html>hello</html>
+
+<svt> print expect 0 <html>hello</html> 100 http_get self [ ]
+<html>hello</html>
+
+<svt> print expect 0 <html>hello</html> 100 tcp self [ ]
+<html>hello</html>
+
+<svt> print expect 0 <html>hello</html> 100 http_post self [ ]
+<html>hello</html>
+
+<svt> print http_get self [ home/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="otherdir/">otherdir/</a></li>
+<li><a href="index.html">index.html</a></li>
+</ul></body></html>
+<svt> print http_get self [ home/otherdir/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="otherfile.txt">otherfile.txt</a></li>
+</ul></body></html>
+<svt> print http_get self [ home/otherdir/otherfile.txt ]
+bbb
+
+<svt> print tcp self [ home/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="otherdir/">otherdir/</a></li>
+<li><a href="index.html">index.html</a></li>
+</ul></body></html>
+<svt> print tcp self [ home/otherdir/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="otherfile.txt">otherfile.txt</a></li>
+</ul></body></html>
+<svt> print tcp self [ home/otherdir/otherfile.txt ]
+bbb
+
+<svt> quit

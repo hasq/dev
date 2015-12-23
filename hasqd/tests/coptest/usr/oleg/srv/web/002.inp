@@ -1,0 +1,25 @@
+
+# FIX execs are commented until unx exec is implemented
+
+print tcp self [ pleb del z ]
+
+#print tcp self [ pleb exec . sh -c 'echo aaa' > z ]
+print tcp self [ pleb list ]
+print tcp self [ pleb get z ]
+print tcp self [ pleb del z ]
+
+
+a = hash b64e [ #!/bin/sh\10echo\32AAA\10 ]
+print a
+print tcp self { [ pleb put otherdir/a.sh ] a }
+
+#print tcp self [ pleb exec otherdir sh a.sh > z ]
+print tcp self [ pleb list ]
+print tcp self [ pleb get otherdir/z ]
+print tcp self [ pleb del otherdir/z ]
+
+print tcp self [ pleb del a.sh ]
+
+
+quit
+

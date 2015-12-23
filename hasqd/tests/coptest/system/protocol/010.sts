@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# FIX post does not work ???
+
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0" load "addpwd _md5 0:1 rdn pass"
+$1/hasqd -clnq s=010.inp dprn=1 dsvt=1 dwkr=1 > 010.tmp
+$1/zdb erasedisk
+
+cat 010.tmp | grep -v "<wkr>"
+cat 010.tmp | grep "<wkr>"
+rm -f 010.tmp
+
+

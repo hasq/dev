@@ -1,0 +1,30 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 100 0
+<zdb> create _md5 md5 MD5 1 [] 100 0
+Hasq server 0.2.3 (Linux) Hasq Technology Pty Ltd (C) 2013-2015
+Secretary listening TCP on 127.0.0.1:13132
+Secretary listening UDP on 224.0.0.1:13131
+HOST: nodename=centos6413132
+Database loaded: OK
+Starting publisher, threads=all
+<svt> n1 = [ 127.0.0.1:13131 ]
+<svt> expect 0 OK 20 tcp n1 { [ z * _wrd ] recpwd _wrd 0 rdn pass }
+<svt> expect 0 OK 20 tcp n1 { [ last _wrd fd80 ] }
+<svt>  for i 1 9 { { print tcp n1 { [ a * _wrd ] recpwd _wrd i rdn pass } } expect 1 i 200 { tcp n1 { [ last _wrd ] hash wrd [ rdn ] } } }
+OK 1001
+OK 1002
+OK 1003
+OK 1004
+OK 1005
+OK 1006
+OK 1007
+OK 1008
+OK 1009
+<svt> expect 1 9 100 tcp n1 { [ last _wrd ] hash wrd [ rdn ] }
+<svt> print tcp n1 { [ last _wrd ] hash wrd [ rdn ] }
+OK 9 fd80 9b71 ac31 2421
+<svt> tcp n1 [ quit ]
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

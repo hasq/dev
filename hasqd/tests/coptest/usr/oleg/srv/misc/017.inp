@@ -1,0 +1,13 @@
+
+
+print expect 0 OK 100 tcp self [ ping ] 
+print expect 0 OK 100 tcp self [ admin disable net ] 
+print expect 0 DISABLED 100 tcp self [ ping ] 
+print expect 0 OK 100 tcp self [ admin enable net ] 
+print expect 0 OK 100 tcp self [ ping ] 
+print expect 0 OK 100 tcp self [ admin reorg ] 
+
+sleep 10
+
+quit
+

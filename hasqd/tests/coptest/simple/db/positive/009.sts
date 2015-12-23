@@ -1,0 +1,19 @@
+#!/bin/sh
+mkdir db1 && cd db1>/dev/null
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0" 
+#$1/zdb load "addpwd _wrd 0 rdn pas3"
+$1/zdb load "recprn _wrd 0 rdn pas1"
+$1/zdb load "recprn _wrd 1 rdn pas1"
+$1/zdb load "recprn _wrd 1 rdn pas2"
+$1/zdb load "recprn _wrd 2 rdn pas1"
+$1/zdb load "add _wrd 0 a7c4 0000 11b1 ef7e"
+$1/zdb load "add _wrd 1 a7c4 4694 9ca4 d528"
+#$1/zdb load "add _wrd 1 fd80 3b51 6a31 2211 add more controversial rec formats"
+cd ..
+
+echo "=============="
+cat db1/index/_wrd/a7c4
+
+rm -rf db1 *.log
+
+

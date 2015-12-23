@@ -1,0 +1,41 @@
+<zdb> irgetlast test_index_data8 25
+13 data_13
+<zdb> irgetrecord test_index_data8 7
+7 data_7
+
+<zdb> irgetrecord test_index_data8 -1
+13 data_13
+
+<zdb> irgetrecord test_index_data8 13
+13 data_13
+
+<zdb> irgetrecord test_index_data8 11
+11 data_11
+
+<zdb> irgetrecord test_index_data8 12
+irgetrecord error
+<zdb> irgetrecord test_index_data8 14
+irgetrecord error
+<zdb> irgetrecord test_index_data8 8
+8 data_8
+
+<zdb> irgetrecord test_index_data8 9
+9 data_9
+
+<zdb> irgetrange test_index_data8 7 8 -1
+Unrestricted: 2, restricted: 2
+7 data_7
+8 data_8
+
+<zdb> irgetrange test_index_data8 9 12 -1
+Unrestricted: 4, restricted: 0
+irgetrange error
+<zdb> irgetrange test_index_data8 11 13 -1
+Unrestricted: 3, restricted: 3
+11 data_11
+14 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data8 11 -2 -1
+Unrestricted: 2, restricted: 0
+irgetrange error

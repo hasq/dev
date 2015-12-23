@@ -1,0 +1,22 @@
+Length of a data field is in bytes:
+	0 for "0"
+	1 for "1"
+	1 for "1b"
+	1 for "1B"
+	1024 for "1k"
+	1024 for "1K"
+	33 for "1h" MD5 hash (32 bytes) is 1 hashsize + 1 byte
+	1048576 for "1m"
+	1048576 for "1M"
+	41 for "1h" RIPEMD-160 hash (40 bytes) is 1 hashsize + 1 byte
+	65 for "1h" SHA2-256 hash (64 bytes) is 1 hashsize + 1 byte
+	129 for "1h" SHA2-512 hash (128 bytes) is 1 hashsize + 1 byte
+	5 for "1h" WORD hash (4 bytes) is 1 hashsize + 1 byte
+	66 for "2h" MD5 hash (32 bytes) is 2 hashsizes + 2 bytes
+	82 for "2h" RIPEMD-160 hash (40 bytes) is 2 hashsizes + 2 bytes
+	130 for "2h" SHA2-256 hash (64 bytes) is 2 hashsizes + 2 bytes
+	258 for "2h" SHA2-512 hash (128 bytes) is 2 hashsizes + 2 bytes
+	10 for "2h" WORD hash (4 bytes) is 2 hashsizes + 2 bytes
+	without restriction for "-1"
+	without restriction, if the parameter is not specified
+	0, if the parameter is an some string

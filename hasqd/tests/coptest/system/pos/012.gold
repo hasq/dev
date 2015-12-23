@@ -1,0 +1,26 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+<svt> print tcp self [ f /_md5/ ]
+OK
+2015
+meta
+db.traits
+
+<svt> print expect 0 OK 3 tcp self [ f /_md5/ ]
+OK
+2015
+meta
+db.traits
+
+<svt> print expect 2 meta 3 tcp self [ f /_md5/ ]
+OK
+2015
+meta
+db.traits
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

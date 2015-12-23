@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> load
+<zdb> add _wrd 0 a7c4 0000 76d5 5ea7
+<zdb> load
+<zdb> add _wrd 1 a7c4 8233 7d9e 11c3
+<sec> Received [range _wrd 2 2 a7c4\n\n]
+<sec> Submitting job [range _wrd 2 2 a7c4]
+<svt> print tcp self { [ range _wrd 2 2 ] hash wrd [ rdn ] }
+<svt> quit
+<wkr> Getrange error [a7c4] -> IDX_HIGH
+<wkr> [range _wrd 2 2 a7c4] -> [IDX_HIGH]
+<zdb> erasedisk
+Database on disk erased successfully

@@ -1,0 +1,9 @@
+#!/bin/sh
+$1/hasqd lock=0 -cq s=010.inp dprn=1 dsvt=1 nodename=aaa > 010_1.log
+#$1/hasqd lock=0 -c s=010.inp dprn=1 dsvt=1 nodename=@port@host
+
+
+cat 010_1.log | grep -v "Dsk usg\|Dsk tot\|Mem usg\|Mem tot\|Cpu load" 
+rm -f 010_1.log
+
+

@@ -1,0 +1,11 @@
+print expect 0 OK 1000 tcp 127.0.0.1:14001 [ ping ] 
+
+print expect 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+
+nb 127.0.0.1:14001
+
+print expect 1 127.0.0.1:14001 100 { tcp self [ info nbs ] sleep 30 }
+
+print expect 0 OK 100 tcp 127.0.0.1:14001 [ quit ] 
+
+quit

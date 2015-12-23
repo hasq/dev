@@ -1,0 +1,2 @@
+print ex 0 OK 100 tcp self [ info id ]
+quit

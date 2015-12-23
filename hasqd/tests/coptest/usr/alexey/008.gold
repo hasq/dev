@@ -1,0 +1,6 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<zdb> erasedisk
+Database on disk erased successfully

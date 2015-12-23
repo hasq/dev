@@ -1,0 +1,7 @@
+
+print tcp self [ f /_md5/ ]
+print expect 0 OK 3 tcp self [ f /_md5/ ]
+print expect 2 meta 3 tcp self [ f /_md5/ ]
+
+quit
+

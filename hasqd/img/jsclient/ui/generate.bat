@@ -1,0 +1,1 @@
+cat node_main.js doc_main.js ../api_ui/api_ui.js ../front/widgets_static.js ../front/widgets_dynamic.js ../front/html.js ../api_eng/api_eng.js ../engine/ajax.js  ../engine/parser.js | nodejs

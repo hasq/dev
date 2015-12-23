@@ -1,0 +1,62 @@
+#!/bin/bash
+in=$(basename $0)
+in=${in%.*}
+
+bzip2 -d -k $in.zdb.bz2
+chmod 0777 $in.zdb
+
+$1/zdb < $in.zdb  >/dev/null
+DIR=""
+
+echo "Length of a data field is in bytes:"
+recursive() {
+while [ ! -z "$1" ]; do
+	if [ -d "$1" ]; then
+		DIR="$1"
+		cd "$1"
+		recursive *
+		cd ..
+	else
+		if [ -r "$1" ]; then
+			HASH="$(cut $1 -f 2 -d ' ')"
+			HASHSIZE="${#HASH}"
+			DATA="$( cut $1 -f 6 -d ' ')"
+			DATALEN="${#DATA}"
+#			let "MODULO=$DATALEN % HASHSIZE"
+			MODULO=$(($DATALEN % $HASHSIZE))
+			[ $DIR = "_0" ] && echo "	$DATALEN for \"0\""
+			[ $DIR = "_1" ] && echo "	$DATALEN for \"1\""
+			[ $DIR = "_1bl" ] && echo "	$DATALEN for \"1b\""
+			[ $DIR = "_1bu" ] && echo "	$DATALEN for \"1B\""
+			[ $DIR = "_1kl" ] && echo "	$DATALEN for \"1k\""
+			[ $DIR = "_1ku" ] && echo "	$DATALEN for \"1K\""
+			[ $DIR = "_1ml" ] && echo "	$DATALEN for \"1m\""
+			[ $DIR = "_1mu" ] && echo "	$DATALEN for \"1M\""
+			[ $DIR = "_1wrd" ] && echo "	$DATALEN for \"1h\" WORD hash ($HASHSIZE bytes) is $MODULO hashsize + $MODULO byte"
+			[ $DIR = "_1md5" ] && echo "	$DATALEN for \"1h\" MD5 hash ($HASHSIZE bytes) is $MODULO hashsize + $MODULO byte"
+			[ $DIR = "_1r16" ] && echo "	$DATALEN for \"1h\" RIPEMD-160 hash ($HASHSIZE bytes) is $MODULO hashsize + $MODULO byte"
+			[ $DIR =  "_1s22" ] && echo "	$DATALEN for \"1h\" SHA2-256 hash ($HASHSIZE bytes) is $MODULO hashsize + $MODULO byte"
+			[ $DIR =  "_1s25" ] && echo "	$DATALEN for \"1h\" SHA2-512 hash ($HASHSIZE bytes) is $MODULO hashsize + $MODULO byte"
+			[ $DIR = "_2wrd" ] && echo "	$DATALEN for \"2h\" WORD hash ($HASHSIZE bytes) is $MODULO hashsizes + $MODULO bytes"
+			[ $DIR = "_2md5" ] && echo "	$DATALEN for \"2h\" MD5 hash ($HASHSIZE bytes) is $MODULO hashsizes + $MODULO bytes"
+			[ $DIR = "_2r16" ] && echo "	$DATALEN for \"2h\" RIPEMD-160 hash ($HASHSIZE bytes) is $MODULO hashsizes + $MODULO bytes"
+			[ $DIR = "_2s22" ] && echo "	$DATALEN for \"2h\" SHA2-256 hash ($HASHSIZE bytes) is $MODULO hashsizes + $MODULO bytes"
+			[ $DIR = "_2s25" ] && echo "	$DATALEN for \"2h\" SHA2-512 hash ($HASHSIZE bytes) is $MODULO hashsizes + $MODULO bytes"
+			if [ $DIR = "_n" ]; then 
+				[ $DATALEN -eq 1050000 ] && echo "	without restriction, if the parameter is not specified" || echo "	$DATALEN for NULL"
+			fi
+			if [ $DIR = "_m" ]; then 
+				[ $DATALEN -eq 1050000 ] && echo "	without restriction for \"-1\"" || echo "	$DATALEN for \"-1\""
+			fi
+			[ $DIR = "_s" ] && echo "	$DATALEN, if the parameter is an some string"
+		fi
+	fi
+    shift
+  done
+}
+
+recursive "index"
+
+
+$1/zdb erasedisk >/dev/null
+rm -f $in.zdb

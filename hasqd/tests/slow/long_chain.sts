@@ -1,0 +1,19 @@
+#!/bin/sh
+
+testname=$(basename $0)
+testname=${testname%.*}
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 100 0" "create _md5 md5 MD5 1 [] 100 0"
+
+$1/hasqd lock=0 -c quit=1 p=13131 > /dev/null &
+
+#pid=$!
+
+$1/hasqd lock=0 -c s=$testname.inp dprn=1 dsvt=1 p=13132
+
+#wait $pid
+
+wait
+
+$1/zdb erasedisk
+

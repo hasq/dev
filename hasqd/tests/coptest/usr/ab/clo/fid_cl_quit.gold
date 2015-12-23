@@ -1,0 +1,6 @@
+<svt> print ex 0 OK 100 tcp self [ quit ]
+OK
+<svt> 
+<svt> print ex 0 OK 100 tcp self [ quit ]
+OK
+<svt> 

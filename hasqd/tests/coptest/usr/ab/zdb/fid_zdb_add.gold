@@ -1,0 +1,11 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrddir wrd WRD 1 [magic] 1 0
+<zdb> load
+<zdb> add _wrddir 0 a7c4 0000 0c37 4d90
+<zdb> add _wrddir 1 a7c4 da53 8911 998d
+<zdb> add _wrddir 2 a7c4 84d1 97d6 7985
+<zdb> getlast _wrddir rdn
+2 a7c4 84d1 97d6 7985
+<zdb> erasedisk
+Database on disk erased successfully

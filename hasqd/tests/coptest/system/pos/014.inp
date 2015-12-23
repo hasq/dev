@@ -1,0 +1,4 @@
+print tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -1 ] }
+
+quit
+

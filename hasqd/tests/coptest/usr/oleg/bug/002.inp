@@ -1,0 +1,11 @@
+print expect 0 OK 50 tcp self [ zero * _wrd 0 a7c4 0000 76d5 5ea7 ]
+print expect 0 OK 50 tcp self [ last _wrd a7c4 ]
+print tcp self [ last _wrd a7c4 ]
+
+print tcp self [ add * _wrd 1 a7c4 8233 7d9e ]
+print tcp self [ last _wrd a7c4 ]
+
+# prevent sendnote still in servant
+sleep 30
+
+quit

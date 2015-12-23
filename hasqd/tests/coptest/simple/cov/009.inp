@@ -1,0 +1,13 @@
+x = [ a b c d ]
+x = arg 1 x
+print x
+
+x = [ a b c d ]
+x = { arg 3 x arg 2 x arg 1 x arg 0 x }
+print x
+
+print arg 10 x
+
+print arg 1 { arg 0 [ a ] arg 2 [ aa bb cc ] }
+
+quit

@@ -1,0 +1,26 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<svt> print expect 0 OK 50 tcp self { [ zero * _wrd ] recpwd _wrd 0 rdn pass }
+OK 1000
+<svt> print expect 0 OK 50 tcp self [ job 1000 ]
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn pass }
+OK 1001
+<svt> print expect 0 OK 50 tcp self [ job 1001 ]
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] recpwd _wrd 2 rdn pass [ hello vasia ] }
+OK 1002
+<svt> print expect 0 OK 50 tcp self [ job 1002 ]
+OK
+<svt> print tcp self { [ last _wrd ] hash wrd [ rdn ] }
+OK 2 a7c4 5000 62e3 ef39 hello vasia
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 3 rdn pass [ 3 ] }
+OK 1003
+<svt> print expect 0 OK 1000 tcp self [ job 1003 ]
+OK
+<svt> print tcp self { [ last _wrd ] hash wrd [ rdn ] }
+OK 3 a7c4 6aca a4a0 05aa 3
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

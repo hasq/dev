@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Testing URF#3
+
+
+inputfile=$(basename $0)
+inputfile=${inputfile%.*}
+
+$1/zdb erasedisk "create MD5DIR md5 MD5 3 [abc] 1 0"
+$1/hasqd -qcx s=$inputfile.inp dprn=1 dsvt=1  | grep -v "sendnote\|Servant"  
+$1/zdb erasedisk

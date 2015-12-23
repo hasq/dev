@@ -1,0 +1,74 @@
+<svt> node0 = [ 127.0.0.1:14000 ]
+<svt> node1 = [ 127.0.0.1:14001 ]
+<svt> node2 = [ 127.0.0.1:14002 ]
+<svt> node3 = [ 127.0.0.1:14003 ]
+<svt> ex 0 OK 100 tcp node0 { [ connect ] node1 sleep 30 }
+<svt> ex 0 OK 100 tcp node0 { [ connect ] node2 sleep 30 }
+<svt> ex 0 OK 100 tcp node1 { [ connect ] node2 sleep 30 }
+<svt> ex 0 OK 100 tcp node1 { [ connect ] node3 sleep 30 }
+<svt> ex 0 OK 100 tcp node2 { [ connect ] node3 sleep 30 }
+<svt> ex 0 OK 100 tcp node2 { [ connect ] node0 sleep 30 }
+<svt> ex 0 OK 100 tcp node3 { [ connect ] node0 sleep 30 }
+<svt> ex 0 OK 100 tcp node3 { [ connect ] node1 sleep 30 }
+<svt> print ex 6 node-14002 100 tcp node0 { [ info fam ] sleep 30  }
+OK
+node-14001 127.0.0.1:14001 N A U
+node-14002 127.0.0.1:14002 N A U
+
+<svt> print ex 6 node-14003 100 tcp node1 { [ info fam ] sleep 30  }
+OK
+node-14002 127.0.0.1:14002 N A U
+node-14003 127.0.0.1:14003 N A U
+
+<svt> print ex 6 node-14003 100 tcp node2 { [ info fam ] sleep 30  }
+OK
+node-14000 127.0.0.1:14000 N A U
+node-14003 127.0.0.1:14003 N A U
+
+<svt> print ex 6 node-14001 100 tcp node3 { [ info fam ] sleep 30  }
+OK
+node-14000 127.0.0.1:14000 N A U
+node-14001 127.0.0.1:14001 N A U
+
+<svt> print ex 0 OK 100 tcp node0 [ admin disable net ]
+OK
+<svt> print ex 0 DISABLED 100 tcp node0 [ ping ] 
+DISABLED
+<svt> print [ Node node0 was DISABLED ]
+Node node0 was DISABLED
+<svt> print ex 0 OK 100 tcp node1 { [ admin reorg ] sleep 30  }
+OK
+<svt> print ex 0 OK 100 tcp node1 { [ info fam ] sleep 30  }
+OK
+node-14002 127.0.0.1:14002 N A U
+node-14003 127.0.0.1:14003 N A U
+
+<svt> print ex 0 OK 100 tcp node2 { [ admin reorg ] sleep 30  }
+OK
+<svt> print ex 0 OK 100 tcp node2 { [ info fam ] sleep 30  }
+OK
+node-14001 127.0.0.1:14001 N A U
+node-14003 127.0.0.1:14003 N A U
+node-14000 127.0.0.1:14000 F D U
+
+<svt> print ex 0 OK 100 tcp node3 { [ admin reorg ] sleep 30  }
+OK
+<svt> print ex 0 OK 100 tcp node3 { [ info fam ] sleep 30  }
+OK
+node-14001 127.0.0.1:14001 N A U
+node-14002 127.0.0.1:14002 N A U
+node-14000 127.0.0.1:14000 F D U
+
+<svt> print ex 0 OK 100 tcp node0 [ admin enable net ]
+OK
+<svt> print ex 0 OK 100 tcp node0 [ ping ] 
+OK
+<svt> print [ Node node0 was ENABLED ]
+Node node0 was ENABLED
+<svt> print ex 0 OK 100 tcp node1 [ quit ]
+OK
+<svt> print ex 0 OK 100 tcp node2 [ quit ]
+OK
+<svt> print ex 0 OK 100 tcp node3 [ quit ]
+OK
+<svt> quit

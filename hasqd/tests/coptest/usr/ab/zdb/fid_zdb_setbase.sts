@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Testing fid_zdb_setbase
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/zdb < $in.zdb
+$1/hasqd -cqnx db=testbase s="@print ex 1 3 100 tcp self { [ last _wrddir ] hash wrd [ rdn ] }; quit" dprn=1 dsvt=1
+
+$1/zdb "set base testbase" erasedisk
+rm -rf testbase

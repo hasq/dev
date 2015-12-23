@@ -1,0 +1,8 @@
+#!/bin/sh
+
+$1/zdb "irgetlast test_index_data5 25"
+
+$1/zdb "irgetrecord test_index_data5 7"
+$1/zdb "irgetrecord test_index_data5 -1"
+
+$1/zdb "irgetrange test_index_data5 7 8 -1"

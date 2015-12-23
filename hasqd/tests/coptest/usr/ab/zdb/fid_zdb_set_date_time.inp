@@ -1,0 +1,2 @@
+print tcp self [ f /_wrddir/meta/0.meta.wrd.txt ]
+quit

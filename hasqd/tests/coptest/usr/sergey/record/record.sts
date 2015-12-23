@@ -1,0 +1,10 @@
+#!/bin/sh
+#FID_NC_RECORD
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+$1/zdb load "addpwd _wrd 0:30 rdn pwd"
+sed -i '1d;2d;3d;4d' index/_wrd/a7c4
+#for win with ap13e 
+chmod 775 index/_wrd/a7c4
+#for win with ap13e 
+$1/hasqd -c s=record.inp dprn=1 dsvt=1 qced=30 | grep -v sendnote 
+$1/zdb erasedisk

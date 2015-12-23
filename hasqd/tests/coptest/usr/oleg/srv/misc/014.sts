@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# This tests ';' in command line
+
+$1/hasqd -nlqc s="@a = [ aaa ]; print a; quit" dprn=1 dsvt=1 
+
+

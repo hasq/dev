@@ -1,0 +1,39 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+<zdb> addpwd _md5 2 rdn pass Data_2
+<zdb> load
+<zdb> addpwd _md5 3:25 rdn pass
+<zdb> addpwd _md5 26 rdn pass Data_26
+<zdb> load
+<zdb> addpwd _md5 27:50 rdn pass
+<zdb> addpwd _md5 51 rdn pass Data_51
+<zdb> load
+<zdb> addpwd _md5 52:75 rdn pass
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+<svt> print ex 0 REQ_N_BAD 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -100 ] }
+REQ_N_BAD
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 0 ] }
+OK 0
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 2 ] }
+OK 2 Data_2
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 15 ] }
+OK 2 Data_2
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 30 ] }
+OK 26 Data_26
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 50 ] }
+OK 31
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ 60 ] }
+OK 51 Data_51
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -1 ] }
+OK 56
+<svt> print ex 0 OK 100 tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -10 ] }
+OK 51 Data_51
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

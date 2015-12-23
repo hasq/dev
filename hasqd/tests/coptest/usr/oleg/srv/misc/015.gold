@@ -1,0 +1,22 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 0 0
+<svt> set date [ yyyymmdd ]
+<svt> r0 = recpwd _wrd 0 rdn pass
+<svt> r1 = recpwd _wrd 1 rdn pass
+<svt> print expect 0 OK 100 tcp self { [ zero * _wrd ] r0 }
+OK 1000
+<svt> print expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
+OK 1001
+<svt> expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+<svt> print expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+OK 1 a7c4 7ccf 811f 2159
+<svt> quit
+==============
+slice/_wrd/:
+db.traits
+index/_wrd/:
+a7c4
+==============
+<zdb> erasedisk
+Database on disk erased successfully

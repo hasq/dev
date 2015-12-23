@@ -1,0 +1,35 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base0 md5 md5 1 [] 1 0
+<zdb> create _md5base1 md5 md5 1 [magic1] 1 0
+<zdb> create _md5base2 md5 md5 2 [magic2] 1 0
+<svt> ex 0 OK 100 tcp self { [ z * (md5,1) 0 [rdn] [k] data0(magic0) ] }
+<svt> ex 0 OK 100 tcp self { [ z * (md5,1,magic1) 0 [rdn] [k] data0(magic1) ] }
+<svt> ex 0 OK 100 tcp self { [ z * (md5,2,magic2) 0 [rdn] [k] data0(magic2) ] }
+<svt> ex 0 OK 100 tcp self { [ add * _md5base0 1 [rdn] [k] data1(magic0) ] }
+<svt> ex 0 OK 100 tcp self { [ add * _md5base1 1 [rdn] [k] data1(magic1) ] }
+<svt> ex 0 OK 100 tcp self { [ add * _md5base2 1 [rdn] [k] data1(magic2) ] }
+<svt> print ex 1 1 100 tcp self { [ last _md5base0 ] hash md5 [ rdn ] }
+OK 1 a7c4eb7a67911d7c03fb9703168ed3e7 7e4a543cd8b95c9ea2335705a05599d1 f5c9b7dc38773429a633742356f687f0 723d36ac72c4e16c8f1c1fc99077b2e5 data1(magic0)
+<svt> print ex 1 1 100 tcp self { [ last _md5base1 ] hash md5 [ rdn ] }
+OK 1 a7c4eb7a67911d7c03fb9703168ed3e7 88df468ecbe6e946ae37c8fca7c511d7 ef20538f575a656602420b3f12063133 111ad174b6a6e425de17add8155a8f7c data1(magic1)
+<svt> print ex 1 1 100 tcp self { [ last _md5base2 ] hash md5 [ rdn ] }
+OK 1 a7c4eb7a67911d7c03fb9703168ed3e7 11b35b4a6858807c86aa26e9bada9729 d52968f2a8c8a2dad8caea44475d8fff fc691f4787aecb2b0439281c1e758ccc 8ab9dab168e63415512faf41cac18116 data1(magic2)
+<svt> ex 0 OK 100 tcp self { [ add * (md5,1) 2 [rdn] [k] data2(magic0) ] }
+<svt> ex 0 OK 100 tcp self { [ add * (md5,1,magic1) 2 [rdn] [k] data2(magic1) ] }
+<svt> ex 0 OK 100 tcp self { [ add * (md5,2,magic2) 2 [rdn] [k] data2(magic2) ] }
+<svt> print ex 1 2 100 tcp self { [ last _md5base0 ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 c8ee501214e8c82335e1323356cd1307 22eec82cb4d25bd470ef8a35150d5005 11447da3adc0978c2931494ed474a94f data2(magic0)
+<svt> print ex 1 2 100 tcp self { [ last (md5,1) ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 c8ee501214e8c82335e1323356cd1307 22eec82cb4d25bd470ef8a35150d5005 11447da3adc0978c2931494ed474a94f data2(magic0)
+<svt> print ex 1 2 100 tcp self { [ last _md5base1 ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 6921dd94b6bf5cdfbd863f69b73f33ef f5b62b2802f9fe9a4aeb4ecbd56a3feb 8a29d0ba6bfd1c06c7938e52c2d99492 data2(magic1)
+<svt> print ex 1 2 100 tcp self { [ last (md5,1,magic1) ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 6921dd94b6bf5cdfbd863f69b73f33ef f5b62b2802f9fe9a4aeb4ecbd56a3feb 8a29d0ba6bfd1c06c7938e52c2d99492 data2(magic1)
+<svt> print ex 1 2 100 tcp self { [ last _md5base2 ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 1d36ba84f881456c2f77d4871195066c 984d4341856a3b24d7ad0043ef48922b bf221a636dea65b3387c5906beaa8476 8e2641bb155071f6a91b3b689f707dbd data2(magic2)
+<svt> print ex 1 2 100 tcp self { [ last (md5,2,magic2) ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 1d36ba84f881456c2f77d4871195066c 984d4341856a3b24d7ad0043ef48922b bf221a636dea65b3387c5906beaa8476 8e2641bb155071f6a91b3b689f707dbd data2(magic2)
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

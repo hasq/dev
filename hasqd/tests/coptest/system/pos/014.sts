@@ -1,0 +1,10 @@
+#!/bin/sh
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+$1/zdb load "addpwd _md5 0:10 rdn pass Data_10" "addpwd _md5 11:20 rdn pass"
+
+rm -r index  # trigger index regeneration when hasqd starts
+
+$1/hasqd -c s=014.inp dprn=1 dsvt=1
+
+$1/zdb erasedisk
+

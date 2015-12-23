@@ -1,0 +1,7 @@
+Hasq server 0.2.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+Secretary listening TCP on 127.0.0.1:8080
+Secretary listening UDP on 224.0.0.1:13131
+HOST: nodename=VM8080
+Database loaded: DB_EMPTY
+Starting publisher, threads=all
+<svt> quit

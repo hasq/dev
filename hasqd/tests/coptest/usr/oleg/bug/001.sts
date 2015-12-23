@@ -1,0 +1,10 @@
+#!/bin/sh
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+#$1/zdb load "add _wrd 0 fd80 0000 d521 d521"
+#$1/zdb load "add _wrd 1 fd80 3b51 6a31 e311"
+$1/zdb load "add _wrd 0 a7c4 0000 76d5 5ea7"
+$1/zdb load "add _wrd 1 a7c4 8233 7d9e 11c3"
+$1/hasqd -nlqc s=001.inp dsec=1 dwkr=1 dprn=0 dsvt=1 dced=1 nn=n0 p=13132 | sort
+$1/zdb erasedisk
+
+# this test gave SegV revision 2074

@@ -1,0 +1,75 @@
+#!/bin/sh
+
+#exit
+
+mkdir -p db1
+$1/zdb "set base db1" erasedisk "create _wrd wrd Word 1 [] 1 0" 
+$1/zdb "set base db1" load "recprn _wrd 0 rdn pas1"
+$1/zdb "set base db1" load "recprn _wrd 1 rdn pas1"
+$1/zdb "set base db1" load "recprn _wrd 1 rdn pas2"
+$1/zdb "set base db1" load "recprn _wrd 2 rdn pas1"
+$1/zdb "set base db1" load "add _wrd 0 a7c4 0000 11b1 ef7e"
+$1/zdb "set base db1" load "add _wrd 1 a7c4 4694 9ca4 d528"
+# next 2 fd80 ab51 4621 7821
+
+mkdir -p db2
+$1/zdb "set base db2" erasedisk "create _wrd wrd Word 1 [] 1 0" 
+$1/zdb "set base db2" load "add _wrd 0 a7c4 0000 11b1 ef7e"
+$1/zdb "set base db2" load "add _wrd 1 a7c4 4694 9ca4 e311"
+
+$1/hasqd -qncl quit=1 dsec=1 dwkr=1 dprn=1 dsvt=1 p=13132 db=db2 id=2 nn=n2 > 2.log &
+
+#pid=$!
+
+$1/hasqd -qncl s=cfl005.inp dsec=1 dwkr=1 dprn=1 dsvt=1 p=13131 db=db1 id=1 nn=n1 > 1.log
+
+#wait $pid
+
+wait
+
+#cat 1.log 2.log > 3.log
+#cat 3.log | grep -v "<wkr\|<sec\|svt" > c1_1.log
+#cat 3.log | grep "<svt\:1" | sort > c1_2.log
+#cat 3.log | grep "<svt\:2" | sort > c1_3.log
+#cat 3.log | grep "<wkr\:1" | sort > c1_4.log
+#cat 3.log | grep "<wkr\:2" | sort > c1_5.log
+#cat 3.log | grep "<sec\:1" | sort > c1_6.log
+#cat 3.log | grep "<sec\:2" | sort > c1_7.log
+
+#cat c1_1.log c1_2.log c1_3.log c1_4.log c1_5.log c1_6.log c1_7.log
+
+split(){
+
+#tran="sort -f -d -i"
+#tran=cat
+tran="grep -v info\|sendnote"
+
+cat $1.log | grep -v "<wkr\|<sec\|svt" > $1.z.log
+cat $1.log | grep "<svt" | $tran > $1.svt.log
+cat $1.log | grep "<wkr" | $tran > $1.wkr.log
+cat $1.log | grep "<sec" | $tran > $1.sec.log
+
+echo "###### node $1 ######"
+echo "### z $1 ###"
+cat $1.z.log
+echo "### svt $1 ###"
+cat $1.svt.log
+echo "### wkr $1 ###"
+cat $1.wkr.log
+echo "### sec $1 ###"
+cat $1.sec.log
+echo "###### done $1 ######"
+}
+
+
+#split 1
+#echo "#"
+#split 2
+
+cat db1/index/_wrd/a7c4
+cat db2/index/_wrd/a7c4
+
+rm -rf db1 db2 *.log
+
+
+

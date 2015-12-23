@@ -1,0 +1,17 @@
+print expect 0 OK 1000 tcp 127.0.0.1:14001 [ ping ] 
+print expect 0 OK 1000 tcp 127.0.0.1:14002 [ ping ]
+print expect 0 OK 1000 tcp 127.0.0.1:14003 [ ping ] 
+print expect 0 OK 1000 tcp 127.0.0.1:14004 [ ping ] 
+print expect 0 OK 100 tcp self [ connect 127.0.0.1:14001 ]
+print expect 0 OK 100 tcp self [ connect 127.0.0.1:14002 ]
+print expect 0 OK 100 tcp self [ connect 127.0.0.1:14003 ] 
+print expect 0 OK 100 tcp self [ connect 127.0.0.1:14004 ] 
+print expect 0 OK 100 tcp self [ info nbs ] 
+#print expect 0 OK 100 tcp self [ info fam ] 
+
+print expect 0 OK 100 tcp 127.0.0.1:14001 [ quit ] 
+print expect 0 OK 100 tcp 127.0.0.1:14002 [ quit ] 
+print expect 0 OK 100 tcp 127.0.0.1:14003 [ quit ] 
+print expect 0 OK 100 tcp 127.0.0.1:14004 [ quit ] 
+
+quit

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Testing fid_zdb_erasedisk
+
+$1/zdb erasedisk "create _wrddir wrd WRD 1 [magic] 1 0"
+
+$1/zdb erasedisk

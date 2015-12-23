@@ -1,0 +1,4 @@
+#!/bin/sh
+$1/hasqd -1cl  s="@quit" dprn=1 dsvt=1
+$1/hasqd -2cl s="@quit" dprn=1 dsvt=1 
+$1/hasqd -cl s="@quit" dprn=1 dsvt=1

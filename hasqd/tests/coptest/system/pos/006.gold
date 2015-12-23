@@ -1,0 +1,25 @@
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: DB_EMPTY
+Starting with threads: all
+<svt> print tcp self [ debug aaa ]
+NOT_IMPLEMENTED
+<svt> print tcp self [ x bbb ]
+NOT_IMPLEMENTED
+<svt> print tcp self [ error aaa ]
+OK
+<svt> print tcp self [ e bbb ]
+OK
+<svt> print tcp self [ slice aaa ]
+OK
+<svt> print tcp self [ s bbb ]
+OK
+<svt> print tcp self [ list aaa ]
+OK
+<svt> print tcp self [ t bbb ]
+OK
+<svt> print tcp self [ conflict aaa aaa aaa ]
+REQ_HASHTYPE_BAD
+<svt> print tcp self [ k bbb bbb bbb ]
+REQ_HASHTYPE_BAD
+<svt> quit

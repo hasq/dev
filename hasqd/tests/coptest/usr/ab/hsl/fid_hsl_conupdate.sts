@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Testing FID_HSL_CONUPDATE
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/hasqd -cnqx dprn=0 dsvt=0 lock=1 tcp_port=14001 &
+$1/hasqd -cnqx dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp

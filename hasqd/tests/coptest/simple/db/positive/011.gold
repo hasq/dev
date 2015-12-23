@@ -1,0 +1,14 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd WRD 1 [magic] 100 0
+<zdb> load
+<zdb> addpwd _wrd 0:5 rawDn pwd Data_1
+<zdb> getfirst _wrd rawDn
+0 bf37 0000 31b8 1e82 Data_1
+<zdb> load
+<zdb> addpwd _wrd 6:10 rawDn pwd Data_2
+<zdb> load
+<zdb> getfirst _wrd rawDn
+6 bf37 9981 da09 7b1f Data_2
+<zdb> erasedisk
+Database on disk erased successfully

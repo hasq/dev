@@ -1,0 +1,28 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<svt> expect 0 OK 100 tcp self { [ z * _wrd ] recpwd _wrd 0 rdn0 pwd }
+<svt> expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn0 pwd }
+<svt> expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 2 rdn0 pwd }
+<svt> expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 3 rdn0 pwd }
+<svt> expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 5 rdn0 pwd }
+<svt> x = arg 1 { expect 0 OK 100 tcp self { [ z * _wrd ] recpwd _wrd 0 rdn0 pwd } }
+<svt> print expect 0 DN_EXISTS 100 tcp self { [ job ] x }
+DN_EXISTS
+<svt> x = arg 1 { expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn0 pwd } }
+<svt> print expect 0 WRONG_SEQ_NUMBER 100 tcp self { [ job ] x }
+WRONG_SEQ_NUMBER
+<svt> x = arg 1 { expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn1 pwd } }
+<svt> print expect 0 NOPREV_RECORD 100 tcp self { [ job ] x }
+NOPREV_RECORD
+<svt> print expect 0 REQ_HASHTYPE_BAD 100 tcp self { [ add * _wrd0 ] recpwd _wrd 6 rdn0 pwd }
+REQ_HASHTYPE_BAD
+<svt> print expect 0 REC_INIT_BAD_N 100 tcp self { [ z * _wrd ] recpwd _wrd0 0 rdn1 pwd }
+REC_INIT_BAD_N
+<svt> print ex 0 URF_BAD_FORMAT 100 tcp self { [ z * _wrd 0 [rdn] [k]:1 ] }
+URF_BAD_FORMAT
+<svt> print ex 0 REC_INIT_BAD_KGO 100 tcp self { [ add * _wrd 6 [rdn0] k1 k2 k3 k4 data1 ] }
+REC_INIT_BAD_KGO
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

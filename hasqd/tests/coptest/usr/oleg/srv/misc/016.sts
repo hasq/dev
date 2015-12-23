@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Testing thin database
+#exit
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [abc] 0 2"
+$1/hasqd -nlqc s=$tn.inp dprn=1 dsvt=1 nodename=vasia@port | grep -v sendnote
+
+echo "=============="
+ls -R slice/_wrd/
+ls -R index/_wrd/
+cat index/_wrd/a7c4
+echo "=============="
+
+$1/zdb erasedisk
+
+

@@ -1,0 +1,13 @@
+print ex 0 NO_RECS 100 tcp self  { [ range _wrd 0 5 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd 0 30 ] hash wrd [ rdn ]  }
+print ex 0 OK 100 tcp self  { [ range _wrd 3 10 ] hash wrd [ rdn ]  }
+print ex 0 OK 100 tcp self  { [ range _wrd 7 15 ] hash wrd [ rdn ]  }
+print ex 0 OK 100 tcp self  { [ range _wrd 10 32 ] hash wrd [ rdn ]  }
+print ex 0 IDX_HIGH 100 tcp self  { [ range _wrd 32 32 ]  hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd -6  -1 ] hash wrd [ rdn ] }
+print ex 0 IDX_NEG 100 tcp self  { [ range _wrd -32 -32 ] hash wrd [ rdn ] }
+print ex 0 NO_RECS 100 tcp self  { [ range _wrd -32 3 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd -32 10 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd -32 32 ] hash wrd [ rdn ] }
+print expect 0 BAD_RANGE 50 tcp self  { [ range _wrd -5  5 ]  hash wrd [ rdn ] }                 
+quit

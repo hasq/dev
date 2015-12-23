@@ -1,0 +1,30 @@
+print tcp self { [ zero ] hash r16 recpwd _r16 0 kostya password [ _r16 ] recpwd _r16 0 kostya password }
+print expect 0 OK 100 tcp self [ job 1000 ]
+r1 = recpwd _r16 1 kostya password
+print hash r16 r1
+print tcp self { [ add 2 _r16 ] r1 }
+print tcp self { [ add 1 _r16 ] r1 }
+print expect 0 OK 100 tcp self [ job 1001 ]
+r2 = recpwd _r16 2 kostya password
+print hash r16 r2
+print tcp self { [ add 0000 _r16 ] r2 }
+print tcp self { [ add 1315 _r16 ] r2 }
+print tcp self { [ add ffff _r16 ] r2 }
+print tcp self { [ add c8a2 _r16 ] r2 }
+print expect 0 OK 100 tcp self [ job 1002 ]
+r3 = recpwd _r16 3 kostya password
+print hash r16 r3
+print tcp self { [ add 00000000000000000000000000000000000000 _r16 ] r3 }
+print tcp self { [ add c8a2d32f7f1914a4e2642bd3c9d25791c9402f7c _r16 ] r3 }
+print tcp self { [ add ffffffffffffffffffffffffffffffffffffff _r16 ] r3 }
+print tcp self { [ add 4cd43dd26af66524b811807d748628e3247f51 _r16 ] r3 }
+print expect 0 OK 100 tcp self [ job 1003 ]
+r4 = recpwd _r16 4 kostya password
+s4 = hash r16 r4
+print s4
+print tcp self { [ add 4cd43dd26af66524b811807d748628e3247f5170 _r16 ] r4 }
+print tcp self { [ add 0000000000000000000000000000000000000000 _r16 ] r4 }
+print tcp self { [ add ] s4 [ _r16 ] r4 }
+print expect 0 OK 100 tcp self [ job 1004 ]
+print tcp self { [ last _r16 ] hash r16 [ kostya ] }
+quit

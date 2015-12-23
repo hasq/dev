@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create WRDDIR wrd WRD 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd WRDDIR 0:3 rdn pwd
+<zdb> nsk wrd 0 a7c4 317d
+4a89
+<zdb> nsk wrd 1 a7c4 317d
+a5f9
+<zdb> nsk wrd 2 a7c4 317d
+80e9
+<zdb> nsk wrd 3 a7c4 317d
+d850
+<zdb> erasedisk
+Database on disk erased successfully

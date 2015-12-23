@@ -1,0 +1,57 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<svt> print tcp self [ info db ]
+OK
+{
+name=_md5
+hash=md5
+description=MD5
+nG=1
+magic=[abc]
+size=1
+thin=0
+datalimit=-1
+altname=1cec6175924d9d6590f313a824c5fab4
+}
+{
+name=_wrd
+hash=wrd
+description=Word
+nG=1
+magic=[abc]
+size=1
+thin=0
+datalimit=-1
+altname=b692
+}
+
+<svt> print tcp self [ i db ]
+OK
+{
+name=_md5
+hash=md5
+description=MD5
+nG=1
+magic=[abc]
+size=1
+thin=0
+datalimit=-1
+altname=1cec6175924d9d6590f313a824c5fab4
+}
+{
+name=_wrd
+hash=wrd
+description=Word
+nG=1
+magic=[abc]
+size=1
+thin=0
+datalimit=-1
+altname=b692
+}
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

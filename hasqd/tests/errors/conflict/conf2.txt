@@ -1,0 +1,42 @@
+Vsem privet!
+
+Vosproizvedenie oshibki:
+
+1. Zapuskaem wxviewer
+2. Sozdaem canvas 2x2 (ili bol'she, po zhelaniju)
+3. Vydeljaem dva verhnih noda.
+    Klikaem pravoj knopkoj myshi na pervom, govorim "Connect to selected"
+    Klikaem pravoj knopkoj myshi na vtorom, govorim "Connect to selected"
+4. Vybiraem "Canvas" -> "Refresh all connections"
+    Poluchaetsja, chto dva verhnih noda soedineny drug s drugom.
+5. Tochno tak zhe soedinjaem dva nizhnih noda.
+    Poluchaetsja dve nezavisimye gruppy. Odna sverhu, vtoraja snizu.
+6. Verhnej gruppe inicializiruem bazu: Right click on node of group -> 
+Send command -> zero -> OK
+    Dobavim 1 zapis': Right click on node of group -> Send command -> 
+menjaem znachenie polja "N" s nulja na edinicu -> add -> OK
+7. Nizhnej gruppe inicializiruem bazu: Right click on node of group -> 
+Send command -> Menjaem znachenie polja PWD s "password" na ljuboe, naprimer 
+"blabla" -> "zero -> OK
+    Dobavim 1 zapis': Right click on node of group -> Send command -> 
+menjaem znachenie polja "N" s nulja na edinicu, a takzhe menjaem znachenie polja 
+PWD, kak i vyshe -> add -> OK
+8. Teper' mozhem ubedit'sja, vypolniv dlja kazhdogo noda: Right click on 
+node -> Send command -> last -> OK
+    v tom, chto u kazhdogo noda po dve zapisi, no pri jetom u verhnih oni 
+drugie, hotja i s tem zhe DN
+9. Vybiraem "Canvas" -> "Interconnect selected", posle jetogo: "Canvas" 
+-> "Refresh all connections".
+    Vidim, chto vse nody soedineny mezhdu soboj svjazjami.
+10. A teper' dobavljaem ljubomu nodu zapis' #2:
+    Right click on node -> Send command -> menjaem znachenie polja "N" na 
+dvojku, tak zhe mozhem pomenjat' znachenie polja PWD na "blabla", mozhem i ne 
+trogat' -> add -> zero
+
+11. Nabljudaem za kartinkoj.
+
+Takaja zhe istorija proishodit, esli odna zapis' est' u bol'shinstva nodov, 
+a vtoraja - tol'ko u treh, naprimer, hotja bol'shinstvo dolzhno pogloshhat' 
+men'shinstvo.
+
+Voobshhem probujte :)

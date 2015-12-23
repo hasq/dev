@@ -1,0 +1,29 @@
+show
+
+erase db1
+new canvas db1 2 2
+new db 1 0 _wrd wrd WRD 1 [] 1 0
+nextsleep 50
+new pub 1 0
+nextsleep 50
+new pub 0 0
+shut 0 0
+show
+new db 1 1 _wrd wrd WRD 1 [] 1 0
+show
+rmdb 1 1
+show
+
+save db1.htv
+new canvas db2 1 1
+show
+erase db2
+
+nextsleep 50
+open db1.htv
+show
+
+send 1 0 ping
+
+erase db1
+q

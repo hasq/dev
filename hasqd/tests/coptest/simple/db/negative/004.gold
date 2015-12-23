@@ -1,0 +1,6 @@
+<zdb> setcfg slice /bbb/db1/slice
+unknown command [setcfg]
+<zdb> setcfg index bbb//db1/index
+unknown command [setcfg]
+<zdb> setcfg index db1/index/
+unknown command [setcfg]

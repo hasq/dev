@@ -1,0 +1,24 @@
+a = [ sting a then 5 spaces     ]
+a_ns  = [ _aaa_ ]
+b = [ here is a long long long long long long long long long line ] 
+print a
+print b
+b = [ bbb ]
+print a_ns
+print { b { a_ns b } a [ not a var 
+print { b { a_ns b } a [ not a var ]
+print { b { a_ns b } a [ not a var ]}
+print { b { a_ns b } a [ not a var }]
+print { b { a_ns b } a [ not a var ] }
+print [ ' }
+print [ " ]
+print [ '- }
+print [ '/]  ]
+print [ '\] ]
+a = [ \[ ]
+z = [ \] ]
+print a z
+print { a z }
+print { a b z }
+quit
+

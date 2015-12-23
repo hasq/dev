@@ -1,0 +1,3 @@
+println [ record wrd [ 0 0c50 0000 d3b1 2ea1 ] ]
+bye
+quit

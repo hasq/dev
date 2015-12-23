@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# Testing hasqd index recovery when slices are bad or corrupt
+
+in=$(basename $0)
+in=${in%.*}
+db=db
+
+rm -rf $db
+
+$1/zdb <$in.zdb
+
+chmod -R 777 $db
+
+rm -rf $db/index
+cp -R $db/slice $db/slice_org
+
+cd $db/slice/_md5base/2015/01/01
+echo "Add pattern \"1\" to the front of each line:"
+sed -i 's/^/1/' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Add pattern \"1\" in the end of each line:"
+sed -i 's/$/1/' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Add pattern \"ff\" instead of \"aa\" in the each coincidence:"
+sed -i 's/aa/ff/g' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Connect each pair of rows side by side:"
+sed -i '$!N;s/\n/ /' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Turn over every line in a file backwards:"
+sed -i '/\n/!G;s/\(.\)\(.*\n\)/&\2\1/;//D;s/.//' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Flip the sequence of lines:"
+sed -i '1!G;h;$!d' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Delete the last line:"
+sed -i '$d' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db/slice
+cp -R $db/slice_org $db/slice
+cd $db/slice/_md5base/2015/01/01
+echo "Delete 1st line:"
+sed -i '1d' *
+cd ../../../../../..
+$1/hasqd -cnqx lock=0 db=$db  dprn=1 dsvt=1 | grep -v "Servant has 1 tasks"
+
+rm -rf $db

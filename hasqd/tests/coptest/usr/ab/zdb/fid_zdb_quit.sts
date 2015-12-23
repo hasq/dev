@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Testing fid_zdb_quit
+
+
+$1/zdb quit

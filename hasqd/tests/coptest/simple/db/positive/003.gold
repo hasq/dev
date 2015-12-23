@@ -1,0 +1,9 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 md5 MD5 1 [magic] 100 0
+<zdb> load
+<zdb> addpwd _md5 0:23 rawDn pwd
+<zdb> getlast _md5 rawDn
+23 bf37a1dc28d22548fd3a056814dec313 91ab17befd640a716c854b2c103a786a afd74bd293dfa24cfe00b05605eb7f45 cecef90d55306837b6bdd01c92289b33
+<zdb> erasedisk
+Database on disk erased successfully

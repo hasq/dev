@@ -1,0 +1,6 @@
+#!/bin/sh
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -lncq s=$tn.inp dprn=1 dsvt=1

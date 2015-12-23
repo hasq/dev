@@ -1,0 +1,7 @@
+
+print http_get self [ ]
+print http_get self [ a ]
+print http_get self [ / ]
+
+quit
+

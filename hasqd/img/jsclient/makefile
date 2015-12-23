@@ -1,0 +1,61 @@
+# Hasq Technology Pty Ltd (C) 2013-2015
+
+JQUID=../../third/
+JQUIF=jquery-ui-1.11.4.custom
+JQUI=$(JQUID)$(JQUIF)
+
+all: lib/jquery-ui slice/home/index.html
+
+lib/jquery-ui: $(JQUI).tar.bz2
+	cp $< lib/
+	cd lib && make NAME=$(JQUIF)
+
+slice/home/index.html: index.html
+	mkdir -p slice/home/ui
+	mkdir -p slice/home/lib
+	mkdir -p slice/home/lib/images
+	mkdir -p slice/home/api_ui
+	mkdir -p slice/home/front
+	mkdir -p slice/home/api_eng
+	mkdir -p slice/home/engine
+	mkdir -p slice/home/images
+	cp ui/*.js slice/home/ui/
+	cp front/*.js slice/home/front/
+	cp api_ui/*.js slice/home/api_ui/
+	cp engine/*.js slice/home/engine/
+	cp api_eng/*.js slice/home/api_eng/
+	cp home.html slice/home/
+	cp images/*.gif slice/home/images/
+	cp index.html slice/home/
+	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
+	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
+	cp lib/jquery-ui/images/ui-icons*.png slice/home/lib/images/
+	chmod 0777 -R slice/home
+#chmod a-x slice/home/*.html slice/home/lib/* slice/home/ui/*
+
+clean:
+	rm -rf lib/jquery* slice/home index lib/*.tar lib/*.tar.bz2
+	rm -rf slice/_MD5DB/2015 slice/_MD5DB/meta
+	rm -rf slice/_R16DB/2015 slice/_R16DB/meta
+	rm -rf slice/_S225DB/2015 slice/_S22DB/meta
+	rm -rf slice/_S25DB/2015 slice/_S25DB/meta
+	rm -rf slice/_MWRDB/2015 slice/_WRDDB/meta
+	rm -rf hq.13151.lock
+	
+myclean:
+	rm -rf slice/home index
+	rm -rf slice/_MD5DB/2015 slice/_MD5DB/meta
+	rm -rf slice/_R16DB/2015 slice/_R16DB/meta
+	rm -rf slice/_S225DB/2015 slice/_S22DB/meta
+	rm -rf slice/_S25DB/2015 slice/_S25DB/meta
+	rm -rf slice/_MWRDB/2015 slice/_WRDDB/meta
+	
+checkin:
+	cp -f slice/home/api_eng/*.js api_eng/
+	cp -f slice/home/api_ui/*.js api_ui/ 
+	cp -f slice/home/front/*.js front/
+	cp -f slice/home/engine/*.js engine/
+	cp -f slice/home/ui/*.js ui/
+	cp -f slice/home/home.html .
+	cp -f slice/home/index.html .

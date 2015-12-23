@@ -1,0 +1,44 @@
+<htv> new canvas base 3 2
+<htv> show
+[  --][  --][  --]
+[  --][  --][  --]
+<htv> new db 1 0 _wrd wrd WRD 1 [] 1 0
+<htv> new db 0 0 _wrd wrd WRD 1 [] 1 0
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> new cmd 0 0
+-lnqc tcp_port=13131 db=base/db_0_0
+<htv> new cmd 1 0
+-lnqc tcp_port=13132 db=base/db_1_0
+<htv> new pub 0 0
+Cmd: -lnqc tcp_port=13131 db=base/db_0_0
+<htv> new pub 1 0
+Cmd: -lnqc tcp_port=13132 db=base/db_1_0
+<htv> show
+[#P--][#P--][  --]
+[  --][  --][  --]
+<htv> connect 0 0 1 0
+<htv> expect 1 127.0.0.1:13132 100
+<htv> send 0 0 info nbs
+<htv> connect 1 0 0 0
+<htv> expect 1 127.0.0.1:13131 100
+<htv> send 1 0 info nbs
+<htv> sleep 100
+<htv> refconn all
+<htv> show
+[#P--][#P--][  --]
+[  --][  --][  --]
+(0 0): (1 0)
+(1 0): (0 0)
+<htv> shut 1 0
+<htv> shut 0 0
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> erase base
+erasing base ok
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> quit

@@ -1,0 +1,15 @@
+<zdb> set base db
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base md5 MD5 1 [magic] 1 0
+<zdb> create _s22base s22 S22 1 [magic] 1 0
+<zdb> create _s25base s25 S25 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _md5base 0:10 rdn:0:10 pwd
+<zdb> addpwd _s22base 0:10 rdn:0:10 pwd
+<zdb> addpwd _s25base 0:10 rdn:0:10 pwd
+<svt> quit
+DIFF_DIRS_START:
+DIFF_DIRS_FINISH
+DIFF_CONTENT_START:
+DIFF_FILES_FINISH

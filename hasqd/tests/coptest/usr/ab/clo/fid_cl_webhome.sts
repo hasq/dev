@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Testing FID_CL_WEBhome
+
+in=$(basename $0)
+in=${in%.*}
+
+mkdir -p slice/home
+
+echo "<html>hello</html>" > slice/home/index.html
+
+echo ""
+echo "TEST 1"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webdir=home
+
+echo ""
+echo "TEST 2 - does not work because no '/' in the path"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webdir=home webhome=home
+
+echo ""
+echo "TEST 3"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webdir=home webhome=home/index.html
+
+echo ""
+echo "TEST 4"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webhome=/home/index.html
+
+echo ""
+echo "TEST 5 - does not work because, 'home' is not defined as directory"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webhome=home/index.html
+
+echo ""
+echo "TEST 6 - outputs directory"
+$1/hasqd -nlqc s=$in.inp dprn=1 dsvt=1 webdir=home webhome=home/ | grep -v server
+
+
+rm -rf slice

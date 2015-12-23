@@ -1,0 +1,30 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<zdb> erasedisk
+Database on disk erased successfully
+=============
+<svt> nb 127.0.0.1:13131
+<svt> print ex 0 OK 100 tcp self [ info nbs ]
+OK
+127.0.0.1:13131
+
+<svt> print hash wrd [ rdn ]
+a7c4
+<svt> r0 = recpwd _wrd 0 rdn pass
+<svt> r1 = recpwd _wrd 1 rdn pass
+<svt> println ex 0 OK 100 tcp self { [ zero * _wrd ] r0 } sleep 200
+OK 1000
+sleeping
+<svt> sendnote
+<svt> noterecv
+<svt> quit
+=============
+<wkr> [info id] -> [OK\naaa\nFamily: []\nVersion: 0.3.1\nSkcKeys: 0\nPublicKey: 0,0\n]
+<wkr> [info nbs] -> [OK\n127.0.0.1:13131\n]
+<wkr> [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
+<wkr> [note b692 0 a7c4 aaa] -> [OK]
+=============
+<ced> job:1000 [0 a7c4 0000 d9e6 fbfc] -> OK
+=============

@@ -1,0 +1,20 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<zdb> create _wrd wrd WRD 1 [abc] 1 0
+Database: OK
+Starting with threads: all
+Database: OK
+Starting with threads: all
+<zdb> erasedisk
+Database on disk erased successfully
+_md5
+_md5
+_md5
+_md5
+_wrd
+_wrd
+_wrd
+_wrd
+just_dir
+just_file

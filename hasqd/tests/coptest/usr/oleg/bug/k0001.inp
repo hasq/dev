@@ -1,0 +1,19 @@
+print expect 0 OK 50 tcp self { [ zero * _wrd ] recpwd _wrd 0 rdn pass }
+print expect 0 OK 50 tcp self [ job 1000 ]
+
+print expect 0 OK 50 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn pass }
+print expect 0 OK 50 tcp self [ job 1001 ]
+
+print expect 0 OK 50 tcp self { [ add * _wrd ] recpwd _wrd 2 rdn pass [ hello vasia ] }
+print expect 0 OK 50 tcp self [ job 1002 ]
+
+print tcp self { [ last _wrd ] hash wrd [ rdn ] }
+
+print tcp self { [ add * _wrd ] recpwd _wrd 3 rdn pass [ 3 ] }
+print expect 0 OK 1000 tcp self [ job 1003 ]
+
+print tcp self { [ last _wrd ] hash wrd [ rdn ] }
+
+
+
+quit

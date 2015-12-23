@@ -1,0 +1,8 @@
+#!/bin/sh
+in=$(basename $0)
+in=${in%.*}
+
+# Testing fid_zdb_set_date_time
+$1/zdb < $in.zdb
+$1/hasqd -cqx s=$in.inp dprn=1 dsvt=1
+$1/zdb erasedisk

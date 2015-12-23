@@ -1,0 +1,26 @@
+begin
+for i 1 1000000 {
+	x = arg 1 { tcp 127.0.0.1:14001 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+	expect 0 OK -1 tcp 127.0.0.1:14001 { [ job ] x }
+#	x = arg 1 { tcp addr { [ z * _md5 ] recpwd _md5 0 rdn:i pass } }
+#	expect 0 OK -1 tcp addr { [ job ] x }
+	for k 1 1000000 {
+		print { [ x_wrd = ] x = arg 1 { tcp 127.0.0.1:14001 { [ add * _wrd ] recpwd _wrd k rdn:i pass } } }
+		expect 0 OK -1 print tcp 127.0.0.1:14001 { [ job ] x }
+#		print { [ x_md5 = ] x = arg 1 { tcp addr { [ add * _md5 ] recpwd _md5 k rdn:i pass } } }
+#		expect 0 OK -1 print tcp addr { [ job ] x }
+
+#		x = arg 1 { tcp addr { [ add * _wrd ] recpwd _wrd k rdn:i pass } }
+#		expect 0 OK -1 tcp addr { [ job ] x }
+#		x = arg 1 { tcp addr { [ add * _md5 ] recpwd _md5 k rdn:i pass } }
+#		expect 0 OK -1 tcp addr { [ job ] x }
+	}
+}
+end
+
+sleep 100
+
+tcp addr [ quit ]
+
+quit
+

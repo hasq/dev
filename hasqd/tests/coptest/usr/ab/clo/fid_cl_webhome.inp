@@ -1,0 +1,4 @@
+print http_get self [ ]
+print http_post self [ ]
+print tcp self [ ]
+quit

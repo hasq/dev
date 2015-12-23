@@ -1,0 +1,35 @@
+include z_vars.inc
+$hash = _wrd
+$dn = a7c4
+erase $db
+new canvas $db 5 5
+show
+new db 0 0 $hash wrd Word 1 [] 1 0
+show
+new pub 0 0
+show
+send 0 0 zero * $hash 0 $dn 0000 11b1 ef7e
+expect 0 OK $try
+send 0 0 job 1000
+send 0 0 add * $hash 1 $dn 4694 9ca4 d528
+expect 0 OK $try
+send 0 0 job 1001
+send 0 0 add * $hash 2 $dn 5000 62e3 ef39 $hello
+expect 0 OK $try
+send 0 0 job 1002
+send 0 0 last $hash $dn
+send 0 0 add * $hash 3 $dn 6aca a4a0 05aa $3
+expect 0 OK $try
+send 0 0 job 1003
+send 0 0 add * $hash 4 $dn 7c7b efb9 9212 $4
+expect 0 OK $try
+send 0 0 job 1004
+send 0 0 add * $hash 5 $dn e922 8643 e4a5 $5
+expect 0 OK $try
+send 0 0 job 1005
+show
+send 0 0 last $hash $dn
+shut 0 0
+show
+erase $db
+q

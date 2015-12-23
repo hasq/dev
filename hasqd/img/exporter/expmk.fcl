@@ -1,0 +1,118 @@
+0
+1
+expmk
+5
+fast_build.bat
+188
+cd gl && make -j 10 && cd ..
+cd os && make -j 10 && cd ..
+cd sg && make -j 10 && cd ..
+cd ma && make -j 10 && cd ..
+cd db && make -j 10 && cd ..
+cd pu && make -j 10 && cd ..
+make
+
+
+makefile
+514
+
+# PLAT: msc unx
+
+include mk_all.mak
+
+all: $(TRG) $(TRG)/pleb$(EEXT)
+
+$(TRG):
+	@echo "Usage: make PLAT={msc,unx} [MEMORY=1] [GCOV=1]"
+	@mkdir -p $(TRG)
+
+$(TRG)/pleb$(EEXT): pu/$(TRG)/pleb$(EEXT)
+	cp $< $@
+
+pu/$(TRG)/pleb$(EEXT): pu/*.cpp pu/*.h os/*.cpp os/*.h gl/*.cpp gl/*.h os/*/*.cpp
+	cd pu && make PLAT=$(PLAT)
+
+
+clean:
+	rm -rf _bin* */_bin* */*.obj */*/_bin* */*/*.obj os/_*.*.cpp
+	cd pu && make clean
+	cd db && make clean
+	cd gl && make clean
+	cd sg && make clean
+	cd os && make clean
+	cd ma && make clean
+
+
+mk_all.mak
+168
+# default values
+
+ifndef PLAT
+PLAT=msc
+endif
+
+BINR=$(PLAT)
+
+TRG=_build_$(BINR)
+TRG=_bin_$(BINR)
+
+include $(SRC)mk_$(PLAT).mak
+
+ifdef MEMORY
+OPT+= -DTEST_MEMORY=1
+endif
+
+mk_msc.mak
+295
+
+COMPILER=cl
+COMPILERC=cl
+AR=arXXX
+ARCR=lib /OUT:
+LD=ld
+RANLIB=ranlibXXX
+STRIP=strip
+
+OPT=-WX -W4 -nologo -EHsc -Ox -D_CRT_SECURE_NO_DEPRECATE=1 /wd4127 /wd4702 /wd4100 /wd4290 -D_USING_V110_SDK71_=1
+
+OPTC=$(OPT)
+
+INC=
+EEXT=.exe
+OEXT=.obj
+LEXT=.lib
+DEFEXT=.exe
+LDF=WS2_32.Lib
+OOUT=-Fo
+EOUT=-Fe
+
+
+mk_unx.mak
+315
+
+COMPILER=g++
+COMPILERC=gcc
+ARCR=ar crs #
+AR=arXXX
+LD=ld
+RANLIB=ranlibXXX
+STRIP=strip
+
+OPT=-Wall -O2 -std=c++11 -fno-strict-aliasing
+OPTC=-Wall -O2
+
+INC=
+EEXT=
+OEXT=.o
+LEXT=.a
+DEFEXT=
+LDF=-lpthread
+OOUT=-o 
+EOUT=-o 
+
+ifdef GCOV
+OPT= -Wall -g -std=c++11 -fprofile-arcs -ftest-coverage -fno-elide-constructors
+endif
+
+
+0

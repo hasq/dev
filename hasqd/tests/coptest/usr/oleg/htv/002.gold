@@ -1,0 +1,40 @@
+<htv> erase db
+erasing db failed
+<htv> new canvas db 2 2
+<htv> new db 0 0 _wrd wrd WRD 1 [] 1 0
+<htv> new cmd 0 0
+-lnqc tcp_port=13131 db=db/db_0_0
+<htv> nextsleep 50
+<htv> new pub 0 0 hint
+Cmd: -lnqc tcp_port=13131 db=db/db_0_0
+<htv> show
+[#P--][  --]
+[  --][  --]
+<htv> send 0 0 zero * _wrd 0 a7c4 0000 11b1 ef7e
+Reply: OK 1000
+<htv> sleep 100
+<htv> activity
+(0 0 z)
+(0 0 a)
+<htv> show
+[#P01][  --]
+[  --][  --]
+<htv> send 0 0 add * _wrd 1 a7c4 4694 9ca4 d528
+Reply: OK 1001
+<htv> sleep 100
+<htv> activity
+(0 0 a)
+<htv> show
+[#P78][  --]
+[  --][  --]
+<htv> send 0 0 add * _wrd 2 a7c4 5000 62e3 ef39
+Reply: OK 1002
+<htv> sleep 100
+<htv> activity
+(0 0 a)
+<htv> show
+[#P9c][  --]
+[  --][  --]
+<htv> erase db
+erasing db ok
+<htv> q

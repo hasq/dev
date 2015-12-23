@@ -1,0 +1,13 @@
+<svt> x = [ a b c d ]
+<svt> x = arg 1 x
+<svt> print x
+b
+<svt> x = [ a b c d ]
+<svt> x = { arg 3 x arg 2 x arg 1 x arg 0 x }
+<svt> print x
+d c b a
+<svt> print arg 10 x
+ARG_INDEX_OUT
+<svt> print arg 1 { arg 0 [ a ] arg 2 [ aa bb cc ] }
+cc
+<svt> quit

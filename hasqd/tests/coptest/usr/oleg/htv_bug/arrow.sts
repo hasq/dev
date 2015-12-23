@@ -1,0 +1,4 @@
+#!/bin/sh
+$1/htview < arrow.inp
+rm -f *.log
+

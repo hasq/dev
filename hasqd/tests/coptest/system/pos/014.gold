@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:10 rdn pass Data_10
+<zdb> addpwd _md5 11:20 rdn pass
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: OK
+Starting with threads: all
+<svt> print tcp self { [ lastdata _md5 ] hash wrd [ rdn ] [ -1 ] }
+OK 10 Data_10
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

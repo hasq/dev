@@ -1,0 +1,2 @@
+print expect 0 NOT_IMPLEMENTED 100 tcp self [ debug ] 
+quit

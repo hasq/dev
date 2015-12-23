@@ -1,0 +1,217 @@
+#!/bin/sh
+
+#	Half count of started servers
+SERVCOUNT=2
+#	DN count
+DNCOUNT=200
+#	IP-address of all servers
+IP=127.0.0.1
+#	Port of managing server
+ZPORT1=14000
+ZPORT2=16000
+
+
+DB=_md5
+
+INPFILE=reorg-confl.inp
+INPFILE0=reorg-confl0.inp
+
+####################################################################################################
+
+SPORT1=$(( ZPORT1+1 ))
+FPORT1=$(( ZPORT1+SERVCOUNT ))
+SADDR1=$IP:$SPORT1
+FADDR1=$IP:$FPORT1
+
+SPORT2=$(( ZPORT2+1 ))
+FPORT2=$(( ZPORT2+SERVCOUNT ))
+SADDR2=$IP:$SPORT2
+FADDR2=$IP:$FPORT2
+
+#	Find an put variables in input file
+sed -i "0,/ZPORT1/s/ZPORT1 \:.*/ZPORT1 \: $ZPORT1/" $INPFILE
+sed -i "0,/SPORT1/s/SPORT1 \:.*/SPORT1 \: $SPORT1/" $INPFILE
+sed -i "0,/FPORT1/s/FPORT1 \:.*/FPORT1 \: $FPORT1/" $INPFILE
+sed -i "0,/ZPORT2/s/ZPORT2 \:.*/ZPORT2 \: $ZPORT2/" $INPFILE
+sed -i "0,/SPORT2/s/SPORT2 \:.*/SPORT2 \: $SPORT2/" $INPFILE
+sed -i "0,/FPORT2/s/FPORT2 \:.*/FPORT2 \: $FPORT2/" $INPFILE
+sed -i "0,/SERVCOUNT/s/SERVCOUNT \:.*/SERVCOUNT \: $SERVCOUNT/" $INPFILE
+sed -i "0,/DNCOUNT/s/DNCOUNT \:.*/DNCOUNT \: $DNCOUNT/" $INPFILE
+sed -i "0,/IP \=/s/^IP.*/IP \= \[ $IP \]/g" $INPFILE
+
+[ -f $INPFILE0 ] && rm -f $INPFILE0
+
+uname | grep -i "CYGWIN" > /dev/null && PLAT="Windows" || PLAT="Linux"
+
+#	killing all hasqd on used ports
+
+i=$ZPORT1
+while [ $i -le $FPORT1 ]
+do
+	if [ -f hq.$i.lock ]
+	then
+		PID=$(cat hq.$i.lock)
+		[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+		rm -f hq.$i.lock
+	fi
+	rm -rf db-$i
+	i=$(( i+1 ))
+done
+
+i=$ZPORT2
+while [ $i -le $FPORT2 ]
+do
+	if [ -f hq.$i.lock ]
+	then
+		PID=$(cat hq.$i.lock)
+		[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+		rm -f hq.$i.lock
+	fi
+	rm -rf db-$i
+	i=$(( i+1 ))
+done
+
+#	starting hasqd
+
+i=$SPORT1
+while [ $i -le $FPORT1 ] 
+do	
+	mkdir db-$i
+	cd db-$i
+	$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+	cd ..
+	if [ $i -ne $SPORT1 -a $i -ne $FPORT1 -a $i ]
+	then
+		$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE0
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE0
+	else
+		if [ $i -eq $SPORT1 ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE0
+		fi
+		if [ $i -eq $FPORT1 ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE0
+		fi
+	fi
+	until [ -f hq.$i.lock ]
+	do
+		echo >/dev/null 2>&1
+	done
+	i=$(( i+1 ))
+done
+
+i=$SPORT2
+while [ $i -le $FPORT2 ] 
+do	
+	mkdir db-$i
+	cd db-$i
+	$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+	cd ..
+	if [ $i -ne $SPORT2 -a $i -ne $FPORT2 -a $i ]
+	then
+		$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE0
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE0
+	else
+		if [ $i -eq $SPORT2 ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE0
+		fi
+		if [ $i -eq $FPORT2 ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE0
+		fi
+	fi
+	until [ -f hq.$i.lock ]
+	do
+		echo >/dev/null 2>&1
+	done
+	i=$(( i+1 ))
+done
+
+#	make db for managing server
+
+mkdir db-$ZPORT1
+cd db-$ZPORT1
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+cd ..
+
+echo "ex 0 OK -1 tcp $IP:$ZPORT1 [ connect $IP:$SPORT1 ]" >> $INPFILE0
+echo "ex 0 OK -1 tcp $IP:$SPORT1 [ connect $IP:$ZPORT1 ]" >> $INPFILE0
+echo "ex 0 OK -1 tcp $IP:$ZPORT1 [ connect $IP:$SPORT2 ]" >> $INPFILE0
+echo "ex 0 OK -1 tcp $IP:$SPORT2 [ connect $IP:$ZPORT1 ]" >> $INPFILE0
+
+echo "begin" >> $INPFILE0
+echo "	for i 1 $DNCOUNT {" >> $INPFILE0
+#echo "			DN = { < [ rdn ] i > }" >> $INPFILE0
+echo "			x = ex 0 OK -1 tcp self { [ z * _md5 ] recpwd _md5 0 rdn:i pass }" >> $INPFILE0
+echo "			ex 0 OK -1 tcp self { [ job ] arg 1 x }" >> $INPFILE0
+echo "			ex 0 OK -1 tcp self { [ last _md5 ] hash md5 < [ rdn ] i > }" >> $INPFILE0
+echo "		}" >> $INPFILE0
+echo "end" >> $INPFILE0
+
+echo "begin" >> $INPFILE0
+echo "	for i 1 $DNCOUNT {" >> $INPFILE0
+echo "			print ex 0 OK -1 tcp $IP:$SPORT1 { [ last _md5 ] hash md5 < [ rdn ] i > }" >> $INPFILE0
+echo "			print ex 0 OK -1 tcp $IP:$SPORT2 { [ last _md5 ] hash md5 < [ rdn ] i > }" >> $INPFILE0
+echo "		}" >> $INPFILE0
+echo "end" >> $INPFILE0
+
+echo "sleep 50" >> $INPFILE0
+echo "quit" >> $INPFILE0
+
+LOOPCOUNT1=0
+LOOPCOUNT2=0
+
+#	make connections between servers
+
+$1/hasqd -cq db=db-$ZPORT1 s=$INPFILE0 dprn=1 dsvt=1 quit=1 lock=1 tcp_port=$ZPORT1
+
+while [ -f hq.$ZPORT1.lock ]
+do
+	echo >/dev/null 2>&1
+done
+
+#[ -f $INPFILE0 ] && rm -f $INPFILE0
+
+[ -f hq.$ZPORT1.lock ] && rm -f hq.$ZPORT1.lock
+
+while [ 1 = 1 ]
+do
+	echo >/dev/null 2>&1
+done
+
+
+#	starting "managing" hasqd to reorganization
+
+$1/hasqd -cq db=db-$ZPORT1 s=$INPFILE dprn=1 dsvt=1 quit=1 lock=1 tcp_port=$ZPORT1 &
+
+
+wait
+
+
+i=$ZPORT1
+while [ $i -le $FPORT1 ]
+do	
+	if [ -f hq.$i.lock ] 
+	then
+		PID=$(cat hq.$i.lock)  >/dev/null 2>&1
+		[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+		rm -f hq.$i.lock
+	fi
+	cd db-$i
+	$1/zdb erasedisk
+	cd ..	
+	rm -rf db-$i
+	[ -f hq.$i.lock ] && rm -f hq.$i.lock
+	i=$(( i+1 ))
+done

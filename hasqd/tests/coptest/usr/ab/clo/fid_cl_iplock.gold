@@ -1,0 +1,24 @@
+<svt> print expect 0 OK 1000 tcp 127.0.0.1:14001 [ ping ] 
+OK
+<svt> print expect 0 OK 1000 tcp 127.0.0.1:14002 [ ping ] 
+OK
+<svt> print expect 0 OK 100 tcp self [ connect 127.0.0.1:14001 ]
+OK
+<svt> conupdate
+<svt> print expect 0 OK 100 tcp self [ connect 127.0.0.1:14002 ] 
+OK
+<svt> conupdate
+<svt> print expect 0 OK 100 tcp 127.0.0.1:14001 [ connect 127.0.0.1:14000 ]
+OK
+<svt> print expect 0 OK 100 tcp 127.0.0.1:14002 [ connect 127.0.0.1:14000 ]
+OK
+<svt> print expect 0 OK 100 tcp self [ info fam ] 
+OK
+test14001 127.0.0.1:14001 N A L
+test14002 127.0.0.1:14002 N A U
+
+<svt> print expect 0 OK 100 tcp 127.0.0.1:14001 [ quit ] 
+OK
+<svt> print expect 0 OK 100 tcp 127.0.0.1:14002 [ quit ] 
+OK
+<svt> quit

@@ -1,0 +1,7 @@
+<svt> a = [ b ]
+<svt> a = { a a a [ a ] }
+<svt> print a
+b b b a
+<svt> print { { a } }
+b b b a
+<svt> quit

@@ -1,0 +1,28 @@
+#print tcp self [ f / ]
+#print tcp self [ f _md5 ]
+#print tcp self [ f /_md5 ]
+#print tcp self [ f /_md5/ ]
+#print tcp self [ f /_md5/db.traits ]
+
+#print tcp self [ h / ]
+#print tcp self [ h _md5 ]
+#print tcp self [ h /_md5 ]
+#print tcp self [ h /_md5/ ]
+#print tcp self [ h /_md5/db.traits ]
+
+#print tcp self [ / ]
+#print tcp self [ /_md5 ]
+#print tcp self [ /_md5/ ]
+#print tcp self [ /_md5/db.traits ]
+
+g = file get.inp
+print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ ]
+print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ a ]
+print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ / ]
+
+p = file post.inp
+print ex 0 REQ_MSG_HEAD 100 tcp self replace replace p [ $1 ] [ a=b ] [ $2 ] [ 3 ]
+print ex 0 REQ_MSG_HEAD 100 tcp self replace replace p [ $1 ] [ a=file+%2F&b=c ] [ $2 ] [ 14 ]
+
+quit
+

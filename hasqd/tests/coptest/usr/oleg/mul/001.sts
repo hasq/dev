@@ -1,0 +1,4 @@
+#!/bin/sh
+
+$1/hasqd lock=0 -cq s=001.inp dprn=1 dsvt=1
+

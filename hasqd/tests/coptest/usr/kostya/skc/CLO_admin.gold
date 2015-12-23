@@ -1,0 +1,55 @@
+Without key:
+<svt> print tcp self [ admin disable net ]
+OK
+<svt>  quit
+With key:
+<svt> print tcp self [ admin disable net ]
+REQ_MSG_HEAD
+<svt>  quit
+With key and let:
+<svt> print tcp self [ admin disable net ]
+OK
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ admin disable net ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ admin enable net ]
+OK
+<svt>  quit
+With key:
+<svt> print tcp self [ admin enable net ]
+REQ_MSG_HEAD
+<svt>  quit
+With key and let:
+<svt> print tcp self [ admin enable net ]
+OK
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ admin enable net ]
+REQ_MSG_HEAD
+<svt>  quit
+===============
+Without key:
+<svt> print tcp self [ admin reorg ]
+OK
+<svt> reorg
+<svt> conupdate
+<svt>  quit
+With key:
+<svt> print tcp self [ admin reorg ]
+REQ_MSG_HEAD
+<svt>  quit
+With key and let:
+<svt> print tcp self [ admin reorg ]
+OK
+<svt> reorg
+<svt> conupdate
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ admin reorg ]
+REQ_MSG_HEAD
+<svt>  quit
+===============

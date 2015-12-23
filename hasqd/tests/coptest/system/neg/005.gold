@@ -1,0 +1,12 @@
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: DB_EMPTY
+Starting with threads: all
+<svt> a = [ aaa 
+<svt> b = { a }
+<svt> print b
+aaa
+<svt> del c
+Offensive command (exec): del c
+Error: delete: no such variable c
+<svt> quit

@@ -1,0 +1,56 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> load
+<zdb> addpwd _wrd 0:20 rdn pwd
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 0 20 ] hash wrd [ rdn ] }
+OK 21
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 3 18 ] hash wrd [ rdn ] }
+OK 16
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 3 100 ] hash wrd [ rdn ] }
+OK 18
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 15 100 ] hash wrd [ rdn ] }
+OK 6
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

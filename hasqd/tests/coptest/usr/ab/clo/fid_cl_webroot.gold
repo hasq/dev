@@ -1,0 +1,22 @@
+<svt> print tcp self [ f / ]
+OK
+
+<svt> print tcp self [ pleb mkdir webroot/test ]
+OK
+<svt> print tcp self [ f / ]
+OK
+
+<svt> print tcp self [ pleb del webroot ]
+OK
+<svt> quit
+<svt> print tcp self [ f / ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb mkdir webroot/test ]
+OK
+<svt> print tcp self [ f / ]
+OK
+test
+
+<svt> print tcp self [ pleb del webroot ]
+OK
+<svt> quit

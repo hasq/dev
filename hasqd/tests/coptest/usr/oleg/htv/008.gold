@@ -1,0 +1,57 @@
+<htv> new canvas db 9 2
+<htv> new db all
+<htv> new pub 0 1 hint nn=v0 nbs=1
+Cmd: -lnqc tcp_port=13140 db=db/db_0_1 nn=v0 nbs=1
+<htv> new pub 1 1 hint nn=v1 nbs=1
+Cmd: -lnqc tcp_port=13141 db=db/db_1_1 nn=v1 nbs=1
+<htv> new pub 2 1 hint nn=v2 nbs=1
+Cmd: -lnqc tcp_port=13142 db=db/db_2_1 nn=v2 nbs=1
+<htv> show
+[# --][# --][# --][# --][# --][# --][# --][# --][# --]
+[#P--][#P--][#P--][# --][# --][# --][# --][# --][# --]
+<htv> send 0 1 connect 127.0.0.1:13141
+Reply: OK
+<htv> send 1 1 connect 127.0.0.1:13142
+Reply: OK
+<htv> send 2 1 connect 127.0.0.1:13140
+Reply: OK
+<htv> expect 1 127.0.0.1:13141 10
+<htv> send 0 1 info nbs
+<htv> expect 1 127.0.0.1:13142 10
+<htv> send 1 1 info nbs
+<htv> expect 1 127.0.0.1:13140 10
+<htv> send 2 1 info nbs
+<htv> send 0 1 connect 127.0.0.1:13142
+Reply: OK
+<htv> send 1 1 connect 127.0.0.1:13140
+Reply: OK
+<htv> send 2 1 connect 127.0.0.1:13141
+Reply: OK
+<htv> expect 7 127.0.0.1:13142 10
+<htv> send 0 1 info fam
+<htv> expect 8 F 20
+<htv> send 0 1 info fam
+<htv> expect 7 127.0.0.1:13140 10
+<htv> send 1 1 info fam
+<htv> expect 8 F 20
+<htv> send 1 1 info fam
+<htv> expect 7 127.0.0.1:13141 10
+<htv> send 2 1 info fam
+<htv> expect 8 F 20
+<htv> send 2 1 info fam
+<htv> send 0 1 zero * _wrd 0 a0d0 0000 7121 bf11
+Reply: OK 1000
+<htv> expect 0 OK 20
+<htv> send 0 1 last _wrd a0d0
+<htv> send 0 1 last _wrd a0d0
+Reply: OK 0 a0d0 0000 7121 bf11
+<htv> expect 0 OK 20
+<htv> send 1 1 last _wrd a0d0
+<htv> expect 0 OK 20
+<htv> send 2 1 last _wrd a0d0
+<htv> shut 2 1
+<htv> shut 1 1
+<htv> shut 0 1
+<htv> erase db
+erasing db ok
+<htv> q

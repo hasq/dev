@@ -1,0 +1,85 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5ng1 md5 MD5_1 1 [abc] 1 0
+<zdb> load
+<zdb> addurf _md5ng1 0 [rdn]0:2 [keyPwd] data0
+<zdb> load
+<zdb> getlast _md5ng1 rdn0
+0 dd20be44d1d8dcfcf63a69622390ef88 dc92c32ab9972fb0fa79a4e8ce983e29 604cf1c8b7f6aa1540b716e2097deb0c 5f73dd2f69a2aa3b1fc84acbffefb65c data0
+<zdb> getlast _md5ng1 rdn1
+0 1fae9fb8104184ffa074fa8b24bb10f7 17ffb35ab2c5c772e249ca5c3868ea4c 3e32006065eab73609bfbab93836925e 2bd033c1d8354a47c063d4d55f97e0e5 data0
+<zdb> getlast _md5ng1 rdn2
+0 1fe1f6d2b098d0117afc89e03a64dec3 520dce961ee6ac7cf6118aa5bb7c127a 1c6d4a28eb96ec20df2040ad913e4a33 079ad9e88618b825cf695a8115f50769 data0
+<zdb> load
+<zdb> addurf _md5ng1 1 [rdn]0:2 [keyPwd]:3
+<zdb> load
+<zdb> getlast _md5ng1 rdn0
+1 dd20be44d1d8dcfcf63a69622390ef88 ea68e02dee198664b1e692372c47bd2b 6c7fa8a822c7ebee10047be74077647b 3bd7c3cf84338109690675b0633a271b
+<zdb> getlast _md5ng1 rdn1
+1 1fae9fb8104184ffa074fa8b24bb10f7 334ac0412f60a2d0cd848d526e80081d b9aeb8bb067b56003b1cb76cfe4c6278 752005878483275fbcf23e388808d513
+<zdb> getlast _md5ng1 rdn2
+1 1fe1f6d2b098d0117afc89e03a64dec3 1a2a155e5e2ed4866d4f507253bb474e 02f0dedbbe193d3ce4389ba09118e8cd 6ab95c219b678d8b2216ff5099f750f5
+<zdb> load
+<zdb> addurf _md5ng1 2 [rdn]0:2 [keyPwd]:3 [keyPwd(data)]:3 data2
+<zdb> load
+<zdb> getlast _md5ng1 rdn0
+2 dd20be44d1d8dcfcf63a69622390ef88 dc45cf356d02bfd00bcaa8321a56cbb0 26a0f8cd6e5b6a4beba28cd811f9a557 670f24126340b09566a96ff50f5e0bd8 [keyPwd(data)]:3 data2
+<zdb> getlast _md5ng1 rdn1
+2 1fae9fb8104184ffa074fa8b24bb10f7 968678ab2d43deffd5d7524495e9c744 acb6ad188533e31f16954aa739c563e0 209338bb01a55b01e9df5c3f947febda [keyPwd(data)]:3 data2
+<zdb> getlast _md5ng1 rdn2
+2 1fe1f6d2b098d0117afc89e03a64dec3 0ea870af8feef435919dab46aebcc5b3 33de92205d383a0165d4ed6557ae640e 7089ae41397e779cfd8b2420b0466e16 [keyPwd(data)]:3 data2
+<zdb> load
+<zdb> addurf _md5ng1 3 [rdn]0:2 [keyPwd]:1 [keyPwd]:2 data3
+<zdb> load
+<zdb> getlast _md5ng1 rdn0
+3 dd20be44d1d8dcfcf63a69622390ef88 522199a0b2c64258f395eaa3567c87dd ec0f30e45ff3068ff5178e2cc4d66b1c cd77e2d6dfcc4de297c87a94207df767 data3
+<zdb> getlast _md5ng1 rdn1
+3 1fae9fb8104184ffa074fa8b24bb10f7 13eb2175bf5966ddf359e7430481899f 51769ce7bde9441281507aa6bf9b2216 81f11c8e4ca947418ea450260cbcf109 data3
+<zdb> getlast _md5ng1 rdn2
+3 1fe1f6d2b098d0117afc89e03a64dec3 efd4ea672f47215825b59a65c635edc7 ec9379e9f8b2c1ae449fdf5000f55ba6 45acf9142a7e2aeb9375e8e265555f9d data3
+<zdb> load
+<zdb> addurf _md5ng1 4 [rdn]0:2 [keyPwd]:1 [keyPwd]:1 [keyPwd]:1 data4
+<zdb> load
+<zdb> getlast _md5ng1 rdn0
+4 dd20be44d1d8dcfcf63a69622390ef88 8a8c7e6fc6aadbcb8203779de83a95fa 9bf9e0d8d8c58dbbe74d833cd182f7b5 9ecc9e9f204bf744629ab2dd1f7fed67 data4
+<zdb> getlast _md5ng1 rdn1
+4 1fae9fb8104184ffa074fa8b24bb10f7 a238021800733420570f950b751ea2fb cc6a33cab38e30e54df35dfebcbdb647 ac699735967116033c897584567b4288 data4
+<zdb> getlast _md5ng1 rdn2
+4 1fe1f6d2b098d0117afc89e03a64dec3 859e16d35b4584a08345b3bc27874212 11db8683ea5d3c418fd8ac0ce63e8315 b40d96f80535dd99bc4487ac14af57c2 data4
+<zdb> load
+<zdb> addurf _md5ng1 5 [rdn]0:2 [keyPwd]:1 [keyPwd]:1 [keyPwd]:2 data5
+Adding URF record error: NOPREV_RECORD
+Adding URF record error: NOPREV_RECORD
+Adding URF record error: NOPREV_RECORD
+<zdb> load
+<zdb> addurf _md5ng1 0 [rdn] [keyPwd] data0
+<zdb> load
+<zdb> addurf _md5ng1 1 [rdn] [keyPwd] data1
+<zdb> load
+<zdb> getlast _md5ng1 rdn
+1 a7c4eb7a67911d7c03fb9703168ed3e7 779e14bcb8daba04ccae467dadb01af7 2460191cd556023552a301ccb3c9611f fc13c99b5eede225661adf2ca56be3be data1
+<zdb> load
+<zdb> addurf _md5ng1 2 [rdn] [keyPwd] data2
+<zdb> load
+<zdb> addurf _md5ng1 3 a7c4eb7a67911d7c03fb9703168ed3e7 [keyPwd] data3
+<zdb> load
+<zdb> getlast _md5ng1 rdn
+3 a7c4eb7a67911d7c03fb9703168ed3e7 3107886acdbae686bf35ba9fac6183cc ec0fd1f8db318b5f2ad4898ce6b143d0 16bc93254248b020300f252d8d5989d4 data3
+<zdb> load
+<zdb> addurf _md5ng1 0 [rdn4] [k1]:1 [k2]:1 [k3]:1 data0
+<zdb> load
+<zdb> addurf _md5ng1 1 [rdn4] [k2]:1 [k3]:1 [k4]:1 data1
+<zdb> load
+<zdb> addurf _md5ng1 2 [rdn4] [k3]:1 [k4]:1 [k5]:1 data2
+<zdb> load
+<zdb> getlast _md5ng1 rdn4
+2 bea52518742eef34e68d332d475a0f3f 6cc47d6ab62fc7d0ffd058f2186fb2f8 1f60873fbb2d2248eede2abefe302ac2 f7dca3abd96ab0723f1b831a6b2e8bfe data2
+<zdb> load
+<zdb> addurf _md5ng1 0 [rdn5] [k1]:1 [k2] data0
+<zdb> load
+<zdb> addurf _md5ng1 1 [rdn5] [k2] data1
+<zdb> load
+<zdb> getlast _md5ng1 rdn5
+1 becd59ed1201befabd8f24be4a834571 14eafe6628f06ed6b8a39d2155245aa9 fa92a80f3731cec1d1606e308dc3886d f8bf051fe7fc127dd8c1b56f54d238e6 data1
+<zdb> erasedisk
+Database on disk erased successfully

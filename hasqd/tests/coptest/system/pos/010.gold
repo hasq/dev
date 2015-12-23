@@ -1,0 +1,89 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+<svt> print tcp self [ f / ]
+OK
+_md5
+
+<svt> print tcp self [ f _md5 ]
+OK
+2015
+meta
+db.traits
+
+<svt> print tcp self [ f /_md5 ]
+OK
+2015
+meta
+db.traits
+
+<svt> print tcp self [ f /_md5/ ]
+OK
+2015
+meta
+db.traits
+
+<svt> print tcp self [ f /_md5/db.traits ]
+_md5
+wrd
+MD5
+1
+[abc]
+1
+0
+-1
+b692
+
+<svt> print tcp self [ h / ]
+<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="_md5/">_md5/</a></li>
+</ul></body></html>
+<svt> print tcp self [ h _md5 ]
+REQ_PATH_BAD
+<svt> print tcp self [ h /_md5 ]
+REQ_PATH_BAD
+<svt> print tcp self [ h /_md5/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="2015/">2015/</a></li>
+<li><a href="meta/">meta/</a></li>
+<li><a href="db.traits">db.traits</a></li>
+</ul></body></html>
+<svt> print tcp self [ h /_md5/db.traits ]
+_md5
+wrd
+MD5
+1
+[abc]
+1
+0
+-1
+b692
+
+<svt> print tcp self [ / ]
+<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="_md5/">_md5/</a></li>
+</ul></body></html>
+<svt> print tcp self [ /_md5 ]
+REQ_PATH_BAD
+<svt> print tcp self [ /_md5/ ]
+<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="2015/">2015/</a></li>
+<li><a href="meta/">meta/</a></li>
+<li><a href="db.traits">db.traits</a></li>
+</ul></body></html>
+<svt> print tcp self [ /_md5/db.traits ]
+_md5
+wrd
+MD5
+1
+[abc]
+1
+0
+-1
+b692
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

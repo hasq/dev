@@ -1,0 +1,24 @@
+<zdb> set base db
+<zdb> set date 20150101
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base md5 MD5 1 [magic] 10 0
+<zdb> load
+<zdb> addpwd _md5base 0:10 rdn pwd
+Add pattern "1" to the front of each line:
+Error: Database index regeneration error: IG_FILE_CORRUPTED
+
+Add pattern "1" in the end of each line:
+Error: Slice corrupted REC_INIT_BAD_KGO
+Add pattern "ff" instead of "aa" in the each coincidence:
+Error: Hash mismatch 3ae44b48a30cbe7f26eb755876e0bef5 f0f436ef7fc1579af03355e1a0cac5f4
+Connect each pair of rows side by side:
+Error: N mismatch 1 2
+Turn over every line in a file backwards:
+Error: Slice corrupted REC_INIT_BAD_N
+Flip the sequence of lines:
+Error: N mismatch 0 10
+Delete the last line:
+Error: Short slice
+Delete 1st line:
+Error: N mismatch 0 1

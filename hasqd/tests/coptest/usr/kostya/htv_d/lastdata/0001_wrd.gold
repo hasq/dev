@@ -1,0 +1,47 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CrankYsNotebook13131 ip=192.168.52.1 port=13131
+Database: OK
+Starting with threads: all
+<svt> hk = { hash wrd [ kostya ] }
+<svt> print { hk }
+19af
+<svt> print tcp self { [ zero * _wrd ] recpwd _wrd 0 kostya password }
+OK 1000
+<svt> print expect 0 OK 500 tcp self [ job 1000 ]
+OK
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 1 kostya password [ message ] }
+OK 1001
+<svt> print expect 0 OK 500 tcp self [ job 1001 ]
+OK
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 2 kostya password [ "Hello, world !" ] }
+OK 1002
+<svt> print expect 0 OK 500 tcp self [ job 1002 ]
+OK
+<svt> print tcp self { [ last _wrd ] hk }
+OK 2 19af 95d6 f0f9 db90 "Hello, world !"
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 3 kostya password [ :ref:cranky ] }
+OK 1003
+<svt> print expect 0 OK 500 tcp self [ job 1003 ]
+OK
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 4 kostya password [ :::::::::::: ] }
+OK 1004
+<svt> print expect 0 OK 500 tcp self [ job 1004 ]
+OK
+<svt> print tcp self { [ add * _wrd ] recpwd _wrd 5 kostya password [ :has:897436594387 ] }
+OK 1005
+<svt> print expect 0 OK 500 tcp self [ job 1005 ]
+OK
+<svt> print tcp self { [ last _wrd ] hk }
+OK 5 19af cb1f cc80 18e6 :has:897436594387
+<svt> print tcp self { [ lastdata _wrd ] hk [ 10 ] }
+OK 5 :has:897436594387
+<svt> print tcp self { [ lastdata _wrd ] hk [ 100 ] }
+OK 5 :has:897436594387
+<svt> print tcp self { [ lastdata _wrd ] hk [ 1000 ] }
+REQ_N_BAD
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

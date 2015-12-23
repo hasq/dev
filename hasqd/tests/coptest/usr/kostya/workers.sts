@@ -1,0 +1,8 @@
+#!/bin/sh
+$1/zdb erasedisk "create _wrd wrd Word 0 [] 1 0"
+$1/hasqd -lnc s=workers.inp dprn=1 dsvt=1 workers=1
+$1/hasqd -lnc s=workers.inp dprn=1 dsvt=1 workers=2
+$1/hasqd -lnc s=workers.inp dprn=1 dsvt=1 workers=10
+$1/hasqd -lnc s=workers.inp dprn=1 dsvt=1 workers=100
+$1/hasqd -lnc s=workers.inp dprn=1 dsvt=1 workers=0 net_conntime=100 net_readtime=100
+$1/zdb erasedisk

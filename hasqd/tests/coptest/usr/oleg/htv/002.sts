@@ -1,0 +1,4 @@
+#!/bin/sh
+$1/htview < 002.inp
+rm -f *.log
+

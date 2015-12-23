@@ -1,0 +1,139 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> load
+<zdb> addpwd _wrd 0:30 rdn pwd
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+<svt> print ex 0 NO_RECS 100 tcp self  { [ range _wrd 0 5 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 0 30 ] hash wrd [ rdn ]  }
+OK 25
+6 a7c4 fd3d 5c03 d3df
+7 a7c4 c50e 58f2 2177
+8 a7c4 7fd1 0baf cc1b
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+21 a7c4 50e4 cdc6 f399
+22 a7c4 6af6 38d6 0dc8
+23 a7c4 3109 4e21 fb6f
+24 a7c4 3deb f4b7 292d
+25 a7c4 6c69 1937 b903
+26 a7c4 e4c2 8df6 154a
+27 a7c4 6f8a a409 0e6c
+28 a7c4 7ab5 0ef6 64ab
+29 a7c4 1594 995d 4fe7
+30 a7c4 c168 821a ee28
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 3 10 ] hash wrd [ rdn ]  }
+OK 5
+6 a7c4 fd3d 5c03 d3df
+7 a7c4 c50e 58f2 2177
+8 a7c4 7fd1 0baf cc1b
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 7 15 ] hash wrd [ rdn ]  }
+OK 9
+7 a7c4 c50e 58f2 2177
+8 a7c4 7fd1 0baf cc1b
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd 10 32 ] hash wrd [ rdn ]  }
+OK 21
+10 a7c4 847b 7171 16ce
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+21 a7c4 50e4 cdc6 f399
+22 a7c4 6af6 38d6 0dc8
+23 a7c4 3109 4e21 fb6f
+24 a7c4 3deb f4b7 292d
+25 a7c4 6c69 1937 b903
+26 a7c4 e4c2 8df6 154a
+27 a7c4 6f8a a409 0e6c
+28 a7c4 7ab5 0ef6 64ab
+29 a7c4 1594 995d 4fe7
+30 a7c4 c168 821a ee28
+
+<svt> print ex 0 IDX_HIGH 100 tcp self  { [ range _wrd 32 32 ]  hash wrd [ rdn ] }
+IDX_HIGH
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd -6  -1 ] hash wrd [ rdn ] }
+OK 6
+25 a7c4 6c69 1937 b903
+26 a7c4 e4c2 8df6 154a
+27 a7c4 6f8a a409 0e6c
+28 a7c4 7ab5 0ef6 64ab
+29 a7c4 1594 995d 4fe7
+30 a7c4 c168 821a ee28
+
+<svt> print ex 0 IDX_NEG 100 tcp self  { [ range _wrd -32 -32 ] hash wrd [ rdn ] }
+IDX_NEG
+<svt> print ex 0 NO_RECS 100 tcp self  { [ range _wrd -32 3 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd -32 10 ] hash wrd [ rdn ] }
+OK 5
+6 a7c4 fd3d 5c03 d3df
+7 a7c4 c50e 58f2 2177
+8 a7c4 7fd1 0baf cc1b
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+
+<svt> print ex 0 OK 100 tcp self  { [ range _wrd -32 32 ] hash wrd [ rdn ] }
+OK 25
+6 a7c4 fd3d 5c03 d3df
+7 a7c4 c50e 58f2 2177
+8 a7c4 7fd1 0baf cc1b
+9 a7c4 4f2b a0ea 3f6d
+10 a7c4 847b 7171 16ce
+11 a7c4 45f6 6180 fcd1
+12 a7c4 1ae0 b0b6 6f2b
+13 a7c4 5049 68cc c47e
+14 a7c4 6d66 0bfd 5ba0
+15 a7c4 c168 4855 7139
+16 a7c4 b5bd 5933 93c8
+17 a7c4 89dc 0caa 15c0
+18 a7c4 c810 05a1 fa80
+19 a7c4 14f0 cdd1 ea3e
+20 a7c4 1ebe 04fe 3555
+21 a7c4 50e4 cdc6 f399
+22 a7c4 6af6 38d6 0dc8
+23 a7c4 3109 4e21 fb6f
+24 a7c4 3deb f4b7 292d
+25 a7c4 6c69 1937 b903
+26 a7c4 e4c2 8df6 154a
+27 a7c4 6f8a a409 0e6c
+28 a7c4 7ab5 0ef6 64ab
+29 a7c4 1594 995d 4fe7
+30 a7c4 c168 821a ee28
+
+<svt> print expect 0 BAD_RANGE 50 tcp self  { [ range _wrd -5  5 ]  hash wrd [ rdn ] }                 
+BAD_RANGE
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

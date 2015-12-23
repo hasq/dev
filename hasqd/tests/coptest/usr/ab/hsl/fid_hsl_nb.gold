@@ -1,0 +1,13 @@
+<svt> print expect 0 OK 1000 tcp 127.0.0.1:14001 [ ping ] 
+OK
+<svt> print expect 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+OK
+ sleeping
+<svt> nb 127.0.0.1:14001
+<svt> print expect 1 127.0.0.1:14001 100 { tcp self [ info nbs ] sleep 30 }
+OK
+127.0.0.1:14001
+ sleeping
+<svt> print expect 0 OK 100 tcp 127.0.0.1:14001 [ quit ] 
+OK
+<svt> quit

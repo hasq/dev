@@ -1,0 +1,3 @@
+<svt> print expect 0 OK 100 tcp self [ quit ] 
+OK
+<svt> 

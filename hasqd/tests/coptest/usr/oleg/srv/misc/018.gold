@@ -1,0 +1,19 @@
+<svt> define myprint A B C : println [ A ] print [ B ] print [ C ]
+<svt> define print22 A B C : print [ B B ]
+<svt> define N : 100
+<svt> define A : B C
+<svt> define B D : print [ D ]
+<svt> myprint x y z
+y
+z
+x
+y
+z
+<svt> print22 1 2 3
+2 2
+<svt> print [ N N ]
+100 100
+<svt> print A
+C
+C
+<svt> quit

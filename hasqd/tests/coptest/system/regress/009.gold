@@ -1,0 +1,16 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _wrd 0 rdn pass
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+<svt> print ex 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+OK 0 a7c4 0000 d9e6 fbfc
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+OK 0 a7c4 0000 d9e6 fbfc
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

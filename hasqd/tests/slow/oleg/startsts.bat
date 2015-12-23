@@ -1,0 +1,1 @@
+sh memleak_oleg.sts ../../../src/_bin_msc

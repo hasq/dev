@@ -1,0 +1,66 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<svt> println [ aaa r0 bbb ]
+aaa r0 bbb
+<svt> r0 = recpwd _md5 0 rdn pass
+<svt> println { [ aaa ] r0 [ bbb ] }
+aaa 0 a7c4 0000 d9e6 fbfc bbb
+<svt> println [ aaa ] recpwd _md5 0 rdn pass [ bbb ccc ] 
+aaa
+0 a7c4 0000 d9e6 fbfc
+bbb ccc
+<svt> r1 = recpwd _md5 1 rdn pass
+<svt> println r0 r1
+0 a7c4 0000 d9e6 fbfc
+1 a7c4 7ccf 811f 2159
+<svt> a = tcp self [ ping ]
+<svt> println a
+OK
+<svt> println tcp self [ ping ]
+OK
+<svt> println tcp self { [ zero * _md5 ] r0 } sleep 100
+OK 1000
+sleeping
+<svt> sendnote
+<svt> a = { [ add * _md5 ] r1 }
+<svt> println a
+add * _md5 1 a7c4 7ccf 811f 2159
+<svt> println tcp self a sleep 100
+OK 1001
+sleeping
+<svt> sendnote
+<svt> dn = hash wrd [ rdn ]
+<svt> println dn
+a7c4
+<svt> println tcp self { [ last _md5 ] dn }
+OK 1 a7c4 7ccf 811f 2159
+<svt> println tcp self { [ last _md5 ] hash wrd [ rdn ] }
+OK 1 a7c4 7ccf 811f 2159
+<svt> show
+a = add * _md5 1 a7c4 7ccf 811f 2159
+dn = a7c4
+r0 = 0 a7c4 0000 d9e6 fbfc
+r1 = 1 a7c4 7ccf 811f 2159
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<ced> job:1000 [0 a7c4 0000 d9e6 fbfc] -> OK
+<ced> job:1001 [1 a7c4 7ccf 811f 2159] -> OK
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<wkr> Record fetched [1 a7c4 7ccf 811f 2159]
+<wkr> Record fetched [1 a7c4 7ccf 811f 2159]
+<wkr> [add * _md5 1 a7c4 7ccf 811f 2159] -> [OK 1001]
+<wkr> [last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
+<wkr> [last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
+<wkr> [ping] -> [OK]
+<wkr> [ping] -> [OK]
+<wkr> [zero * _md5 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
+<zdb> erasedisk
+Database on disk erased successfully

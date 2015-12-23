@@ -1,0 +1,22 @@
+
+set date yyyymmdd
+
+create _md5 wrd MD5 1 [abc] 1 0
+load
+
+recprn _md5 0 dn pass
+recprn _md5 1 dn pass
+recprn _md5 2 dn pass
+nsk wrd 1 567c 3122
+nsk wrd 1 567c ba01
+
+addpwd _md5 0 dn pass
+addpwd _md5 1 dn passX
+addpwd _md5 0 dn pass
+addpwd _md5 1 dn pass
+addpwd _md5 1 dn pass
+
+erasedisk
+drop
+
+

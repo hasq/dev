@@ -1,0 +1,40 @@
+node0 = [ 127.0.0.1:14000 ]
+node1 = [ 127.0.0.1:14001 ]
+node2 = [ 127.0.0.1:14002 ]
+node3 = [ 127.0.0.1:14003 ]
+
+ex 0 OK 100 tcp node0 { [ connect ] node1 sleep 30 }
+ex 0 OK 100 tcp node0 { [ connect ] node2 sleep 30 }
+ex 0 OK 100 tcp node1 { [ connect ] node2 sleep 30 }
+ex 0 OK 100 tcp node1 { [ connect ] node3 sleep 30 }
+ex 0 OK 100 tcp node2 { [ connect ] node3 sleep 30 }
+ex 0 OK 100 tcp node2 { [ connect ] node0 sleep 30 }
+ex 0 OK 100 tcp node3 { [ connect ] node0 sleep 30 }
+ex 0 OK 100 tcp node3 { [ connect ] node1 sleep 30 }
+
+
+print ex 6 node-14002 100 tcp node0 { [ info fam ] sleep 30  }
+print ex 6 node-14003 100 tcp node1 { [ info fam ] sleep 30  }
+print ex 6 node-14003 100 tcp node2 { [ info fam ] sleep 30  }
+print ex 6 node-14001 100 tcp node3 { [ info fam ] sleep 30  }
+
+print ex 0 OK 100 tcp node0 [ admin disable net ]
+print ex 0 DISABLED 100 tcp node0 [ ping ] 
+print [ Node node0 was DISABLED ]
+
+print ex 0 OK 100 tcp node1 { [ admin reorg ] sleep 30  }
+print ex 0 OK 100 tcp node1 { [ info fam ] sleep 30  }
+print ex 0 OK 100 tcp node2 { [ admin reorg ] sleep 30  }
+print ex 0 OK 100 tcp node2 { [ info fam ] sleep 30  }
+print ex 0 OK 100 tcp node3 { [ admin reorg ] sleep 30  }
+print ex 0 OK 100 tcp node3 { [ info fam ] sleep 30  }
+
+print ex 0 OK 100 tcp node0 [ admin enable net ]
+print ex 0 OK 100 tcp node0 [ ping ] 
+print [ Node node0 was ENABLED ]
+
+print ex 0 OK 100 tcp node1 [ quit ]
+print ex 0 OK 100 tcp node2 [ quit ]
+print ex 0 OK 100 tcp node3 [ quit ]
+
+quit

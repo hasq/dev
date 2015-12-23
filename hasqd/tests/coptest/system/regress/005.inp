@@ -1,0 +1,16 @@
+r = recpwd _md5 3 rdn pass
+print r
+print ex 0 OK 100 tcp self [ ping ]
+print ex 0 OK 100 tcp self [ info db ]
+print ex 0 REQ_HASHTYPE_BAD 100 tcp self { [ add _md5 * ] r }
+print ex 0 JOB_NOINFO 100 tcp self [ job 1000 ]
+print ex 0 REQ_HASHTYPE_BAD 100 tcp self { [ add _md5 * ] r }
+print ex 0 JOB_NOINFO 100 tcp self [ job 1001 ]
+
+sleep 100
+
+print ex 0 JOB_NOINFO 100 tcp self [ job 1000 ]
+print ex 0 JOB_NOINFO 100 tcp self [ job 1001 ]
+
+quit
+

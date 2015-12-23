@@ -1,0 +1,31 @@
+#!/bin/sh
+$1/zdb erasedisk "create _md5 md5 MD5 1 [magic] 1 0"
+$1/zdb load "addpwd _md5 0 rawDn:0:256 pass"
+
+$1/zdb load "getrecord _md5 rawDn0 0" "getrecord _md5 rawDn1 0"
+
+mkdir ./index/_md5/f8/bf
+mkdir ./index/_md5/f8/bf/02
+mkdir ./index/_md5/f8/bf/02/1c
+mkdir ./index/_md5/f8/bf/02/1c/0f
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d/c5
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d/c5/6f
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d/c5/6f/46
+mv ./index/_md5/f8/f8bf* ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d/c5/6f/46
+
+$1/zdb load "getrecord _md5 rawDn0 0" "getrecord _md5 rawDn1 0"
+
+mkdir ./index/_md5/f8/bf/02/1c/0f/e7/28/6c/dd/ea/fb/f7/6d/c5/6f/46/wrong_dir
+
+$1/zdb load "getrecord _md5 rawDn0 0" "getrecord _md5 rawDn1 0"
+
+$1/zdb erasedisk
+

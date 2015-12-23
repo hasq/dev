@@ -1,0 +1,6 @@
+a = [ aaa 
+b = { a }
+print b
+del c
+quit
+

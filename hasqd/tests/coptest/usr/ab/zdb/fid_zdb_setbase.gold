@@ -1,0 +1,14 @@
+<zdb> set base testbase
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrddir wrd WRD 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _wrddir 0:3 rdn pwd
+<zdb> getlast _wrddir rdn
+3 a7c4 9f6c 1038 d138
+<svt> print ex 1 3 100 tcp self { [ last _wrddir ] hash wrd [ rdn ] }
+OK 3 a7c4 9f6c 1038 d138
+<svt>  quit
+<zdb> set base testbase
+<zdb> erasedisk
+Database on disk erased successfully

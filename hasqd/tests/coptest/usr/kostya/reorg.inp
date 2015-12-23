@@ -1,0 +1,74 @@
+erase dbp
+new canvas dbp 3 3
+show
+new db 0 0 _wrd wrd Word 1 [] 1 0
+new db 0 1 _wrd wrd Word 1 [] 1 0
+new db 1 0 _wrd wrd Word 1 [] 1 0
+new db 2 0 _wrd wrd Word 1 [] 1 0
+new db 1 1 _wrd wrd Word 1 [] 1 0
+new db 2 1 _wrd wrd Word 1 [] 1 0
+show
+new pub 0 0 hint nn=v00
+new pub 1 0 hint nn=v10
+new pub 0 1 hint nn=v01
+new pub 1 1 hint nn=v11
+new pub 2 0 hint nn=v20
+new pub 2 1 hint nn=v21
+show
+send 0 0 connect ${1:0}
+send 1 0 connect ${0:0}
+send 0 0 connect ${0:1}
+send 0 1 connect ${0:0}
+send 0 1 connect ${1:1}
+send 1 1 connect ${0:1}
+send 1 1 connect ${1:0}
+send 1 0 connect ${1:1}
+send 1 0 connect ${2:0}
+send 2 0 connect ${1:0}
+send 1 1 connect ${2:1}
+send 2 1 connect ${1:1}
+
+expect 2 127.0.0.1:13134 50
+send 0 0 info nbs
+send 0 0 info nbs
+
+expect 3 127.0.0.1:13135 50
+send 1 0 info nbs
+send 1 0 info nbs
+
+expect 1 127.0.0.1:13132 50
+send 2 0 info nbs
+send 2 0 info nbs
+
+expect 2 127.0.0.1:13135 50
+send 0 1 info nbs
+send 0 1 info nbs
+
+expect 3 127.0.0.1:13136 50
+send 1 1 info nbs
+send 1 1 info nbs
+
+expect 1 127.0.0.1:13135 50
+send 2 1 info nbs
+send 2 1 info nbs
+
+reorg 1 1
+sleep 10
+expect 1 v00 50
+send 1 1 info fam
+expect 21 v20 50
+send 1 1 info fam
+send 1 1 info fam
+
+reorg 1 0
+sleep 10
+expect 1 v00 50
+send 1 0 info fam
+expect 21 v21 50
+send 1 0 info fam
+send 1 0 info fam
+
+#sleep 100
+shut all
+erase dbp
+q

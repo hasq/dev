@@ -1,0 +1,9 @@
+
+print tcp self [ pleb mkdir aaa ]
+print tcp self [ pleb put aaa/a.txt YQ== ]
+print tcp self [ pleb list ]
+print tcp self [ pleb clean ]
+print tcp self [ pleb list ]
+
+quit
+

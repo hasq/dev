@@ -1,0 +1,4 @@
+#!/bin/sh
+INPFILE=$(basename $0)
+INPFILE=${INPFILE%.*}
+$1/hasqd -cq s=$INPFILE.inp dprn=1 dsvt=1

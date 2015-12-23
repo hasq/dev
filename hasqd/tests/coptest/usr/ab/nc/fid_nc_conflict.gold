@@ -1,0 +1,62 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base md5 md5 1 [abc] 100 0
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base md5 md5 1 [abc] 100 0
+<svt> node0 = [ 127.0.0.1:14000 ]
+<svt> node1 = [ 127.0.0.1:14001 ]
+<svt> print ex 0 OK 100 tcp node1 [ ping ] 
+OK
+<svt> ex 0 OK 100 tcp node0 { [ z * _md5base 0 [rdn] [k0] data0 ] }
+<svt> ex 0 OK 100 tcp node0 { [ add * _md5base 1 [rdn] [k0] data0 ] }
+<svt> ex 0 OK 100 tcp node0 { [ add * _md5base 2 [rdn] [k0] data0 ] }
+<svt> print ex 1 2 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 923d49731ec41ebed77b7fedd6d95937 e93f6e5bbc1e599bed31f3eb1ccceae1 95fe8cad11ca60db1320a6e28ac3cb66 data0
+<svt> ex 0 OK 100 tcp node1 { [ z * _md5base 0 [rdn] [k0] data1 ] }
+<svt> ex 0 OK 100 tcp node1 { [ add * _md5base 1 [rdn] [k0] data1 ] }
+<svt> ex 0 OK 100 tcp node1 { [ add * _md5base 2 [rdn] [k0]:1 [k0]:1 [k1] data1 ] }
+<svt> ex 0 OK 100 tcp node1 { [ add * _md5base 3 [rdn] [k0]:1 [k1]:1 [k0] data1 ] }
+<svt> print ex 1 3 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+OK 3 a7c4eb7a67911d7c03fb9703168ed3e7 dc544e4ab0360154de84822a407449d2 dc657e23c1b98282332a8bb6e0212d10 222983ec2b0618c6cf04cad593bda0f5 data1
+<svt> ex 0 OK 100 tcp node0 { [ connect ] node1 sleep 30 }
+<svt> ex 0 OK 100 tcp node1 { [ connect ] node0 sleep 30 }
+<svt> print ex 0 OK 100 tcp node0 { [ conflict _md5base ] hash md5 [ rdn ] }
+OK
+<svt> print ex 1 2 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 923d49731ec41ebed77b7fedd6d95937 e93f6e5bbc1e599bed31f3eb1ccceae1 95fe8cad11ca60db1320a6e28ac3cb66 data0
+<svt> print ex 1 2 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+OK 2 a7c4eb7a67911d7c03fb9703168ed3e7 923d49731ec41ebed77b7fedd6d95937 e93f6e5bbc1e599bed31f3eb1ccceae1 95fe8cad11ca60db1320a6e28ac3cb66 data0
+<svt> print ex 0 OK 100 tcp node0 [ admin disable net ]
+OK
+<svt> print ex 0 DISABLED 100 tcp node0 [ ping ] 
+DISABLED
+<svt> ex 0 OK 100 tcp node1 { [ add * _md5base 3 [rdn] [k0]:2 [k1] data1 ] }
+<svt> ex 0 OK 100 tcp node1 { [ add * _md5base 4 [rdn] [k0]:1 [k1]:2 data1 ] }
+<svt> print ex 1 4 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+OK 4 a7c4eb7a67911d7c03fb9703168ed3e7 0bae53e48a74b0317e7bf99dd63c057a a0e6edaf17bc8089c4a80fcd8bce3d86 96682f9e2b96a8b2f0ee2eec690689b6 data1
+<svt> print ex 0 OK 100 tcp node0 [ admin enable net ]
+OK
+<svt> print ex 0 OK 100 tcp node0 [ ping ] 
+OK
+<svt> print ex 0 OK 100 tcp node1 [ admin disable net ]
+OK
+<svt> print ex 0 DISABLED 100 tcp node1 [ ping ] 
+DISABLED
+<svt> ex 0 OK 100 tcp node0 { [ add * _md5base 3 [rdn] [k0] data0 ] }
+<svt> ex 0 OK 100 tcp node0 { [ add * _md5base 4 [rdn] [k0] data0 ] }
+<svt> print ex 1 4 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+OK 4 a7c4eb7a67911d7c03fb9703168ed3e7 0bae53e48a74b0317e7bf99dd63c057a 8b8ce8babcff61db868896a3be96bc6c f107d40988cd468de124468422c41879 data0
+<svt> print ex 0 OK 100 tcp node1 [ admin enable net ]
+OK
+<svt> print ex 0 OK 100 tcp node1 [ ping ] 
+OK
+<svt> print ex 0 OK 100 tcp node0 { [ conflict _md5base ] hash md5 [ rdn ] }
+OK
+<svt> print ex 1 4 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+OK 4 a7c4eb7a67911d7c03fb9703168ed3e7 0bae53e48a74b0317e7bf99dd63c057a 8b8ce8babcff61db868896a3be96bc6c f107d40988cd468de124468422c41879 data0
+<svt> print ex 1 4 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+OK 4 a7c4eb7a67911d7c03fb9703168ed3e7 0bae53e48a74b0317e7bf99dd63c057a 8b8ce8babcff61db868896a3be96bc6c f107d40988cd468de124468422c41879 data0
+<svt> print ex 0 OK 100 tcp node1 [ quit ]
+OK
+<svt> quit

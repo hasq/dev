@@ -1,0 +1,12 @@
+#!/bin/sh
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0"
+
+$1/zdb load "addpwd _md5 0:1 rdn pass" "addpwd _md5 2 rdn pass Data_2"
+$1/zdb load "addpwd _md5 3:25 rdn pass" "addpwd _md5 26 rdn pass Data_26"
+$1/zdb load "addpwd _md5 27:50 rdn pass" "addpwd _md5 51 rdn pass Data_51"
+$1/zdb load "addpwd _md5 52:75 rdn pass"
+
+$1/hasqd -c s=013.inp dprn=1 dsvt=1 lastdata_max=20
+
+$1/zdb erasedisk
+

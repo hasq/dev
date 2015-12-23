@@ -1,0 +1,13 @@
+a = [ Hello ]
+b = [ world ]
+c = { a [ my ] b }
+print a
+print b
+print c
+
+#c = { a [ ", " ] b [ "!" ] }
+#print c
+#c = { { a } [ , ] { b } [ ! ] }
+#print c
+
+quit

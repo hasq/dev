@@ -1,0 +1,127 @@
+<!-- Hasq Technology Pty Ltd (C) 2013-2015 -->
+<html lang="us">
+
+<head>
+	<meta charset="utf-8"/>
+<!--   <meta name=viewport content="width=device-width, initial-scale=1"> -->
+	<link rel="stylesheet" href="lib/jquery-ui.min.css"/>
+	<title>Hasq JavaScript Client</title>
+  
+	<style>
+		body {
+			font: 75% "Trebuchet MS", sans-serif;
+			margin: 50px;
+		}
+    
+		.demoHeaders {
+			margin-top: 2em;
+		}
+    
+		#dialog-link {
+			padding: .4em 1em .4em 20px;
+			text-decoration: none;
+			position: relative;
+		}
+    
+		#dialog-link span.ui-icon	{
+			margin: 0 5px 0 0;
+			position: absolute;
+			left: .2em;
+			top: 50%;
+			margin-top: -8px;
+		}
+    
+		#icons {
+			margin: 0;
+			padding: 0;
+		}
+    
+ 		#icons li	{
+			margin: 2px;
+			position: relative;
+			padding: 4px 0;
+			cursor: pointer;
+			float: left;
+			list-style: none;
+		}
+    
+		#icons span.ui-icon	{
+			float: left;
+			margin: 0 4px;
+		}
+    
+		.fakewindowcontain .ui-widget-overlay	{
+			position: absolute;
+		}
+    
+		select {
+			width: 200px;
+		}
+
+		input[type='text'] {
+      font-family: monospace; 
+    }
+    
+    textarea[type='text'] {
+      font-family: monospace;
+      width: 100%;
+      /*resize: none;*/
+    }
+
+    .scrolling { 
+			height: 150px; 
+			/*width: 500px;*/
+			background: #fff;
+			overflow-x: auto;
+			overflow-y: auto;
+			display: none;
+		}
+    
+    .ui-progressbar {
+      position: relative;
+      height: 20px;
+    }
+    
+    .tokens-progressbar-label {
+      position: absolute;
+      left: 46%;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 #fff;
+    }
+    
+    html {
+      overflow-y: scroll;
+    }
+    
+/* ::-webkit-scrollbar {
+    width: 0px;
+  }
+*/  
+}
+	</style>
+
+ 	<script src="lib/jquery.js"></script>
+	<script src="lib/jquery-ui.min.js"></script>
+	<script src="ui/ui_doc_main.js"></script>
+	<script src="front/wid_base_s.js"></script>
+	<script src="front/wid_base_d.js"></script>
+	<script src="front/wid_tokens_s.js"></script>
+	<script src="front/wid_tokens_d.js"></script>
+	<script src="engine/eng_parsers.js"></script>
+	<script src="engine/eng_core.js"></script>	  
+	<script src="engine/eng_ajax.js"></script>
+	<script src="engine/hash_md5.js"></script>
+	<script src="engine/hash_rmd160.js"></script>
+	<script src="engine/hash_sha256.js"></script>
+	<script src="engine/hash_sha512.js"></script>
+
+</head>
+
+<body onLoad="preloadImages('images/blinkpoint.gif','images/redpoint.gif','images/greypoint.gif')">
+	<script>
+		docMainWrite();
+		docMainInit();
+	</script>
+
+</body>
+</html>

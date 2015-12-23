@@ -1,0 +1,27 @@
+set base db
+set date 20150101
+set time 000000 
+
+erasedisk
+
+create _md5base-1-1 md5 MD5 1 [magic] 1 1
+create _md5base-4-8 md5 MD5 1 [magic] 4 8
+create _md5base-8-0 md5 MD5 1 [magic] 8 0
+
+
+load
+
+addpwd _md5base-1-1 0:31 rdn pwd
+
+getfirst _md5base-1-1 rdn
+getlast _md5base-1-1 rdn
+
+addpwd _md5base-4-8 0:31 rdn pwd
+
+getfirst _md5base-4-8 rdn
+getlast _md5base-4-8 rdn
+
+addpwd _md5base-8-0 0:63 rdn pwd
+
+getfirst _md5base-8-0 rdn
+getlast _md5base-8-0 rdn

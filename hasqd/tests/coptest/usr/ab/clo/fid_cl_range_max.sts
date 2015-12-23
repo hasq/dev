@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Testing FID_CL_RANGE_MAX
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+$1/zdb load "addpwd _wrd 0:20 rdn pwd"
+$1/hasqd -cqx lock=0 s=$tn.inp dprn=1 dsvt=1 range_max=10
+
+$1/zdb erasedisk

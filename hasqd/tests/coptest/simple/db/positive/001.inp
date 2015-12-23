@@ -1,0 +1,6 @@
+create _md5 md5 MD5 1 [abc] 1 0
+load
+addpwd _md5 0 dn pass
+addpwd _md5 1 dn pass
+addpwd _md5 2 dn pass
+erasedisk

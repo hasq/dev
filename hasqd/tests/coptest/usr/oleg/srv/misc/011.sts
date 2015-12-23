@@ -1,0 +1,5 @@
+#!/bin/sh
+#$1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0" "create _md5 md5 MD5 1 [abc] 1 0"
+$1/hasqd -nlqc s=011.inp dprn=1 dsvt=1 nodename=vasia@port
+#$1/zdb erasedisk
+

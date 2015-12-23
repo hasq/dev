@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Testing fid_zdb_genidx
+
+
+compare () {
+	if cmp $1 $2 >/dev/null
+	then
+		echo Index files are identical 
+	else
+		echo Index files are not identical 
+	fi
+}
+
+$1/zdb erasedisk "create _wrddir wrd WRD 1 [magic] 1 0"
+$1/zdb load "addpwd _wrddir 0:100 rdn pwd"
+mv index/_wrddir/a7c4 index/_wrddir/index.org
+$1/zdb "genidx slice index"
+compare index/_wrddir/a7c4 index/_wrddir/index.org
+
+$1/zdb erasedisk

@@ -1,0 +1,13 @@
+print ex 0 OK 100 tcp self [ info nbs ]
+#print tcp self [ info nbs ]
+
+print ex 0 OK 100 tcp self [ connect 127.0.0.1:13131 ]
+print ex 0 OK 100 tcp self [ connect 127.0.0.1:13132 ]
+print ex 0 OK 100 tcp self [ connect abradabra:13131 ]
+sleep 10
+print ex 0 OK 100 tcp self [ info nbs ]
+print ex 0 OK 100 tcp self [ info log connect ]
+print ex 0 OK 100 tcp self [ info log critical ]
+print ex 0 OK 100 tcp self [ info log conflict ]
+quit
+

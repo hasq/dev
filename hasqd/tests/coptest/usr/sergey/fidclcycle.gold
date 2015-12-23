@@ -1,0 +1,8 @@
+Hasq server 0.2.3 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+Secretary listening TCP on 127.0.0.1:13131
+Secretary listening UDP on 224.0.0.1:13131
+HOST: nodename=sergeyPC13131
+Database loaded: DB_EMPTY
+Starting publisher, threads=all
+<svt> sleep 20000
+....<svt> quit

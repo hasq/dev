@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Testing FID_CL_QBIN
+
+$1/hasqd -qc s="@quit" dprn=1 dsvt=1 qbin=0
+$1/hasqd -qc s="@quit" dprn=1 dsvt=1 qbin=100

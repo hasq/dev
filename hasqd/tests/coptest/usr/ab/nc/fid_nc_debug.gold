@@ -1,0 +1,3 @@
+<svt> print expect 0 NOT_IMPLEMENTED 100 tcp self [ debug ] 
+NOT_IMPLEMENTED
+<svt> quit

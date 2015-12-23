@@ -1,0 +1,19 @@
+#!/bin/sh
+
+$1/zdb "irgetlast test_index_data8 25"
+
+$1/zdb "irgetrecord test_index_data8 7"
+$1/zdb "irgetrecord test_index_data8 -1"
+$1/zdb "irgetrecord test_index_data8 13"
+
+$1/zdb "irgetrecord test_index_data8 11"
+$1/zdb "irgetrecord test_index_data8 12"
+$1/zdb "irgetrecord test_index_data8 14"
+
+$1/zdb "irgetrecord test_index_data8 8"
+$1/zdb "irgetrecord test_index_data8 9"
+
+$1/zdb "irgetrange test_index_data8 7 8 -1"
+$1/zdb "irgetrange test_index_data8 9 12 -1"
+$1/zdb "irgetrange test_index_data8 11 13 -1"
+$1/zdb "irgetrange test_index_data8 11 -2 -1"

@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#DIGESTS="md5 sh1 s22 s23 s25 r16 wpl"
+DIGESTS="md5 s22 s25 r16"
+
+HASQPATH="$1"
+
+gethash() {
+[ -z "$1" -o -z "$2" ] && return
+echo "$1"|sed -n -e "s/.*\([a-z0-9]\{$2\}\).*/\1/p"
+}
+
+checkhash() {
+[ -z "$1" -o -z "$2" ] && return
+
+case $1 in
+md5)
+	OHASH="md5"
+	HASHSIZE=32
+	;;
+sh1)
+	OHASH="sha1"
+	HASHSIZE=40
+	;;
+s22)
+	OHASH="sha256"
+	HASHSIZE=64
+	;;
+s23)
+	OHASH="sha384"
+	HASHSIZE=96
+	;;
+s25)
+	OHASH="sha512"
+	HASHSIZE=128
+	;;
+r16)
+	OHASH="rmd160"
+	HASHSIZE=40
+	;;
+wpl)
+	OHASH="whirlpool"
+	HASHSIZE=128
+	;;
+*)
+	echo "ERROR: not known algorythm"
+	exit
+	;;
+esac
+
+HR=$(gethash "$(${HASQPATH}/hasqd -lnqc s="@print { hash $1 [ "$2" ] }; quit" dsvt=1 dprn=1)" "$HASHSIZE")
+OR=$(gethash "$(echo -n "$2"|openssl $OHASH 2>/dev/null)" "$HASHSIZE")
+if [ "z$HR" = "z$OR" ]
+then
+	echo "right $1 hash for $2 - $HR"
+	echo -n "+" 1>&2
+else
+	echo "WRONG $1 hash for $2 - $HR, $OR"
+	echo -n "-" 1>&2
+fi
+}
+
+readwordsfile() {
+[ -z "$1" ] && return
+while read line
+do
+	checkhash "$1" "$(echo "$line"|tr -d '\r\n')"
+done < words.txt
+}
+
+[ -z $(which openssl) ] && exit
+
+for z in $DIGESTS
+do
+	echo -e "\n$z" 1>&2
+readwordsfile "$z"
+done

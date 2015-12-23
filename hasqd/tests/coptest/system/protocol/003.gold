@@ -1,0 +1,37 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: OK
+Starting with threads: all
+<svt> print tcp self [ ]
+REQ_MSG_HEAD
+<svt> print tcp self [ a ]
+REQ_HASHTYPE_BAD
+<svt> print tcp self [ / ]
+<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="_md5/">_md5/</a></li>
+</ul></body></html>
+<svt> quit
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: OK
+Starting with threads: all
+<wkr> [] -> [REQ_MSG_HEAD]
+<wkr> [a] -> [REQ_HASHTYPE_BAD]
+<wkr> [/] -> [<html><head><title>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>\n<li><a href="_md5/">_md5/</a></li>\n</ul></body></html>]
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Database: OK
+Starting with threads: all
+<sec> Received [\n\n]
+<sec> Submitting job []
+<sec> Received [a\n\n]
+<sec> Submitting job [a]
+<sec> Received [/\n\n]
+<sec> Submitting job [/]
+<zdb> erasedisk
+Database on disk erased successfully

@@ -1,0 +1,2 @@
+<zdb> create my_md5 xd5 MD5 1 [] 1 0
+Fatal error (gl::Exception): Cannot create DN for type [xd5]

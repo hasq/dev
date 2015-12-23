@@ -1,0 +1,20 @@
+#!/bin/sh
+#FID_NC_FIRST
+$1/zdb erasedisk "create _wrd wrd Word 1 [] 1 0"
+$1/zdb load "addpwd _wrd 0:30 rdn pwd"
+
+$1/hasqd -lncq s=first.inp dprn=1 dsvt=0
+sed -i '1d;2d' index/_wrd/a7c4
+chmod 775 index/_wrd/a7c4
+
+$1/hasqd -lncq s=first.inp dprn=1 dsvt=0
+sed -i '1d;2d' index/_wrd/a7c4
+chmod 775 index/_wrd/a7c4
+
+$1/hasqd -lncq s=first.inp dprn=1 dsvt=0
+sed -i '1d;2d' index/_wrd/a7c4
+chmod 775 index/_wrd/a7c4
+
+$1/hasqd -lnc s=first.inp dprn=1 dsvt=0
+
+$1/zdb erasedisk

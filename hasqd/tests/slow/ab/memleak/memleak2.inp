@@ -1,0 +1,20 @@
+ADDR = [ 127.0.0.1:14001 ]
+
+print [ Before the running of work: ] 
+print expect 0 OK -1 tcp ADDR [ info sys ]
+
+begin
+	for i 1 10000 {
+		expect 0 OK -1 tcp ADDR { [ z * _md5 ] recpwd _md5 0 rdn:i pass }
+		for k 1 10000 { 
+			expect 0 OK -1 tcp ADDR { [ add * _md5 ] recpwd _md5 k rdn:i pass k }
+		}
+                print < [ Loop: ] i >
+		print expect 0 OK -1 tcp ADDR [ info sys ]
+	}
+end
+
+sleep 100
+tcp ADDR [ quit ]
+
+quit

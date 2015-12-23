@@ -1,0 +1,51 @@
+<zdb> irgetrecord test_index_data 0
+0 A roza data_0
+
+<zdb> irgetrecord test_index_data -40
+0 A roza data_0
+
+<zdb> irgetrecord test_index_data 1
+1 A roza upala data_1
+
+<zdb> irgetrecord test_index_data -39
+1 A roza upala data_1
+
+<zdb> irgetrecord test_index_data 40
+irgetrecord error
+<zdb> irgetrecord test_index_data -41
+irgetrecord error
+<zdb> irgetrecord test_index_data -45
+irgetrecord error
+<zdb> irgetrecord test_index_data 2
+2 A roza upala na data_2
+
+<zdb> irgetrecord test_index_data 3
+3 A roza upala na lapu data_3
+
+<zdb> irgetrecord test_index_data 7
+7 A roza upala na lapu Azora 89856 data_7
+
+<zdb> irgetrecord test_index_data 8
+8 A roza upala data_8
+
+<zdb> irgetrecord test_index_data 10
+10 A roza upala lsdkjfsldkfj data_10
+
+<zdb> irgetrecord test_index_data 16
+16 A roza upala na lapu Azora data_16
+
+<zdb> irgetrecord test_index_data 21
+21 A roza upala data_21
+
+<zdb> irgetrecord test_index_data -10
+30 data_30
+
+<zdb> irgetrecord test_index_data -9
+31 A roza upala na lapu Azora kdjfhkdfjgh kjhggh lwjrgurghq3875tyq5tghejvn h data_31
+
+<zdb> irgetrecord test_index_data -8
+32 A data_32
+
+<zdb> irgetrecord test_index_data -2
+38 data_38
+

@@ -1,0 +1,4 @@
+print tcp self [ info db ]
+print tcp self [ i db ]
+quit
+

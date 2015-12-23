@@ -1,0 +1,335 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 0 [] 1 0
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.83.212 port=13131
+Database: OK
+Starting with threads: all
+<svt> r0 = recpwd _wrd 0 kostya password
+<svt> s0 = hash wrd r0
+<svt> r1 = recpwd _wrd 1 kostya password
+<svt> s1 = hash wrd r1
+<svt> r2 = recpwd _wrd 2 kostya password
+<svt> s2 = hash wrd r2
+<svt> r3 = recpwd _wrd 3 kostya password
+<svt> s3 = hash wrd r3
+<svt> r4 = recpwd _wrd 4 kostya password
+<svt> s4 = hash wrd r4
+<svt> r5 = recpwd _wrd 5 kostya password
+<svt> s5 = hash wrd r5
+<svt> println r0 s0 r1 s1 r2 s2 r3 s3 r4 s4 r5 s5
+0 19af 0000 5c61
+8de3
+1 19af 671a c171
+88c0
+2 19af 95d6 f0f9
+073e
+3 19af a329 11df
+f882
+4 19af 960f 7740
+2054
+5 19af cb1f cc80
+9077
+<svt> print expect 0 OK 50 tcp self { [ zero ] s0 [ _wrd ] r0 }
+OK 1000
+<svt> print expect 0 OK 50 tcp self { [ zero s0 _wrd 0 19af 0000 5c61 168e 377b b736 a6f6 ] }
+Expect error: [REQ_BAD_SIGN] expected [OK] at [0]
+error
+<svt> print expect 1  0 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 0 19af 0000 5c61
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r1 [ exampledata ] }
+OK 1001
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 1 19af 671a c171 a032 15f0 de97 292b exampledata ] }
+OK 1002
+<svt> print expect 1  1 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 1 19af 671a c171 exampledata
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK exampledata
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r2 }
+OK 1003
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 ] }
+OK 1004
+<svt> print expect 1  2 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 2 19af 95d6 f0f9
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r3 [ :ref:kostya ] }
+OK 1005
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 3 19af a329 11df 302b d4df 188f 88fa :ref:kostya ] }
+OK 1006
+<svt> print expect 1  3 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 3 19af a329 11df :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r4 }
+OK 1007
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 4 19af 960f 7740 acb1 4c10 f1ea 64da ] }
+OK 1008
+<svt> print expect 1  4 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 4 19af 960f 7740
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r5 [ ::::::::::: message ::::::::::: ] }
+OK 1009
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 5 19af cb1f cc80 18e6 9c8a c39c 975e ::::::::::: message ::::::::::: ] }
+OK 1010
+<svt> print expect 1  5 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 5 19af cb1f cc80 ::::::::::: message :::::::::::
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK ::::::::::: message :::::::::::
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.83.212 port=13131
+Database: OK
+Starting with threads: all
+<svt> r0 = recpwd _wrd 0 kostya password
+<svt> s0 = hash wrd r0
+<svt> r1 = recpwd _wrd 1 kostya password
+<svt> s1 = hash wrd r1
+<svt> r2 = recpwd _wrd 2 kostya password
+<svt> s2 = hash wrd r2
+<svt> r3 = recpwd _wrd 3 kostya password
+<svt> s3 = hash wrd r3
+<svt> r4 = recpwd _wrd 4 kostya password
+<svt> s4 = hash wrd r4
+<svt> r5 = recpwd _wrd 5 kostya password
+<svt> s5 = hash wrd r5
+<svt> println r0 s0 r1 s1 r2 s2 r3 s3 r4 s4 r5 s5
+0 19af 0000 5c61 168e
+7b2a
+1 19af 671a c171 a032
+410d
+2 19af 95d6 f0f9 db90
+02bf
+3 19af a329 11df 302b
+f5b3
+4 19af 960f 7740 acb1
+9add
+5 19af cb1f cc80 18e6
+58ba
+<svt> print expect 0 OK 50 tcp self { [ zero ] s0 [ _wrd ] r0 }
+OK 1000
+<svt> print expect 0 OK 50 tcp self { [ zero s0 _wrd 0 19af 0000 5c61 168e 377b b736 a6f6 ] }
+Expect error: [REQ_BAD_SIGN] expected [OK] at [0]
+error
+<svt> print expect 1 0  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 0 19af 0000 5c61 168e
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r1 [ exampledata ] }
+OK 1001
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 1 19af 671a c171 a032 15f0 de97 292b exampledata ] }
+OK 1002
+<svt> print expect 1 1  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 1 19af 671a c171 a032 exampledata
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK exampledata
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r2 }
+OK 1003
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 ] }
+OK 1004
+<svt> print expect 1 2  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 2 19af 95d6 f0f9 db90
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r3 [ :ref:kostya ] }
+OK 1005
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 3 19af a329 11df 302b d4df 188f 88fa :ref:kostya ] }
+OK 1006
+<svt> print expect 1 3  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 3 19af a329 11df 302b :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r4 }
+OK 1007
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 4 19af 960f 7740 acb1 4c10 f1ea 64da ] }
+OK 1008
+<svt> print expect 1 4  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 4 19af 960f 7740 acb1
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r5 [ ::::::::::: message ::::::::::: ] }
+OK 1009
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 5 19af cb1f cc80 18e6 9c8a c39c 975e ::::::::::: message ::::::::::: ] }
+OK 1010
+<svt> print expect 1 5  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 5 19af cb1f cc80 18e6 ::::::::::: message :::::::::::
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK ::::::::::: message :::::::::::
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 3 [] 1 0
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.83.212 port=13131
+Database: OK
+Starting with threads: all
+<svt> r0 = recpwd _wrd 0 kostya password
+<svt> s0 = hash wrd r0
+<svt> r1 = recpwd _wrd 1 kostya password
+<svt> s1 = hash wrd r1
+<svt> r2 = recpwd _wrd 2 kostya password
+<svt> s2 = hash wrd r2
+<svt> r3 = recpwd _wrd 3 kostya password
+<svt> s3 = hash wrd r3
+<svt> r4 = recpwd _wrd 4 kostya password
+<svt> s4 = hash wrd r4
+<svt> r5 = recpwd _wrd 5 kostya password
+<svt> s5 = hash wrd r5
+<svt> println r0 s0 r1 s1 r2 s2 r3 s3 r4 s4 r5 s5
+0 19af 0000 5c61 168e 377b b736
+8882
+1 19af 671a c171 a032 15f0 de97
+9b67
+2 19af 95d6 f0f9 db90 f6bc 68d1
+a24e
+3 19af a329 11df 302b d4df 188f
+4af4
+4 19af 960f 7740 acb1 4c10 f1ea
+2a51
+5 19af cb1f cc80 18e6 9c8a c39c
+e04e
+<svt> print expect 0 OK 50 tcp self { [ zero ] s0 [ _wrd ] r0 }
+OK 1000
+<svt> print expect 0 OK 50 tcp self { [ zero s0 _wrd 0 19af 0000 5c61 168e 377b b736 a6f6 ] }
+Expect error: [REQ_BAD_SIGN] expected [OK] at [0]
+error
+<svt> print expect 1  0 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 0 19af 0000 5c61 168e 377b b736
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r1 [ exampledata ] }
+OK 1001
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 1 19af 671a c171 a032 15f0 de97 292b exampledata ] }
+OK 1002
+<svt> print expect 1  1 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 1 19af 671a c171 a032 15f0 de97 exampledata
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK exampledata
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r2 }
+OK 1003
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 ] }
+OK 1004
+<svt> print expect 1  2 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 2 19af 95d6 f0f9 db90 f6bc 68d1
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r3 [ :ref:kostya ] }
+OK 1005
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 3 19af a329 11df 302b d4df 188f 88fa :ref:kostya ] }
+OK 1006
+<svt> print expect 1  3 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 3 19af a329 11df 302b d4df 188f :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r4 }
+OK 1007
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 4 19af 960f 7740 acb1 4c10 f1ea 64da ] }
+OK 1008
+<svt> print expect 1  4 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 4 19af 960f 7740 acb1 4c10 f1ea
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r5 [ ::::::::::: message ::::::::::: ] }
+OK 1009
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 5 19af cb1f cc80 18e6 9c8a c39c 975e ::::::::::: message ::::::::::: ] }
+OK 1010
+<svt> print expect 1  5 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 5 19af cb1f cc80 18e6 9c8a c39c ::::::::::: message :::::::::::
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK ::::::::::: message :::::::::::
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 10 [] 1 0
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.83.212 port=13131
+Database: OK
+Starting with threads: all
+<svt> r0 = recpwd _wrd 0 kostya password
+<svt> s0 = hash wrd r0
+<svt> r1 = recpwd _wrd 1 kostya password
+<svt> s1 = hash wrd r1
+<svt> r2 = recpwd _wrd 2 kostya password
+<svt> s2 = hash wrd r2
+<svt> r3 = recpwd _wrd 3 kostya password
+<svt> s3 = hash wrd r3
+<svt> r4 = recpwd _wrd 4 kostya password
+<svt> s4 = hash wrd r4
+<svt> r5 = recpwd _wrd 5 kostya password
+<svt> s5 = hash wrd r5
+<svt> println r0 s0 r1 s1 r2 s2 r3 s3 r4 s4 r5 s5
+0 19af 0000 5c61 168e 377b b736 a6f6 1e19 337b 939b fa6d a653 1097
+2cbf
+1 19af 671a c171 a032 15f0 de97 292b 2e5d 5c82 1e74 d238 144b 1455
+1ae5
+2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 14c5 7382 9b0c 167d 98cd f146
+b4e3
+3 19af a329 11df 302b d4df 188f 88fa 47c7 163d ff0a 395c 4a9d 499f
+61b5
+4 19af 960f 7740 acb1 4c10 f1ea 64da 24f0 c748 508f eef1 b062 7354
+bf83
+5 19af cb1f cc80 18e6 9c8a c39c 975e a17e 369f e40a a856 a56f 815c
+cd19
+<svt> print expect 0 OK 50 tcp self { [ zero ] s0 [ _wrd ] r0 }
+OK 1000
+<svt> print expect 0 OK 50 tcp self { [ zero s0 _wrd 0 19af 0000 5c61 168e 377b b736 a6f6 ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1 0  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 0 19af 0000 5c61 168e 377b b736 a6f6 1e19 337b 939b fa6d a653 1097
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r1 [ exampledata ] }
+OK 1001
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 1 19af 671a c171 a032 15f0 de97 292b exampledata ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1 1  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 1 19af 671a c171 a032 15f0 de97 292b 2e5d 5c82 1e74 d238 144b 1455 exampledata
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK exampledata
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r2 }
+OK 1002
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1 2  50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 2 19af 95d6 f0f9 db90 f6bc 68d1 bf73 14c5 7382 9b0c 167d 98cd f146
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r3 [ :ref:kostya ] }
+OK 1003
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 3 19af a329 11df 302b d4df 188f 88fa :ref:kostya ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1  3 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 3 19af a329 11df 302b d4df 188f 88fa 47c7 163d ff0a 395c 4a9d 499f :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK :ref:kostya
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r4 }
+OK 1004
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 4 19af 960f 7740 acb1 4c10 f1ea 64da ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1  4 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 4 19af 960f 7740 acb1 4c10 f1ea 64da 24f0 c748 508f eef1 b062 7354
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd ] r5 [ ::::::::::: message ::::::::::: ] }
+OK 1005
+<svt> print expect 0 OK 50 tcp self { [ add * _wrd 5 19af cb1f cc80 18e6 9c8a c39c 975e ::::::::::: message ::::::::::: ] }
+Expect error: [URF_BAD_FORMAT] expected [OK] at [0]
+error
+<svt> print expect 1  5 50 tcp self { [ last _wrd ] hash wrd [ kostya ] }
+OK 5 19af cb1f cc80 18e6 9c8a c39c 975e a17e 369f e40a a856 a56f 815c ::::::::::: message :::::::::::
+<svt> print expect 0 OK 50 tcp self { [ data _wrd ] hash wrd [ kostya ] }
+OK ::::::::::: message :::::::::::
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

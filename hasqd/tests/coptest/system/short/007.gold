@@ -1,0 +1,13 @@
+<svt> aaa = [ abb ]
+<svt> aa1 = [ a11 ]
+<svt> aaa = { aaa aa1 aa1 [ b ] }
+<svt> print print println aa1 aaa
+a11
+abb a11 a11 b
+a11
+abb a11 a11 b
+a11
+abb a11 a11 b
+<svt>  print { { aaa } }
+abb a11 a11 b
+<svt> quit

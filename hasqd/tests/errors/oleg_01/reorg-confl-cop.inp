@@ -1,0 +1,42 @@
+#
+#		14001 < > 14002 < > 14003
+#	14000< >
+#		14004 < > 14005 < > 14006
+#
+
+# Connectim nody kak ukazano na risunke vverhu 
+
+#ex 0 OK 10 tcp 127.0.0.1:14001 [ connect 127.0.0.1:14002 ]
+#ex 0 OK 10 tcp 127.0.0.1:14002 [ connect 127.0.0.1:14001 ]
+#ex 0 OK 10 tcp 127.0.0.1:14002 [ connect 127.0.0.1:14003 ]
+#ex 0 OK 10 tcp 127.0.0.1:14003 [ connect 127.0.0.1:14002 ]
+
+#ex 0 OK 10 tcp 127.0.0.1:14004 [ connect 127.0.0.1:14005 ]
+#ex 0 OK 10 tcp 127.0.0.1:14005 [ connect 127.0.0.1:14004 ]
+#ex 0 OK 10 tcp 127.0.0.1:14005 [ connect 127.0.0.1:14006 ]
+#ex 0 OK 10 tcp 127.0.0.1:14006 [ connect 127.0.0.1:14005 ]
+
+#ex 0 OK 10 tcp 127.0.0.1:14000 [ connect 127.0.0.1:14001 ]
+#ex 0 OK 10 tcp 127.0.0.1:14001 [ connect 127.0.0.1:14000 ]
+#ex 0 OK 10 tcp 127.0.0.1:14000 [ connect 127.0.0.1:14004 ]
+#ex 0 OK 10 tcp 127.0.0.1:14004 [ connect 127.0.0.1:14000 ]
+
+sleep 100
+
+# Zapolnjaem bazu nulevogo noda - 1000 dn po 10 zapisej
+
+begin
+  for i 1 10 {
+      x = ex 0 OK 1 tcp self { [ z * _md5 ] recpwd _md5 0 rdn:i pass }
+      ex 0 OK 1 tcp self { [ job ] arg 1 x }
+      for l 1 10 {
+          x = ex 0 OK 1 tcp self { [ add * _md5 ] recpwd _md5 l rdn:i pass }
+          print ex 0 OK 1 tcp self { [ job ] arg 1 x }
+      }
+  }	
+end
+
+
+
+
+

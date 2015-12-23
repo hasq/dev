@@ -1,0 +1,18 @@
+new canvas base 3 2
+show
+new db 1 0 _wrd wrd WRD 1 [] 1 0
+new db 0 0 all
+show
+new cmd 0 0
+new pub 0 0
+new pub 1 0
+show
+send 1 0 info db
+send 0 0 info db
+shut 1 0
+shut 0 0
+show
+erase base
+show
+
+quit

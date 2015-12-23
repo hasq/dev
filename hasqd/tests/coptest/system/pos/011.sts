@@ -1,0 +1,6 @@
+#!/bin/sh
+$1/zdb erasedisk "create _md5 wrd MD5 1 [abc] 1 0" load "addpwd _md5 0:1 rdn pass"
+$1/hasqd -c s=011.inp dprn=1 dsvt=1
+$1/hasqd -c s=011.inp dwkr=1 | grep wkr | ( LC_ALL=C sort )
+$1/zdb erasedisk
+

@@ -1,0 +1,10 @@
+--- ssmtp-2.64/Makefile.in.orig	2014-09-19 22:10:36.709992854 +0000
++++ ssmtp-2.64/Makefile.in	2014-09-19 22:10:47.963355652 +0000
+@@ -52,7 +52,6 @@
+ 	$(INSTALL) -m 644 $(srcdir)/ssmtp.8 $(mandir)/ssmtp.8
+ 	$(INSTALL) -d -m 755 $(SSMTPCONFDIR)
+ 	$(INSTALL) -m 644 $(srcdir)/revaliases $(INSTALLED_REVALIASES_FILE)
+-	$(GEN_CONFIG) $(INSTALLED_CONFIGURATION_FILE)
+ 
+ 
+ .PHONY: install-sendmail

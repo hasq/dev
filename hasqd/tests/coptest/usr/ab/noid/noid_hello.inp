@@ -1,0 +1,37 @@
+a = [ Hello, ]
+b = [ underr ]
+c = [ QWERTY ]
+d = [ 123ABC321 ]
+
+show
+
+print   a b 
+print  { a b }
+print  { [ Hello, ] [ underr ] }
+
+del c
+show
+
+print  replace d [ ABC ] [ XYZ ]
+
+c = d
+d = { print  replace c [ ABC ] [ XYZ ] }
+
+show
+
+
+e = { c d }
+myhashC = hash wrd c
+myhashD = hash wrd d
+myhashCD = hash wrd { c d }
+myhashE = hash wrd { e }
+
+print { [ Word: ] c [ , Hash: ] myhashC }
+print { [ Word: ] d [ , Hash: ] myhashD }
+print { [ Word: ] { c d } [ , Hash:  ] myhashCD }
+print { [ Word: ] e [ , Hash: ] myhashE }
+
+
+print for i 1 3   { { a } { b } { i }  [ times. \ ] } 
+
+quit 

@@ -1,0 +1,15 @@
+
+set date [ yyyymmdd ]
+
+begin
+for i 0 4 {
+tcp self { [ zero * _wrd ] recpwd _wrd i rdn pass }
+cmd = { [ last _wrd ] hash wrd [ rdn ] }
+expect 0 OK 1 tcp self cmd
+print tcp self cmd
+}
+end
+
+quit
+
+

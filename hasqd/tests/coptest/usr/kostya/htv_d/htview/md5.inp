@@ -1,0 +1,35 @@
+include z_vars.inc
+$hash = _md5
+$dn = 19af62e899fd7e3a993a868db7389cfa
+erase $db
+new canvas $db 5 5
+show
+new db 0 0 $hash md5 MD5 1 [] 1 0
+show
+new pub 0 0
+show
+send 0 0 zero * $hash 0 $dn 00000000000000000000000000000000 089eaa04086cc8f8ec6b29d8143eea69 823f095c525d47eac4672ec081c32a2a
+expect 0 OK $try
+send 0 0 job 1000
+send 0 0 add * $hash 1 $dn c04caccf50d73fce96c0aabda135ce74 4e677f53880c00aa7c789db4af60dd6f 4908a92b88bdb7f0da63d7e556a19057
+expect 0 OK $try
+send 0 0 job 1001
+send 0 0 add * $hash 2 $dn 0af584fa4b3708f567267d5eb2832ba1 22dcd6c6d12f6980a5ac6606e4d4c445 c5293271a2c581f064aa46b526c9c74b $hello
+expect 0 OK $try
+send 0 0 job 1002
+send 0 0 last $hash $dn
+send 0 0 add * $hash 3 $dn f6c0904d6927cc616f19a9c5c7688ca5 71d29352ea30affe7aff8e9c12eb6bdd 758b597f60561fa41053cc18b0b3e8e9 $3
+expect 0 OK $try
+send 0 0 job 1003
+send 0 0 add * $hash 4 $dn 1858d295a22823a1b5c61a5161ec5e1e 4ff9c66ff708f82115fa2b1258b7240d d7bf3903a78a7e4d1780ff7f6575d789 $4
+expect 0 OK $try
+send 0 0 job 1004
+send 0 0 add * $hash 5 $dn 973a3356d49799a885c6614b7a6c723d 3129c7ab7c6dde5e4aa3bae3861dd6c7 c4c51c5a0460e1b8c6535f3467006780 $5
+expect 0 OK $try
+send 0 0 job 1005
+show
+send 0 0 last $hash $dn
+shut 0 0
+show
+erase $db
+q

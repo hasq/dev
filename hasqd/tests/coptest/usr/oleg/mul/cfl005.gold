@@ -1,0 +1,42 @@
+<zdb> set base db1
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> set base db1
+<zdb> load
+<zdb> recprn _wrd 0 rdn pas1
+0 a7c4 0000 207a ba2a
+<zdb> set base db1
+<zdb> load
+<zdb> recprn _wrd 1 rdn pas1
+1 a7c4 3202 6ebe 1336
+<zdb> set base db1
+<zdb> load
+<zdb> recprn _wrd 1 rdn pas2
+1 a7c4 1bf9 0a7c f478
+<zdb> set base db1
+<zdb> load
+<zdb> recprn _wrd 2 rdn pas1
+2 a7c4 9e5c 4ed5 5970
+<zdb> set base db1
+<zdb> load
+<zdb> add _wrd 0 a7c4 0000 11b1 ef7e
+<zdb> set base db1
+<zdb> load
+<zdb> add _wrd 1 a7c4 4694 9ca4 d528
+<zdb> set base db2
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> set base db2
+<zdb> load
+<zdb> add _wrd 0 a7c4 0000 11b1 ef7e
+<zdb> set base db2
+<zdb> load
+<zdb> add _wrd 1 a7c4 4694 9ca4 e311
+0 a7c4 0000 11b1 ef7e
+1 a7c4 4694 9ca4 d528
+2 a7c4 5000 62e3 ef39
+0 a7c4 0000 11b1 ef7e
+1 a7c4 4694 9ca4 d528
+2 a7c4 5000 62e3 ef39

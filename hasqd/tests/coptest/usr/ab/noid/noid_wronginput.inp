@@ -1,0 +1,30 @@
+expect 0 OK 100 tcp self { [ z * _wrd ] recpwd _wrd 0 rdn0 pwd }
+expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn0 pwd }
+expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 2 rdn0 pwd }
+expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 3 rdn0 pwd }
+expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 5 rdn0 pwd }
+
+# error DN_EXISTS when adding an existing zero-entry for DN
+x = arg 1 { expect 0 OK 100 tcp self { [ z * _wrd ] recpwd _wrd 0 rdn0 pwd } }
+print expect 0 DN_EXISTS 100 tcp self { [ job ] x }
+
+# error WRONG_SEQ_NUMBER when adding an existing entry for DN
+x = arg 1 { expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn0 pwd } }
+print expect 0 WRONG_SEQ_NUMBER 100 tcp self { [ job ] x }
+
+# error NOPREV_RECORD  when adding an existing entry for DN without a previous entry
+x = arg 1 { expect 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 1 rdn1 pwd } }
+print expect 0 NOPREV_RECORD 100 tcp self { [ job ] x }
+
+# error REQ_HASHTYPE_BAD  when adding an entry for DN with wrong hashtype
+print expect 0 REQ_HASHTYPE_BAD 100 tcp self { [ add * _wrd0 ] recpwd _wrd 6 rdn0 pwd }
+
+# error REC_INIT_BAD_N
+print expect 0 REC_INIT_BAD_N 100 tcp self { [ z * _wrd ] recpwd _wrd0 0 rdn1 pwd }
+
+print ex 0 URF_BAD_FORMAT 100 tcp self { [ z * _wrd 0 [rdn] [k]:1 ] }
+
+print ex 0 REC_INIT_BAD_KGO 100 tcp self { [ add * _wrd 6 [rdn0] k1 k2 k3 k4 data1 ] }
+
+quit
+

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+exit
+
+$1/htview < cfl001.inp > cfl001.log
+cat cfl001.log | grep -v "<wkr\|<sec\|svt" > c1_1.log
+cat cfl001.log | grep "<svt\:1" | sort > c1_2.log
+cat cfl001.log | grep "<svt\:2" | sort > c1_3.log
+cat cfl001.log | grep "<wkr\:1" | sort > c1_4.log
+cat cfl001.log | grep "<wkr\:2" | sort > c1_5.log
+cat cfl001.log | grep "<sec\:1" | sort > c1_6.log
+cat cfl001.log | grep "<sec\:2" | sort > c1_7.log
+
+cat c1_1.log c1_2.log c1_3.log c1_4.log c1_5.log c1_6.log c1_7.log
+
+#rm -f *.log
+
+# FIX FIX

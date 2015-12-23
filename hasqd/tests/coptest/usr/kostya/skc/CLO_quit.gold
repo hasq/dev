@@ -1,0 +1,16 @@
+Without key:
+<svt> print tcp self [ quit ]
+OK
+<svt>  quit
+With key:
+<svt> print tcp self [ quit ]
+REQ_MSG_HEAD
+<svt>  quit
+With key and let:
+<svt> print tcp self [ quit ]
+OK
+<svt>  quit
+With key and ban:
+<svt> print tcp self [ quit ]
+REQ_MSG_HEAD
+<svt>  quit

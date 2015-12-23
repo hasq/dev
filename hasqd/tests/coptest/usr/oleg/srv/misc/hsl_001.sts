@@ -1,0 +1,3 @@
+#!/bin/sh
+$1/hasqd -nlqc s=hsl_001.inp dprn=1 dsvt=1 p=13001
+

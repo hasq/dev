@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing FID_CL_ID
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -qc s=$tn.inp id=14000 dprn=1 dsvt=1 | grep "^<svt:14000>"

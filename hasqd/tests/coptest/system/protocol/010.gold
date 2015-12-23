@@ -1,0 +1,45 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+<zdb> erasedisk
+Database on disk erased successfully
+<svt> g = file get.inp
+<svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ ]
+HTTP/1.0 200 OK
+Server: Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+Access-Control-Allow-Origin: *
+Content-Type: text/plain
+Content-Length: 12
+
+REQ_MSG_HEAD
+<svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ a ]
+HTTP/1.0 200 OK
+Server: Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+Access-Control-Allow-Origin: *
+Content-Type: text/plain
+Content-Length: 16
+
+REQ_HASHTYPE_BAD
+<svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ / ]
+HTTP/1.0 200 OK
+Server: Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+Access-Control-Allow-Origin: *
+Content-Type: text/html
+Content-Length: 238
+
+<html><head><title>Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="_md5/">_md5/</a></li>
+</ul></body></html>
+<svt> p = file post.inp
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self replace replace p [ $1 ] [ a=b ] [ $2 ] [ 3 ]
+REQ_MSG_HEAD
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self replace replace p [ $1 ] [ a=file+%2F&b=c ] [ $2 ] [ 14 ]
+REQ_MSG_HEAD
+<svt> quit
+<wkr> [] -> [REQ_MSG_HEAD]
+<wkr> [a] -> [REQ_HASHTYPE_BAD]
+<wkr> [/] -> [<html><head><title>Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.3.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>\n<li><a href="_md5/">_md5/</a></li>\n</ul></body></html>]
+<wkr> [POST / HTTP/1.1] -> [REQ_MSG_HEAD]
+<wkr> [POST / HTTP/1.1] -> [REQ_MSG_HEAD]

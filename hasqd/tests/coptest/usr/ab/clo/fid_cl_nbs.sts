@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Testing FID_CL_IPLOCK
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -cq quit=1 lock=0 tcp_port=14001 &
+$1/hasqd -cq quit=1 lock=0 tcp_port=14002 &
+$1/hasqd -cq quit=1 lock=0 tcp_port=14003 &
+$1/hasqd -cq quit=1 lock=0 tcp_port=14004 &
+$1/hasqd -cq quit=1 lock=0 s=$tn.inp nbs=3 tcp_port=14000 dprn=1 dsvt=1
+
+ 

@@ -1,0 +1,23 @@
+#comment
+println [ aaa r0 bbb ]
+r0 = recpwd _md5 0 rdn pass
+println { [ aaa ] r0 [ bbb ] }
+println [ aaa ] recpwd _md5 0 rdn pass [ bbb ccc ] 
+
+r1 = recpwd _md5 1 rdn pass
+println r0 r1
+a = tcp self [ ping ]
+println a
+println tcp self [ ping ]
+println tcp self { [ zero * _md5 ] r0 } sleep 100
+a = { [ add * _md5 ] r1 }
+println a
+println tcp self a sleep 100
+dn = hash wrd [ rdn ]
+println dn
+println tcp self { [ last _md5 ] dn }
+println tcp self { [ last _md5 ] hash wrd [ rdn ] }
+
+show
+quit
+

@@ -1,0 +1,10 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrddir wrd WRD 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _wrddir 0:100 rdn pwd
+<zdb> genidx slice index
+index successfully generated
+Index files are identical
+<zdb> erasedisk
+Database on disk erased successfully

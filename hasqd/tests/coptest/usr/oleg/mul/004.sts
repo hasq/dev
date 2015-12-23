@@ -1,0 +1,16 @@
+#!/bin/sh
+
+$1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0" "create _md5 md5 MD5 1 [abc] 1 0"
+
+$1/hasqd -clq quit=1 tcp_port=13131 > /dev/null &
+
+#pid=$!
+
+$1/hasqd -clq s=004.inp dprn=1 dsvt=1 tcp_port=13132
+
+#wait $pid
+
+wait
+
+$1/zdb erasedisk
+

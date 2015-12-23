@@ -1,0 +1,17 @@
+print tcp self [ debug aaa ]
+print tcp self [ x bbb ]
+
+print tcp self [ error aaa ]
+print tcp self [ e bbb ]
+
+print tcp self [ slice aaa ]
+print tcp self [ s bbb ]
+
+print tcp self [ list aaa ]
+print tcp self [ t bbb ]
+
+print tcp self [ conflict aaa aaa aaa ]
+print tcp self [ k bbb bbb bbb ]
+
+quit
+

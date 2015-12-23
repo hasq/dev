@@ -1,0 +1,38 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5ng3 md5 MD5_1 3 [abc] 1 0
+<zdb> load
+<zdb> addurf _md5ng3 0 [rdn0] [keyPwd] data0
+<zdb> load
+<zdb> getlast _md5ng3 rdn0
+0 dd20be44d1d8dcfcf63a69622390ef88 dc92c32ab9972fb0fa79a4e8ce983e29 604cf1c8b7f6aa1540b716e2097deb0c 5f73dd2f69a2aa3b1fc84acbffefb65c 809cb7765446929be06ff48acd110cd2 01978e5ea92cef9c0b3e6ac3dba4c56b data0
+<zdb> load
+<zdb> addurf _md5ng3 1 [rdn0] [keyPwd] data1
+<zdb> load
+<zdb> getlast _md5ng3 rdn0
+1 dd20be44d1d8dcfcf63a69622390ef88 ea68e02dee198664b1e692372c47bd2b 6c7fa8a822c7ebee10047be74077647b 3bd7c3cf84338109690675b0633a271b f6586ea68768de8961fb3f8a77304337 e25ac5637c80f1ce1cabf3a717adfaa3 data1
+<zdb> load
+<zdb> addurf _md5ng3 0 [rdn] [k1]:1 [k2]:1 [k3]:1 [k4]:1 [k5]:1 data0
+<zdb> load
+<zdb> addurf _md5ng3 1 [rdn] [k2]:1 [k3]:1 [k4]:1 43134d912da049814e5aa0aa19efb27a [k] data1
+<zdb> load
+<zdb> addurf _md5ng3 2 [rdn] [k3]:1 [k4]:0 [k4]:1 [k5]:1 [k]:0 [k] data2
+<zdb> load
+<zdb> addurf _md5ng3 3 [rdn] 43d3f8456fbba659a1cdef8f47623896 [k5]:1 [k] data3
+<zdb> load
+<zdb> addurf _md5ng3 4 [rdn] [k5]:1 [k] data4
+<zdb> load
+<zdb> getlast _md5ng3 rdn
+4 a7c4eb7a67911d7c03fb9703168ed3e7 32c14fc0ce4c73996df9ad2e1e79a8df 365d13429691ae69e01a43830cf225b7 f29e5ac38b31de865b21ef495af15d7e 7923f015ee5f4d5825edbde917ee5586 af1f1d4251b8631d85fb6ccafd13d85d data4
+<zdb> load
+<zdb> addurf _md5ng3 0 [rdn1] [k1]:1 [k2]:1 [k3]:1 [k4]:1 [k5]:1 data0
+<zdb> load
+<zdb> addurf _md5ng3 1 [rdn1] [k2]:1 [k3]0:1 [k4]:1 [k5]:1 [k] data1
+<zdb> load
+<zdb> addurf _md5ng3 2 [rdn1] [k3]:1 [k4]1:1 [k5]:1 [k] data2
+Adding URF record error: RECORD_MISMATCH
+<zdb> load
+<zdb> getlast _md5ng3 rdn1
+1 1fae9fb8104184ffa074fa8b24bb10f7 daaa929febd29d448dd39ff4e82f92b7 b4cd447e10b212a5da2f507162162142 0e0f461a6060ff6d16ae979c95a8cd43 afcc32cee6ff520baa8293d43cc46343 591a10c7ebd3fac13511d366781a48e2 data1
+<zdb> erasedisk
+Database on disk erased successfully

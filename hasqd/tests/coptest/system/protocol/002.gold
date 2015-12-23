@@ -1,0 +1,37 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Database: OK
+Starting with threads: all
+<svt> print http_post self [ ]
+REQ_MSG_HEAD
+<svt> print http_post self [ a ]
+REQ_HASHTYPE_BAD
+<svt> print http_post self [ / ]
+<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<li><a href="_md5/">_md5/</a></li>
+</ul></body></html>
+<svt> quit
+Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Database: OK
+Starting with threads: all
+<wkr> [] -> [REQ_MSG_HEAD]
+<wkr> [a] -> [REQ_HASHTYPE_BAD]
+<wkr> [/] -> [<html><head><title>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>\n<li><a href="_md5/">_md5/</a></li>\n</ul></body></html>]
+Hasq server 0.2.5 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Database: OK
+Starting with threads: all
+<sec> Received [POST / HTTP/1.0\nContent-Length: 8\n\ncommand=]
+<sec> Submitting job []
+<sec> Received [POST / HTTP/1.0\nContent-Length: 9\n\ncommand=a]
+<sec> Submitting job [a]
+<sec> Received [POST / HTTP/1.0\nContent-Length: 9\n\ncommand=/]
+<sec> Submitting job [/]
+<zdb> erasedisk
+Database on disk erased successfully

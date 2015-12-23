@@ -1,0 +1,5 @@
+print tcp self [ f / ]
+print tcp self [ pleb mkdir webroot/test ]
+print tcp self [ f / ]
+print tcp self [ pleb del webroot ]
+quit

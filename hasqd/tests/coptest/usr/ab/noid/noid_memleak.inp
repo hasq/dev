@@ -1,0 +1,74 @@
+begin
+for i 1 10 {
+	x = tcp 127.0.0.1:14021 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass }
+	x = arg 1 x
+	expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x }
+	x = tcp 127.0.0.1:14021 { [ z * _md5 ] recpwd _md5 0 rdn:i pass } 
+	x = arg 1 x
+	expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x }
+
+#	Correct input
+
+	for k 1 10 {
+		x = tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:i pass }
+		x = arg 1 x
+		expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x }	
+		x = tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:i pass } 
+		x = arg 1 x
+		expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x }
+	}
+
+#	DN_EXISTS
+
+	x =  tcp 127.0.0.1:14021 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass }
+	x = arg 1 x
+	expect 0 DN_EXISTS 100 tcp 127.0.0.1:14021 { [ job ] x }
+	x = tcp 127.0.0.1:14021 { [ z * _md5 ] recpwd _md5 0 rdn:i pass }
+	x = arg 1 x
+	expect 0 DN_EXISTS 100 tcp 127.0.0.1:14021 { [ job ] x }
+
+#	REQ_HASHTYPE_BAD
+
+	for k 1 10 {
+		tcp 127.0.0.1:14021 { [ add * _wrd0 ] recpwd _wrd k rdn:i pass } 
+		tcp 127.0.0.1:14021 { [ add * _md50 ] recpwd _md5 k rdn:i pass } 
+	}
+
+#	REC_INIT_BAD_N
+
+	for k 1 10 {
+		tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd0 k rdn:i pass } 
+		tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md50 k rdn:i pass }
+	}
+
+#	WRONG_SEQ_NUMBER
+
+	for k 30 20 {
+		x =  tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:i pass }
+		x = arg 1 x
+		expect 0 WRONG_SEQ_NUMBER 100 tcp 127.0.0.1:14021 { [ job ] x }
+		x =  tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:i pass }
+		x = arg 1 x
+		expect 0 WRONG_SEQ_NUMBER 100 tcp 127.0.0.1:14021 { [ job ] x }
+	}
+
+#	NOPREV_RECORD
+
+	for k 20 30 {
+		x = tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:k pass }
+		x = arg 1 x
+		expect 0 NOPREV_RECORD 100 tcp 127.0.0.1:14021 { [ job ] x }
+		x = tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:k pass }
+		x = arg 1 x
+		expect 0 NOPREV_RECORD 100 tcp 127.0.0.1:14021 { [ job ] x }
+	}
+}
+end
+
+sleep 100
+
+tcp 127.0.0.1:14021 [ quit ]
+
+quit
+
+

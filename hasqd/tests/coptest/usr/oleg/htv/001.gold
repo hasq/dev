@@ -1,0 +1,46 @@
+<htv> show
+no canvas
+<htv> erase db1
+erasing db1 failed
+<htv> new canvas db1 2 2
+<htv> new db 1 0 _wrd wrd WRD 1 [] 1 0
+<htv> nextsleep 50
+<htv> new pub 1 0
+Cmd: -lnqc tcp_port=13132 db=db1/db_1_0
+<htv> nextsleep 50
+<htv> new pub 0 0
+Cmd: -lnqc tcp_port=13131 db=db1/db_0_0
+<htv> shut 0 0
+<htv> show
+[  --][#P--]
+[  --][  --]
+<htv> new db 1 1 _wrd wrd WRD 1 [] 1 0
+<htv> show
+[  --][#P--]
+[  --][# --]
+<htv> rmdb 1 1
+<htv> show
+[  --][#P--]
+[  --][  --]
+<htv> save db1.htv
+<htv> new canvas db2 1 1
+<htv> show
+[  --]
+<htv> erase db2
+erasing db2 ok
+<htv> nextsleep 50
+<htv> open db1.htv
+<htv> show
+[  --][#P--]
+[  --][  --]
+<htv> send 1 0 ping
+Reply: OK
+<htv> erase db1
+erasing db1 ok
+<htv> q
+db1
+-lnqc tcp_port=$port_xy db=$db_xy
+2 2
+1
+1 0
+[ -lnqc tcp_port=13132 db=db1/db_1_0 ]

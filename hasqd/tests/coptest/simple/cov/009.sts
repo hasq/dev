@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Testing function arg
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -nlcq s=$tn.inp dprn=1 dsvt=1 nn=mach
+
+
+
+
+
+

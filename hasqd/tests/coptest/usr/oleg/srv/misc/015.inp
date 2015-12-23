@@ -1,0 +1,14 @@
+
+set date [ yyyymmdd ]
+
+r0 = recpwd _wrd 0 rdn pass
+r1 = recpwd _wrd 1 rdn pass
+print expect 0 OK 100 tcp self { [ zero * _wrd ] r0 }
+print expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
+
+#sleep 200
+expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+print expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+
+quit
+

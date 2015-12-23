@@ -1,0 +1,22 @@
+#!/bin/sh
+$1/zdb "irgetrange test_index_data 0 0 -1"
+$1/zdb "irgetrange test_index_data 0 -40 -1"
+$1/zdb "irgetrange test_index_data 0 -41 -1"
+
+$1/zdb "irgetrange test_index_data 0 1 -1"
+$1/zdb "irgetrange test_index_data -40 1 -1"
+$1/zdb "irgetrange test_index_data 0 -39 -1"
+$1/zdb "irgetrange test_index_data -40 -39 -1"
+$1/zdb "irgetrange test_index_data -39 -40 -1"
+
+$1/zdb "irgetrange test_index_data 5 9 -1"
+$1/zdb "irgetrange test_index_data 5 10 -1"
+
+$1/zdb "irgetrange test_index_data 11 17 -1"
+$1/zdb "irgetrange test_index_data -2 -1 -1"
+$1/zdb "irgetrange test_index_data -10 -9 -1"
+$1/zdb "irgetrange test_index_data 8 -1 -1"
+$1/zdb "irgetrange test_index_data -1 -1 -1"
+$1/zdb "irgetrange test_index_data -2 -2 -1"
+$1/zdb "irgetrange test_index_data -2 -1 -1"
+$1/zdb "irgetrange test_index_data 19 39 -1"

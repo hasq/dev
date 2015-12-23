@@ -1,0 +1,5 @@
+print for i 1 10 { i }
+print for i 1 10 { i [ ] }
+for i 1 10 { print i }
+quit
+

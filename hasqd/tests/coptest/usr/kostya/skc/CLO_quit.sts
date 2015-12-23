@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Without key:"
+$1/hasqd -lqnc dprn=1 dsvt=1 s=@"print tcp self [ quit ]; quit" | grep -v sendnote
+
+echo "With key:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ quit ]; quit" | grep -v sendnote
+
+echo "With key and let:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ quit ]; quit" let="quit" | grep -v sendnote
+
+echo "With key and ban:"
+$1/hasqd -lqnc dprn=1 dsvt=1 skckey="abc" s=@"print tcp self [ quit ]; quit" ban="quit" | grep -v sendnote

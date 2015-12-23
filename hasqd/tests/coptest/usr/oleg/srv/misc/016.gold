@@ -1,0 +1,59 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 0 2
+<svt> set date [ yyyymmdd ]
+<svt> tcp self { [ zero * _wrd ] recpwd _wrd 0 rdn pass }
+<svt> dn = hash wrd [ rdn ]
+<svt>  for i 1 40 { rec = recpwd _wrd i rdn pass ex 0 OK 100 tcp self { [ add * _wrd ] rec } cmd = { [ last _wrd ] dn } print expect 1 i 100 tcp self cmd }
+OK 1 a7c4 7ccf 811f 2159
+OK 2 a7c4 391d ecd4 7c3e
+OK 3 a7c4 2a6f ac2e 4e8e
+OK 4 a7c4 5499 bfd1 ab2a
+OK 5 a7c4 c0a6 0f4f dbb6
+OK 6 a7c4 45c6 c2c7 37df
+OK 7 a7c4 a5a9 550e aa5f
+OK 8 a7c4 44cc 9b0f 3472
+OK 9 a7c4 c777 f019 c0fe
+OK 10 a7c4 bee9 07bb f4a3
+OK 11 a7c4 273c b98b bbbd
+OK 12 a7c4 050b e974 ccea
+OK 13 a7c4 c2da ed7f f79d
+OK 14 a7c4 c036 cea9 0b2d
+OK 15 a7c4 2efe e1dd 2de5
+OK 16 a7c4 200e 4ed0 4888
+OK 17 a7c4 ad06 3dc0 31d5
+OK 18 a7c4 3bf0 604d f535
+OK 19 a7c4 eac6 a718 2986
+OK 20 a7c4 0fa2 533c c9f9
+OK 21 a7c4 9775 01de 9cb8
+OK 22 a7c4 47ea 55ae d2f2
+OK 23 a7c4 4120 8c41 2d45
+OK 24 a7c4 0e4e 45ff 32cc
+OK 25 a7c4 8d47 3c60 c578
+OK 26 a7c4 16e8 9126 84bd
+OK 27 a7c4 3504 f31f 35f0
+OK 28 a7c4 9b7a 01b8 d620
+OK 29 a7c4 c609 b93d ff34
+OK 30 a7c4 fe32 8a3f 4fef
+OK 31 a7c4 33b1 0fff a362
+OK 32 a7c4 14d3 bd0f 86fe
+OK 33 a7c4 6247 e941 7438
+OK 34 a7c4 447b b45a 2d99
+OK 35 a7c4 a289 acde c88b
+OK 36 a7c4 9fb2 b1c2 f83a
+OK 37 a7c4 7de7 bcb2 dc89
+OK 38 a7c4 5976 1c6c a66f
+OK 39 a7c4 8f6e d23b 46f3
+OK 40 a7c4 c4e2 017c 8350
+<svt> quit
+==============
+slice/_wrd/:
+db.traits
+index/_wrd/:
+a7c4
+38 a7c4 5976 1c6c a66f
+39 a7c4 8f6e d23b 46f3
+40 a7c4 c4e2 017c 8350
+==============
+<zdb> erasedisk
+Database on disk erased successfully

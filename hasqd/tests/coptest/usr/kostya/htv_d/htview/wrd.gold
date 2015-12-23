@@ -1,0 +1,77 @@
+<htv> include z_vars.inc
+<htv> (variable) $try = 100
+<htv> (variable) $db = db33
+<htv> (variable) $hello = Hello, world!
+<htv> (variable) $3 = 3
+<htv> (variable) $4 = 4 5
+<htv> (variable) $5 = 5 6 7
+<htv> (variable) $hash = _wrd
+<htv> (variable) $dn = a7c4
+<htv> erase $db
+erasing db33 failed
+<htv> new canvas $db 5 5
+<htv> show
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> new db 0 0 $hash wrd Word 1 [] 1 0
+<htv> show
+[# --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> new pub 0 0
+Cmd: -lnqc tcp_port=13131 db=db33/db_0_0
+<htv> show
+[#P--][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> send 0 0 zero * $hash 0 $dn 0000 11b1 ef7e
+Reply: OK 1000
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1000
+<htv> send 0 0 add * $hash 1 $dn 4694 9ca4 d528
+Reply: OK 1001
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1001
+<htv> send 0 0 add * $hash 2 $dn 5000 62e3 ef39 $hello
+Reply: OK 1002
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1002
+<htv> send 0 0 last $hash $dn
+Reply: OK 2 a7c4 5000 62e3 ef39 Hello, world!
+<htv> send 0 0 add * $hash 3 $dn 6aca a4a0 05aa $3
+Reply: OK 1003
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1003
+<htv> send 0 0 add * $hash 4 $dn 7c7b efb9 9212 $4
+Reply: OK 1004
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1004
+<htv> send 0 0 add * $hash 5 $dn e922 8643 e4a5 $5
+Reply: OK 1005
+<htv> expect 0 OK $try
+<htv> send 0 0 job 1005
+<htv> show
+[#P--][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> send 0 0 last $hash $dn
+Reply: OK 5 a7c4 e922 8643 e4a5 5 6 7
+<htv> shut 0 0
+<htv> show
+[# --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+[  --][  --][  --][  --][  --]
+<htv> erase $db
+erasing db33 ok
+<htv> q

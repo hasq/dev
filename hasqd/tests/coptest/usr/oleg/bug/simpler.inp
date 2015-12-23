@@ -1,0 +1,13 @@
+
+begin
+for i 31 40
+{
+	ex 0 OK 100 tcp self { [ add * _md5 ] i [ [dn] [pass] ] }
+}
+end
+
+
+print ex 1 40 100 tcp self { [ last _md5 ] hash md5 [ dn ] }
+sleep 50
+
+quit

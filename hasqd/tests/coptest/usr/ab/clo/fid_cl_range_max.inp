@@ -1,0 +1,5 @@
+print ex 0 OK 100 tcp self  { [ range _wrd 0 20 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd 3 18 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd 3 100 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self  { [ range _wrd 15 100 ] hash wrd [ rdn ] }
+quit

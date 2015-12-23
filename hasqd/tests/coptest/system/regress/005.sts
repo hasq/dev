@@ -1,0 +1,2 @@
+#!/bin/sh
+$1/hasqd -clnq s=005.inp dprn=1 dsvt=1

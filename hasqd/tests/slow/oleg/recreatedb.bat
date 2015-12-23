@@ -1,0 +1,1 @@
+..\..\..\src\_bin_msc\zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0" "create _s22 s22 SHA2-256 1 [abc] 1 0"

@@ -1,0 +1,14 @@
+ex 0 OK 100 tcp self { [ z * MD5DIR 0 [rdn] [k1]:1 [k2]:1 [k3]:1 [k4]:1 [k5]:1 data0 ] }
+ex 0 OK 100 tcp self { [ add * MD5DIR 1 [rdn] [k2]:1 [k3]:1 [k4]:1 43134d912da049814e5aa0aa19efb27a [k] data1 ] }
+ex 0 OK 100 tcp self { [ add * MD5DIR 2 [rdn] [k3]:1 [k4]:0 [k4]:1 [k5]:1 [k]:0 [k] data2 ] }
+ex 0 OK 100 tcp self { [ add * MD5DIR 3 [rdn] 43d3f8456fbba659a1cdef8f47623896 [k5]:1 [k] data3 ] }
+ex 0 OK 100 tcp self { [ add * MD5DIR 4 [rdn] [k5]:1 [k] data4 ] }
+print ex 1 4 100 tcp self { [ last MD5DIR ] hash md5 [ rdn ] }
+
+ex 0 OK 100 tcp self { [ z * MD5DIR 0 [rdn1] [k1]:1 [k2]:1 [k3]:1 [k4]:1 [k5]:1 data0 ] }
+print ex 0 REC_INIT_BAD_KGO 100 tcp self { [ add * MD5DIR 1 [rdn1] [k2]:1 [k3]:1 [k4]:1 [k5]:1 data1 ] }
+print ex 0 REC_INIT_BAD_KGO 100 tcp self { [ add * MD5DIR 1 [rdn1] [k2]0:1 [k3]:1 [k4]:1 [k5]:1 data1 ] }
+ex 0 OK 100 tcp self { [ add * MD5DIR 1 [rdn1] [k2]:1 [k3]:1 [k4]:1 [k5]:1 [k] data1 ] }
+print ex 1 1 100 tcp self { [ last MD5DIR ] hash md5 [ rdn1 ] }
+
+quit 

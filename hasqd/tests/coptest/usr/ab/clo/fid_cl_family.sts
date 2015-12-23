@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing FID_CL_FAMILY
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -qc s=$tn.inp family="cl_family" dprn=1 dsvt=1 | grep "^Family"

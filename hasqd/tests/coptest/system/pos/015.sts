@@ -1,0 +1,24 @@
+#!/bin/sh
+
+$1/zdb erasedisk
+$1/zdb "create _md5 md5 MD5 1 [abc] 1 0" "create _wrd wrd WRD 1 [abc] 1 0"
+
+$1/hasqd -c s=015.inp
+
+ls -1 slice > tmp
+ls -1 index >> tmp
+
+mkdir slice/just_dir
+echo rubbish > slice/just_file
+ls -1 slice >> tmp
+
+rm -r index  # trigger index regeneration when hasqd starts
+$1/hasqd -c s=015.inp
+ls -1 index >> tmp
+
+$1/zdb erasedisk
+
+cat tmp | ( LC_ALL=C sort )
+rm tmp
+
+

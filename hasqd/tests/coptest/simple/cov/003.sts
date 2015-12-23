@@ -1,0 +1,2 @@
+#!/bin/sh
+$1/hasqd s=@quit tcp_port=8080 console=0 dsvt=1

@@ -1,0 +1,320 @@
+
+# simple test on node down
+# 0 -> 2D
+
+new canvas db 9 2
+new pub 0 1 hint iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+new pub 2 1 hint nn=v2
+
+show
+
+send 0 1 connect 127.0.0.1:13142
+
+expect 2 127.0.0.1:13142 10
+send 0 1 info fam
+
+shut 2 1
+
+sleep 50
+
+reorg 0 1
+sleep 50
+
+expect 4 D 30
+send 0 1 info fam
+send 0 1 info fam
+
+reorg 0 1
+sleep 1500
+send 0 1 info nbs
+
+shut 0 1
+
+erase db
+q
+
+
+#=====================================================
+# + -> 1L
+# |
+# 0 -> 2 -> 4 -> 5 -> 6 -> 7D
+# |
+# + -> 3D
+# |
+# + -> 8DL
+
+new canvas db 9 2
+new pub 0 1 hint iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+new pub 1 1
+new pub 2 1
+new pub 3 1
+new pub 4 1
+new pub 5 1
+new pub 6 1
+new pub 7 1
+new pub 8 1
+show
+
+send 6 1 connect 127.0.0.1:13147
+expect 2 127.0.0.1:13147 10
+send 6 1 info fam
+
+send 5 1 connect 127.0.0.1:13146
+expect 2 127.0.0.1:13146 10
+send 5 1 info fam
+
+send 4 1 connect 127.0.0.1:13145
+expect 2 127.0.0.1:13145 10
+send 4 1 info fam
+
+send 2 1 connect 127.0.0.1:13144
+expect 2 127.0.0.1:13144 10
+send 2 1 info fam
+
+send 0 1 connect 127.0.0.1:13141
+send 0 1 connect 127.0.0.1:13142
+send 0 1 connect 127.0.0.1:13143
+send 0 1 connect 127.0.0.1:13148
+
+expect 2 127.0.0.1:13141 10
+send 0 1 info fam
+
+expect 7 127.0.0.1:13142 10
+send 0 1 info fam
+
+expect 12 127.0.0.1:13143 10
+send 0 1 info fam
+
+expect 17 127.0.0.1:13148 10
+send 0 1 info fam
+
+shut 8 1
+shut 7 1
+shut 3 1
+
+expect 0 127.0.0.1:13148 10
+send 0 1 info fam
+
+reorg 0 1
+sleep 50
+
+expect 0 127.0.0.1:13148 30
+send 0 1 info fam
+
+shut 6 1
+shut 5 1
+shut 4 1
+shut 2 1
+shut 1 1
+shut 0 1
+
+erase db
+q
+
+
+############################
+
+# + -> 1L
+# |
+# 0 -> 2 -> 4 -> 5 -> 6 -> 7D
+# |
+# + -> 3D
+# |
+# + -> 8DL
+
+new canvas db 9 2
+new pub 0 1 hint iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+new pub 1 1
+new pub 2 1
+new pub 3 1
+new pub 4 1
+new pub 5 1
+new pub 6 1
+new pub 7 1
+new pub 8 1
+show
+
+send 6 1 connect 127.0.0.1:13147
+expect 2 127.0.0.1:13147 10
+send 6 1 info fam
+
+send 5 1 connect 127.0.0.1:13146
+expect 2 127.0.0.1:13146 10
+send 5 1 info fam
+
+send 4 1 connect 127.0.0.1:13145
+expect 2 127.0.0.1:13145 10
+send 4 1 info fam
+
+send 2 1 connect 127.0.0.1:13144
+expect 2 127.0.0.1:13144 10
+send 2 1 info fam
+
+send 0 1 connect 127.0.0.1:13141
+send 0 1 connect 127.0.0.1:13142
+send 0 1 connect 127.0.0.1:13143
+send 0 1 connect 127.0.0.1:13148
+
+expect 2 127.0.0.1:13141 10
+send 0 1 info fam
+
+expect 7 127.0.0.1:13142 10
+send 0 1 info fam
+
+expect 12 127.0.0.1:13143 10
+send 0 1 info fam
+
+expect 17 127.0.0.1:13148 10
+send 0 1 info fam
+
+shut 8 1
+shut 7 1
+shut 3 1
+
+reorg 0 1
+sleep 50
+
+expect 0 127.0.0.1:13148 10
+send 0 1 info fam
+
+shut 6 1
+shut 5 1
+shut 4 1
+shut 2 1
+shut 1 1
+shut 0 1
+
+erase db
+q
+
+#################################
+
+erase db
+new canvas db 2 1
+new db all
+start all
+
+
+send 0 0 zero _wrd * 0 fd80 0000 d521 d521
+send 0 0 add _wrd * 1 fd80 3b51 6a31 e311
+expect 5 e311 10
+send 0 0 last _wrd fd80
+show
+
+send 1 0 zero _wrd * 0 fd80 0000 d521 d521
+send 1 0 add _wrd * 1 fd80 3b51 6a31 2211
+send 1 0 add _wrd * 2 fd80 ab51 4621 7821
+expect 5 7821 10
+send 1 0 last _wrd fd80
+
+
+
+cross all
+
+sleep 100
+
+expect 1 127.0.0.1:13132 100
+send 0 0 info nbs
+
+expect 1 127.0.0.1:13131 100
+send 1 0 info nbs
+
+show
+
+
+send 1 0 conflict _wrd fd80
+
+show
+
+sleep 100000
+shut all
+
+erase db
+
+q
+
+
+##############################################################
+
+new canvas base 3 2
+new db 0 0 _wrd wrd WRD 1 [] 1 0
+new db 1 0 _wrd wrd WRD 1 [] 1 0
+new pub 0 0 hint dsvt=1 dprn=1
+new pub 1 0 hint dsvt=1 dprn=1
+
+nextsleep 10
+inject 0 0 print [ hello ]
+
+inject 0 0 r0 = recpwd _wrd 0 rdn pas1
+inject 0 0 r1 = recpwd _wrd 1 rdn pas1
+inject 0 0 r2 = recpwd _wrd 1 rdn pas2
+inject 0 0 r3 = recpwd _wrd 2 rdn pas1
+sleep 10
+
+nextsleep 10
+inject 0 0 print r0 r1 r2 r3
+
+inject 0 0 tcp self [ zero _wrd * 0 fd80 0000 d521 d521 ]
+inject 0 0 tcp self [ zero _wrd * 1 fd80 3b51 6a31 2211 ]
+expect 5 2211
+send 0 0 last _wrd fd80
+
+inject 1 0 tcp self [ zero _wrd * 0 fd80 0000 d521 d521 ]
+inject 1 0 tcp self [ zero _wrd * 1 fd80 3b51 6a31 e311 ]
+expect 5 e311
+send 1 0 last _wrd fd80
+
+connect 0 0 1 0
+connect 1 0 0 0
+
+expect 1 127.0.0.1:13132 100
+send 0 0 info nbs
+expect 1 127.0.0.1:13131 100
+send 1 0 info nbs
+refconn all
+show
+
+
+inject 0 0 tcp self [ zero _wrd * 2 fd80 ab51 4621 7821 ]
+expect 5 7821
+send 0 0 last _wrd fd80
+
+sleep 1000
+
+shut 1 0
+shut 0 0
+erase base
+q
+
+
+
+new canvas base 3 2
+show
+new db 1 0 _wrd wrd WRD 1 [] 1 0
+new db 0 0 all
+show
+new cmd 0 0
+new pub 0 0
+new pub 1 0
+show
+#send 1 0 info db
+send 0 0 info db
+shut 1 0
+shut 0 0
+show
+erase base
+show
+
+q
+
+erase db
+new canvas db 20 15
+start all
+sleep 4000
+
+#cross all
+
+shut all
+
+q
+

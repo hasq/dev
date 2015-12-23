@@ -1,0 +1,18 @@
+erasedisk      
+create _md5 md5 MD5 1 [magic] 100 0
+load
+addpwd _md5 0:29 rawDn pwd
+getrange _md5 rawDn 0 0 -1
+getrange _md5 rawDn 0 -30 -1
+getrange _md5 rawDn -30 0 -1
+getrange _md5 rawDn -30 -30 -1
+getrange _md5 rawDn 0 1 -1
+getrange _md5 rawDn 1 0 -1
+getrange _md5 rawDn 0 5 -1
+getrange _md5 rawDn 3 11 -1
+getrange _md5 rawDn -2 -1 -1
+getrange _md5 rawDn -1 -1 -1
+getrange _md5 rawDn 20 23 -1
+getrange _md5 rawDn 27 29 -1
+getrange _md5 rawDn 29 29 -1
+erasedisk

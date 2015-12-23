@@ -1,0 +1,33 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<svt> for i 1 4 { print { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+z * _wrd 0 1fae 0000 3272 a197
+z * _wrd 0 1fe1 0000 5ab0 e297
+z * _wrd 0 8e69 0000 57f7 b3cf
+z * _wrd 0 bea5 0000 7ba3 9e7a
+<svt> for i 1 4 { print hash wrd < [ rdn ] i > }
+1fae
+1fe1
+8e69
+bea5
+<svt> for i 1 4 { print expect 0 OK 100 tcp 127.0.0.1:13131 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+OK 1000
+OK 1001
+OK 1002
+OK 1003
+<svt> sleep 100
+<svt> expect 0 OK 20 tcp 127.0.0.1:13131 { [ last _wrd bea5 ] }
+<svt> print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 1fae ] }
+OK 0 1fae 0000 3272 a197
+<svt> print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 1fe1 ] }
+OK 0 1fe1 0000 5ab0 e297
+<svt> print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 8e69 ] }
+OK 0 8e69 0000 57f7 b3cf
+<svt> print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd bea5 ] }
+OK 0 bea5 0000 7ba3 9e7a
+<svt> tcp 127.0.0.1:13131 [ quit ]
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

@@ -1,0 +1,13 @@
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<zdb> create _s25 s25 MD5 1 [bcd] 1 0
+<zdb> drop
+Fatal error (char*): Database does not exist
+<zdb> load
+<zdb> load
+Fatal error (char*): Database exists
+<zdb> drop
+Fatal error (char*): Database does not exist
+<zdb> load
+<zdb> drop
+<zdb> erasedisk
+Database on disk erased successfully

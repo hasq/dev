@@ -1,0 +1,96 @@
+<htv> erase dbp
+erasing dbp failed
+<htv> new canvas dbp 3 3
+<htv> show
+[  --][  --][  --]
+[  --][  --][  --]
+[  --][  --][  --]
+<htv> new db 0 0 _wrd wrd Word 1 [] 1 0
+<htv> new db 0 1 _wrd wrd Word 1 [] 1 0
+<htv> new db 1 0 _wrd wrd Word 1 [] 1 0
+<htv> new db 2 0 _wrd wrd Word 1 [] 1 0
+<htv> new db 1 1 _wrd wrd Word 1 [] 1 0
+<htv> new db 2 1 _wrd wrd Word 1 [] 1 0
+<htv> show
+[# --][# --][# --]
+[# --][# --][# --]
+[  --][  --][  --]
+<htv> new pub 0 0 hint nn=v00
+Cmd: -lnqc tcp_port=13131 db=dbp/db_0_0 nn=v00
+<htv> new pub 1 0 hint nn=v10
+Cmd: -lnqc tcp_port=13132 db=dbp/db_1_0 nn=v10
+<htv> new pub 0 1 hint nn=v01
+Cmd: -lnqc tcp_port=13134 db=dbp/db_0_1 nn=v01
+<htv> new pub 1 1 hint nn=v11
+Cmd: -lnqc tcp_port=13135 db=dbp/db_1_1 nn=v11
+<htv> new pub 2 0 hint nn=v20
+Cmd: -lnqc tcp_port=13133 db=dbp/db_2_0 nn=v20
+<htv> new pub 2 1 hint nn=v21
+Cmd: -lnqc tcp_port=13136 db=dbp/db_2_1 nn=v21
+<htv> show
+[#P--][#P--][#P--]
+[#P--][#P--][#P--]
+[  --][  --][  --]
+<htv> send 0 0 connect ${1:0}
+Reply: OK
+<htv> send 1 0 connect ${0:0}
+Reply: OK
+<htv> send 0 0 connect ${0:1}
+Reply: OK
+<htv> send 0 1 connect ${0:0}
+Reply: OK
+<htv> send 0 1 connect ${1:1}
+Reply: OK
+<htv> send 1 1 connect ${0:1}
+Reply: OK
+<htv> send 1 0 connect ${2:0}
+Reply: OK
+<htv> send 2 0 connect ${1:0}
+Reply: OK
+<htv> send 1 1 connect ${2:1}
+Reply: OK
+<htv> send 2 1 connect ${1:1}
+Reply: OK
+<htv> expect 2 127.0.0.1:13134
+<htv> send 0 0 info nbs
+<htv> expect 2 127.0.0.1:13134
+<htv> send 0 0 info nbs
+<htv> expect 2 127.0.0.1:13133
+<htv> send 1 0 info nbs
+<htv> expect 1 127.0.0.1:13132
+<htv> send 2 0 info nbs
+<htv> expect 2 127.0.0.1:13135
+<htv> send 0 1 info nbs
+<htv> expect 2 127.0.0.1:13136
+<htv> send 1 1 info nbs
+<htv> expect 1 127.0.0.1:13135
+<htv> send 2 1 info nbs
+<htv> show
+[#P--][#P--][#P--]
+[#P--][#P--][#P--]
+[  --][  --][  --]
+<htv> send 2 1 zero * _wrd 0 3421 0000 96f0 0c01
+Reply: OK 1000
+<htv> expect 0 OK
+<htv> send 2 1 job 1000
+<htv> sleep 150
+<htv> send 2 1 info log connect
+Reply: OK
+
+<htv> send 0 0 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> send 1 0 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> send 2 0 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> send 0 1 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> send 1 1 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> send 2 1 last _wrd 3421
+Reply: OK 0 3421 0000 96f0 0c01
+<htv> shut all
+stopping all: [0x0][1x0][2x0][0x1][1x1][2x1][0x2][1x2][2x2] done
+<htv> erase dbp
+erasing dbp ok
+<htv> q

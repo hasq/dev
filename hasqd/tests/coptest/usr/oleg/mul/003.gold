@@ -1,0 +1,17 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<svt> for i 1 9 { print { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+z * _wrd 0 1fae 0000 3272 a197
+z * _wrd 0 1fe1 0000 5ab0 e297
+z * _wrd 0 8e69 0000 57f7 b3cf
+z * _wrd 0 bea5 0000 7ba3 9e7a
+z * _wrd 0 becd 0000 e934 9b68
+z * _wrd 0 5299 0000 3378 e080
+z * _wrd 0 11e3 0000 8525 96ad
+z * _wrd 0 14fc 0000 7a17 5c99
+z * _wrd 0 69b3 0000 496a d71a
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

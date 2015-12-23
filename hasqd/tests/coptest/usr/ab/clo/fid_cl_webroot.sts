@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Testing FID_CL_WEBROOT
+
+in=$(basename $0)
+in=${in%.*}
+
+mkdir slice
+
+$1/hasqd -cq s=$in.inp dprn=1 dsvt=1
+$1/hasqd -cq s=$in.inp dprn=1 dsvt=1 webroot="webroot"
+
+rm -rf slice

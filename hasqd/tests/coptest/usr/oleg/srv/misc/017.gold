@@ -1,0 +1,14 @@
+<svt> print expect 0 OK 100 tcp self [ ping ] 
+OK
+<svt> print expect 0 OK 100 tcp self [ admin disable net ] 
+OK
+<svt> print expect 0 DISABLED 100 tcp self [ ping ] 
+DISABLED
+<svt> print expect 0 OK 100 tcp self [ admin enable net ] 
+OK
+<svt> print expect 0 OK 100 tcp self [ ping ] 
+OK
+<svt> print expect 0 OK 100 tcp self [ admin reorg ] 
+OK
+<svt> sleep 10
+<svt> quit

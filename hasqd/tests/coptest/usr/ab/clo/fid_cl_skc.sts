@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Testing FID_CL_SKCKEY
+
+in=$(basename $0)
+in=${in%.*}
+text="abcdefghijklmnoprstuvwxyz\nABCDEFJHIJKLMNOPRSTUVWXYZ\n0123456789"
+touch $in
+
+compare () {
+	if cmp $1 $2 >/dev/null
+	then
+		echo $3 algorithm working
+	else
+		echo $3 algorithm not working
+	fi
+}
+
+echo -e $text> $in
+
+$1/hasqd -clqpy skckey="skckey" skcseed="abcdefghijklmnoprstuvwxyz" s="@save $in.e.hex skc enc hex file $in; quit"
+$1/hasqd -clqpy skckey="skckey" s="@save $in.d.hex skc dec hex file $in.e.hex; quit"
+
+#$1/hasqd -clqpy s="@addkey [ skckey ]; save $in.d.hex skc dec hex file $in.e.hex; quit"
+
+compare $in.d.hex $in hex
+
+$1/hasqd -clqpy skckey="skckey" skcseed="abcdefghijklmnoprstuvwxyz" s="@save $in.e.bin skc enc bin file $in; quit"
+$1/hasqd -clqpy skckey="skckey"  s="@save $in.d.bin skc dec bin file $in.e.bin; quit"
+#$1/hasqd -clqpy s="@addkey [ skckey ]; save $in.d.bin skc dec bin file $in.e.bin; quit"
+
+compare $in.d.bin $in bin
+
+$1/hasqd -clqpy skckey="skckey" skcseed="abcdefghijklmnoprstuvwxyz" s="@save $in.e.b64 skc enc b64 file $in; quit"
+$1/hasqd -clqpy skckey="skckey" s="@save $in.d.b64 skc dec b64 file $in.e.b64; quit"
+#$1/hasqd -clqpy s="@addkey [ skckey ]; save $in.d.b64 skc dec b64 file $in.e.b64; quit"
+
+compare $in.d.b64 $in b64
+
+rm $in.e.hex $in.e.bin $in.e.b64 $in.d.hex $in.d.bin $in.d.b64 $in

@@ -1,0 +1,31 @@
+<htv> erase db
+erasing db failed
+<htv> new canvas db 2 1
+<htv> new db all
+<htv> start all
+starting: [0x0 (13131)][1x0 (13132)] done
+<htv> cross all
+crossing: [0x0 (13131)][1x0 (13132)] done
+<htv> sleep 100
+<htv> expect 1 127.0.0.1:13132 100
+<htv> send 0 0 info nbs
+<htv> expect 1 127.0.0.1:13131 100
+<htv> send 1 0 info nbs
+<htv> show
+[#P--][#P--]
+<htv> send 0 0 zero * _wrd 0 a0d0 0000 7121 bf11
+Reply: OK 1000
+<htv> expect 0 OK 10
+<htv> send 0 0 last _wrd a0d0
+<htv> show
+[#P--][#P--]
+<htv> expect 0 OK 10
+<htv> send 1 0 last _wrd a0d0
+<htv> show
+[#P--][#P--]
+<htv> sleep 10
+<htv> shut all
+stopping all: [0x0][1x0] done
+<htv> erase db
+erasing db ok
+<htv> q

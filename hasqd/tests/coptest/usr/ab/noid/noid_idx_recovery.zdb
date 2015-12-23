@@ -1,0 +1,12 @@
+set base db
+erasedisk
+
+create _md5base md5 MD5 1 [magic] 1 0
+create _s22base s22 S22 1 [magic] 1 0
+create _s25base s25 S25 1 [magic] 1 0
+
+load
+
+addpwd _md5base 0:10 rdn:0:10 pwd
+addpwd _s22base 0:10 rdn:0:10 pwd
+addpwd _s25base 0:10 rdn:0:10 pwd

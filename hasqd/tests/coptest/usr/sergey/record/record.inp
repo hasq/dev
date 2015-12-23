@@ -1,0 +1,49 @@
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 1 ] hash wrd [ rdn ] }
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 3 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 5 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 10 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 15 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 25 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -1 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -5 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -10 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -15 ] hash wrd [ rdn ] }   
+print ex 0 IDX_NEG 100 tcp self { [ record _wrd -32 ] hash wrd [ rdn ] }  
+print ex 0 IDX_HIGH 100 tcp self { [ record _wrd  32 ] hash wrd [ rdn ] }                   
+
+
+print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 31 rdn pwd }
+print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 32 rdn pwd }
+print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 33 rdn pwd }
+print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 34 rdn pwd }
+print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 35 rdn pwd }
+
+sleep 100 
+
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 1 ] hash wrd [ rdn ] }
+print ex 0 NO_RECS 100 tcp self { [ record _wrd 3 ] hash wrd [ rdn ] }
+
+print ex 0 OK 100 tcp self { [ record _wrd 7 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 12 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 20 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 30 ] hash wrd [ rdn ] }
+
+print ex 0 OK 100 tcp self { [ record _wrd -2 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -7 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -12 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd -20 ] hash wrd [ rdn ] }   
+
+
+print ex 0 OK 100 tcp self { [ record _wrd 31 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 32 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 33 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 34 ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 35 ] hash wrd [ rdn ] }
+
+print ex 0 IDX_NEG 100 tcp self { [ record _wrd -37 ] hash wrd [ rdn ] }
+print ex 0 IDX_HIGH 100 tcp self { [ record _wrd 36 ] hash wrd [ rdn ] }
+
+quit
+

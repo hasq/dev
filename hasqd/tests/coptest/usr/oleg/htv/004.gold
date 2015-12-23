@@ -1,0 +1,22 @@
+<htv> (variable) $cmd = new
+<htv> $cmd canvas db 2 1
+<htv> (variable) $cmd = show
+<htv> $cmd
+[  --][  --]
+<htv> include 004.inc
+<htv> show
+[  --][  --]
+<htv> show
+[  --][  --]
+<htv> include
+Fatal error (gl::Exception): Index error
+<htv> include aaa
+Fatal error (string): Cannot open aaa
+<htv> include 004.inc
+<htv> show
+no canvas
+<htv> show
+no canvas
+<htv> erase db
+erasing db ok
+<htv> q

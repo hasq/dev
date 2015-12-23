@@ -1,0 +1,30 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _md5 0:1 rdn pass
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+<svt> r = recpwd _md5 2 rdn pass
+<svt> print r
+2 a7c4 391d ecd4 7c3e
+<svt> println tcp self { [ add * _md5 ] r } sleep 100
+OK 1000
+sleeping
+<svt> sendnote
+<svt> print tcp self [ job 1000 ]
+OK
+<svt> println tcp self { [ add * _md5 ] r } sleep 100
+OK 1001
+sleeping
+<svt> print tcp self [ job 1001 ]
+WRONG_SEQ_NUMBER
+<svt> print tcp self [ job 1000 ]
+OK
+<svt> print tcp self [ job 1001 ]
+WRONG_SEQ_NUMBER
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

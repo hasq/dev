@@ -1,0 +1,12 @@
+erasedisk      
+create _md5 md5 MD5 1 [magic] 100 0
+load
+addpwd _md5 0:18 rawDn pwd
+getrecord _md5 rawDn 2
+getrecord _md5 rawDn -1
+getrecord _md5 rawDn -2
+getrecord _md5 rawDn 0
+getrecord _md5 rawDn -19
+getrecord _md5 rawDn 1
+getrecord _md5 rawDn 18   
+erasedisk

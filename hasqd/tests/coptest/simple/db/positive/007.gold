@@ -1,0 +1,27 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 md5 MD5 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _md5 0 rawDn pass
+<zdb> getrecord _md5 rawDn 0
+0 bf37a1dc28d22548fd3a056814dec313 00000000000000000000000000000000 d82b9a69ce0cd48626def3d5fc2efec7 c98605ab21bd927d72edf0af27baff87
+<zdb> addpwd _md5 1 rawDn pass a
+<zdb> getrecord _md5 rawDn 1
+1 bf37a1dc28d22548fd3a056814dec313 7c21f01a8dba77575894c41b0d434280 bc60102aca8e1cb084611684eb384378 786abbc93d98ded2c2a24100081263d2 a
+<zdb> addpwd _md5 2 rawDn pass 	aa
+<zdb> getrecord _md5 rawDn 2
+2 bf37a1dc28d22548fd3a056814dec313 a308c4be4b87635eee1d54a21ee5c73f 65a61c2c393e86dcaa648ccf65a13aed a1f1f5e27a9983cd82357f55fbc19cde aa
+<zdb> addpwd _md5 3 rawDn pass  	¾	bb 	
+<zdb> getrecord _md5 rawDn 3
+3 bf37a1dc28d22548fd3a056814dec313 6a39e8d473107b200e39d6c6e2f9a912 ccf7a5362918cb8c730c8636b6c538bd fdd61754228f4e2308d9a1657ebf6580 . bb
+<zdb> addpwd _md5 4 rawDn pass 	aa¼bb        cc  ½
+<zdb> getrecord _md5 rawDn 4
+4 bf37a1dc28d22548fd3a056814dec313 7594c5061bf6d82129c7b8b8487f6dc3 06d389ca616a3b3cef2b0665d362c6f4 31a301aa2767da615d4e355ff2fadd76 aa.bb . cc .
+<zdb> addpwd _md5 5 rawDn pass aa  	bb.	cc	
+<zdb> getrecord _md5 rawDn 5
+5 bf37a1dc28d22548fd3a056814dec313 0bdd195013824249455c9180827cd973 57d87757139c8fe94cf86d6fa1219e6d a18e551a8853dfab78f80f1ec97eb0d2 aa bb. .cc
+<zdb> addpwd _md5 6 rawDn pass      aa..bb. Ä  cc
+<zdb> getrecord _md5 rawDn 6
+6 bf37a1dc28d22548fd3a056814dec313 a60352d02bf45f2422724b9bf9fb043f 7d4b7e6590629b9246fa87020e7c797b d2ec9244ac9f7455d45b2edef935009b aa..bb. . cc
+<zdb> erasedisk
+Database on disk erased successfully

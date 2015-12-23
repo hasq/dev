@@ -1,0 +1,50 @@
+erasedisk
+
+create _md5 md5 MD5 1 [abc] 1 0
+load
+
+addpwd _md5 0 rdn pass
+getlastdata _md5 rdn 0 0
+getlastdata _md5 rdn 0 1
+getlastdata _md5 rdn 10 1
+getlastdata _md5 rdn 0 -1
+getlastdata _md5 rdn 10 -1
+
+addpwd _md5 1 rdn pass Data_1
+getlastdata _md5 rdn 0 0
+getlastdata _md5 rdn 0 -1
+getlastdata _md5 rdn 1 0
+getlastdata _md5 rdn 10 1
+getlastdata _md5 rdn 10 10
+getlastdata _md5 rdn 10 -1
+getlastdata _md5 rdn -3 0
+getlastdata _md5 rdn -3 5
+getlastdata _md5 rdn 2 2
+
+addpwd _md5 2:10 rdn pass
+getlastdata _md5 rdn 5 4
+getlastdata _md5 rdn 5 5
+getlastdata _md5 rdn 6 6
+getlastdata _md5 rdn 6 5
+getlastdata _md5 rdn 12 -1
+getlastdata _md5 rdn 12 1
+getlastdata _md5 rdn 12 2
+getlastdata _md5 rdn 12 3
+getlastdata _md5 rdn -12 -1
+getlastdata _md5 rdn -5 5
+getlastdata _md5 rdn -5 6
+
+addpwd _md5 11 rdn pass Data_11
+addpwd _md5 12:20 rdn pass
+getlastdata _md5 rdn -1 -1
+getlastdata _md5 rdn 12 -1
+getlastdata _md5 rdn 10 -1
+getlastdata _md5 rdn -8 2
+getlastdata _md5 rdn -8 3
+getlastdata _md5 rdn 23 -1
+getlastdata _md5 rdn 23 1
+getlastdata _md5 rdn 11 -1
+getlastdata _md5 rdn 11 0
+getlastdata _md5 rdn 11 1
+
+erasedisk

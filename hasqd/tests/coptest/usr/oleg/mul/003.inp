@@ -1,0 +1,4 @@
+for i 1 9 { print { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+
+quit
+

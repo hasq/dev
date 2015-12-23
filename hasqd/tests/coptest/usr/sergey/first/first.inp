@@ -1,0 +1,4 @@
+print expect 0 OK 100 tcp self  { [ first _wrd ] hash wrd [ rdn ] }
+print [ ]
+
+quit

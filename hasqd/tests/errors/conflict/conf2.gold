@@ -1,0 +1,314 @@
+<htv> new canvas dbp 2 2
+<htv> show
+[  --][  --]
+[  --][  --]
+<htv> new db 0 0 _wrd wrd Word 1 [] 1 0
+<htv> new db 0 1 _wrd wrd Word 1 [] 1 0
+<htv> new db 1 0 _wrd wrd Word 1 [] 1 0
+<htv> new db 1 1 _wrd wrd Word 1 [] 1 0
+<htv> show
+[# --][# --]
+[# --][# --]
+<htv> new pub 0 0 -lnqc tcp_port=13100 db=dbp/db_0_0 nn=v00 dsvt=0 dprn=1 id=700 dwkr=0
+Cmd: -lnqc tcp_port=13100 db=dbp/db_0_0 nn=v00 dsvt=0 dprn=1 id=700 dwkr=0
+<htv> new pub 0 1 -lnqc tcp_port=13101 db=dbp/db_0_1 nn=v01 dsvt=0 dprn=1 id=701 dwkr=0
+Cmd: -lnqc tcp_port=13101 db=dbp/db_0_1 nn=v01 dsvt=0 dprn=1 id=701 dwkr=0
+<htv> new pub 1 0 -lnqc tcp_port=13110 db=dbp/db_1_0 nn=v10 dsvt=0 dprn=1 id=710 dwkr=0
+Cmd: -lnqc tcp_port=13110 db=dbp/db_1_0 nn=v10 dsvt=0 dprn=1 id=710 dwkr=0
+<htv> new pub 1 1 -lnqc tcp_port=13111 db=dbp/db_1_1 nn=v11 dsvt=0 dprn=1 id=711 dwkr=0
+Cmd: -lnqc tcp_port=13111 db=dbp/db_1_1 nn=v11 dsvt=0 dprn=1 id=711 dwkr=0
+<htv> show
+[#P--][#P--]
+[#P--][#P--]
+<htv> connect 0 0 0 1
+<htv> connect 0 1 0 0
+<htv> connect 1 0 1 1
+<htv> connect 1 1 1 0
+<htv> send 0 0 info nbs
+Reply: OK
+127.0.0.1:13101
+
+<htv> send 0 1 info nbs
+Reply: OK
+127.0.0.1:13100
+
+<htv> send 1 0 info nbs
+Reply: OK
+127.0.0.1:13111
+
+<htv> send 1 1 info nbs
+Reply: OK
+127.0.0.1:13110
+
+<htv> send 0 0 zero * _wrd 0 [rdn] [pw1]
+Reply: OK 1000
+<htv> send 1 1 zero * _wrd 0 [rdn] [pw2]
+Reply: OK 1000
+<htv> expect 1 0 20
+<htv> send 0 0 last _wrd a7c4
+<htv> send 0 0 last _wrd a7c4
+Reply: OK 0 a7c4 dec7 9db7 1120
+<htv> expect 1 0 20
+<htv> send 0 1 last _wrd a7c4
+<htv> send 0 1 last _wrd a7c4
+Reply: OK 0 a7c4 dec7 9db7 1120
+<htv> expect 1 0 20
+<htv> send 1 0 last _wrd a7c4
+<htv> send 1 0 last _wrd a7c4
+Reply: OK 0 a7c4 787a b458 b2b4
+<htv> expect 1 0 20
+<htv> send 1 1 last _wrd a7c4
+<htv> send 1 1 last _wrd a7c4
+Reply: OK 0 a7c4 787a b458 b2b4
+<htv> show
+[#P--][#P--]
+[#P--][#P--]
+<htv> connect 0 0 1 0
+<htv> connect 1 0 0 0
+<htv> connect 0 1 1 1
+<htv> connect 1 1 0 1
+<htv> send 0 0 info nbs
+Reply: OK
+127.0.0.1:13101
+127.0.0.1:13110
+
+<htv> send 0 1 info nbs
+Reply: OK
+127.0.0.1:13100
+127.0.0.1:13111
+
+<htv> send 1 0 info nbs
+Reply: OK
+127.0.0.1:13100
+127.0.0.1:13111
+
+<htv> send 1 1 info nbs
+Reply: OK
+127.0.0.1:13101
+127.0.0.1:13110
+
+<htv> send 0 0 add * _wrd 1 [rdn] [pw1]
+Reply: OK 1001
+<htv> send 0 0 last _wrd a7c4
+Reply: OK 1 a7c4 fbed 033b 37ba
+<htv> send 1 1 last _wrd a7c4
+Reply: OK 0 a7c4 787a b458 b2b4
+<htv> sleep 1000
+<htv> send 0 0 last _wrd a7c4
+Reply: OK 1 a7c4 fbed 033b 37ba
+<htv> send 1 1 last _wrd a7c4
+Reply: OK 0 a7c4 787a b458 b2b4
+<htv> sleep 1000
+<htv> send 0 0 last _wrd a7c4
+Reply: OK 1 a7c4 fbed 033b 37ba
+<htv> send 1 1 last _wrd a7c4
+Reply: OK 0 a7c4 787a b458 b2b4
+<htv> send 0 0 info log conflict
+Reply: OK
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+
+<htv> send 1 1 info log conflict
+Reply: OK
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+checkConflict: a7c4
+
+<htv> shut all
+stopping all: [0x0][1x0][0x1][1x1] done
+<htv> erase dbp
+erasing dbp ok
+<htv> quit

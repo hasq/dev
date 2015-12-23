@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing FID_NC_QUIT
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -cq quit=1 lock=0 s=$tn.inp dprn=1 dsvt=1

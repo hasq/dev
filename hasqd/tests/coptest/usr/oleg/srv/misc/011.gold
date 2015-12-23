@@ -1,0 +1,12 @@
+<svt> pp = [ 127.0.0.1:13131 ]
+<svt> show
+pp = 127.0.0.1:13131
+<svt> print expect 0 OK 100 tcp pp [ info id ]
+OK
+vasia13131
+Family: []
+Version: 0.3.1
+SkcKeys: 0
+PublicKey: 0,0
+
+<svt> quit

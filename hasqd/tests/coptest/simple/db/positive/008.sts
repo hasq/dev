@@ -1,0 +1,22 @@
+#!/bin/sh
+$1/zdb < 008.inp
+
+find index > idx_dirs_orig
+find index -type f -print0 | xargs -0 cat > idx_files_content_orig
+
+$1/zdb erasedisk
+
+mv index_ index
+find index > idx_dirs_gen
+find index -type f -print0 | xargs -0 cat > idx_files_content_gen
+rm -r index
+
+echo DIFF_DIRS_START:
+diff idx_dirs_orig idx_dirs_gen
+echo DIFF_DIRS_FINISH
+
+echo DIFF_FILES_START:
+diff idx_files_content_orig idx_files_content_gen
+echo DIFF_FILES_FINISH
+
+rm idx_*

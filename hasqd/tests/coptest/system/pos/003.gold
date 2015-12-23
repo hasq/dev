@@ -1,0 +1,17 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CrankYsNotebook13131 ip=192.168.52.1 port=13131
+Database: OK
+Starting with threads: all
+<svt> a = recpwd _md5 0 dn pass
+<svt> print a
+0 567c 0000 e003 33b4
+<svt> show
+a = 0 567c 0000 e003 33b4
+<svt> del a
+<svt> show
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

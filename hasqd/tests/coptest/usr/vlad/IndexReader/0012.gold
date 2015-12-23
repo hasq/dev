@@ -1,0 +1,102 @@
+<zdb> irgetrange test_index_data10 0 5 -1
+Unrestricted: 0, restricted: 0
+NO_RECORDS_IN_RANGE
+<zdb> irgetrange test_index_data10 0 7 -1
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data10 0 9 -1
+Unrestricted: 3, restricted: 3
+7 data_7
+8 data_8
+9 data_9
+
+<zdb> irgetrange test_index_data10 0 13 -1
+Unrestricted: 7, restricted: 7
+7 data_7
+8 data_8
+9 data_9
+10 data_10
+11 data_11
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 0 15 -1
+Unrestricted: 7, restricted: 7
+7 data_7
+8 data_8
+9 data_9
+10 data_10
+11 data_11
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 9 15 -1
+Unrestricted: 5, restricted: 5
+9 data_9
+10 data_10
+11 data_11
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 13 15 -1
+Unrestricted: 1, restricted: 1
+13 data_13
+
+<zdb> irgetrange test_index_data10 14 15 -1
+Unrestricted: 0, restricted: 0
+INDEX_TOO_HIGH
+<zdb> irgetrange test_index_data10 0 5 2
+Unrestricted: 0, restricted: 0
+NO_RECORDS_IN_RANGE
+<zdb> irgetrange test_index_data10 0 7 2
+Unrestricted: 1, restricted: 1
+7 data_7
+
+<zdb> irgetrange test_index_data10 0 9 2
+Unrestricted: 3, restricted: 2
+8 data_8
+9 data_9
+
+<zdb> irgetrange test_index_data10 0 13 3
+Unrestricted: 7, restricted: 3
+11 data_11
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 0 15 3
+Unrestricted: 7, restricted: 3
+11 data_11
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 9 15 2
+Unrestricted: 5, restricted: 2
+12 data_12
+13 data_13
+
+<zdb> irgetrange test_index_data10 13 15 2
+Unrestricted: 1, restricted: 1
+13 data_13
+
+<zdb> irgetrange test_index_data10 14 15 2
+Unrestricted: 0, restricted: 0
+INDEX_TOO_HIGH
+<zdb> irgetrange test_index_data10 0 5 0
+Unrestricted: 0, restricted: 0
+NO_RECORDS_IN_RANGE
+<zdb> irgetrange test_index_data10 0 7 0
+Unrestricted: 1, restricted: 0
+<zdb> irgetrange test_index_data10 0 9 0
+Unrestricted: 3, restricted: 0
+<zdb> irgetrange test_index_data10 0 13 0
+Unrestricted: 7, restricted: 0
+<zdb> irgetrange test_index_data10 0 15 0
+Unrestricted: 7, restricted: 0
+<zdb> irgetrange test_index_data10 9 15 0
+Unrestricted: 5, restricted: 0
+<zdb> irgetrange test_index_data10 13 15 0
+Unrestricted: 1, restricted: 0
+<zdb> irgetrange test_index_data10 14 15 0
+Unrestricted: 0, restricted: 0
+INDEX_TOO_HIGH

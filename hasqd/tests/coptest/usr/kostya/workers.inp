@@ -1,0 +1,3 @@
+#expect 0 OK 50 print tcp self { [ ping ] }
+print expect 0 OK 50 tcp self { [ ping ] }
+quit

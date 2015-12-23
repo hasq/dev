@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _hash1 md5 HASH1 1 [magic] 1 0
+<zdb> create _hash2 s22 HASH3 1 [magic] 1 0
+<zdb> load
+<zdb> addpwd _hash1 0 rawDn:0:10 pass
+<zdb> addpwd _hash2 0 rawDn:0:5 pass
+<zdb> genidx slice index_
+index successfully generated
+<zdb> erasedisk
+Database on disk erased successfully
+DIFF_DIRS_START:
+DIFF_DIRS_FINISH
+DIFF_FILES_START:
+DIFF_FILES_FINISH

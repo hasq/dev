@@ -1,0 +1,6 @@
+erasedisk 
+create _wrddir wrd WRD 1 [magic] 1 0
+set date 20140101
+set time 235959 
+load 
+addpwd _wrddir 0:3 rdn pwd

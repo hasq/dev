@@ -1,0 +1,16 @@
+<zdb> set base db1
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> set base db1
+<zdb> load
+<zdb> add _wrd 0 fd80 0000 d521 d521
+<zdb> set base db2
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> set base db2
+<zdb> load
+<zdb> add _wrd 0 fd80 0000 f931 4621
+0 fd80 0000 d521 d521
+0 fd80 0000 d521 d521

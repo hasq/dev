@@ -1,0 +1,30 @@
+erasedisk
+
+create _md5 md5 MD5 1 [magic] 1 0
+
+load
+
+
+addpwd _md5 0 rawDn pass
+getrecord _md5 rawDn 0
+
+addpwd _md5 1 rawDn pass a
+getrecord _md5 rawDn 1
+
+addpwd _md5 2 rawDn pass 	aa
+getrecord _md5 rawDn 2
+
+addpwd _md5 3 rawDn pass  	¾	bb 	
+getrecord _md5 rawDn 3
+
+addpwd _md5 4 rawDn pass 	aa¼bb        cc  ½
+getrecord _md5 rawDn 4
+
+addpwd _md5 5 rawDn pass aa  	bb.	cc	
+getrecord _md5 rawDn 5
+
+addpwd _md5 6 rawDn pass      aa..bb. Ä  cc
+getrecord _md5 rawDn 6
+
+
+erasedisk

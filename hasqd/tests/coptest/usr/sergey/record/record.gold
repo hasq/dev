@@ -1,0 +1,85 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [] 1 0
+<zdb> load
+<zdb> addpwd _wrd 0:30 rdn pwd
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=CK180813131 ip=10.224.82.147 port=13131
+Database: OK
+Starting with threads: all
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 1 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 3 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 5 ] hash wrd [ rdn ] }
+OK 5 a7c4 ee0d 58ca 0340
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 10 ] hash wrd [ rdn ] }
+OK 10 a7c4 847b 7171 16ce
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 15 ] hash wrd [ rdn ] }
+OK 15 a7c4 c168 4855 7139
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 25 ] hash wrd [ rdn ] }
+OK 25 a7c4 6c69 1937 b903
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -1 ] hash wrd [ rdn ] }
+OK 30 a7c4 c168 821a ee28
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -5 ] hash wrd [ rdn ] }
+OK 26 a7c4 e4c2 8df6 154a
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -10 ] hash wrd [ rdn ] }
+OK 21 a7c4 50e4 cdc6 f399
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -15 ] hash wrd [ rdn ] }   
+OK 16 a7c4 b5bd 5933 93c8
+<svt> print ex 0 IDX_NEG 100 tcp self { [ record _wrd -32 ] hash wrd [ rdn ] }  
+IDX_NEG
+<svt> print ex 0 IDX_HIGH 100 tcp self { [ record _wrd  32 ] hash wrd [ rdn ] }                   
+IDX_HIGH
+<svt> print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 31 rdn pwd }
+OK 1000
+<svt> print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 32 rdn pwd }
+OK 1001
+<svt> print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 33 rdn pwd }
+OK 1002
+<svt> print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 34 rdn pwd }
+OK 1003
+<svt> print ex 0 OK 100 tcp self { [ add * _wrd ] recpwd _wrd 35 rdn pwd }
+OK 1004
+<svt> sleep 100 
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 1 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 NO_RECS 100 tcp self { [ record _wrd 3 ] hash wrd [ rdn ] }
+NO_RECS
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 7 ] hash wrd [ rdn ] }
+OK 7 a7c4 c50e 58f2 2177
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 12 ] hash wrd [ rdn ] }
+OK 12 a7c4 1ae0 b0b6 6f2b
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 20 ] hash wrd [ rdn ] }
+OK 20 a7c4 1ebe 04fe 3555
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 30 ] hash wrd [ rdn ] }
+OK 30 a7c4 c168 821a ee28
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -2 ] hash wrd [ rdn ] }
+OK 34 a7c4 49c9 31e7 4a18
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -7 ] hash wrd [ rdn ] }
+OK 29 a7c4 1594 995d 4fe7
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -12 ] hash wrd [ rdn ] }
+OK 24 a7c4 3deb f4b7 292d
+<svt> print ex 0 OK 100 tcp self { [ record _wrd -20 ] hash wrd [ rdn ] }   
+OK 16 a7c4 b5bd 5933 93c8
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 31 ] hash wrd [ rdn ] }
+OK 31 a7c4 2767 4cb2 320b
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 32 ] hash wrd [ rdn ] }
+OK 32 a7c4 e5c2 3e29 adc4
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 33 ] hash wrd [ rdn ] }
+OK 33 a7c4 4341 c218 d022
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 34 ] hash wrd [ rdn ] }
+OK 34 a7c4 49c9 31e7 4a18
+<svt> print ex 0 OK 100 tcp self { [ record _wrd 35 ] hash wrd [ rdn ] }
+OK 35 a7c4 b6ff da8a dd84
+<svt> print ex 0 IDX_NEG 100 tcp self { [ record _wrd -37 ] hash wrd [ rdn ] }
+IDX_NEG
+<svt> print ex 0 IDX_HIGH 100 tcp self { [ record _wrd 36 ] hash wrd [ rdn ] }
+IDX_HIGH
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

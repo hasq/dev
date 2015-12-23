@@ -1,0 +1,52 @@
+<svt> skc addkey [ key2 ]
+<svt> skc addkey [ key ]
+<svt> print skc show
+72e86f1e074a3191aad0345e6fdac71c0d13a4a359b09775987f7cef5c73975f
+da3811154d59c4267077ddd8bb768fa9b06399c486e1fc00485116b57c9872f5
+b10253764c8b233fb37542e23401c7b450e5a6f9751f3b5a014f6f67e8bc999d
+2c70e12b7a0646f92279f427c7b38e7334d8e5389cff167a1dc30e73f826b683
+
+<svt> skc popkey
+<svt> print skc show
+72e86f1e074a3191aad0345e6fdac71c0d13a4a359b09775987f7cef5c73975f
+da3811154d59c4267077ddd8bb768fa9b06399c486e1fc00485116b57c9872f5
+2c70e12b7a0646f92279f427c7b38e7334d8e5389cff167a1dc30e73f826b683
+
+<svt> a = file 013in.txt
+<svt> b = skc enc bin a
+<svt> save 013in.txt.enc b
+<svt> print c = skc enc b64 a
+/Valq0k3jMvJ4DNdqaA49YzBgNnyCjOQ0rgUpzdHWWSw48WhluS41fABL3DG6SLEb2o6/TqU3InJizjAiqv3pWsTFeKuwdh51re+dxuaT5kCJVy9omi3U1Mw06g56//h
+<svt> save 013in.txt.enc.b64 c
+<svt> print d = skc enc hex a
+59df7cc9f99b15125f3fd0ac32ec0c63428a7989527903465fa04070d1ddf07262758e46803169aaa2c9f785dd19881d40a2575ba6986e42137c469d442cfe3464ea59ee19863663157eef8d18b2d707da80fcb8f21927d97a2f5a135a16a2be
+<svt> save 013in.txt.enc.hex d
+<svt> a = file 013in.txt.enc
+<svt> b = skc dec bin a
+<svt> save 013in.txt.enc.dec b
+<svt> a = file 013in.txt.enc.b64
+<svt> b = skc dec b64 a
+<svt> save 013in.txt.enc.b64.dec b
+<svt> a = file 013in.txt.enc.hex
+<svt> b = skc dec hex a
+<svt> save 013in.txt.enc.hex.dec b
+<svt> quit
+= 013in.txt =
+abc
+= 013in.txt.enc =
+0000000 38da 1511 594d 26c4 7770 d8dd 76bb a98f
+0000020 63b0 c499 e186 00fc 5148 b516 987c f572
+0000040 8e8e ff9b b2d4 6e3d bb30 80bb 76cd 7cb2
+0000060 37d9 2640 6bf6 fc18 3377 3aab 6ba9 eceb
+0000100 7ace ff43 481e aa7e 4243 202c 3bef f5b2
+0000120 7c4d bb33 d2fe 1bbe 6e05 2d21 244f d893
+0000140
+= 013in.txt.enc.b64 =
+/Valq0k3jMvJ4DNdqaA49YzBgNnyCjOQ0rgUpzdHWWSw48WhluS41fABL3DG6SLEb2o6/TqU3InJizjAiqv3pWsTFeKuwdh51re+dxuaT5kCJVy9omi3U1Mw06g56//h= 013in.txt.enc.hex =
+59df7cc9f99b15125f3fd0ac32ec0c63428a7989527903465fa04070d1ddf07262758e46803169aaa2c9f785dd19881d40a2575ba6986e42137c469d442cfe3464ea59ee19863663157eef8d18b2d707da80fcb8f21927d97a2f5a135a16a2be
+= 013in.txt.enc.dec =
+abc
+= 013in.txt.enc.b64.dec =
+abc
+= 013in.txt.enc.hex.dec =
+abc

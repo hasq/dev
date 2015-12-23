@@ -1,0 +1,38 @@
+<zdb> set base db
+<zdb> set date 20150101
+<zdb> set time 000000 
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _md5base-1-1 md5 MD5 1 [magic] 1 1
+<zdb> create _md5base-4-8 md5 MD5 1 [magic] 4 8
+<zdb> create _md5base-8-0 md5 MD5 1 [magic] 8 0
+<zdb> load
+<zdb> addpwd _md5base-1-1 0:31 rdn pwd
+<zdb> getfirst _md5base-1-1 rdn
+30 a7c4eb7a67911d7c03fb9703168ed3e7 fc2e85410601008b005ebcf45ec36f6b 487a8aa1633ce425a0c1dd3e673b7d33 0c1f978ba83cd01fa357cc1e86c4a2dd
+<zdb> getlast _md5base-1-1 rdn
+31 a7c4eb7a67911d7c03fb9703168ed3e7 e7a807d7b06b1da6faa62815be7ddfb2 8e139af13a8c8222b84512880f44b219 0be86e00ceebbc071f106d2f21215a48
+<zdb> addpwd _md5base-4-8 0:31 rdn pwd
+<zdb> getfirst _md5base-4-8 rdn
+16 a7c4eb7a67911d7c03fb9703168ed3e7 51295353ba778c0322363ebcd871d1ad e12e46357e71a5acb8009c5bcf75ddc1 bc994093b8b84feca1578ee3786141ba
+<zdb> getlast _md5base-4-8 rdn
+31 a7c4eb7a67911d7c03fb9703168ed3e7 e7a807d7b06b1da6faa62815be7ddfb2 8e139af13a8c8222b84512880f44b219 0be86e00ceebbc071f106d2f21215a48
+<zdb> addpwd _md5base-8-0 0:63 rdn pwd
+<zdb> getfirst _md5base-8-0 rdn
+0 a7c4eb7a67911d7c03fb9703168ed3e7 00000000000000000000000000000000 cfeced74e3da3747233aba878432565c c90ca553fa0add18a9aefe0f233181c1
+<zdb> getlast _md5base-8-0 rdn
+63 a7c4eb7a67911d7c03fb9703168ed3e7 2be14300899134c490d8958b6d84307c 5ec356d1808c0c7664af9e5f91f45375 44c76d390a4b7fa4c05e8a065e819ceb
+<svt> quit
+_md5base-1-1 - slice size 1K
+1072 20150101-1.md5.txt
+1078 20150101-2.md5.txt
+1080 20150101-3.md5.txt
+1080 20150101-4.md5.txt
+_md5base-4-8 - slice size 4K
+4175 20150101-1.md5.txt
+135 20150101-2.md5.txt
+_md5base-8-0 - slice size 8K
+8225 20150101-1.md5.txt
+405 20150101-2.md5.txt
+<zdb> erasedisk
+Database on disk erased successfully

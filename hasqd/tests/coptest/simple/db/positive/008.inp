@@ -1,0 +1,11 @@
+erasedisk
+
+create _hash1 md5 HASH1 1 [magic] 1 0
+create _hash2 s22 HASH3 1 [magic] 1 0
+
+load
+
+addpwd _hash1 0 rawDn:0:10 pass
+addpwd _hash2 0 rawDn:0:5 pass
+
+genidx slice index_

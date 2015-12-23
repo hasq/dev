@@ -1,0 +1,35 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<svt> print ex 0 OK 100 tcp self [ info nbs ]
+OK
+
+<svt> print ex 0 OK 100 tcp self [ connect 127.0.0.1:13131 ]
+OK
+<svt> conupdate
+<svt> print ex 0 OK 100 tcp self [ connect 127.0.0.1:13132 ]
+OK
+<svt> conupdate
+<svt> print ex 0 OK 100 tcp self [ connect abradabra:13131 ]
+OK
+<svt> conupdate
+<svt> sleep 10
+<svt> print ex 0 OK 100 tcp self [ info nbs ]
+OK
+
+<svt> print ex 0 OK 100 tcp self [ info log connect ]
+OK
+Conn hint self: 127.0.0.1:13131
+Conn hint dead: 127.0.0.1:13132
+Conn hint dead: abradabra:13131
+
+<svt> print ex 0 OK 100 tcp self [ info log critical ]
+OK
+
+<svt> print ex 0 OK 100 tcp self [ info log conflict ]
+OK
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

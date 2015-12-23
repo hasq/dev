@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Testing FID_CL_DEVT
+
+$1/hasqd -cqx s="@quit" devt=0 dprn=1 dsvt=1 dwkr=1
+
+$1/hasqd -cqx s="@quit" devt=1 dprn=1 dsvt=1 dwkr=1

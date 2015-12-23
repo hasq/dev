@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Testing hasqd index recovery
+
+in=$(basename $0)
+in=${in%.*}
+
+rm -rf $in
+
+$1/zdb <$in.zdb
+
+find $in/index > $in/idx_dirs_org
+find $in/index -type f -print0 | xargs -0 cat > $in/idx_content_org
+
+mv $in/index $in/index_org
+
+$1/hasqd -cnqx lock=0 db=$in s="@quit" dprn=1 dsvt=1
+
+find $in/index > $in/idx_dirs_gen
+find $in/index -type f -print0 | xargs -0 cat > $in/idx_content_gen
+
+echo DIFF_DIRS_START:
+diff $in/idx_dirs_org $in/idx_dirs_gen
+echo DIFF_DIRS_FINISH
+
+echo DIFF_CONTENT_START:
+diff $in/idx_content_org $in/idx_content_gen
+echo DIFF_FILES_FINISH
+
+$1/zdb erasedisk
+
+rm -rf $in
+

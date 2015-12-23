@@ -1,0 +1,14 @@
+Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Offensive command (parse): b = { a
+Error: invalid {} or <>
+Database: DB_EMPTY
+Starting with threads: all
+<svt> a = [ aaa ]
+<svt> print b
+Offensive command (exec): print b
+Error: Bad input: b
+<svt> del c
+Offensive command (exec): del c
+Error: delete: no such variable c
+<svt> quit

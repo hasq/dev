@@ -1,0 +1,135 @@
+#!/bin/sh
+
+#	Quantity of started HASQ
+QH=10
+
+#	IP-address of servers
+IP=127.0.0.1
+
+#	Port of "direct server"
+ZPORT=14030
+
+LOGFILE=reorg.log
+INPFILE0=reorg.inp
+INPFILE1=reorg0.inp
+
+####################################################################################################
+
+SPORT=$(( ZPORT+1 ))
+FPORT=$(( ZPORT+QH ))
+SADDR=$IP:$SPORT
+FADDR=$IP:$FPORT
+
+#	Find an put variables in input file
+sed -i "0,/ZPORT/s/ZPORT \:.*/ZPORT \: $ZPORT/" $INPFILE0
+sed -i "0,/SPORT/s/SPORT \:.*/SPORT \: $SPORT/" $INPFILE0
+sed -i "0,/FPORT/s/FPORT \:.*/FPORT \: $FPORT/" $INPFILE0
+sed -i "0,/QH/s/QH \:.*/QH \: $QH/" $INPFILE0
+sed -i "0,/IP \=/s/^IP.*/IP \= \[ $IP \]/g" $INPFILE0
+
+[ -f $LOGFILE ] && rm -f $LOGFILE
+[ -f $INPFILE1 ] && rm -f $INPFILE1
+
+uname | grep -i "CYGWIN" > /dev/null && PLAT="Windows" || PLAT="Linux"
+
+#echo "Current platform is ${PLAT} " > $LOGFILE
+#echo "Startup time is `date +"%H:%M"`" >> $LOGFILE
+
+#	killing all hasqd on used ports
+
+i=$ZPORT
+while [ $i -le $FPORT ]
+do
+	if [ -f hq.$i.lock ]
+	then
+		PID=$(cat hq.$i.lock)
+		[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+		rm -f hq.$i.lock
+	fi
+	rm -rf db-$i
+	i=$(( i+1 ))
+done
+
+#	starting hasqd
+
+i=$SPORT
+while [ $i -le $FPORT ] 
+do	
+	mkdir db-$i
+	cd db-$i
+	$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+	cd ..
+	if [ $i -ne $SPORT -a $i -ne $FPORT -a $i ]
+	then
+		$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE1
+		echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE1
+	else
+		if [ $i -eq $SPORT ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i+1 )) ]" >> $INPFILE1
+		fi
+		if [ $i -eq $FPORT ] 
+		then
+			$1/hasqd -cq db=db-$i dprn=0 dsvt=0 quit=1 lock=1 tcp_port=$i >/dev/null 2>&1 &
+			echo "ex 0 OK -1 tcp $IP:$i [ connect $IP:$(( i-1 )) ]" >> $INPFILE1
+			echo "quit" >> $INPFILE1
+		fi
+
+	fi
+	until [ -f hq.$i.lock ]
+	do
+		echo >/dev/null 2>&1
+	done
+#	echo "HASQD#$i was run on port $i." >> $LOGFILE
+	i=$(( i+1 ))
+done
+
+#	starting "managing" hasqd only for make connections between servers
+
+mkdir db-$ZPORT
+cd db-$ZPORT
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 1 0"  >/dev/null 2>&1
+cd ..
+$1/hasqd -cq db=db-$ZPORT s=$INPFILE1 dprn=1 dsvt=1 quit=1 lock=1 tcp_port=$ZPORT
+
+while [ -f hq.$ZPORT.lock ]
+do
+	echo >/dev/null 2>&1
+done
+#echo "HASQD#$i was run on port $ZPORT - hasq runs for making connection between servers." >> $LOGFILE
+
+[ -f $INPFILE1 ] && rm -f $INPFILE1
+
+[ -f hq.$ZPORT.lock ] && rm -f hq.$ZPORT.lock
+
+
+#	starting "managing" hasqd to reorganization
+
+$1/hasqd -cq db=db-$ZPORT s=$INPFILE0 dprn=1 dsvt=1 quit=1 lock=1 tcp_port=$ZPORT &
+
+#echo "HASQD#$ZPORT was run on port $ZPORT." >> $LOGFILE
+
+wait
+
+
+i=$ZPORT
+while [ $i -le $FPORT ]
+do	
+	if [ -f hq.$i.lock ] 
+	then
+		PID=$(cat hq.$i.lock)  >/dev/null 2>&1
+		[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+		rm -f hq.$i.lock
+	fi
+	cd db-$i
+	$1/zdb erasedisk
+	cd ..	
+	rm -rf db-$i
+	[ -f hq.$i.lock ] && rm -f hq.$i.lock
+#	echo "HASQD#$i on port $i was terminated successfully." >> $LOGFILE
+	i=$(( i+1 ))
+done

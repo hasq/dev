@@ -1,0 +1,7 @@
+
+print http_post self [ ]
+print http_post self [ a ]
+print http_post self [ / ]
+
+quit
+

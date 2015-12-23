@@ -1,0 +1,4 @@
+<svt> a = [ aaa ]
+<svt>  print a
+aaa
+<svt>  quit

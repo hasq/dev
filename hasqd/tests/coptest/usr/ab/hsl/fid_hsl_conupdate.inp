@@ -1,0 +1,20 @@
+print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
+print ex 0 OK 100 tcp 127.0.0.1:14001 [ admin disable net ]
+print ex 0 DISABLED 100 tcp 127.0.0.1:14001 [ ping ]
+
+print ex 0 OK 100 tcp self [ connect 127.0.0.1:14001 ]
+print ex 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+
+print ex 0 OK 100 tcp 127.0.0.1:14001 [ admin enable net ]
+print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
+
+conupdate
+sleep 100
+
+print ex 0 OK 100 { tcp self [ info nbs ] sleep 30 }
+
+
+print ex 0 OK 100 tcp 127.0.0.1:14001 [ quit ]
+quit 
+
+

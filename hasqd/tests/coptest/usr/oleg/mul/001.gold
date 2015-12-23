@@ -1,0 +1,16 @@
+<svt> print for i 1 10 { i }
+12345678910
+<svt> print for i 1 10 { i [ ] }
+1 2 3 4 5 6 7 8 9 10 
+<svt> for i 1 10 { print i }
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+<svt> quit

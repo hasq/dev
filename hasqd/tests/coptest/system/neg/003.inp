@@ -1,0 +1,4 @@
+print tcp self [ \126\91\32\91\13\10\13\10 ]
+print tcp self [ \32 ]
+quit
+

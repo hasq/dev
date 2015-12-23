@@ -1,0 +1,5 @@
+# Set error paths
+
+setcfg slice /bbb/db1/slice
+setcfg index bbb//db1/index
+setcfg index db1/index/

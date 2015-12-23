@@ -1,0 +1,28 @@
+
+print tcp self [ pleb put a.txt YQ== ]
+print tcp self [ pleb put aaa/a.txt YQ== ]
+
+print tcp self [ pleb mkdir aaa/bbb ]
+print tcp self [ pleb mkdir aaa/bbb ]
+print tcp self [ pleb put aaa/a.txt YQ== ]
+print tcp self [ pleb del aaa ]
+
+print tcp self [ pleb put b.txt YQ== ]
+print tcp self [ pleb app b.txt YQ== ]
+
+print tcp self [ pleb get a.txt ]
+print tcp self [ pleb get b.txt ]
+
+print tcp self [ pleb mkdir aaa ]
+print tcp self [ pleb list aaa ]
+print tcp self [ pleb del aaa ]
+print tcp self [ pleb list aaa ]
+print tcp self [ pleb list ]
+
+print tcp self [ pleb del a.txt ]
+print tcp self [ pleb del b.txt ]
+
+print tcp self [ file home/ ]
+
+quit
+

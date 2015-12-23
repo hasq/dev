@@ -1,0 +1,35 @@
+<zdb> irgetrecord test_index_data2 0
+0 A roza lfjhflhkjfhkljfgklhjfghlj fkl jf lkfjhlfkgjhlfhjf lfk fkjfkhjflgj lkfj data_0
+
+<zdb> irgetrecord test_index_data2 3
+3 A roza klhjfghlj fkl jf lkfjhlfkgjhlfhjf lfk fkjfkhjflgj lkfj upala na data_2
+
+<zdb> irgetrecord test_index_data2 26
+irgetrecord error
+<zdb> irgetrecord test_index_data2 66
+irgetrecord error
+<zdb> irgetrecord test_index_data2 40
+irgetrecord error
+<zdb> irgetrecord test_index_data2 41
+41 r41
+
+<zdb> irgetrecord test_index_data2 42
+irgetrecord error
+<zdb> irgetrecord test_index_data2 43
+irgetrecord error
+<zdb> irgetrecord test_index_data2 44
+irgetrecord error
+<zdb> irgetrecord test_index_data2 10
+10 A roza upala lsdkjfsldkfj klhjfghlj fkl jf lkfjhlfkgjhlfhjf lfk fkjfkhjflgj lkfj data_10
+
+<zdb> irgetrecord test_index_data2 30
+irgetrecord error
+<zdb> irgetrecord test_index_data2 75
+75 A data_5
+
+<zdb> irgetrecord test_index_data2 6
+6 A roza upala na lapu Azora kdjfhgkdfjghdfkjghfkjghdkh klhjfghlj fkl jf lkfjhlfkgjhlfhjf lfk fkjfkhjflgj lkfj data_6
+
+<zdb> irgetrecord test_index_data2 64
+64 A roza upala na lapu Azora data_4
+

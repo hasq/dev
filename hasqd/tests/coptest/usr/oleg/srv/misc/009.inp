@@ -1,0 +1,11 @@
+nb 127.0.0.1:13131
+print ex 0 OK 100 tcp self [ info nbs ]
+#print ex 0 OK 100 tcp self [ info sys ]
+
+print hash wrd [ rdn ]
+r0 = recpwd _wrd 0 rdn pass
+r1 = recpwd _wrd 1 rdn pass
+println ex 0 OK 100 tcp self { [ zero * _wrd ] r0 } sleep 200
+
+quit
+

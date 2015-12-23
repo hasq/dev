@@ -1,0 +1,75 @@
+#!/bin/sh
+in=$(basename $0)
+in=${in%.*}
+
+rm -fr db-14001
+mkdir db-14001
+cd db-14001
+$1/zdb erasedisk 
+$1/zdb "create _b md5 MD5 1 [b] 1 0 1b"
+$1/zdb "create _k md5 MD5 1 [k] 1 0 1k"
+#$1/zdb "create _m md5 MD5 1 [m] 1 0 1m"
+$1/zdb "create _wrd wrd WORD 1 [wrd] 1 0 1h"
+$1/zdb "create _md5 md5 MD5 1 [md5] 1 0 1h"
+$1/zdb "create _r16 r16 RIPEMD-160 1 [r16] 1 0 1h"
+$1/zdb "create _s22 s22 SHA2-256 1 [s22] 1 0 1h"
+$1/zdb "create _s25 s25 SHA2-512 1 [s25] 1 0 1h"
+cd ..
+
+$1/hasqd -cnqx db=db-14001 dprn=1 dsvt=0 lock=0 tcp_port=14001 | grep -v "conupdate\|sendnote\|noterecv" &
+
+rm -fr db-14000
+mkdir db-14000
+cd db-14000
+$1/zdb erasedisk
+$1/zdb "create _b md5 MD5 1 [b] 1 0 2b"
+$1/zdb "create _k md5 MD5 1 [k] 1 0 2k"
+#$1/zdb "create _m md5 MD5 1 [m] 1 0 2m"
+$1/zdb "create _wrd wrd WORD 1 [wrd] 1 0 2h"
+$1/zdb "create _md5 md5 MD5 1 [md5] 1 0 2h"
+$1/zdb "create _r16 r16 RIPEMD-160 1 [r16] 1 0 2h"
+$1/zdb "create _s22 s22 SHA2-256 1 [s22] 1 0 2h"
+$1/zdb "create _s25 s25 SHA2-512 1 [s25] 1 0 2h"
+cd ..
+
+$1/hasqd -cnqx db=db-14000 dprn=1 dsvt=0 lock=0 tcp_port=14000 s=$in.inp  | grep -v "conupdate\|sendnote\|noterecv"  
+
+printdatalim () {
+cd $1
+DATA=$(find -type f | cut * -f 6 -d ' ')
+DATALIM=${#DATA}
+echo "	$DATALIM	for $2"
+cd ..
+}
+
+cd db-14000/index
+echo
+echo - node0 - The length of the data field with the data limits is in bytes:
+
+printdatalim _b "\"2b\""
+printdatalim _k "\"2k\""
+#printdatalim _m "2m"
+printdatalim _wrd "\"2h\" WRD hash"
+printdatalim _md5 "\"2h\" MD5 hash"
+printdatalim _r16 "\"2h\" RIPEMD-160 hash"
+printdatalim _s22 "\"2h\" SHA2-256 hash"
+printdatalim _s25 "\"2h\" SHA2-512 hash"
+
+cd ../..
+cd db-14001/index
+echo
+echo - node1 - The length of the data field with the data limits is in bytes:
+
+printdatalim _b "\"1b\""
+printdatalim _k "\"1k\""
+#printdatalim _m "\"1m\""
+printdatalim _wrd "\"1h\" WRD hash"
+printdatalim _md5 "\"1h\" MD5 hash"
+printdatalim _r16 "\"1h\" RIPEMD-160 hash"
+printdatalim _s22 "\"1h\" SHA2-256 hash"
+printdatalim _s25 "\"1h\" SHA2-512 hash"
+
+cd ../..
+
+rm -fr db-14000
+rm -fr db-14001

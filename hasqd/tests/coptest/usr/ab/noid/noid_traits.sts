@@ -1,0 +1,6 @@
+#!/bin/sh
+in=$(basename $0)
+in=${in%.*}
+$1/zdb erasedisk "create _md5base0 md5 md5 1 [] 1 0" "create _md5base1 md5 md5 1 [magic1] 1 0" "create _md5base2 md5 md5 2 [magic2] 1 0"
+$1/hasqd -cnqx s=$in.inp dprn=1 dsvt=1 | grep -v "Servant has jobs\|sendnote"
+$1/zdb erasedisk

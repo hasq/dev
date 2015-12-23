@@ -1,0 +1,11 @@
+r = recpwd _md5 2 rdn pass
+print r
+println tcp self { [ add * _md5 ] r } sleep 100
+print tcp self [ job 1000 ]
+println tcp self { [ add * _md5 ] r } sleep 100
+print tcp self [ job 1001 ]
+print tcp self [ job 1000 ]
+print tcp self [ job 1001 ]
+
+quit
+

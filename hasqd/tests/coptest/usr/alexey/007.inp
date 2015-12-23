@@ -1,0 +1,24 @@
+a = [ sting a then 5 spaces     ]
+a_ns  = [ _aaa_ ]
+b = [ long_long_long_long_long_long_long_long_long_long_long_long_long_ ] 
+print b
+b = [ long_ ]
+print b 
+b = { a b }
+print b
+b = { a b }
+print b
+b = { a b [ more1 ] }
+print b
+b = { a { b } [ more2 ] { a } }
+print a
+print b
+
+a = [ \{ ]
+z = [ \} ]
+
+print a z
+print { a z }
+print { a b z }
+quit
+

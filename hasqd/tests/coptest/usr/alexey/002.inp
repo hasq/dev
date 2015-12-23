@@ -1,0 +1,6 @@
+a = [ b ]
+a = { a a a [ a ] }
+print a
+print { { a } }
+quit
+

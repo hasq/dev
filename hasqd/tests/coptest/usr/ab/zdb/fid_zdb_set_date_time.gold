@@ -1,0 +1,13 @@
+<zdb> erasedisk 
+Database on disk erased successfully
+<zdb> create _wrddir wrd WRD 1 [magic] 1 0
+<zdb> set date 20140101
+<zdb> set time 235959 
+<zdb> load 
+<zdb> addpwd _wrddir 0:3 rdn pwd
+<svt> print tcp self [ f /_wrddir/meta/0.meta.wrd.txt ]
+20140101-1.wrd.txt 0000 20140101 235959
+
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

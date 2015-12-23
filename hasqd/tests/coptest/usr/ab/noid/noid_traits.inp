@@ -1,0 +1,26 @@
+ex 0 OK 100 tcp self { [ z * (md5,1) 0 [rdn] [k] data0(magic0) ] }
+ex 0 OK 100 tcp self { [ z * (md5,1,magic1) 0 [rdn] [k] data0(magic1) ] }
+ex 0 OK 100 tcp self { [ z * (md5,2,magic2) 0 [rdn] [k] data0(magic2) ] }
+
+ex 0 OK 100 tcp self { [ add * _md5base0 1 [rdn] [k] data1(magic0) ] }
+ex 0 OK 100 tcp self { [ add * _md5base1 1 [rdn] [k] data1(magic1) ] }
+ex 0 OK 100 tcp self { [ add * _md5base2 1 [rdn] [k] data1(magic2) ] }
+
+print ex 1 1 100 tcp self { [ last _md5base0 ] hash md5 [ rdn ] }
+print ex 1 1 100 tcp self { [ last _md5base1 ] hash md5 [ rdn ] }
+print ex 1 1 100 tcp self { [ last _md5base2 ] hash md5 [ rdn ] }
+
+ex 0 OK 100 tcp self { [ add * (md5,1) 2 [rdn] [k] data2(magic0) ] }
+ex 0 OK 100 tcp self { [ add * (md5,1,magic1) 2 [rdn] [k] data2(magic1) ] }
+ex 0 OK 100 tcp self { [ add * (md5,2,magic2) 2 [rdn] [k] data2(magic2) ] }
+
+print ex 1 2 100 tcp self { [ last _md5base0 ] hash md5 [ rdn ] }
+print ex 1 2 100 tcp self { [ last (md5,1) ] hash md5 [ rdn ] }
+
+print ex 1 2 100 tcp self { [ last _md5base1 ] hash md5 [ rdn ] }
+print ex 1 2 100 tcp self { [ last (md5,1,magic1) ] hash md5 [ rdn ] }
+
+print ex 1 2 100 tcp self { [ last _md5base2 ] hash md5 [ rdn ] }
+print ex 1 2 100 tcp self { [ last (md5,2,magic2) ] hash md5 [ rdn ] }
+
+quit

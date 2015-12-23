@@ -1,0 +1,46 @@
+<svt> print tcp self [ pleb put a.txt YQ== ]
+OK
+<svt> print tcp self [ pleb put aaa/a.txt YQ== ]
+FILE_CANT_CREATE
+<svt> print tcp self [ pleb mkdir aaa/bbb ]
+OK
+<svt> print tcp self [ pleb mkdir aaa/bbb ]
+OK
+<svt> print tcp self [ pleb put aaa/a.txt YQ== ]
+OK
+<svt> print tcp self [ pleb del aaa ]
+OK
+<svt> print tcp self [ pleb put b.txt YQ== ]
+OK
+<svt> print tcp self [ pleb app b.txt YQ== ]
+OK
+<svt> print tcp self [ pleb get a.txt ]
+OK YQ==
+<svt> print tcp self [ pleb get b.txt ]
+OK YWE=
+<svt> print tcp self [ pleb mkdir aaa ]
+OK
+<svt> print tcp self [ pleb list aaa ]
+OK
+aaa/
+<svt> print tcp self [ pleb del aaa ]
+OK
+<svt> print tcp self [ pleb list aaa ]
+REQ_PATH_BAD
+<svt> print tcp self [ pleb list ]
+OK
+otherdir/
+a.txt
+b.txt
+index.html
+
+<svt> print tcp self [ pleb del a.txt ]
+OK
+<svt> print tcp self [ pleb del b.txt ]
+OK
+<svt> print tcp self [ file home/ ]
+OK
+otherdir
+index.html
+
+<svt> quit

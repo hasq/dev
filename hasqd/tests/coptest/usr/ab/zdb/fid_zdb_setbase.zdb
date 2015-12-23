@@ -1,0 +1,11 @@
+set base testbase
+erasedisk
+
+create _wrddir wrd WRD 1 [magic] 1 0
+load
+addpwd _wrddir 0:3 rdn pwd
+getlast _wrddir rdn
+
+
+
+

@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# this tests testing scenario
+# n1(d521) (connect ->) n0(4621)
+# n1 conflict
+# n0 wins
+# n1 fixes its record
+
+
+#exit
+
+# this is how records were generated
+#$1/zdb load "recprn _wrd 0 rdn pas1"
+#$1/zdb load "recprn _wrd 0 rdn pas2"
+
+mkdir -p db1
+$1/zdb "set base db1" erasedisk "create _wrd wrd Word 1 [] 1 0" 
+$1/zdb "set base db1" load "add _wrd 0 fd80 0000 d521 d521"
+
+mkdir -p db2
+$1/zdb "set base db2" erasedisk "create _wrd wrd Word 1 [] 1 0" 
+$1/zdb "set base db2" load "add _wrd 0 fd80 0000 f931 4621"
+
+$1/hasqd -qncl quit=1 dsec=1 dwkr=1 dprn=1 dsvt=1 tcp_port=13132 db=db2 id=2 nodename=n0 > 2.log &
+
+#pid=$!
+
+$1/hasqd -qncl s=cfl006.inp dsec=1 dwkr=1 dprn=1 dsvt=1 tcp_port=13131 db=db1 id=1 nodename=n1 > 1.log
+
+#wait $pid
+
+wait
+
+#cat 1.log 2.log > 3.log
+#cat 3.log | grep -v "<wkr\|<sec\|svt" > c1_1.log
+#cat 3.log | grep "<svt\:1" | sort > c1_2.log
+#cat 3.log | grep "<svt\:2" | sort > c1_3.log
+#cat 3.log | grep "<wkr\:1" | sort > c1_4.log
+#cat 3.log | grep "<wkr\:2" | sort > c1_5.log
+#cat 3.log | grep "<sec\:1" | sort > c1_6.log
+#cat 3.log | grep "<sec\:2" | sort > c1_7.log
+
+#cat c1_1.log c1_2.log c1_3.log c1_4.log c1_5.log c1_6.log c1_7.log
+
+cat db1/index/_wrd/fd80
+cat db2/index/_wrd/fd80
+
+
+rm -rf db1 db2 *.log
+
+

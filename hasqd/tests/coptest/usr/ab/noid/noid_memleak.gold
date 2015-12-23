@@ -1,0 +1,10 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<zdb> create _md5 md5 MD5 1 [abc] 1 0
+<svt>  for i 1 10 { 	x = tcp 127.0.0.1:14021 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } 	x = arg 1 x 	expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x } 	x = tcp 127.0.0.1:14021 { [ z * _md5 ] recpwd _md5 0 rdn:i pass }  	x = arg 1 x 	expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x } 	for k 1 10 { 		x = tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:i pass } 		x = arg 1 x 		expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x }	 		x = tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:i pass }  		x = arg 1 x 		expect 0 OK 100 tcp 127.0.0.1:14021 { [ job ] x } 	} 	x =  tcp 127.0.0.1:14021 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } 	x = arg 1 x 	expect 0 DN_EXISTS 100 tcp 127.0.0.1:14021 { [ job ] x } 	x = tcp 127.0.0.1:14021 { [ z * _md5 ] recpwd _md5 0 rdn:i pass } 	x = arg 1 x 	expect 0 DN_EXISTS 100 tcp 127.0.0.1:14021 { [ job ] x } 	for k 1 10 { 		tcp 127.0.0.1:14021 { [ add * _wrd0 ] recpwd _wrd k rdn:i pass }  		tcp 127.0.0.1:14021 { [ add * _md50 ] recpwd _md5 k rdn:i pass }  	} 	for k 1 10 { 		tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd0 k rdn:i pass }  		tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md50 k rdn:i pass } 	} 	for k 30 20 { 		x =  tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:i pass } 		x = arg 1 x 		expect 0 WRONG_SEQ_NUMBER 100 tcp 127.0.0.1:14021 { [ job ] x } 		x =  tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:i pass } 		x = arg 1 x 		expect 0 WRONG_SEQ_NUMBER 100 tcp 127.0.0.1:14021 { [ job ] x } 	} 	for k 20 30 { 		x = tcp 127.0.0.1:14021 { [ add * _wrd ] recpwd _wrd k rdn:k pass } 		x = arg 1 x 		expect 0 NOPREV_RECORD 100 tcp 127.0.0.1:14021 { [ job ] x } 		x = tcp 127.0.0.1:14021 { [ add * _md5 ] recpwd _md5 k rdn:k pass } 		x = arg 1 x 		expect 0 NOPREV_RECORD 100 tcp 127.0.0.1:14021 { [ job ] x } 	} }
+<svt> sleep 100
+<svt> tcp 127.0.0.1:14021 [ quit ]
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

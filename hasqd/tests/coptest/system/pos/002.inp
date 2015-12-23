@@ -1,0 +1,8 @@
+#comment
+a = recpwd _md5 0 dn pass
+print a
+show
+del a
+show
+
+quit

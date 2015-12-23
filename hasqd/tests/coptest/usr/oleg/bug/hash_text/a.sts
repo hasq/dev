@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#	IP-address of servers
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd s="@quit;"
+

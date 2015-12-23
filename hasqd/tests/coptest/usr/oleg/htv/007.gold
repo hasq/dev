@@ -1,0 +1,42 @@
+<htv> new canvas db 9 2
+<htv> new pub 0 1 hint iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+Cmd: -lnqc tcp_port=13140 db=db/db_0_1 iplock=127.0.0.1:13141 iplock=127.0.0.1:13148
+<htv> new pub 2 1 hint nn=v2
+Cmd: -lnqc tcp_port=13142 db=db/db_2_1 nn=v2
+<htv> show
+[  --][  --][  --][  --][  --][  --][  --][  --][  --]
+[ P--][  --][ P--][  --][  --][  --][  --][  --][  --]
+<htv> send 0 1 connect 127.0.0.1:13142
+Reply: OK
+<htv> expect 2 127.0.0.1:13142 10
+<htv> send 0 1 info fam
+<htv> shut 2 1
+<htv> sleep 50
+<htv> reorg 0 1
+<htv> sleep 50
+<htv> expect 4 D 300
+<htv> send 0 1 info fam
+<htv> expect 3 F 300
+<htv> send 0 1 info fam
+<htv> send 0 1 info fam
+Reply: OK
+v2 127.0.0.1:13142 F D U
+
+<htv> new pub 2 1 hint nn=v2
+Cmd: -lnqc tcp_port=13142 db=db/db_2_1 nn=v2
+<htv> send 0 1 connect 127.0.0.1:13142
+Reply: OK
+<htv> expect 3 N 100
+<htv> send 0 1 info fam
+<htv> send 0 1 info fam
+Reply: OK
+v2 127.0.0.1:13142 N A U
+
+<htv> send 0 1 info nbs
+Reply: OK
+127.0.0.1:13142
+
+<htv> shut 0 1
+<htv> erase db
+erasing db ok
+<htv> q

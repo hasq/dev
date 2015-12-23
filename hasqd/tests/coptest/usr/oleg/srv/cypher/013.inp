@@ -1,0 +1,32 @@
+
+#addkey [ key ]
+skc addkey [ key2 ]
+skc addkey [ key ]
+print skc show
+skc popkey
+print skc show
+
+a = file 013in.txt
+b = skc enc bin a
+save 013in.txt.enc b
+print c = skc enc b64 a
+save 013in.txt.enc.b64 c
+print d = skc enc hex a
+save 013in.txt.enc.hex d
+
+a = file 013in.txt.enc
+b = skc dec bin a
+save 013in.txt.enc.dec b
+
+a = file 013in.txt.enc.b64
+b = skc dec b64 a
+save 013in.txt.enc.b64.dec b
+
+a = file 013in.txt.enc.hex
+b = skc dec hex a
+save 013in.txt.enc.hex.dec b
+
+quit
+
+
+

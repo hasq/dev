@@ -1,0 +1,7 @@
+#!/bin/sh
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/htview < $tn.inp
+

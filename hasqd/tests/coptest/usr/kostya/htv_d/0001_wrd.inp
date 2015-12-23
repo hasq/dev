@@ -1,0 +1,16 @@
+print tcp self { [ zero * _wrd ] recpwd _wrd 0 kostya password }
+print expect 0 OK 500 tcp self [ job 1000 ]
+print tcp self { [ add * _wrd ] recpwd _wrd 1 kostya password [ message ] }
+print expect 0 OK 500 tcp self [ job 1001 ]
+print tcp self { [ add * _wrd ] recpwd _wrd 2 kostya password [ "Hello, world !" ] }
+print expect 0 OK 500 tcp self [ job 1002 ]
+print tcp self { [ last _wrd ] hash wrd [ kostya ] }
+print tcp self { [ add * _wrd ] recpwd _wrd 3 kostya password [ :ref:cranky ] }
+print expect 0 OK 500 tcp self [ job 1003 ]
+print tcp self { [ add * _wrd ] recpwd _wrd 4 kostya password [ :::::::::::: ] }
+print expect 0 OK 500 tcp self [ job 1004 ]
+print tcp self { [ add * _wrd ] recpwd _wrd 5 kostya password [ :has:897436594387 ] }
+print expect 0 OK 500 tcp self [ job 1005 ]
+print tcp self { [ last _wrd ] hash wrd [ kostya ] }
+print tcp self { [ data _wrd ] hash wrd [ kostya ] }
+quit

@@ -1,0 +1,24 @@
+node0 = [ 127.0.0.1:14000 ]
+node1 = [ 127.0.0.1:14001 ]
+
+print ex 0 OK 100 tcp node1 [ ping ]
+print ex 0 OK 100 tcp node0 { [ connect ] node1 }
+print ex 0 OK 100 tcp node1 { [ connect ] node0 }
+print ex 1 127.0.0.1:14001 100 tcp node0 { [ info nbs ] sleep 30  }
+print ex 1 127.0.0.1:14000 100 tcp node1 { [ info nbs ] sleep 30  }
+
+print ex 0 OK 100 tcp node1 [ admin disable net ]
+print ex 0 DISABLED 100 tcp node1 [ ping ]
+
+ex 0 OK 100 tcp node0 { [ z * _md5base 0 [rdn] [k] data0 ] }
+ex 0 OK 100 tcp node0 { [ add * _md5base 1 [rdn] [k] data1 ] }
+print ex 1 1 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+
+ex 0 OK 100 tcp node1 [ admin enable net ]
+ex 0 OK 100 tcp node1 [ ping ]
+
+sendnote _md5base 1 hash md5 [ rdn ]
+print ex 1 1 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+
+print ex 0 OK 100 tcp node1 [ quit ]
+quit 

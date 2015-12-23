@@ -1,0 +1,7 @@
+set base db
+set date 20150101
+
+erasedisk
+create _md5base md5 MD5 1 [magic] 10 0
+load
+addpwd _md5base 0:10 rdn pwd

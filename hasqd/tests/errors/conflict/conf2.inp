@@ -1,0 +1,90 @@
+
+new canvas dbp 2 2
+show
+#================================ CREATE DBS
+new db 0 0 _wrd wrd Word 1 [] 1 0
+new db 0 1 _wrd wrd Word 1 [] 1 0
+new db 1 0 _wrd wrd Word 1 [] 1 0
+new db 1 1 _wrd wrd Word 1 [] 1 0
+show
+
+#================================ START SERVICE
+#new pub 0 0 hint nn=v00
+new pub 0 0 -lnqc tcp_port=13100 db=dbp/db_0_0 nn=v00 dsvt=0 dprn=1 id=700 dwkr=0
+new pub 0 1 -lnqc tcp_port=13101 db=dbp/db_0_1 nn=v01 dsvt=0 dprn=1 id=701 dwkr=0
+new pub 1 0 -lnqc tcp_port=13110 db=dbp/db_1_0 nn=v10 dsvt=0 dprn=1 id=710 dwkr=0
+new pub 1 1 -lnqc tcp_port=13111 db=dbp/db_1_1 nn=v11 dsvt=0 dprn=1 id=711 dwkr=0
+show
+
+#================================ CONNECT PAIRS
+connect 0 0 0 1
+connect 0 1 0 0
+connect 1 0 1 1
+connect 1 1 1 0
+send 0 0 info nbs
+send 0 1 info nbs
+send 1 0 info nbs
+send 1 1 info nbs
+
+#================================ FILL DATA
+
+#send 0 0 zero * _wrd 0 a7c4 0000 0000 0000
+#send 1 1 zero * _wrd 0 a7c4 0000 0000 1111
+send 0 0 zero * _wrd 0 [rdn] [pw1]
+send 1 1 zero * _wrd 0 [rdn] [pw2]
+
+expect 1 0 20
+send 0 0 last _wrd a7c4
+send 0 0 last _wrd a7c4
+
+expect 1 0 20
+send 0 1 last _wrd a7c4
+send 0 1 last _wrd a7c4
+
+expect 1 0 20
+send 1 0 last _wrd a7c4
+send 1 0 last _wrd a7c4
+
+expect 1 0 20
+send 1 1 last _wrd a7c4
+send 1 1 last _wrd a7c4
+
+show
+
+#================================ CONNECT ALL
+connect 0 0 1 0
+connect 1 0 0 0
+connect 0 1 1 1
+connect 1 1 0 1
+send 0 0 info nbs
+send 0 1 info nbs
+send 1 0 info nbs
+send 1 1 info nbs
+
+#================================ CONFLICT
+send 0 0 add * _wrd 1 [rdn] [pw1]
+
+send 0 0 last _wrd a7c4
+send 1 1 last _wrd a7c4
+
+sleep 1000
+
+send 0 0 last _wrd a7c4
+send 1 1 last _wrd a7c4
+
+sleep 1000
+
+send 0 0 last _wrd a7c4
+send 1 1 last _wrd a7c4
+
+
+send 0 0 info log conflict
+send 1 1 info log conflict
+
+#================================ DONE
+shut all
+erase dbp
+quit
+
+
+

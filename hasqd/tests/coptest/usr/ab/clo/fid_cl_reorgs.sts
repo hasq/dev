@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Testing FID_CL_reorgS
+
+$1/hasqd -cqx reorgS=2 s="@quit" dprn=1 dsvt=1  | grep -x "Warning: reorganisation timeout is less than cycle timeout"  
+$1/hasqd -cqx s=$in.inp cycle=1 reorgS=2 s="@sleep 3000; quit" dprn=1 dsvt=1 | grep -x "<svt> reorg"

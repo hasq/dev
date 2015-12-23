@@ -1,0 +1,24 @@
+<zdb> set date yyyymmdd
+<zdb> create _md5 wrd MD5 1 [abc] 1 0
+<zdb> load
+<zdb> recprn _md5 0 dn pass
+0 567c 0000 e003 33b4
+<zdb> recprn _md5 1 dn pass
+1 567c 55c3 2c8f 8755
+<zdb> recprn _md5 2 dn pass
+2 567c 924a 8acc 0241
+<zdb> nsk wrd 1 567c 3122
+5cab
+<zdb> nsk wrd 1 567c ba01
+bd67
+<zdb> addpwd _md5 0 dn pass
+<zdb> addpwd _md5 1 dn passX
+Adding record error: RECORD_MISMATCH
+<zdb> addpwd _md5 0 dn pass
+Adding record error: DN_EXISTS
+<zdb> addpwd _md5 1 dn pass
+<zdb> addpwd _md5 1 dn pass
+Adding record error: WRONG_SEQ_NUMBER
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> drop

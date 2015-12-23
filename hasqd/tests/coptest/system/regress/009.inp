@@ -1,0 +1,5 @@
+print ex 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+print ex 0 OK 100 tcp self { [ record _wrd 0 ] hash wrd [ rdn ] }
+
+quit
+

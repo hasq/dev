@@ -1,0 +1,7 @@
+<svt> println [ record wrd [ 0 0c50 0000 d3b1 2ea1 ] ]
+Offensive command (exec): println [ record wrd [ 0 0c50 0000 d3b1 2ea1 ] ]
+Error: Bad input: ]
+<svt> bye
+Offensive command (exec): bye
+Error: Bad input: bye
+<svt> quit

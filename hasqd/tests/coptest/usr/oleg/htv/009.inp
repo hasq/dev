@@ -1,0 +1,32 @@
+
+# Test variable ${0:0}
+# 0 <-> 1 
+# 
+
+new canvas db 9 2
+new db all
+
+new pub 0 1 hint nn=v0 nbs=2
+new pub 1 1 hint nn=v1 nbs=2
+
+show
+
+send 0 1 connect ${1:1}
+send 1 1 connect ${0:1}
+
+expect 1 ${1:1} 10
+send 0 1 info nbs
+expect 1 ${0:1} 10
+send 1 1 info nbs
+
+echo ${0:1}
+echo ${1:1}
+
+send 0 1 info nbs
+send 1 1 info nbs
+
+shut 1 1
+shut 0 1
+
+erase db
+q

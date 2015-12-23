@@ -1,0 +1,11 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<svt> a = [ letter_A ]
+<svt> b = [ letter_B ]
+<svt> c = { a b }
+<svt> print c
+letter_A letter_B
+<svt> c = { c c }
+<svt> print c
+letter_A letter_B letter_A letter_B
+<svt> quit

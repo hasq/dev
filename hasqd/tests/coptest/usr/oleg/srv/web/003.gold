@@ -1,0 +1,16 @@
+<svt> print tcp self [ pleb mkdir aaa ]
+OK
+<svt> print tcp self [ pleb put aaa/a.txt YQ== ]
+OK
+<svt> print tcp self [ pleb list ]
+OK
+aaa/
+otherdir/
+index.html
+
+<svt> print tcp self [ pleb clean ]
+OK
+<svt> print tcp self [ pleb list ]
+OK
+
+<svt> quit

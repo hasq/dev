@@ -1,0 +1,55 @@
+node0 = [ 127.0.0.1:14000 ]
+node1 = [ 127.0.0.1:14001 ]
+
+print ex 0 OK 100 tcp node1 [ ping ] 
+
+ex 0 OK 100 tcp node0 { [ z * _md5base 0 [rdn] [k0] data0 ] }
+ex 0 OK 100 tcp node0 { [ add * _md5base 1 [rdn] [k0] data0 ] }
+ex 0 OK 100 tcp node0 { [ add * _md5base 2 [rdn] [k0] data0 ] }
+print ex 1 2 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+
+ex 0 OK 100 tcp node1 { [ z * _md5base 0 [rdn] [k0] data1 ] }
+ex 0 OK 100 tcp node1 { [ add * _md5base 1 [rdn] [k0] data1 ] }
+ex 0 OK 100 tcp node1 { [ add * _md5base 2 [rdn] [k0]:1 [k0]:1 [k1] data1 ] }
+ex 0 OK 100 tcp node1 { [ add * _md5base 3 [rdn] [k0]:1 [k1]:1 [k0] data1 ] }
+print ex 1 3 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+
+ex 0 OK 100 tcp node0 { [ connect ] node1 sleep 30 }
+ex 0 OK 100 tcp node1 { [ connect ] node0 sleep 30 }
+
+#say about conflict
+print ex 0 OK 100 tcp node0 { [ conflict _md5base ] hash md5 [ rdn ] }
+
+#unwanted token will be deleted
+print ex 1 2 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+print ex 1 2 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+
+print ex 0 OK 100 tcp node0 [ admin disable net ]
+print ex 0 DISABLED 100 tcp node0 [ ping ] 
+
+ex 0 OK 100 tcp node1 { [ add * _md5base 3 [rdn] [k0]:2 [k1] data1 ] }
+ex 0 OK 100 tcp node1 { [ add * _md5base 4 [rdn] [k0]:1 [k1]:2 data1 ] }
+print ex 1 4 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+
+print ex 0 OK 100 tcp node0 [ admin enable net ]
+print ex 0 OK 100 tcp node0 [ ping ] 
+
+print ex 0 OK 100 tcp node1 [ admin disable net ]
+print ex 0 DISABLED 100 tcp node1 [ ping ] 
+
+ex 0 OK 100 tcp node0 { [ add * _md5base 3 [rdn] [k0] data0 ] }
+ex 0 OK 100 tcp node0 { [ add * _md5base 4 [rdn] [k0] data0 ] }
+print ex 1 4 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+
+print ex 0 OK 100 tcp node1 [ admin enable net ]
+print ex 0 OK 100 tcp node1 [ ping ] 
+
+#say about conflict
+print ex 0 OK 100 tcp node0 { [ conflict _md5base ] hash md5 [ rdn ] }
+
+print ex 1 4 100 tcp node0 { [ last _md5base ] hash md5 [ rdn ] }
+print ex 1 4 100 tcp node1 { [ last _md5base ] hash md5 [ rdn ] }
+
+print ex 0 OK 100 tcp node1 [ quit ]
+
+quit

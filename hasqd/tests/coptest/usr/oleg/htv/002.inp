@@ -1,0 +1,29 @@
+erase db
+
+new canvas db 2 2
+new db 0 0 _wrd wrd WRD 1 [] 1 0
+new cmd 0 0
+# new pub 0 0 hint -d ced
+nextsleep 50
+new pub 0 0 hint
+show
+
+send 0 0 zero * _wrd 0 a7c4 0000 11b1 ef7e
+sleep 100
+activity
+show
+
+send 0 0 add * _wrd 1 a7c4 4694 9ca4 d528
+sleep 100
+activity
+show
+
+send 0 0 add * _wrd 2 a7c4 5000 62e3 ef39
+sleep 100
+activity
+show
+
+erase db
+
+q
+

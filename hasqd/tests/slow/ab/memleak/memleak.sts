@@ -1,0 +1,129 @@
+#!/bin/sh
+
+#	Memory test writes data about memory state in a .log and .out files.
+#	HASQD-client writes data into database and collects data about memory states in a .log and .out files.
+#	With memory.inp file data is written alternately - one records for each DN.
+#	With memory2.inp file data is written linearly - all records for each DN.
+
+#	Port of HASQD-server
+PORT1=14001
+#	Port of HASQD-client
+PORT2=0
+#	IP-address of server
+IP=127.0.0.1
+#	The name of log file
+LOGFILE=memleak.log
+#	The name of input file for HASQD-client
+INPFILE=memleak.inp
+#	The flag for dprn
+DPRNSTATUS=1
+#	The flag for dsvt
+DSVTSTATUS=1
+PIDFILE1=hq.$PORT1.lock
+PIDFILE2=hq.$PORT2.lock
+
+#	Find the "ADDR = [ IPADDRESS:PORT ]" and change it to "ADDR = [ $IP:$PORT1 ]"
+sed -i '0,/ADDR \=/s/^ADDR.*/ADDR \= \[ '$IP:$PORT1' \]/g' $INPFILE
+
+# 	TIME0 can be ONLY "m" for minutes or "s" for seconds. If we choose "s", then INTERVAL will be calculated in seconds and TIME_LIMIT_H in minutes (its for debug)
+TIME0=m
+
+#	Timelimit of test in minutes or hours - it depends on the value of TIME0
+TIME_LIMIT_H=24
+TIME_LIMIT_M=$(($TIME_LIMIT_H * 60))
+
+#	Intervals in minutes or seconds - it depends on the value of TIME0
+INTERVAL=30
+
+###########################################################################################################
+
+if [ $TIME0 != "m" -a $TIME0 != "s"  ] 
+then 
+	echo "Error: TIME0 must be ONLY \"m\" or \"s\""
+	exit
+fi
+
+uname | grep -i "CYGWIN" >/dev/null 2>&1 && PLAT="Windows" || PLAT="Linux"
+
+if [ -f $PIDFILE1 ]
+then
+	PID=$(cat $PIDFILE1)
+	[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+	[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+	rm -f $PIDFILE1 >/dev/null 2>&1
+fi
+
+if [ -f $PIDFILE2 ]
+then
+	PID=$(cat $PIDFILE2)
+	[ $PLAT = "Linux" ] && kill -9 $PID >/dev/null 2>&1
+	[ $PLAT = "Windows" ] && taskkill /PID $PID /F >/dev/null 2>&1
+	rm -f $PIDFILE2 >/dev/null 2>&1
+fi
+
+[ -f $LOGFILE ] && rm -f $LOGFILE >/dev/null 2>&1
+
+printlog() {
+	[ $PLAT = "Linux" ] && echo "	free memory is - $(free -k | grep "Mem:" | sed 's/ \+/\t/g' | cut -f 4) Kb" >> $LOGFILE || echo "	free memory is - $(cmd /c %systemroot%/system32/wbem/wmic.exe os get FreePhysicalMemory | grep -o '[0-9]*') Kb" >> $LOGFILE
+}
+
+echo "Startup time is `date +"%H:%M"`" >> $LOGFILE
+echo "Current platform is ${PLAT} " >> $LOGFILE
+
+[ $TIME0 = "m" ] && echo "Specified time of the test is $TIME_LIMIT_H hours"  >> $LOGFILE || echo "Specified time is $TIME_LIMIT_H minutes"  >> $LOGFILE
+[ $TIME0 = "m" ] && echo "Collection interval is $INTERVAL minutes"  >> $LOGFILE || echo "Collection interval is $INTERVAL seconds"  >> $LOGFILE
+
+echo "HASQD#1 was started on port $PORT1" >> $LOGFILE
+echo "HASQD#2 was started on port $PORT2" >> $LOGFILE
+echo ""  >> $LOGFILE
+
+echo -n "`date +"%H:%M"`	-	before the start of test" >> $LOGFILE
+
+printlog
+
+$1/zdb erasedisk "create _md5 md5 MD5 1 [abc] 0 0" "create _s22 s22 SHA2-256 1 [abc] 0 0"
+
+$1/hasqd -cq quit=1 lock=1 tcp_port=$PORT1 >/dev/null 2>&1 &
+
+$1/hasqd -cq quit=1 s=$INPFILE lock=1 dprn=$DPRNSTATUS dsvt=$DSVTSTATUS tcp_port=$PORT2 &
+
+#	Waiting until the HASQD-server #1 creates a lock file
+
+until [ -f $PIDFILE1 ]
+do 
+	echo >/dev/null 2>&1
+done
+
+until [ -f $PIDFILE2 ]
+do 
+	echo >/dev/null 2>&1
+done
+
+#	The loop runs while there is a lock file of HASQD Server #1 or time is done
+
+RUNTIME=0
+while [ -f $PIDFILE1 ]
+do
+	if [ $RUNTIME -ge $TIME_LIMIT_M ]
+	then
+		[ $TIME0 = "m" ] && echo -n "`date +"%H:%M"`	-	$RUNTIME	minutes past,	" >> $LOGFILE || echo -n "`date +"%H:%M"`	-	$RUNTIME seconds past,	" >> $LOGFILE
+		printlog
+		PID1=$(cat $PIDFILE1)
+		PID2=$(cat $PIDFILE2)
+		[ $PLAT = "Linux" ] && kill -9 $PID2 $PID1 >/dev/null 2>&1
+		[ $PLAT = "Windows" ] && taskkill /PID $PID2 /PID $PID1 /F >/dev/null 2>&1
+		[ -f $PIDFILE1 ] && rm -f $PIDFILE1 >/dev/null 2>&1
+		[ -f $PIDFILE2 ] && rm -f $PIDFILE2 >/dev/null 2>&1
+		break
+	else
+		sleep $INTERVAL$TIME0
+		RUNTIME=$(($RUNTIME + $INTERVAL))
+		[ $TIME0 = "m" ] && echo -n "`date +"%H:%M"`	-	$RUNTIME	minutes past,	" >> $LOGFILE || echo -n "`date +"%H:%M"`	-	$RUNTIME seconds past,	" >> $LOGFILE
+		printlog
+	fi
+done
+wait
+echo -n "`date +"%H:%M"`	-	after the end of test	" >> $LOGFILE
+printlog
+
+$1/zdb erasedisk

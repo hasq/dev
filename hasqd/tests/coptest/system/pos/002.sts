@@ -1,0 +1,2 @@
+#!/bin/sh
+$1/hasqd -c s=002.inp dsvt=1 dprn=1

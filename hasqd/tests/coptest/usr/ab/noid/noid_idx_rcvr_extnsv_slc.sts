@@ -1,0 +1,46 @@
+#!/bin/sh
+
+#	IP-address of servers
+in=$(basename $0)
+in=${in%.*} 
+db0=db-14000
+db1=db-14001
+
+rm -fr $db1
+mkdir $db1
+cd $db1
+$1/zdb erasedisk "set date 20150101" "create _md5base md5 md5 1 [abc] 100 0" 
+cd ..
+$1/hasqd -cqnx db=$db1 nn=node-14001 dprn=1 dsvt=0 lock=1 tcp_port=14001 &
+
+rm -fr $db0
+mkdir $db0
+cd $db0
+$1/zdb erasedisk "create _md5base md5 md5 1 [abc] 100 0"
+cd ..
+
+$1/hasqd -cqnx db=$db0 nn=node-14000 dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp | grep -v "<svt> sendnote\|<svt> conupdate\|<svt> reorg\|<svt> noterecv\|<svt> chkconfl\|<svt> setconfl\|<svt> conflict"  
+
+rm -fr $db0
+
+find $db1/index > $db1/idx_dirs_org
+find $db1/index -type f -print0 | xargs -0 cat > $db1/idx_content_org
+
+rm -fr $db1/index $db1/index_org
+
+$1/hasqd -cnqx lock=0 db=$db1 s="@quit" dprn=1 dsvt=0
+
+find $db1/index > $db1/idx_dirs_gen
+find $db1/index -type f -print0 | xargs -0 cat > $db1/idx_content_gen
+
+echo DIFF_DIRS_START:
+diff $db1/idx_dirs_org $db1/idx_dirs_gen
+echo DIFF_DIRS_FINISH
+
+echo DIFF_CONTENT_START:
+diff $db1/idx_content_org $db1/idx_content_gen
+echo DIFF_FILES_FINISH
+
+
+rm -fr $db1
+

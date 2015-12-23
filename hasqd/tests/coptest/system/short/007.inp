@@ -1,0 +1,14 @@
+aaa = [ abb ]
+aa1 = [ a11 ]
+aaa = { aaa aa1 aa1 [ b ] }
+print print println aa1 aaa
+
+begin
+print
+{
+  { aaa }
+}
+end
+
+quit
+

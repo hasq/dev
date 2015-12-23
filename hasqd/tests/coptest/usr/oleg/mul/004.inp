@@ -1,0 +1,17 @@
+
+for i 1 4 { print { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+for i 1 4 { print hash wrd < [ rdn ] i > }
+
+for i 1 4 { print expect 0 OK 100 tcp 127.0.0.1:13131 { [ z * _wrd ] recpwd _wrd 0 rdn:i pass } }
+sleep 100
+
+expect 0 OK 20 tcp 127.0.0.1:13131 { [ last _wrd bea5 ] }
+
+print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 1fae ] }
+print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 1fe1 ] }
+print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd 8e69 ] }
+print expect 0 OK 100 tcp 127.0.0.1:13131 { [ last _wrd bea5 ] }
+
+tcp 127.0.0.1:13131 [ quit ]
+quit
+

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Testing fid_zdb_nsk
+
+
+$1/zdb erasedisk "create WRDDIR wrd WRD 1 [magic] 1 0"
+$1/zdb load "addpwd WRDDIR 0:3 rdn pwd"
+
+#0 a7c4 0000 0c37 4d90
+#1 a7c4 da53 8911 998d
+#2 a7c4 84d1 97d6 7985
+#3 a7c4 9f6c 1038 d138
+
+$1/zdb "nsk wrd 0 a7c4 317d"
+#4a89
+$1/zdb "nsk wrd 1 a7c4 317d"
+#a5f9
+$1/zdb "nsk wrd 2 a7c4 317d"
+#80e9
+$1/zdb "nsk wrd 3 a7c4 317d"
+#d850
+$1/zdb erasedisk

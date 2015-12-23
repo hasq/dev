@@ -1,0 +1,101 @@
+<htv> new canvas base 3 2
+<htv> show
+[  --][  --][  --]
+[  --][  --][  --]
+<htv> new db 1 0 _wrd wrd WRD 1 [] 1 0
+<htv> new db 0 0 all
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> new cmd 0 0
+-lnqc tcp_port=13131 db=base/db_0_0
+<htv> new pub 0 0
+Cmd: -lnqc tcp_port=13131 db=base/db_0_0
+<htv> new pub 1 0
+Cmd: -lnqc tcp_port=13132 db=base/db_1_0
+<htv> show
+[#P--][#P--][  --]
+[  --][  --][  --]
+<htv> send 1 0 info db
+Reply: OK
+{
+name=_wrd
+hash=wrd
+description=WRD
+nG=1
+magic=[]
+size=1
+thin=0
+datalimit=-1
+altname=e55b
+}
+
+<htv> send 0 0 info db
+Reply: OK
+{
+name=_md5
+hash=md5
+description=MD5
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=3d9dcd16980d97dcf6ef91cca54f8a9f
+}
+{
+name=_r16
+hash=r16
+description=RIPEMD-160
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=2685e994c02da786b977f32a6fc4dc1075ad3aac
+}
+{
+name=_s22
+hash=s22
+description=SHA2-256
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=bb6abf760fe53131e9350fef5f835c403f1a7684352269dee46ec589e9f1335d
+}
+{
+name=_s25
+hash=s25
+description=SHA2-512
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=84f247e8faa9b30f786e607f210cc713aecba1aee56505a02894284ae57d16debe639bac006da9d9d3c979e92399b34df5c9399f0299d87963bf7c7270a2b91d
+}
+{
+name=_wrd
+hash=wrd
+description=Md5-2bytes
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=e55b
+}
+
+<htv> shut 1 0
+<htv> shut 0 0
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> erase base
+erasing base ok
+<htv> show
+[# --][# --][  --]
+[  --][  --][  --]
+<htv> quit
