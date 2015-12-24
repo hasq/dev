@@ -52,11 +52,8 @@ echo "> exporting $WF"
 makeexport "$TCDIR"/tcz "$WF" > /dev/null || svnerror
 cp "$TCDIR"/iso/* "${WF}/"
 SRCDIR=""
-[ -d ".." ] && SRCDIR=".."
-# [ -z "$SRCDIR" -a -d "../../hasqd" ] && SRCDIR="../../hasqd"
-# [ -z "$SRCDIR" -a -d "../dev/hasqd" ] && SRCDIR="../dev/hasqd"
-# [ -z "$SRCDIR" -a -d "../hasqd" ] && SRCDIR="../hasqd"
-[ -z "$SRCDIR" ] && error "no SRC folder found"
+[ -d ".." -a -d "../src" -a -d "../srcu" -a -d "../ext/jq" ] && SRCDIR=".."
+[ -z "$SRCDIR" ] && error "Source folder incorrect. Run this script from the proper folder."
 cd "$SRCDIR" || exit
 delfolder "$WS"
 
