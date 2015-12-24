@@ -3,6 +3,7 @@
 MYDIR="$(pwd)"
 WF="additional"
 WS="worksrc"
+JQFILENAME="$(basename $(find ../ext/jq/ -name jquery-ui-*.bz2))"
 
 error() {
 	[ -z "$1" ] || echo "$1"
@@ -36,10 +37,10 @@ exportsvn() {
 	makeexport srcu "${1}/srcu"
 	makeexport img "${1}/img"
 	svnversion > "$VERFILE"
+	mkdir -p "${1}/ext/jq"
+	makeexport "ext/jq/$JQFILENAME" "${1}/ext/jq/$JQFILENAME"
 # TODO: find ":" in rev num
 	grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
-	mkdir "${1}/ext"
-	makeexport "ext/jq" "${1}/ext/jq/"
 }
 
 delfolder "$WF"
