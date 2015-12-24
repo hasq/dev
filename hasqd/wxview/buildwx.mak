@@ -38,7 +38,7 @@ $(WXNAME).fcl: $(WXNAME).fcl.bz2
 	chmod 0777 $(WXNAME).fcl
 	touch $(WXNAME).fcl
 
-$(WXNAME).fcl.bz2: ../third/wx/$(WXNAME).fcl.bz2
+$(WXNAME).fcl.bz2: ../ext/wx/$(WXNAME).fcl.bz2
 	cp $< $@
 	chmod 0777 $@
 
