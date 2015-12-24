@@ -8,7 +8,7 @@
 
 #Eto ispravit prava dostupa v arhive
 
-JQUERY=jquery-ui-1.11.0.custom
+JQUERY=jquery-ui-1.11.4.custom
 
 [ -f "${JQUERY}.tar.bz2" ] || exit
 tar xjf "${JQUERY}.tar.bz2" || exit
