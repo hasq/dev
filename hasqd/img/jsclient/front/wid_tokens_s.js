@@ -1,3 +1,5 @@
+// Hasq Technology Pty Ltd (C) 2013-2015
+
 function widTokensTab() {
     var r = '';
     var tabs = [];

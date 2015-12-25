@@ -1,3 +1,5 @@
+// Hasq Technology Pty Ltd (C) 2013-2015
+
 function widCleanCRL() {
     glCRL.idx = 0;
     glCRL.counter = 100;

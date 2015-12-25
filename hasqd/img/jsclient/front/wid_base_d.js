@@ -1,4 +1,5 @@
 ﻿// Hasq Technology Pty Ltd (C) 2013-2015
+
 function ProgressLed() {
     //this.counter = 0;
 }
@@ -17,6 +18,10 @@ ProgressLed.prototype.dec = function () {
 };
 
 var progressLed = new ProgressLed();
+
+function widAnimateProgbar() {
+    $('#progress_led').html('<img src="images/greypoint.gif">');
+}
 
 function widPrintBorderColor(id, color) {
     $('#' + id).css('borderLeftColor', color);

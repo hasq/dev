@@ -1,10 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-
-function widAnimateProgbar() {
-    $('#progress_led').html('<img src="images/greypoint.gif">');
-}
-
 function widTableCell(x) {
     return '<td>' + x + '';
 }

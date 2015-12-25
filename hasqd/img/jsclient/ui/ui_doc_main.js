@@ -1,4 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
+
 var glClientTitle = '&nbspHasq JavaScript Client';
 var glDataBase = {};
 var glCurrentDB = {}; //The object which contains selected database properties
