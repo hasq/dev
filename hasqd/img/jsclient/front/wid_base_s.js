@@ -2,7 +2,7 @@
 
 
 function widAnimateProgbar() {
-    $('#progressbar').html('<img src="images/greypoint.gif">');
+    $('#progress_led').html('<img src="images/greypoint.gif">');
 }
 
 function widTableCell(x) {
@@ -32,7 +32,7 @@ function widGlobalTable(tabs){
 
     r += '<tr>\n';
     r += '<td>\n' + widClientTitle(glClientTitle);
-    r += '<td style="text-align:right;">&nbsp' + widClientLed('progressbar');
+    r += '<td style="text-align:right;">&nbsp' + widClientLed('progress_led');
     r += '</tr>\n';
 
     r += '<tr>\n';

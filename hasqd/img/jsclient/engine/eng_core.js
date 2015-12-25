@@ -147,7 +147,7 @@ function engRunCRL(cmdsList, cbFunc) {
     }
 
     if (cmdsList.items.length !== 0 && cmdsList.idx < cmdsList.items.length) {
-        ajxSendCommand(cmdsList.items[cmdsList.idx].cmd, cb, progbar);
+        ajxSendCommand(cmdsList.items[cmdsList.idx].cmd, cb, progressLed);
     } else if (cmdsList.items.length === 0) {
         cbFunc('OK', 0, 0);
     }

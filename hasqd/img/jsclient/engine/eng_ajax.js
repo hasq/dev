@@ -1,18 +1,18 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function ajxSendCommand(cmd, callback, progbar) {
-    progbar.inc();
+function ajxSendCommand(cmd, callback, progressLed) {
+    progressLed.inc();
     //$.get('/' + cmd, function (data){})
     // use post to prevent caching
     $.post('/', 'command=' + cmd, function (data) {})
 
     .done(function (data) {
         callback(data);
-        progbar.dec();
+        progressLed.dec();
     })
 
     .fail(function () {
-        progbar.fail();
+        progressLed.fail();
     })
 
     .always(function () {
