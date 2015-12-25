@@ -10,7 +10,7 @@ while read -r LINE; do
         read LINE
         [ -r "$LINE" ] || error "cant open file $LINE"
             while read -r SLINE; do
-                echo "r+='$SLINE\n';"
+                echo "r += '$SLINE\n';"
             done < "$LINE"
         continue
     fi

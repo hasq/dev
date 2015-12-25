@@ -14,7 +14,7 @@ wid_base_s_help_tab.tmp: front/wid_base_s_help_tab.js txt/*.htm
 	cat front/wid_base_s_help_tab.js >> front/wid_base_s_help_tab.tmp
 
 wid_base_s_help_tab.js: wid_base_s_help_tab.tmp
-	sh subster.sh < front/wid_base_s_help_tab.tmp > front/wid_base_s_help_tab_gen.js
+	sh subster.sh < front/wid_base_s_help_tab.tmp > front/wid_base_s_help_tab.gen
 	rm front/wid_base_s_help_tab.tmp	
 
 lib/jquery-ui: $(JQUI).tar.bz2
@@ -25,20 +25,16 @@ slice/home/index.html: index.html
 	mkdir -p slice/home/ui
 	mkdir -p slice/home/lib
 	mkdir -p slice/home/lib/images
-	mkdir -p slice/home/api_ui
 	mkdir -p slice/home/front
-	mkdir -p slice/home/api_eng
 	mkdir -p slice/home/engine
 	mkdir -p slice/home/images
+	cp engine/*.js slice/home/engine/
 	cp ui/*.js slice/home/ui/
 	cp front/wid_base_d.js slice/home/front/
 	cp front/wid_base_s.js slice/home/front/
-	mv front/wid_base_s_help_tab_gen.js slice/home/front/wid_base_s_help_tab.js
+	mv front/wid_base_s_help_tab.gen slice/home/front/wid_base_s_help_tab.js
 	cp front/wid_tokens_d.js slice/home/front/
 	cp front/wid_tokens_s.js slice/home/front/
-	cp api_ui/*.js slice/home/api_ui/
-	cp engine/*.js slice/home/engine/
-	cp api_eng/*.js slice/home/api_eng/
 	cp home.html slice/home/
 	cp images/*.gif slice/home/images/
 	cp index.html slice/home/
@@ -47,7 +43,6 @@ slice/home/index.html: index.html
 	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
 	cp lib/jquery-ui/images/ui-icons*.png slice/home/lib/images/
 	chmod 0777 -R slice/home
-	rm wid_base_s_help_tab_gen.js
 #chmod a-x slice/home/*.html slice/home/lib/* slice/home/ui/*
 
 clean:
@@ -57,6 +52,8 @@ clean:
 	rm -rf slice/_S225DB/2015 slice/_S22DB/meta
 	rm -rf slice/_S25DB/2015 slice/_S25DB/meta
 	rm -rf slice/_MWRDB/2015 slice/_WRDDB/meta
+	rm -rf front/wid_base_s_help_tab.gen
+	rm -rf front/wid_base_s_help_tab.tmp
 	rm -rf hq.13151.lock
 	
 myclean:
@@ -68,9 +65,10 @@ myclean:
 	rm -rf slice/_MWRDB/2015 slice/_WRDDB/meta
 	
 checkin:
-	cp -f slice/home/api_eng/*.js api_eng/
-	cp -f slice/home/api_ui/*.js api_ui/ 
-	cp -f slice/home/front/*.js front/
+	cp -f slice/home/front/wid_base_d.js front/
+	cp -f slice/home/front/wid_base_s.js front/
+	cp -f slice/home/front/wid_tokens_d.js front/
+	cp -f slice/home/front/wid_tokens_s.js front/
 	cp -f slice/home/engine/*.js engine/
 	cp -f slice/home/ui/*.js ui/
 	cp -f slice/home/home.html .
