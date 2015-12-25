@@ -13,7 +13,7 @@ wid_base_s_help_tab.tmp: front/wid_base_s_help_tab.js txt/*.htm
 	echo "" >> front/wid_base_s_help_tab.tmp
 	cat front/wid_base_s_help_tab.js >> front/wid_base_s_help_tab.tmp
 
-wid_base_s_help_tab.js: front/wid_base_s_help_tab.tmp
+wid_base_s_help_tab.js: wid_base_s_help_tab.tmp
 	sh subster.sh < front/wid_base_s_help_tab.tmp > front/wid_base_s_help_tab_gen.js
 	rm front/wid_base_s_help_tab.tmp	
 
@@ -33,7 +33,7 @@ slice/home/index.html: index.html
 	cp ui/*.js slice/home/ui/
 	cp front/wid_base_d.js slice/home/front/
 	cp front/wid_base_s.js slice/home/front/
-	cp front/wid_base_s_help_tab_gen.js slice/home/front/wid_base_s_help_tab.js
+	mv front/wid_base_s_help_tab_gen.js slice/home/front/wid_base_s_help_tab.js
 	cp front/wid_tokens_d.js slice/home/front/
 	cp front/wid_tokens_s.js slice/home/front/
 	cp api_ui/*.js slice/home/api_ui/
