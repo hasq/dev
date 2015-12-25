@@ -354,7 +354,7 @@ function widTokensSS3() {
 	r += '<table style="border-collapse:collapse;border-spacing:0;">\n';
 	r += '<tr>\n';
 	r += '<td style="text-align:left">';
-	r += '<button id="tokens_ss3_s1_showkeys_button" data-title="Initiate (Step 1)" data-class="main" onclick="widMainButtonClick(this.id)">Initiate (Step 1)</button>';
+	r += '<button id="tokens_ss3_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 1</button>';
 	r += '</td>\n';
 	r += '<td style="text-align:left">';
 	r += '<div id="tokens_ss3_s1_led_div"></div>';
@@ -384,7 +384,7 @@ function widTokensSS3() {
 	r += '<table style="border-collapse:collapse;border-spacing:0;">\n';
 	r += '<tr>\n';
 	r += '<td style="text-align:left">';
-	r += '<button id="tokens_ss3_s2_showkeys_button" data-title="Initiate (Step 2)" data-class="main" onclick="widMainButtonClick(this.id)">Initiate (Step 2)</button>';
+	r += '<button id="tokens_ss3_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 2</button>';
 	r += '</td>\n';
 	r += '<td style="text-align:left">';
 	r += '<div id="tokens_ss3_s2_led_div"></div>';
@@ -440,7 +440,7 @@ function widTokensSS4() {
 	r += '</td>\n';
 	r += '<td align="right">\n';
 	r += '<button id="tokens_ss4_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-	r += '<button id="tokens_ss4_s1_obtainkeys_button" data-title="Finalize (step 1)" data-class="main" onclick="widMainButtonClick(this.id)">Finalize (step 1)</button>\n'; 
+	r += '<button id="tokens_ss4_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 1</button>\n'; 
 	r += '</td>\n';
 	r += '</tr>\n';
 	r += '</table>\n';
@@ -474,7 +474,7 @@ function widTokensSS4() {
 	r += '</td>\n';
 	r += '<td align="right">\n';
 	r += '<button id="tokens_ss4_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-	r += '<button id="tokens_ss4_s2_obtainkeys_button" data-title="Finalize (step 2)" data-class="main" onclick="widMainButtonClick(this.id)">Finalize (step 2)</button>\n'; 
+	r += '<button id="tokens_ss4_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 2</button>\n'; 
 	r += '</td>\n';
 	r += '</tr>\n';
 	r += '</table>\n';
@@ -624,7 +624,7 @@ function widTokensRS3() {
 	r += '</td>\n';
 	r += '<td align="right">\n';
 	r += '<button id="tokens_rs3_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-	r += '<button id="tokens_rs3_s1_obtainkeys_button" data-title="Finalize (step 1)" data-class="main" onclick="widMainButtonClick(this.id)">Finalize (step 1)</button>\n'; 
+	r += '<button id="tokens_rs3_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 1</button>\n'; 
 	r += '</td>\n';
 	r += '</tr>\n';
 	r += '</table>\n';
@@ -659,7 +659,7 @@ function widTokensRS3() {
 	r += '</td>\n';
 	r += '<td align="right">\n';
 	r += '<button id="tokens_rs3_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-	r += '<button id="tokens_rs3_s2_obtainkeys_button" data-title="Finalize (step 2)" data-class="main" onclick="widMainButtonClick(this.id)">Finalize (step 2)</button>\n'; 
+	r += '<button id="tokens_rs3_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 2</button>\n'; 
 	r += '</td>\n';
 	r += '</tr>\n';
 	r += '</table>\n';
@@ -683,7 +683,7 @@ function widTokensRS4() {
 	r += '<table style="border-collapse:collapse;border-spacing:0;">\n';
 	r += '<tr>\n';
 	r += '<td style="text-align:left">';
-	r += '<button id="tokens_rs4_s1_showkeys_button" data-title="Initiate (step 1)" data-class="main" onclick="widMainButtonClick(this.id)">Initiate (step 1)</button>';
+	r += '<button id="tokens_rs4_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 1</button>';
 	r += '</td>\n';
 	r += '<td style="text-align:left">';
 	r += '<div id="tokens_rs4_s1_led_div"></div>';
@@ -713,7 +713,7 @@ function widTokensRS4() {
 	r += '<table style="border-collapse:collapse;border-spacing:0;">\n';
 	r += '<tr>\n';
 	r += '<td style="text-align:left">';
-	r += '<button id="tokens_rs4_s2_showkeys_button" data-title="Initiate (step 2)" data-class="main" onclick="widMainButtonClick(this.id)">Initiate (step 2)</button>';
+	r += '<button id="tokens_rs4_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 2</button>';
 	r += '</td>\n';
 	r += '<td style="text-align:left">';
 	r += '<div id="tokens_rs4_s2_led_div"></div>';
