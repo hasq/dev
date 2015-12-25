@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+﻿// Hasq Technology Pty Ltd (C) 2013-2015
 
 function engGetHasqdOk(data) {
 	var r = data.replace(/\r|\s+$/g, '');
