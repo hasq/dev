@@ -1,9 +1,41 @@
 #!/bin/bash
 
-MYDIR="$(pwd)"
+STARTDIR="$(pwd)"
+TCDIR=""
+SRCDIR=""
 WF="additional"
 WS="worksrc"
-JQFILENAME="$(basename $(find ../ext/jq/ -name jquery-ui-*.bz2))"
+JQFILENAME=""
+
+# 2015.12.28 - BEGIN: recursive search of TC folder
+
+findinc() {
+# $1 - this folder will be scanned
+# $2 - this folder has been scanned previously and will be skipped
+	for i in "$1"/*; do
+		if [ -d "$i" -a ! -L "$i" -a "$i" != "$2" ]
+		then
+			if [ -d "$i/iso" -a -d "$i/tcz" ]
+			then 
+				TCDIR="$i"
+				return
+			else
+				findinc "$i"
+			fi
+		fi
+	done
+}
+
+finddec() {
+	findinc "$1" "$2"
+	if [ -z "$TCDIR" ]
+	then
+		local PARENTDIR="$(dirname "$1")"
+		finddec "$PARENTDIR" "$1"
+	fi
+}
+
+# 2015.12.28 - END: recursive search of TC folder
 
 error() {
 	[ -z "$1" ] || echo "$1"
@@ -44,26 +76,28 @@ exportsvn() {
 }
 
 delfolder "$WF"
-TCDIR=""
-[ -d "../ext/tc" ] && TCDIR="../ext/tc"
-[ -z "$TCDIR" ] && error "no TiniCore folder found"
-delfolder "$WF"
+
+
+finddec "$STARTDIR"
+[ -z "$TCDIR" ] && error "TinyCore folder not found"
+
 echo "> exporting $WF"
 makeexport "$TCDIR"/tcz "$WF" > /dev/null || svnerror
 cp "$TCDIR"/iso/* "${WF}/"
-SRCDIR=""
+
 [ -d ".." -a -d "../src" -a -d "../srcu" -a -d "../ext/jq" ] && SRCDIR=".."
 [ -z "$SRCDIR" ] && error "Source folder incorrect. Run this script from the proper folder."
+JQFILENAME="$(basename $(find ../ext/jq/ -name jquery-ui-*.bz2))"
 cd "$SRCDIR" || exit
 delfolder "$WS"
 
-TARGETDIR="${MYDIR}/${WF}/${WS}"
+TARGETDIR="${STARTDIR}/${WF}/${WS}"
 
 [ -d "$TARGETDIR" ] || mkdir -p "$TARGETDIR"
 
 exportsvn "$TARGETDIR"
 
-cd "$MYDIR"
+cd "$STARTDIR"
 [ -d "$WF" -a -d "${WF}/$WS" ] || exit
 which genisoimage > /dev/null 2>&1 || error "! please install genisoimage"
 [ -f "${WF}.iso" ] && rm "${WF}.iso"
