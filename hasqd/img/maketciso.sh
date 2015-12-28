@@ -1,24 +1,25 @@
 #!/bin/bash
 
-STARTDIR="$(pwd)"
-TCDIR=""
-SRCDIR=""
-WF="additional"
-WS="worksrc"
-JQFILENAME=""
+startdir="$(pwd)"
+tcdir=""
+srcdir=""
+temp="additional"
+worksrc="worksrc"
+jqfile=""
 
 # 2015.12.28 - BEGIN: recursive search of TC folder
 
 findinc() {
 # $1 - this folder will be scanned
 # $2 - this folder has been scanned previously and will be skipped
+	local tcdir=""
 	for i in "$1"/*; do
 		if [ -d "$i" -a ! -L "$i" -a "$i" != "$2" ]
 		then
 			if [ -d "$i/iso" -a -d "$i/tcz" ]
 			then 
-				TCDIR="$i"
-				return
+				tcdir="$i"
+				echo "$tcdir"
 			else
 				findinc "$i"
 			fi
@@ -27,11 +28,13 @@ findinc() {
 }
 
 finddec() {
-	findinc "$1" "$2"
-	if [ -z "$TCDIR" ]
+	local tcdir=$(findinc "$1" "$2")
+	if [ -z "$tcdir" ]
 	then
-		local PARENTDIR="$(dirname "$1")"
-		finddec "$PARENTDIR" "$1"
+		local parentdir="$(dirname "$1")"
+		finddec "$parentdir" "$1"
+	else
+		echo "$tcdir"
 	fi
 }
 
@@ -70,38 +73,38 @@ exportsvn() {
 	makeexport img "${1}/img"
 	svnversion > "$VERFILE"
 	mkdir -p "${1}/ext/jq"
-	makeexport "ext/jq/$JQFILENAME" "${1}/ext/jq/$JQFILENAME"
+	makeexport "ext/jq/$jqfile" "${1}/ext/jq/$jqfile"
 # TODO: find ":" in rev num
 	grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
 }
 
-delfolder "$WF"
+delfolder "$temp"
 
 
-finddec "$STARTDIR"
-[ -z "$TCDIR" ] && error "TinyCore folder not found"
+tcdir=$(finddec "$startdir")
+[ -z "$tcdir" ] && error "TinyCore folder not found"
 
-echo "> exporting $WF"
-makeexport "$TCDIR"/tcz "$WF" > /dev/null || svnerror
-cp "$TCDIR"/iso/* "${WF}/"
+echo "> exporting $temp"
+makeexport "$tcdir"/tcz "$temp" > /dev/null || svnerror
+cp "$tcdir"/iso/* "${temp}/"
 
-[ -d ".." -a -d "../src" -a -d "../srcu" -a -d "../ext/jq" ] && SRCDIR=".."
-[ -z "$SRCDIR" ] && error "Source folder incorrect. Run this script from the proper folder."
-JQFILENAME="$(basename $(find ../ext/jq/ -name jquery-ui-*.bz2))"
-cd "$SRCDIR" || exit
-delfolder "$WS"
+[ -d ".." -a -d "../src" -a -d "../srcu" -a -d "../ext/jq" ] && srcdir=".."
+[ -z "$srcdir" ] && error "Source folder incorrect. Run this script from the proper folder."
+jqfile="$(basename $(find ../ext/jq/ -name jquery-ui-*.bz2))"
+cd "$srcdir" || exit
+delfolder "$worksrc"
 
-TARGETDIR="${STARTDIR}/${WF}/${WS}"
+TARGETDIR="${startdir}/${temp}/${worksrc}"
 
 [ -d "$TARGETDIR" ] || mkdir -p "$TARGETDIR"
 
 exportsvn "$TARGETDIR"
 
-cd "$STARTDIR"
-[ -d "$WF" -a -d "${WF}/$WS" ] || exit
+cd "$startdir"
+[ -d "$temp" -a -d "${temp}/$worksrc" ] || exit
 which genisoimage > /dev/null 2>&1 || error "! please install genisoimage"
-[ -f "${WF}.iso" ] && rm "${WF}.iso"
+[ -f "${temp}.iso" ] && rm "${temp}.iso"
 echo "> making iso"
-genisoimage -J -D -o "${WF}.iso" "$WF" > /dev/null 2>&1
-[ $? -eq 0 -a -f "${WF}.iso" ] && echo ">> OK!"
-delfolder "$WF"
+genisoimage -J -D -o "${temp}.iso" "$temp" > /dev/null 2>&1
+[ $? -eq 0 -a -f "${temp}.iso" ] && echo ">> OK!"
+delfolder "$temp"
