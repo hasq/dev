@@ -82,9 +82,10 @@ delfolder "$temp"
 
 tcdir=$(finddec "$startdir")
 echo ">searching for TinyCore folder..."
-[ -z "$tcdir" ] && error "TinyCore folder not found or corrupt!"
-[ -z "$(svn status "$tcdir" 2>&1 | grep "was not found.")" ] || error "$tcdir - is not a working copy of TinyCore."
-[ -z "$(svn status "$tcdir" | grep "^!")" -a -z "$(svn status "$tcdir" | grep "^M")" ] || error "$tcdir have changes, please update it."
+[ -z "$tcdir" ] && error "TinyCore folder not found!"
+[ -z "$(svn status "$tcdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$tcdir/tcz" 2>&1 | grep "was not found.")" ] || error ">>$tcdir is not a working copy of TinyCore."
+[ -z "$(svn status "$tcdir" | grep "^M")" ] || error ">>$tcdir - folder have uncommited changes, please commit it before."
+[ -z "$(svn status "$tcdir" | grep "^!")" ] || error ">>$tcdir - folder have missing files, please update it before."
 
 echo "> exporting $temp"
 makeexport "$tcdir"/tcz "$temp" > /dev/null || svnerror
