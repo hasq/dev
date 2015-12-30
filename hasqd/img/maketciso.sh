@@ -80,9 +80,11 @@ exportsvn() {
 
 delfolder "$temp"
 
-
 tcdir=$(finddec "$startdir")
-[ -z "$tcdir" ] && error "TinyCore folder not found"
+echo ">searching for TinyCore folder..."
+[ -z "$tcdir" ] && error "TinyCore folder not found or corrupt!"
+[ -z "$(svn status "$tcdir" 2>&1 | grep "was not found.")" ] || error "$tcdir - is not a working copy of TinyCore."
+[ -z "$(svn status "$tcdir" | grep "^!")" -a -z "$(svn status "$tcdir" | grep "^M")" ] || error "$tcdir have changes, please update it."
 
 echo "> exporting $temp"
 makeexport "$tcdir"/tcz "$temp" > /dev/null || svnerror
