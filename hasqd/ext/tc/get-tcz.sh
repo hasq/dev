@@ -71,7 +71,7 @@ download() {
 workdir=$(finddec "$(pwd)")
 echo ">searching for TinyCore folder..."
 [ -z "$workdir" ] && error "TinyCore folder not found"
-[ -z "$(svn status "$workdir" 2>&1 | grep "was not found.")" ] || error "$workdir - is not a working copy of TinyCore."
+[ -z "$(svn status "$workdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$workdir/tcz" 2>&1 | grep "was not found.")" ] || error "$workdir - is not a working copy of TinyCore."
 [ -z "$(svn status "$workdir" | grep "^M")" ] || error ">>$workdir folder have uncommited changes, please commit it before."
 
 [ -f "$(pwd)/$listfile" ] || error "Run scrip from proper folder!"
