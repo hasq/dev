@@ -69,8 +69,10 @@ download() {
 }
 
 workdir=$(finddec "$(pwd)")
-
-[ -z "$workdir" ] && error "TinyCore folder not found" ||
+echo ">searching for TinyCore folder..."
+[ -z "$workdir" ] && error "TinyCore folder not found"
+[ -z "$(svn status "$workdir" 2>&1 | grep "was not found.")" ] || error "$workdir - is not a working copy of TinyCore."
+[ -z "$(svn status "$workdir" | grep "^M")" ] || error ">>$workdir folder have uncommited changes, please commit it before."
 
 [ -f "$(pwd)/$listfile" ] || error "Run scrip from proper folder!"
 
@@ -81,11 +83,11 @@ do
 	if [ ! -f "$tcz/$i" ];	then 
 		download "$link" "$i" "$workdir"
 		rc=$?
-		[ "$rc" == "0" ] && echo "$i OK" && echo "OK $i" >>"$logfile"
+		[ "$rc" == "0" ] && echo "$i OK" && echo "$i OK" >>"$logfile"
 		[ "$rc" == "1" ] && echo "$i FAILED" && echo "$i FAILED" >>"$logfile"
 		[ "$rc" == "2" ] && echo "$i UPDATED" && echo "$i UPDATED" >>"$logfile"
 		[ "$rc" == "3" ] && echo "$i EXIST" && echo "$i EXIST" >>"$logfile"
 	fi
 done
 
-echo -e "\nDONE! See results in $logfile"
+echo -e "\nDONE! See results in $logfile and don't forget to update SVN"
