@@ -159,7 +159,7 @@ function widTokensVerifyTab() {
     r += '</table">\n';
     r += '<table width="100%" style="border-collapse:collapse;border-spacing:0;">\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">\n<div class="scrolling" id="tokens_verify_hidden_div">\n';
+    r += '<td width="100%" colspan="2">\n<div class="verify-table-div" id="tokens_verify_hidden_div">\n';
     r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;padding:0;border-collapse:collapse;border-spacing:0;">\n';
     r += '<tr><th>Status</th><th>Raw name</th><th>Hash</th><th>Last rec. N</th><th>Data</th></tr>\n';
     r += '</table>\n';

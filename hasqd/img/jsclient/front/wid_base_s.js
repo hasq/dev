@@ -168,7 +168,7 @@ function widDatabaseTraitTable(data) {
 
 function widRecordsTab() {
     var r = '';
-    r += '<table border="0">\n';
+    r += '<table border="1">\n';
     r += '<tr>\n';
     r += '<td colspan="2" rowspan="4">\n';
     r += '<b>Current DB:&nbsp;</b>\n';
@@ -180,23 +180,23 @@ function widRecordsTab() {
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td>\n';
-    r += '</tr>\n'; //
+    r += '</tr>\n';
     r += '<tr>\n';
     r += '<td>\n';
     r += '<td>Key<td><input type="text" id="lastrec_k_input" size="35" title="" value="" disabled>\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td>\n';
-    r += '</tr>\n'; //
+    r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2" rowspan="3">\n';
     r += '<table border="0">\n';
     r += '<tr>\n';
-    r += '<td>Raw DN&nbsp;\n';
+    r += '<td>Raw token&nbsp;\n';
     r += '<td><input type="text" id="rdn_input" oninput="widRawDNOninput()" size="35" title="" value="">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td>DN';
+    r += '<td>Token';
     r += '<td><input type="text" id="dn_input" oninput="widDNOninput()" size="35" title="" value="">\n';
     r += '</tr>\n';
     r += '<tr>\n';
@@ -224,9 +224,29 @@ function widRecordsTab() {
     r += '</tr>\n';
 
     r += '<tr>\n';
-    r += '<td colspan="5"><hr/>\n';
+    r += '<td colspan="5" rowspan="1"><hr/>\n';
     r += '</tr>\n';
 
+	/* get range*/
+	r += '<tr>\n';
+	r += '<td colspan="5" style="text-align:left">\n';
+	r += '<button id="get_range_button" onclick="widRangeBtnClk();">Range</button>\n';
+	r += '<input type="text" id="records_range" size="35" title="" value="">\n'
+	r += '</tr>\n';
+	
+	r += '<tr>\n';
+	r += '<td colspan="5">\n<div class="range-table-div" id="range_table_hidden_div">\n';
+	r += '<table id="range_table" border="1" width="100%">\n';
+	r += '<tr><th width="5%">N</th><th>K</th><th>G</th><th>O</th><th width="10%">D</th></tr>\n';
+	r += '</table>\n';
+	r += '</div>\n';
+	r += '</tr>\n';
+
+	
+	r += '<tr>\n';
+    r += '<td colspan="5"><hr/>\n';
+    r += '</tr>\n';
+	
     r += '<tr>\n';
     r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
     r += '<td>\n';
