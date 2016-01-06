@@ -100,6 +100,10 @@ void SvtJob::setconfl_proc()
     const int & idx = i_arg1;
     db::Database & db = gs->database;
 
+    // before starting conflict resolution lets open family nodes 
+    // just in case if no reorg is run before
+    Reorganiser(gs).discoverNet().updateFamily_safe();
+
     while (1)
     {
         const string sdn = db.get1conflict(idx);

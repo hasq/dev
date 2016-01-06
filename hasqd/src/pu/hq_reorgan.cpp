@@ -43,7 +43,7 @@ bool Reorganiser::moveDead1()
 }
 
 // very complex function with much subtlety
-void Reorganiser::discoverNet()
+Reorganiser& Reorganiser::discoverNet()
 {
     moveDead();
 
@@ -139,6 +139,7 @@ void Reorganiser::discoverNet()
         dag.link(me, mynbs[i].name);
     }
 
+    return *this;
 }
 
 void Reorganiser::reorgNbs()
@@ -222,6 +223,13 @@ void Reorganiser::reorgNbs()
 
     } // for
 
+}
+
+void Reorganiser::updateFamily_safe()
+{
+    ConArea & ca = gs->conArea;
+    sgl::Mutex mtx(ca.access2conArea);
+    updateFamily();
 }
 
 void Reorganiser::updateFamily()
