@@ -146,6 +146,21 @@ function doc_init() {
 		}
 	});
 
+	$('#tokens_history_selectmenu').selectmenu({
+		select: function( event, data ) {
+			var d = +data.item.value;
+			switch(d){
+			case 0:
+				$('#tokens_history_div').hide();
+				break;
+			default:
+				$('#tokens_history_div').show();
+				widTokensHistorySMenu(d);
+				break;
+		  }
+	  }
+	});	
+	
 	$('button').button();
 
 	var cmdinputHints = [

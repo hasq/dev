@@ -35,7 +35,7 @@ slice/home/index.html: index.html
 	mv front/wid_base_s_help_tab.gen slice/home/front/wid_base_s_help_tab.js
 	cp front/wid_tokens_d.js slice/home/front/
 	cp front/wid_tokens_s.js slice/home/front/
-	cp home.html slice/home/
+	cp hqclnt.html slice/home/
 	cp images/*.gif slice/home/images/
 	cp index.html slice/home/
 	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
@@ -71,5 +71,5 @@ checkin:
 	cp -f slice/home/front/wid_tokens_s.js front/
 	cp -f slice/home/engine/*.js engine/
 	cp -f slice/home/ui/*.js ui/
-	cp -f slice/home/home.html .
+	cp -f slice/home/hqclnt.html .
 	cp -f slice/home/index.html .

@@ -168,7 +168,7 @@ function widDatabaseTraitTable(data) {
 
 function widRecordsTab() {
     var r = '';
-    r += '<table border="1">\n';
+    r += '<table border="0">\n';
     r += '<tr>\n';
     r += '<td colspan="2" rowspan="4">\n';
     r += '<b>Current DB:&nbsp;</b>\n';
@@ -227,26 +227,7 @@ function widRecordsTab() {
     r += '<td colspan="5" rowspan="1"><hr/>\n';
     r += '</tr>\n';
 
-	/* get range*/
-	r += '<tr>\n';
-	r += '<td colspan="5" style="text-align:left">\n';
-	r += '<button id="get_range_button" onclick="widRangeBtnClk();">Range</button>\n';
-	r += '<input type="text" id="records_range" size="35" title="" value="">\n'
-	r += '</tr>\n';
-	
-	r += '<tr>\n';
-	r += '<td colspan="5">\n<div class="range-table-div" id="range_table_hidden_div">\n';
-	r += '<table id="range_table" border="1" width="100%">\n';
-	r += '<tr><th width="5%">N</th><th>K</th><th>G</th><th>O</th><th width="10%">D</th></tr>\n';
-	r += '</table>\n';
-	r += '</div>\n';
-	r += '</tr>\n';
 
-	
-	r += '<tr>\n';
-    r += '<td colspan="5"><hr/>\n';
-    r += '</tr>\n';
-	
     r += '<tr>\n';
     r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
     r += '<td>\n';
@@ -291,6 +272,33 @@ function widRecordsTab() {
     r += '<button id="submit_button" onclick="widSubmitBtnClk()">Submit</button>\n';
     r += '</tr>\n';
 
+	/* get range*/
+    r += '<tr>\n';
+    r += '<td colspan="5"><hr/>\n';
+    r += '</tr>\n';
+
+    r += '<tr>\n';
+    r += '<td colspan="2" rowspan="2"><b>History</b>\n';	
+	r += '<tr>\n';
+	r += '<td>\n';
+	r += '<td style="text-align:left;vertical-align: middle">\n';
+    r += '<select name="tokens_history" id="tokens_history_selectmenu">\n';
+    r += '<option selected="selected">0</option>\n';
+    r += '<option>3</option>\n';    
+	r += '<option>10</option>\n';
+    r += '<option>30</option>\n';
+    r += '</select>\n';
+	r += '<td colspan="1" style="text-align:left;vertical-align: middle">\n';
+	r += '<label for="tokens_history_selectmenu">last records</label>\n';
+	r += '</tr>\n';
+	
+	r += '<tr>\n';
+	r += '<td colspan="5">\n<div id="tokens_history_div" hidden>\n';
+	r += '<textarea id="tokens_history_textarea" type="text" wrap="off" rows="4" style="resize: none;" readonly></textarea>\n';
+	r += '</div>\n';
+	r += '</tr>\n';
+
+//========================	
     r += '<tr>\n';
     r += '<td colspan="5"><hr/>\n';
     r += '</tr>\n';
@@ -314,7 +322,7 @@ function widHashcalcTab() {
 
     r += '<table width="100%">\n';
     r += '<tr>\n';
-    r += '<td style="text-align:right colspan="4">' + widHashCalcSMenu();
+    r += '<td style="text-align:left" colspan="4">' + widHashCalcSMenu();
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left colspan="4">\n';

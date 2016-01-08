@@ -328,16 +328,15 @@ function widCheckNewRecord() {
     }
 }
 
-function widRangeBtnClk() {
-//print ex 0 OK 100 tcp self  { [ range _wrd 3 100 ] hash wrd [ rdn ] }	
-//    $('#' + table).append(widAddRow(widTableCell(data.s) + ...));
+function widTokensHistorySMenu(data) {
 	var cb = function (data) {
 		//var r = engGetRange(data);
-		console.log(data);
+		$('#' + 'tokens_history_div').css('display', 'block');
+
+		$('#tokens_history_textarea').val(data);
 	}
-	var nr = $('#records_range').val();
 	tokenName = $('#dn_input').val();
-	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + nr + ' ' + '-1' + ' ' + tokenName;
+	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + data + ' ' + '-1' + ' ' + tokenName;
 	ajxSendCommand(cmd, cb, progressLed);
 }
 
