@@ -4,8 +4,8 @@
 PLAT=${PLAT:-msc}
 execdir=_bin_${PLAT}
 
-comm="../../src/$execdir/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
-#comm="../../src/$execdir/hasqd webdir=home tcp_port=13131 dsec=1 dprn=1"
+#comm="../../src/$execdir/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
+comm="../../src/$execdir/hasqd webdir=home:hqclnt tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
 
 if [ "$1" = "here" ]
 then
