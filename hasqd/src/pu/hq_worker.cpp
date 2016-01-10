@@ -24,9 +24,21 @@ void Worker::runOnceUnconditionally()
 
     if ( gs->config->dbg.wkr )
     {
+        const int SZ = 40;
+
         const string & prx = gs->config->proxyIpport;
         gl::replaceAll(reply, "\r", "");
         gl::replaceAll(reply, "\n", "\\n");
+
+        if( reply.size() > SZ ) reply = reply.substr(0,SZ-3)+"...";
+
+        for( size_t i=0; i<reply.size(); i++ )
+        {
+            const char & c = reply[i];
+            if( c=='\n' || ( c>=' ' && c<='~' ) ){}
+            else reply[i]='.';
+        }
+
         os::Cout() << os::prmpt("wkr", gs->config->dbg.id)
                    << "[" << msg
                    << "] -> [" << reply << "]"
