@@ -89,6 +89,6 @@ checkin:
 	cp -f slice/hqclnt/front/hqcl_wid_stc_tokens_tab.js front/
 	cp -f slice/hqclnt/engine/*.js engine/
 	cp -f slice/hqclnt/ui/*.js ui/
-	cp -f slice/hqclnt/home.html.
-	cp -f slice/hqclnt/index.html .
+	cp -f slice/hqclnt/home.html ./hqclnt.html
+	cp -f slice/hqclnt/index.html ./
 	

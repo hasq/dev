@@ -562,7 +562,13 @@ function widGetVerifyRowLed(data) {
     case 'WRONG_PWD':
         return picYellow;
         break;
-    case 'OK':
+    case 'TKN_SNDNG':
+        return picRGreen;
+        break;
+    case 'TKN_RCVNG':
+        return picGRed;
+        break;
+	case 'OK':
         return picGreen;
         break;
     default: // 'IDX_NODN':

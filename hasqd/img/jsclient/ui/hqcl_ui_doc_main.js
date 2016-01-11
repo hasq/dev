@@ -20,7 +20,9 @@ glVTL.unknown  = false;	// The marker of mismatched tokens in the specified rang
 
 var picYellow = '<img src="images/yellowpoint.gif">';
 var picRed = '<img src="images/redpoint.gif">';
+var picGRed = '<img src="images/greenredpoint.gif">';
 var picGreen = '<img src="images/greenpoint.gif">';
+var picRGreen = '<img src="images/redgreenpoint.gif">';
 var picGrey = '<img src="images/greypoint.gif">';
 var picBlink = '<img src="images/blinkpoint.gif">';
 

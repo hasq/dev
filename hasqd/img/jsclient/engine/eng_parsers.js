@@ -536,7 +536,7 @@ function engGetUpdatedTransferKeys(data, p, h, m, sk) {
     return r;
 }
 
-function engGetTokensHashNames(data){
+function engGetTokensHashedNames(data){
     var r = [];
     for (var i = 0; i < data.length; i++){
         r[i] = data[i].s;
@@ -557,22 +557,22 @@ function engGetTokensRawNames(data){
     return r;
 }
 
-function engGetTokensUpdatedNames(arr0, arr1) {
-    for (var k = 0; k < arr0.length; k++){
-        for (var t = 0; t < arr1.length; t++) {
-            if (arr0[k] == engGetHash(arr1[t], glCurrentDB.hash)) {
-                var rawName = '[' + arr1[t] + ']';
-                arr0[k] = rawName;
-                arr1.splice(t, 1);
+function engGetTokensUpdatedNames(data0, data1) {
+    for (var k = 0; k < data0.length; k++){
+        for (var t = 0; t < data1.length; t++) {
+            if (data0[k] == engGetHash(data1[t], glCurrentDB.hash)) {
+                var rawName = '[' + data1[t] + ']';
+                data0[k] = rawName;
+                data1.splice(t, 1);
                 t--;
                 break;
-            } else if (arr0[k] == arr1[t] ) {
-                arr1.splice(t, 1);
+            } else if (data0[k] == data1[t] ) {
+                data1.splice(t, 1);
                 t--;
             }
         }
     }
-    return arr0;
+    return data0;
 }
 
 function engSetNumber(data) {
@@ -584,9 +584,7 @@ function engSetHex(data) {
     var r = data.replace(/[^0-9a-f]/g, '');
     return r;
 }
+
 function engIsNull(data) {
     return data == null ? true : false;
 }
-
-// a=$.extend(true,{},b)
-// var new_array = old_array.slice();
