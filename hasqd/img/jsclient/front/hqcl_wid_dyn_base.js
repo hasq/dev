@@ -10,11 +10,11 @@ ProgressLed.prototype.fail = function () {
 };
 
 ProgressLed.prototype.inc = function () {
-    setTimeout(function(){ $('#progress_led').html(picBlink); }, 500);
+    setTimeout(function(){ $('#progress_led').html(picGryGrn); }, 500);
 };
 
 ProgressLed.prototype.dec = function () {
-    setTimeout(function(){ $('#progress_led').html(picGrey); }, 500);
+    setTimeout(function(){ $('#progress_led').html(picGry); }, 500);
 };
 
 var progressLed = new ProgressLed();
@@ -133,11 +133,15 @@ function widRawDNOninput() {
     widCleanLastRecordData();
 
     if ($('#rdn_input').val() == '') {
+		$('#tokens_history_selectmenu').get(0).selectedIndex = 0;
+		$('#tokens_history_selectmenu').selectmenu('refresh');
+		$('#tokens_history_selectmenu').selectmenu('disable');
         widPrintBorderColor('dn_input', '');
         widPrintBorderColor('submit_button', '');
         widPrintRecordsLastOperation('&nbsp');
     } else {
         widPrintBorderColor('dn_input', '');
+		$('#tokens_history_selectmenu').selectmenu('enable');
         widPrintBorderColor('submit_button', '');
         $('#dn_input').val(engGetHash($('#rdn_input').val(), glCurrentDB.hash));
         widGetNewRecordOninput();

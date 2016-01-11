@@ -18,13 +18,13 @@ glVTL.items = []			// The array which include the list of a last records of spec
 glVTL.known  = false;		// The objects property which indicate about presence of a known Hasq-tokens in a range
 glVTL.unknown  = false;	// The marker of mismatched tokens in the specified range
 
-var picYellow = '<img src="images/yellowpoint.gif">';
-var picRed = '<img src="images/redpoint.gif">';
-var picGRed = '<img src="images/greenredpoint.gif">';
-var picGreen = '<img src="images/greenpoint.gif">';
-var picRGreen = '<img src="images/redgreenpoint.gif">';
-var picGrey = '<img src="images/greypoint.gif">';
-var picBlink = '<img src="images/blinkpoint.gif">';
+var picYlw = '<img src="images/ylw_pnt.gif">';
+var picRed = '<img src="images/red_pnt.gif">';
+var picGrnYlw = '<img src="images/grn_ylw_pnt.gif">';
+var picGrn = '<img src="images/grn_pnt.gif">';
+var picYlwGrn = '<img src="images/ylw_grn_pnt.gif">';
+var picGry = '<img src="images/gry_pnt.gif">';
+var picGryGrn = '<img src="images/gry_grn_pnt.gif">';
 
 function newImage(arg) {
 	if (document.images) {
@@ -149,6 +149,7 @@ function doc_init() {
 	});
 
 	$('#tokens_history_selectmenu').selectmenu({
+		disabled: true,
 		select: function( event, data ) {
 			var d = +data.item.value;
 			switch(d){
