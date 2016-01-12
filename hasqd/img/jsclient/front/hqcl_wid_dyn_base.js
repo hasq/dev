@@ -382,7 +382,6 @@ function widSubmitBtnClk() {
     var nr_g = $('#newrec_g_input').val();
     var nr_o = $('#newrec_o_input').val();
     var nr_d = $('#newrec_d_input').val();
-
     var newRec = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + nr_d;
 
     ajxSendCommand(newRec, cb, progressLed);
@@ -390,6 +389,6 @@ function widSubmitBtnClk() {
 
 function widCheckEnterKey(d, e) {
     if (e.keyCode == 13) {
-        widCommandSendBtnClk()
+        widCommandSendBtnClk();
     }
 }
