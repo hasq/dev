@@ -70,24 +70,24 @@ function doc_init() {
 				switch (glHashCalcHash) {
 				case 'md5': //md5
 					widHashcalcOninput();
-					$('#hashcalc_smenu').get(0).selectedIndex = 0;
-
+					//$('#hashcalc_smenu').get(0).selectedIndex = 0;
+					$('#hashcalc_smenu').val(0);
 					break;
 				case 'r16': //r16
 					widHashcalcOninput();
-					$('#hashcalc_smenu').get(0).selectedIndex = 1;
+					$('#hashcalc_smenu').val(1);
 					break;
 				case 's22': //s22
 					widHashcalcOninput();
-					$('#hashcalc_smenu').get(0).selectedIndex = 2;
+					$('#hashcalc_smenu').val(2);
 					break;
 				case 's25': //s25
 					widHashcalcOninput();
-					$('#hashcalc_smenu').get(0).selectedIndex = 3;
+					$('#hashcalc_smenu').val(3);
 					break;
 				case 'wrd': //wrd
 					widHashcalcOninput();
-					$('#hashcalc_smenu').get(0).selectedIndex = 4;
+					$('#hashcalc_smenu').val(4);
 					break;
 				default:
 					break;
@@ -150,14 +150,16 @@ function doc_init() {
 
 	$('#tokens_history_selectmenu').selectmenu({
 		disabled: true,
-		select: function( event, data ) {
-			var d = +data.item.value;
+		width: '80%',
+		select: function(event, data) {
+			var d = +this.options[this.selectedIndex].text;
 			switch(d){
 			case 0:
-				$('#tokens_history_div').hide();
+				//$('#tokens_history_div').hide();
+				$('#tokens_history_textarea').val('');
 				break;
 			default:
-				$('#tokens_history_div').show();
+				//$('#tokens_history_div').show();
 				widTokensHistorySMenu(d);
 				break;
 		  }

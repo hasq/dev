@@ -293,9 +293,10 @@ function widRecordsTab() {
 	r += '</tr>\n';
 	
 	r += '<tr>\n';
-	r += '<td colspan="5">\n<div id="tokens_history_div" hidden>\n';
+	//r += '<td colspan="5">\n<div id="tokens_history_div" hidden>\n';
+	r += '<td colspan="5">\n';
 	r += '<textarea id="tokens_history_textarea" type="text" wrap="off" rows="4" style="resize: none;" readonly></textarea>\n';
-	r += '</div>\n';
+	//r += '</div>\n';
 	r += '</tr>\n';
 
 //========================	
@@ -347,11 +348,11 @@ function widHashCalcSMenu() {
     var r = '';
 
     r += '<select id="hashcalc_smenu">\n';
-    r += '<option>MD5</option>\n';
-    r += '<option>RIPEMD-160</option>\n';
-    r += '<option>SHA2-256</option>\n';
-    r += '<option>SHA2-512</option>\n';
-    r += '<option>WORD</option>\n';
+    r += '<option value="0">MD5</option>\n';
+    r += '<option value="1">RIPEMD-160</option>\n';
+    r += '<option value="2">SHA2-256</option>\n';
+    r += '<option value="3">SHA2-512</option>\n';
+    r += '<option value="4">WORD</option>\n';
     r += '</select>\n';
 
     return r;

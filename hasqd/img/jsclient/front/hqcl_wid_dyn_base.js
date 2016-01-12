@@ -38,6 +38,11 @@ function widCleanLastRecordData() {
     $('#lastrec_d_input').val('');
 }
 
+function widCleanHistoryData() {
+	$('#tokens_history_selectmenu').get(0).selectedIndex = 0;
+	$('#tokens_history_selectmenu').selectmenu('refresh');
+}
+
 function widCleanNewRecordData() {
     $('#newrec_n_input').val('');
     $('#newrec_k_input').val('');
@@ -127,14 +132,13 @@ function widCommandSendBtnClk() {
 
 function widRawDNOninput() {
     widCleanNewRecordData();
+	widCleanHistoryData();
     widCleanLastRecordData();
 
     $('#dn_input').val('');
     widCleanLastRecordData();
 
     if ($('#rdn_input').val() == '') {
-		$('#tokens_history_selectmenu').get(0).selectedIndex = 0;
-		$('#tokens_history_selectmenu').selectmenu('refresh');
 		$('#tokens_history_selectmenu').selectmenu('disable');
         widPrintBorderColor('dn_input', '');
         widPrintBorderColor('submit_button', '');
@@ -152,6 +156,8 @@ function widRawDNOninput() {
 function widDNOninput() {
     widCleanNewRecordData();
     widCleanLastRecordData();
+	widCleanHistoryData();
+	
     $('#dn_input').val(engSetHex($('#dn_input').val()));
 
     $('#rdn_input').val('');
@@ -171,6 +177,7 @@ function widDNOninput() {
 function widPrintRecordsLastOperation(data) {
     $('#records_last_operation_pre').html(data);
 }
+
 function widCheckNewRecordKeys(id) {
     $('#' + id).val(engSetHex($('#' + id).val()));
 
@@ -334,9 +341,14 @@ function widCheckNewRecord() {
 
 function widTokensHistorySMenu(data) {
 	var cb = function (data) {
-		//var r = engGetRange(data);
-		$('#' + 'tokens_history_div').css('display', 'block');
-
+		var r = engGetHasqdOk(data);
+		if (r !== 'OK') {
+			$('#tokens_history_textarea').val('');
+			return;
+		}
+		//$('#' + 'tokens_history_div').css('display', 'block');
+		var i = data.indexOf('\r\n');
+		var data = data.substr(i+2);
 		$('#tokens_history_textarea').val(data);
 	}
 	tokenName = $('#dn_input').val();
@@ -353,9 +365,14 @@ function widHashcalcOninput() {
 }
 
 function widSubmitBtnClk() {
-    var cb = function (data) {
+    var cb = function (data) { 
         var r = engGetSubmit(data);
         widPrintRecordsLastOperation(r);
+		var i = $('#tokens_history_selectmenu').get(0).selectedIndex;
+		console.log(i);
+		var d = +$('#tokens_history_selectmenu').get(0).options[i].text;
+		console.log(d);
+		widTokensHistorySMenu(d);
     }
     var s = $('#dn_input').val();
     var p0 = $('#newrec_pass0_input').val();
