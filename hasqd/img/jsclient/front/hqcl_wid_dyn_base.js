@@ -369,11 +369,10 @@ function widSubmitBtnClk() {
         var r = engGetSubmit(data);
         widPrintRecordsLastOperation(r);
 		var i = $('#tokens_history_selectmenu').get(0).selectedIndex;
-		console.log(i);
 		var d = +$('#tokens_history_selectmenu').get(0).options[i].text;
-		console.log(d);
 		widTokensHistorySMenu(d);
     }
+	
     var s = $('#dn_input').val();
     var p0 = $('#newrec_pass0_input').val();
     var p1 = $('#newrec_pass1_input').val();
