@@ -56,9 +56,17 @@ function docMainInit() {
 }
 
 function doc_init() {
-	$('#tabs').tabs({
-		
-	})
+	$('#main_tabs').tabs();
+	
+	$('button').button();
+	
+	$('#show_hide').click(function() {
+		if ($('.password').attr('type') == 'password') {
+			$('.password').attr('type', 'text');
+		} else {
+			$('.password').attr('type', 'password');
+		}
+	});
 }
 
 function docMain() {

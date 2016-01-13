@@ -51,6 +51,7 @@ slice/hqclnt/index.html: index.html
 	mkdir -p slice/tsclnt/front
 	mkdir -p slice/tsclnt/engine
 	mkdir -p slice/tsclnt/images
+	cp engine/eng_ajax.js slice/tsclnt/engine/
 	cp ui/tscl_ui_doc_main.js slice/tsclnt/ui/
 	cp front/tscl_wid_stc_base.js slice/tsclnt/front/
 	cp tsclnt.html slice/tsclnt/home.html
@@ -83,6 +84,7 @@ myclean:
 	rm -rf slice/_MWRDB/2016 slice/_WRDDB/meta
 	
 checkin:
+#	hqclnt
 	cp -f slice/hqclnt/front/hqcl_wid_dyn_base.js front/
 	cp -f slice/hqclnt/front/hqcl_wid_stc_base.js front/
 	cp -f slice/hqclnt/front/hqcl_wid_stc_tokens_tab.js front/
@@ -91,4 +93,7 @@ checkin:
 	cp -f slice/hqclnt/ui/*.js ui/
 	cp -f slice/hqclnt/home.html ./hqclnt.html
 	cp -f slice/hqclnt/index.html ./
-	
+#	tsclnt
+	cp -f slice/tsclnt/engine/*.js engine/
+	cp -f slice/tsclnt/ui/*.js ui/
+	cp -f slice/tsclnt/home.html ./tsclnt.html	
