@@ -4,7 +4,7 @@ JQUID=../../ext/jq/
 JQUIF=jquery-ui-1.11.4.custom
 JQUI=$(JQUID)$(JQUIF)
 
-all: hqcl_wid_stc_help_tab.js lib/jquery-ui slice/hqclnt/index.html
+all: hqcl_wid_stc_help_tab.js lib/jquery-ui slice/home/index.html
 
 hqcl_wid_stc_help_tab.tmp: front/hqcl_wid_stc_help_tab.js txt/*.htm
 	echo "////////////////////////////////////////////////////" > front/hqcl_wid_stc_help_tab.tmp
@@ -21,29 +21,29 @@ lib/jquery-ui: $(JQUI).tar.bz2
 	cp $< lib/
 	cd lib && make NAME=$(JQUIF)
 
-slice/hqclnt/index.html: index.html 
+slice/home/index.html: index.html 
 #	hqclnt
-	mkdir -p slice/hqclnt/ui
-	mkdir -p slice/hqclnt/lib
-	mkdir -p slice/hqclnt/lib/images
-	mkdir -p slice/hqclnt/front
-	mkdir -p slice/hqclnt/engine
-	mkdir -p slice/hqclnt/images
-	cp engine/*.js slice/hqclnt/engine/
-	cp ui/*.js slice/hqclnt/ui/
-	cp front/hqcl_wid_dyn_base.js slice/hqclnt/front/
-	cp front/hqcl_wid_stc_base.js slice/hqclnt/front/
-	mv front/hqcl_wid_stc_help_tab.gen slice/hqclnt/front/hqcl_wid_stc_help_tab.js
-	cp front/hqcl_wid_dyn_tokens_tab.js slice/hqclnt/front/
-	cp front/hqcl_wid_stc_tokens_tab.js slice/hqclnt/front/
-	cp hqclnt.html slice/hqclnt/home.html
-	cp images/*.gif slice/hqclnt/images/
-	cp index.html slice/hqclnt/
-	cp lib/jquery-ui/jquery-ui.min.js slice/hqclnt/lib/
-	cp lib/jquery-ui/external/jquery/jquery.js slice/hqclnt/lib/
-	cp lib/jquery-ui/jquery-ui.min.css slice/hqclnt/lib/
-	cp lib/jquery-ui/images/ui-icons*.png slice/hqclnt/lib/images/
-	chmod 0777 -R slice/hqclnt
+	mkdir -p slice/home/ui
+	mkdir -p slice/home/lib
+	mkdir -p slice/home/lib/images
+	mkdir -p slice/home/front
+	mkdir -p slice/home/engine
+	mkdir -p slice/home/images
+	cp engine/*.js slice/home/engine/
+	cp ui/*.js slice/home/ui/
+	cp front/hqcl_wid_dyn_base.js slice/home/front/
+	cp front/hqcl_wid_stc_base.js slice/home/front/
+	mv front/hqcl_wid_stc_help_tab.gen slice/home/front/hqcl_wid_stc_help_tab.js
+	cp front/hqcl_wid_dyn_tokens_tab.js slice/home/front/
+	cp front/hqcl_wid_stc_tokens_tab.js slice/home/front/
+	cp hqclnt.html slice/home/home.html
+	cp images/*.gif slice/home/images/
+	cp index.html slice/home/
+	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
+	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
+	cp lib/jquery-ui/images/ui-icons*.png slice/home/lib/images/
+	chmod 0777 -R slice/home
 #	tsclnt
 	mkdir -p slice/tsclnt/ui
 	mkdir -p slice/tsclnt/lib
@@ -65,7 +65,7 @@ slice/hqclnt/index.html: index.html
 	chmod 0777 -R slice/tsclnt
 	
 clean:
-	rm -rf lib/jquery* slice/hqclnt slice/tsclnt index lib/*.tar lib/*.tar.bz2
+	rm -rf lib/jquery* slice/home slice/tsclnt index lib/*.tar lib/*.tar.bz2
 	rm -rf slice/_MD5DB/2016 slice/_MD5DB/meta
 	rm -rf slice/_R16DB/2016 slice/_R16DB/meta
 	rm -rf slice/_S225DB/2016 slice/_S22DB/meta
@@ -73,10 +73,10 @@ clean:
 	rm -rf slice/_MWRDB/2016 slice/_WRDDB/meta
 	rm -rf front/hqcl_wid_stc_help_tab.gen
 	rm -rf front/hqcl_wid_stc_help_tab.tmp
-	rm -rf hq.13151.lock
+	rm -rf hq.*.lock
 	
 myclean:
-	rm -rf slice/hqclnt index slice/tsclnt
+	rm -rf slice/home index slice/tsclnt
 	rm -rf slice/_MD5DB/2016 slice/_MD5DB/meta
 	rm -rf slice/_R16DB/2016 slice/_R16DB/meta
 	rm -rf slice/_S225DB/2016 slice/_S22DB/meta
@@ -85,14 +85,14 @@ myclean:
 	
 checkin:
 #	hqclnt
-	cp -f slice/hqclnt/front/hqcl_wid_dyn_base.js front/
-	cp -f slice/hqclnt/front/hqcl_wid_stc_base.js front/
-	cp -f slice/hqclnt/front/hqcl_wid_stc_tokens_tab.js front/
-	cp -f slice/hqclnt/front/hqcl_wid_stc_tokens_tab.js front/
-	cp -f slice/hqclnt/engine/*.js engine/
-	cp -f slice/hqclnt/ui/*.js ui/
-	cp -f slice/hqclnt/home.html ./hqclnt.html
-	cp -f slice/hqclnt/index.html ./
+	cp -f slice/home/front/hqcl_wid_dyn_base.js front/
+	cp -f slice/home/front/hqcl_wid_stc_base.js front/
+	cp -f slice/home/front/hqcl_wid_stc_tokens_tab.js front/
+	cp -f slice/home/front/hqcl_wid_stc_tokens_tab.js front/
+	cp -f slice/home/engine/*.js engine/
+	cp -f slice/home/ui/*.js ui/
+	cp -f slice/home/home.html ./hqclnt.html
+	cp -f slice/home/index.html ./
 #	tsclnt
 	cp -f slice/tsclnt/engine/*.js engine/
 	cp -f slice/tsclnt/front/*.js front/
