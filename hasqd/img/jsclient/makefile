@@ -30,19 +30,20 @@ slice/home/index.html: index.html
 	mkdir -p slice/home/engine
 	mkdir -p slice/home/images
 	cp engine/*.js slice/home/engine/
-	cp ui/*.js slice/home/ui/
 	cp front/hqcl_wid_dyn_base.js slice/home/front/
 	cp front/hqcl_wid_stc_base.js slice/home/front/
-	mv front/hqcl_wid_stc_help_tab.gen slice/home/front/hqcl_wid_stc_help_tab.js
 	cp front/hqcl_wid_dyn_tokens_tab.js slice/home/front/
 	cp front/hqcl_wid_stc_tokens_tab.js slice/home/front/
-	cp hqclnt.html slice/home/home.html
+	mv front/hqcl_wid_stc_help_tab.gen slice/home/front/hqcl_wid_stc_help_tab.js
 	cp images/*.gif slice/home/images/
-	cp index.html slice/home/
 	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
-	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
 	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
 	cp lib/jquery-ui/images/ui-icons*.png slice/home/lib/images/
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
+	cp ui/*.js slice/home/ui/	
+	cp index.html slice/home/
+	cp hqclnt.html slice/home/home.html	
 	chmod 0777 -R slice/home
 #	tsclnt
 	mkdir -p slice/tsclnt/ui
@@ -52,16 +53,16 @@ slice/home/index.html: index.html
 	mkdir -p slice/tsclnt/engine
 	mkdir -p slice/tsclnt/images
 	cp engine/eng_ajax.js slice/tsclnt/engine/
-	cp ui/tscl_ui_doc_main.js slice/tsclnt/ui/
+	cp engine/hash_*.js slice/tsclnt/engine/
 	cp front/tscl_wid_stc_base.js slice/tsclnt/front/
-	cp tsclnt.html slice/tsclnt/home.html
 	cp images/*.gif slice/tsclnt/images/
-	cp index.html slice/tsclnt/
 	cp lib/jquery-ui/jquery-ui.min.js slice/tsclnt/lib/
 	cp lib/jquery-ui/external/jquery/jquery.js slice/tsclnt/lib/
 	cp lib/jquery-ui/jquery-ui.min.css slice/tsclnt/lib/
 	cp lib/jquery-ui/images/ui-icons*.png slice/tsclnt/lib/images/
-	cp engine/hash_*.js slice/tsclnt/engine/
+	cp ui/tscl_ui_doc_main.js slice/tsclnt/ui/
+	cp tsclnt.html slice/tsclnt/home.html
+	cp index.html slice/tsclnt/
 	chmod 0777 -R slice/tsclnt
 	
 clean:
