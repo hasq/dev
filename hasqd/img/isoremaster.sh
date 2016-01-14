@@ -320,10 +320,10 @@ case "$param" in
 		echo "Using this script:"
 		echo
 		echo -e "$myname \t\t: this help"
-		echo -e "$myname $ext \t: download all needed files from internet and repack iso"
+		echo -e "$myname $ext \t: download all needed files from Internet and repack iso"
 		echo -e "$myname $loc <foldername> : get all packets from <foldername>"
 		echo -e "$myname $rel <foldername> : integrate the $hasqtcz extension into iso"
-		echo -e "$myname $down \t: download all needed files from interned and put it on packets folder"
+		echo -e "$myname $down \t: download all needed files from Internet and put it on packets folder"
 		echo
 		exit
 		;;
