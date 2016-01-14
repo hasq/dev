@@ -34,7 +34,7 @@ function widClientLed(span_id) {
 function widMainTabs(items) {
     var r = '';
 
-    r += '<div id="tabs">\n';
+    r += '<div id="main_tabs">\n';
 
     r += '\t<ul>\n';
     for (var i = 0; i < items.length; i++)
@@ -89,11 +89,15 @@ function widTokensInputArea(){
     r += '<table width="100%" style="border-collapse:collapse;border-spacing:0;">\n';
     r += '<tr>\n';
 	r += '<td width="5%" nowrap style="text-align:left">Token name&nbsp\n';
-    r += '<td width="100%"><input type="text" id="tokens_name_input" size="64" oninput="widTokenNameOninput(this.value);" placeholder="Enter tokens name"></input>\n';
+    r += '<td width="10%"><input type="text" nowrap id="tokens_name_input" size="64" oninput="" placeholder="Enter tokens name"></input>\n';
+	r += '<td>';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td width="5%" style="text-align:left">Password&nbsp\n';
-    r += '<td width="100%"><input type="text" id="tokens_password_input" size="64" placeholder="Enter tokens password" oninput="widTokenPasswordOninput(this.value);">\n';
+    r += '<td width="10%"><input type="password" id="tokens_password_input" class="password" size="64" placeholder="Enter tokens password" oninput="">\n';
+	r += '<td style="text-align:left" nowrap>';
+    r += '<input nowrap type="checkbox" id="show_hide" />';
+    r += '<label for="show_hide" id="show_hide_label">Show Password</label>';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';

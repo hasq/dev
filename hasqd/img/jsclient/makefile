@@ -95,5 +95,6 @@ checkin:
 	cp -f slice/hqclnt/index.html ./
 #	tsclnt
 	cp -f slice/tsclnt/engine/*.js engine/
+	cp -f slice/tsclnt/front/*.js front/
 	cp -f slice/tsclnt/ui/*.js ui/
 	cp -f slice/tsclnt/home.html ./tsclnt.html	
