@@ -1,0 +1,107 @@
+<!-- Hasq Technology Pty Ltd (C) 2013-2015 -->
+
+<!DOCTYPE html>
+<html lang="us">
+
+<head>
+  <meta charset="utf-8"/>
+<!--   <meta name=viewport content="width=device-width, initial-scale=1"> -->
+  <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
+  <title>Tokenswap JavaScript Client</title>
+
+  <style>
+    body {
+      font: 75% "Trebuchet MS", sans-serif;
+      margin: 50px;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    .demoHeaders {
+      margin-top: 2em;
+    }
+
+    #dialog-link {
+      padding: .4em 1em .4em 20px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    #dialog-link span.ui-icon {
+      margin: 0 5px 0 0;
+      position: absolute;
+      left: .2em;
+      top: 50%;
+      margin-top: -8px;
+    }
+
+    #icons {
+      margin: 0;
+      padding: 0;
+    }
+
+    #icons li {
+      margin: 2px;
+      position: relative;
+      padding: 4px 0;
+      cursor: pointer;
+      float: left;
+      list-style: none;
+    }
+
+    #icons span.ui-icon {
+      float: left;
+      margin: 0 4px;
+    }
+
+    #tokens_history_selectmenu {
+      width: 80%;
+    }
+
+    .fakewindowcontain .ui-widget-overlay {
+      position: absolute;
+    }
+
+    select {
+      width: 200px;
+    }
+
+    input {
+      font-family: monospace;
+    }
+
+    textarea[type='text'] {
+      font-family: monospace;
+      width: 100%;
+      /*resize: none;*/
+    }
+
+    .ui-progressbar {
+      position: relative;
+      height: 20px;
+    }
+}
+  </style>
+
+  <script src="lib/jquery.js"></script>
+  <script src="lib/jquery-ui.min.js"></script>
+  <script src="engine/eng_ajax.js"></script>
+  <script src="front/tscl_wid_stc_base.js"></script>
+  <script src="ui/tscl_ui_doc_main.js"></script>
+  <script src="engine/hash_md5.js"></script>
+  <script src="engine/hash_rmd160.js"></script>
+  <script src="engine/hash_sha256.js"></script>
+  <script src="engine/hash_sha512.js"></script>
+
+</head>
+
+<body onLoad="preloadImages('images/gry_grn_pnt.gif','images/red_pnt.gif','images/gry_pnt.gif')">
+  <script>
+    docMainWrite();
+    docMainInit();
+  </script>
+
+</body>
+</html>
