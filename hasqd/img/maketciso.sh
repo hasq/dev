@@ -59,8 +59,8 @@ delfolder() {
 }
 
 makeexport() {
-	[ $# -eq 2 ] || return
-	echo "> exporting $1"
+	[ $# -ge 2 ] || return
+	[ -z "$3" ] && echo "> exporting $1" || echo "> exporting $3"
 	[ -z "$(svn status "$1" | grep "^M")" ] || echo ">> uncommited files exists!"
 	svn export "$1" "$2" > /dev/null || svnerror
 }
@@ -68,12 +68,12 @@ makeexport() {
 exportsvn() {
 	VERFILE="${1}/img/root/hasq/build.txt"
 	[ -z "$1" ] && return
-	makeexport src "${1}/src"
-	makeexport srcu "${1}/srcu"
-	makeexport img "${1}/img"
+	makeexport src "${1}/src" "src folder"
+	makeexport srcu "${1}/srcu" "srcu folder"
+	makeexport img "${1}/img" "img folder"
 	svnversion > "$VERFILE"
 	mkdir -p "${1}/ext/jq"
-	makeexport "ext/jq/$jqfile" "${1}/ext/jq/$jqfile"
+	makeexport "ext/jq/$jqfile" "${1}/ext/jq/$jqfile" "external libraries"
 # TODO: find ":" in rev num
 	grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
 }
@@ -81,7 +81,7 @@ exportsvn() {
 delfolder "$temp"
 
 tcdir=$(finddec "$startdir")
-echo ">searching for TinyCore folder..."
+echo "> searching for TinyCore folder..."
 [ -z "$tcdir" ] && error "TinyCore folder not found!"
 [ -z "$(svn status "$tcdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$tcdir/tcz" 2>&1 | grep "was not found.")" ] || error ">>$tcdir is not a working copy of TinyCore."
 [ -z "$(svn status "$tcdir" | grep "^M")" ] || error ">>$tcdir - folder have uncommited changes, please commit it before."
