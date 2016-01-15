@@ -74,7 +74,7 @@ function widReceiveTab() {
 	return r;	
 }
 
-function widDataTab() {
+function widSetTab() {
 	var r = '';
 	
 	return r;	

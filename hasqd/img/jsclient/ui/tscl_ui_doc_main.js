@@ -80,24 +80,25 @@ function docMain() {
     tabs[tabs.length] = item;
 
     item = {};
+    item.title = 'Set data';
+    item.data = widSetTab();
+    tabs[tabs.length] = item;	
+
+    item = {};
     item.title = 'Search';
     item.data = widSearchTab();
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Send token';
+    item.title = 'Send';
     item.data = widSendTab();
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Receive token';
+    item.title = 'Receive';
     item.data = widReceiveTab();
     tabs[tabs.length] = item;
 
-    item = {};
-    item.title = 'Attach data';
-    item.data = widDataTab();
-    tabs[tabs.length] = item;
 
     r += '<table width="100%" border="0" style="border-collapse:collapse;">\n';
     r += '<tr>\n';
