@@ -1,4 +1,4 @@
-﻿// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2015
 
 function ProgressLed() {
     //this.counter = 0;
@@ -339,7 +339,7 @@ function widCheckNewRecord() {
     }
 }
 
-function widTokensHistorySMenu(data) {
+function widTokensHistorySMenu(range) {
 	var cb = function (data) {
 		var r = engGetHasqdOk(data);
 		if (r !== 'OK') {
@@ -351,8 +351,13 @@ function widTokensHistorySMenu(data) {
 		var data = data.substr(i+2);
 		$('#tokens_history_textarea').val(data);
 	}
-	tokenName = $('#dn_input').val();
-	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + data + ' ' + '-1' + ' ' + tokenName;
+	
+	if (range === 0) {
+		$('#tokens_history_textarea').val('');
+		return;
+	}
+	
+	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + $('#dn_input').val();;
 	ajxSendCommand(cmd, cb, progressLed);
 }
 

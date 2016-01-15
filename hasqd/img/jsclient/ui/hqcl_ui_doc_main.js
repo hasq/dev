@@ -153,17 +153,8 @@ function doc_init() {
 		width: '80%',
 		select: function(event, data) {
 			var d = +this.options[this.selectedIndex].text;
-			switch(d){
-			case 0:
-				//$('#tokens_history_div').hide();
-				$('#tokens_history_textarea').val('');
-				break;
-			default:
-				//$('#tokens_history_div').show();
-				widTokensHistorySMenu(d);
-				break;
-		  }
-	  }
+			widTokensHistorySMenu(d);
+		}
 	});	
 	
 	$('button').button();
