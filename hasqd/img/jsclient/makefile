@@ -43,7 +43,7 @@ slice/home/index.html: index.html
 	cp ui/ts_*.js slice/home/ui/
 	cp tsclnt.html slice/home/tsclnt.html
 #	shared
-	cp eng/sh_eng_ajax.js slice/home/eng/
+	cp eng/sh_*.js slice/home/eng/
 	cp img/*.gif slice/home/img/
 	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
 	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
