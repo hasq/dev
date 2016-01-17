@@ -1,7 +1,7 @@
 #!/bin/sh
 # Hasq Technology Pty Ltd (C) 2013-2015
 #wb=firefox
-addr=http://127.0.0.1:13151/hqclnt.html
+addr=http://127.0.0.1:13151/home/hqclnt.html
 
 
 if cmd /c ls 2> /dev/null 1> /dev/null
