@@ -12,6 +12,8 @@ function engGetHash(data, hashType) {
 		return hex_sha256(data);
 	case 's25':
 		return hex_sha512(data);
+	case 'sm5':
+		return hex_sha2md5(data);		
 	default:
 		break;
 	}
