@@ -250,7 +250,7 @@ function doc_init() {
 	});
 	
 	$('#tokens_tab_help_accordion').accordion({
-		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+		icons: { 'header': 'ui-icon-plus', 'activeHeader': 'ui-icon-minus' },
 		active : 'false',
 		heightStyle : 'content',
 		collapsible : 'false',
@@ -261,7 +261,7 @@ function doc_init() {
 
 	$('[data-class="hide"]').hide();
 	
-	$('#progressbar').html('<img src="img/greypoint.gif">');
+	$('#progress_led').html(picGry);
 
 	$('#server_host').html('' + location.host);
 

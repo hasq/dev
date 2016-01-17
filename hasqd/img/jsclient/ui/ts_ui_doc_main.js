@@ -10,6 +10,8 @@ var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
 var picGry = '<img src="img/gry_pnt.gif">';
 var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
 
+var timerId;
+
 function docMainWrite() {
 	document.write(docMain());
 }
@@ -21,11 +23,11 @@ function docMainInit() {
 }
 
 function docInit() {
-	$('#main_tabs').tabs();
-	
+	$('#main_tabs_div').tabs();
+	$('#progress_led').html(picGry);
 	$('button').button();
 	
-	$('#show_hide').click(function() {
+	$('#show_hide_input').click(function() {
 		if ($('.password').attr('type') == 'password') {
 			$('.password').attr('type', 'text');
 		} else {

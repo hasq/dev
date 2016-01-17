@@ -20,7 +20,7 @@ ProgressLed.prototype.dec = function () {
 var progressLed = new ProgressLed();
 
 function widAnimateProgbar() {
-    $('#progress_led').html('<img src="images/greypoint.gif">');
+    $('#progress_led').html(picGry);
 }
 
 function widPrintBorderColor(id, color) {

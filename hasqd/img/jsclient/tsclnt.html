@@ -10,32 +10,18 @@
   <title>Tokenswap JavaScript Client</title>
 
   <style>
+    html {
+      overflow-y: scroll;
+    }
+    
     body {
       font: 75% "Trebuchet MS", sans-serif;
       margin: 50px;
     }
-
-    html {
-      overflow-y: scroll;
-    }
-
-    .demoHeaders {
-      margin-top: 2em;
-    }
-
-    #dialog-link {
-      padding: .4em 1em .4em 20px;
-      text-decoration: none;
-      position: relative;
-    }
-
-    #dialog-link span.ui-icon {
-      margin: 0 5px 0 0;
-      position: absolute;
-      left: .2em;
-      top: 50%;
-      margin-top: -8px;
-    }
+    
+    .monospace {
+      font: 120% monospace;
+    }    
 
     #icons {
       margin: 0;
@@ -56,32 +42,14 @@
       margin: 0 4px;
     }
 
-    #tokens_history_selectmenu {
-      width: 80%;
-    }
-
     .fakewindowcontain .ui-widget-overlay {
       position: absolute;
-    }
-
-    select {
-      width: 200px;
     }
 
     input {
       font-family: monospace;
     }
 
-    textarea[type='text'] {
-      font-family: monospace;
-      width: 100%;
-      /*resize: none;*/
-    }
-
-    .ui-progressbar {
-      position: relative;
-      height: 20px;
-    }
 }
   </style>
 
@@ -94,6 +62,7 @@
   <script src="eng/sh_hash_sha512.js"></script>
   <script src="eng/sh_hash_sha2md5.js"></script>  
   <script src="front/ts_wid_stc_base.js"></script>
+  <script src="front/ts_wid_dyn_base.js"></script>  
   <script src="ui/ts_ui_doc_main.js"></script>
 
 

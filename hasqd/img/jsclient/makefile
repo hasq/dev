@@ -48,7 +48,7 @@ slice/home/index.html: index.html
 	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
 	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
 	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
-	cp lib/jquery-ui/images/ui-icons*.png slice/home/lib/images
+	cp lib/jquery-ui/images/*.png slice/home/lib/images
 	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
 	cp index.html slice/home/
 #
@@ -64,6 +64,7 @@ clean:
 	rm -rf slice/_MWRDB/2016 slice/_WRDDB/meta
 	rm -rf front/help_tab.gen
 	rm -rf front/help_tab.tmp
+	rm -rf front/hq_wid_stc_help_tab.js
 	rm -rf hq.*.lock	
 	
 	

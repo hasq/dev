@@ -560,16 +560,16 @@ function widPrintVerifyTableRow(data, pic) {
 function widGetVerifyRowLed(data) {
     switch (data) {
     case 'WRONG_PWD':
-        return picYellow;
+        return picYlw;
         break;
     case 'TKN_SNDNG':
-        return picRGreen;
+        return picYlwGrn;
         break;
     case 'TKN_RCVNG':
-        return picGRed;
+        return picGrnYlw;
         break;
 	case 'OK':
-        return picGreen;
+        return picGrn;
         break;
     default: // 'IDX_NODN':
         return picRed;
@@ -583,8 +583,8 @@ function widPrintVerifyMainLed(data) {
     if (data && $('#' + led).outerHTML != picRed) {
         $('#' + led).html(picRed);
         $('#' + led).prop('title', 'TOKENS MISMATCH DETECTED');
-    } else if ($('#' + led).outerHTML != picGreen) {
-        $('#' + led).html(picGreen);
+    } else if ($('#' + led).outerHTML != picGrn) {
+        $('#' + led).html(picGrn);
         $('#' + led).prop('title', 'OK');
     }
 }
@@ -751,7 +751,7 @@ function widPrintSendReceiveOut(id, data){
 
 function widPrintSendReceiveLed(id, data) {
     if (data) {
-        $('#' + id).html(picGreen);
+        $('#' + id).html(picGrn);
         $('#' + id).prop('title', 'OK');
     } else {
         $('#' + id).html(picRed);
@@ -882,7 +882,7 @@ function widRS1ObtainK1K2Keys(id, data) {
         var idLed = 'tokens_rs1_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
@@ -982,7 +982,7 @@ function widSS2ObtainG2O2Keys(id, data) {
         var idLed = 'tokens_ss2_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
@@ -1290,7 +1290,7 @@ function widRS3ObtainK1G1Keys(id, data) {
         var idLed = 'tokens_rs3_s1_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
@@ -1373,7 +1373,7 @@ function widRS3ObtainK2Keys(id, data) {
         var idLed = 'tokens_rs3_s2_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
@@ -1458,7 +1458,7 @@ function widSS4ObtainO1Keys(id, data) {
         var idLed = 'tokens_ss4_s1_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
@@ -1539,7 +1539,7 @@ function widSS4ObtainG2O2Keys(id, data) {
         var idLed = 'tokens_ss4_s2_led_div';
 
         if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGreen);
+            $('#' + idLed).html(picGrn);
             $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
         } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
             $('#' + idLed).html(picRed);
