@@ -16,7 +16,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_server_tab.htm
+    txt/hq_help_server_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -27,7 +27,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_database_tab.htm
+    txt/hq_help_database_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -38,7 +38,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_records_tab.htm
+    txt/hq_help_records_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -49,7 +49,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_hash_calc_tab.htm
+    txt/hq_help_hash_calc_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -60,7 +60,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_command_tab.htm
+    txt/hq_help_command_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -71,7 +71,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_tab.htm
+    txt/hq_help_tokens_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '<div id="tokens_tab_help_accordion">\n';
@@ -82,7 +82,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_create_tab.htm
+    txt/hq_help_tokens_create_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -93,7 +93,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_verify_tab.htm
+    txt/hq_help_tokens_verify_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -104,7 +104,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_data_tab.htm
+    txt/hq_help_tokens_data_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -115,7 +115,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_send_tab.htm
+    txt/hq_help_tokens_send_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -126,7 +126,7 @@ function widHelpTab() {
     r += '<tr>\n';
     r += '<td>\n';
     INCLUDEFILE
-    txt/help_tokens_receive_tab.htm
+    txt/hq_help_tokens_receive_tab.htm
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';

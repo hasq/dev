@@ -18,13 +18,13 @@ glVTL.items = []			// The array which include the list of a last records of spec
 glVTL.known  = false;		// The objects property which indicate about presence of a known Hasq-tokens in a range
 glVTL.unknown  = false;	// The marker of mismatched tokens in the specified range
 
-var picYlw = '<img src="images/ylw_pnt.gif">';
-var picRed = '<img src="images/red_pnt.gif">';
-var picGrnYlw = '<img src="images/grn_ylw_pnt.gif">';
-var picGrn = '<img src="images/grn_pnt.gif">';
-var picYlwGrn = '<img src="images/ylw_grn_pnt.gif">';
-var picGry = '<img src="images/gry_pnt.gif">';
-var picGryGrn = '<img src="images/gry_grn_pnt.gif">';
+var picYlw = '<img src="img/ylw_pnt.gif">';
+var picRed = '<img src="img/red_pnt.gif">';
+var picGrnYlw = '<img src="img/grn_ylw_pnt.gif">';
+var picGrn = '<img src="img/grn_pnt.gif">';
+var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
+var picGry = '<img src="img/gry_pnt.gif">';
+var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
 
 function newImage(arg) {
 	if (document.images) {
@@ -261,7 +261,7 @@ function doc_init() {
 
 	$('[data-class="hide"]').hide();
 	
-	$('#progressbar').html('<img src="images/greypoint.gif">');
+	$('#progressbar').html('<img src="img/greypoint.gif">');
 
 	$('#server_host').html('' + location.host);
 
