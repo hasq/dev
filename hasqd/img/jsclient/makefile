@@ -37,7 +37,7 @@ slice/home/index.html: index.html
 	cp front/hq_*.js slice/home/front/
 	mv -f front/help_tab.gen slice/home/front/hq_wid_stc_help_tab.js
 	cp ui/hq_*.js slice/home/ui/	
-	cp hqclnt.html slice/home/home.html	
+	cp hqclnt.html slice/home/
 #	tsclnt
 	cp front/ts_*.js slice/home/front/
 	cp ui/ts_*.js slice/home/ui/
