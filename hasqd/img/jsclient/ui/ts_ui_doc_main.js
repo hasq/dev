@@ -1,12 +1,14 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 var glClientTitle = 'Tokenswap JavaScript Client';
 
-var picYellow = '<img src="images/yellowpoint.gif">';
-var picRed = '<img src="images/redpoint.gif">';
-var picGreen = '<img src="images/greenpoint.gif">';
-var picGrey = '<img src="images/greypoint.gif">';
-var picBlink = '<img src="images/blinkpoint.gif">';
+var picYlw = '<img src="img/ylw_pnt.gif">';
+var picRed = '<img src="img/red_pnt.gif">';
+var picGrnYlw = '<img src="img/grn_ylw_pnt.gif">';
+var picGrn = '<img src="img/grn_pnt.gif">';
+var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
+var picGry = '<img src="img/gry_pnt.gif">';
+var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
 
 function docMainWrite() {
 	document.write(docMain());
@@ -14,11 +16,11 @@ function docMainWrite() {
 
 function docMainInit() {
 	$(document).ready(function () {
-		doc_init();
+		docInit();
 	});
 }
 
-function doc_init() {
+function docInit() {
 	$('#main_tabs').tabs();
 	
 	$('button').button();
