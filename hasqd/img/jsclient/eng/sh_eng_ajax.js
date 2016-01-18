@@ -1,20 +1,23 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
-function ajxSendCommand(cmd, callback, progressLed) {
-    progressLed.inc();
+function ajxSendCommand(cmd, callback, progress) {
+	//console.log('---start!');
+    progress.inc();
     //$.get('/' + cmd, function (data){})
     // use post to prevent caching
-    $.post('/', 'command=' + cmd, function (data) {})
+    $.post('/', 'command=' + cmd, function(data){})
 
     .done(function (data) {
-        callback(data);
-        progressLed.dec();
+		//console.log('---done!');
+		//setTimeout(function(){callback(data)}, 2000);
+		callback(data);
+		progress.dec();
     })
 
-    .fail(function () {
-        progressLed.fail();
+    .fail(function(){
+        progress.fail();
     })
 
-    .always(function () {
+    .always(function(){
     });
 }

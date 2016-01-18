@@ -1,6 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 var glClientTitle = 'Tokenswap JavaScript Client';
+var glDataBase = '_MD5DB';
+var glTimerId;
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
 var picRed = '<img src="img/red_pnt.gif">';
@@ -10,24 +12,24 @@ var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
 var picGry = '<img src="img/gry_pnt.gif">';
 var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
 
-var timerId;
 
-function docMainWrite() {
+
+function docMainWrite(){
 	document.write(docMain());
 }
 
-function docMainInit() {
-	$(document).ready(function () {
+function docMainInit(){
+	$(document).ready(function(){
 		docInit();
 	});
 }
 
-function docInit() {
+function docInit(){
 	$('#main_tabs_div').tabs();
-	$('#progress_led').html(picGry);
+	$('#hasqd_led').html(picGry);
 	$('button').button();
-	
-	$('#show_hide_input').click(function() {
+	$('#tokens_data_div').hide();
+	$('#show_hide_input').click(function(){
 		if ($('.password').attr('type') == 'password') {
 			$('.password').attr('type', 'text');
 		} else {
@@ -36,7 +38,7 @@ function docInit() {
 	});
 }
 
-function docMain() {
+function docMain(){
     var tabs = [];
     var item;
 
