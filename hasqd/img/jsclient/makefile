@@ -4,7 +4,7 @@ JQUID=../../ext/jq/
 JQUIF=jquery-ui-1.11.4.custom
 JQUI=$(JQUID)$(JQUIF)
 
-all: help_tab_gen lib/jquery-ui slice/home/index.html
+all: createdb help_tab_gen jqcopy makeclients
 
 help_tab_tmp: front/hq_wid_stc_help_tab.inc txt/*.htm
 	echo "////////////////////////////////////////////////////" > front/help_tab.tmp
@@ -12,20 +12,21 @@ help_tab_tmp: front/hq_wid_stc_help_tab.inc txt/*.htm
 	echo "////////////////////////////////////////////////////" >> front/help_tab.tmp
 	echo "" >> front/help_tab.tmp
 	cat front/hq_wid_stc_help_tab.inc >> front/help_tab.tmp
-
 	
 help_tab_gen: help_tab_tmp
 	sh subster.sh < front/help_tab.tmp > front/help_tab.gen
 	rm front/help_tab.tmp
 #	cat front/help_tab.gen
 	
+createdb: createdb.sh
+	sh createdb.sh
 	
-lib/jquery-ui: $(JQUI).tar.bz2
+jqcopy: $(JQUI).tar.bz2
 	cp $< lib/
 	cd lib && make NAME=$(JQUIF)
 	
 	
-slice/home/index.html: index.html 
+makeclients: index.html 
 	mkdir -p slice/home/ui
 	mkdir -p slice/home/lib
 	mkdir -p slice/home/lib/images
@@ -56,12 +57,7 @@ slice/home/index.html: index.html
 #	read
 	
 clean:
-	rm -rf lib/jquery* slice/home index lib/*.tar lib/*.tar.bz2
-	rm -rf slice/_MD5DB/2016 slice/_MD5DB/meta
-	rm -rf slice/_R16DB/2016 slice/_R16DB/meta
-	rm -rf slice/_S225DB/2016 slice/_S22DB/meta
-	rm -rf slice/_S25DB/2016 slice/_S25DB/meta
-	rm -rf slice/_MWRDB/2016 slice/_WRDDB/meta
+	rm -rf lib/jquery* slice/home index slice lib/*.tar lib/*.tar.bz2
 	rm -rf front/help_tab.gen
 	rm -rf front/help_tab.tmp
 	rm -rf front/hq_wid_stc_help_tab.js
@@ -69,13 +65,7 @@ clean:
 	
 	
 myclean:
-	rm -rf slice/home index
-	rm -rf slice/_MD5DB/2016 slice/_MD5DB/meta
-	rm -rf slice/_R16DB/2016 slice/_R16DB/meta
-	rm -rf slice/_S225DB/2016 slice/_S22DB/meta
-	rm -rf slice/_S25DB/2016 slice/_S25DB/meta
-	rm -rf slice/_MWRDB/2016 slice/_WRDDB/meta	
-	
+	rm -rf slice index
 	
 checkin:
 	cp -f slice/home/front/*.js front/
