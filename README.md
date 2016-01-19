@@ -10,7 +10,7 @@ Prerequisites
   - OS: Linux or Windows XP or higher
 
       An easy way to compile under Windows is to use ap14 set of tools
-      from http://hasq.org/release/latest/tools/ap14/
+      from https://github.com/hasq/release/tree/master/tools/ap14
 
 
 How to build
