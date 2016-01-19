@@ -1,24 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function engGetHash(data, hashType) {
-	switch (hashType) {
-	case 'wrd':
-		return hex_md5(data).substring(0, 4);
-	case 'md5':
-		return hex_md5(data);
-	case 'r16':
-		return hex_rmd160(data);
-	case 's22':
-		return hex_sha256(data);
-	case 's25':
-		return hex_sha512(data);
-	case 'sm5':
-		return hex_sha2md5(data);		
-	default:
-		break;
-	}
-	return null;
-}
 
 function engGetNewRecord(n, s, p0, p1, p2, m, h) {
 	var r = {};

@@ -2,6 +2,7 @@
 
 var glClientTitle = 'Tokenswap JavaScript Client';
 var glDataBase = '_MD5DB';
+var glDbHash = 'md5';
 var glTimerId;
 
 var picYlw = '<img src="img/ylw_pnt.gif">';

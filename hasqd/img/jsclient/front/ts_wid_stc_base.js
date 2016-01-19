@@ -50,7 +50,7 @@ function widMainInputsArea(){
     r += '<table width="100%" border="1" style="border-collapse:collapse;border-spacing:0;">\n';
 		r += '<tr>\n';
 			r += '<td width="1%" nowrap style="text-align:left">Token&nbsp\n';
-			r += '<td width="30%" style="text-align:left"><input type="text" nowrap id="tokens_value_input" size="64" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"></input>\n';
+			r += '<td width="30%" style="text-align:left"><input type="text" nowrap id="tokens_raw_value_input" size="64" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"></input>\n';
 			r += '<td id="tokens_hashed_value_td" class="monospace">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';

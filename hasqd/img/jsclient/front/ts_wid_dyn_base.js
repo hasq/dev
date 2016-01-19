@@ -25,19 +25,30 @@ function widAnimateProgbar(){
 
 function widTokensValueOninput(id){
 	clearTimeout(glTimerId);
-	$('#' + 'tokens_data_div').hide();
+	
+	var objTokensDataDiv = $('#' + 'tokens_data_div');
+	objTokensDataDiv.hide();
 	var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td>
-	var t = $('#' + id).val();
-	var th = hex_md5(t); //var th = hex_sha2md5($('#' + id).val());
-
-	if ($('#' + id).val() == ''){
-		$('#' + nextTdId).empty();
-		return;
+	var objTokensHashedValueTd = $('#' + nextTdId);
+	var objTokensRawValue = $('#' + id);
+	var rt = objTokensRawValue.val();
+	
+	if (engIsHash(rt, glDbHash)) {
+		var ht = rt;
+	} else {
+		var ht = engGetHash(rt, glDbHash)
 	}
 	
-	$('#' + nextTdId).html(th);
+	if (rt == ''){
+		objTokensHashedValueTd.empty();
+		return;
+	} else if (engIsHash(rt, glDbHash)) {
+		objTokensHashedValueTd.empty();
+	} else {
+		objTokensHashedValueTd.html(ht);
+	}
 	
-	var cmd = 'last' + ' ' + glDataBase + ' ' + th;
+	var cmd = 'last' + ' ' + glDataBase + ' ' + ht;
 
 	var req = function(){
 		var timerId = glTimerId;
@@ -50,12 +61,12 @@ function widTokensValueOninput(id){
 				if (r.message === 'OK'){
 					var tokensData = r.d;
 					if (tokensData.length > 0) {
-						$('#' + 'tokens_data_div').show();
-						$('#' + 'tokens_data_div').html(r.d);
+						objTokensDataDiv.show();
+						objTokensDataDiv.html(r.d);
 					}
 				} else if (r.message === 'IDX_NODN'){
-					$('#' + 'tokens_data_div').show();
-					$('#' + 'tokens_data_div').html('No such token');
+					objTokensDataDiv.show();
+					objTokensDataDiv.html('No such token');
 				}
 			} else {
 				clearTimeout(timerId);

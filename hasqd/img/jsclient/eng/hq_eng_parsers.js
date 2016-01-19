@@ -151,36 +151,6 @@ function engGetInfoDb(data) {
     return r;
 }
 
-function engIsHash(data, hashFunction) {
-    var notHex = /[^0-9a-f]/g;
-    var r = true;
-    switch (hashFunction) {
-    case 'md5':
-        var l = 32;
-        break;
-    case 'r16':
-        var l = 40;
-        break;
-    case 's22':
-        var l = 64;
-        break;
-    case 's25':
-        var l = 128;
-        break;
-    case 'wrd':
-        var l = 4;
-        break;
-    default:
-        break;
-    }
-
-    if (data.length != l || notHex.test(data) ) { //mismatched length or not not hex chars contents
-        return false;
-    } else {
-        return true;
-    };
-}
-
 function engIsTokensNamesGood(data, hash) {
     var n = data;
     n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
