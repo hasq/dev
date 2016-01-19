@@ -57,3 +57,12 @@ void calcRipeMd160Hash(const char * in, int inlen, char * out)
     }
 }
 
+void calcSmdHash(const char * in, int inlen, char * out)
+{
+    char buf[SHA256_DIGEST_STRING_LENGTH];
+
+    SHA256_Data((const u_int8_t *)in, inlen, buf);
+
+    MD5 m(string(buf, SHA256_DIGEST_STRING_LENGTH - 1));
+    ma::toHex(gl::p2p<const char>(m.getDigest()), 16, out);
+}

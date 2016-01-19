@@ -1,0 +1,26 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _smd smd SHA256MD5 1 [abc] 1 0
+<zdb> load
+<zdb> addpwd _smd 0:1 rdn pass
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=zhuzha13131 ip=192.168.137.1 port=13131
+Database: OK
+Starting with threads: all
+<svt> r = recpwd _smd 2 rdn pass
+<svt> print r
+2 701edbd3e2b483150c62edf907daa063 b0aa762118eb69da507bb164ab2c8697 5daed11f6049ce9e6514ec835781a1da a420db390c58802ea218302e7b00adb0
+<svt> println tcp self { [ add * _smd ] r } sleep 100
+OK 1000
+sleeping
+<svt> sendnote
+<svt> print tcp self [ job 1000 ]
+OK
+<svt> println tcp self { [ add * _smd ] r } sleep 100
+OK 1001
+sleeping
+<svt> print tcp self [ job 1001 ]
+WRONG_SEQ_NUMBER
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

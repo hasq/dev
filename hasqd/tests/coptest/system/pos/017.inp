@@ -1,0 +1,9 @@
+r = recpwd _smd 2 rdn pass
+print r
+println tcp self { [ add * _smd ] r } sleep 100
+print tcp self [ job 1000 ]
+println tcp self { [ add * _smd ] r } sleep 100
+print tcp self [ job 1001 ]
+
+quit
+

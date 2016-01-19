@@ -19,6 +19,7 @@ db::Record * db::Record::create(const string & typ)
     else if (typ == Sha512::name() )    r = new db::RecordT<Hash<Sha512> >();
     else if (typ == Word::name() )      r = new db::RecordT<Hash<Word> >();
     else if (typ == RipeMd160::name() ) r = new db::RecordT<Hash<RipeMd160> >();
+    else if (typ == Smd::name() )      r = new db::RecordT<Hash<Smd> >();
     else return 0;
 
     REPORT(r);

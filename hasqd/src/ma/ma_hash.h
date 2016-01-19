@@ -12,5 +12,6 @@ void calcSha384Hash(const char * in, int inlen, char * out);
 void calcSha512Hash(const char * in, int inlen, char * out);
 void calcRipeMd160Hash(const char * in, int inlen, char * out);
 void calcWhirlpoolHash(const char * in, int inlen, char * out);
+void calcSmdHash(const char * in, int inlen, char * out);
 
 #endif

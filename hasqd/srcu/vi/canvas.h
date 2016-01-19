@@ -130,6 +130,7 @@ class Canvas
             addDb(t, "_s22", "s22", "SHA2-256",   1, "", 100, 0);
             addDb(t, "_s25", "s25", "SHA2-512",   1, "", 100, 0);
             addDb(t, "_r16", "r16", "RIPEMD-160", 1, "", 100, 0);
+            addDb(t, "_smd", "smd", "SHA256+MD5", 1, "", 100, 0);
             //addDb(t,"_s3x","s3x","SHA3",       1,"",100,0);
         }
 

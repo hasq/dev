@@ -20,6 +20,7 @@ db::Single * db::Single::create(const Traits & t)
     else if (typ == Sha512::name() )    r = new db::SingleT<Hash<Sha512> >(t);
     else if (typ == Word::name() )      r = new db::SingleT<Hash<Word> >(t);
     else if (typ == RipeMd160::name() ) r = new db::SingleT<Hash<RipeMd160> >(t);
+    else if (typ == Smd::name() )    r = new db::SingleT<Hash<Smd> >(t);
     else return 0;
 
     REPORT(r);

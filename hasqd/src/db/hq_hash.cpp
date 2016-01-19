@@ -19,7 +19,6 @@ void db::Sha3::calc(const char * in, int inlen, char * out)
     throw gl::ex("Sha3::calc not implemented");
 }
 
-
 void db::Md5::calc(const char * in, int inlen, char * out)
 {
     calcMd5Hash(in, inlen, out);
@@ -40,10 +39,16 @@ void db::RipeMd160::calc(const char * in, int inlen, char * out)
     calcRipeMd160Hash(in, inlen, out);
 }
 
+void db::Smd::calc(const char * in, int inlen, char * out)
+{
+    calcSmdHash(in, inlen, out);
+}
+
 db::Dn * db::Dn::create(const string & type, const string & str, bool calculate)
 {
     Dn * r = 0;
     if (type == Md5::name()) r =  new db::DnT<Md5>();
+    else if (type == Smd::name()) r =  new db::DnT<Smd>();
     else if (type == Sha256::name()) r =  new db::DnT<Sha256>();
     else if (type == Sha512::name()) r = new db::DnT<Sha512>();
     else if (type == Sha3::name()) r = new db::DnT<Sha3>();
@@ -131,3 +136,4 @@ template class db::Hash<db::Sha256>;
 template class db::Hash<db::Sha512>;
 template class db::Hash<db::RipeMd160>;
 template class db::Hash<db::Sha3>;
+template class db::Hash<db::Smd>;

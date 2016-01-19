@@ -63,6 +63,15 @@ struct Sha3
     static const char * nameLong() { return "SHA3"; }
 };
 
+struct Smd
+{
+    static const int SIZE = 16 * 2;
+    static void calc(const char * in, int inlen, char * out);
+    static const char * name() { return "smd"; }
+    static const char * nameLong() { return "SHA256+MD5"; }
+};
+
+
 
 template<typename T>
 class Hash : public T
