@@ -44,6 +44,31 @@ function widClientLed(span_id) {
     return r;
 }
 
+function widPing(timeDelay){
+	var timerId = glPingTimerId;
+	if ( timeDelay < 60000 ){
+		timeDelay += 5000;
+	}
+	
+	var cb = function(data){
+		var response = engGetHasqdResponse(data);
+		
+		if (response.message !== 'OK'){
+			clearInterval(timerId);
+		} else {
+			var now = new Date()
+			var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+			console.log(ct);
+			clearInterval(timerId);
+			
+			var ping = function(){widPing(timeDelay)};
+			glPingTimerId = setTimeout(ping, timeDelay);
+		}
+	}
+	
+	ajxSendCommand('ping', cb, hasqdLed)
+}
+	
 function widMainInputsArea(){
     var r = '';
 

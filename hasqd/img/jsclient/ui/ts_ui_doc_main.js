@@ -3,8 +3,7 @@
 var glClientTitle = 'Tokenswap JavaScript Client';
 var glDataBase = 'smd.db';
 var glDbHash = 'smd';
-var glTimerId;
-var pingTimerId;
+var glTimerId, glPingTimerId;
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
 var picRed = '<img src="img/red_pnt.gif">';
@@ -59,22 +58,9 @@ function docInit(){
 		}
 	});
 	
+	var ping = function(){ widPing(5000) }
 	
-	var ping = function(){
-		var cb = function(data){
-			var response = engGetHasqdResponse(data);
-			if (response.message !== 'OK'){
-				clearInterval(pingTimerId);
-			} else {
-				var now = new Date()
-				var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-				console.log(ct);
-			}
-		}
-		ajxSendCommand('ping', cb, hasqdLed)
-	}
-	
-	pingTimerId = setInterval(ping, 30000);
+	glPingTimerId = setTimeout(ping, 5000);
 }
 
 function docMain(){
