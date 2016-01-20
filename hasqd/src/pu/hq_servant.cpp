@@ -16,7 +16,7 @@ Servant::~Servant()
     if ( gs->svtArea.jobQueue.size() )
     {
         string text = gs->svtArea.jobQueue.front().text();
-        text = "Error: Servant has jobs ["+text+"]";
+        text = "Error: Servant has jobs [" + text + "]";
         os::Cout() << text << os::endl;
     }
 

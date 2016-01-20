@@ -43,7 +43,7 @@ bool Reorganiser::moveDead1()
 }
 
 // very complex function with much subtlety
-Reorganiser& Reorganiser::discoverNet()
+Reorganiser & Reorganiser::discoverNet()
 {
     moveDead();
 
@@ -79,7 +79,7 @@ Reorganiser& Reorganiser::discoverNet()
 
         if ( !node.isAlive() )
         {
-            gl::add(dead_nodes,node.name);
+            gl::add(dead_nodes, node.name);
             if ( nodeIsMyNbs )
             {
                 moveDead();
@@ -113,7 +113,7 @@ Reorganiser& Reorganiser::discoverNet()
 
             if ( fn.neighbour )
                 dag_link.push_back( pss(node.name, fnname) );
-                //dag.link(node.name, fnname);
+            //dag.link(node.name, fnname);
         }
     } // while
 

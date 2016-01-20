@@ -20,6 +20,7 @@ void Worker::runOnceUnconditionally()
     const char ** mime = &s->accessRequest().accessPmd().mime;
     string reply = workerCore.process(msg, mime);
     s->send_msg(reply);
+    string ip = s->getAddr().strIp();
     delete s;
 
     if ( gs->config->dbg.wkr )
@@ -30,16 +31,17 @@ void Worker::runOnceUnconditionally()
         gl::replaceAll(reply, "\r", "");
         gl::replaceAll(reply, "\n", "\\n");
 
-        if( reply.size() > SZ ) reply = reply.substr(0,SZ-3)+"...";
+        if ( reply.size() > SZ ) reply = reply.substr(0, SZ - 3) + "...";
 
-        for( size_t i=0; i<reply.size(); i++ )
+        for ( size_t i = 0; i < reply.size(); i++ )
         {
             const char & c = reply[i];
-            if( c=='\n' || ( c>=' ' && c<='~' ) ){}
-            else reply[i]='.';
+            if ( c == '\n' || ( c >= ' ' && c <= '~' ) ) {}
+            else reply[i] = '.';
         }
 
         os::Cout() << os::prmpt("wkr", gs->config->dbg.id)
+                   << "(" << ip << ")"
                    << "[" << msg
                    << "] -> [" << reply << "]"
                    << (prx.empty() ? "" : " (proxy)") << os::endl;
