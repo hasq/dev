@@ -3,8 +3,8 @@ Database on disk erased successfully
 <zdb> create _md5 wrd MD5 1 [abc] 1 0
 <zdb> load
 <zdb> addpwd _md5 0:1 rdn pass
-Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=LOD0425413131 ip=131.185.78.15 port=13131
 Database: OK
 Starting with threads: all
 <svt> print tcp self [ f /_md5/./ ]
@@ -18,10 +18,10 @@ REQ_FILE_BAD
 <svt> print tcp self [ f /_md5\92..\92 ]
 REQ_FILE_BAD
 <svt> quit
-<wkr> [f /_md5/../../../] -> [REQ_FILE_BAD]
-<wkr> [f /_md5/../] -> [REQ_FILE_BAD]
-<wkr> [f /_md5/./] -> [REQ_FILE_BAD]
-<wkr> [f /_md5\..\] -> [REQ_FILE_BAD]
-<wkr> [f /_md5\.\] -> [REQ_FILE_BAD]
+<wkr> (127.0.0.1)[f /_md5/../../../] -> [REQ_FILE_BAD]
+<wkr> (127.0.0.1)[f /_md5/../] -> [REQ_FILE_BAD]
+<wkr> (127.0.0.1)[f /_md5/./] -> [REQ_FILE_BAD]
+<wkr> (127.0.0.1)[f /_md5\..\] -> [REQ_FILE_BAD]
+<wkr> (127.0.0.1)[f /_md5\.\] -> [REQ_FILE_BAD]
 <zdb> erasedisk
 Database on disk erased successfully

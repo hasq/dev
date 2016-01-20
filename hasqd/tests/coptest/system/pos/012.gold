@@ -5,19 +5,19 @@ Database on disk erased successfully
 <zdb> addpwd _md5 0:1 rdn pass
 <svt> print tcp self [ f /_md5/ ]
 OK
-2015
+2016
 meta
 db.traits
 
 <svt> print expect 0 OK 3 tcp self [ f /_md5/ ]
 OK
-2015
+2016
 meta
 db.traits
 
 <svt> print expect 2 meta 3 tcp self [ f /_md5/ ]
 OK
-2015
+2016
 meta
 db.traits
 

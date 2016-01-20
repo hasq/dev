@@ -54,13 +54,13 @@ Database on disk erased successfully
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _md5 wrd MD5 1 [abc] 1 0
+<wkr> (127.0.0.1)[add * _md5 1 a7c4 7ccf 811f 2159] -> [OK 1001]
+<wkr> (127.0.0.1)[last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
+<wkr> (127.0.0.1)[last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
+<wkr> (127.0.0.1)[ping] -> [OK]
+<wkr> (127.0.0.1)[ping] -> [OK]
+<wkr> (127.0.0.1)[zero * _md5 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
 <wkr> Record fetched [1 a7c4 7ccf 811f 2159]
 <wkr> Record fetched [1 a7c4 7ccf 811f 2159]
-<wkr> [add * _md5 1 a7c4 7ccf 811f 2159] -> [OK 1001]
-<wkr> [last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
-<wkr> [last _md5 a7c4] -> [OK 1 a7c4 7ccf 811f 2159]
-<wkr> [ping] -> [OK]
-<wkr> [ping] -> [OK]
-<wkr> [zero * _md5 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
 <zdb> erasedisk
 Database on disk erased successfully

@@ -1,13 +1,13 @@
-Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=LOD0425413131 ip=131.185.78.15 port=13131
 Database: DB_EMPTY
 Starting with threads: all
 <svt> print tcp self [ \126\91\32\91\13\10\13\10 ]
 <svt> print tcp self [ \32 ]
 <svt> quit
-Hasq server 0.2.5 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=lod-maz-vm113131 ip=131.185.78.15 port=13131
+Hasq server 0.3.1 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=LOD0425413131 ip=131.185.78.15 port=13131
 Database: DB_EMPTY
 Starting with threads: all
-<wkr> [~[ [] -> [REQ_MSG_HEAD]
-<wkr> [ ] -> [REQ_EMPTY_MSG]
+<wkr> (127.0.0.1)[~[ [] -> [REQ_MSG_HEAD]
+<wkr> (127.0.0.1)[ ] -> [REQ_EMPTY_MSG]
