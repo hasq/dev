@@ -265,7 +265,7 @@ function widRecordsTab() {
 		r += '<tr>\n';
 			r += '<td  style="text-align:left">';
 				r += '<input nowrap type="checkbox" id="show_hide_input"/>\n';
-				r += '<label for="show_hide_input" id="show_hide_label">&nbsp;' + 'Show Password&nbsp;</label>\n';
+				r += '<label for="show_hide_input" id="show_hide_label">&nbsp;' + 'Show passwords&nbsp;</label>\n';
 			r += '<td  style="text-align:left">\n';
 				r += '<input type="password" class="password" id="newrec_pass2_input" oninput="widGetNewRecordOninput()" disabled>\n';
 			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';

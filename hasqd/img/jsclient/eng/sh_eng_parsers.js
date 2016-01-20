@@ -24,23 +24,23 @@ function engGetHasqdResponse(data) {
     if (lines.length == 0 || blocks[0] == 0) {
         r.content = 'NO_OUTPUT';
         r.message = 'ERROR';
-    } else if (lines[0] == 'OK') {
+    } else if (lines[0] === 'OK') {
         r.content = response.replace(/^OK/, '');
         r.message = 'OK'
-    } else if (blocks[0] == 'OK') {
+    } else if (blocks[0] === 'OK') {
         r.content = response.replace(/^OK\s/, '');
         r.message = 'OK';
-    } else if (blocks[0] == 'IDX_NODN' ) {
+    } else if (blocks[0] === 'IDX_NODN' ) {
         r.content = blocks[0];
         r.message = blocks[0];
     } else if (
-                blocks[0] == 'REQ_HASHTYPE_BAD' ||
-                blocks[0] == 'URF_BAD_FORMAT' ||
-                blocks[0] == 'REQ_MSG_HEAD' ||
-                blocks[0] == 'REQ_DN_BAD' ||
-                blocks[0] == 'REC_INIT_BAD_N' ||
-                blocks[0] == 'REC_INIT_BAD_S' ||
-                blocks[0] == 'REC_INIT_BAD_KGO'
+                blocks[0] === 'REQ_HASHTYPE_BAD' ||
+                blocks[0] === 'URF_BAD_FORMAT' ||
+                blocks[0] === 'REQ_MSG_HEAD' ||
+                blocks[0] === 'REQ_DN_BAD' ||
+                blocks[0] === 'REC_INIT_BAD_N' ||
+                blocks[0] === 'REC_INIT_BAD_S' ||
+                blocks[0] === 'REC_INIT_BAD_KGO'
                 ) {
         r.content = blocks[0];
         r.message = 'ERROR';

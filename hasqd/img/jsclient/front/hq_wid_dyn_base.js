@@ -341,23 +341,26 @@ function widCheckNewRecord() {
 
 function widTokensHistorySMenu(range) {
 	var cb = function (data) {
-		var r = engGetHasqdOk(data);
-		if (r !== 'OK') {
-			$('#tokens_history_textarea').val('');
+		var resp = engGetHasqdResponse(data);
+		var obj = $('#tokens_history_textarea');
+		if (resp.message !== 'OK') {
+			obj.val('');
 			return;
 		}
-		//$('#' + 'tokens_history_div').css('display', 'block');
-		var i = data.indexOf('\r\n');
-		var data = data.substr(i+2);
-		$('#tokens_history_textarea').val(data);
+		var i = resp.content.indexOf('\n');
+		var r = resp.content.substr(i+1);
+		obj.val(r);
 	}
+
+	var obj = $('#tokens_history_textarea');
+	var t = $('#dn_input').val();
 	
 	if (range === 0) {
-		$('#tokens_history_textarea').val('');
+		obj.val('');
 		return;
 	}
 	
-	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + $('#dn_input').val();;
+	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + t;
 	ajxSendCommand(cmd, cb, progressLed);
 }
 

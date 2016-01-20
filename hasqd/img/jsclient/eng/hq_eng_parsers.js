@@ -55,14 +55,14 @@ function engGetInfoFam(data) {
     r.message = 'OK';
     r.content = '';
 
-    var parsedData = engGetHasqdResponse(data);
+    var response = engGetHasqdResponse(data);
 
-    if (parsedData.message != 'OK') {
-        return parsedData;
+    if (response.message != 'OK') {
+        return response;
     }
 
-    var dataContent = parsedData.content;
-    var lines = dataContent.split(/\n/);
+    var rawFamData = response.content;
+    var lines = rawFamData.split(/\n/);
 
     if (lines.length <= 1) {
         r.message = 'OK';
@@ -90,26 +90,26 @@ function engGetInfoFam(data) {
 function engGetInfoDb(data) {
     var r = [];
 
-    var parsedData = engGetHasqdResponse(data);
+    var response = engGetHasqdResponse(data);
 
-    if (parsedData.message != 'OK' || parsedData.length == 0) {
-        return parsedData;
+    if (response.message != 'OK' || response.length == 0) {
+        return response;
     }
 
-    var dataContent = parsedData.content;
+    var rawDbData = response.content;
 
-    dataContent = dataContent.replace(/{\n|}+$/g, '');
-    dataContent = dataContent.split(/}\n/);
+    rawDbData = rawDbData.replace(/{\n|}+$/g, '');
+    rawDbData = rawDbData.split(/}\n/);
 
-    if (dataContent.length < 1) {
-        return dataContent;
+    if (rawDbData.length < 1) {
+        return rawDbData;
     }
 
-    for (var i = 0; i < dataContent.length; i++) {
+    for (var i = 0; i < rawDbData.length; i++) {
         r[i] = {};
         var traitLines = {};
 
-        traitLines[i] = dataContent[i].split(/\n/);
+        traitLines[i] = rawDbData[i].split(/\n/);
 
         var lines = traitLines[i];
         for (var j = 0; j < (lines.length - 1); j++) {
