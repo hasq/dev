@@ -2,25 +2,25 @@
 
 function widBody(tabs){
 	var r = '';
-    r += '<table width="100%" border="1" style="border-collapse:collapse;">\n';
+    r += '<table width="100%" border="1" nowrap>\n';
     r += '<tr>\n';
     r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
 	r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
     r += '</tr>\n';	
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">' + widMainInputsArea() + '\n';
+    r += '<td colspan="2" nowrap>' + widMainInputsArea() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">' + widMainTabs(tabs) + '\n';
+    r += '<td width="100%" colspan="2" nowrap>' + widMainTabs(tabs) + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2"><hr/>\n';
+    r += '<td width="100%" colspan="2" nowrap><hr/>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">' + widLogArea() + '\n';
+    r += '<td width="100%" colspan="2" nowrap>' + widLogArea() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2"><hr/>\n';
+    r += '<td width="100%" colspan="2" nowrap><hr/>\n';
     r += '</tr>\n';
     r += '</table>\n';
 	
@@ -29,7 +29,7 @@ function widBody(tabs){
 
 function widClientTitle(text) {
     var r = '';
-    r += '<table border="0" style="padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="0">\n';
     r += '<tr>\n';
     r += '<td>\n';
     r += '<div style="font-size:20px">\n' + text + '</div>\n';
@@ -47,25 +47,29 @@ function widClientLed(span_id) {
 function widMainInputsArea(){
     var r = '';
 
-    r += '<table width="100%" border="1" style="border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table width="100%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td width="1%" nowrap style="text-align:left">Token&nbsp\n';
-			r += '<td width="30%" style="text-align:left"><input type="text" nowrap id="tokens_raw_value_input" size="64" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"></input>\n';
-			r += '<td id="tokens_hashed_value_td" class="monospace">\n';
+			r += '<td width="1%" style="text-align:left" nowrap>\n'
+				r += '&nbsp;' + 'Token' + '&nbsp;\n';
+			r += '<td width="40%" style="text-align:left" nowrap>\n';
+				r += '<input type="text" id="tokens_raw_value_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
+			r += '<td id="tokens_hashed_value_td" class="monospace" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="1%" style="text-align:left">Password&nbsp\n';
-			r += '<td width="30%" style="text-align:left"><input type="password" id="tokens_password_input" class="password" size="64" placeholder="Enter tokens password" oninput="">\n';
-			r += '<td style="text-align:left" nowrap>';
-				r += '<input nowrap type="checkbox" id="show_hide_input" />';
-				r += '<label for="show_hide_input" id="show_hide_label">Show Password</label>';
+			r += '<td style="text-align:left">\n';
+				r += '&nbsp;' + 'Password' + '&nbsp\n';
+			r += '<td style="text-align:left">\n';
+				r += '<input type="password" id="tokens_password_input" class="password" placeholder="Enter tokens password" oninput=""/>\n';
+			r += '<td style="text-align:left">\n';
+				r += '<input type="checkbox" id="show_hide_input"/>\n';
+				r += '<label for="show_hide_input" id="show_hide_label">Show password</label>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" colspan="3" style="text-align:left">';
+			r += '<td width="100%" colspan="3" style="text-align:left" nowrap>';
 				r += '<table width="100%">';
 					r += '<tr>';
 						r += '<td width="100%" >';
-							r += '<div id="tokens_data_div" style="border:2px solid CornflowerBlue;border-radius:5px;background:#F0F0F0;">1111\n11111\n\\\\1';
+							r += '<div id="tokens_data_div">\n';
 							r += '</div>';
 					r += '</tr>';
 				r += '</table>\n';
@@ -78,17 +82,17 @@ function widMainInputsArea(){
 function widMainTabs(items) {
     var r = '';
 
-    r += '<div id="main_tabs_div">\n';
+    r += '<div id="tabs">\n';
 
     r += '\t<ul>\n';
     for (var i = 0; i < items.length; i++) {
-        r += '\t<li><a href="#tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
+        r += '\t<li><a href="#tabs-' + (i + 1) + '">' + items[i].title + '</a>\n';
 	}
 	
     r += '\t</ul>\n';
 
     for (var i = 0; i < items.length; i++) {
-        r += '\t<div id="tabs-' + (i + 1) + '_div">' + items[i].data + '</div>\n';
+        r += '\t<div id="tabs-' + (i + 1) + '">' + items[i].data + '</div>\n';
 	}
 	
     r += '</div>\n';

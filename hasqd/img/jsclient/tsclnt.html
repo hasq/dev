@@ -20,7 +20,7 @@
     }
     
     .monospace {
-      font: 120% monospace;
+      font: 140% monospace;
     }    
 
     #icons {
@@ -47,27 +47,56 @@
         overflow: hidden;
     }
     
+
     #tabs ul li {
         display: inline-block;
         float: none;
         vertical-align: bottom;
     }
-    
+
+     #tokens_data_div {
+        border:2px solid CornflowerBlue;
+        border-radius:5px;
+        background:#F0F0F0;"     
+     }
+     
     .fakewindowcontain .ui-widget-overlay {
       position: absolute;
     }
 
-    input {
+    input[type='text'] {
+      box-sizing: border-box;
       font-family: monospace;
-      width: 99%;
+      width: 100%;
+      margin: 0px;
+      border: 1px solid;
     }
-
-    textarea {
+    
+    input[type='password'] {
+      box-sizing: border-box;
       font-family: monospace;
-      width: 99%;
+      width: 100%;
+      margin: 0px;
+      border: 1px solid;
+    }
+    
+    table {
+      box-sizing: border-box;
+      padding:0;
+      border-collapse:collapse;
+    }
+    
+    textarea[type='text'] {
+      box-sizing: border-box;
+      font-family: monospace;
+      width: 100%;
       /*resize: none;*/
-    }    
-
+    } 
+    
+    td tr {
+      box-sizing: border-box;
+    }
+    
 }
   </style>
 
@@ -87,7 +116,7 @@
 
 </head>
 
-<body>
+<body onLoad="preloadImages('img/gry_grn_pnt.gif','img/red_pnt.gif','img/gry_pnt.gif')">
   <script>
     docMainWrite();
     docMainInit();

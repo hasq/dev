@@ -6,7 +6,7 @@ function HasqdLed(){
 
 HasqdLed.prototype.fail = function(){
     $('#hasqd_led').html(picRed);
-    widPrintRecordsLastOperation('Connection failed!');
+    alert('Connection failed!');
 };
 
 HasqdLed.prototype.inc = function(){
@@ -21,6 +21,16 @@ var hasqdLed = new HasqdLed();
 
 function widAnimateProgbar(){
     $('#hasqd_led').html(picGry);
+}
+
+function widStringsGrow(string, l){
+	var r = '';
+	
+	for (var i = 0; i < l; i++){
+		r += string;
+	}
+	
+	return r;
 }
 
 function widTokensValueOninput(id){
@@ -40,10 +50,10 @@ function widTokensValueOninput(id){
 	}
 	
 	if (rt == ''){
-		objTokensHashedValueTd.empty();
+		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
 		return;
 	} else if (engIsHash(rt, glDbHash)) {
-		objTokensHashedValueTd.empty();
+		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
 	} else {
 		objTokensHashedValueTd.html(ht);
 	}

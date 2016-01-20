@@ -25,9 +25,9 @@ function widGlobalTable(tabs){
     var r = '';
     r += '<table width="100%" border="0" nowrap>\n';
 
-    r += '<tr nowrap>\n';
+    r += '<tr>\n';
     r += '<td nowrap>\n' + widClientTitle(glClientTitle);
-    r += '<td style="text-align:right;">&nbsp;' + '' + widClientLed('progress_led');
+    r += '<td style="text-align:right;">&nbsp;' + '' + widClientLed('hasqd_led');
     r += '</tr>\n';
 
     r += '<tr>\n';

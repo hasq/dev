@@ -125,7 +125,8 @@ function engRunCRL(cmdsList, cbFunc) {
 		}
 
 		var progress = 100 * (cmdsList.idx + 1) / cmdsList.items.length;
-		var r = engGetHasqdOk(data);
+		//var r = engGetHasqdOk(data);
+		var r = engGetHasqdResponse(data).message;
 
 		if (r === 'OK' || r === 'IDX_NODN') {
 			cbFunc(data, cmdsList.idx, progress);
@@ -145,7 +146,7 @@ function engRunCRL(cmdsList, cbFunc) {
 	}
 
 	if (cmdsList.items.length !== 0 && cmdsList.idx < cmdsList.items.length) {
-		ajxSendCommand(cmdsList.items[cmdsList.idx].cmd, cb, progressLed);
+		ajxSendCommand(cmdsList.items[cmdsList.idx].cmd, cb, hasqdLed);
 	} else if (cmdsList.items.length === 0) {
 		cbFunc('OK', 0, 0);
 	}

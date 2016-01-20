@@ -863,7 +863,7 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
         widPrintUpdatedTokensNames(tokens, idInp);
         var f = function () {
@@ -962,7 +962,7 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
 
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
         widPrintUpdatedTokensNames(tokens, idInp);
 
@@ -1272,7 +1272,7 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
         widPrintUpdatedTokensNames(tokens, idInp);
         var f = function () {
             widRS3ObtainK1G1Keys(id, transferKeys);
@@ -1353,7 +1353,7 @@ function widPrepareToRS3ObtainK2Keys(id, data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
         widPrintUpdatedTokensNames(tokens, idInp);
         var f = function () {
@@ -1438,7 +1438,7 @@ function widPrepareToSS4ObtainO1Keys(id, data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
         widPrintUpdatedTokensNames(tokens, idInp);
         var f = function () {
@@ -1521,7 +1521,7 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
-        tokens = engGetTokensUpdatedNames(engGetTokensHashNames(transferKeys), engGetTokensRawNames(tokens));
+        tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
         widPrintUpdatedTokensNames(tokens, idInp);
         var f = function () {
             widSS4ObtainG2O2Keys(id, transferKeys);

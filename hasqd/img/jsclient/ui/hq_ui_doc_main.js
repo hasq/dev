@@ -277,7 +277,7 @@ function doc_init() {
 		}
 	});
 	
-	$('#progress_led').html(picGry);
+	$('#hasqd_led').html(picGry);
 
 	$('#server_host').html('' + location.host);
 
