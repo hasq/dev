@@ -76,7 +76,7 @@ function widMainTabs(items) {
 function widServerTab() {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table width="70%">\n';
     r += '<tr>\n';
     r += '<td>\n';
     r += '<table border="1" style="font-family: monospace;">\n';

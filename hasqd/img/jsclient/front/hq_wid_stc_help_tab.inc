@@ -3,10 +3,9 @@
 function widHelpTab() {
     var r = '';
 
-    r += '<table width="90%" style="table-layout:inherit;">\n';
-    //r += '<col width="860" valign="top">\n';
+    r += '<table width="70%"">\n';
     r += '<tr>\n';
-    r += '<td >\n';
+    r += '<td width="100%">\n';
 
     r += '<div id="main_help_accordion">\n';
 

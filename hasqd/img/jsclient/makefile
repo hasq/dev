@@ -4,7 +4,9 @@ JQUID=../../ext/jq/
 JQUIF=jquery-ui-1.11.4.custom
 JQUI=$(JQUID)$(JQUIF)
 
-all: createdb help_tab_gen jqcopy makeclients
+all: createdb help_tab_gen jqcopy jsclient
+
+client: help_tab_gen jqcopy jsclient
 
 help_tab_tmp: front/hq_wid_stc_help_tab.inc txt/*.htm
 	echo "////////////////////////////////////////////////////" > front/help_tab.tmp
@@ -26,7 +28,37 @@ jqcopy: $(JQUI).tar.bz2
 	cd lib && make NAME=$(JQUIF)
 	
 	
-makeclients: index.html 
+jsclient: index.html 
+	mkdir -p slice/home/ui
+	mkdir -p slice/home/lib
+	mkdir -p slice/home/lib/images
+	mkdir -p slice/home/front
+	mkdir -p slice/home/eng
+	mkdir -p slice/home/img
+#	hqclnt
+	cp eng/hq_*.js slice/home/eng/
+	cp front/hq_*.js slice/home/front/
+	mv -f front/help_tab.gen slice/home/front/hq_wid_stc_help_tab.js
+	cp ui/hq_*.js slice/home/ui/	
+	cp hqclnt.html slice/home/
+#	tsclnt
+	cp front/ts_*.js slice/home/front/
+	cp ui/ts_*.js slice/home/ui/
+	cp tsclnt.html slice/home/tsclnt.html
+#	shared
+	cp eng/sh_*.js slice/home/eng/
+	cp img/*.gif slice/home/img/
+	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
+	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
+	cp lib/jquery-ui/images/*.png slice/home/lib/images
+	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
+	cp index.html slice/home/
+#
+	chmod 0777 -R slice/home	
+#	read
+
+only: index.html 
 	mkdir -p slice/home/ui
 	mkdir -p slice/home/lib
 	mkdir -p slice/home/lib/images
@@ -65,7 +97,10 @@ clean:
 	
 	
 myclean:
-	rm -rf slice index
+	rm -rf lib/jquery* slice/home lib/*.tar lib/*.tar.bz2
+	rm -rf front/help_tab.gen
+	rm -rf front/help_tab.tmp
+	rm -rf front/hq_wid_stc_help_tab.js
 	
 checkin:
 	cp -f slice/home/front/*.js front/
