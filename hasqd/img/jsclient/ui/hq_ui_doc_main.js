@@ -85,9 +85,13 @@ function doc_init() {
 					widHashcalcOninput();
 					$('#hashcalc_smenu').val(3);
 					break;
-				case 'wrd': //wrd
+				case 'smd': //s25
 					widHashcalcOninput();
 					$('#hashcalc_smenu').val(4);
+					break;					
+				case 'wrd': //wrd
+					widHashcalcOninput();
+					$('#hashcalc_smenu').val(5);
 					break;
 				default:
 					break;
@@ -138,7 +142,11 @@ function doc_init() {
 				glHashCalcHash = 's25';
 				widHashcalcOninput();
 				break;
-			case 4: //wrd
+			case 4: //smd
+				glHashCalcHash = 'smd';
+				widHashcalcOninput();
+				break;
+			case 5: //wrd
 				glHashCalcHash = 'wrd';
 				widHashcalcOninput();
 				break;
@@ -150,7 +158,7 @@ function doc_init() {
 
 	$('#tokens_history_selectmenu').selectmenu({
 		disabled: true,
-		width: '80%',
+		width: '60px',
 		select: function(event, data) {
 			var d = +this.options[this.selectedIndex].text;
 			widTokensHistorySMenu(d);
@@ -260,6 +268,14 @@ function doc_init() {
 	//$( '#progressbar' ).progressbar({value: false});
 
 	$('[data-class="hide"]').hide();
+
+	$('#show_hide_input').click(function(){
+		if ($('.password').attr('type') == 'password') {
+			$('.password').attr('type', 'text');
+		} else {
+			$('.password').attr('type', 'password');
+		}
+	});
 	
 	$('#progress_led').html(picGry);
 

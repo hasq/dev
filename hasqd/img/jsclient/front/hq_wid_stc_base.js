@@ -7,7 +7,7 @@ function widTableCell(x) {
 function widTableCellSpan(x, y, z) {
     if (!y)
         y = '';
-    return '<td><span id="' + x + '"></span>&nbsp;' + y + '';
+    return '<td><span id="' + x + '"></span>&nbsp;' + '' + y + '';
 }
 
 function widAddRow(data) {
@@ -23,15 +23,15 @@ function widLink(x) {
 
 function widGlobalTable(tabs){
     var r = '';
-    r += '<table width="100%" border="0">\n';
+    r += '<table width="100%" border="0" nowrap>\n';
 
-    r += '<tr>\n';
-    r += '<td>\n' + widClientTitle(glClientTitle);
-    r += '<td style="text-align:right;">&nbsp' + widClientLed('progress_led');
+    r += '<tr nowrap>\n';
+    r += '<td nowrap>\n' + widClientTitle(glClientTitle);
+    r += '<td style="text-align:right;">&nbsp;' + '' + widClientLed('progress_led');
     r += '</tr>\n';
 
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">\n' + widMainTabs(tabs);
+    r += '<td width="100%" colspan="2" nowrap>\n' + widMainTabs(tabs);
     r += '</tr>\n';
     r += '</table>\n';
     return r;
@@ -39,7 +39,7 @@ function widGlobalTable(tabs){
 
 function widClientTitle(text) {
     var r = '';
-    r += '<table border="0" style="padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="0">\n';
     r += '<tr>\n';
     r += '<td>\n';
     r += '<div style="font-size:20px">\n' + text + '</div>\n';
@@ -79,7 +79,7 @@ function widServerTab() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td>\n';
-    r += '<table border="1" style="font-family: monospace;padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="1" style="font-family: monospace;">\n';
     r += '<tr>\n' + widTableCell('Host') + widTableCellSpan('server_host', widServerRefreshButton()) + '</tr>\n';
     r += '<tr>\n' + widTableCell('Server') + widTableCellSpan('server_id') + '</tr>\n';
     r += '<tr>\n' + widTableCell('System') + widTableCellSpan('server_sys') + '</tr>\n';
@@ -102,18 +102,20 @@ function widServerRefreshButton() {
 function widServerFamilyTable(data) {
     var r = '';
 
-    r += '<table border="1" style="font-family:monospace;padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="1" style="font-family:monospace;">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
     var contentData = data.content;
 
     if (contentData != 'NO_FAMILY') {
         for (var i = 0; i < contentData.list.length; i++) {
-            r += '<tr>\n' + widTableCell(contentData.list[i].name);
+            r += '<tr>\n';
+			r += widTableCell(contentData.list[i].name);
             r += widTableCell(widLink(contentData.list[i].link));
             r += widTableCell(contentData.list[i].neighbor ? 'Yes' : 'No');
             r += widTableCell(contentData.list[i].alive ? 'Yes' : 'No');
-            r += widTableCell(contentData.list[i].unlock ? 'No' : 'Yes') + '</tr>\n';
+            r += widTableCell(contentData.list[i].unlock ? 'No' : 'Yes');
+			r += '</tr>\n';
         }
     }
 
@@ -137,7 +139,7 @@ function widDatabaseTab() {
 function widDatabaseDBTable() {
     var r = '';
 
-    r += '<table border="0" style="padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="0" style=" table-layout:fixed ">\n';
     r += '<tr>\n';
     r += '<td colspan="2"><select name="database_smenu" id="database_smenu">';
     r += '<option>No database</option>\n';
@@ -155,7 +157,7 @@ function widDatabaseDBTable() {
 
 function widDatabaseTraitTable(data) {
     var r = '';
-    r += '<table border="1" style="font-family: monospace;padding:0;border-collapse:collapse;border-spacing:0;">\n';
+    r += '<table border="1" style="font-family:monospace;">\n';
     r += '<tr><th>Trait</th><th>Value</th></tr>\n';
 
     for (var key in data) {
@@ -168,152 +170,143 @@ function widDatabaseTraitTable(data) {
 
 function widRecordsTab() {
     var r = '';
-    r += '<table border="0">\n';
-    r += '<tr>\n';
-    r += '<td colspan="2" rowspan="4">\n';
-    r += '<b>Current DB:&nbsp;</b>\n';
-    r += '<b><span id="current_db">No database</span></b>\n';
-    r += '<td width="20px">\n';
-    r += '<td>\n';
-    r += 'Record #\n';
-    r += '<td><input type="text" id="lastrec_n_input" size="35" title="" value="" disabled>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td>Key<td><input type="text" id="lastrec_k_input" size="35" title="" value="" disabled>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td colspan="2" rowspan="3">\n';
-    r += '<table border="0">\n';
-    r += '<tr>\n';
-    r += '<td>Raw token&nbsp;\n';
-    r += '<td><input type="text" id="rdn_input" oninput="widRawDNOninput()" size="35" title="" value="">\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td>Token';
-    r += '<td><input type="text" id="dn_input" oninput="widDNOninput()" size="35" title="" value="">\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td style="text-align:right">\n';
-    r += '<button id="lastrec_button" onclick="widRecordsGetLastRecordBtnClk()">Get Last Record</button>\n';
-    r += '</tr>\n';
-    r += '</table>\n';
-    r += '<td>\n';
-    r += '<td>\n';
-    r += 'Generator\n';
-    r += '<td><input type="text" id="lastrec_g_input" size="35" title="" value="" disabled>\n';
-    r += '</tr>\n';
+    r += '<table width="70%" border="0">\n'; //style="table-layout:fixed;"
+		r += '<tr>\n';
+			r += '<td colspan="2" rowspan="4">\n';
+				r += '<b>Current DB:&nbsp;</b>\n';
+				r += '<b><span id="current_db">No database</span></b>\n';
+			//r += '<td width="2%">\n';
+			r += '<td width="80px">\n';
+				r += '&nbspRecord #\n';
+			r += '<td><input type="text" id="lastrec_n_input" disabled>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			//r += '<td>\n';
+			r += '<td >&nbsp;' + 'Key&nbsp\n';
+			r += '<td >\n';
+				r += '<input type="text" id="lastrec_k_input" disabled>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  colspan="2">\n';
+		r += '</tr>\n';
 
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td>Owner';
-    r += '<td><input type="text" id="lastrec_o_input" size="35" title="" value="" disabled>\n';
-    r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="2" rowspan="3">\n';
+				r += '<table width="100%" border="0">\n';
+					r += '<tr>\n';
+						r += '<td width="5%">\n';
+							r += '&nbsp;Raw token' + '&nbsp;\n';
+						r += '<td >\n';
+							r += '<input type="text" id="rdn_input" oninput="widRawDNOninput()">\n';
+					r += '</tr>\n';
+					r += '<tr>\n';
+						r += '<td width="5%">&nbsp;' + 'Token&nbsp;';
+						r += '<td>\n';
+							r += '<input type="text" id="dn_input" oninput="widDNOninput()">\n';
+					r += '</tr>\n';
+					r += '<tr>\n';
+						r += '<td colspan="2" style="text-align:right">\n';
+						r += '<button id="lastrec_button" onclick="widRecordsGetLastRecordBtnClk()">Get Last Record</button>\n';
+					r += '</tr>\n';
+				r += '</table>\n';
+				
+			r += '<td >\n';
+				r += '&nbsp;Generator' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="lastrec_g_input" disabled>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td >&nbsp;' + 'Owner' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="lastrec_o_input" disabled>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="lastrec_d_input" disabled>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="4" rowspan="1"><hr/>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
+			r += '<td >&nbsp;' + 'Record #' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="newrec_n_input" oninput="widGetNewRecordOninput();" >\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td >&nbsp;' + 'Key' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="newrec_k_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="120px" style="text-align:left">\n';
+				r += '<input type="checkbox" id="onepass_checkbox" onclick="widRecordsOnePwdChkboxClk(this);" unchecked>\n';
+				r += '&nbsp;' + 'One password' + '&nbsp;\n';
+			r += '<td style="text-align:left">\n';
+				r += '<input type="password" class="password" id="newrec_pass0_input" oninput="widGetNewRecordOninput()" disabled>\n';
+			r += '<td>&nbsp;' + 'Generator' + '&nbsp;\n';
+			r += '<td>\n';
+				r += '<input type="text" id="newrec_g_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  style="text-align:left">\n';
+				r += '<input type="checkbox" id="threepass_checkbox" onclick="widRecordsThreePwdChkboxClk(this)" unchecked/>\n';
+				r += '&nbsp;' + 'Three passwords' + '&nbsp;';
+			r += '<td  style="text-align:left">\n';
+				r += '<input type="password" class="password" id="newrec_pass1_input" oninput="widGetNewRecordOninput()" disabled>\n';
+			r += '<td >&nbsp;' + 'Owner' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="newrec_o_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  style="text-align:left">';
+				r += '<input nowrap type="checkbox" id="show_hide_input"/>\n';
+				r += '<label for="show_hide_input" id="show_hide_label">&nbsp;' + 'Show Password&nbsp;</label>\n';
+			r += '<td  style="text-align:left">\n';
+				r += '<input type="password" class="password" id="newrec_pass2_input" oninput="widGetNewRecordOninput()" disabled>\n';
+			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';
+			r += '<td >\n';
+				r += '<input type="text" id="newrec_d_input" oninput="">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="4" style="text-align:right">\n';
+				r += '<button id="submit_button" onclick="widSubmitBtnClk()">Submit</button>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  colspan="4"><hr/>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="2"><b>History</b>\n';	
+			r += '<td style="text-align:right;vertical-align:middle;">\n';
+				r += '<select name="tokens_history" id="tokens_history_selectmenu">\n';
+					r += '<option selected="selected">0</option>\n';
+					r += '<option>3</option>\n';    
+					r += '<option>10</option>\n';
+					r += '<option>30</option>\n';
+				r += '</select>\n';
+			r += '<td style="text-align:left;vertical-align: middle">\n';
+				r += '<label for="tokens_history_selectmenu">last records</label>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="4">\n';
+				r += '<textarea id="tokens_history_textarea" type="text" wrap="off" rows="4" readonly></textarea>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  colspan="4"><hr/>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  colspan="4">\n';
+				r += '<pre id="records_last_operation_pre">&nbsp;' + '</pre>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td  colspan="4"><hr/>\n';
+		r += '</tr>\n';
 
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td>Data\n';
-    r += '<td><input type="text" id="lastrec_d_input" size="35" title="" value="" disabled>\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td colspan="5" rowspan="1"><hr/>\n';
-    r += '</tr>\n';
-
-
-    r += '<tr>\n';
-    r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
-    r += '<td>\n';
-    r += '<td>Record #\n';
-    r += '<td><input type="text" id="newrec_n_input" oninput="widGetNewRecordOninput();" size="35" value="" >\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td>Key';
-    r += '<td><input type="text" id="newrec_k_input" oninput="widCheckNewRecordKeys(this.id)" size="35" title="" value="">\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td><input type="checkbox" id="onepass_checkbox" name="" value="" onclick="widRecordsOnePwdChkboxClk(this)" unchecked>\n';
-    r += 'One password\n';
-    r += '<td style="text-align:right"><input type="text" id="newrec_pass0_input" oninput="widGetNewRecordOninput()" title="" value="" disabled>\n';
-    r += '<td>\n';
-    r += '<td>Generator\n';
-    r += '<td><input type="text" id="newrec_g_input" oninput="widCheckNewRecordKeys(this.id)" size="35" title="" value="">\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td><input type="checkbox" id="threepass_checkbox" name="" value="" onclick="widRecordsThreePwdChkboxClk(this)" unchecked>Three passwords';
-    r += '<td style="text-align:right"><input type="text" id="newrec_pass1_input" oninput="widGetNewRecordOninput()" title="" value="" disabled>\n';
-    r += '<td>';
-    r += '<td>Owner\n';
-    r += '<td><input type="text" id="newrec_o_input" oninput="widCheckNewRecordKeys(this.id)" size="35" title="" value="">\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<td style="text-align:right"><input type="text" id="newrec_pass2_input" oninput="widGetNewRecordOninput()" title="" value="" disabled>\n';
-    r += '<td>';
-    r += '<td>Data\n';
-    r += '<td><input type="text" id="newrec_d_input" oninput="" size="35" title="" value="">\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td colspan="4">\n';
-    r += '<td style="text-align:right">\n';
-    r += '<button id="submit_button" onclick="widSubmitBtnClk()">Submit</button>\n';
-    r += '</tr>\n';
-
-	/* get range*/
-    r += '<tr>\n';
-    r += '<td colspan="5"><hr/>\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td colspan="2" rowspan="2"><b>History</b>\n';	
-	r += '<tr>\n';
-	r += '<td>\n';
-	r += '<td style="text-align:left;vertical-align: middle">\n';
-    r += '<select name="tokens_history" id="tokens_history_selectmenu">\n';
-    r += '<option selected="selected">0</option>\n';
-    r += '<option>3</option>\n';    
-	r += '<option>10</option>\n';
-    r += '<option>30</option>\n';
-    r += '</select>\n';
-	r += '<td colspan="1" style="text-align:left;vertical-align: middle">\n';
-	r += '<label for="tokens_history_selectmenu">last records</label>\n';
-	r += '</tr>\n';
-	
-	r += '<tr>\n';
-	//r += '<td colspan="5">\n<div id="tokens_history_div" hidden>\n';
-	r += '<td colspan="5">\n';
-	r += '<textarea id="tokens_history_textarea" type="text" wrap="off" rows="4" style="resize: none;" readonly></textarea>\n';
-	//r += '</div>\n';
-	r += '</tr>\n';
-
-//========================	
-    r += '<tr>\n';
-    r += '<td colspan="5"><hr/>\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td colspan="5">\n';
-    r += '<pre id="records_last_operation_pre">&nbsp</pre>\n';
-    r += '</tr>\n';
-
-    r += '<tr>\n';
-    r += '<td colspan="5"><hr/>\n';
-    r += '</tr>\n';
-
-    r += '</table>\n';
+	r += '</table>\n';
 
     return r;
 }
@@ -321,24 +314,24 @@ function widRecordsTab() {
 function widHashcalcTab() {
     var r = '';
 
-    r += '<table width="100%">\n';
-    r += '<tr>\n';
-    r += '<td style="text-align:left" colspan="4">' + widHashCalcSMenu();
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td style="text-align:left colspan="4">\n';
-    r += '<textarea rows="5" cols="64" type="text" id="hashcalc_textarea" oninput="widHashcalcOninput()"></textarea></b>';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td style="text-align:left colspan="4">';
-    r += '<textarea rows="3" cols="64" type="text" id="hashcalc_input" readonly></textarea>';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td colspan="4" style="text-align:right">\n';
-    r += '<button id="send_to_k_button" onclick="return document.getElementById(\'newrec_k_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to K</button>\n';
-    r += '<button id="send_to_g_button" onclick="return document.getElementById(\'newrec_g_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to G</button>\n';
-    r += '<button id="send_to_o_button" onclick="return document.getElementById(\'newrec_o_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to O</button>\n';
-    r += '</tr>\n';
+    r += '<table width="70%" border="0">\n';
+		r += '<tr>\n';
+			r += '<td style="text-align:left">' + widHashCalcSMenu();
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td>\n';
+				r += '<textarea rows="5" type="text" id="hashcalc_textarea" oninput="widHashcalcOninput()"></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td>';
+				r += '<textarea rows="3" type="text" id="hashcalc_input" readonly></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td style="text-align:right" nowrap>\n';
+				r += '<button id="send_to_k_button" onclick="return document.getElementById(\'newrec_k_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to K</button>\n';
+				r += '<button id="send_to_g_button" onclick="return document.getElementById(\'newrec_g_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to G</button>\n';
+				r += '<button id="send_to_o_button" onclick="return document.getElementById(\'newrec_o_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to O</button>\n';
+		r += '</tr>\n';
     r += '</table>\n';
 
     return r;
@@ -352,6 +345,7 @@ function widHashCalcSMenu() {
     r += '<option value="1">RIPEMD-160</option>\n';
     r += '<option value="2">SHA2-256</option>\n';
     r += '<option value="3">SHA2-512</option>\n';
+	r += '<option value="4">SMD</option>\n';
     r += '<option value="4">WORD</option>\n';
     r += '</select>\n';
 
@@ -361,16 +355,18 @@ function widHashCalcSMenu() {
 function widCommandTab() {
     var r = '';
 
-    r += '<table width="100%" border="0" style="padding:0;border-collapse:collapse;border-spacing:0;">\n';
-    r += '<tr>\n';
-    r += '<td width="5%">\n';
-    r += '<button type="submit" id="cmd_button" onclick="widCommandSendBtnClk()">Send</button>\n';
-    r += '<td width="100%" style="text-align:left"><input type="text" style="width:50%" id="cmd_input" size="32" title="type a command;" value="ping" onkeypress="return widCheckEnterKey(this.value, event);">\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td colspan="2" rowspan="5" style="text-align:left">\n';
-    r += '<textarea rows="5" type="text" id="cmd_output" wrap="off" readonly></textarea>\n';
-    r += '</tr>\n';
+    r += '<table width="70%" border="0">\n';
+		r += '<tr>\n';
+			r += '<td width="5%">\n';
+				r += '<button type="submit" id="cmd_button" onclick="widCommandSendBtnClk()">Send</button>\n';
+			r += '<td width="45%" style="text-align:left">\n';
+				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widCheckEnterKey(this.value, event);"/>\n';
+			r += '<td width="50%">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" colspan="3" rowspan="5" style="text-align:left">\n';
+			r += '<textarea rows="5" type="text" id="cmd_output" wrap="off" readonly></textarea>\n';
+		r += '</tr>\n';
     r += '</table>\n';
 
     return r;

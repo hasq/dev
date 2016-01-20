@@ -109,6 +109,9 @@ function engIsHash(data, hashFunction) {
     case 'wrd':
         var l = 4;
         break;
+    case 'smd':
+        var l = 32;
+        break;		
     default:
         break;
     }
@@ -132,8 +135,8 @@ function engGetHash(data, hashType) {
 		return hex_sha256(data);
 	case 's25':
 		return hex_sha512(data);
-	case 'sm5':
-		return hex_sha2md5(data);		
+	case 'smd':
+		return hex_smd(data);		
 	default:
 		break;
 	}

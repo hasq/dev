@@ -4,7 +4,7 @@ function widBody(tabs){
 	var r = '';
     r += '<table width="100%" border="1" style="border-collapse:collapse;">\n';
     r += '<tr>\n';
-    r += '<td>' + widClientTitle(glClientTitle) + '\n';
+    r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
 	r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
     r += '</tr>\n';	
     r += '<tr>\n';

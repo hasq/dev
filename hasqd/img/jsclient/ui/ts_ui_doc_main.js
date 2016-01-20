@@ -1,8 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 var glClientTitle = 'Tokenswap JavaScript Client';
-var glDataBase = '_MD5DB';
-var glDbHash = 'md5';
+var glDataBase = 'smd.db';
+var glDbHash = 'smd';
 var glTimerId;
 
 var picYlw = '<img src="img/ylw_pnt.gif">';

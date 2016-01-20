@@ -42,13 +42,31 @@
       margin: 0 4px;
     }
 
+    #tabs {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    #tabs ul li {
+        display: inline-block;
+        float: none;
+        vertical-align: bottom;
+    }
+    
     .fakewindowcontain .ui-widget-overlay {
       position: absolute;
     }
 
     input {
       font-family: monospace;
+      width: 99%;
     }
+
+    textarea {
+      font-family: monospace;
+      width: 99%;
+      /*resize: none;*/
+    }    
 
 }
   </style>
