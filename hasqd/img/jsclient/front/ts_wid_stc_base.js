@@ -3,25 +3,25 @@
 function widBody(tabs){
 	var r = '';
     r += '<table width="100%" border="1" nowrap>\n';
-    r += '<tr>\n';
-    r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
-	r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
-    r += '</tr>\n';	
-    r += '<tr>\n';
-    r += '<td colspan="2" nowrap>' + widMainInputsArea() + '\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="100%" colspan="2" nowrap>' + widMainTabs(tabs) + '\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="100%" colspan="2" nowrap><hr/>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="100%" colspan="2" nowrap>' + widLogArea() + '\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="100%" colspan="2" nowrap><hr/>\n';
-    r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
+			r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
+		r += '</tr>\n';	
+		r += '<tr>\n';
+			r += '<td colspan="2" nowrap>' + widMainInputsArea() + '\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" colspan="2" nowrap>' + widMainTabs(tabs) + '\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" colspan="2" nowrap>' + widLogArea() + '\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
+		r += '</tr>\n';
     r += '</table>\n';
 	
     return r;
@@ -30,11 +30,11 @@ function widBody(tabs){
 function widClientTitle(text) {
     var r = '';
     r += '<table border="0">\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<div style="font-size:20px">\n' + text + '</div>\n';
-    r += '</tr>\n';
-    r += '</table>\n';
+		r += '<tr>\n';
+			r += '<td>\n';
+				r += '<div style="font-size:20px">\n' + text + '</div>\n';
+		r += '</tr>\n';
+		r += '</table>\n';
     return r;
 }
 
@@ -44,31 +44,7 @@ function widClientLed(span_id) {
     return r;
 }
 
-function widPing(timeDelay){
-	var timerId = glPingTimerId;
-	if ( timeDelay < 60000 ){
-		timeDelay += 5000;
-	}
-	
-	var cb = function(data){
-		var response = engGetHasqdResponse(data);
-		
-		if (response.message !== 'OK'){
-			clearInterval(timerId);
-		} else {
-			var now = new Date()
-			var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-			console.log(ct);
-			clearInterval(timerId);
-			
-			var ping = function(){widPing(timeDelay)};
-			glPingTimerId = setTimeout(ping, timeDelay);
-		}
-	}
-	
-	ajxSendCommand('ping', cb, hasqdLed)
-}
-	
+
 function widMainInputsArea(){
     var r = '';
 
@@ -95,6 +71,7 @@ function widMainInputsArea(){
 					r += '<tr>';
 						r += '<td width="100%" >';
 							r += '<div id="tokens_data_div">\n';
+							r += '<pre id="tokens_data_pre"></pre>';
 							r += '</div>';
 					r += '</tr>';
 				r += '</table>\n';
@@ -108,8 +85,8 @@ function widMainTabs(items) {
     var r = '';
 
     r += '<div id="tabs">\n';
-
     r += '\t<ul>\n';
+
     for (var i = 0; i < items.length; i++) {
         r += '\t<li><a href="#tabs-' + (i + 1) + '">' + items[i].title + '</a>\n';
 	}

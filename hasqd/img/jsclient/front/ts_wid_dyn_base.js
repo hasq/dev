@@ -23,7 +23,31 @@ function widAnimateProgbar(){
     $('#hasqd_led').html(picGry);
 }
 
+function widPing(timeDelay){
+	var timerId = glPingTimerId;
+	
+	if ( timeDelay < 60000 ){
+		timeDelay += 5000;
+	}
+
+	var cb = function(data){
+		var response = engGetHasqdResponse(data);
+		
+		if (response.message === 'OK'){
+			//var now = new Date()
+			//var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+			//console.log(ct);
+			var ping = function(){widPing(timeDelay)};
+			glPingTimerId = setTimeout(ping, timeDelay);
+			clearInterval(timerId);			
+		}
+	}
+	
+	ajxSendCommand('ping', cb, hasqdLed)
+}
+
 function widStringsGrow(string, l){
+//
 	var r = '';
 	
 	for (var i = 0; i < l; i++){
@@ -33,21 +57,35 @@ function widStringsGrow(string, l){
 	return r;
 }
 
+function widGetTokens(data){
+//It returns hash of raw tokens value
+	if (engIsHash(data, glDbHash)) {
+		var r = data;
+	} else {
+		var r = engGetHash(data, glDbHash)
+	}
+	
+	return r;
+}
+
 function widTokensValueOninput(id){
 	clearTimeout(glTimerId);
-	
-	var objTokensDataDiv = $('#' + 'tokens_data_div');
-	objTokensDataDiv.hide();
-	var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td>
-	var objTokensHashedValueTd = $('#' + nextTdId);
+
 	var objTokensRawValue = $('#' + id);
 	var rt = objTokensRawValue.val();
+	var s = widGetTokens(rt);
+
+	widShowTokensHashedVal(id);
+	widLastDataReq(s);
+}
+
+function widShowTokensHashedVal(id){
+// It shows a hashed value of the token, if the value is not a hashed 
+	var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
+	var objTokensHashedValueTd = $('#' + nextTdId);
+	var objTokensRawValue = $('#' + id);
 	
-	if (engIsHash(rt, glDbHash)) {
-		var ht = rt;
-	} else {
-		var ht = engGetHash(rt, glDbHash)
-	}
+	var rt = objTokensRawValue.val();
 	
 	if (rt == ''){
 		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
@@ -55,28 +93,36 @@ function widTokensValueOninput(id){
 	} else if (engIsHash(rt, glDbHash)) {
 		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
 	} else {
-		objTokensHashedValueTd.html(ht);
-	}
-	
-	var cmd = 'last' + ' ' + glDataBase + ' ' + ht;
+		var s = widGetTokens(rt);
+		objTokensHashedValueTd.html(s);
+	}	
+}
 
+function widLastDataReq(s){
+// It get the request for last data with 1000ms delay .
+// the request will be ignored if token value will be changed during this 1000ms
+	var cmd = 'last' + ' ' + glDataBase + ' ' + s;
+	var objTokensDataDiv = $('#' + 'tokens_data_div');
+	var objTokensDataPre = $('#' + 'tokens_data_pre');
+	objTokensDataDiv.hide();	
+	objTokensDataPre.html();
+	
 	var req = function(){
 		var timerId = glTimerId;
 		
 		var cb = function(data){
-			//console.log('1. glTimerId:' + glTimerId);
-			//console.log('1. timerId:' + timerId);
 			if (timerId === glTimerId){
 				var r = engGetLastRecord(data);
+
 				if (r.message === 'OK'){
 					var tokensData = r.d;
 					if (tokensData.length > 0) {
 						objTokensDataDiv.show();
-						objTokensDataDiv.html(r.d);
+						objTokensDataPre.html(engGetParsedDataValue(r.d));
 					}
 				} else if (r.message === 'IDX_NODN'){
 					objTokensDataDiv.show();
-					objTokensDataDiv.html('No such token');
+					objTokensDataPre.html('No such token');
 				}
 			} else {
 				clearTimeout(timerId);
@@ -85,6 +131,5 @@ function widTokensValueOninput(id){
 		ajxSendCommand(cmd, cb, hasqdLed);
 	}
 	
-	glTimerId = setTimeout(req, 1000);
-	//console.log('0. glTimerId:' + glTimerId);
+	glTimerId = setTimeout(req, 1000);	
 }

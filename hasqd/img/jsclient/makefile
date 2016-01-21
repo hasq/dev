@@ -41,6 +41,7 @@ createclient: index.html
 	cp hqclnt.html slice/home/
 #	tsclnt
 	cp front/ts_*.js slice/home/front/
+	cp eng/ts_*.js slice/home/eng/
 	cp ui/ts_*.js slice/home/ui/
 	cp tsclnt.html slice/home/tsclnt.html
 #	shared
