@@ -142,3 +142,28 @@ function engGetHash(data, hashType) {
 	}
 	return null;
 }
+
+function engGetParsedDataValue(data){
+	var r = data;
+	if (r !== undefined && r.length > 0) {
+		var lf = '\u000a'; //unicode line-feed
+
+		for (var i = 0; i < r.length; i++) {
+			//console.log(r.length);			
+			if (r[i] === '\u005c' && r[i + 1] === '\u005c' && r[i + 2] === '\u006e'){
+				// "\\n" > "\n", "\\\n" > "\\n"
+				r = r.substring(0, i) + r.substr(i + 1, r.length);
+			} else if (r[i] === '\u005c' && r[i + 1] === '\u006e'){
+				// "/n" > LF
+				r = r.substring(0, i) + lf + r.substr(i + 2, r.length);
+			} else if (r[i] === '\u0020' && r[i + 1] === '\u005c' && r[i + 2] === '\u0020'){
+				// "a \ a" > "a, "a \ \ a" > "a   a", "a\ " > "a\ "
+				r = r.substring(0, i + 1) + r.substr(i + 2, r.length);
+			} else if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
+				// "a  a" -> "a \ a" 
+				r = r.substring(0, i + 1) + '\u005c' + r.substr(i + 1, r.length);
+			}
+		}
+	}
+	return r;
+}
