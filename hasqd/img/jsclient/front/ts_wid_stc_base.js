@@ -52,6 +52,7 @@ function widMainInputsArea(){
 		r += '<tr>\n';
 			r += '<td width="1%" style="text-align:left" nowrap>\n'
 				r += '&nbsp;' + 'Token' + '&nbsp;\n';
+			//r += '<td width="1%" style="text-align:right">' + picGry;
 			r += '<td width="40%" style="text-align:left" nowrap>\n';
 				r += '<input type="text" id="tokens_raw_value_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
 			r += '<td id="tokens_hashed_value_td" class="monospace" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
@@ -59,6 +60,7 @@ function widMainInputsArea(){
 		r += '<tr>\n';
 			r += '<td style="text-align:left">\n';
 				r += '&nbsp;' + 'Password' + '&nbsp\n';
+			//r += '<td style="text-align:right">' + picGry;
 			r += '<td style="text-align:left">\n';
 				r += '<input type="password" id="tokens_password_input" class="password" placeholder="Enter tokens password" oninput=""/>\n';
 			r += '<td style="text-align:left">\n';
@@ -134,6 +136,6 @@ function widSetTab(){
 
 function widLogArea(){
     var r = '';
-    r += '<pre id="tokens_log_area_pre">&nbsp</pre>\n';
+    r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
     return r;
 }

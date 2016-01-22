@@ -70,7 +70,8 @@ function widGetTokens(data){
 
 function widTokensValueOninput(id){
 	clearTimeout(glTimerId);
-
+	widShowLog();
+	
 	var objTokensRawValue = $('#' + id);
 	var rt = objTokensRawValue.val();
 	var s = widGetTokens(rt);
@@ -98,14 +99,33 @@ function widShowTokensHashedVal(id){
 	}	
 }
 
+function widShowLog(data){
+	var objLogArea = $('#' + 'tokens_log_pre');
+	if (arguments.length == 0) {
+		objLogArea.html('&nbsp');
+	} else {
+		objLogArea.html(data);
+	}
+}
+
+function widShowData(data){
+	var objTokensDataDiv = $('#' + 'tokens_data_div');
+	var objTokensDataPre = $('#' + 'tokens_data_pre'); 
+
+	
+	if (arguments.length == 0) {
+		objTokensDataDiv.hide();	
+		objTokensDataPre.empty();
+	} else {
+		objTokensDataDiv.show();	
+		objTokensDataPre.html(data);
+	}
+}
+
 function widLastDataReq(s){
 // It get the request for last data with 1000ms delay .
 // the request will be ignored if token value will be changed during this 1000ms
 	var cmd = 'last' + ' ' + glDataBase + ' ' + s;
-	var objTokensDataDiv = $('#' + 'tokens_data_div');
-	var objTokensDataPre = $('#' + 'tokens_data_pre');
-	objTokensDataDiv.hide();	
-	objTokensDataPre.html();
 	
 	var req = function(){
 		var timerId = glTimerId;
@@ -117,12 +137,12 @@ function widLastDataReq(s){
 				if (r.message === 'OK'){
 					var tokensData = r.d;
 					if (tokensData.length > 0) {
-						objTokensDataDiv.show();
-						objTokensDataPre.html(engGetParsedDataValue(r.d));
+						widShowData(engGetParsedDataValue(r.d));
+						widShowLog('Token exists.');
 					}
 				} else if (r.message === 'IDX_NODN'){
-					objTokensDataDiv.show();
-					objTokensDataPre.html('No such token');
+					widShowData();
+					widShowLog('No such token.');
 				}
 			} else {
 				clearTimeout(timerId);

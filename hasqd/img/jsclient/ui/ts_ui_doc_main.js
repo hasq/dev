@@ -13,7 +13,6 @@ var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
 var picGry = '<img src="img/gry_pnt.gif">';
 var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
 
-
 function newImage(arg) {
 	if (document.images) {
 		result = new Image();
