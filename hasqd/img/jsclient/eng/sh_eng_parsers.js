@@ -152,16 +152,30 @@ function engGetParsedDataValue(data){
 			//console.log(r.length);			
 			if (r[i] === '\u005c' && r[i + 1] === '\u005c' && r[i + 2] === '\u006e'){
 				// "\\n" > "\n", "\\\n" > "\\n"
-				r = r.substring(0, i) + r.substr(i + 1, r.length);
+				r = r.substring(0, i) + r.substr(i + 1);
+				i++; // need check;
 			} else if (r[i] === '\u005c' && r[i + 1] === '\u006e'){
 				// "/n" > LF
-				r = r.substring(0, i) + lf + r.substr(i + 2, r.length);
-			} else if (r[i] === '\u0020' && r[i + 1] === '\u005c' && r[i + 2] === '\u0020'){
+				r = r.substring(0, i) + lf + r.substr(i + 2);
+			} else if (r[i] === '\u005c' && r[i - 1] === '\u0020' && r[i + 1] === '\u0020'){
 				// "a \ a" > "a, "a \ \ a" > "a   a", "a\ " > "a\ "
-				r = r.substring(0, i + 1) + r.substr(i + 2, r.length);
-			} else if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
-				// "a  a" -> "a \ a" 
+				r = r.substring(0, i) + r.substr(i + 1);
+			}
+		}
+	}
+	console.log(r.length);
+	return r;
+	
+}
+
+function engSetParsedDataValue(data){
+	var r = data.replace(/^\s+|\s+$/g, '');;
+	if (r !== undefined && r.length > 0) {
+		for (var i = 0; i < r.length; i++) {
+			if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
+				// "a  a" -> "a \ a", "  " -> ""
 				r = r.substring(0, i + 1) + '\u005c' + r.substr(i + 1, r.length);
+				i++;
 			}
 		}
 	}

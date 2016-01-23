@@ -101,7 +101,7 @@ function widShowTokensHashedVal(id){
 
 function widShowLog(data){
 	var objLogArea = $('#' + 'tokens_log_pre');
-	if (arguments.length == 0) {
+	if (arguments.length === 0) {
 		objLogArea.html('&nbsp');
 	} else {
 		objLogArea.html(data);
@@ -111,9 +111,8 @@ function widShowLog(data){
 function widShowData(data){
 	var objTokensDataDiv = $('#' + 'tokens_data_div');
 	var objTokensDataPre = $('#' + 'tokens_data_pre'); 
-
 	
-	if (arguments.length == 0) {
+	if (arguments.length === 0) {
 		objTokensDataDiv.hide();	
 		objTokensDataPre.empty();
 	} else {
@@ -135,10 +134,10 @@ function widLastDataReq(s){
 				var r = engGetLastRecord(data);
 
 				if (r.message === 'OK'){
+					widShowLog('Token exists.');
 					var tokensData = r.d;
 					if (tokensData.length > 0) {
 						widShowData(engGetParsedDataValue(r.d));
-						widShowLog('Token exists.');
 					}
 				} else if (r.message === 'IDX_NODN'){
 					widShowData();
