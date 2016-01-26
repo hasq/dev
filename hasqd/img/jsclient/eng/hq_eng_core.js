@@ -46,18 +46,6 @@ function engGetKey(n, s, p, m, h) {
 	return engGetHash(raw_k, h); ;
 }
 
-function engCheckTokensOwnership(existingRec, expectingRec) {
-	if ((existingRec.g === expectingRec.g) && (existingRec.o === expectingRec.o)) {
-		return 1; // Tokens keys is fully matched with a password
-	} else if (existingRec.g === expectingRec.g) {
-		return 2; // Token is in a sending process
-	} else if (existingRec.o === expectingRec.o) {
-		return 3; // Token is in a receiving process
-	} else {
-		return 0; // Tokens keys is not matched with a password
-	}
-}
-
 function engAddVTLItem(data, idx, table, cmdList) {
 	var n = table.items.length;
 
@@ -125,7 +113,6 @@ function engRunCRL(cmdsList, cbFunc) {
 		}
 
 		var progress = 100 * (cmdsList.idx + 1) / cmdsList.items.length;
-		//var r = engGetHasqdOk(data);
 		var r = engGetHasqdResponse(data).message;
 
 		if (r === 'OK' || r === 'IDX_NODN') {

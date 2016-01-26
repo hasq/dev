@@ -4,6 +4,7 @@ var glClientTitle = 'Tokenswap JavaScript Client';
 var glDataBase = 'smd.db';
 var glDbHash = 'smd';
 var glTimerId, glPingTimerId;
+var glLastRec = {};
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
 var picRed = '<img src="img/red_pnt.gif">';
@@ -21,7 +22,7 @@ function newImage(arg) {
 	}
 }
 
-preloadFlag = false;
+var preloadFlag = false;
 
 function preloadImages() {
 	frame = []; //new Array();
@@ -48,7 +49,7 @@ function docInit(){
 	$('#tabs').tabs();
 	$('#hasqd_led').html(picGry);
 	$('button').button();
-	$('#tokens_data_div').hide();
+	$('#tokens_data_pre').hide();
 	$('#show_hide_input').click(function(){
 		if ($('.password').attr('type') == 'password') {
 			$('.password').attr('type', 'text');

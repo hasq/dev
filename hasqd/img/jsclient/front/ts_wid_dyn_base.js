@@ -57,7 +57,7 @@ function widStringsGrow(string, l){
 	return r;
 }
 
-function widGetTokens(data){
+function widGetHashedValue(data){
 //It returns hash of raw tokens value
 	if (engIsHash(data, glDbHash)) {
 		var r = data;
@@ -68,87 +68,117 @@ function widGetTokens(data){
 	return r;
 }
 
-function widTokensValueOninput(id){
-	clearTimeout(glTimerId);
-	widShowLog();
-	
-	var objTokensRawValue = $('#' + id);
-	var rt = objTokensRawValue.val();
-	var s = widGetTokens(rt);
+function widEnDisPasswordInput(data){
+// It enable/disable passwords field.
+	var obj = $('#' + 'tokens_password_input');
+	if (data.length !== 0) {
+		obj.attr('disabled', false);
+	} else {
+		obj.attr('disabled', true);
+	}
+}
 
-	widShowTokensHashedVal(id);
-	widLastDataReq(s);
+function widShowLog(data){
+	var obj = $('#' + 'tokens_log_pre');
+	if (arguments.length === 0) {
+		obj.html('&nbsp');
+	} else {
+		obj.html(data);
+	}
+}
+
+function widShowData(data){
+	var obj = $('#' + 'tokens_data_pre'); 
+	
+	if (arguments.length === 0) {
+		obj.hide();	
+		obj.empty();
+	} else {
+		obj.show();	
+		obj.html(data);
+	}
 }
 
 function widShowTokensHashedVal(id){
 // It shows a hashed value of the token, if the value is not a hashed 
 	var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
-	var objTokensHashedValueTd = $('#' + nextTdId);
-	var objTokensRawValue = $('#' + id);
-	
-	var rt = objTokensRawValue.val();
+	var objH = $('#' + nextTdId);
+	var objR = $('#' + id);
+	var rt = objR.val();
 	
 	if (rt == ''){
-		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
+		objH.html(widStringsGrow('&nbsp',32));
 		return;
 	} else if (engIsHash(rt, glDbHash)) {
-		objTokensHashedValueTd.html(widStringsGrow('&nbsp',32));
+		objH.html(widStringsGrow('&nbsp',32));
 	} else {
-		var s = widGetTokens(rt);
-		objTokensHashedValueTd.html(s);
+		var s = widGetHashedValue(rt);
+		objH.html(s);
 	}	
 }
 
-function widShowLog(data){
-	var objLogArea = $('#' + 'tokens_log_pre');
-	if (arguments.length === 0) {
-		objLogArea.html('&nbsp');
-	} else {
-		objLogArea.html(data);
-	}
+function widGetTokenState(){
+	widShowTokensExistence();
+	widGet
 }
 
-function widShowData(data){
-	var objTokensDataDiv = $('#' + 'tokens_data_div');
-	var objTokensDataPre = $('#' + 'tokens_data_pre'); 
+function widShowTokensExistence(data){
+	var r = engGetLastRecord(data);
+	if (r.message === 'OK'){
+		widShowLog('Token exists.');
+		var tokensData = r.d;
+		if (tokensData.length > 0) {
+			widShowData(engGetParsedDataValue(r.d));
+		}
+	} else if (r.message === 'IDX_NODN'){
+		widShowData();
+		widShowLog('No such token.');
+	}	
+}
+
+function widTokensValueOninput(id){
+	clearTimeout(glTimerId);
+	widShowLog();
+	widShowData();
 	
-	if (arguments.length === 0) {
-		objTokensDataDiv.hide();	
-		objTokensDataPre.empty();
-	} else {
-		objTokensDataDiv.show();	
-		objTokensDataPre.html(data);
+	var obj = $('#' + id);
+	var rt = obj.val();
+	widEnDisPasswordInput(rt);	
+	widShowTokensHashedVal(id);
+	
+	if (rt.length > 0) {
+		var s = widGetHashedValue(rt);
+		var cmd = 'last' + ' ' + glDataBase + ' ' + s;
+		widSendDeferredRequest(cmd, 1000, widShowTokensExistence);
 	}
 }
-
-function widLastDataReq(s){
-// It get the request for last data with 1000ms delay .
+				
+				
+function widSendDeferredRequest(cmd, t, f){
+// It sends request for last data with 1000ms delay .
 // the request will be ignored if token value will be changed during this 1000ms
-	var cmd = 'last' + ' ' + glDataBase + ' ' + s;
-	
 	var req = function(){
 		var timerId = glTimerId;
 		
 		var cb = function(data){
 			if (timerId === glTimerId){
-				var r = engGetLastRecord(data);
-
-				if (r.message === 'OK'){
-					widShowLog('Token exists.');
-					var tokensData = r.d;
-					if (tokensData.length > 0) {
-						widShowData(engGetParsedDataValue(r.d));
-					}
-				} else if (r.message === 'IDX_NODN'){
-					widShowData();
-					widShowLog('No such token.');
-				}
-			} else {
-				clearTimeout(timerId);
-			}
-		}		
+				f(data);
+			} 
+			clearTimeout(timerId);
+		}	
+		
 		ajxSendCommand(cmd, cb, hasqdLed);
 	}
 	
-	glTimerId = setTimeout(req, 1000);	
+	glTimerId = setTimeout(req, t);	
 }
+
+
+function widTokensPasswordOninput(id){
+	
+	return;
+}
+
+
+
+

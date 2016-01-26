@@ -105,7 +105,6 @@ function doc_init() {
 	$('#tabs').tabs().tabs('option', 'active', 2);
 
 	$('#database_smenu').selectmenu({
-		icons: { button: 'ui-icon-triangle-1-s' },
 		select: function (event, ui) {
 			var db_table = widDatabaseTraitTable(glDataBase[this.selectedIndex]);
 			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
@@ -114,7 +113,7 @@ function doc_init() {
 
 			$('#database_table').html(db_table);
 			$('#current_db').html(current_db);
-			widCleanLastRecordData();
+			widShowLastRecord();
 			widRawDNOninput();
 			if (pwdCheckBoxIsOn) {
 				widGetNewRecordOninput();

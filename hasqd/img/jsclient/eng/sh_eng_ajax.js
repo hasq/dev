@@ -8,8 +8,8 @@ function ajxSendCommand(cmd, callback, progress) {
     $.post('/', 'command=' + cmd, function(data){})
 
     .done(function (data) {
-		//console.log('---done!');
-		//setTimeout(function(){callback(data)}, 2000);
+		//console.log('-done:' + data);
+		//setTimeout(function(){callback(data)}, 3000);
 		callback(data);
 		progress.dec();
     })

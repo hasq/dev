@@ -1,20 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetHasqdOk(data) {
-    var r = data.replace(/\r|\s+$/g, '');
-
-    var blocks = r.split(/\s/); // split by by \s (\s, \n, \t, \v);
-    var lines = r.split(/\n/);  // split by \n;
-
-    if (lines[0] == 'OK') {
-        return lines[0];
-    } else if (blocks[0] == 'OK' || blocks[0] == 'IDX_NODN') {
-        return blocks[0];
-    } else {
-        return r;
-    }
-}
-
 function engGetHasqdResponse(data) {
     var r = {};
     var response = data.replace(/\r|\s+$/g, '');
@@ -143,13 +128,24 @@ function engGetHash(data, hashType) {
 	return null;
 }
 
+function engCheckTokensOwnership(existingRec, expectingRec) {
+	if ((existingRec.g === expectingRec.g) && (existingRec.o === expectingRec.o)) {
+		return 1; // Tokens keys is fully matched with a password
+	} else if (existingRec.g === expectingRec.g) {
+		return 2; // Token is in a sending process
+	} else if (existingRec.o === expectingRec.o) {
+		return 3; // Token is in a receiving process
+	} else {
+		return 0; // Tokens keys is not matched with a password
+	}
+}
+
 function engGetParsedDataValue(data){
 	var r = data;
 	if (r !== undefined && r.length > 0) {
 		var lf = '\u000a'; //unicode line-feed
 
 		for (var i = 0; i < r.length; i++) {
-			//console.log(r.length);			
 			if (r[i] === '\u005c' && r[i + 1] === '\u005c' && r[i + 2] === '\u006e'){
 				// "\\n" > "\n", "\\\n" > "\\n"
 				r = r.substring(0, i) + r.substr(i + 1);
@@ -163,7 +159,6 @@ function engGetParsedDataValue(data){
 			}
 		}
 	}
-	console.log(r.length);
 	return r;
 	
 }

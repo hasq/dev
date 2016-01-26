@@ -33,12 +33,6 @@ function engGetKeysSetCheckResults(data, altName, sKey){
     return r;
 }
 
-
-function engGetSubmit(data) {
-    var r = data.replace(/^\s|\s+$/g, '');
-    return r;
-}
-
 function engGetInfoId(data) {
     var r = engGetHasqdResponse(data);
     return r;

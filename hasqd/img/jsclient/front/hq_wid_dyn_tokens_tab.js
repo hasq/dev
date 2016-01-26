@@ -99,19 +99,22 @@ function widTokensPasswordOninput(data) {
 }
 
 function widDisableTokensInput() {
-    $('#tokens_tabs').tabs('option', 'disabled', true);
-    $('#tokens_tabs').closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
-    $('#tokens_tabs').closest('div[id^="tabs"]').find('textarea:first').prop('disabled', false);
+	var obj = $('#tokens_tabs');
+    obj.tabs('option', 'disabled', true);
+    obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
+    obj.closest('div[id^="tabs"]').find('textarea:first').prop('disabled', false);
 }
 
 function widEnableTokensInput() {
-    $('#tokens_tabs').tabs('enable');
-    $('#tokens_tabs').closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
+	var obj = $('#tokens_tabs');
+    obj.tabs('enable');
+    obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
 
 function widDisableAllTokensOperations(id) {
-    $('#tokens_tabs').tabs('option', 'disabled', true);
-    $('#tokens_tabs').closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
+	var obj = $('#tokens_tabs');	
+    obj.tabs('option', 'disabled', true);
+    obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
     //var idC = widGetClosestContinueButtonId(id);
     //var idB = widGetClosestMainButtonId(id);
     $('#' + widGetClosestContinueButtonId(id)).prop('disabled', false);
@@ -119,8 +122,9 @@ function widDisableAllTokensOperations(id) {
 }
 
 function widEnableAllTokensOperations() {
-    $('#tokens_tabs').tabs('enable');
-    $('#tokens_tabs').closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
+	var obj = $('#tokens_tabs');	
+    obj.tabs('enable');
+    obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
 
 function widGetTokensNamesCheckResults() {
@@ -187,24 +191,24 @@ function widTokensNamesOninput(data) {
     var inp = 'tokens_names_textarea';
     widCleanVTL();
     widCleanAllTabs();
-    widPrintBorderColor(inp, '');
+    widShowBorderColor(inp, '');
 
     var namesArray = data;
 
 
     if (!engIsTokensNamesGood(data, glCurrentDB.hash)) {
         widDisableTokensInput();
-        widPrintBorderColor(inp, '#FF0000'); //RED BORDER
+        widShowBorderColor(inp, '#FF0000'); //RED BORDER
         widPrintTokensLastOperation('REQ_TOKENS_BAD_NAME');
     } else if (namesArray.length >= 15479) {
         widEnableTokensInput();
-        widPrintBorderColor(inp, '#FFFF00'); //YELLOW BORDER
+        widShowBorderColor(inp, '#FFFF00'); //YELLOW BORDER
         var l = 16511 - namesArray.length;
         $('#' + inp).prop('title', 'WARNING! ' + l + ' CHARS LEFT.');
         widPrintTokensLastOperation('.');
     } else {
         widEnableTokensInput();
-        widPrintBorderColor(inp, '');
+        widShowBorderColor(inp, '');
         widPrintTokensLastOperation('.');
     }
 }
@@ -266,10 +270,11 @@ function widTokensAdd(id, data) {
 }
 
 function widSwitchShowHide(id) {
-    if ($('#' + id).css('display') === 'none') {
-        $('#' + id).show();
+	var obj = $('#' + id);
+    if (obj.css('display') === 'none') {
+        obj.show();
     } else {
-        $('#' + id).hide();
+        obj.hide();
     }
 }
 
@@ -422,22 +427,23 @@ function widGetClosestTextareaId(id) {
 }
 
 function widSwitchButtonsMode(id) {
+	var obj = $('#' + id);
     var dataset = document.getElementById(id).dataset.title;
-    var label = $('#' + id).button('option', 'label');
+    var label = obj.button('option', 'label');
     if (label === dataset && dataset === 'Continue') {
         var idM = widGetClosestWarningMessageId(id);
         widSwitchShowHide(id);
         widSwitchShowHide(idM);
-        $('#' + id).button('option', 'label', 'Hidden');
+        obj.button('option', 'label', 'Hidden');
     } else if (label !== dataset && dataset === 'Continue') {
-        $('#' + id).button('option', 'label', dataset );
+        obj.button('option', 'label', dataset );
         var idM = widGetClosestWarningMessageId(id);
         widSwitchShowHide(id);
         widSwitchShowHide(idM);
     } else if (label === dataset) {
-        $('#' + id).button('option', 'label', 'Cancel');
+        obj.button('option', 'label', 'Cancel');
     } else {
-        $('#' + id).button('option', 'label', dataset);
+        obj.button('option', 'label', dataset);
         var idC = widGetClosestContinueButtonId(id);
         var idM = widGetClosestWarningMessageId(id);
         if (widGetWarningsMode(idC)) {
@@ -578,14 +584,14 @@ function widGetVerifyRowLed(data) {
 }
 
 function widPrintVerifyMainLed(data) {
-    var led = 'tokens_verify_led_div';
+    var obj = $('#tokens_verify_led_div');
 
-    if (data && $('#' + led).outerHTML != picRed) {
-        $('#' + led).html(picRed);
-        $('#' + led).prop('title', 'TOKENS MISMATCH DETECTED');
-    } else if ($('#' + led).outerHTML != picGrn) {
-        $('#' + led).html(picGrn);
-        $('#' + led).prop('title', 'OK');
+    if (data && obj.outerHTML != picRed) {
+        obj.html(picRed);
+        obj.prop('title', 'TOKENS MISMATCH DETECTED');
+    } else if (obj.outerHTML != picGrn) {
+        obj.html(picGrn);
+        obj.prop('title', 'OK');
     }
 }
 
@@ -750,12 +756,13 @@ function widPrintSendReceiveOut(id, data){
 }
 
 function widPrintSendReceiveLed(id, data) {
+	var obj = $('#' + id);
     if (data) {
-        $('#' + id).html(picGrn);
-        $('#' + id).prop('title', 'OK');
+        obj.html(picGrn);
+        obj.prop('title', 'OK');
     } else {
-        $('#' + id).html(picRed);
-        $('#' + id).prop('title', 'MISMATCHED TOKENS DETECTED');
+        obj.html(picRed);
+        obj.prop('title', 'MISMATCHED TOKENS DETECTED');
     }
 }
 
@@ -826,11 +833,12 @@ function widSS1ShowK1K2Keys(id, data) {
 }
 
 function widPrintUpdatedTokensNames(arr, id) {
+	var obj = $('#' + id);
     for (var i = 0; i < arr.length; i++) {
         if (i == 0) {
-            $('#' + id).val(arr[i]);
+            obj.val(arr[i]);
         } else {
-            $('#' + id).val($('#' + id).val() + ' ' + arr[i]);
+            obj.val(obj.val() + ' ' + arr[i]);
         }
     }
 }
@@ -879,14 +887,14 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
 function widRS1ObtainK1K2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_rs1_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+		var objL = $('#tokens_rs1_led_div');
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widPrintTokensProgressbar(progress);
@@ -979,14 +987,14 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
 function widSS2ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_ss2_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+		var objL = $('#tokens_ss2_led_div');
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widPrintTokensProgressbar(progress);
@@ -1287,14 +1295,14 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
 function widRS3ObtainK1G1Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_rs3_s1_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+		var objL = $('#tokens_rs3_s1_led_div');
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
         widPrintTokensProgressbar(progress);
 
@@ -1370,14 +1378,14 @@ function widRS3ObtainK2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_rs3_s2_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+		var objL = $('#tokens_rs3_s2_led_div');
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widPrintTokensProgressbar(progress);
@@ -1455,14 +1463,14 @@ function widSS4ObtainO1Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_ss4_s1_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        var objL = $('#tokens_ss4_s1_led_div' + idLed);
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widPrintTokensProgressbar(progress);
@@ -1536,14 +1544,14 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
 function widSS4ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetHasqdResponse(cbData);
-        var idLed = 'tokens_ss4_s2_led_div';
-
-        if (cbResponse.message != 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picGrn);
-            $('#' + idLed).prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && $('#' + idLed).html() != picRed) {
-            $('#' + idLed).html(picRed);
-            $('#' + idLed).prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+		var objL = $('#tokens_ss4_s2_led_div');
+		
+        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
+            objL.html(picGrn);
+            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
+            objL.html(picRed);
+            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
         widPrintTokensProgressbar(progress);
 

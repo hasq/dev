@@ -6,7 +6,7 @@ function HasqdLed(){
 
 HasqdLed.prototype.fail = function(){
     $('#hasqd_led').html(picRed);
-    widPrintRecordsLastOperation('Connection failed!');
+    widShowRecordsLastOperation('Connection failed!');
 };
 
 HasqdLed.prototype.inc = function(){
@@ -23,34 +23,50 @@ function widAnimateProgbar(){
     $('#hasqd_led').html(picGry);
 }
 
-function widPrintBorderColor(id, color) {
+function widShowBorderColor(id, color) {
     $('#' + id).css('borderLeftColor', color);
     $('#' + id).css('borderTopColor', color);
     $('#' + id).css('borderRightColor', color);
     $('#' + id).css('borderBottomColor', color);
 }
 
-function widCleanLastRecordData() {
-    $('#lastrec_n_input').val('');
-    $('#lastrec_k_input').val('');
-    $('#lastrec_g_input').val('');
-    $('#lastrec_o_input').val('');
-    $('#lastrec_d_input').val('');
+function widShowLastRecord(data) {
+	if (arguments.length === 0)	{
+		$('#lastrec_n_input').val('');
+		$('#lastrec_k_input').val('');
+		$('#lastrec_g_input').val('');
+		$('#lastrec_o_input').val('');
+		$('#lastrec_d_input').val('');
+	} else {
+        $('#lastrec_n_input').val(data.n);
+        $('#lastrec_k_input').val(data.k);
+        $('#lastrec_g_input').val(data.g);
+        $('#lastrec_o_input').val(data.o);
+        $('#lastrec_d_input').val(data.d);
+	}
+}
+
+function widShowNewRecord(data) {
+	if (arguments.length === 0)	{	
+		$('#newrec_n_input').val('');
+		$('#newrec_k_input').val('');
+		$('#newrec_g_input').val('');
+		$('#newrec_o_input').val('');
+		$('#newrec_d_input').val('');
+		widShowBorderColor('newrec_k_input', '');
+		widShowBorderColor('newrec_g_input', '');
+		widShowBorderColor('newrec_o_input', '');
+	} else {
+		$('#newrec_n_input').val(data.n);
+		$('#newrec_k_input').val(data.k);
+		$('#newrec_g_input').val(data.g);
+		$('#newrec_o_input').val(data.o);
+	}
 }
 
 function widCleanHistoryData() {
 	$('#tokens_history_selectmenu').get(0).selectedIndex = 0;
 	$('#tokens_history_selectmenu').selectmenu('refresh');
-}
-
-function widCleanNewRecordData() {
-    $('#newrec_n_input').val('');
-    $('#newrec_k_input').val('');
-    $('#newrec_g_input').val('');
-    $('#newrec_o_input').val('');
-    widPrintBorderColor('newrec_k_input', '');
-    widPrintBorderColor('newrec_g_input', '');
-    widPrintBorderColor('newrec_o_input', '');
 }
 
 function widCleanPasswordData() {
@@ -60,65 +76,74 @@ function widCleanPasswordData() {
 }
 
 function widServerRefreshBtnClk() {
-    var cb1 = function (data) {
+	var cb1 = function (data) {
         var r = engGetInfoId(data);
+		var obj1 = $('#server_id');
+		
         if (r.message == 'ERROR') {
-            $('#server_id').html('<pre>' + r.message + '\n' + r.content + '</pre>');
+            obj1.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         } else {
-            $('#server_id').html('<pre>' + r.content + '</pre>');
+            obj1.html('<pre>' + r.content + '</pre>');
         }
     }
+	
     ajxSendCommand('info id', cb1, hasqdLed);
-
+	
     var cb2 = function (data) {
-        var r = engGetInfoSys(data);
+		var r = engGetInfoSys(data);
+		var obj2 = $('#server_sys');
+		
         if (r.message == 'ERROR') {
-            $('#server_sys').html('<pre>' + r.message + '\n' + r.content + '</pre>');
+            obj2.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         } else {
-            $('#server_sys').html('<pre>' + r.content + '</pre>');
+            obj2.html('<pre>' + r.content + '</pre>');
         }
     }
+	
     ajxSendCommand('info sys', cb2, hasqdLed);
-
+	
     var cb3 = function (data) {
+		var obj3 = $('#server_fam');
         var r = engGetInfoFam(data);
 
         if (r.message == 'OK') {
             table = widServerFamilyTable(r);
-            $('#server_fam').html('<pre>' + table + '</pre>');
+            obj3.html('<pre>' + table + '</pre>');
         } else {
-            $('#server_fam').html('<pre>' + r.message + '\n' + r.content + '</pre>');
+            obj3.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         }
     }
+	
     ajxSendCommand('info fam', cb3, hasqdLed);
 
     var cb4 = function (data) {
         glDataBase = engGetInfoDb(data);
         if (glDataBase.length < 1) {
-            return "No database"
+            return 'No database';
         }
 
-        var dbs_smenu = document.getElementById('database_smenu');
+        var obj4 =  $('#database_smenu');//document.getElementById('database_smenu');
         for (var i = 0; i < glDataBase.length; i++) {
             switch (i) {
             case 0:
-                dbs_smenu.options[i] = new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true);
-                var db_table = widDatabaseTraitTable(glDataBase[i]);
-                var current_db = glDataBase[dbs_smenu.selectedIndex].name + '(' + glDataBase[dbs_smenu.selectedIndex].hash + ')';
-
-                glCurrentDB = glDataBase[dbs_smenu.selectedIndex];
-                glHashCalcHash = glCurrentDB.hash; //
-                $('#database_table').html(db_table);
+				obj4.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');;
+				var db_table = widDatabaseTraitTable(glDataBase[i]);
+				$('#database_table').html(db_table);
+				
+				var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
                 $('#current_db').html(current_db);
-                widGetNewRecordOninput();
+				
+				glCurrentDB = glDataBase[0];
+                glHashCalcHash = glCurrentDB.hash; //
+				widGetNewRecordOninput();  
                 break;
             default:
-                dbs_smenu.options[i] = new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name);
+				obj4.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');;
                 break;
             }
         }
-        $('#database_smenu').selectmenu('refresh');
     }
+	
     ajxSendCommand('info db', cb4, hasqdLed);
 }
 
@@ -131,64 +156,77 @@ function widCommandSendBtnClk() {
 }
 
 function widRawDNOninput() {
-    widCleanNewRecordData();
+	var objH = $('#tokens_history_selectmenu');
+	var objS = $('#dn_input');
+	var objRDn = $('#rdn_input');
+	
+    widShowNewRecord();
 	widCleanHistoryData();
-    widCleanLastRecordData();
+    widShowLastRecord();
 
-    $('#dn_input').val('');
-    widCleanLastRecordData();
+    objS.val('');
+    widShowLastRecord();
 
-    if ($('#rdn_input').val() == '') {
-		$('#tokens_history_selectmenu').selectmenu('disable');
-        widPrintBorderColor('dn_input', '');
-        widPrintBorderColor('submit_button', '');
-        widPrintRecordsLastOperation('&nbsp');
+    if (objRDn.val() == '') {
+		objH.selectmenu('disable');
+        widShowBorderColor('dn_input', '');
+        widShowBorderColor('submit_button', '');
+        widShowRecordsLastOperation();
     } else {
-        widPrintBorderColor('dn_input', '');
-		$('#tokens_history_selectmenu').selectmenu('enable');
-        widPrintBorderColor('submit_button', '');
-        $('#dn_input').val(engGetHash($('#rdn_input').val(), glCurrentDB.hash));
+        widShowBorderColor('dn_input', '');
+		objH.selectmenu('enable');
+        widShowBorderColor('submit_button', '');
+        objS.val(engGetHash(objRDn.val(), glCurrentDB.hash));
         widGetNewRecordOninput();
-        widPrintRecordsLastOperation('OK');
+        widShowRecordsLastOperation('OK');
     }
 }
 
 function widDNOninput() {
-    widCleanNewRecordData();
-    widCleanLastRecordData();
+    widShowNewRecord();
+    widShowLastRecord();
 	widCleanHistoryData();
+	var obj = $('#dn_input');
+    obj.val(engSetHex(obj.val()));
 	
-    $('#dn_input').val(engSetHex($('#dn_input').val()));
-
     $('#rdn_input').val('');
-
-    if (engIsHash($('#dn_input').val(), glCurrentDB.hash)) {
-        widPrintBorderColor('dn_input', '');
-        widPrintBorderColor('submit_button', '');
-        widPrintRecordsLastOperation('OK');
-        widGetNewRecordOninput();
+	var s = obj.val();
+	if (s.length === 0) {
+		widShowBorderColor('dn_input', '');
+        widShowBorderColor('submit_button', '');		
+		widShowRecordsLastOperation();
+	} else if (engIsHash(obj.val(), glCurrentDB.hash)) {
+        widShowBorderColor('dn_input', '');
+        widShowBorderColor('submit_button', '');
+        widShowRecordsLastOperation('OK');
+        //widGetNewRecordOninput();
     } else {
-        widPrintBorderColor('dn_input', 'red');
-        widPrintBorderColor('submit_button', 'red');
-        widPrintRecordsLastOperation('BAD_HASH');
+        widShowBorderColor('dn_input', 'red');
+        widShowBorderColor('submit_button', 'red');
+        widShowRecordsLastOperation('BAD_HASH');
     }
 }
 
-function widPrintRecordsLastOperation(data) {
-    $('#records_last_operation_pre').html(data);
+function widShowRecordsLastOperation(data) {
+	var obj = $('#' + 'records_last_operation_pre');
+	if (arguments.length === 0) {
+		obj.html('&nbsp');
+	} else {
+		obj.html(data);
+	}	
 }
 
 function widCheckNewRecordKeys(id) {
     $('#' + id).val(engSetHex($('#' + id).val()));
 
     if (engIsHash($('#' + id).val(), glCurrentDB.hash) || $('#' + id).val() == '') {
-        widPrintBorderColor(id, '');
-        widPrintBorderColor('submit_button', '');
-        widPrintRecordsLastOperation('&nbsp');
+        widShowBorderColor(id, '');
+        widShowBorderColor('submit_button', '');
+        widShowRecordsLastOperation();
     } else {
-        widPrintBorderColor(id, 'red');
-        widPrintBorderColor('submit_button', 'red');
-        widPrintRecordsLastOperation('BAD_HASH');
+        widShowBorderColor(id, 'red');
+        widShowBorderColor('submit_button', 'red');
+        widShowRecordsLastOperation('BAD_HASH');
     }
     widCheckNewRecord();
 }
@@ -201,79 +239,82 @@ function widRecordsGetLastRecordBtnClk() {
         var r = engGetLastRecord(data);
 
         if (r.message == 'OK') {
-            $('#lastrec_n_input').val(r.n);
-            $('#lastrec_k_input').val(r.k);
-            $('#lastrec_g_input').val(r.g);
-            $('#lastrec_o_input').val(r.o);
-            $('#lastrec_d_input').val(r.d);
+			widShowLastRecord(r);
             widGetNewRecordAuto();
         } else {
-            widCleanLastRecordData();
+            widShowLastRecord();
         }
-        widPrintRecordsLastOperation(r.content);
+        widShowRecordsLastOperation(r.content);
     }
 
     ajxSendCommand(getlast, cb, hasqdLed);
 }
 
 function widGetNewRecordAuto() {
-    var lastrec_n_input = $('#lastrec_n_input').val();
-    var newrec_n_input = $('#newrec_n_input').val();
+    var lr_n = $('#lastrec_n_input').val();
     var s = $('#dn_input').val();
     var p0 = $('#newrec_pass0_input').val();
-
-    if ($('#onepass_checkbox').prop('checked') == 'enabled') {
+	var objOP = $('#onepass_checkbox');
+	var objTP = $('#threepass_checkbox')
+	var objP1 = $('#newrec_pass1_input');
+	var objP2 = $('#newrec_pass2_input');
+	
+    if (objOP.prop('checked') == 'enabled') {
         var p1 = null;
         var p2 = null;
-    } else if ($('#threepass_checkbox').prop('checked')) {
-        var p1 = $('#newrec_pass1_input').val();
-        var p2 = $('#newrec_pass2_input').val();
+    } else if (objTP.prop('checked')) {
+        var p1 = objP1.val();
+        var p2 = objP2.val();
     }
 
-    widCleanNewRecordData();
+    widShowNewRecord();
 
-    if (lastrec_n_input != '') {
-        var n = +lastrec_n_input + 1;
-        widSetNewRecord(engGetNewRecord(n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+    if (lr_n != '') {
+        var nr_n = +lr_n + 1;
+		widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
     }
 
     widCheckNewRecord();
 }
 
 function widGetNewRecordOninput() {
-    if ($('#newrec_n_input').val() == '' && $('#newrec_k_input').val() == '' && $('#newrec_g_input').val() == '' && $('#newrec_o_input').val() == '') {
+	var objNRN = $('#newrec_n_input');
+	var objNRK = $('#newrec_k_input');
+	var objNRG = $('#newrec_g_input');
+	var objNRO = $('#newrec_o_input');
+	var objOPC = $('#onepass_checkbox');
+	var objTPC = $('#threepass_checkbox');
+	var objP0 = $('#newrec_pass0_input');
+	var objP1 = $('#newrec_pass1_input');
+	var objP2 = $('#newrec_pass2_input');
+	
+    var s = $('#dn_input').val();	
+	
+    if (objNRN.val() == '' && objNRK.val() == '' && objNRG.val() == '' && objNRO.val() == '') {
         return;
     }
 
-    $('#newrec_n_input').val(engSetNumber($('#newrec_n_input').val()));
+    objNRN.val(engSetNumber(objNRN.val()));
 
-    var newrec_n_input = $('#newrec_n_input').val();
-    var s = $('#dn_input').val();
-    var p0 = $('#newrec_pass0_input').val();
+    var nr_n = +objNRN.val();
 
-    if ($('#onepass_checkbox').prop('checked')) {
+    var p0 = objP0.val();
+
+    if (objOPC.prop('checked')) {
         var p1 = null;
         var p2 = null;
-    } else if ($('#threepass_checkbox').prop('checked')) {
-        var p1 = $('#newrec_pass1_input').val();
-        var p2 = $('#newrec_pass2_input').val();
+    } else if (objTPC.prop('checked')) {
+        var p1 = objP1.val();
+        var p2 = objP2.val();
     }
 
-    var pwdCheckBoxIsOn = $('#onepass_checkbox').prop('checked') + $('#threepass_checkbox').prop('checked');
+    var pwdCheckBoxIsOn = objOPC.prop('checked') + objTPC.prop('checked');
 
     if ((s != '') && pwdCheckBoxIsOn == 1) {
-        var n = +newrec_n_input;
-        widSetNewRecord(engGetNewRecord(n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
-        widPrintRecordsLastOperation('&nbsp');
+        widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowRecordsLastOperation();
     }
     widCheckNewRecord();
-}
-
-function widSetNewRecord(data) {
-    $('#newrec_n_input').val(data.n);
-    $('#newrec_k_input').val(data.k);
-    $('#newrec_g_input').val(data.g);
-    $('#newrec_o_input').val(data.o);
 }
 
 function widRecordsOnePwdChkboxClk(obj) {
@@ -297,7 +338,6 @@ function widRecordsThreePwdChkboxClk(obj) {
         $('#newrec_pass2_input').prop('disabled', false);
         widGetNewRecordOninput();
     } else {
-        //document.getElementById('onepass_checkbox').checked = true;
         $('#newrec_pass0_input').prop('disabled', true);
         $('#newrec_pass1_input').prop('disabled', true);
         $('#newrec_pass2_input').prop('disabled', true);
@@ -325,17 +365,17 @@ function widCheckNewRecord() {
 
     if (nr_n == '') //new record number is required
     {
-        widPrintBorderColor('submit_button', '');
-        widPrintRecordsLastOperation('&nbsp');
+        widShowBorderColor('submit_button', '');
+        widShowRecordsLastOperation();
     } else if (lr_n == '') {
-        widPrintBorderColor('submit_button', '');
-        widPrintRecordsLastOperation('UNTESTABLE_REC');
+        widShowBorderColor('submit_button', '');
+        widShowRecordsLastOperation('UNTESTABLE_REC');
     } else if ((g0 == lr_g) && (o0 == lr_o)) {
-        widPrintBorderColor('submit_button', 'green');
-        widPrintRecordsLastOperation('COMPATIBLE_REC');
+        widShowBorderColor('submit_button', 'green');
+        widShowRecordsLastOperation('COMPATIBLE_REC');
     } else {
-        widPrintBorderColor('submit_button', 'red');
-        widPrintRecordsLastOperation('UNCOMPATIBLE_REC');
+        widShowBorderColor('submit_button', 'red');
+        widShowRecordsLastOperation('UNCOMPATIBLE_REC');
     }
 }
 
@@ -365,17 +405,20 @@ function widTokensHistorySMenu(range) {
 }
 
 function widHashcalcOninput() {
-    if ($('#hashcalc_textarea').val().length > 0) {
-        $('#hashcalc_input').val(engGetHash($('#hashcalc_textarea').val(), glHashCalcHash));
+	var objT = $('#hashcalc_textarea');
+	var objI = $('#hashcalc_input');
+	
+    if (objT.val().length > 0) {
+        objI.val(engGetHash(objT.val(), glHashCalcHash));
     } else {
-        $('#hashcalc_input').val('');
+        objI.val('');
     }
 }
 
 function widSubmitBtnClk() {
     var cb = function (data) { 
-        var r = engGetSubmit(data);
-        widPrintRecordsLastOperation(r);
+		var r = engGetHasqdResponse(data)
+        widShowRecordsLastOperation(r.message);
 		var i = $('#tokens_history_selectmenu').get(0).selectedIndex;
 		var d = +$('#tokens_history_selectmenu').get(0).options[i].text;
 		widTokensHistorySMenu(d);
