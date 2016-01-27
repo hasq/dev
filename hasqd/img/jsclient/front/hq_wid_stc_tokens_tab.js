@@ -30,7 +30,7 @@ function widTokensTab() {
     item.data = widTokensReceiveTab();
     tabs[tabs.length] = item;
 
-    r += '<table width="70%" border="0" style="border-collapse:collapse;">\n';
+    r += '<table width="70%" border="0">\n';
     r += '<tr>\n';
     r += '<td width="100%">' + widTokensNamesAddArea() + '\n';
     r += '</tr>\n';
