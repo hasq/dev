@@ -1,10 +1,12 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 var glClientTitle = 'Tokenswap JavaScript Client';
-var glDataBase = 'smd.db';
-var glDbHash = 'smd';
-var glTimerId, glPingTimerId;
+var glRequiredDbHash = 'smd';
+
+var glDataBase = {}; //'smd.db';
 var glLastRec = {};
+var glTimerId, glPingTimerId;
+
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
 var picRed = '<img src="img/red_pnt.gif">';
@@ -61,6 +63,7 @@ function docInit(){
 	var ping = function(){ widPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);
+	widGetDatabase(glRequiredDbHash);
 }
 
 function docMain(){

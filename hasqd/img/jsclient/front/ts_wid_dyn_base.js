@@ -57,12 +57,12 @@ function widStringsGrow(string, l){
 	return r;
 }
 
-function widGetHashedValue(data){
+function widGetHashedValue(d, h){
 //It returns hash of raw tokens value
-	if (engIsHash(data, glDbHash)) {
-		var r = data;
+	if (engIsHash(d, h)) {
+		var r = d;
 	} else {
-		var r = engGetHash(data, glDbHash)
+		var r = engGetHash(d, h)
 	}
 	
 	return r;
@@ -101,29 +101,58 @@ function widShowData(data){
 
 function widShowTokensHashedVal(id){
 // It shows a hashed value of the token, if the value is not a hashed 
-	var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
-	var objH = $('#' + nextTdId);
+	//var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
+	//var objH = $('#' + nextTdId);
+	var objH = $('#tokens_hashed_value_td');
+	
 	var objR = $('#' + id);
 	var rt = objR.val();
 	
 	if (rt == ''){
 		objH.html(widStringsGrow('&nbsp',32));
 		return;
-	} else if (engIsHash(rt, glDbHash)) {
+	} else if (engIsHash(rt, glDataBase.hash)) {
 		objH.html(widStringsGrow('&nbsp',32));
 	} else {
-		var s = widGetHashedValue(rt);
+		var s = widGetHashedValue(rt, glDataBase.hash);
 		objH.html(s);
 	}	
 }
 
-function widGetTokenState(){
-	widShowTokensExistence();
-	widGet
+function widGetDatabase(dbHash){
+	
+    var cb = function (data) {
+        var db = engGetInfoDb(data);
+        
+		if (db.length < 1) {
+            return 'No database!';
+        }
+		
+		for (var i = 0; i < db.length; i++) {
+			if (db[i].hash === dbHash) {
+				glDataBase = db[i];
+				break;
+			}
+		}
+
+		if (glDataBase.name === undefined) {
+			widShowLog('No database!');
+		}		
+     }
+
+    ajxSendCommand('info db', cb, hasqdLed);	
+}
+
+function widShowTokensState(data){
+	widShowTokensExistence(data);
+	var lr = engGetLastRecord(data);
+	var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+	var p = widGetTokensState();
 }
 
 function widShowTokensExistence(data){
 	var r = engGetLastRecord(data);
+	
 	if (r.message === 'OK'){
 		widShowLog('Token exists.');
 		var tokensData = r.d;
@@ -143,12 +172,13 @@ function widTokensValueOninput(id){
 	
 	var obj = $('#' + id);
 	var rt = obj.val();
+	
 	widEnDisPasswordInput(rt);	
 	widShowTokensHashedVal(id);
 	
 	if (rt.length > 0) {
-		var s = widGetHashedValue(rt);
-		var cmd = 'last' + ' ' + glDataBase + ' ' + s;
+		var s = widGetHashedValue(rt, glDataBase.hash);
+		var cmd = 'last' + ' ' + glDataBase.name + ' ' + s;
 		widSendDeferredRequest(cmd, 1000, widShowTokensExistence);
 	}
 }

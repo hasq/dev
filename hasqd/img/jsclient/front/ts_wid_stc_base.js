@@ -2,7 +2,7 @@
 
 function widBody(tabs){
 	var r = '';
-    r += '<table width="100%" border="1" nowrap>\n';
+    r += '<table width="100%" border="0" nowrap>\n';
 		r += '<tr>\n';
 			r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
 			r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
@@ -51,24 +51,32 @@ function widMainInputsArea(){
     r += '<table width="100%" border="0">\n';
 		r += '<tr>\n';
 			r += '<td width="1%" style="text-align:left" nowrap>\n'
-				r += '&nbsp;' + 'Token' + '&nbsp;\n';
-			//r += '<td width="1%" style="text-align:right">' + picGry;
+				r += 'Token' + '&nbsp;\n';
 			r += '<td width="40%" style="text-align:left" nowrap>\n';
 				r += '<input type="text" id="tokens_raw_value_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
+			r += '<td width="1%" id="tokens_pic_td" style="text-align:right">' + '&nbsp;\n'; //picGry;
 			r += '<td id="tokens_hashed_value_td" class="monospace" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:left">\n';
-				r += '&nbsp;' + 'Password' + '&nbsp\n';
-			//r += '<td style="text-align:right">' + picGry;
+				r += 'Password' + '&nbsp\n';
 			r += '<td style="text-align:left">\n';
 				r += '<input type="password" id="tokens_password_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter tokens password" oninput="" disabled/>\n';
+			r += '<td id="password_pic_td" style="text-align:right">' + '&nbsp;\n'; //picGry;
 			r += '<td style="text-align:left">\n';
+				//r += '<input type="checkbox" id="show_hide_input"/>\n';
+				//r += '<label for="show_hide_input" id="show_hide_label">Show password</label>\n';
+		r += '<tr>\n';
+			r += '<td>';
+			r += '<td style="text-align:right">\n';
 				r += '<input type="checkbox" id="show_hide_input"/>\n';
 				r += '<label for="show_hide_input" id="show_hide_label">Show password</label>\n';
+			r += '<td>';
+			r += '<td>';
+		r += '</tr>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="3" style="text-align:left;">\n';
+			r += '<td colspan="4" style="text-align:left;">\n';
 				r += '<table width="100%">\n';
 					r += '<tr>\n';
 						r += '<td>\n';

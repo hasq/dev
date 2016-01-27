@@ -71,7 +71,7 @@ function engAddVTLItem(data, idx, table, cmdList) {
 		table.items[n].n = existingRec.n;
 		table.items[n].d = existingRec.d;
 
-		switch (engCheckTokensOwnership(existingRec, expectingRec)) {
+		switch (engGetTokensState(existingRec, expectingRec)) {
 		case 1:
 			table.items[n].message = 'OK';
 			table.known = true;
