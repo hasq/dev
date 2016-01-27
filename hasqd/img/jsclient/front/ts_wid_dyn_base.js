@@ -6,7 +6,7 @@ function HasqdLed(){
 
 HasqdLed.prototype.fail = function(){
     $('#hasqd_led').html(picRed);
-    alert('Connection failed!');
+    widShowLog('Server connection failure!');
 };
 
 HasqdLed.prototype.inc = function(){
@@ -24,6 +24,7 @@ function widAnimateProgbar(){
 }
 
 function widPing(timeDelay){
+// Ping server every 5s,10s,15s,...,60s,...,60s,...
 	var timerId = glPingTimerId;
 	
 	if ( timeDelay < 60000 ){
@@ -46,12 +47,36 @@ function widPing(timeDelay){
 	ajxSendCommand('ping', cb, hasqdLed)
 }
 
-function widStringsGrow(string, l){
-//
+function widSetDefaultDb(dbHash){
+// Searching for database and save it in variable.
+    var cb = function (d) {
+        var db = engGetInfoDb(d);
+        
+		if (db.length < 1) {
+            widShowLog('Database is not availible!');
+        }
+		
+		for (var i = 0; i < db.length; i++) {
+			if (db[i].hash === dbHash) {
+				glCurrentDB = db[i];
+				break;
+			}
+		}
+		
+		if (glCurrentDB.name === undefined) {
+			widShowLog('Database is not availible!');
+		}		
+     }
+
+    ajxSendCommand('info db', cb, hasqdLed);	
+}
+
+function widStringsGrow(s, l){
+// workaround for html...
 	var r = '';
 	
 	for (var i = 0; i < l; i++){
-		r += string;
+		r += s;
 	}
 	
 	return r;
@@ -68,107 +93,125 @@ function widGetHashedValue(d, h){
 	return r;
 }
 
-function widEnDisPasswordInput(data){
+function widEnDisPasswordInput(d){
 // It enable/disable passwords field.
 	var obj = $('#' + 'tokens_password_input');
-	if (data.length !== 0) {
+	if (d.length !== 0) {
 		obj.attr('disabled', false);
 	} else {
 		obj.attr('disabled', true);
 	}
 }
 
-function widShowLog(data){
+function widShowLog(d){
 	var obj = $('#' + 'tokens_log_pre');
 	if (arguments.length === 0) {
 		obj.html('&nbsp');
 	} else {
-		obj.html(data);
+		obj.html(d);
 	}
 }
 
-function widShowData(data){
+function widShowData(d){
+// Shows tokens data field if it length greater then zero.
 	var obj = $('#' + 'tokens_data_pre'); 
-	
 	if (arguments.length === 0) {
 		obj.hide();	
 		obj.empty();
-	} else {
+	} else if (String(d).length > 0) {
 		obj.show();	
-		obj.html(data);
+		obj.html(d);
+	} else {
+		obj.hide();	
+		obj.empty();
 	}
 }
 
 function widShowTokensHashedVal(id){
-// It shows a hashed value of the token, if the value is not a hashed 
+// Shows hashed value of token (if the value is not a default hash)
 	//var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
 	//var objH = $('#' + nextTdId);
 	var objH = $('#tokens_hashed_value_td');
-	
 	var objR = $('#' + id);
 	var rt = objR.val();
 	
-	if (rt == ''){
+	if (rt.length == 0){
 		objH.html(widStringsGrow('&nbsp',32));
 		return;
-	} else if (engIsHash(rt, glDataBase.hash)) {
+	} else if (engIsHash(rt, glCurrentDB.hash)) {
 		objH.html(widStringsGrow('&nbsp',32));
 	} else {
-		var s = widGetHashedValue(rt, glDataBase.hash);
+		var s = widGetHashedValue(rt, glCurrentDB.hash);
 		objH.html(s);
 	}	
 }
 
-function widGetDatabase(dbHash){
+function widTokensRequest(d){
+	var lr = engGetLastRecord(d);
 	
-    var cb = function (data) {
-        var db = engGetInfoDb(data);
-        
-		if (db.length < 1) {
-            return 'No database!';
-        }
-		
-		for (var i = 0; i < db.length; i++) {
-			if (db[i].hash === dbHash) {
-				glDataBase = db[i];
-				break;
-			}
-		}
-
-		if (glDataBase.name === undefined) {
-			widShowLog('No database!');
-		}		
-     }
-
-    ajxSendCommand('info db', cb, hasqdLed);	
-}
-
-function widShowTokensState(data){
-	widShowTokensExistence(data);
-	var lr = engGetLastRecord(data);
-	var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-	var p = widGetTokensState();
-}
-
-function widShowTokensExistence(data){
-	var r = engGetLastRecord(data);
-	
-	if (r.message === 'OK'){
-		widShowLog('Token exists.');
-		var tokensData = r.d;
-		if (tokensData.length > 0) {
-			widShowData(engGetParsedDataValue(r.d));
-		}
-	} else if (r.message === 'IDX_NODN'){
+	if (lr.message === 'OK'){
+		widShowTokensExistence(true);
+		widShowPasswordMatch(lr);
+		widShowData(engGetParsedDataValue(lr.d));
+	} else if (lr.message === 'IDX_NODN'){
+		widShowTokensExistence(false);
+		widShowPasswordMatch();
 		widShowData();
-		widShowLog('No such token.');
-	}	
+	}
+
+}
+
+function widGetPasswordPicture(d){
+	switch (d){
+		case 1:
+			return picGrn;
+			break;
+		case 2:
+			return picYlwGrn;
+			break;
+		case 3:
+			return picGrnYlw;
+			break;
+		default:
+			return picRed;
+			break;
+	}
+}
+
+function widShowPasswordMatch(lr){
+	var obj = $('#passwords_pic_td');
+	if (arguments.length !== 0) {
+		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+		var p = engGetTokensState(lr, nr);
+		var pic = widGetPasswordPicture(p);
+		obj.html(pic);
+	} else {
+		obj.empty();
+	}
+
+	
+
+}
+
+function widShowTokensExistence(d){
+// Shows message or image about tokens existense.
+	var e = $('#tokens_pic_td');
+	
+	if (d) {
+		widShowLog('Token exists.');
+		e.html('+');		
+	} else {
+		e.html('-');
+		widShowLog('No such token.');		
+	}
 }
 
 function widTokensValueOninput(id){
+// Events when tokens value changed.
 	clearTimeout(glTimerId);
 	widShowLog();
 	widShowData();
+	$('#tokens_pic_td').html('&nbsp');
 	
 	var obj = $('#' + id);
 	var rt = obj.val();
@@ -177,9 +220,9 @@ function widTokensValueOninput(id){
 	widShowTokensHashedVal(id);
 	
 	if (rt.length > 0) {
-		var s = widGetHashedValue(rt, glDataBase.hash);
-		var cmd = 'last' + ' ' + glDataBase.name + ' ' + s;
-		widSendDeferredRequest(cmd, 1000, widShowTokensExistence);
+		var s = widGetHashedValue(rt, glCurrentDB.hash);
+		var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
+		widSendDeferredRequest(cmd, 1000, widTokensRequest);
 	}
 }
 				
@@ -205,8 +248,8 @@ function widSendDeferredRequest(cmd, t, f){
 
 
 function widTokensPasswordOninput(id){
-	
-	return;
+// Events when passwords value changed.
+	glPassword = $('#tokens_password_input').val();
 }
 
 

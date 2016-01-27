@@ -2,8 +2,9 @@
 
 var glClientTitle = 'Tokenswap JavaScript Client';
 var glRequiredDbHash = 'smd';
+var glPassword = '';
 
-var glDataBase = {}; //'smd.db';
+var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
@@ -60,10 +61,12 @@ function docInit(){
 		}
 	});
 	
+	widSetDefaultDb(glRequiredDbHash);
+
 	var ping = function(){ widPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);
-	widGetDatabase(glRequiredDbHash);
+
 }
 
 function docMain(){

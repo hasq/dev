@@ -139,6 +139,51 @@ function engGetLastRecord(data) {
     return r;
 }
 
+function engGetNewRecord(n, s, p0, p1, p2, m, h) {
+	var r = {};
+	r.n = '';
+	r.s = '';
+	r.k = '';
+	r.g = '';
+	r.o = '';
+
+	var n0 = +n;
+	var n1 = +n + 1;
+	var n2 = +n + 2;
+
+	var k0 = engGetKey(n0, s, p0, m, h);
+
+	if ((p1 == null) || (p2 == null)) {
+		var k1 = engGetKey(n1, s, p0, m, h);
+		var k2 = engGetKey(n2, s, p0, m, h);
+	} else {
+		var k1 = engGetKey(n1, s, p1, m, h);
+		var k2 = engGetKey(n2, s, p2, m, h);
+	}
+
+	var g0 = engGetKey(n1, s, k1, m, h);
+	var g1 = engGetKey(n2, s, k2, m, h);
+	var o0 = engGetKey(n1, s, g1, m, h);
+
+	r.n = n0;
+	r.s = s;
+	r.k = k0;
+	r.g = g0;
+	r.o = o0;
+
+	return r;
+}
+
+function engGetKey(n, s, p, m, h) {
+	var raw_k = n + ' ' + s + ' ' + p;
+
+	if (m != '') {
+		raw_k += ' ' + m;
+	}
+
+	return engGetHash(raw_k, h); ;
+}
+
 function engIsHash(data, hashFunction) {
     var notHex = /[^0-9a-f]/g;
     var r = true;
