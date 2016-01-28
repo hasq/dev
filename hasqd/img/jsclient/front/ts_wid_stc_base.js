@@ -113,6 +113,13 @@ function widMainTabs(items) {
 function widCreateTab(){
 	var r = '';
 	
+	r += '<table>\n';
+		r += '<tr>\n';
+			r += '<td>\n'
+				r += '<button id="create_button" onclick="widCreateButtonClick()">Create';
+		r += '</tr>\n';
+	r += '</table>\n';
+	
 	return r;
 }
 

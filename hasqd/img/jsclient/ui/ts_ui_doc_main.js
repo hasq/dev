@@ -62,6 +62,8 @@ function docInit(){
 		}
 	});
 	
+	widDisableUI(true);
+	
 	widSetDefaultDb(glRequiredDbHash);
 
 	var ping = function(){ widPing(5000) }

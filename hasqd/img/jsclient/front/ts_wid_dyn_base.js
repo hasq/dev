@@ -215,9 +215,11 @@ function widTokensValueOninput(id){
 		var s = widGetHashedValue(rt, glCurrentDB.hash);
 		var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
 		widSendDeferredRequest(cmd, 1000, widShowTokenLastRecords);
+		widDisableUI(false);
 	} else {
 		widShowTokensExistence();
 		widShowPasswordMatch();
+		widDisableUI(true);
 		//widShowPasswordGuessTime();		
 	}
 }
@@ -289,6 +291,51 @@ function widShowPasswordGuessTime(d){
 	}
 }
 
-function widCreate(){
+function widDisableUI(f){
+	var obj = $('#tabs');
+	if (f) {
+		//obj.tabs('option', 'disabled', true);
+		obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
+	} else {
+		//obj.tabs('option', 'disabled', false);
+		obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
+	}
+
+}
+
+function widShowNoValueWarnings(){
+	var objT = $('#token_input');
+	var objP = $('#password_input');
 	
+	if (objT.val() == ''){
+		widShowLog('Empty token value.');
+	} else if (objP.val() == ''){
+		widShowLog('Empty token password.');
+	} else {
+		widShowLog();
+	}
+}
+
+function widCreateButtonClick(){
+	var objT = $('#token_input');
+	var objP = $('#password_input');
+	var s = engGetHash(objT.val(), glCurrentDB.hash);
+	
+	if (objT.val().length <= 160) {
+		var nr_d = objT.val();
+	} else {
+		var nr_d = '';
+	}
+	
+	var nr = engGetNewRecord(0, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var cmd = 'z * ' + glCurrentDB.name + ' 0 ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
+	
+	var cb = function(d) {
+		var r = engGetHasqdResponse(d);
+		widShowLog(r.message);
+	}
+	
+	var f = function(){ ajxSendCommand(cmd, cb, hasqdLed);}
+	
+	setTimeout(f, 1000);
 }
