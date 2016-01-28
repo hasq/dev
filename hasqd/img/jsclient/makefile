@@ -4,9 +4,9 @@ JQUID=../../ext/jq/
 JQUIF=jquery-ui-1.11.4.custom
 JQUI=$(JQUID)$(JQUIF)
 
-all: createdb createhelp jqcopy createclient
+all: createdb createhelp jquery zxcvbn createclient
 
-client: createhelp jqcopy createclient
+client: createhelp jquery zxcvbn createclient
 
 createhelp_tmp: front/hq_wid_stc_help_tab.inc txt/*.htm
 	echo "////////////////////////////////////////////////////" > front/help_tab.tmp
@@ -22,10 +22,13 @@ createhelp: createhelp_tmp
 createdb: createdb.sh
 	sh createdb.sh
 	
-jqcopy: $(JQUI).tar.bz2
+jquery: $(JQUI).tar.bz2
 	cp $< lib/
 	cd lib && make NAME=$(JQUIF)
-	
+
+zxcvbn:	lib/zxcvbn.js
+		cp lib/zxcvbn.js slice/home/lib/
+		
 createclient: index.html 
 	mkdir -p slice/home/ui
 	mkdir -p slice/home/lib
