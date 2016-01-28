@@ -114,7 +114,7 @@ function widGetHashedValue(d, h){
 
 function widEnDisPasswordInput(d){
 // It enable/disable passwords field.
-	var obj = $('#' + 'tokens_input');
+	var obj = $('#' + 'password_input');
 	if (d.length !== 0) {
 		obj.attr('disabled', false);
 	} else {
@@ -258,7 +258,7 @@ function widGetPasswordPicture(d){
 
 function widShowPasswordMatch(lr){
 	var objT = $('#password_pic_td');
-	var objI = $('#tokens_input');
+	var objI = $('#password_input');
 	
 	if (arguments.length !== 0 && objI.val() !== '') {
 		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -289,4 +289,6 @@ function widShowPasswordGuessTime(d){
 	}
 }
 
-
+function widCreate(){
+	
+}

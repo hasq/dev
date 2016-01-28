@@ -48,20 +48,20 @@ function widClientLed(span_id) {
 function widMainInputsArea(){
     var r = '';
 
-    r += '<table width="100%" border="1">\n';
+    r += '<table width="100%" border="0" style="border: 1px solid #DDDDDD;">\n';
 		r += '<tr>\n';
-			r += '<td width="1%" style="text-align:left" nowrap>\n'
-				r += 'Token' + '&nbsp;\n';
+			r += '<td width="1%" style="text-align:right;" nowrap>\n'
+				r += '&nbsp;' + '<b>Token</b>' + '&nbsp;\n';
 			r += '<td width="40%" style="text-align:left" nowrap>\n';
-				r += '<input type="text" id="tokens_raw_value_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
+				r += '<input type="text" id="token_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
 			r += '<td width="15px" id="token_pic_td" style="text-align:left">\n'; //picGry;
 			r += '<td id="tokens_hashed_value_td" class="monospace" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:left">\n';
-				r += 'Password' + '&nbsp\n';
+				r += '&nbsp;' + '<b>Password</b>' + '&nbsp\n';
 			r += '<td style="text-align:left">\n';
-				r += '<input type="password" id="tokens_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter tokens password" oninput=""/>\n'; // disabled/>\n';
+				r += '<input type="password" id="password_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter tokens password" oninput=""/>\n'; // disabled/>\n';
 			r += '<td width="15px" id="password_pic_td" style="text-align:left">\n'; //picGry;
 			r += '<td id="password_zxcvbn_td" style="text-align:left; font-style: italic">\n';
 				//r += '<input type="checkbox" id="show_hide_input"/>\n';
