@@ -48,13 +48,13 @@ function widClientLed(span_id) {
 function widMainInputsArea(){
     var r = '';
 
-    r += '<table width="100%" border="0">\n';
+    r += '<table width="100%" border="1">\n';
 		r += '<tr>\n';
 			r += '<td width="1%" style="text-align:left" nowrap>\n'
 				r += 'Token' + '&nbsp;\n';
 			r += '<td width="40%" style="text-align:left" nowrap>\n';
 				r += '<input type="text" id="tokens_raw_value_input" oninput="widTokensValueOninput(this.id);" placeholder="Enter tokens value"/>\n';
-			r += '<td width="1%" id="tokens_pic_td" style="text-align:left">' + '&nbsp;\n'; //picGry;
+			r += '<td width="15px" id="token_pic_td" style="text-align:left">\n'; //picGry;
 			r += '<td id="tokens_hashed_value_td" class="monospace" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
@@ -62,8 +62,8 @@ function widMainInputsArea(){
 				r += 'Password' + '&nbsp\n';
 			r += '<td style="text-align:left">\n';
 				r += '<input type="password" id="tokens_password_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter tokens password" oninput="" disabled/>\n';
-			r += '<td id="passwords_pic_td" style="text-align:left">' + '&nbsp;\n'; //picGry;
-			r += '<td style="text-align:left">\n';
+			r += '<td width="15px" id="password_pic_td" style="text-align:left">\n'; //picGry;
+			r += '<td id="password_zxcvbn_td" style="text-align:left; font-style: italic">\n';
 				//r += '<input type="checkbox" id="show_hide_input"/>\n';
 				//r += '<label for="show_hide_input" id="show_hide_label">Show password</label>\n';
 		r += '<tr>\n';

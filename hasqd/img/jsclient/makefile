@@ -64,7 +64,7 @@ clean:
 	rm -rf hq.*.lock	
 	
 	
-cleancl:
+softclean:
 	rm -rf lib/jquery* slice/home lib/*.tar lib/*.tar.bz2
 	rm -rf front/help_tab.gen
 	rm -rf front/help_tab.tmp

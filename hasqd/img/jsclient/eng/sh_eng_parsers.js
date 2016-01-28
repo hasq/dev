@@ -1,8 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetHasqdResponse(data) {
+function engGetHasqdResponse(d) {
     var r = {};
-    var response = data.replace(/\r|\s+$/g, '');
+    var response = d.replace(/\r|\s+$/g, '');
     var blocks = response.split(/\s/);  // split by by \s (\s, \n, \t, \v);
     var lines = response.split(/\n/);   // split by \n only;
 
@@ -36,10 +36,10 @@ function engGetHasqdResponse(data) {
     return r;
 }
 
-function engGetInfoDb(data) {
+function engGetInfoDb(d) {
     var r = [];
 
-    var response = engGetHasqdResponse(data);
+    var response = engGetHasqdResponse(d);
 
     if (response.message != 'OK' || response.length == 0) {
         return response;
@@ -100,12 +100,12 @@ function engGetInfoDb(data) {
     return r;
 }
 
-function engGetLastRecord(data) {
+function engGetLastRecord(d) {
     var r = {};
     r.content = 'OK';
     r.message = 'OK';
 
-    parsedData = engGetHasqdResponse(data);
+    parsedData = engGetHasqdResponse(d);
 
     if (parsedData.message != 'OK' || parsedData.length == 0) {
         return parsedData;
@@ -184,10 +184,10 @@ function engGetKey(n, s, p, m, h) {
 	return engGetHash(raw_k, h); ;
 }
 
-function engIsHash(data, hashFunction) {
+function engIsHash(d, h) {
     var notHex = /[^0-9a-f]/g;
     var r = true;
-    switch (hashFunction) {
+    switch (h) {
     case 'md5':
         var l = 32;
         break;
@@ -210,47 +210,47 @@ function engIsHash(data, hashFunction) {
         break;
     }
 
-    if (data.length != l || notHex.test(data) ) { //mismatched length or not not hex chars contents
+    if (d.length != l || notHex.test(d) ) { //mismatched length or not not hex chars contents
         return false;
     } else {
         return true;
     };
 }
 
-function engGetHash(data, hashType) {
-	switch (hashType) {
+function engGetHash(d, h) {
+	switch (h) {
 	case 'wrd':
-		return hex_md5(data).substring(0, 4);
+		return hex_md5(d).substring(0, 4);
 	case 'md5':
-		return hex_md5(data);
+		return hex_md5(d);
 	case 'r16':
-		return hex_rmd160(data);
+		return hex_rmd160(d);
 	case 's22':
-		return hex_sha256(data);
+		return hex_sha256(d);
 	case 's25':
-		return hex_sha512(data);
+		return hex_sha512(d);
 	case 'smd':
-		return hex_smd(data);		
+		return hex_smd(d);		
 	default:
 		break;
 	}
 	return null;
 }
 
-function engGetTokensState(existingRec, expectingRec) {
-	if ((existingRec.g === expectingRec.g) && (existingRec.o === expectingRec.o)) {
+function engGetTokensState(lr, nr) {
+	if ((lr.g === nr.g) && (lr.o === nr.o)) {
 		return 1; // Tokens keys is fully matched with a password
-	} else if (existingRec.g === expectingRec.g) {
+	} else if (lr.g === nr.g) {
 		return 2; // Token is in a sending process
-	} else if (existingRec.o === expectingRec.o) {
+	} else if (lr.o === nr.o) {
 		return 3; // Token is in a receiving process
 	} else {
 		return 0; // Tokens keys is not matched with a password
 	}
 }
 
-function engGetParsedDataValue(data){
-	var r = data;
+function engGetParsedDataValue(d){
+	var r = d;
 	if (r !== undefined && r.length > 0) {
 		var lf = '\u000a'; //unicode line-feed
 
@@ -272,8 +272,8 @@ function engGetParsedDataValue(data){
 	
 }
 
-function engSetParsedDataValue(data){
-	var r = data.replace(/^\s+|\s+$/g, '');;
+function engSetParsedDataValue(d){
+	var r = d.replace(/^\s+|\s+$/g, '');;
 	if (r !== undefined && r.length > 0) {
 		for (var i = 0; i < r.length; i++) {
 			if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
