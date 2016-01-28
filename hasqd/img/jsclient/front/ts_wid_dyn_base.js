@@ -47,6 +47,25 @@ function widPing(timeDelay){
 	ajxSendCommand('ping', cb, hasqdLed)
 }
 
+function widSendDeferredRequest(cmd, t, f){
+// It sends request for last data with 1000ms delay .
+// the request will be ignored if token value will be changed during this 1000ms
+	var req = function(){
+		var timerId = glTimerId;
+		
+		var cb = function(data){
+			if (timerId === glTimerId){
+				f(data);
+			} 
+			clearTimeout(timerId);
+		}	
+		
+		ajxSendCommand(cmd, cb, hasqdLed);
+	}
+	
+	glTimerId = setTimeout(req, t);	
+}
+
 function widSetDefaultDb(dbHash){
 // Searching for database and save it in variable.
     var cb = function (d) {
@@ -95,7 +114,7 @@ function widGetHashedValue(d, h){
 
 function widEnDisPasswordInput(d){
 // It enable/disable passwords field.
-	var obj = $('#' + 'tokens_password_input');
+	var obj = $('#' + 'tokens_input');
 	if (d.length !== 0) {
 		obj.attr('disabled', false);
 	} else {
@@ -152,11 +171,71 @@ function widShowTokenLastRecords(d){
 	if (glLastRec.message === 'OK'){
 		widShowTokensExistence(true);
 		widShowPasswordMatch(glLastRec);
+		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
 		widShowData(engGetParsedDataValue(glLastRec.d));
 	} else if (glLastRec.message === 'IDX_NODN'){
 		widShowTokensExistence(false);
 		widShowPasswordMatch();
 		widShowData();
+	}
+}
+
+function widShowTokensExistence(d){
+// Shows message or image about tokens existense.
+	var obj = $('#token_pic_td');
+	
+	if (arguments.length === 0) {
+		obj.empty();
+	} else if (d === null) {
+		obj.html(picL12);
+	} else if (d === true) {
+		widShowLog('Token exists.');
+		obj.html(picGrn);		
+	} else if (d === false){
+		obj.html(picRed);
+		widShowLog('No such token.');		
+	} 
+}
+
+function widTokensValueOninput(id){
+// Events when tokens value changed.
+	clearTimeout(glTimerId);
+	widShowLog(); //clear log
+	widShowData(); //clear and hide data field
+	widShowTokensExistence(null); // show animation
+	
+	var obj = $('#' + id);
+	var rt = obj.val();
+	glLastRec = {};
+	
+	//widEnDisPasswordInput(rt);	
+	widShowTokensHashedVal(id);
+	
+	if (rt.length > 0) {
+		var s = widGetHashedValue(rt, glCurrentDB.hash);
+		var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
+		widSendDeferredRequest(cmd, 1000, widShowTokenLastRecords);
+	} else {
+		widShowTokensExistence();
+		widShowPasswordMatch();
+		//widShowPasswordGuessTime();		
+	}
+}
+				
+				
+function widTokensPasswordOninput(id){
+// Events when passwords value changed.
+	glPassword = $('#' + id).val();
+	
+	if (glPassword.length === 0){
+		widShowPasswordMatch();
+		widShowPasswordGuessTime();		
+	} else if (glLastRec.message === 'OK'){
+		widShowPasswordMatch(glLastRec);
+		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
+	} else {
+		widShowPasswordMatch();
+		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
 	}
 }
 
@@ -179,7 +258,7 @@ function widGetPasswordPicture(d){
 
 function widShowPasswordMatch(lr){
 	var objT = $('#password_pic_td');
-	var objI = $('#tokens_password_input');
+	var objI = $('#tokens_input');
 	
 	if (arguments.length !== 0 && objI.val() !== '') {
 		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -188,89 +267,26 @@ function widShowPasswordMatch(lr){
 		objT.html(pic);
 	} else {
 		objT.empty();
+		//objI.val('');
 	}
 }
 
-function widShowTokensExistence(d){
-// Shows message or image about tokens existense.
-	var obj = $('#token_pic_td');
-	
-	if (arguments.length === 0) {
-		obj.empty();
-	} else if (d === null) {
-		obj.html(picL12);
-	} else if (d === true) {
-		widShowLog('Token exists.');
-		obj.html(picGrn);		
-	} else if (d === false){
-		obj.html(picRed);
-		widShowLog('No such token.');		
-	} 
-}
-
-function widGetZxcvbnResponse(d){
-	var r = zxcvbn(d);
-	return 'Guess time: ' + r.crack_times_display.offline_slow_hashing_1e4_per_second;		
-}
-
-function widTokensValueOninput(id){
-// Events when tokens value changed.
-	clearTimeout(glTimerId);
-	widShowLog();
-	widShowData();
-	widShowTokensExistence(null);
-	
-	var obj = $('#' + id);
-	var rt = obj.val();
-	glLastRec = {};
-	
-	widEnDisPasswordInput(rt);	
-	widShowTokensHashedVal(id);
-	
-	if (rt.length > 0) {
-		var s = widGetHashedValue(rt, glCurrentDB.hash);
-		var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
-		widSendDeferredRequest(cmd, 1000, widShowTokenLastRecords);
+function widGetPasswordGuessTime(d){
+	if (String(d).length === 0) {
+		return '';
 	} else {
-		widShowTokensExistence();
+		var r = zxcvbn(d);
+		return 'Guess time: ' + r.crack_times_display.offline_slow_hashing_1e4_per_second;		
 	}
 }
-				
-				
-function widSendDeferredRequest(cmd, t, f){
-// It sends request for last data with 1000ms delay .
-// the request will be ignored if token value will be changed during this 1000ms
-	var req = function(){
-		var timerId = glTimerId;
-		
-		var cb = function(data){
-			if (timerId === glTimerId){
-				f(data);
-			} 
-			clearTimeout(timerId);
-		}	
-		
-		ajxSendCommand(cmd, cb, hasqdLed);
-	}
-	
-	glTimerId = setTimeout(req, t);	
-}
 
-
-function widTokensPasswordOninput(id){
-// Events when passwords value changed.
+function widShowPasswordGuessTime(d){
 	var obj = $('#password_zxcvbn_td');
-	
-	glPassword = $('#' + id).val();
-	obj.html(widGetZxcvbnResponse(glPassword));
-	
-	if (glLastRec.message === 'OK') {
-		widShowPasswordMatch(glLastRec);
+	if (arguments.length !== 0 && String(d).length > 0){
+		obj.html(d);			
 	} else {
-		widShowPasswordMatch();
+		obj.empty();
 	}
 }
-
-
 
 
