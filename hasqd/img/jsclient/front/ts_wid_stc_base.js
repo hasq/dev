@@ -133,12 +133,35 @@ function widSearchTab() {
 function widSendTab() {
 	var r = '';
 	
+	r += '<table width="70%" border="0" >\n';
+		r += '<tr>\n';
+			r += '<td width="100%" style="text-align:left">\n';
+				r += '<button id="send_button" onclick="widButtonClick(this.id)" data-onclick="widSendButtonClick()" disabled>Send';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%">\n'
+				r += '<textarea wrap="off" rows="4" type="text" id="send_textarea" readonly></textarea>';
+		r += '</tr>\n';
+	r += '</table>\n';
+	
 	return r;	
 }
 
 function widReceiveTab() {
 	var r = '';
 	
+	
+	r += '<table width="70%" border="0" >\n';
+		r += '<tr>\n';
+			r += '<td width="100%">\n'
+				r += '<textarea wrap="off" rows="4" type="text" id="receive_textarea"></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" style="text-align:right">\n';
+				r += '<button id="receive_button" onclick="widButtonClick(this.id)" data-onclick="widReceiveButtonClick()" disabled>Receive';
+		r += '</tr>\n';
+	r += '</table>\n';
+
 	return r;	
 }
 
@@ -148,11 +171,11 @@ function widSetDataTab() {
 	r += '<table border="0" width="350px">\n';
 		r += '<tr>\n';
 			r += '<td width="100%">\n';
-				r += '<input id="setdata_input" type="text"/>';
+				r += '<input id="setdata_input" type="text" placeholder="Enter new data"/>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:right">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this.id);" data-onclick="widSetDataButtonClick()">Set data';
+				r += '<button id="setdata_button" onclick="widButtonClick(this.id)" data-onclick="widSetDataButtonClick()">Set data';
 		r += '</tr>\n';
 	r += '</table>\n';
 	

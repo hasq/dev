@@ -9,8 +9,8 @@ function ajxSendCommand(cmd, callback, progress) {
 
     .done(function (data) {
 		//console.log('-done:' + data);
-		setTimeout(function() {callback(data)}, 1000);
-		//callback(data);
+		//setTimeout(function() {callback(data)}, 1000);
+		callback(data);
 		progress.dec();
     })
 
