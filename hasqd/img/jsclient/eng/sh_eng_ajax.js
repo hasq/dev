@@ -3,21 +3,21 @@
 function ajxSendCommand(cmd, callback, progress) {
 	//console.log('---start!');
     progress.inc();
-    //$.get('/' + cmd, function (data){})
+    //$.get('/' + cmd, function (data) {})
     // use post to prevent caching
-    $.post('/', 'command=' + cmd, function(data){})
+    $.post('/', 'command=' + cmd, function(data) {})
 
     .done(function (data) {
 		//console.log('-done:' + data);
-		//setTimeout(function(){callback(data)}, 3000);
-		callback(data);
+		setTimeout(function() {callback(data)}, 1000);
+		//callback(data);
 		progress.dec();
     })
 
-    .fail(function(){
+    .fail(function() {
         progress.fail();
     })
 
-    .always(function(){
+    .always(function() {
     });
 }

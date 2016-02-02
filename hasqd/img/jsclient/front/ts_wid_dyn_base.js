@@ -1,44 +1,44 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function HasqdLed(){
+function HasqdLed() {
     //this.counter = 0;
 }
 
-HasqdLed.prototype.fail = function(){
+HasqdLed.prototype.fail = function() {
     $('#hasqd_led').html(picRed);
     widShowLog('Server connection failure!');
 };
 
-HasqdLed.prototype.inc = function(){
-    setTimeout(function(){ $('#hasqd_led').html(picGryGrn); }, 500);
+HasqdLed.prototype.inc = function() {
+    setTimeout(function() { $('#hasqd_led').html(picGryGrn); }, 500);
 };
 
-HasqdLed.prototype.dec = function(){
-    setTimeout(function(){ $('#hasqd_led').html(picGry); }, 500);
+HasqdLed.prototype.dec = function() {
+    setTimeout(function() { $('#hasqd_led').html(picGry); }, 500);
 };
 
 var hasqdLed = new HasqdLed();
 
-function widAnimateProgbar(){
+function widAnimateProgbar() {
     $('#hasqd_led').html(picGry);
 }
 
-function widPing(timeDelay){
+function widPing(timeDelay) {
 // Ping server every 5s,10s,15s,...,60s,...,60s,...
 	var timerId = glPingTimerId;
 	
-	if ( timeDelay < 60000 ){
+	if ( timeDelay < 60000 ) {
 		timeDelay += 5000;
 	}
 
-	var cb = function(data){
+	var cb = function(data) {
 		var response = engGetHasqdResponse(data);
 		
-		if (response.message === 'OK'){
+		if (response.message === 'OK') {
 			//var now = new Date()
 			//var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
 			//console.log(ct);
-			var ping = function(){widPing(timeDelay)};
+			var ping = function() {widPing(timeDelay)};
 			glPingTimerId = setTimeout(ping, timeDelay);
 			clearInterval(timerId);			
 		}
@@ -47,14 +47,14 @@ function widPing(timeDelay){
 	ajxSendCommand('ping', cb, hasqdLed)
 }
 
-function widSendDeferredRequest(cmd, t, f){
-// It sends request for last data with 1000ms delay .
+function widSendDeferredRequest(cmd, t, f) {
+// It sends ajax request with 1000ms delay.
 // the request will be ignored if token value will be changed during this 1000ms
-	var req = function(){
+	var req = function() {
 		var timerId = glTimerId;
 		
-		var cb = function(data){
-			if (timerId === glTimerId){
+		var cb = function(data) {
+			if (timerId === glTimerId) {
 				f(data);
 			} 
 			clearTimeout(timerId);
@@ -66,7 +66,7 @@ function widSendDeferredRequest(cmd, t, f){
 	glTimerId = setTimeout(req, t);	
 }
 
-function widSetDefaultDb(dbHash){
+function widSetDefaultDb(dbHash) {
 // Searching for database and save it in variable.
     var cb = function (d) {
         var db = engGetInfoDb(d);
@@ -90,18 +90,18 @@ function widSetDefaultDb(dbHash){
     ajxSendCommand('info db', cb, hasqdLed);	
 }
 
-function widStringsGrow(s, l){
+function widStringsGrow(s, l) {
 // workaround for html...
 	var r = '';
 	
-	for (var i = 0; i < l; i++){
+	for (var i = 0; i < l; i++) {
 		r += s;
 	}
 	
 	return r;
 }
 
-function widGetHashedValue(d, h){
+function widGetToken(d, h) {
 //It returns hash of raw tokens value
 	if (engIsHash(d, h)) {
 		var r = d;
@@ -112,7 +112,7 @@ function widGetHashedValue(d, h){
 	return r;
 }
 
-function widEnDisPasswordInput(d){
+function widEnDisPasswordInput(d) {
 // It enable/disable passwords field.
 	var obj = $('#' + 'password_input');
 	if (d.length !== 0) {
@@ -122,7 +122,7 @@ function widEnDisPasswordInput(d){
 	}
 }
 
-function widShowLog(d){
+function widShowLog(d) {
 	var obj = $('#' + 'tokens_log_pre');
 	if (arguments.length === 0) {
 		obj.html('&nbsp');
@@ -131,7 +131,7 @@ function widShowLog(d){
 	}
 }
 
-function widShowData(d){
+function widShowData(d) {
 // Shows tokens data field if it length greater then zero.
 	var obj = $('#' + 'tokens_data_pre'); 
 	if (arguments.length === 0) {
@@ -146,103 +146,102 @@ function widShowData(d){
 	}
 }
 
-function widShowTokensHashedVal(id){
+function widShowToken() {
 // Shows hashed value of token (if the value is not a default hash)
-	//var nextTdId = $('#' + id).closest('td').next('td').attr('id'); //find id of the next <td> 
-	//var objH = $('#' + nextTdId);
-	var objH = $('#tokens_hashed_value_td');
-	var objR = $('#' + id);
-	var rt = objR.val();
+	var objT = $('#token_value_td');
+	var objH = $('#token_hint_input');
+	var hint = objH.val();
 	
-	if (rt.length == 0){
-		objH.html(widStringsGrow('&nbsp',32));
+	if (hint.length == 0) {
+		objT.html(widStringsGrow('&nbsp',32));
 		return;
-	} else if (engIsHash(rt, glCurrentDB.hash)) {
-		objH.html(widStringsGrow('&nbsp',32));
+	} else if (engIsHash(hint, glCurrentDB.hash)) {
+		objT.html(widStringsGrow('&nbsp',32));
 	} else {
-		var s = widGetHashedValue(rt, glCurrentDB.hash);
-		objH.html(s);
+		var s = widGetToken(hint, glCurrentDB.hash);
+		objT.html(s);
 	}	
 }
 
-function widShowTokenLastRecords(d){
+
+function widSetLastRecChanges(d) {
 	glLastRec = engGetLastRecord(d);
 	
-	if (glLastRec.message === 'OK'){
-		widShowTokensExistence(true);
+	if (glLastRec.message === 'OK') {
+		widShowTokenState(true);
 		widShowPasswordMatch(glLastRec);
 		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
 		widShowData(engGetParsedDataValue(glLastRec.d));
-	} else if (glLastRec.message === 'IDX_NODN'){
-		widShowTokensExistence(false);
+	} else if (glLastRec.message === 'IDX_NODN') {
+		widShowTokenState(false);
 		widShowPasswordMatch();
 		widShowData();
 	}
 }
 
-function widShowTokensExistence(d){
+function widShowTokenState(d) {
 // Shows message or image about tokens existense.
 	var obj = $('#token_pic_td');
 	
 	if (arguments.length === 0) {
 		obj.empty();
+		widShowLog();
 	} else if (d === null) {
 		obj.html(picL12);
+		widShowLog('Searching for token...');
 	} else if (d === true) {
 		widShowLog('Token exists.');
-		obj.html(picGrn);		
-	} else if (d === false){
-		obj.html(picRed);
+		obj.empty();		
+	} else if (d === false) {
+		obj.empty();
 		widShowLog('No such token.');		
 	} 
 }
 
-function widTokensValueOninput(id){
+function widTokenHintOninput(id) {
 // Events when tokens value changed.
 	clearTimeout(glTimerId);
+	glLastRec = {};
 	widShowLog(); //clear log
 	widShowData(); //clear and hide data field
-	widShowTokensExistence(null); // show animation
+	widShowTokenState(null); // show animation
 	
-	var obj = $('#' + id);
-	var rt = obj.val();
+	var obj = $('#token_hint_input');
+	var hint = obj.val();
 	glLastRec = {};
 	
-	//widEnDisPasswordInput(rt);	
-	widShowTokensHashedVal(id);
-	
-	if (rt.length > 0) {
-		var s = widGetHashedValue(rt, glCurrentDB.hash);
+	//widEnDisPasswordInput(hint);	
+	widShowToken();	
+ 	if (hint.length > 0) {
+		var s = widGetToken(hint, glCurrentDB.hash);
 		var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
-		widSendDeferredRequest(cmd, 1000, widShowTokenLastRecords);
-		widDisableUI(false);
+		widSendDeferredRequest(cmd, 1000, widSetLastRecChanges);
 	} else {
-		widShowTokensExistence();
+		widShowTokenState();
 		widShowPasswordMatch();
-		widDisableUI(true);
-		//widShowPasswordGuessTime();		
 	}
 }
 				
 				
-function widTokensPasswordOninput(id){
+function widTokensPasswordOninput() {
 // Events when passwords value changed.
-	glPassword = $('#' + id).val();
+	glPassword = $('#password_input').val();
+	var e = widGetInitialDataState();
 	
-	if (glPassword.length === 0){
+	if (glPassword.length === 0) {
 		widShowPasswordMatch();
-		widShowPasswordGuessTime();		
-	} else if (glLastRec.message === 'OK'){
+		widShowPasswordGuessTime();
+	} else if (glLastRec.message === 'OK') {
 		widShowPasswordMatch(glLastRec);
 		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
-	} else {
+	} else if (e.message) {
 		widShowPasswordMatch();
 		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
 	}
 }
 
-function widGetPasswordPicture(d){
-	switch (d){
+function widGetPasswordPicture(d) {
+	switch (d) {
 		case 1:
 			return picGrn;
 			break;
@@ -258,7 +257,7 @@ function widGetPasswordPicture(d){
 	}
 }
 
-function widShowPasswordMatch(lr){
+function widShowPasswordMatch(lr) {
 	var objT = $('#password_pic_td');
 	var objI = $('#password_input');
 	
@@ -273,7 +272,7 @@ function widShowPasswordMatch(lr){
 	}
 }
 
-function widGetPasswordGuessTime(d){
+function widGetPasswordGuessTime(d) {
 	if (String(d).length === 0) {
 		return '';
 	} else {
@@ -282,60 +281,148 @@ function widGetPasswordGuessTime(d){
 	}
 }
 
-function widShowPasswordGuessTime(d){
+function widShowPasswordGuessTime(d) {
 	var obj = $('#password_zxcvbn_td');
-	if (arguments.length !== 0 && String(d).length > 0){
+	if (arguments.length !== 0 && String(d).length > 0) {
 		obj.html(d);			
 	} else {
 		obj.empty();
 	}
 }
 
-function widDisableUI(f){
-	var obj = $('#tabs');
-	if (f) {
-		//obj.tabs('option', 'disabled', true);
-		obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
-	} else {
-		//obj.tabs('option', 'disabled', false);
-		obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
-	}
 
-}
-
-function widShowNoValueWarnings(){
-	var objT = $('#token_input');
-	var objP = $('#password_input');
+function widDisableInitialUI(f) {
+	var obj = $('#initial_data_table');
 	
-	if (objT.val() == ''){
-		widShowLog('Empty token value.');
-	} else if (objP.val() == ''){
-		widShowLog('Empty token password.');
-	} else {
-		widShowLog();
-	}
+	if (arguments.length == 0 ) { var f = true; }
+	
+	obj.closest('#initial_data_table').find('input').prop('disabled', f); //closest('table[id^="initial"]').
 }
 
-function widCreateButtonClick(){
-	var objT = $('#token_input');
+
+function widDisableTabsUI(f) {
+// To enable/disable specified selectors into the tabs area
+	var obj = $('#tabs_div');
+	
+	if (arguments.length == 0) { var f = true; }
+
+	obj.closest('#tabs_div').find('button, input, textarea').prop('disabled', f);			
+}
+
+function widGetInitialDataState() {
+	var objT = $('#token_hint_input');
+	var objP = $('#password_input');
+	var r = {};
+	r.message = false;
+	r.content = '';
+	
+	if (objT.val() == '') {
+		r.message = false;
+		r.content = 'Empty token value.';
+	} else if (objP.val() == '') {
+		r.message = false;
+		r.content = 'Empty token password.';		
+	} else {
+		r.message = true;
+		r.content = '&nbsp';	
+	}
+	return r;
+}
+
+function widButtonClick(id) {
+	var obj = $('#' + id);
+	var f = obj.attr('data-onclick');
+	
+	widDisableInitialUI();
+	widDisableTabsUI();
+	
+	eval(f);
+}
+
+function widCompleteEvent(t) {
+	widDisableInitialUI(false);
+	widDisableTabsUI(false);
+	widShowLog(t);
+}
+
+function widCreateButtonClick() {
+	var objT = $('#token_hint_input');
 	var objP = $('#password_input');
 	var s = engGetHash(objT.val(), glCurrentDB.hash);
+	var e = widGetInitialDataState();
 	
-	if (objT.val().length <= 160) {
-		var nr_d = objT.val();
+	if (glLastRec.message === 'OK') {
+		widCompleteEvent('Token already exists.');
+		return;
+	} else if (glLastRec.message === undefined) {
+		widCompleteEvent();
+		return;			
+	} else if (!e.message) {
+		widCompleteEvent(e.content);
+		return;	
+	}
+	
+	var nr_d = (objT.val().length <= 160) ? '[' + objT.val() + ']' : '';
+	
+	/*if (objT.val().length <= 160) {
+		var nr_d = '[' + objT.val() + ']';
 	} else {
 		var nr_d = '';
-	}
+	}*/
 	
 	var nr = engGetNewRecord(0, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var cmd = 'z * ' + glCurrentDB.name + ' 0 ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 	
 	var cb = function(d) {
 		var r = engGetHasqdResponse(d);
-		widShowLog(r.message);
+		if (r.message == 'OK') {
+			widCompleteEvent(r.message);
+			widTokenHintOninput();
+		} else {
+			widCompleteEvent(r.message + ': ' + r.content);
+		}
 	}
 	
-	var f = function(){ ajxSendCommand(cmd, cb, hasqdLed);}
+	var f = function() { ajxSendCommand(cmd, cb, hasqdLed);}
 	
 	setTimeout(f, 1000);
+	widShowLog('Creating token...');
+}
+
+function widSetDataButtonClick() {
+	var objT = $('#token_hint_input');
+	var objP = $('#password_input');
+	var objP = $('#setdata_input');
+	
+	var e = widGetInitialDataState();
+	
+	if (glLastRec.message !== 'OK') {
+		widCompleteEvent('First create a token.');
+		return;
+	} else if (!e.message) {
+		widCompleteEvent(e.content);
+		return;
+	}
+	
+	var s = engGetHash(objT.val(), glCurrentDB.hash);
+	
+	var nr_d = engSetParsedDataValue(objP.val());
+	
+	var nr = engGetNewRecord(glLastRec.n + 1, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var cmd = 'add * ' + glCurrentDB.name + ' ' + nr.n + ' ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
+	
+	var cb = function(d) {
+		var r = engGetHasqdResponse(d);
+		if (r.message == 'OK') {
+			widCompleteEvent(r.message);
+			widTokenHintOninput();
+		} else {
+			widCompleteEvent(r.message + ': ' + r.content);
+		}
+	}
+	
+	var f = function() { ajxSendCommand(cmd, cb, hasqdLed);}
+	
+	setTimeout(f, 1000);
+	widShowLog('Setting token data...');
 }

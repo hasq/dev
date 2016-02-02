@@ -54,7 +54,7 @@ function widTokensTab() {
     return r;
 }
 
-function widTokensNamesAddArea(){
+function widTokensNamesAddArea() {
     var r = '';
 
     r += '<table width="100%" border="0">\n';
@@ -104,14 +104,14 @@ function widTokensNamesAddArea(){
     return r;
 }
 
-function widProgressBarArea(){
+function widProgressBarArea() {
     var r = '';
     r += '<div id="tokens_progressbar" style="text-align:center">\n<div class="tokens-progressbar-label" style="text-align:center">\n</div>\n</div>\n';
     return r;
 }
 
 
-function widLogArea(){
+function widLogArea() {
     var r = '';
     r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
     return r;
@@ -459,7 +459,7 @@ function widTokensRS1() {
     return r;
 }
 
-function widTokensRS2(){
+function widTokensRS2() {
     var r = '';
 
     r += '<div>\n';

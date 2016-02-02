@@ -39,22 +39,22 @@ function preloadImages() {
 	}
 }
 
-function docMainWrite(){
+function docMainWrite() {
 	document.write(docMain());
 }
 
-function docMainInit(){
-	$(document).ready(function(){
+function docMainInit() {
+	$(document).ready(function() {
 		docInit();
 	});
 }
 
-function docInit(){
-	$('#tabs').tabs();
+function docInit() {
+	$('#tabs_div').tabs();
 	$('#hasqd_led').html(picGry);
 	$('button').button();
 	$('#tokens_data_pre').hide();
-	$('#show_hide_input').click(function(){
+	$('#show_hide_input').click(function() {
 		if ($('.password').attr('type') == 'password') {
 			$('.password').attr('type', 'text');
 		} else {
@@ -62,17 +62,15 @@ function docInit(){
 		}
 	});
 	
-	widDisableUI(true);
-	
 	widSetDefaultDb(glRequiredDbHash);
 
-	var ping = function(){ widPing(5000) }
+	var ping = function() { widPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);
 
 }
 
-function docMain(){
+function docMain() {
     var tabs = [];
     var item;
 
@@ -83,7 +81,7 @@ function docMain(){
 
     item = {};
     item.title = 'Set data';
-    item.data = widSetTab();
+    item.data = widSetDataTab();
     tabs[tabs.length] = item;	
 
     item = {};

@@ -249,20 +249,20 @@ function engGetTokensState(lr, nr) {
 	}
 }
 
-function engGetParsedDataValue(d){
+function engGetParsedDataValue(d) {
 	var r = d;
 	if (r !== undefined && r.length > 0) {
 		var lf = '\u000a'; //unicode line-feed
 
 		for (var i = 0; i < r.length; i++) {
-			if (r[i] === '\u005c' && r[i + 1] === '\u005c' && r[i + 2] === '\u006e'){
+			if (r[i] === '\u005c' && r[i + 1] === '\u005c' && r[i + 2] === '\u006e') {
 				// "\\n" > "\n", "\\\n" > "\\n"
 				r = r.substring(0, i) + r.substr(i + 1);
 				i++; // need check;
-			} else if (r[i] === '\u005c' && r[i + 1] === '\u006e'){
+			} else if (r[i] === '\u005c' && r[i + 1] === '\u006e') {
 				// "/n" > LF
 				r = r.substring(0, i) + lf + r.substr(i + 2);
-			} else if (r[i] === '\u005c' && r[i - 1] === '\u0020' && r[i + 1] === '\u0020'){
+			} else if (r[i] === '\u005c' && r[i - 1] === '\u0020' && r[i + 1] === '\u0020') {
 				// "a \ a" > "a, "a \ \ a" > "a   a", "a\ " > "a\ "
 				r = r.substring(0, i) + r.substr(i + 1);
 			}
@@ -272,7 +272,7 @@ function engGetParsedDataValue(d){
 	
 }
 
-function engSetParsedDataValue(d){
+function engSetParsedDataValue(d) {
 	var r = d.replace(/^\s+|\s+$/g, '');;
 	if (r !== undefined && r.length > 0) {
 		for (var i = 0; i < r.length; i++) {
