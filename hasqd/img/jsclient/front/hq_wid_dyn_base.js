@@ -118,7 +118,7 @@ function widServerRefreshButtonClick() {
         var r = engGetParsedResponseInfoFam(d);
 
         if (r.message == 'OK') {
-            table = widServerFamilyTable(r);
+            table = widGetHTMLFamilyTable(r);
             obj3.html('<pre>' + table + '</pre>');
         } else {
             obj3.html('<pre>' + r.message + '\n' + r.content + '</pre>');
@@ -138,7 +138,7 @@ function widServerRefreshButtonClick() {
             switch (i) {
             case 0:
 				obj4.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');;
-				var db_table = widDatabaseTraitTable(glDataBase[i]);
+				var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
 				$('#database_table').html(db_table);
 				
 				var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
@@ -469,7 +469,7 @@ function widSubmitButtonClick() {
     ajxSendCommand(nr, cb, hasqdLed);
 }
 
-function widCheckEnterKey(d, e) {
+function widSendCommandInputOnpresskey(d, e) {
     if (e.keyCode == 13) {
         widCommandSendButtonClick();
     }

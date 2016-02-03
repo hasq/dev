@@ -560,7 +560,7 @@ function widPrepareToVerify(id, data) {
 
 function widPrintVerifyTableRow(data, pic) {
     var table = 'tokens_verify_table';
-    $('#' + table).append(widAddRow(widTableCell(pic + data.message) + widTableCell(data.rawS) + widTableCell(data.s) + widTableCell(data.n) + widTableCell(data.d)));
+    $('#' + table).append(widGetHTMLTr(widGetHTMLTd(pic + data.message) + widGetHTMLTd(data.rawS) + widGetHTMLTd(data.s) + widGetHTMLTd(data.n) + widGetHTMLTd(data.d)));
 }
 
 function widGetVerifyRowLed(data) {

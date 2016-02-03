@@ -1,28 +1,28 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function widTokensTab() {
+function widGetHTMLTokensTab() {
     var r = '';
     var tabs = [];
     var item;
 
     item = {};
     item.title = 'Create';
-    item.data = widTokensCreateTab();
+    item.data = widGetHTMLTokensCreateTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Verify';
-    item.data = widTokensVerifyTab();
+    item.data = widGetHTMLTokensVerifyTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Data';
-    item.data = widTokensDataTab();
+    item.data = widGetHTMLTokensDataTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Send';
-    item.data = widTokensSendTab();
+    item.data = widGetHTMLTokensSendTab();
     tabs[tabs.length] = item;
 
     item = {};
@@ -32,19 +32,19 @@ function widTokensTab() {
 
     r += '<table width="70%" border="0">\n';
     r += '<tr>\n';
-    r += '<td width="100%">' + widTokensNamesAddArea() + '\n';
+    r += '<td width="100%">' + widGetHTMLTokensTabInitialData() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%">' + widProgressBarArea() + '\n';
+    r += '<td width="100%">' + widGetHTMLTokensProgressbar() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%">' + widTokensTabWrite(tabs) + '\n';
+    r += '<td width="100%">' + widGetHTMLTokensTabWrite(tabs) + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td width="100%"><hr/>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="100%">' + widLogArea() + '\n';
+    r += '<td width="100%">' + widGetHTMLTokensLog() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td width="100%"><hr/>\n';
@@ -54,7 +54,25 @@ function widTokensTab() {
     return r;
 }
 
-function widTokensNamesAddArea() {
+function widGetHTMLTokensTabWrite(items) {
+    var r = '';
+    r += '<div id="tokens_tabs">\n';
+
+    r += '\t<ul>\n';
+    for (var i = 0; i < items.length; i++)
+        r += '\t<li style="list-style-type:none;"><a href="#tokens_tabs-' + (i + 1) + '">' + items[i].title + '</a>\n';
+
+    r += '\t</ul>\n';
+
+    for (var i = 0; i < items.length; i++)
+        r += '\t<div id="tokens_tabs-' + (i + 1) + '">\n' + items[i].data + '</div>\n';
+
+    r += '</div>\n';
+
+    return r;
+}
+
+function widGetHTMLTokensTabInitialData() {
     var r = '';
 
     r += '<table width="100%" border="0">\n';
@@ -104,38 +122,21 @@ function widTokensNamesAddArea() {
     return r;
 }
 
-function widProgressBarArea() {
+function widGetHTMLTokensProgressbar() {
     var r = '';
     r += '<div id="tokens_progressbar" style="text-align:center">\n<div class="tokens-progressbar-label" style="text-align:center">\n</div>\n</div>\n';
     return r;
 }
 
 
-function widLogArea() {
+function widGetHTMLTokensLog() {
     var r = '';
     r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
     return r;
 }
 
-function widTokensTabWrite(items) {
-    var r = '';
-    r += '<div id="tokens_tabs">\n';
 
-    r += '\t<ul>\n';
-    for (var i = 0; i < items.length; i++)
-        r += '\t<li style="list-style-type:none;"><a href="#tokens_tabs-' + (i + 1) + '">' + items[i].title + '</a>\n';
-
-    r += '\t</ul>\n';
-
-    for (var i = 0; i < items.length; i++)
-        r += '\t<div id="tokens_tabs-' + (i + 1) + '">\n' + items[i].data + '</div>\n';
-
-    r += '</div>\n';
-
-    return r;
-}
-
-function widTokensCreateTab() {
+function widGetHTMLTokensCreateTab() {
     var r = '';
     r += '<div data-class="div">\n';
     r += '<table width="100%">\n';
@@ -147,7 +148,7 @@ function widTokensCreateTab() {
     return r;
 }
 
-function widTokensVerifyTab() {
+function widGetHTMLTokensVerifyTab() {
     var r = '';
     r += '<div data-class="div">\n';
     r += '<table>\n';
@@ -171,7 +172,7 @@ function widTokensVerifyTab() {
     return r;
 }
 
-function widTokensDataTab() {
+function widGetHTMLTokensDataTab() {
     var r = '';
 
     r += '<div data-class="div">\n';
@@ -192,7 +193,7 @@ function widTokensDataTab() {
     return r;
 }
 
-function widTokensSendTab() {
+function widGetHTMLTokensSendTab() {
     var r = '';
     r += '<div id="tokens_send_accordion">\n';
     r += '<h3>Scenario 1: Simple send</h3>\n';

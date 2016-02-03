@@ -106,7 +106,7 @@ function doc_init() {
 
 	$('#database_smenu').selectmenu({
 		select: function (event, ui) {
-			var db_table = widDatabaseTraitTable(glDataBase[this.selectedIndex]);
+			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
 			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
 			var pwdCheckBoxIsOn = document.getElementById('onepass_checkbox').checked + document.getElementById('threepass_checkbox').checked
 				glCurrentDB = glDataBase[this.selectedIndex];
@@ -291,32 +291,32 @@ function docMain() {
 
 	item = {};
 	item.title = 'Server';
-	item.data = widServerTab();
+	item.data = widGetHTMLServerTab();
 	tabs[tabs.length] = item;
 
 	item = {};
 	item.title = 'Database';
-	item.data = widDatabaseTab();
+	item.data = widGetHTMLDatabaseTab();
 	tabs[tabs.length] = item;
 
 	item = {};
 	item.title = 'Records';
-	item.data = widRecordsTab();
+	item.data = widGetHTMLRecordsTab();
 	tabs[tabs.length] = item;
 
 	item = {};
 	item.title = 'Hash calc';
-	item.data = widHashcalcTab();
+	item.data = widGetHTMLHashcalcTab();
 	tabs[tabs.length] = item;
 
 	item = {};
 	item.title = 'Command';
-	item.data = widCommandTab();
+	item.data = widGetHTMLCommandTab();
 	tabs[tabs.length] = item;
 
 	item = {};
 	item.title = 'Tokens';
-	item.data = widTokensTab();
+	item.data = widGetHTMLTokensTab();
 	tabs[tabs.length] = item;
 
 	item = {};
@@ -324,7 +324,7 @@ function docMain() {
 	item.data = widHelpTab();
 	tabs[tabs.length] = item;
 
-	var body = widGlobalTable(tabs);
+	var body = widGetHTMLBody(tabs);
 
 	return body;
 }

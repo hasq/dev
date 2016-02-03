@@ -1,43 +1,43 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function widTableCell(x) {
-    return '<td>' + x + '';
+function widGetHTMLTd(x) {
+    return '<td>\n' + x + '';
 }
 
-function widTableCellSpan(x, y, z) {
+function widGetHTMLTdSpan(x, y, z) {
     if (!y)
         y = '';
-    return '<td><span id="' + x + '"></span>&nbsp;' + '' + y + '';
+    return '<td>\n<span id="' + x + '"></span>&nbsp;' + '' + y + '';
 }
 
-function widAddRow(data) {
-    var r = '<tr>\n' + data + '</tr>\n';
+function widGetHTMLTr(x) {
+    var r = '<tr>\n' + x + '</tr>\n';
     return r;
 }
 
-function widLink(x) {
+function widGetHTMLHref(x) {
     var r = '';
     r += '<a href="http://' + x + '"><b>' + x + '</b></a>\n';
     return r;
 }
 
-function widGlobalTable(tabs){
+function widGetHTMLBody(tabs){
     var r = '';
     r += '<table width="100%" border="0" nowrap>\n';
 
     r += '<tr>\n';
-    r += '<td nowrap>\n' + widClientTitle(glClientTitle);
-    r += '<td style="text-align:right;">&nbsp;' + '' + widClientLed('hasqd_led');
+    r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
+    r += '<td style="text-align:right;">&nbsp;' + '' + widGetHTMLSpan('hasqd_led');
     r += '</tr>\n';
 
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2" nowrap>\n' + widMainTabs(tabs);
+    r += '<td width="100%" colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);
     r += '</tr>\n';
     r += '</table>\n';
     return r;
 }
 
-function widClientTitle(text) {
+function widGetHTMLTitle(text) {
     var r = '';
     r += '<table border="0">\n';
     r += '<tr>\n';
@@ -48,13 +48,13 @@ function widClientTitle(text) {
     return r;
 }
 
-function widClientLed(span_id) {
+function widGetHTMLSpan(span_id) {
     var r = '';
     r += '<span id="' + span_id + '"></span>\n';
     return r;
 }
 
-function widMainTabs(items) {
+function widGetHTMLTabs(items) {
     var r = '';
 
     r += '<div id="tabs">\n';
@@ -73,33 +73,33 @@ function widMainTabs(items) {
     return r;
 }
 
-function widServerTab() {
+function widGetHTMLServerTab() {
     var r = '';
 
     r += '<table width="70%">\n';
     r += '<tr>\n';
     r += '<td>\n';
     r += '<table border="1" style="font-family: monospace;">\n';
-    r += '<tr>\n' + widTableCell('Host') + widTableCellSpan('server_host', widServerRefreshButton()) + '</tr>\n';
-    r += '<tr>\n' + widTableCell('Server') + widTableCellSpan('server_id') + '</tr>\n';
-    r += '<tr>\n' + widTableCell('System') + widTableCellSpan('server_sys') + '</tr>\n';
+    r += '<tr>\n' + widGetHTMLTd('Host') + widGetHTMLTdSpan('server_host', widGetHTMLRefreshButton()) + '</tr>\n';
+    r += '<tr>\n' + widGetHTMLTd('Server') + widGetHTMLTdSpan('server_id') + '</tr>\n';
+    r += '<tr>\n' + widGetHTMLTd('System') + widGetHTMLTdSpan('server_sys') + '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr><td><hr/></tr>\n';
     r += '<tr>\n';
-    r += widTableCellSpan('server_fam') + '\n';
+    r += widGetHTMLTdSpan('server_fam') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     return r;
 }
 
-function widServerRefreshButton() {
+function widGetHTMLRefreshButton() {
     var r = '';
     r += '<button id="srv_refresh_button" onclick="widServerRefreshButtonClick()">Refresh</button>\n';
     return r;
 }
 
-function widServerFamilyTable(data) {
+function widGetHTMLFamilyTable(data) {
     var r = '';
 
     r += '<table border="1" style="font-family:monospace;">\n';
@@ -110,11 +110,11 @@ function widServerFamilyTable(data) {
     if (contentData != 'NO_FAMILY') {
         for (var i = 0; i < contentData.list.length; i++) {
             r += '<tr>\n';
-			r += widTableCell(contentData.list[i].name);
-            r += widTableCell(widLink(contentData.list[i].link));
-            r += widTableCell(contentData.list[i].neighbor ? 'Yes' : 'No');
-            r += widTableCell(contentData.list[i].alive ? 'Yes' : 'No');
-            r += widTableCell(contentData.list[i].unlock ? 'No' : 'Yes');
+			r += widGetHTMLTd(contentData.list[i].name);
+            r += widGetHTMLTd(widGetHTMLHref(contentData.list[i].link));
+            r += widGetHTMLTd(contentData.list[i].neighbor ? 'Yes' : 'No');
+            r += widGetHTMLTd(contentData.list[i].alive ? 'Yes' : 'No');
+            r += widGetHTMLTd(contentData.list[i].unlock ? 'No' : 'Yes');
 			r += '</tr>\n';
         }
     }
@@ -124,19 +124,19 @@ function widServerFamilyTable(data) {
     return r;
 }
 
-function widDatabaseTab() {
+function widGetHTMLDatabaseTab() {
     var r = '';
 
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td>\n';
-    r += '<div>' + widTableCellSpan('server_db', widDatabaseDBTable()) + '</div>\n';
+    r += '<div>' + widGetHTMLTdSpan('server_db', widGetHTMLDatabaseSelect()) + '</div>\n';
     r += '</tr>\n';
     r += '</table>\n';
     return r;
 }
 
-function widDatabaseDBTable() {
+function widGetHTMLDatabaseSelect() {
     var r = '';
 
     r += '<table border="0" style=" table-layout:fixed ">\n';
@@ -155,7 +155,7 @@ function widDatabaseDBTable() {
     return r;
 }
 
-function widDatabaseTraitTable(data) {
+function widGetHTMLDatabaseTraitTable(data) {
     var r = '';
     r += '<table border="1" style="font-family:monospace;">\n';
     r += '<tr><th>Trait</th><th>Value</th></tr>\n';
@@ -168,7 +168,7 @@ function widDatabaseTraitTable(data) {
     return r;
 }
 
-function widRecordsTab() {
+function widGetHTMLRecordsTab() {
     var r = '';
     r += '<table width="70%" border="0">\n'; //style="table-layout:fixed;"
 		r += '<tr>\n';
@@ -311,12 +311,12 @@ function widRecordsTab() {
     return r;
 }
 
-function widHashcalcTab() {
+function widGetHTMLHashcalcTab() {
     var r = '';
 
     r += '<table width="70%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td style="text-align:left">' + widHashCalcSMenu();
+			r += '<td style="text-align:left">' + widGetHTMLHashcalcSelect();
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td>\n';
@@ -337,7 +337,7 @@ function widHashcalcTab() {
     return r;
 }
 
-function widHashCalcSMenu() {
+function widGetHTMLHashcalcSelect() {
     var r = '';
 
     r += '<select id="hashcalc_smenu">\n';
@@ -352,7 +352,7 @@ function widHashCalcSMenu() {
     return r;
 }
 
-function widCommandTab() {
+function widGetHTMLCommandTab() {
     var r = '';
 
     r += '<table width="70%" border="0">\n';
@@ -360,7 +360,7 @@ function widCommandTab() {
 			r += '<td width="5%">\n';
 				r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
 			r += '<td width="45%" style="text-align:left">\n';
-				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widCheckEnterKey(this.value, event);"/>\n';
+				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
 			r += '<td width="50%">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
