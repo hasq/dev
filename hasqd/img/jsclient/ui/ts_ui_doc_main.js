@@ -61,6 +61,16 @@ function docInit() {
 			$('.password').attr('type', 'password');
 		}
 	});
+	$('#search_datepicker_input').datepicker({
+		dateFormat: 'yy/mm/dd',
+		maxDate: new Date(),
+		minDate: new Date(2016, 1 - 1, 1),
+		showMonthAfterYear: true,
+		showOtherMonths: true,
+		selectOtherMonths: true,
+		changeMonth: true,
+		changeYear: true
+	});
 	
 	widSetDefaultDb(glRequiredDbHash);
 

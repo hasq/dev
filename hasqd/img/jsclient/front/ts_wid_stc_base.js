@@ -53,7 +53,7 @@ function widMainInputsArea() {
 			r += '<td width="3%" style="text-align:left;" nowrap>\n'
 				r += '&nbsp;' + '<b>Token hint</b>' + '&nbsp;\n';
 			r += '<td colspan="2" style="text-align:right;" nowrap>\n';
-				r += '<input type="text" id="token_hint_input" oninput="widTokenHintOninput();" placeholder="Enter token hint"/>\n';
+					r += '<input type="text" id="token_hint_input" oninput="widTokenHintOninput();" placeholder="Enter token hint"/>\n';
 			r += '<td width="30%" id="token_pic_td" style="text-align:left">\n'; //picGry;
 		r += '</tr>\n';
 		r += '<tr>\n';
@@ -126,7 +126,20 @@ function widCreateTab() {
 
 function widSearchTab() {
 	var r = '';
-	
+	r += '<table border="0">\n';
+		r += '<tr>\n';
+			r += '<td style="font-family:monospace">\n'
+				r += 'From ' + widGetCurrentDate() + ' to:';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td>\n'
+				r += '<input type="text" size="10" id="search_datepicker_input">';
+		r += '</tr>\n';		
+		r += '<tr>\n';
+			r += '<td style="text-align:right">\n'
+				r += '<button id="search_button" onclick="widButtonClick(this.id);" data-onclick="widSearchButtonClick()" disabled>Search';
+		r += '</tr>\n';		
+	r += '</table>\n';	
 	return r;	
 }
 

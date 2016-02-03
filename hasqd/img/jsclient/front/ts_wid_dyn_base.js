@@ -418,3 +418,11 @@ function widSetDataButtonClick() {
 	widShowLog('Setting token data...');
 }
 
+function widGetCurrentDate(){
+	var date = new Date();
+	var y = date.getFullYear();
+	var m = (date.getMonth() < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+	var d = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+	var r = y + '/' + m + '/' + d;
+	return r;
+}
