@@ -95,7 +95,7 @@ function widServerTab() {
 
 function widServerRefreshButton() {
     var r = '';
-    r += '<button id="srv_refresh_button" onclick="widServerRefreshBtnClk()">Refresh</button>\n';
+    r += '<button id="srv_refresh_button" onclick="widServerRefreshButtonClick()">Refresh</button>\n';
     return r;
 }
 
@@ -209,7 +209,7 @@ function widRecordsTab() {
 					r += '</tr>\n';
 					r += '<tr>\n';
 						r += '<td colspan="2" style="text-align:right">\n';
-						r += '<button id="lastrec_button" onclick="widRecordsGetLastRecordBtnClk()">Get Last Record</button>\n';
+						r += '<button id="lastrec_button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
 					r += '</tr>\n';
 				r += '</table>\n';
 				
@@ -235,46 +235,46 @@ function widRecordsTab() {
 			r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
 			r += '<td >&nbsp;' + 'Record #' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_n_input" oninput="widGetNewRecordOninput();" >\n';
+				r += '<input type="text" id="newrec_n_input" oninput="widShowNewRecordOninput();" >\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td >&nbsp;' + 'Key' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_k_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+				r += '<input type="text" id="newrec_k_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="120px" style="text-align:left">\n';
-				r += '<input type="checkbox" id="onepass_checkbox" onclick="widRecordsOnePwdChkboxClk(this);" unchecked>\n';
+				r += '<input type="checkbox" id="onepass_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
 				r += '&nbsp;' + 'One password' + '&nbsp;\n';
 			r += '<td style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass0_input" oninput="widGetNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="newrec_pass0_input" oninput="widShowNewRecordOninput()" disabled>\n';
 			r += '<td>&nbsp;' + 'Generator' + '&nbsp;\n';
 			r += '<td>\n';
-				r += '<input type="text" id="newrec_g_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+				r += '<input type="text" id="newrec_g_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="checkbox" id="threepass_checkbox" onclick="widRecordsThreePwdChkboxClk(this)" unchecked/>\n';
+				r += '<input type="checkbox" id="threepass_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
 				r += '&nbsp;' + 'Three passwords' + '&nbsp;';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass1_input" oninput="widGetNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="newrec_pass1_input" oninput="widShowNewRecordOninput()" disabled>\n';
 			r += '<td >&nbsp;' + 'Owner' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_o_input" oninput="widCheckNewRecordKeys(this.id)">\n';
+				r += '<input type="text" id="newrec_o_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  style="text-align:left">';
 				r += '<input nowrap type="checkbox" id="show_hide_input"/>\n';
 				r += '<label for="show_hide_input" id="show_hide_label">&nbsp;' + 'Show passwords&nbsp;</label>\n';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass2_input" oninput="widGetNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="newrec_pass2_input" oninput="widShowNewRecordOninput()" disabled>\n';
 			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';
 			r += '<td >\n';
 				r += '<input type="text" id="newrec_d_input" oninput="">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="4" style="text-align:right">\n';
-				r += '<button id="submit_button" onclick="widSubmitBtnClk()">Submit</button>\n';
+				r += '<button id="submit_button" onclick="widSubmitButtonClick()">Submit</button>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  colspan="4"><hr/>\n';
@@ -282,14 +282,14 @@ function widRecordsTab() {
 		r += '<tr>\n';
 			r += '<td colspan="2"><b>History</b>\n';	
 			r += '<td style="text-align:right;vertical-align:middle;">\n';
-				r += '<select name="tokens_history" id="tokens_history_selectmenu">\n';
+				r += '<select name="tokens_history" id="tokens_history_select">\n';
 					r += '<option selected="selected">0</option>\n';
 					r += '<option>3</option>\n';    
 					r += '<option>10</option>\n';
 					r += '<option>30</option>\n';
 				r += '</select>\n';
 			r += '<td style="text-align:left;vertical-align: middle">\n';
-				r += '<label for="tokens_history_selectmenu">last records</label>\n';
+				r += '<label for="tokens_history_select">last records</label>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="4">\n';
@@ -300,7 +300,7 @@ function widRecordsTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  colspan="4">\n';
-				r += '<pre id="records_last_operation_pre">&nbsp;' + '</pre>\n';
+				r += '<pre id="records_log_pre">&nbsp;' + '</pre>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  colspan="4"><hr/>\n';
@@ -358,7 +358,7 @@ function widCommandTab() {
     r += '<table width="70%" border="0">\n';
 		r += '<tr>\n';
 			r += '<td width="5%">\n';
-				r += '<button type="submit" id="cmd_button" onclick="widCommandSendBtnClk()">Send</button>\n';
+				r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
 			r += '<td width="45%" style="text-align:left">\n';
 				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widCheckEnterKey(this.value, event);"/>\n';
 			r += '<td width="50%">\n';

@@ -86,30 +86,30 @@ function docMain() {
 
     item = {};
     item.title = 'Create token';
-    item.data = widCreateTab();
+    item.data = widGetHTMLCreateTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Set data';
-    item.data = widSetDataTab();
+    item.data = widGetHTMLSetDataTab();
     tabs[tabs.length] = item;	
 
     item = {};
     item.title = 'Search';
-    item.data = widSearchTab();
+    item.data = widGetHTMLSearchTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Send';
-    item.data = widSendTab();
+    item.data = widGetHTMLSendTab();
     tabs[tabs.length] = item;
 
     item = {};
     item.title = 'Receive';
-    item.data = widReceiveTab();
+    item.data = widGetHTMLReceiveTab();
     tabs[tabs.length] = item;
 
-	var body = widBody(tabs);
+	var body = widGetHTMLBody(tabs);
 
 	return body;
 }

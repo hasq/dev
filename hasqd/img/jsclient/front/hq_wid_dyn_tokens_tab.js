@@ -88,7 +88,7 @@ function widCleanAllTabs() {
 
 function widTokensIdxOninput(id, data) {
     if ($('#' + id).val() !== '') {
-        $('#' + id).val(engSetNumber(data));
+        $('#' + id).val(engGetOnlyNumber(data));
     }
 }
 
@@ -188,27 +188,27 @@ function widGetTokensRangeCheckResults() {
 }
 
 function widTokensNamesOninput(data) {
-    var inp = 'tokens_names_textarea';
+	objNamesTextarea = $('#tokens_names_textarea')
     widCleanVTL();
     widCleanAllTabs();
-    widShowBorderColor(inp, '');
+    widShowBordersColor(objNamesTextarea);
 
     var namesArray = data;
 
 
     if (!engIsTokensNamesGood(data, glCurrentDB.hash)) {
         widDisableTokensInput();
-        widShowBorderColor(inp, '#FF0000'); //RED BORDER
+        widShowBordersColor(objNamesTextarea, '#FF0000'); //RED BORDER
         widPrintTokensLastOperation('REQ_TOKENS_BAD_NAME');
     } else if (namesArray.length >= 15479) {
         widEnableTokensInput();
-        widShowBorderColor(inp, '#FFFF00'); //YELLOW BORDER
+        widShowBordersColor(objNamesTextarea, '#FFFF00'); //YELLOW BORDER
         var l = 16511 - namesArray.length;
-        $('#' + inp).prop('title', 'WARNING! ' + l + ' CHARS LEFT.');
+        objNamesTextarea.prop('title', 'WARNING! ' + l + ' CHARS LEFT.');
         widPrintTokensLastOperation('.');
     } else {
         widEnableTokensInput();
-        widShowBorderColor(inp, '');
+        widShowBordersColor(objNamesTextarea);
         widPrintTokensLastOperation('.');
     }
 }
@@ -506,7 +506,7 @@ function widCreateTokens(id, tokens) {
 
         widPrintTokensProgressbar(progress);
 
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message == 'ERROR') {
             widCancelByEvent(id, cbResponse.content);
@@ -601,7 +601,7 @@ function widVerifyTokens(id, tokens, nextFunc, nextFuncData) {
             return;
         }
 
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message == 'ERROR') {
             widCancelByEvent(id, cbResponse.content);
@@ -711,7 +711,7 @@ function widUpdateTokens(id, data) {
 
         widPrintTokensProgressbar(progress);
 
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message === 'ERROR') {
             widCancelByEvent(id, cbResponse.content);
@@ -886,7 +886,7 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
 
 function widRS1ObtainK1K2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 		var objL = $('#tokens_rs1_led_div');
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
@@ -986,7 +986,7 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
 
 function widSS2ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 		var objL = $('#tokens_ss2_led_div');
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
@@ -1294,7 +1294,7 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
 
 function widRS3ObtainK1G1Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 		var objL = $('#tokens_rs3_s1_led_div');
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
@@ -1377,7 +1377,7 @@ function widPrepareToRS3ObtainK2Keys(id, data) {
 function widRS3ObtainK2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 		var objL = $('#tokens_rs3_s2_led_div');
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
@@ -1462,7 +1462,7 @@ function widPrepareToSS4ObtainO1Keys(id, data) {
 function widSS4ObtainO1Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
         var objL = $('#tokens_ss4_s1_led_div' + idLed);
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
@@ -1543,7 +1543,7 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
 
 function widSS4ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        var cbResponse = engGetHasqdResponse(cbData);
+        var cbResponse = engGetParsedResponse(cbData);
 		var objL = $('#tokens_ss4_s2_led_div');
 		
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {

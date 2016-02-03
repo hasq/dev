@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetHasqdResponse(d) {
+function engGetParsedResponse(d) {
     var r = {};
     var response = d.replace(/\r|\s+$/g, '');
     var blocks = response.split(/\s/);  // split by by \s (\s, \n, \t, \v);
@@ -36,10 +36,10 @@ function engGetHasqdResponse(d) {
     return r;
 }
 
-function engGetInfoDb(d) {
+function engGetParsedResponseInfoDb(d) {
     var r = [];
 
-    var response = engGetHasqdResponse(d);
+    var response = engGetParsedResponse(d);
 
     if (response.message != 'OK' || response.length == 0) {
         return response;
@@ -100,12 +100,12 @@ function engGetInfoDb(d) {
     return r;
 }
 
-function engGetLastRecord(d) {
+function engGetParsedResponseLast(d) {
     var r = {};
     r.content = 'OK';
     r.message = 'OK';
 
-    parsedData = engGetHasqdResponse(d);
+    parsedData = engGetParsedResponse(d);
 
     if (parsedData.message != 'OK' || parsedData.length == 0) {
         return parsedData;

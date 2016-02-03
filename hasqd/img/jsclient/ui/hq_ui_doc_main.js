@@ -116,7 +116,7 @@ function doc_init() {
 			widShowLastRecord();
 			widRawDNOninput();
 			if (pwdCheckBoxIsOn) {
-				widGetNewRecordOninput();
+				widShowNewRecordOninput();
 			}
 			return true;
 		}
@@ -155,12 +155,12 @@ function doc_init() {
 		}
 	});
 
-	$('#tokens_history_selectmenu').selectmenu({
+	$('#tokens_history_select').selectmenu({
 		disabled: true,
 		width: '60px',
 		select: function(event, data) {
 			var d = +this.options[this.selectedIndex].text;
-			widTokensHistorySMenu(d);
+			widTokensHistorySelect(d);
 		}
 	});	
 	
@@ -280,7 +280,7 @@ function doc_init() {
 
 	$('#server_host').html('' + location.host);
 
-	setTimeout(widServerRefreshBtnClk, 2000);
+	setTimeout(widServerRefreshButtonClick, 2000);
 
 	widAnimateProgbar();
 }

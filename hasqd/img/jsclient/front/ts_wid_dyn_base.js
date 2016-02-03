@@ -32,7 +32,7 @@ function widPing(timeDelay) {
 	}
 
 	var cb = function(data) {
-		var response = engGetHasqdResponse(data);
+		var response = engGetParsedResponse(data);
 		
 		if (response.message === 'OK') {
 			//var now = new Date()
@@ -69,7 +69,7 @@ function widSendDeferredRequest(cmd, t, f) {
 function widSetDefaultDb(dbHash) {
 // Searching for database and save it in variable.
     var cb = function (d) {
-        var db = engGetInfoDb(d);
+        var db = engGetParsedResponseInfoDb(d);
         
 		if (db.length < 1) {
             widShowLog('Database is not availible!');
@@ -165,7 +165,7 @@ function widShowToken() {
 
 
 function widSetLastRecChanges(d) {
-	glLastRec = engGetLastRecord(d);
+	glLastRec = engGetParsedResponseLast(d);
 	
 	if (glLastRec.message === 'OK') {
 		widShowTokenState(true);
@@ -367,7 +367,7 @@ function widCreateButtonClick() {
     var cmd = 'z * ' + glCurrentDB.name + ' 0 ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 	
 	var cb = function(d) {
-		var r = engGetHasqdResponse(d);
+		var r = engGetParsedResponse(d);
 		if (r.message == 'OK') {
 			widCompleteEvent(r.message);
 			widTokenHintOninput();
@@ -403,7 +403,7 @@ function widSetDataButtonClick() {
     var cmd = 'add * ' + glCurrentDB.name + ' ' + nr.n + ' ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 	
 	var cb = function(d) {
-		var r = engGetHasqdResponse(d);
+		var r = engGetParsedResponse(d);
 		if (r.message == 'OK') {
 			widCompleteEvent(r.message);
 			widTokenHintOninput();

@@ -6,7 +6,7 @@ function HasqdLed(){
 
 HasqdLed.prototype.fail = function(){
     $('#hasqd_led').html(picRed);
-    widShowRecordsLastOperation('Connection failed!');
+    widShowRecordsTabLog('Connection failed!');
 };
 
 HasqdLed.prototype.inc = function(){
@@ -23,61 +23,72 @@ function widAnimateProgbar(){
     $('#hasqd_led').html(picGry);
 }
 
-function widShowBorderColor(id, color) {
-    $('#' + id).css('borderLeftColor', color);
-    $('#' + id).css('borderTopColor', color);
-    $('#' + id).css('borderRightColor', color);
-    $('#' + id).css('borderBottomColor', color);
+function widShowBordersColor(obj, color) {
+	var borders = [ 'borderLeftColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor' ];
+	for (var i = 0; i < borders.length; i++) {
+		if (color !== undefined) {
+			obj.css(borders[i], color);
+		} else {
+			obj.css(borders[i], '');
+		}
+	}
 }
 
 function widShowLastRecord(data) {
+	var objN = $('#lastrec_n_input');
+	var objK = $('#lastrec_k_input');
+	var objG = $('#lastrec_g_input');
+	var objO = $('#lastrec_o_input');
+	var objD = $('#lastrec_d_input');
+	
 	if (arguments.length === 0)	{
-		$('#lastrec_n_input').val('');
-		$('#lastrec_k_input').val('');
-		$('#lastrec_g_input').val('');
-		$('#lastrec_o_input').val('');
-		$('#lastrec_d_input').val('');
+		objN.val('');
+		objK.val('');
+		objG.val('');
+		objO.val('');
+		objD.val('');
 	} else {
-        $('#lastrec_n_input').val(data.n);
-        $('#lastrec_k_input').val(data.k);
-        $('#lastrec_g_input').val(data.g);
-        $('#lastrec_o_input').val(data.o);
-        $('#lastrec_d_input').val(data.d);
+        objN.val(data.n);
+        objK.val(data.k);
+        objG.val(data.g);
+        objO.val(data.o);
+        objD.val(data.d);
 	}
 }
 
 function widShowNewRecord(data) {
+	var objN = $('#newrec_n_input');
+	var objK = $('#newrec_k_input');
+	var objG = $('#newrec_g_input');
+	var objO = $('#newrec_o_input');
+	var objD = $('#newrec_d_input');
+	
 	if (arguments.length === 0)	{	
-		$('#newrec_n_input').val('');
-		$('#newrec_k_input').val('');
-		$('#newrec_g_input').val('');
-		$('#newrec_o_input').val('');
-		$('#newrec_d_input').val('');
-		widShowBorderColor('newrec_k_input', '');
-		widShowBorderColor('newrec_g_input', '');
-		widShowBorderColor('newrec_o_input', '');
+		objN.val('');
+		objK.val('');
+		objG.val('');
+		objO.val('');
+		objD.val('');
+		widShowBordersColor(objK);
+		widShowBordersColor(objG);
+		widShowBordersColor(objO);
 	} else {
-		$('#newrec_n_input').val(data.n);
-		$('#newrec_k_input').val(data.k);
-		$('#newrec_g_input').val(data.g);
-		$('#newrec_o_input').val(data.o);
+		objN.val(data.n);
+		objK.val(data.k);
+		objG.val(data.g);
+		objO.val(data.o);
 	}
 }
 
 function widCleanHistoryData() {
-	$('#tokens_history_selectmenu').get(0).selectedIndex = 0;
-	$('#tokens_history_selectmenu').selectmenu('refresh');
+	var obj = $('#tokens_history_select');
+	obj.get(0).selectedIndex = 0;
+	obj.selectmenu('refresh');
 }
 
-function widCleanPasswordData() {
-    $('#newrec_pass0_input').val('');
-    $('#newrec_pass1_input').val('');
-    $('#newrec_pass2_input').val('');
-}
-
-function widServerRefreshBtnClk() {
-	var cb1 = function (data) {
-        var r = engGetInfoId(data);
+function widServerRefreshButtonClick() {
+	var cb1 = function (d) {
+        var r = engGetParsedResponseInfoId(d);
 		var obj1 = $('#server_id');
 		
         if (r.message == 'ERROR') {
@@ -89,8 +100,8 @@ function widServerRefreshBtnClk() {
 	
     ajxSendCommand('info id', cb1, hasqdLed);
 	
-    var cb2 = function (data) {
-		var r = engGetInfoSys(data);
+    var cb2 = function (d) {
+		var r = engGetParsedResponseInfoSys(d);
 		var obj2 = $('#server_sys');
 		
         if (r.message == 'ERROR') {
@@ -102,9 +113,9 @@ function widServerRefreshBtnClk() {
 	
     ajxSendCommand('info sys', cb2, hasqdLed);
 	
-    var cb3 = function (data) {
+    var cb3 = function (d) {
 		var obj3 = $('#server_fam');
-        var r = engGetInfoFam(data);
+        var r = engGetParsedResponseInfoFam(d);
 
         if (r.message == 'OK') {
             table = widServerFamilyTable(r);
@@ -116,8 +127,8 @@ function widServerRefreshBtnClk() {
 	
     ajxSendCommand('info fam', cb3, hasqdLed);
 
-    var cb4 = function (data) {
-        glDataBase = engGetInfoDb(data);
+    var cb4 = function (d) {
+        glDataBase = engGetParsedResponseInfoDb(d);
         if (glDataBase.length < 1) {
             return 'No database';
         }
@@ -135,7 +146,7 @@ function widServerRefreshBtnClk() {
 				
 				glCurrentDB = glDataBase[0];
                 glHashCalcHash = glCurrentDB.hash; //
-				widGetNewRecordOninput();  
+				widShowNewRecordOninput();  
                 break;
             default:
 				obj4.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');;
@@ -147,124 +158,139 @@ function widServerRefreshBtnClk() {
     ajxSendCommand('info db', cb4, hasqdLed);
 }
 
-function widCommandSendBtnClk() {
-    var cmd = $('#cmd_input').val();
-    var cb = function (data) {
-        $('#cmd_output').html(data);
+function widCommandSendButtonClick() {
+	var objCmdInput = $('#cmd_input');
+	var objCmdOutput = $('#cmd_output');
+    var cmd = objCmdInput.val();
+    var cb = function (d) {
+        objCmdOutput.html(d);
     }
+	
     ajxSendCommand(cmd, cb, hasqdLed);
 }
 
 function widRawDNOninput() {
-	var objH = $('#tokens_history_selectmenu');
-	var objS = $('#dn_input');
-	var objRDn = $('#rdn_input');
+	var objHistorySelect = $('#tokens_history_select');
+	var objDn = $('#dn_input');
+	var objRawDn = $('#rdn_input');
+	var objSubmitButton = $('submit_button');
 	
     widShowNewRecord();
 	widCleanHistoryData();
     widShowLastRecord();
 
-    objS.val('');
+    objDn.val('');
     widShowLastRecord();
 
-    if (objRDn.val() == '') {
-		objH.selectmenu('disable');
-        widShowBorderColor('dn_input', '');
-        widShowBorderColor('submit_button', '');
-        widShowRecordsLastOperation();
+    if (objRawDn.val() == '') {
+		objHistorySelect.selectmenu('disable');
+        widShowBordersColor(objDn);
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog();
     } else {
-        widShowBorderColor('dn_input', '');
-		objH.selectmenu('enable');
-        widShowBorderColor('submit_button', '');
-        objS.val(engGetHash(objRDn.val(), glCurrentDB.hash));
-        widGetNewRecordOninput();
-        widShowRecordsLastOperation('OK');
+        widShowBordersColor(objDn);
+		objHistorySelect.selectmenu('enable');
+        widShowBordersColor(objSubmitButton);
+        objDn.val(engGetHash(objRawDn.val(), glCurrentDB.hash));
+        widShowNewRecordOninput();
+        widShowRecordsTabLog('OK');
     }
 }
 
 function widDNOninput() {
+	var objDn = $('#dn_input');
+	var objRawDn = $('#rdn_input');
+	var objSubmitButton = $('#submit_button');
+	var s = objDn.val();
+
     widShowNewRecord();
     widShowLastRecord();
 	widCleanHistoryData();
-	var obj = $('#dn_input');
-    obj.val(engSetHex(obj.val()));
 	
-    $('#rdn_input').val('');
-	var s = obj.val();
+    objDn.val(engGetOnlyHex(objDn.val()));
+	objRawDn.val('');
+	
 	if (s.length === 0) {
-		widShowBorderColor('dn_input', '');
-        widShowBorderColor('submit_button', '');		
-		widShowRecordsLastOperation();
-	} else if (engIsHash(obj.val(), glCurrentDB.hash)) {
-        widShowBorderColor('dn_input', '');
-        widShowBorderColor('submit_button', '');
-        widShowRecordsLastOperation('OK');
-        //widGetNewRecordOninput();
+		widShowBordersColor(objDn);
+        widShowBordersColor(objSubmitButton);		
+		widShowRecordsTabLog();
+	} else if (engIsHash(objDn.val(), glCurrentDB.hash)) {
+        widShowBordersColor(objDn);
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog('OK');
     } else {
-        widShowBorderColor('dn_input', 'red');
-        widShowBorderColor('submit_button', 'red');
-        widShowRecordsLastOperation('BAD_HASH');
+        widShowBordersColor(objDn, 'red');
+        widShowBordersColor(objSubmitButton, 'red');
+        widShowRecordsTabLog('BAD_HASH');
     }
 }
 
-function widShowRecordsLastOperation(data) {
-	var obj = $('#' + 'records_last_operation_pre');
-	if (arguments.length === 0) {
+function widShowRecordsTabLog(d) {
+	var obj = $('#' + 'records_log_pre');
+	if (arguments.length == 0) {
 		obj.html('&nbsp');
 	} else {
-		obj.html(data);
+		obj.html(d);
 	}	
 }
 
-function widCheckNewRecordKeys(id) {
-    $('#' + id).val(engSetHex($('#' + id).val()));
+function widShowKeysPropriety(id) {
+	var objSubmitButton = $('#submit_button');
+	var objId = $('#' + id);
+	
+    objId.val(engGetOnlyHex(objId.val()));
 
-    if (engIsHash($('#' + id).val(), glCurrentDB.hash) || $('#' + id).val() == '') {
-        widShowBorderColor(id, '');
-        widShowBorderColor('submit_button', '');
-        widShowRecordsLastOperation();
+    if (engIsHash(objId.val(), glCurrentDB.hash) || objId.val() == '') {
+        widShowBordersColor(objId);
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog();
     } else {
-        widShowBorderColor(id, 'red');
-        widShowBorderColor('submit_button', 'red');
-        widShowRecordsLastOperation('BAD_HASH');
+        widShowBordersColor(objId, 'red');
+        widShowBordersColor(objSubmitButton, 'red');
+        widShowRecordsTabLog('BAD_HASH');
     }
-    widCheckNewRecord();
+	
+    widShowNewRecordsCompability();
 }
 
-function widRecordsGetLastRecordBtnClk() {
-    var s = $('#dn_input').val();
+function widGetLastRecordButtonClick() {
+	var objDn = $('#dn_input');
+    var s = objDn.val();
     var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
-
-    var cb = function (data) {
-        var r = engGetLastRecord(data);
+    var cb = function (d) {
+        var r = engGetParsedResponseLast(d);
 
         if (r.message == 'OK') {
 			widShowLastRecord(r);
-            widGetNewRecordAuto();
+            widShowNewRecordAuto();
         } else {
             widShowLastRecord();
         }
-        widShowRecordsLastOperation(r.content);
+        widShowRecordsTabLog(r.content);
     }
 
     ajxSendCommand(getlast, cb, hasqdLed);
 }
 
-function widGetNewRecordAuto() {
-    var lr_n = $('#lastrec_n_input').val();
-    var s = $('#dn_input').val();
-    var p0 = $('#newrec_pass0_input').val();
-	var objOP = $('#onepass_checkbox');
-	var objTP = $('#threepass_checkbox')
-	var objP1 = $('#newrec_pass1_input');
-	var objP2 = $('#newrec_pass2_input');
+function widShowNewRecordAuto() {
+	var objLastRecN = $('#lastrec_n_input');
+	var objDn = $('#dn_input');
+	var objNewRecPwd0 = $('#newrec_pass0_input');
+	var objNewRecPwd1 = $('#newrec_pass1_input');
+	var objNewRecPwd2 = $('#newrec_pass2_input');
+	var objOnePwd = $('#onepass_checkbox');
+	var objThreePwd = $('#threepass_checkbox')
 	
-    if (objOP.prop('checked') == 'enabled') {
+    var lr_n = objLastRecN.val();
+    var s = objDn.val();
+    var p0 = objNewRecPwd0.val();
+	
+    if (objOnePwd.prop('checked') === 'enabled') {
         var p1 = null;
         var p2 = null;
-    } else if (objTP.prop('checked')) {
-        var p1 = objP1.val();
-        var p2 = objP2.val();
+    } else if (objThreePwd.prop('checked')) {
+        var p1 = objNewRecPwd1.val();
+        var p2 = objNewRecPwd2.val();
     }
 
     widShowNewRecord();
@@ -274,78 +300,79 @@ function widGetNewRecordAuto() {
 		widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
     }
 
-    widCheckNewRecord();
+    widShowNewRecordsCompability();
 }
 
-function widGetNewRecordOninput() {
-	var objNRN = $('#newrec_n_input');
-	var objNRK = $('#newrec_k_input');
-	var objNRG = $('#newrec_g_input');
-	var objNRO = $('#newrec_o_input');
-	var objOPC = $('#onepass_checkbox');
-	var objTPC = $('#threepass_checkbox');
-	var objP0 = $('#newrec_pass0_input');
-	var objP1 = $('#newrec_pass1_input');
-	var objP2 = $('#newrec_pass2_input');
+function widShowNewRecordOninput() {
+	var objNewRecN = $('#newrec_n_input');
+	var objNewRecK = $('#newrec_k_input');
+	var objNewRecG = $('#newrec_g_input');
+	var objNewRecO = $('#newrec_o_input');
+	var objOnePwd = $('#onepass_checkbox');
+	var objThreePwd = $('#threepass_checkbox');
+	var objNewRecPwd0 = $('#newrec_pass0_input');
+	var objNewRecPwd1 = $('#newrec_pass1_input');
+	var objNewRecPwd2 = $('#newrec_pass2_input');
 	
     var s = $('#dn_input').val();	
+    var nr_n = +objNewRecN.val();
+    var p0 = objNewRecPwd0.val();
 	
-    if (objNRN.val() == '' && objNRK.val() == '' && objNRG.val() == '' && objNRO.val() == '') {
+    if (objNewRecN.val() == '' && objNewRecK.val() == '' && objNewRecG.val() == '' && objNewRecO.val() == '') {
         return;
     }
 
-    objNRN.val(engSetNumber(objNRN.val()));
+    objNewRecN.val(engGetOnlyNumber(objNewRecN.val()));
 
-    var nr_n = +objNRN.val();
-
-    var p0 = objP0.val();
-
-    if (objOPC.prop('checked')) {
+    if (objOnePwd.prop('checked')) {
         var p1 = null;
         var p2 = null;
-    } else if (objTPC.prop('checked')) {
-        var p1 = objP1.val();
-        var p2 = objP2.val();
+    } else if (objThreePwd.prop('checked')) {
+        var p1 = objNewRecPwd1.val();
+        var p2 = objNewRecPwd2.val();
     }
 
-    var pwdCheckBoxIsOn = objOPC.prop('checked') + objTPC.prop('checked');
+    var pwdCheckboxIsOn = objOnePwd.prop('checked') + objThreePwd.prop('checked');
 
-    if ((s != '') && pwdCheckBoxIsOn == 1) {
+    if ((s != '') && pwdCheckboxIsOn == 1) {
         widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
-        widShowRecordsLastOperation();
+        widShowRecordsTabLog();
     }
-    widCheckNewRecord();
+    widShowNewRecordsCompability();
 }
 
-function widRecordsOnePwdChkboxClk(obj) {
+function widRecordsOnePwdCheckboxClick(obj) {
     if (obj.checked == true) {
         $('#threepass_checkbox').prop('checked', false);
         $('#newrec_pass0_input').prop('disabled', false);
         $('#newrec_pass1_input').prop('disabled', true);
         $('#newrec_pass2_input').prop('disabled', true);
-        widGetNewRecordOninput();
+        widShowNewRecordOninput();
     } else {
         $('#newrec_pass0_input').prop('disabled', true);
-        widCheckNewRecord();
+        widShowNewRecordsCompability();
     }
 }
 
-function widRecordsThreePwdChkboxClk(obj) {
-    if (obj.checked == true) {
-        $('#onepass_checkbox').prop('checked', false);
-        $('#newrec_pass0_input').prop('disabled', false);
-        $('#newrec_pass1_input').prop('disabled', false);
-        $('#newrec_pass2_input').prop('disabled', false);
-        widGetNewRecordOninput();
+function widRecordsThreePwdCheckboxClick(obj) {
+	var objNewRecPwd0 = $('#newrec_pass0_input');
+	var objNewRecPwd1 = $('#newrec_pass1_input');
+	var objNewRecPwd2 = $('#newrec_pass2_input');
+	var objNewRecOnePwdCheckbox = $('#onepass_checkbox');
+
+    objNewRecPwd0.prop('disabled', !obj.checked);
+    objNewRecPwd1.prop('disabled', !obj.checked);
+    objNewRecPwd2.prop('disabled', !obj.checked);
+		
+    if (obj.checked) {
+        objNewRecOnePwdCheckbox.prop('checked', !obj.checked);
+        widShowNewRecordOninput();
     } else {
-        $('#newrec_pass0_input').prop('disabled', true);
-        $('#newrec_pass1_input').prop('disabled', true);
-        $('#newrec_pass2_input').prop('disabled', true);
-        widCheckNewRecord();
+        widShowNewRecordsCompability();
     }
 }
 
-function widCheckNewRecord() {
+function widShowNewRecordsCompability() {
     var s = $('#dn_input').val();
     var p0 = $('#newrec_pass0_input').val();
     var p1 = $('#newrec_pass1_input').val();
@@ -358,49 +385,52 @@ function widCheckNewRecord() {
     var nr_k = $('#newrec_k_input').val();
     var nr_g = $('#newrec_g_input').val();
     var nr_o = $('#newrec_o_input').val();
-    var k1 = $('#newrec_k_input').val();
-    var g1 = $('#newrec_g_input').val();
-    var g0 = engGetKey(nr_n, s, k1, glCurrentDB.magic, glCurrentDB.hash);
-    var o0 = engGetKey(nr_n, s, g1, glCurrentDB.magic, glCurrentDB.hash);
 
+    var g0 = engGetKey(nr_n, s, nr_k, glCurrentDB.magic, glCurrentDB.hash);
+    var o0 = engGetKey(nr_n, s, nr_g, glCurrentDB.magic, glCurrentDB.hash);
+
+	var objSubmitButton = $('#submit_button');
+	
     if (nr_n == '') //new record number is required
     {
-        widShowBorderColor('submit_button', '');
-        widShowRecordsLastOperation();
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog();
     } else if (lr_n == '') {
-        widShowBorderColor('submit_button', '');
-        widShowRecordsLastOperation('UNTESTABLE_REC');
-    } else if ((g0 == lr_g) && (o0 == lr_o)) {
-        widShowBorderColor('submit_button', 'green');
-        widShowRecordsLastOperation('COMPATIBLE_REC');
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog('New records compatible is unknown.');
+    } else if ((g0 === lr_g) && (o0 === lr_o)) {
+        widShowBordersColor(objSubmitButton, 'green');
+        widShowRecordsTabLog('New record is compatible.');
     } else {
-        widShowBorderColor('submit_button', 'red');
-        widShowRecordsLastOperation('UNCOMPATIBLE_REC');
+        widShowBordersColor(objSubmitButton, 'red');
+        widShowRecordsTabLog('New record is uncompatible.');
     }
 }
 
-function widTokensHistorySMenu(range) {
+function widTokensHistorySelect(range) {
+	var objHistorySelect = $('#tokens_history_textarea');
+	var s = $('#dn_input').val();	
 	var cb = function (data) {
-		var resp = engGetHasqdResponse(data);
-		var obj = $('#tokens_history_textarea');
+		var resp = engGetParsedResponse(data);
+		var objHistorySelect = $('#tokens_history_textarea');
+		
 		if (resp.message !== 'OK') {
-			obj.val('');
+			objHistorySelect.val('');
 			return;
 		}
+		
 		var i = resp.content.indexOf('\n');
 		var r = resp.content.substr(i+1);
-		obj.val(r);
+		objHistorySelect.val(r);
 	}
-
-	var obj = $('#tokens_history_textarea');
-	var t = $('#dn_input').val();
 	
 	if (range === 0) {
-		obj.val('');
+		objHistorySelect.val('');
 		return;
 	}
 	
-	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + t;
+	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
+	
 	ajxSendCommand(cmd, cb, hasqdLed);
 }
 
@@ -415,15 +445,7 @@ function widHashcalcOninput() {
     }
 }
 
-function widSubmitBtnClk() {
-    var cb = function (data) { 
-		var r = engGetHasqdResponse(data)
-        widShowRecordsLastOperation(r.message);
-		var i = $('#tokens_history_selectmenu').get(0).selectedIndex;
-		var d = +$('#tokens_history_selectmenu').get(0).options[i].text;
-		widTokensHistorySMenu(d);
-    }
-	
+function widSubmitButtonClick() {
     var s = $('#dn_input').val();
     var p0 = $('#newrec_pass0_input').val();
     var p1 = $('#newrec_pass1_input').val();
@@ -433,13 +455,22 @@ function widSubmitBtnClk() {
     var nr_g = $('#newrec_g_input').val();
     var nr_o = $('#newrec_o_input').val();
     var nr_d = $('#newrec_d_input').val();
-    var newRec = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engSetParsedDataValue(nr_d);
+    var cb = function (data) {
+		var objHistorySelect = $('#tokens_history_select');
+		var r = engGetParsedResponse(data)
+        widShowRecordsTabLog(r.message);
+		var i = objHistorySelect.get(0).selectedIndex;
+		var d = +objHistorySelect.get(0).options[i].text;
+		widTokensHistorySelect(d);
+    }
+	
+    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engSetParsedDataValue(nr_d);
 
-    ajxSendCommand(newRec, cb, hasqdLed);
+    ajxSendCommand(nr, cb, hasqdLed);
 }
 
 function widCheckEnterKey(d, e) {
     if (e.keyCode == 13) {
-        widCommandSendBtnClk();
+        widCommandSendButtonClick();
     }
 }

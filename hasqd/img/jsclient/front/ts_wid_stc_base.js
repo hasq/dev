@@ -1,23 +1,23 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function widBody(tabs) {
+function widGetHTMLBody(tabs) {
 	var r = '';
     r += '<table width="100%" id="body_table" border="0" nowrap>\n';
 		r += '<tr>\n';
-			r += '<td nowrap>' + widClientTitle(glClientTitle) + '\n';
-			r += '<td style="text-align:right">' + widClientLed('hasqd_led') + '\n';
+			r += '<td nowrap>' + widGetHTMLTitle(glClientTitle) + '\n';
+			r += '<td style="text-align:right">' + widGetHTMLSpan('hasqd_led') + '\n';
 		r += '</tr>\n';	
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>' + widMainInputsArea() + '\n';
+			r += '<td colspan="2" nowrap>' + widGetHTMLInitialData() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" colspan="2" nowrap>' + widMainTabs(tabs) + '\n';
+			r += '<td width="100%" colspan="2" nowrap>' + widGetHTMLMainTabs(tabs) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" colspan="2" nowrap>' + widLogArea() + '\n';
+			r += '<td width="100%" colspan="2" nowrap>' + widGetHTMLLogArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
@@ -27,7 +27,7 @@ function widBody(tabs) {
     return r;
 }
 
-function widClientTitle(text) {
+function widGetHTMLTitle(text) {
     var r = '';
     r += '<table border="0">\n';
 		r += '<tr>\n';
@@ -38,14 +38,14 @@ function widClientTitle(text) {
     return r;
 }
 
-function widClientLed(span_id) {
+function widGetHTMLSpan(span_id) {
     var r = '';
     r += '<span id="' + span_id + '"></span>\n';
     return r;
 }
 
 
-function widMainInputsArea() {
+function widGetHTMLInitialData() {
     var r = '';
 
     r += '<table width="100%" border="0" id="initial_data_table" style="border: 1px solid #DDDDDD;">\n';
@@ -90,7 +90,7 @@ function widMainInputsArea() {
     return r;
 }
 
-function widMainTabs(items) {
+function widGetHTMLMainTabs(items) {
     var r = '';
 
     r += '<div id="tabs_div">\n';
@@ -111,7 +111,7 @@ function widMainTabs(items) {
     return r;
 }
 
-function widCreateTab() {
+function widGetHTMLCreateTab() {
 	var r = '';
 	
 	r += '<table>\n';
@@ -124,7 +124,7 @@ function widCreateTab() {
 	return r;
 }
 
-function widSearchTab() {
+function widGetHTMLSearchTab() {
 	var r = '';
 	r += '<table border="0">\n';
 		r += '<tr>\n';
@@ -143,7 +143,7 @@ function widSearchTab() {
 	return r;	
 }
 
-function widSendTab() {
+function widGetHTMLSendTab() {
 	var r = '';
 	
 	r += '<table width="70%" border="0" >\n';
@@ -160,7 +160,7 @@ function widSendTab() {
 	return r;	
 }
 
-function widReceiveTab() {
+function widGetHTMLReceiveTab() {
 	var r = '';
 	
 	
@@ -178,7 +178,7 @@ function widReceiveTab() {
 	return r;	
 }
 
-function widSetDataTab() {
+function widGetHTMLSetDataTab() {
 	var r = '';
 	
 	r += '<table border="0" width="350px">\n';
@@ -195,7 +195,7 @@ function widSetDataTab() {
 	return r;
 }
 
-function widLogArea() {
+function widGetHTMLLogArea() {
     var r = '';
     r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
     return r;

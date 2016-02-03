@@ -17,7 +17,7 @@ function engGetKeysSetCheckResults(data, altName, sKey){
     } else if (sKey.length == 4 && (keys.length - 3) % 3 != 0) {
         r.message = 'ERROR';
         r.content = 'BAD_KEYS';
-    } else if (rawKeys != engSetHex(rawKeys)) {
+    } else if (rawKeys != engGetOnlyHex(rawKeys)) {
         r.message = 'ERROR';
         r.content = 'BAD_CHARS';
     } else if (keys[keys.length - 1] != sKey) {
@@ -33,23 +33,23 @@ function engGetKeysSetCheckResults(data, altName, sKey){
     return r;
 }
 
-function engGetInfoId(data) {
-    var r = engGetHasqdResponse(data);
+function engGetParsedResponseInfoId(data) {
+    var r = engGetParsedResponse(data);
     return r;
 }
 
-function engGetInfoSys(data) {
-    var r = engGetHasqdResponse(data);
+function engGetParsedResponseInfoSys(data) {
+    var r = engGetParsedResponse(data);
     return r;
 }
 
-function engGetInfoFam(data) {
+function engGetParsedResponseInfoFam(data) {
     var r = {};
     r.list = [];
     r.message = 'OK';
     r.content = '';
 
-    var response = engGetHasqdResponse(data);
+    var response = engGetParsedResponse(data);
 
     if (response.message != 'OK') {
         return response;
@@ -386,12 +386,12 @@ function engGetTokensUpdatedNames(data0, data1) {
     return data0;
 }
 
-function engSetNumber(data) {
+function engGetOnlyNumber(data) {
     var r = +data.replace(/[^0-9]/g, '');
     return r;
 }
 
-function engSetHex(data) {
+function engGetOnlyHex(data) {
     var r = data.replace(/[^0-9a-f]/g, '');
     return r;
 }

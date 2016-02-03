@@ -1,50 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
-
-
-function engGetNewRecord(n, s, p0, p1, p2, m, h) {
-	var r = {};
-	r.n = '';
-	r.s = '';
-	r.k = '';
-	r.g = '';
-	r.o = '';
-
-	var n0 = +n;
-	var n1 = +n + 1;
-	var n2 = +n + 2;
-
-	var k0 = engGetKey(n0, s, p0, m, h);
-
-	if ((p1 == null) || (p2 == null)) {
-		var k1 = engGetKey(n1, s, p0, m, h);
-		var k2 = engGetKey(n2, s, p0, m, h);
-	} else {
-		var k1 = engGetKey(n1, s, p1, m, h);
-		var k2 = engGetKey(n2, s, p2, m, h);
-	}
-
-	var g0 = engGetKey(n1, s, k1, m, h);
-	var g1 = engGetKey(n2, s, k2, m, h);
-	var o0 = engGetKey(n1, s, g1, m, h);
-
-	r.n = n0;
-	r.s = s;
-	r.k = k0;
-	r.g = g0;
-	r.o = o0;
-
-	return r;
-}
-
-function engGetKey(n, s, p, m, h) {
-	var raw_k = n + ' ' + s + ' ' + p;
-
-	if (m != '') {
-		raw_k += ' ' + m;
-	}
-
-	return engGetHash(raw_k, h); ;
-}
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 function engAddVTLItem(data, idx, table, cmdList) {
 	var n = table.items.length;
@@ -66,7 +20,7 @@ function engAddVTLItem(data, idx, table, cmdList) {
 		table.items[n].message = 'IDX_NODN';
 		table.unknown = true;
 	} else {
-		var existingRec = engGetLastRecord(data);
+		var existingRec = engGetParsedResponseLast(data);
 		var expectingRec = engGetNewRecord(existingRec.n, existingRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		table.items[n].n = existingRec.n;
 		table.items[n].d = existingRec.d;
@@ -113,7 +67,7 @@ function engRunCRL(cmdsList, cbFunc) {
 		}
 
 		var progress = 100 * (cmdsList.idx + 1) / cmdsList.items.length;
-		var r = engGetHasqdResponse(data).message;
+		var r = engGetParsedResponse(data).message;
 
 		if (r === 'OK' || r === 'IDX_NODN') {
 			cbFunc(data, cmdsList.idx, progress);
