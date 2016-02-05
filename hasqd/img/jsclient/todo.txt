@@ -1,3 +1,9 @@
+Critical things
+---------------
+- ISO creating hangs on create.db inside TC
+
+Major things
+------------
 start hasqd without db
 then run tsclnt
 
@@ -7,6 +13,8 @@ problems
 3. No hash shown
 
 
+Minor things
+------------
 - Set data - make textarea
 - Search from [field]
            to [field]
