@@ -15,6 +15,6 @@ problems
 
 Minor things
 ------------
-- Set data - make textarea
-- Search from [field]
+DONE - Set data - make textarea
+DONE - Search from [field]
            to [field]
