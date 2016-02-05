@@ -92,7 +92,7 @@ function docInit() {
 	});
 	
 	widSetDefaultDb(glRequiredDbHash);
-
+	window.onerror = engDoNothing();
 	var ping = function() { engSendPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);

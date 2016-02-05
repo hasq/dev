@@ -1,4 +1,8 @@
-﻿function engSendDeferredRequest(cmd, t, f) {
+﻿function engDoNothing() {
+	return true;
+}
+
+function engSendDeferredRequest(cmd, t, f) {
 // Sends ajax request with 1000ms delay.
 // the request will be ignored if token value will be changed during this 1000ms
 	var req = function() {

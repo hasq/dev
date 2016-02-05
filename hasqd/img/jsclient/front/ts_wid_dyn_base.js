@@ -418,35 +418,19 @@ function widSearchButtonClick(){
 	var toM = toDate.getMonth() + 1;
 	var toD = toDate.getDate();
 	
-	var cbY = function callBackY (dY) {
-		var rY = engGetParsedResponse(dY);
-		
-		if (rY.content != 'REQ_PATH_BAD') {
-			var cbM = function callBackM(dM) {
-				var rM = engGetParsedResponse(dM);
-				if (rM.content != 'REQ_PATH_BAD') {
-					console.log(rM.content);
-				} else {
-					toM--;
-					if (toM >= fromM) {
-						var cmdM = cmdM = '/' + glCurrentDB.name + '/' + toY + '/' + toM + '/';
-						ajxSendCommand(cmdM, cbM, hasqdLed);
-					}
-				}				
-			}		
-			var cmdM = '/' + glCurrentDB.name + '/' + toY + '/' + toM + '/';
-			ajxSendCommand(cmdM, cbM, hasqdLed);			
-		} else {
-			toY--;
-			if (toY >= fromY) {
-				var cmdY = '/' + glCurrentDB.name + '/' + toY + '/';
-				ajxSendCommand(cmdY, callBackY, hasqdLed);
+	var cmd = [];
+	for (var y = toY; toY >= fromY; y--) {
+		for (var m = toM; toM >= fromM; m--) {
+			if (m <= 0) {
+				break;
+			}
+			for (var d = 31; d > 0; d--) {
+				cmd[cmd.length] = '/' + glCurrentDB.name + '/' + y + '/' + m + '/' + d + '/';
+				console.log(cmd[cmd.length - 1]);
 			}
 		}
 	}
 	
-	var cmdY = '/' + glCurrentDB.name + '/' + toY + '/';	
-	ajxSendCommand(cmdY, cbY, hasqdLed);
-
+	
 }
 

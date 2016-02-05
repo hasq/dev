@@ -19,5 +19,10 @@ function ajxSendCommand(cmd, callback, progress) {
     })
 
     .always(function() {
-    });
+    })
+	
+	.error(function() {
+		progress.fail();
+		alert('Failed to connect to server!');
+	});
 }
