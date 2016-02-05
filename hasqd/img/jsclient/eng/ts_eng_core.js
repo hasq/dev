@@ -43,3 +43,64 @@ function engSendPing(timeDelay) {
 	
 	ajxSendCommand('ping', cb, hasqdLed)
 }
+
+function engGetDateRangeFolders(fromDate, toDate) {
+	var r = [];
+	var fromY = fromDate.getFullYear();
+	var fromM = fromDate.getMonth() + 1;
+	var fromD = fromDate.getDate();
+	var toY = toDate.getFullYear();
+	var toM = toDate.getMonth() + 1;
+	var toD = toDate.getDate();
+
+	while (toY >= 2016) {
+		if (toY == fromY && toM == fromM && toD == fromD){
+			break;
+		} else if (toM == 0) {
+			toM = 12;
+		}
+		
+		while (toM > 0) {
+			if (toD == 0) {
+				// fills days count in month
+				if (toM == 1 || toM == 3 ||toM == 5 ||toM == 7 ||toM == 8 ||toM == 10 ||toM == 12) {
+					toD = 31;
+				} else if (toM == 4 ||toM == 6 ||toM == 9 ||toM == 11 ||toM == 10 ||toM == 12) {
+					toD = 30;
+				} else if (toY % 400 == 0 || (toY % 4 == 0 && toY % 100 != 0)) {
+					toD = 29;
+				} else {
+					toD = 28;
+				}				
+			}
+			while (toD > 0) {
+				var mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
+				var dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
+				var cmd = '/' + toY.toString() + '/' + mm + '/' + dd + '/';
+				
+				r[r.length] = cmd;
+				
+				if (toY == fromY && toM == fromM && toD == fromD) {
+					break;
+				} else {
+					toD--;
+				}
+				
+			}
+			
+			if (toY == fromY && toM == fromM && toD == fromD){
+				break;
+			} else {
+				toM--;
+			}			
+		}
+		
+		if (toY == fromY && toM == fromM && toD == fromD){
+			break;
+		} else {
+			toY--;
+		}		
+	}
+
+	return r;
+}

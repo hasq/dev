@@ -67,7 +67,8 @@ function docInit() {
 	});
 	$('#from_datepicker_input').datepicker({
 		dateFormat: 'yy/mm/dd',
-		minDate: new Date(2013, 0, 1),
+		minDate: new Date(2016, 0, 1),
+		maxDate: new Date(),
 		showMonthAfterYear: true,
 		showOtherMonths: true,
 		selectOtherMonths: true,
@@ -80,6 +81,7 @@ function docInit() {
 	
 	$('#to_datepicker_input').datepicker({
 		dateFormat: 'yy/mm/dd',
+		minDate: new Date(2016, 0, 1),
 		maxDate: new Date(),
 		showMonthAfterYear: true,
 		showOtherMonths: true,

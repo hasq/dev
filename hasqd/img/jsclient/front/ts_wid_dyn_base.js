@@ -392,17 +392,6 @@ function widSetDataButtonClick() {
 	widShowLog('Setting token data...');
 }
 
-/*
-function widGetCurrentDate(){
-	var date = new Date();
-	var y = date.getFullYear();
-	var m = (date.getMonth() < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-	var d = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
-	var r = y + '/' + m + '/' + d;
-	return r;
-}
-*/
-
 function widSearchButtonClick(){
 	var objFrom = $('#from_datepicker_input');
 	var objTo = $('#to_datepicker_input');
@@ -410,27 +399,11 @@ function widSearchButtonClick(){
 	var fromDate = new Date(objFrom.datepicker('getDate'));
 	var toDate = new Date(objTo.datepicker('getDate'));
 	
-	var fromY = fromDate.getFullYear();
-	var fromM = fromDate.getMonth() + 1;
-	var fromD = fromDate.getDate();
-	
-	var toY = toDate.getFullYear();
-	var toM = toDate.getMonth() + 1;
-	var toD = toDate.getDate();
-	
-	var cmd = [];
-	for (var y = toY; toY >= fromY; y--) {
-		for (var m = toM; toM >= fromM; m--) {
-			if (m <= 0) {
-				break;
-			}
-			for (var d = 31; d > 0; d--) {
-				cmd[cmd.length] = '/' + glCurrentDB.name + '/' + y + '/' + m + '/' + d + '/';
-				console.log(cmd[cmd.length - 1]);
-			}
-		}
-	}
-	
-	
+	// needs to check correctness of specified date range if entered manually
+	console.log(fromDate);
+	console.log(toDate);
+	var folders = engGetDateRangeFolders(fromDate, toDate);
+
+	widCompleteEvent();
 }
 
