@@ -32,7 +32,7 @@ function widGetHTMLTokensTab() {
 
     r += '<table width="70%" border="0">\n';
     r += '<tr>\n';
-    r += '<td width="100%">' + widGetHTMLTokensTabInitialData() + '\n';
+    r += '<td width="100%">' + widGetHTMLTokensInitialData() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td width="100%">' + widGetHTMLTokensProgressbar() + '\n';
@@ -72,7 +72,7 @@ function widGetHTMLTokensTabWrite(items) {
     return r;
 }
 
-function widGetHTMLTokensTabInitialData() {
+function widGetHTMLTokensInitialData() {
     var r = '';
 
     r += '<table width="100%" border="0">\n';
@@ -95,7 +95,8 @@ function widGetHTMLTokensTabInitialData() {
     r += '<tr>\n';
     r += '<td style="text-align:left">Base name&nbsp\n';
     r += '<td colspan="3" style="text-align:left"><input type="text" size="24" id="tokens_basename_input" value="">\n';
-    r += '<td style="text-align:right" rowspan="2"><button id="tokens_add_button" data-title="Add" onclick="widMainButtonClick(this.id)">Add</button>\n';
+    r += '<td style="text-align:right" rowspan="2">\n';
+	r += '<button id="tokens_add_button" onclick="widMainButtonClick(this.id)" data-title="Add">Add</button>\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">Start index&nbsp\n';
@@ -184,7 +185,7 @@ function widGetHTMLTokensDataTab() {
     r += '<tr>\n';
     r += '<td colspan="2" align="right">\n';
     r += '<button id="tokens_data_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_data_update_button" data-title="Update" data-class="main" onclick="widMainButtonClick(this.id)">Update</button>\n';
+    r += '<button id="tokens_data_update_button"  onclick="widMainButtonClick(this.id)" data-title="Update" data-class="main">Update</button>\n';
     r += '<td data-class="hide" id="tokens_data_warning_text" style="background:pink" colspan="3" align="center">\n';
     r += '<pre>The specified range contains unknown tokens. Continue?</pre>\n';
     r += '</tr>\n';
@@ -197,19 +198,19 @@ function widGetHTMLTokensSendTab() {
     var r = '';
     r += '<div id="tokens_send_accordion">\n';
     r += '<h3>Scenario 1: Simple send</h3>\n';
-    r += widTokensSS1();
+    r += widGetHTMLTokensSS1();
     r += '<h3>Scenario 2: Simple accept</h3>\n';
-    r += widTokensSS2();
+    r += widGetHTMLTokensSS2();
     r += '<h3>Scenario 3: Blocking send</h3>\n';
-    r += widTokensSS3();
+    r += widGetHTMLTokensSS3();
     r += '<h3>Scenario 4: Blocking accept</h3>\n';
-    r += widTokensSS4();
+    r += widGetHTMLTokensSS4();
     r += '</div>\n';
 
     return r;
 }
 
-function widTokensSS1() {
+function widGetHTMLTokensSS1() {
     var r = '';
 
     r += '<div>\n';
@@ -245,37 +246,37 @@ function widTokensSS1() {
     return r;
 }
 
-function widTokensSS2() {
+function widGetHTMLTokensSS2() {
     var r = '';
 
     r += '<div>\n';
 
     r += '<div data-class="div" id="divSS2">\n';
     r += '<table width="100%" >\n';
-    r += '<tr>\n';
-    r += '<td>\n';
-    r += '<table width="100%">\n';
-    r += '<tr rowspan="5">\n';
-    r += '<td colspan="2">\n';
-    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" id="tokens_ss2_textarea"></textarea>\n';
-    r += '</tr>\n';
-    r += '</table>\n';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td align="right">\n';
-    r += '<table>\n';
-    r += '<tr>\n';
-    r += '<td id="tokens_ss2_warning_text" data-class="hide" style="background:pink" colspan="3" align="center">\n';
-    r += '<pre>Tokens names will be updated. Continue?</pre>\n';
-    r += '<td align="right">\n';
-    r += '<div id="tokens_ss2_led_div">\n</div>\n';
-    r += '<td align="right">\n';
-    r += '<button id="tokens_ss2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_ss2_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick(this.id)">Finalize</button>\n';
-    r += '</tr>\n';
-    r += '</table>\n';
-    r += '</tr>\n';
-    r += '</table>\n';
+		r += '<tr>\n';
+			r += '<td>\n';
+				r += '<table width="100%">\n';
+					r += '<tr rowspan="5">\n';
+						r += '<td colspan="2">\n';
+							r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" id="tokens_ss2_textarea"></textarea>\n';
+					r += '</tr>\n';
+				r += '</table>\n';
+			r += '</tr>\n';
+			r += '<tr>\n';
+				r += '<td align="right">\n';
+					r += '<table>\n';
+						r += '<tr>\n';
+							r += '<td id="tokens_ss2_warning_text" data-class="hide" style="background:pink" colspan="3" align="center">\n';
+								r += '<pre>Tokens names will be updated. Continue?</pre>\n';
+							r += '<td align="right">\n';
+								r += '<div id="tokens_ss2_led_div">\n</div>\n';
+							r += '<td align="right">\n';
+								r += '<button id="tokens_ss2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
+								r += '<button id="tokens_ss2_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick(this.id)">Finalize</button>\n';
+						r += '</tr>\n';
+					r += '</table>\n';
+			r += '</tr>\n';
+		r += '</table>\n';
     r += '</div>\n';
 
     r += '</div>\n';
@@ -283,7 +284,7 @@ function widTokensSS2() {
     return r;
 }
 
-function widTokensSS3() {
+function widGetHTMLTokensSS3() {
     var r = '';
     r += '<div>\n';
 
@@ -341,7 +342,7 @@ function widTokensSS3() {
     return r;
 }
 
-function widTokensSS4() {
+function widGetHTMLTokensSS4() {
     var r = '';
     r += '<div>\n';
 
@@ -411,19 +412,19 @@ function widTokensReceiveTab() {
     var r = '';
     r += '<div id="tokens_receive_accordion">\n';
     r += '<h3>Scenario 1: Simple receive</h3>\n';
-    r += widTokensRS1();
+    r += widGetHTMLTokensRS1();
     r += '<h3>Scenario 2: Simple request</h3>\n';
-    r += widTokensRS2();
+    r += widGetHTMLTokensRS2();
     r += '<h3>Scenario 3: Blocking receive</h3>\n';
-    r += widTokensRS3();
+    r += widGetHTMLTokensRS3();
     r += '<h3>Scenario 4: Blocking request</h3>\n';
-    r += widTokensRS4();
+    r += widGetHTMLTokensRS4();
     r += '</div>\n';
 
     return r;
 }
 
-function widTokensRS1() {
+function widGetHTMLTokensRS1() {
     var r = '';
     r += '<div>\n';
 
@@ -460,7 +461,7 @@ function widTokensRS1() {
     return r;
 }
 
-function widTokensRS2() {
+function widGetHTMLTokensRS2() {
     var r = '';
 
     r += '<div>\n';
@@ -498,7 +499,7 @@ function widTokensRS2() {
     return r;
 }
 
-function widTokensRS3() {
+function widGetHTMLTokensRS3() {
     var r = '';
     r += '<div>\n';
 
@@ -565,7 +566,7 @@ function widTokensRS3() {
     return r;
 }
 
-function widTokensRS4() {
+function widGetHTMLTokensRS4() {
     var r = '';
     r += '<div>\n';
 

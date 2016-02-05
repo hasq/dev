@@ -60,17 +60,26 @@ function widCleanRS4() {
     $('#tokens_rs4_s2_textarea').val('');
 }
 
-function widPrintTokensProgressbar(data) {
-    if (data === false) {
-        $('#tokens_progressbar').progressbar('value', data);
-    } else {
+function widShowProgressbar(data) {
+	var objProgressbar = $('#tokens_progressbar');
+	
+    if (data) {
         var val = Math.floor(data);
-        $('#tokens_progressbar').progressbar('value', val);
+        objProgressbar.progressbar('value', val);
+    } else {
+        objProgressbar.progressbar('value', data);		
     }
 }
 
-function widPrintTokensLastOperation(data) {
-    $('#tokens_log_pre').html(data);
+function widShowTokensLog(data) {
+	var objLog = $('#tokens_log_pre');
+	
+	if (arguments.length == 0) {
+		objLog.html('&nbsp');
+	} else {
+		objLog.html(data);
+	}
+    
 }
 
 function widCleanAllTabs() {
@@ -83,7 +92,7 @@ function widCleanAllTabs() {
     widCleanRS2();
     widCleanRS3();
     widCleanRS4();
-    widPrintTokensProgressbar(0);
+    widShowProgressbar(0);
 }
 
 function widTokensIdxOninput(id, data) {
@@ -115,8 +124,6 @@ function widDisableAllTokensOperations(id) {
 	var obj = $('#tokens_tabs');	
     obj.tabs('option', 'disabled', true);
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
-    //var idC = widGetClosestContinueButtonId(id);
-    //var idB = widGetClosestMainButtonId(id);
     $('#' + widGetClosestContinueButtonId(id)).prop('disabled', false);
     $('#' + widGetClosestMainButtonId(id)).prop('disabled', false);
 }
@@ -144,44 +151,39 @@ function widGetTokensNamesCheckResults() {
 }
 
 function widGetTokensPasswordCheckResults() {
+	var objPwd = $('#tokens_password_input');
     var r = {};
     r.message = 'OK';
     r.content = 'OK';
 
-    if ($('#tokens_password_input').val() == '') {
+    if (objPwd.val() == '') {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_BAD_PWD';
+        r.content = 'Empty password.';
     }
 
     return r;
 }
 
 function widGetTokensRangeCheckResults() {
+	var objBasename = $('#tokens_basename_input');
+    var idx0 = +$('#tokens_first_idx_input').val();
+    var idx1 = +$('#tokens_last_idx_input').val();	
     var r = {};
     r.message = 'OK';
     r.content = 'OK';
 
-    if ($('#tokens_basename_input').val() == '') {
+    if (objBasename.val() == '') {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_BAD_BASENAME';
-    }
-
-    if (/[\s]/g.test($('#tokens_basename_input').val())) {
+        r.content = 'Empty basename.';
+    } else if (/[\s]/g.test(objBasename.val())) {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_BAD_BASENAME';
-    }
-
-    var idx0 = +$('#tokens_first_idx_input').val();
-    var idx1 = +$('#tokens_last_idx_input').val();
-
-    if (idx0 > idx1) {
+        r.content = 'Incorrect basename. Please, remove spaces.';
+    } else if (idx0 > idx1) {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_BAD_IDX';
-    }
-
-    if (idx1 - idx0 > 127) {
+        r.content = 'Incorrect indexes. The start index should not be bigger the end index.';
+    } else if (idx1 - idx0 > 127) {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_LARGE_RANGE';
+        r.content = 'Too many tokens, the maximum quantity - 128';
     }
 
     return r;
@@ -199,26 +201,26 @@ function widTokensNamesOninput(data) {
     if (!engIsTokensNamesGood(data, glCurrentDB.hash)) {
         widDisableTokensInput();
         widShowBordersColor(objNamesTextarea, '#FF0000'); //RED BORDER
-        widPrintTokensLastOperation('REQ_TOKENS_BAD_NAME');
+        widShowTokensLog('Please enter a hashes or raw value in square brackets.');
     } else if (namesArray.length >= 15479) {
         widEnableTokensInput();
         widShowBordersColor(objNamesTextarea, '#FFFF00'); //YELLOW BORDER
         var l = 16511 - namesArray.length;
-        objNamesTextarea.prop('title', 'WARNING! ' + l + ' CHARS LEFT.');
-        widPrintTokensLastOperation('.');
+        objNamesTextarea.prop('title', 'Warning! ' + l + ' chars left.');
+        widShowTokensLog();
     } else {
         widEnableTokensInput();
         widShowBordersColor(objNamesTextarea);
-        widPrintTokensLastOperation('.');
+        widShowTokensLog();
     }
 }
 
 function widTokensAdd(id, data) {
-    idName = 'tokens_basename_input';
-    idFirstIdx = 'tokens_first_idx_input';
-    idLastIdx = 'tokens_last_idx_input';
-    idTokensArea = 'tokens_names_textarea';
-
+	var objBasename = $('#tokens_basename_input')
+	var objFirstIdx = $('#tokens_first_idx_input')
+	var objLastIdx = $('#tokens_last_idx_input')
+	var objNames = $('#tokens_names_textarea')
+	
     var tChk = widGetTokensRangeCheckResults();
 
     if (tChk.message == 'ERROR') {
@@ -226,11 +228,10 @@ function widTokensAdd(id, data) {
         return;
     }
 
-    var baseName = $('#' + idName).val();
-    var idx0 = $('#' + idFirstIdx).val();
-    var idx1 = $('#' + idLastIdx).val();
-
-    var tokens = $('#' + idTokensArea).val().replace(/\s+$/g, '');
+    var baseName = objBasename.val();
+    var idx0 = objFirstIdx.val();
+    var idx1 = objLastIdx.val();
+    var tokens = objNames.val().replace(/\s+$/g, '');
     var l = tokens.length;
     var lastChar = tokens.charAt(l - 1);
     var newTokens = (l == 0 || lastChar == '\u0020' || lastChar == '\u0009' || lastChar == '\u000A' || lastChar == '\u000B' || lastChar == '\u000D') ? '' : '\u0020';
@@ -255,12 +256,13 @@ function widTokensAdd(id, data) {
     }
 
     tokens += newTokens;
+	
     if (tokens.length <= 16511) {
-        $('#' + idTokensArea).val(tokens);
-        $('#' + idTokensArea)[0].oninput();
-        $('#' + idName).val('');
-        $('#' + idFirstIdx).val('');
-        $('#' + idLastIdx).val('');
+        objNames.val(tokens);
+        objNames[0].oninput();
+        objBasename.val('');
+        objFirstIdx.val('');
+        objLastIdx.val('');
         widCancelByEvent(id, 'OK');
     } else {
         widCancelByEvent(id, 'REQ_TOKENS_TOO_MANY');
@@ -402,7 +404,7 @@ function widCancelFunction(id, data) {
     }
 
     widCleanCRL();
-    widPrintTokensLastOperation(data);
+    widShowTokensLog(data);
     widEnableAllTokensOperations();
 }
 
@@ -504,14 +506,14 @@ function widCreateTokens(id, tokens) {
             return;
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message == 'ERROR') {
             widCancelByEvent(id, cbResponse.content);
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('CREATING... ');
+            widShowTokensLog('Creating... ');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -608,7 +610,7 @@ function widVerifyTokens(id, tokens, nextFunc, nextFuncData) {
             return;
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         cbData = cbData.replace(/^\s+|\s+$/g, '');
         glVTL = engAddVTLItem(cbData, cmdItemIdx, glVTL, glCRL.items);
@@ -622,9 +624,9 @@ function widVerifyTokens(id, tokens, nextFunc, nextFuncData) {
         }
 
         if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('VERIFYING...');
+            widShowTokensLog('Verifying...');
         } else if (nextFunc != null) {
-            widPrintTokensLastOperation('VTL_READY');
+            widShowTokensLog('Verified tokens list is ready.');
             widCleanCRL();
             var f = (nextFuncData === null) ? function () {
                 nextFunc(id);
@@ -709,14 +711,14 @@ function widUpdateTokens(id, data) {
             return;
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message === 'ERROR') {
             widCancelByEvent(id, cbResponse.content);
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('UPDATE... ');
+            widShowTokensLog('Update data... ');
         } else {
             widCancelByEvent(id, 'OK');
         }
@@ -812,7 +814,7 @@ function widPrepareToSS1ShowK1K2Keys(id) {
 
 function widSS1ShowK1K2Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message == 'OK') {
             var r = data.items[i];
             var k1 = engGetKey(r.n + 1, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -823,7 +825,7 @@ function widSS1ShowK1K2Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
@@ -897,12 +899,12 @@ function widRS1ObtainK1K2Keys(id, data) {
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -997,12 +999,12 @@ function widSS2ObtainG2O2Keys(id, data) {
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -1089,7 +1091,7 @@ function widPrepareToRS2ShowG2O2Keys(id) {
 
 function widRS2ShowG2O2Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN') {
             var r = data.items[i];
             var k3 = engGetKey(r.n + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -1103,7 +1105,7 @@ function widRS2ShowG2O2Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     idOut = widGetClosestTextareaId(id);
@@ -1159,7 +1161,7 @@ function widPrepareToSS3ShowK1G1Keys(id) {
 
 function widSS3ShowK1G1Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message == 'OK') {
             var r = data.items[i];
             var n0 = r.n;
@@ -1172,7 +1174,7 @@ function widSS3ShowK1G1Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     idOut = widGetClosestTextareaId(id);
@@ -1229,7 +1231,7 @@ function widPrepareToSS3ShowK2Keys(id) {
 
 function widSS3ShowK2Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN' && data.items[i].n !== 0) {
             var r = data.items[i];
             var n0 = r.n - 1;
@@ -1241,7 +1243,7 @@ function widSS3ShowK2Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     if (newRow.length !== 0) {
@@ -1304,12 +1306,12 @@ function widRS3ObtainK1G1Keys(id, data) {
             objL.html(picRed);
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -1388,12 +1390,12 @@ function widRS3ObtainK2Keys(id, data) {
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -1473,12 +1475,12 @@ function widSS4ObtainO1Keys(id, data) {
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -1553,12 +1555,12 @@ function widSS4ObtainG2O2Keys(id, data) {
             objL.html(picRed);
             objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
-        widPrintTokensProgressbar(progress);
+        widShowProgressbar(progress);
 
         if (glCRL.items.length == 0) {
             widCancelByEvent(id, 'CANCELLED_BY_USER');
         } else if (cmdItemIdx + 1 < glCRL.items.length) {
-            widPrintTokensLastOperation('OBTAINING KEYS...');
+            widShowTokensLog('Obtaining keys...');
         } else {
             widMainButtonClick(id, 'OK');
         }
@@ -1630,7 +1632,7 @@ function widPrepareToRS4ShowO1Keys(id) {
 
 function widRS4ShowO1Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN') {
             var r = data.items[i];
             var n0 = r.n;
@@ -1643,7 +1645,7 @@ function widRS4ShowO1Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
@@ -1699,7 +1701,7 @@ function widPrepareToRS4ShowG2O2Keys(id) {
 
 function widRS4ShowG2O2Keys(id, data) {
     for (var i = 0; i < data.items.length; i++) {
-        widPrintTokensProgressbar(100 * (i + 1) / data.items.length);
+        widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN' && data.items[i].n !== 0) {
             var r = data.items[i];
             var n0 = r.n - 1;
@@ -1714,7 +1716,7 @@ function widRS4ShowG2O2Keys(id, data) {
         }
 
         widPrintSendReceiveOut(id, newRow);
-        widPrintTokensLastOperation('GENERATION...');
+        widShowTokensLog('Generation...');
     }
 
     if  (newRow.length !== 0) {

@@ -128,16 +128,18 @@ function widGetHTMLSearchTab() {
 	var r = '';
 	r += '<table border="0">\n';
 		r += '<tr>\n';
-			r += '<td style="font-family:monospace">\n'
-				r += 'From ' + widGetCurrentDate() + ' to:';
-		r += '</tr>\n';
-		r += '<tr>\n';
+			r += '<td>\n';
+				r += 'From' + '&nbsp';
+			r += '<td>\n';	
+				r += '<input id="from_datepicker_input" type="text">\n';
 			r += '<td>\n'
-				r += '<input type="text" size="10" id="search_datepicker_input">';
+				r += '&nbsp' + 'to' + '&nbsp';
+			r += '<td>\n';
+				r += '<input id="to_datepicker_input" type="text">\n';
 		r += '</tr>\n';		
 		r += '<tr>\n';
-			r += '<td style="text-align:right">\n'
-				r += '<button id="search_button" onclick="widButtonClick(this.id);" data-onclick="widSearchButtonClick()" disabled>Search';
+			r += '<td colspan="4" style="text-align:right">\n'
+				r += '<button id="search_button" onclick="widButtonClick(this.id);" data-onclick="widSearchButtonClick()">Search';
 		r += '</tr>\n';		
 	r += '</table>\n';	
 	return r;	
@@ -181,10 +183,10 @@ function widGetHTMLReceiveTab() {
 function widGetHTMLSetDataTab() {
 	var r = '';
 	
-	r += '<table border="0" width="350px">\n';
+	r += '<table border="1" width="30%">\n';
 		r += '<tr>\n';
 			r += '<td width="100%">\n';
-				r += '<input id="setdata_input" type="text" placeholder="Enter new data"/>';
+				r += '<textarea id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:right">\n'

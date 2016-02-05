@@ -198,25 +198,25 @@ function doc_init() {
 	
 	$('#tokens_tabs').tabs({
 		activate : function (event, ui) {
-			widPrintTokensProgressbar(0);
+			widShowProgressbar(0);
 			switch (ui.newTab.index()) {
 			case 0: 
-				widPrintTokensLastOperation('Create');
+				widShowTokensLog('Create');
 				break;
 			case 1: 
-				widPrintTokensLastOperation('Verify');
+				widShowTokensLog('Verify');
 				break;
 			case 2: 
-				widPrintTokensLastOperation('Update');
+				widShowTokensLog('Update');
 				break;
 			case 3:
-				widPrintTokensLastOperation('Keys generation for Sender');
+				widShowTokensLog('Keys generation for Sender');
 				break;
 			case 4: 
-				widPrintTokensLastOperation('Keys generation for Receiver');
+				widShowTokensLog('Keys generation for Receiver');
 				break;
 			default:
-				widPrintTokensLastOperation('&nbsp');
+				widShowTokensLog('&nbsp');
 				break;
 			}
 		}

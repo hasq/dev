@@ -1,6 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 function engGetParsedResponse(d) {
+// returns response header 
     var r = {};
     var response = d.replace(/\r|\s+$/g, '');
     var blocks = response.split(/\s/);  // split by by \s (\s, \n, \t, \v);
@@ -37,6 +38,7 @@ function engGetParsedResponse(d) {
 }
 
 function engGetParsedResponseInfoDb(d) {
+// returns parsed 'info db' response	
     var r = [];
 
     var response = engGetParsedResponse(d);
@@ -101,6 +103,7 @@ function engGetParsedResponseInfoDb(d) {
 }
 
 function engGetParsedResponseLast(d) {
+// returns parsed 'last' response
     var r = {};
     r.content = 'OK';
     r.message = 'OK';
@@ -140,6 +143,7 @@ function engGetParsedResponseLast(d) {
 }
 
 function engGetNewRecord(n, s, p0, p1, p2, m, h) {
+// generates new record
 	var r = {};
 	r.n = '';
 	r.s = '';
@@ -185,6 +189,7 @@ function engGetKey(n, s, p, m, h) {
 }
 
 function engIsHash(d, h) {
+//checks string is hash or not hash
     var notHex = /[^0-9a-f]/g;
     var r = true;
     switch (h) {
@@ -218,6 +223,7 @@ function engIsHash(d, h) {
 }
 
 function engGetHash(d, h) {
+//returns specified hash of 'd'
 	switch (h) {
 	case 'wrd':
 		return hex_md5(d).substring(0, 4);
@@ -238,6 +244,7 @@ function engGetHash(d, h) {
 }
 
 function engGetTokensState(lr, nr) {
+// returns current matching of password 
 	if ((lr.g === nr.g) && (lr.o === nr.o)) {
 		return 1; // Tokens keys is fully matched with a password
 	} else if (lr.g === nr.g) {
@@ -249,7 +256,8 @@ function engGetTokensState(lr, nr) {
 	}
 }
 
-function engGetParsedDataValue(d) {
+function engGetOutParsedDataValue(d) {
+// returns parsed data for displaying
 	var r = d;
 	if (r !== undefined && r.length > 0) {
 		var lf = '\u000a'; //unicode line-feed
@@ -260,7 +268,7 @@ function engGetParsedDataValue(d) {
 				r = r.substring(0, i) + r.substr(i + 1);
 				i++; // need check;
 			} else if (r[i] === '\u005c' && r[i + 1] === '\u006e') {
-				// "/n" > LF
+				// "\n" > LF
 				r = r.substring(0, i) + lf + r.substr(i + 2);
 			} else if (r[i] === '\u005c' && r[i - 1] === '\u0020' && r[i + 1] === '\u0020') {
 				// "a \ a" > "a, "a \ \ a" > "a   a", "a\ " > "a\ "
@@ -272,14 +280,18 @@ function engGetParsedDataValue(d) {
 	
 }
 
-function engSetParsedDataValue(d) {
-	var r = d.replace(/^\s+|\s+$/g, '');;
+function engGetInParsedDataValue(d) {
+// returns parsed data for add into record
+	var r = d.replace(/^\s+|\s+$/g, '');
 	if (r !== undefined && r.length > 0) {
 		for (var i = 0; i < r.length; i++) {
 			if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
 				// "a  a" -> "a \ a", "  " -> ""
 				r = r.substring(0, i + 1) + '\u005c' + r.substr(i + 1, r.length);
 				i++;
+			} else if (r[i] === '\u000a') {
+				// LF  > "\n"
+				r = r.substring(0, i) + '\u005c\u006e' + r.substr(i + 1);
 			}
 		}
 	}

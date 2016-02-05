@@ -50,7 +50,11 @@ function docMainInit() {
 }
 
 function docInit() {
-	$('#tabs_div').tabs();
+	$('#tabs_div').tabs({
+		activate : function (event, ui) { 
+			widShowLog();
+		}
+	});
 	$('#hasqd_led').html(picGry);
 	$('button').button();
 	$('#tokens_data_pre').hide();
@@ -61,20 +65,35 @@ function docInit() {
 			$('.password').attr('type', 'password');
 		}
 	});
-	$('#search_datepicker_input').datepicker({
+	$('#from_datepicker_input').datepicker({
 		dateFormat: 'yy/mm/dd',
-		maxDate: new Date(),
-		minDate: new Date(2016, 1 - 1, 1),
+		minDate: new Date(2013, 0, 1),
 		showMonthAfterYear: true,
 		showOtherMonths: true,
 		selectOtherMonths: true,
 		changeMonth: true,
-		changeYear: true
+		changeYear: true,
+		onClose: function( selectedDate ) {
+			$( '#to_datepicker_input' ).datepicker( 'option', 'minDate', selectedDate );
+		}
+	});
+	
+	$('#to_datepicker_input').datepicker({
+		dateFormat: 'yy/mm/dd',
+		maxDate: new Date(),
+		showMonthAfterYear: true,
+		showOtherMonths: true,
+		selectOtherMonths: true,
+		changeMonth: true,
+		changeYear: true,
+		onClose: function( selectedDate ) {
+			$( '#from_datepicker_input' ).datepicker( 'option', 'maxDate', selectedDate );
+		}		
 	});
 	
 	widSetDefaultDb(glRequiredDbHash);
 
-	var ping = function() { widPing(5000) }
+	var ping = function() { widSendPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);
 

@@ -464,7 +464,7 @@ function widSubmitButtonClick() {
 		widTokensHistorySelect(d);
     }
 	
-    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engSetParsedDataValue(nr_d);
+    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetInParsedDataValue(nr_d);
 
     ajxSendCommand(nr, cb, hasqdLed);
 }

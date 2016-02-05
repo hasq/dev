@@ -23,7 +23,7 @@ function widAnimateProgbar() {
     $('#hasqd_led').html(picGry);
 }
 
-function widPing(timeDelay) {
+function widSendPing(timeDelay) {
 // Ping server every 5s,10s,15s,...,60s,...,60s,...
 	var timerId = glPingTimerId;
 	
@@ -38,7 +38,7 @@ function widPing(timeDelay) {
 			//var now = new Date()
 			//var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
 			//console.log(ct);
-			var ping = function() {widPing(timeDelay)};
+			var ping = function() {widSendPing(timeDelay)};
 			glPingTimerId = setTimeout(ping, timeDelay);
 			clearInterval(timerId);			
 		}
@@ -123,6 +123,7 @@ function widEnDisPasswordInput(d) {
 }
 
 function widShowLog(d) {
+// Shows messages in log
 	var obj = $('#' + 'tokens_log_pre');
 	if (arguments.length === 0) {
 		obj.html('&nbsp');
@@ -163,7 +164,6 @@ function widShowToken() {
 	}	
 }
 
-
 function widSetLastRecChanges(d) {
 	glLastRec = engGetParsedResponseLast(d);
 	
@@ -171,7 +171,7 @@ function widSetLastRecChanges(d) {
 		widShowTokenState(true);
 		widShowPasswordMatch(glLastRec);
 		widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
-		widShowData(engGetParsedDataValue(glLastRec.d));
+		widShowData(engGetOutParsedDataValue(glLastRec.d));
 	} else if (glLastRec.message === 'IDX_NODN') {
 		widShowTokenState(false);
 		widShowPasswordMatch();
@@ -240,6 +240,7 @@ function widTokensPasswordOninput() {
 }
 
 function widGetPasswordPicture(d) {
+// Returns an image displaying the password match
 	switch (d) {
 		case 1:
 			return picGrn;
@@ -257,6 +258,7 @@ function widGetPasswordPicture(d) {
 }
 
 function widShowPasswordMatch(lr) {
+// Shows an image displaying the password match
 	var objT = $('#password_pic_td');
 	var objI = $('#password_input');
 	
@@ -272,6 +274,7 @@ function widShowPasswordMatch(lr) {
 }
 
 function widGetPasswordGuessTime(d) {
+// Returns guess time of specified password
 	if (String(d).length === 0) {
 		return '';
 	} else {
@@ -281,6 +284,7 @@ function widGetPasswordGuessTime(d) {
 }
 
 function widShowPasswordGuessTime(d) {
+// Shows password guess time
 	var obj = $('#password_zxcvbn_td');
 	
 	if (arguments.length !== 0 && String(d).length > 0) {
@@ -291,7 +295,8 @@ function widShowPasswordGuessTime(d) {
 }
 
 
-function widDisableInitialUI(f) {
+function widDisableInitialDataUI(f) {
+// Disables UI
 	var obj = $('#initial_data_table');
 	
 	if (arguments.length == 0 ) { var f = true; }
@@ -310,6 +315,7 @@ function widDisableTabsUI(f) {
 }
 
 function widGetInitialDataState() {
+// Returns state of initial data	
 	var objT = $('#token_hint_input');
 	var objP = $('#password_input');
 	var r = {};
@@ -330,22 +336,25 @@ function widGetInitialDataState() {
 }
 
 function widButtonClick(id) {
+// Shared button click function
 	var obj = $('#' + id);
 	var f = obj.attr('data-onclick');
 	
-	widDisableInitialUI();
+	widDisableInitialDataUI();
 	widDisableTabsUI();
 	
 	eval(f);
 }
 
 function widCompleteEvent(t) {
-	widDisableInitialUI(false);
+// Completes actions and enables UI
+	widDisableInitialDataUI(false);
 	widDisableTabsUI(false);
 	widShowLog(t);
 }
 
 function widCreateButtonClick() {
+// Creates a new token record
 	var objT = $('#token_hint_input');
 	var objP = $('#password_input');
 	var s = engGetHash(objT.val(), glCurrentDB.hash);
@@ -383,9 +392,10 @@ function widCreateButtonClick() {
 }
 
 function widSetDataButtonClick() {
+// Adds a new record with a specified data
 	var objT = $('#token_hint_input');
 	var objP = $('#password_input');
-	var objP = $('#setdata_input');
+	var objP = $('#setdata_textarea');
 	
 	var e = widGetInitialDataState();
 	
@@ -399,7 +409,7 @@ function widSetDataButtonClick() {
 	
 	var s = engGetHash(objT.val(), glCurrentDB.hash);
 	var nr = engGetNewRecord(glLastRec.n + 1, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-	var nr_d = engSetParsedDataValue(objP.val());
+	var nr_d = engGetInParsedDataValue(objP.val());
     var cmd = 'add * ' + glCurrentDB.name + ' ' + nr.n + ' ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 	
 	var cb = function(d) {
@@ -418,6 +428,7 @@ function widSetDataButtonClick() {
 	widShowLog('Setting token data...');
 }
 
+/*
 function widGetCurrentDate(){
 	var date = new Date();
 	var y = date.getFullYear();
@@ -426,3 +437,52 @@ function widGetCurrentDate(){
 	var r = y + '/' + m + '/' + d;
 	return r;
 }
+*/
+
+function widSearchButtonClick(){
+	var objFrom = $('#from_datepicker_input');
+	var objTo = $('#to_datepicker_input');
+	
+	var fromDate = new Date(objFrom.datepicker('getDate'));
+	var toDate = new Date(objTo.datepicker('getDate'));
+	
+	var fromY = fromDate.getFullYear();
+	var fromM = fromDate.getMonth() + 1;
+	var fromD = fromDate.getDate();
+	
+	var toY = toDate.getFullYear();
+	var toM = toDate.getMonth() + 1;
+	var toD = toDate.getDate();
+	
+	var cbY = function callBackY (dY) {
+		var rY = engGetParsedResponse(dY);
+		
+		if (rY.content != 'REQ_PATH_BAD') {
+			var cbM = function callBackM(dM) {
+				var rM = engGetParsedResponse(dM);
+				if (rM.content != 'REQ_PATH_BAD') {
+					console.log(rM.content);
+				} else {
+					toM--;
+					if (toM >= fromM) {
+						var cmdM = cmdM = '/' + glCurrentDB.name + '/' + toY + '/' + toM + '/';
+						ajxSendCommand(cmdM, cbM, hasqdLed);
+					}
+				}				
+			}		
+			var cmdM = '/' + glCurrentDB.name + '/' + toY + '/' + toM + '/';
+			ajxSendCommand(cmdM, cbM, hasqdLed);			
+		} else {
+			toY--;
+			if (toY >= fromY) {
+				var cmdY = '/' + glCurrentDB.name + '/' + toY + '/';
+				ajxSendCommand(cmdY, callBackY, hasqdLed);
+			}
+		}
+	}
+	
+	var cmdY = '/' + glCurrentDB.name + '/' + toY + '/';	
+	ajxSendCommand(cmdY, cbY, hasqdLed);
+
+}
+
