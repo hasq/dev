@@ -23,19 +23,18 @@ function engSendPing(timeDelay) {
 	
 	if ( timeDelay < 60000 ) {
 		timeDelay += 5000;
-	}
+	} 
 
 	var cb = function(data) {
 		var response = engGetParsedResponse(data);
 		
-		if (response.message === 'OK') {
-			//var now = new Date()
-			//var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-			//console.log(ct);
-			var ping = function() {engSendPing(timeDelay)};
-			glPingTimerId = setTimeout(ping, timeDelay);
-			clearInterval(timerId);			
-		}
+		var now = new Date();
+		var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+		console.log(ct);
+		
+		var ping = function() {engSendPing(timeDelay)};
+		glPingTimerId = setTimeout(ping, timeDelay);
+		clearInterval(timerId);	
 	}
 	
 	ajxSendCommand('ping', cb, hasqdLed)

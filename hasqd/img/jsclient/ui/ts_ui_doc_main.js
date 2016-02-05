@@ -93,7 +93,7 @@ function docInit() {
 	
 	widSetDefaultDb(glRequiredDbHash);
 
-	var ping = function() { widSendPing(5000) }
+	var ping = function() { engSendPing(5000) }
 	
 	glPingTimerId = setTimeout(ping, 5000);
 

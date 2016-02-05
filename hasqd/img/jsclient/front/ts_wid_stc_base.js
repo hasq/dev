@@ -5,7 +5,7 @@ function widGetHTMLBody(tabs) {
     r += '<table width="100%" id="body_table" border="0" nowrap>\n';
 		r += '<tr>\n';
 			r += '<td nowrap>' + widGetHTMLTitle(glClientTitle) + '\n';
-			r += '<td style="text-align:right">' + widGetHTMLSpan('hasqd_led') + '\n';
+			r += '<td style="text-align:right" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td colspan="2" nowrap>' + widGetHTMLInitialData() + '\n';
