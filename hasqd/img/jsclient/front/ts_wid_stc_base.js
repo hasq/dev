@@ -183,9 +183,9 @@ function widGetHTMLReceiveTab() {
 function widGetHTMLSetDataTab() {
 	var r = '';
 	
-	r += '<table border="1" width="30%">\n';
+	r += '<table border="0">\n';
 		r += '<tr>\n';
-			r += '<td width="100%">\n';
+			r += '<td>\n';
 				r += '<textarea id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
