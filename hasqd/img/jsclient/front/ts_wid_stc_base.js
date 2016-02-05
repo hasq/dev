@@ -59,7 +59,7 @@ function widGetHTMLInitialData() {
 		r += '<tr>\n';
 			r += '<td width="3%" style="text-align:right;" nowrap>\n';
 				r += '&nbsp;' + '<i>Token</i>' + '&nbsp;\n';
-			r += '<td id="token_value_td" colspan="2" class="monospace" style="font-style: italic;" nowrap>' + widStringsGrow('&nbsp',32) + '\n';
+			r += '<td id="token_value_td" colspan="2" class="monospace" style="font-style: italic;" nowrap>';
 			r += '<td width="30%">';
 		r += '</tr>\n';
 		r += '<tr>\n';

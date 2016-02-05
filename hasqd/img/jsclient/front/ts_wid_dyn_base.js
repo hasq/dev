@@ -47,8 +47,17 @@ function widSendPing(timeDelay) {
 	ajxSendCommand('ping', cb, hasqdLed)
 }
 
+function widShowDBError() {
+// displays error message and blocks all UI;
+	var warning = 'Database is not accessible!';
+	alert(warning);
+	widShowLog(warning);
+	widDisableInitialDataUI(true);
+	widDisableTabsUI(true);
+}
+
 function widSendDeferredRequest(cmd, t, f) {
-// It sends ajax request with 1000ms delay.
+// Sends ajax request with 1000ms delay.
 // the request will be ignored if token value will be changed during this 1000ms
 	var req = function() {
 		var timerId = glTimerId;
@@ -71,19 +80,17 @@ function widSetDefaultDb(dbHash) {
     var cb = function (d) {
         var db = engGetParsedResponseInfoDb(d);
         
-		if (db.length < 1) {
-            widShowLog('Database is not availible!');
-        }
-		
-		for (var i = 0; i < db.length; i++) {
-			if (db[i].hash === dbHash) {
-				glCurrentDB = db[i];
-				break;
+		if (db.length > 0) {
+			for (var i = 0; i < db.length; i++) {
+				if (db[i].hash === dbHash) {
+					glCurrentDB = db[i];
+					break;
+				}
 			}
 		}
 		
 		if (glCurrentDB.name === undefined) {
-			widShowLog('Database is not availible!');
+			widShowDBError();
 		}		
      }
 
@@ -91,7 +98,7 @@ function widSetDefaultDb(dbHash) {
 }
 
 function widStringsGrow(s, l) {
-// workaround for html...
+// workaround for html, not used now
 	var r = '';
 	
 	for (var i = 0; i < l; i++) {
@@ -154,10 +161,10 @@ function widShowToken() {
 	var hint = objH.val();
 	
 	if (hint.length == 0) {
-		objT.html(widStringsGrow('&nbsp',32));
+		objT.empty();
 		return;
 	} else if (engIsHash(hint, glCurrentDB.hash)) {
-		objT.html(widStringsGrow('&nbsp',32));
+		objT.empty();
 	} else {
 		var s = widGetToken(hint, glCurrentDB.hash);
 		objT.html(s);
