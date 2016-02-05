@@ -1,0 +1,12 @@
+start hasqd without db
+then run tsclnt
+
+problems
+1. First table changes vertical size on empty/non-empty "token hint" field
+2. Checking forever
+3. No hash shown
+
+
+- Set data - make textarea
+- Search from [field]
+           to [field]

@@ -26,8 +26,11 @@ jquery: $(JQUI).tar.bz2
 	cp $< lib/
 	cd lib && make NAME=$(JQUIF)
 
-zxcvbn:	lib/zxcvbn.js
-		cp lib/zxcvbn.js slice/home/lib/
+zxcvbn:	lib/zxcvbn.js slice/home/lib
+	cp lib/zxcvbn.js slice/home/lib/
+
+slice/home/lib:
+	mkdir -p slice/home/lib
 		
 createclient: index.html 
 	mkdir -p slice/home/ui
