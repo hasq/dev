@@ -52,6 +52,23 @@ function engGetDateRangeFolders(fromDate, toDate) {
     var toY = toDate.getFullYear();
     var toM = toDate.getMonth() + 1;
     var toD = toDate.getDate();
+
+	var getD = function engGetDaysNumber(month, year){
+		// returns the number of the days in a month
+		var day;
+		
+		if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+			day = 31;
+		} else if (month == 4 || month == 6 || month == 9 || month == 11 || month == 10 || month == 12) {
+			day = 30;
+		} else if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
+			day = 29;
+		} else {
+			day = 28;
+		}
+		return day;
+	}	
+	
     while (toY >= 2016) {
         if (toY == fromY && toM == fromM && toD == fromD) {
             break;
@@ -60,16 +77,7 @@ function engGetDateRangeFolders(fromDate, toDate) {
         }
         while (toM > 0) {
             if (toD == 0) {
-                // fills days count in month
-                if (toM == 1 || toM == 3 || toM == 5 || toM == 7 || toM == 8 || toM == 10 || toM == 12) {
-                    toD = 31;
-                } else if (toM == 4 || toM == 6 || toM == 9 || toM == 11 || toM == 10 || toM == 12) {
-                    toD = 30;
-                } else if (toY % 400 == 0 || (toY % 4 == 0 && toY % 100 != 0)) {
-                    toD = 29;
-                } else {
-                    toD = 28;
-                }
+				toD = engGetDaysNumber(toM, toY);				
             }
             while (toD > 0) {
                 var mm = (toM < 10) ? '0' + toM.toString() : toM.toString();

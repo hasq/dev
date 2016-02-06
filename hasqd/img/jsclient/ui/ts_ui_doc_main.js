@@ -58,7 +58,7 @@ function docInit() {
     $('button').button();
     $('#tokens_data_pre').hide();
     $('#show_hide_input').click(function () {
-        if ($('.password').attr('type') == 'password') {
+        if (this.checked) {
             $('.password').attr('type', 'text');
         } else {
             $('.password').attr('type', 'password');
