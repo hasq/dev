@@ -140,6 +140,10 @@ function widSetLastRecChanges(d) {
 		widShowTokenState(false);
 		widShowPasswordMatch();
 		widShowData();
+	} else {
+		widShowTokenState();
+		widShowPasswordMatch();
+		widShowData(glLastRec.message + ':\n' + glLastRec.content);
 	}
 }
 
@@ -345,7 +349,7 @@ function widCreateButtonClick() {
 			widCompleteEvent(r.message);
 			widTokenHintOninput();
 		} else {
-			widCompleteEvent(r.message + ': ' + r.content);
+			widCompleteEvent(r.message + ':\n' + r.content);
 		}
 	}
 	
@@ -382,7 +386,7 @@ function widSetDataButtonClick() {
 			widCompleteEvent(r.message);
 			widTokenHintOninput();
 		} else {
-			widCompleteEvent(r.message + ': ' + r.content);
+			widCompleteEvent(r.message + ':\n' + r.content);
 		}
 	}
 	
