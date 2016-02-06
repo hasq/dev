@@ -1,20 +1,8 @@
 Critical things
 ---------------
-DONE - ISO creating hangs on create.db inside TC
 
 Major things
 ------------
-start hasqd without db
-then run tsclnt
-
-problems
-DONE 1. First table changes vertical size on empty/non-empty "token hint" field
-DONE 2. Checking forever
-DONE 3. No hash shown
-
 
 Minor things
 ------------
-DONE - Set data - make textarea
-DONE - Search from [field]
-           to [field]
