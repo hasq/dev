@@ -1,6 +1,6 @@
 Critical things
 ---------------
-- ISO creating hangs on create.db inside TC
+DONE - ISO creating hangs on create.db inside TC
 
 Major things
 ------------
@@ -8,9 +8,9 @@ start hasqd without db
 then run tsclnt
 
 problems
-1. First table changes vertical size on empty/non-empty "token hint" field
-2. Checking forever
-3. No hash shown
+DONE 1. First table changes vertical size on empty/non-empty "token hint" field
+DONE 2. Checking forever
+DONE 3. No hash shown
 
 
 Minor things
