@@ -71,13 +71,11 @@ function widStringsGrow(s, l) {
 
 function widGetToken(d, h) {
     //It returns hash of raw tokens value
-    if (engIsHash(d, h)) {
-        var r = d;
-    } else {
-        var r = engGetHash(d, h)
-    }
 
-    return r;
+    if (engIsHash(d, h)) 
+	return d;
+
+    return engGetHash(d, h)
 }
 
 function widEnDisPasswordInput(d) {
@@ -126,8 +124,7 @@ function widShowToken() {
 		return;
 	} 
 
-	if (!engIsHash(tok, glCurrentDB.hash)) 
-		tok = widGetToken(tok, glCurrentDB.hash);
+	tok = widGetToken(tok, glCurrentDB.hash);
 
 	objT.html(tok);
 }
