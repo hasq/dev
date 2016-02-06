@@ -116,20 +116,20 @@ function widShowData(d) {
 }
 
 function widShowToken() {
-    // Shows hashed value of token (if the value is not a default hash)
-    var objT = $('#token_value_td');
-    var objH = $('#token_hint_input');
-    var hint = objH.val();
+// Shows hashed value of token (if the value is not a default hash)
+	var objT = $('#token_value_td');
+	var objH = $('#token_hint_input');
+	var tok = objH.val();
+	
+	if (tok.length == 0) {
+		objT.empty();
+		return;
+	} 
 
-    if (hint.length == 0) {
-        objT.empty();
-        return;
-    } else if (engIsHash(hint, glCurrentDB.hash)) {
-        objT.empty();
-    } else {
-        var s = widGetToken(hint, glCurrentDB.hash);
-        objT.html(s);
-    }
+	if (!engIsHash(tok, glCurrentDB.hash)) 
+		tok = widGetToken(tok, glCurrentDB.hash);
+
+	objT.html(tok);
 }
 
 function widSetLastRecChanges(d) {
