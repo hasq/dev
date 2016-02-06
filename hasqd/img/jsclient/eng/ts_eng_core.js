@@ -30,18 +30,16 @@ function engSendPing(timeDelay) {
 	} 
 
 	var cb = function(data) {
-		var response = engGetParsedResponse(data);
+		var now = new Date();
+		var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+		console.log(ct);
 		
-		//var now = new Date();
-		//var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-		//console.log(ct);
-		
-		var ping = function() {engSendPing(timeDelay)};
-		glPingTimerId = setTimeout(ping, timeDelay);
-		clearInterval(timerId);	
 	}
-	
+
 	ajxSendCommand('ping', cb, hasqdLed)
+	var ping = function() {engSendPing(timeDelay)};
+	glPingTimerId = setTimeout(ping, timeDelay);
+	clearInterval(timerId);	
 }
 
 function engGetDateRangeFolders(fromDate, toDate) {
