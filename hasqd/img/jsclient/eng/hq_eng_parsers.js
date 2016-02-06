@@ -1,12 +1,12 @@
-﻿// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2015
 
-function engGetKeysSetCheckResults(data, altName, sKey){
+function engGetKeysSetCheckResults(data, altName, sKey) {
     var keys = data;
     keys = keys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
     var rawKeys = data;
     rawKeys = rawKeys.replace(/\s/g, '');
     var chkHash = 's22'
-    var r = {};
+        var r = {};
     r.message = 'OK';
     r.content = 'OK';
     var hashLength = altName.length; //it may be need to check tokens length
@@ -104,7 +104,6 @@ function engIsTokensNamesGood(data, hash) {
     return true;
 }
 
-
 function engGetSortTokensNames(data) {
     function sortStr(prop) {
         return function (a, b) {
@@ -120,11 +119,11 @@ function engGetSortTokensNames(data) {
         if (r[i].s == r[i + 1].s && r[i].rawS == r[i + 1].rawS) {
             r.splice(i + 1, 1);
             i--;
-        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i].rawS == ''){
+        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i].rawS == '') {
             r[i].rawS = r[i + 1].rawS;
             r.splice(i + 1, 1);
             i--;
-        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i + 1].rawS == ''){
+        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i + 1].rawS == '') {
             r.splice(i + 1, 1);
             i--;
         }
@@ -179,7 +178,7 @@ function engGetParsedTransferKeys(data, sk) {
 
     keys = keys.slice(0, keys.length - 3); // remove transfer protocol;
 
-    for (var i = 0; i < keys.length;) {
+    for (var i = 0; i < keys.length; ) {
         switch (sk) {
         case sK1K2:
             var idx = i / 4;
@@ -306,8 +305,8 @@ function engGetUpdatedTransferKeys(data, p, h, m, sk) {
             var n2 = n0 + 2;
             var n3 = n0 + 3;
             var s = r[i].s;
-            var k1 = r[i].k1;//
-            var g1 = r[i].g1;//
+            var k1 = r[i].k1; //
+            var g1 = r[i].g1; //
             var k3 = engGetKey(n3, s, p, m, h);
             var g2 = engGetKey(n3, s, k3, m, h);
             var o1 = r[i].o1 = engGetKey(n2, s, g2, m, h); //
@@ -333,10 +332,10 @@ function engGetUpdatedTransferKeys(data, p, h, m, sk) {
             var n1 = r[i].n1 = n0 + 1;
             var n2 = n0 + 2;
             var s = r[i].s;
-            var k1 = r[i].k1 = engGetKey(n1, s, p, m, h);//
+            var k1 = r[i].k1 = engGetKey(n1, s, p, m, h); //
             var k2 = engGetKey(n2, s, p, m, h);
-            var g1 = r[i].g1 = engGetKey(n2, s, k2, m, h);//
-            var o1 = r[i].o1;//
+            var g1 = r[i].g1 = engGetKey(n2, s, k2, m, h); //
+            var o1 = r[i].o1; //
 
             break;
         default:
@@ -347,17 +346,17 @@ function engGetUpdatedTransferKeys(data, p, h, m, sk) {
     return r;
 }
 
-function engGetTokensHashedNames(data){
+function engGetTokensHashedNames(data) {
     var r = [];
-    for (var i = 0; i < data.length; i++){
+    for (var i = 0; i < data.length; i++) {
         r[i] = data[i].s;
     }
     return r;
 }
 
-function engGetTokensRawNames(data){
+function engGetTokensRawNames(data) {
     var r = [];
-    for (var i = 0; i < data.length; i++){
+    for (var i = 0; i < data.length; i++) {
         if (data[i].rawS != '') {
             r[i] = data[i].rawS;
         } else {
@@ -369,7 +368,7 @@ function engGetTokensRawNames(data){
 }
 
 function engGetTokensUpdatedNames(data0, data1) {
-    for (var k = 0; k < data0.length; k++){
+    for (var k = 0; k < data0.length; k++) {
         for (var t = 0; t < data1.length; t++) {
             if (data0[k] == engGetHash(data1[t], glCurrentDB.hash)) {
                 var rawName = '[' + data1[t] + ']';
@@ -377,7 +376,7 @@ function engGetTokensUpdatedNames(data0, data1) {
                 data1.splice(t, 1);
                 t--;
                 break;
-            } else if (data0[k] == data1[t] ) {
+            } else if (data0[k] == data1[t]) {
                 data1.splice(t, 1);
                 t--;
             }

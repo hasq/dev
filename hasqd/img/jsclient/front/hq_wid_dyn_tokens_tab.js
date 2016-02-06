@@ -61,25 +61,25 @@ function widCleanRS4() {
 }
 
 function widShowProgressbar(data) {
-	var objProgressbar = $('#tokens_progressbar');
-	
+    var objProgressbar = $('#tokens_progressbar');
+
     if (data) {
         var val = Math.floor(data);
         objProgressbar.progressbar('value', val);
     } else {
-        objProgressbar.progressbar('value', data);		
+        objProgressbar.progressbar('value', data);
     }
 }
 
 function widShowTokensLog(data) {
-	var objLog = $('#tokens_log_pre');
-	
-	if (arguments.length == 0) {
-		objLog.html('&nbsp');
-	} else {
-		objLog.html(data);
-	}
-    
+    var objLog = $('#tokens_log_pre');
+
+    if (arguments.length == 0) {
+        objLog.html('&nbsp');
+    } else {
+        objLog.html(data);
+    }
+
 }
 
 function widCleanAllTabs() {
@@ -108,20 +108,20 @@ function widTokensPasswordOninput(data) {
 }
 
 function widDisableTokensInput() {
-	var obj = $('#tokens_tabs');
+    var obj = $('#tokens_tabs');
     obj.tabs('option', 'disabled', true);
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
     obj.closest('div[id^="tabs"]').find('textarea:first').prop('disabled', false);
 }
 
 function widEnableTokensInput() {
-	var obj = $('#tokens_tabs');
+    var obj = $('#tokens_tabs');
     obj.tabs('enable');
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
 
 function widDisableAllTokensOperations(id) {
-	var obj = $('#tokens_tabs');	
+    var obj = $('#tokens_tabs');
     obj.tabs('option', 'disabled', true);
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
     $('#' + widGetClosestContinueButtonId(id)).prop('disabled', false);
@@ -129,7 +129,7 @@ function widDisableAllTokensOperations(id) {
 }
 
 function widEnableAllTokensOperations() {
-	var obj = $('#tokens_tabs');	
+    var obj = $('#tokens_tabs');
     obj.tabs('enable');
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
@@ -151,7 +151,7 @@ function widGetTokensNamesCheckResults() {
 }
 
 function widGetTokensPasswordCheckResults() {
-	var objPwd = $('#tokens_password_input');
+    var objPwd = $('#tokens_password_input');
     var r = {};
     r.message = 'OK';
     r.content = 'OK';
@@ -165,9 +165,9 @@ function widGetTokensPasswordCheckResults() {
 }
 
 function widGetTokensRangeCheckResults() {
-	var objBasename = $('#tokens_basename_input');
+    var objBasename = $('#tokens_basename_input');
     var idx0 = +$('#tokens_first_idx_input').val();
-    var idx1 = +$('#tokens_last_idx_input').val();	
+    var idx1 = +$('#tokens_last_idx_input').val();
     var r = {};
     r.message = 'OK';
     r.content = 'OK';
@@ -190,13 +190,12 @@ function widGetTokensRangeCheckResults() {
 }
 
 function widTokensNamesOninput(data) {
-	objNamesTextarea = $('#tokens_names_textarea')
-    widCleanVTL();
+    objNamesTextarea = $('#tokens_names_textarea')
+        widCleanVTL();
     widCleanAllTabs();
     widShowBordersColor(objNamesTextarea);
 
     var namesArray = data;
-
 
     if (!engIsTokensNamesGood(data, glCurrentDB.hash)) {
         widDisableTokensInput();
@@ -216,12 +215,12 @@ function widTokensNamesOninput(data) {
 }
 
 function widTokensAdd(id, data) {
-	var objBasename = $('#tokens_basename_input')
-	var objFirstIdx = $('#tokens_first_idx_input')
-	var objLastIdx = $('#tokens_last_idx_input')
-	var objNames = $('#tokens_names_textarea')
-	
-    var tChk = widGetTokensRangeCheckResults();
+    var objBasename = $('#tokens_basename_input')
+        var objFirstIdx = $('#tokens_first_idx_input')
+        var objLastIdx = $('#tokens_last_idx_input')
+        var objNames = $('#tokens_names_textarea')
+
+        var tChk = widGetTokensRangeCheckResults();
 
     if (tChk.message == 'ERROR') {
         widCancelByEvent(id, tChk.content);
@@ -256,7 +255,7 @@ function widTokensAdd(id, data) {
     }
 
     tokens += newTokens;
-	
+
     if (tokens.length <= 16511) {
         objNames.val(tokens);
         objNames[0].oninput();
@@ -268,11 +267,10 @@ function widTokensAdd(id, data) {
         widCancelByEvent(id, 'REQ_TOKENS_TOO_MANY');
     }
 
-
 }
 
 function widSwitchShowHide(id) {
-	var obj = $('#' + id);
+    var obj = $('#' + id);
     if (obj.css('display') === 'none') {
         obj.show();
     } else {
@@ -280,7 +278,7 @@ function widSwitchShowHide(id) {
     }
 }
 
-function widGetWarningsMode(id){
+function widGetWarningsMode(id) {
     var label = $('#' + id).button('option', 'label');
 
     if (label == 'Continue') {
@@ -298,7 +296,7 @@ function widGetButtonsMode(id) {
 
     if (id == cId && cMode) {
         return true;
-    } else if (label == title ) {
+    } else if (label == title) {
         return true; // Main button in action-mode is visible
     } else {
         return false; // Cancel is visible
@@ -429,7 +427,7 @@ function widGetClosestTextareaId(id) {
 }
 
 function widSwitchButtonsMode(id) {
-	var obj = $('#' + id);
+    var obj = $('#' + id);
     var dataset = document.getElementById(id).dataset.title;
     var label = obj.button('option', 'label');
     if (label === dataset && dataset === 'Continue') {
@@ -438,7 +436,7 @@ function widSwitchButtonsMode(id) {
         widSwitchShowHide(idM);
         obj.button('option', 'label', 'Hidden');
     } else if (label !== dataset && dataset === 'Continue') {
-        obj.button('option', 'label', dataset );
+        obj.button('option', 'label', dataset);
         var idM = widGetClosestWarningMessageId(id);
         widSwitchShowHide(id);
         widSwitchShowHide(idM);
@@ -461,7 +459,7 @@ function widMainButtonClick(id, data) {
         widDisableAllTokensOperations(id);
         var f = widGetFunctionToRun(id);
     } else {
-        var f = function(){
+        var f = function () {
             widCancelFunction(id, data);
         }
     }
@@ -469,7 +467,7 @@ function widMainButtonClick(id, data) {
     setTimeout(f);
 }
 
-function widCancelByEvent(id, data){
+function widCancelByEvent(id, data) {
     widMainButtonClick(id, data);
 }
 
@@ -576,7 +574,7 @@ function widGetVerifyRowLed(data) {
     case 'TKN_RCVNG':
         return picGrnYlw;
         break;
-	case 'OK':
+    case 'OK':
         return picGrn;
         break;
     default: // 'IDX_NODN':
@@ -750,7 +748,7 @@ function widUpdateTokens(id, data) {
     engRunCRL(glCRL, cbFunc);
 }
 
-function widPrintSendReceiveOut(id, data){
+function widPrintSendReceiveOut(id, data) {
     var idOut = widGetClosestTextareaId(id);
     if (data != '') {
         $('#' + idOut).val($('#' + idOut).val() + data);
@@ -758,7 +756,7 @@ function widPrintSendReceiveOut(id, data){
 }
 
 function widPrintSendReceiveLed(id, data) {
-	var obj = $('#' + id);
+    var obj = $('#' + id);
     if (data) {
         obj.html(picGrn);
         obj.prop('title', 'OK');
@@ -835,7 +833,7 @@ function widSS1ShowK1K2Keys(id, data) {
 }
 
 function widPrintUpdatedTokensNames(arr, id) {
-	var obj = $('#' + id);
+    var obj = $('#' + id);
     for (var i = 0; i < arr.length; i++) {
         if (i == 0) {
             obj.val(arr[i]);
@@ -852,12 +850,12 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '123132';
@@ -869,7 +867,7 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
@@ -889,8 +887,8 @@ function widPrepareToRS1ObtainK1K2Keys(id, data) {
 function widRS1ObtainK1K2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-		var objL = $('#tokens_rs1_led_div');
-		
+        var objL = $('#tokens_rs1_led_div');
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -951,12 +949,12 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '124252';
@@ -967,7 +965,7 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
 
@@ -989,8 +987,8 @@ function widPrepareToSS2ObtainG2O2Keys(id, data) {
 function widSS2ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-		var objL = $('#tokens_ss2_led_div');
-		
+        var objL = $('#tokens_ss2_led_div');
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -1009,7 +1007,6 @@ function widSS2ObtainG2O2Keys(id, data) {
             widMainButtonClick(id, 'OK');
         }
     }
-
 
     for (var i = 0; i < data.length; i++) {
         var n0 = data[i].n;
@@ -1237,7 +1234,7 @@ function widSS3ShowK2Keys(id, data) {
             var n0 = r.n - 1;
             var n2 = r.n + 1;
             var k2 = engGetKey(n2, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            var newRow = n0  + ' ' + r.s + ' ' + k2 + '\n';
+            var newRow = n0 + ' ' + r.s + ' ' + k2 + '\n';
         } else {
             var newRow = '';
         }
@@ -1261,12 +1258,12 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '123141';
@@ -1278,7 +1275,7 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
@@ -1297,8 +1294,8 @@ function widPrepareToRS3ObtainK1G1Keys(id, data) {
 function widRS3ObtainK1G1Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-		var objL = $('#tokens_rs3_s1_led_div');
-		
+        var objL = $('#tokens_rs3_s1_led_div');
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -1342,12 +1339,12 @@ function widPrepareToRS3ObtainK2Keys(id, data) {
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '1232';
@@ -1359,7 +1356,7 @@ function widPrepareToRS3ObtainK2Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
@@ -1380,8 +1377,8 @@ function widRS3ObtainK2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetParsedResponse(cbData);
-		var objL = $('#tokens_rs3_s2_led_div');
-		
+        var objL = $('#tokens_rs3_s2_led_div');
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -1420,19 +1417,18 @@ function widRS3ObtainK2Keys(id, data) {
     engRunCRL(glCRL, cbFunc);
 }
 
-
 function widPrepareToSS4ObtainO1Keys(id, data) {
     widCleanCRL();
     widCleanVTL();
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '1251';
@@ -1444,7 +1440,7 @@ function widPrepareToSS4ObtainO1Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
@@ -1466,7 +1462,7 @@ function widSS4ObtainO1Keys(id, data) {
 
         var cbResponse = engGetParsedResponse(cbData);
         var objL = $('#tokens_ss4_s1_led_div' + idLed);
-		
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -1510,12 +1506,12 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
 
     var pChk = widGetTokensPasswordCheckResults()
 
-    if (pChk.message == 'ERROR') {
-        widCancelByEvent(id, pChk.content);
-        return;
-    }
+        if (pChk.message == 'ERROR') {
+            widCancelByEvent(id, pChk.content);
+            return;
+        }
 
-    var idInp = 'tokens_names_textarea';
+        var idInp = 'tokens_names_textarea';
     var rawTokens = $('#' + idInp).val();
     var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
     var sKey = '124252';
@@ -1527,7 +1523,7 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
         return;
     }
 
-    if (rawTokens == '' || data ) {
+    if (rawTokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
         var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
@@ -1546,8 +1542,8 @@ function widPrepareToSS4ObtainG2O2Keys(id, data) {
 function widSS4ObtainG2O2Keys(id, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-		var objL = $('#tokens_ss4_s2_led_div');
-		
+        var objL = $('#tokens_ss4_s2_led_div');
+
         if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
             objL.html(picGrn);
             objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
@@ -1583,7 +1579,6 @@ function widSS4ObtainG2O2Keys(id, data) {
 
     engRunCRL(glCRL, cbFunc);
 }
-
 
 function widPrepareToRS4ShowO1Keys(id) {
     widCleanCRL();
@@ -1639,7 +1634,7 @@ function widRS4ShowO1Keys(id, data) {
             var k3 = engGetKey(n0 + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var g2 = engGetKey(n0 + 3, r.s, k3, glCurrentDB.magic, glCurrentDB.hash);
             var o1 = engGetKey(n0 + 2, r.s, g2, glCurrentDB.magic, glCurrentDB.hash);
-            var newRow = r.n  + ' ' + r.s + ' ' + o1 + '\n';
+            var newRow = r.n + ' ' + r.s + ' ' + o1 + '\n';
         } else {
             var newRow = '';
         }
@@ -1706,11 +1701,11 @@ function widRS4ShowG2O2Keys(id, data) {
             var r = data.items[i];
             var n0 = r.n - 1;
             var k3 = engGetKey(n0 + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            var g2 = engGetKey(n0 + 3, r.s, k3, glCurrentDB.magic, glCurrentDB.hash);//
+            var g2 = engGetKey(n0 + 3, r.s, k3, glCurrentDB.magic, glCurrentDB.hash); //
             var k4 = engGetKey(n0 + 4, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var g3 = engGetKey(n0 + 4, r.s, k4, glCurrentDB.magic, glCurrentDB.hash);
-            var o2 = engGetKey(n0 + 3, r.s, g3, glCurrentDB.magic, glCurrentDB.hash);//
-            var newRow = n0  + ' ' + r.s + ' ' + g2 + ' ' + o2 + '\n';
+            var o2 = engGetKey(n0 + 3, r.s, g3, glCurrentDB.magic, glCurrentDB.hash); //
+            var newRow = n0 + ' ' + r.s + ' ' + g2 + ' ' + o2 + '\n';
         } else {
             var newRow = '';
         }
@@ -1719,7 +1714,7 @@ function widRS4ShowG2O2Keys(id, data) {
         widShowTokensLog('Generation...');
     }
 
-    if  (newRow.length !== 0) {
+    if (newRow.length !== 0) {
         var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
         var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
         widPrintSendReceiveOut(id, lastRow);

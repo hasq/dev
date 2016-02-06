@@ -1,120 +1,124 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function HasqdLed(){
+function HasqdLed() {
     //this.counter = 0;
 }
 
-HasqdLed.prototype.fail = function(){
+HasqdLed.prototype.fail = function () {
     $('#hasqd_led').html(picRed);
     widShowRecordsTabLog('Connection failed!');
 };
 
-HasqdLed.prototype.inc = function(){
-    setTimeout(function(){ $('#hasqd_led').html(picGryGrn); }, 500);
+HasqdLed.prototype.inc = function () {
+    setTimeout(function () {
+        $('#hasqd_led').html(picGryGrn);
+    }, 500);
 };
 
-HasqdLed.prototype.dec = function(){
-    setTimeout(function(){ $('#hasqd_led').html(picGry); }, 500);
+HasqdLed.prototype.dec = function () {
+    setTimeout(function () {
+        $('#hasqd_led').html(picGry);
+    }, 500);
 };
 
 var hasqdLed = new HasqdLed();
 
-function widAnimateProgbar(){
+function widAnimateProgbar() {
     $('#hasqd_led').html(picGry);
 }
 
 function widShowBordersColor(obj, color) {
-	var borders = [ 'borderLeftColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor' ];
-	for (var i = 0; i < borders.length; i++) {
-		if (color !== undefined) {
-			obj.css(borders[i], color);
-		} else {
-			obj.css(borders[i], '');
-		}
-	}
+    var borders = ['borderLeftColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor'];
+    for (var i = 0; i < borders.length; i++) {
+        if (color !== undefined) {
+            obj.css(borders[i], color);
+        } else {
+            obj.css(borders[i], '');
+        }
+    }
 }
 
 function widShowLastRecord(data) {
-	var objN = $('#lastrec_n_input');
-	var objK = $('#lastrec_k_input');
-	var objG = $('#lastrec_g_input');
-	var objO = $('#lastrec_o_input');
-	var objD = $('#lastrec_d_input');
-	
-	if (arguments.length === 0)	{
-		objN.val('');
-		objK.val('');
-		objG.val('');
-		objO.val('');
-		objD.val('');
-	} else {
+    var objN = $('#lastrec_n_input');
+    var objK = $('#lastrec_k_input');
+    var objG = $('#lastrec_g_input');
+    var objO = $('#lastrec_o_input');
+    var objD = $('#lastrec_d_input');
+
+    if (arguments.length === 0) {
+        objN.val('');
+        objK.val('');
+        objG.val('');
+        objO.val('');
+        objD.val('');
+    } else {
         objN.val(data.n);
         objK.val(data.k);
         objG.val(data.g);
         objO.val(data.o);
         objD.val(data.d);
-	}
+    }
 }
 
 function widShowNewRecord(data) {
-	var objN = $('#newrec_n_input');
-	var objK = $('#newrec_k_input');
-	var objG = $('#newrec_g_input');
-	var objO = $('#newrec_o_input');
-	var objD = $('#newrec_d_input');
-	
-	if (arguments.length === 0)	{	
-		objN.val('');
-		objK.val('');
-		objG.val('');
-		objO.val('');
-		objD.val('');
-		widShowBordersColor(objK);
-		widShowBordersColor(objG);
-		widShowBordersColor(objO);
-	} else {
-		objN.val(data.n);
-		objK.val(data.k);
-		objG.val(data.g);
-		objO.val(data.o);
-	}
+    var objN = $('#newrec_n_input');
+    var objK = $('#newrec_k_input');
+    var objG = $('#newrec_g_input');
+    var objO = $('#newrec_o_input');
+    var objD = $('#newrec_d_input');
+
+    if (arguments.length === 0) {
+        objN.val('');
+        objK.val('');
+        objG.val('');
+        objO.val('');
+        objD.val('');
+        widShowBordersColor(objK);
+        widShowBordersColor(objG);
+        widShowBordersColor(objO);
+    } else {
+        objN.val(data.n);
+        objK.val(data.k);
+        objG.val(data.g);
+        objO.val(data.o);
+    }
 }
 
 function widCleanHistoryData() {
-	var obj = $('#tokens_history_select');
-	obj.get(0).selectedIndex = 0;
-	obj.selectmenu('refresh');
+    var obj = $('#tokens_history_select');
+    obj.get(0).selectedIndex = 0;
+    obj.selectmenu('refresh');
 }
 
 function widServerRefreshButtonClick() {
-	var cb1 = function (d) {
+    var cb1 = function (d) {
         var r = engGetParsedResponseInfoId(d);
-		var obj1 = $('#server_id');
-		
+        var obj1 = $('#server_id');
+
         if (r.message == 'ERROR') {
             obj1.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         } else {
             obj1.html('<pre>' + r.content + '</pre>');
         }
     }
-	
+
     ajxSendCommand('info id', cb1, hasqdLed);
-	
+
     var cb2 = function (d) {
-		var r = engGetParsedResponseInfoSys(d);
-		var obj2 = $('#server_sys');
-		
+        var r = engGetParsedResponseInfoSys(d);
+        var obj2 = $('#server_sys');
+
         if (r.message == 'ERROR') {
             obj2.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         } else {
             obj2.html('<pre>' + r.content + '</pre>');
         }
     }
-	
+
     ajxSendCommand('info sys', cb2, hasqdLed);
-	
+
     var cb3 = function (d) {
-		var obj3 = $('#server_fam');
+        var obj3 = $('#server_fam');
         var r = engGetParsedResponseInfoFam(d);
 
         if (r.message == 'OK') {
@@ -124,7 +128,7 @@ function widServerRefreshButtonClick() {
             obj3.html('<pre>' + r.message + '\n' + r.content + '</pre>');
         }
     }
-	
+
     ajxSendCommand('info fam', cb3, hasqdLed);
 
     var cb4 = function (d) {
@@ -133,63 +137,63 @@ function widServerRefreshButtonClick() {
             return 'No database';
         }
 
-        var obj4 =  $('#database_smenu');//document.getElementById('database_smenu');
+        var obj4 = $('#database_smenu'); //document.getElementById('database_smenu');
         for (var i = 0; i < glDataBase.length; i++) {
             switch (i) {
             case 0:
-				obj4.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');;
-				var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
-				$('#database_table').html(db_table);
-				
-				var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
+                obj4.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh'); ;
+                var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
+                $('#database_table').html(db_table);
+
+                var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
                 $('#current_db').html(current_db);
-				
-				glCurrentDB = glDataBase[0];
+
+                glCurrentDB = glDataBase[0];
                 glHashCalcHash = glCurrentDB.hash; //
-				widShowNewRecordOninput();  
+                widShowNewRecordOninput();
                 break;
             default:
-				obj4.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');;
+                obj4.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh'); ;
                 break;
             }
         }
     }
-	
+
     ajxSendCommand('info db', cb4, hasqdLed);
 }
 
 function widCommandSendButtonClick() {
-	var objCmdInput = $('#cmd_input');
-	var objCmdOutput = $('#cmd_output');
+    var objCmdInput = $('#cmd_input');
+    var objCmdOutput = $('#cmd_output');
     var cmd = objCmdInput.val();
     var cb = function (d) {
         objCmdOutput.html(d);
     }
-	
+
     ajxSendCommand(cmd, cb, hasqdLed);
 }
 
 function widRawDNOninput() {
-	var objHistorySelect = $('#tokens_history_select');
-	var objDn = $('#dn_input');
-	var objRawDn = $('#rdn_input');
-	var objSubmitButton = $('submit_button');
-	
+    var objHistorySelect = $('#tokens_history_select');
+    var objDn = $('#dn_input');
+    var objRawDn = $('#rdn_input');
+    var objSubmitButton = $('submit_button');
+
     widShowNewRecord();
-	widCleanHistoryData();
+    widCleanHistoryData();
     widShowLastRecord();
 
     objDn.val('');
     widShowLastRecord();
 
     if (objRawDn.val() == '') {
-		objHistorySelect.selectmenu('disable');
+        objHistorySelect.selectmenu('disable');
         widShowBordersColor(objDn);
         widShowBordersColor(objSubmitButton);
         widShowRecordsTabLog();
     } else {
         widShowBordersColor(objDn);
-		objHistorySelect.selectmenu('enable');
+        objHistorySelect.selectmenu('enable');
         widShowBordersColor(objSubmitButton);
         objDn.val(engGetHash(objRawDn.val(), glCurrentDB.hash));
         widShowNewRecordOninput();
@@ -198,23 +202,23 @@ function widRawDNOninput() {
 }
 
 function widDNOninput() {
-	var objDn = $('#dn_input');
-	var objRawDn = $('#rdn_input');
-	var objSubmitButton = $('#submit_button');
-	var s = objDn.val();
+    var objDn = $('#dn_input');
+    var objRawDn = $('#rdn_input');
+    var objSubmitButton = $('#submit_button');
+    var s = objDn.val();
 
     widShowNewRecord();
     widShowLastRecord();
-	widCleanHistoryData();
-	
+    widCleanHistoryData();
+
     objDn.val(engGetOnlyHex(objDn.val()));
-	objRawDn.val('');
-	
-	if (s.length === 0) {
-		widShowBordersColor(objDn);
-        widShowBordersColor(objSubmitButton);		
-		widShowRecordsTabLog();
-	} else if (engIsHash(objDn.val(), glCurrentDB.hash)) {
+    objRawDn.val('');
+
+    if (s.length === 0) {
+        widShowBordersColor(objDn);
+        widShowBordersColor(objSubmitButton);
+        widShowRecordsTabLog();
+    } else if (engIsHash(objDn.val(), glCurrentDB.hash)) {
         widShowBordersColor(objDn);
         widShowBordersColor(objSubmitButton);
         widShowRecordsTabLog('OK');
@@ -226,18 +230,18 @@ function widDNOninput() {
 }
 
 function widShowRecordsTabLog(d) {
-	var obj = $('#' + 'records_log_pre');
-	if (arguments.length == 0) {
-		obj.html('&nbsp');
-	} else {
-		obj.html(d);
-	}	
+    var obj = $('#' + 'records_log_pre');
+    if (arguments.length == 0) {
+        obj.html('&nbsp');
+    } else {
+        obj.html(d);
+    }
 }
 
 function widShowKeysPropriety(id) {
-	var objSubmitButton = $('#submit_button');
-	var objId = $('#' + id);
-	
+    var objSubmitButton = $('#submit_button');
+    var objId = $('#' + id);
+
     objId.val(engGetOnlyHex(objId.val()));
 
     if (engIsHash(objId.val(), glCurrentDB.hash) || objId.val() == '') {
@@ -249,19 +253,19 @@ function widShowKeysPropriety(id) {
         widShowBordersColor(objSubmitButton, 'red');
         widShowRecordsTabLog('BAD_HASH');
     }
-	
+
     widShowNewRecordsCompability();
 }
 
 function widGetLastRecordButtonClick() {
-	var objDn = $('#dn_input');
+    var objDn = $('#dn_input');
     var s = objDn.val();
     var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
     var cb = function (d) {
         var r = engGetParsedResponseLast(d);
 
         if (r.message == 'OK') {
-			widShowLastRecord(r);
+            widShowLastRecord(r);
             widShowNewRecordAuto();
         } else {
             widShowLastRecord();
@@ -273,18 +277,18 @@ function widGetLastRecordButtonClick() {
 }
 
 function widShowNewRecordAuto() {
-	var objLastRecN = $('#lastrec_n_input');
-	var objDn = $('#dn_input');
-	var objNewRecPwd0 = $('#newrec_pass0_input');
-	var objNewRecPwd1 = $('#newrec_pass1_input');
-	var objNewRecPwd2 = $('#newrec_pass2_input');
-	var objOnePwd = $('#onepass_checkbox');
-	var objThreePwd = $('#threepass_checkbox')
-	
-    var lr_n = objLastRecN.val();
+    var objLastRecN = $('#lastrec_n_input');
+    var objDn = $('#dn_input');
+    var objNewRecPwd0 = $('#newrec_pass0_input');
+    var objNewRecPwd1 = $('#newrec_pass1_input');
+    var objNewRecPwd2 = $('#newrec_pass2_input');
+    var objOnePwd = $('#onepass_checkbox');
+    var objThreePwd = $('#threepass_checkbox')
+
+        var lr_n = objLastRecN.val();
     var s = objDn.val();
     var p0 = objNewRecPwd0.val();
-	
+
     if (objOnePwd.prop('checked') === 'enabled') {
         var p1 = null;
         var p2 = null;
@@ -297,27 +301,27 @@ function widShowNewRecordAuto() {
 
     if (lr_n != '') {
         var nr_n = +lr_n + 1;
-		widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
     }
 
     widShowNewRecordsCompability();
 }
 
 function widShowNewRecordOninput() {
-	var objNewRecN = $('#newrec_n_input');
-	var objNewRecK = $('#newrec_k_input');
-	var objNewRecG = $('#newrec_g_input');
-	var objNewRecO = $('#newrec_o_input');
-	var objOnePwd = $('#onepass_checkbox');
-	var objThreePwd = $('#threepass_checkbox');
-	var objNewRecPwd0 = $('#newrec_pass0_input');
-	var objNewRecPwd1 = $('#newrec_pass1_input');
-	var objNewRecPwd2 = $('#newrec_pass2_input');
-	
-    var s = $('#dn_input').val();	
+    var objNewRecN = $('#newrec_n_input');
+    var objNewRecK = $('#newrec_k_input');
+    var objNewRecG = $('#newrec_g_input');
+    var objNewRecO = $('#newrec_o_input');
+    var objOnePwd = $('#onepass_checkbox');
+    var objThreePwd = $('#threepass_checkbox');
+    var objNewRecPwd0 = $('#newrec_pass0_input');
+    var objNewRecPwd1 = $('#newrec_pass1_input');
+    var objNewRecPwd2 = $('#newrec_pass2_input');
+
+    var s = $('#dn_input').val();
     var nr_n = +objNewRecN.val();
     var p0 = objNewRecPwd0.val();
-	
+
     if (objNewRecN.val() == '' && objNewRecK.val() == '' && objNewRecG.val() == '' && objNewRecO.val() == '') {
         return;
     }
@@ -355,15 +359,15 @@ function widRecordsOnePwdCheckboxClick(obj) {
 }
 
 function widRecordsThreePwdCheckboxClick(obj) {
-	var objNewRecPwd0 = $('#newrec_pass0_input');
-	var objNewRecPwd1 = $('#newrec_pass1_input');
-	var objNewRecPwd2 = $('#newrec_pass2_input');
-	var objNewRecOnePwdCheckbox = $('#onepass_checkbox');
+    var objNewRecPwd0 = $('#newrec_pass0_input');
+    var objNewRecPwd1 = $('#newrec_pass1_input');
+    var objNewRecPwd2 = $('#newrec_pass2_input');
+    var objNewRecOnePwdCheckbox = $('#onepass_checkbox');
 
     objNewRecPwd0.prop('disabled', !obj.checked);
     objNewRecPwd1.prop('disabled', !obj.checked);
     objNewRecPwd2.prop('disabled', !obj.checked);
-		
+
     if (obj.checked) {
         objNewRecOnePwdCheckbox.prop('checked', !obj.checked);
         widShowNewRecordOninput();
@@ -389,8 +393,8 @@ function widShowNewRecordsCompability() {
     var g0 = engGetKey(nr_n, s, nr_k, glCurrentDB.magic, glCurrentDB.hash);
     var o0 = engGetKey(nr_n, s, nr_g, glCurrentDB.magic, glCurrentDB.hash);
 
-	var objSubmitButton = $('#submit_button');
-	
+    var objSubmitButton = $('#submit_button');
+
     if (nr_n == '') //new record number is required
     {
         widShowBordersColor(objSubmitButton);
@@ -408,36 +412,36 @@ function widShowNewRecordsCompability() {
 }
 
 function widTokensHistorySelect(range) {
-	var objHistorySelect = $('#tokens_history_textarea');
-	var s = $('#dn_input').val();	
-	var cb = function (data) {
-		var resp = engGetParsedResponse(data);
-		var objHistorySelect = $('#tokens_history_textarea');
-		
-		if (resp.message !== 'OK') {
-			objHistorySelect.val('');
-			return;
-		}
-		
-		var i = resp.content.indexOf('\n');
-		var r = resp.content.substr(i+1);
-		objHistorySelect.val(r);
-	}
-	
-	if (range === 0) {
-		objHistorySelect.val('');
-		return;
-	}
-	
-	var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
-	
-	ajxSendCommand(cmd, cb, hasqdLed);
+    var objHistorySelect = $('#tokens_history_textarea');
+    var s = $('#dn_input').val();
+    var cb = function (data) {
+        var resp = engGetParsedResponse(data);
+        var objHistorySelect = $('#tokens_history_textarea');
+
+        if (resp.message !== 'OK') {
+            objHistorySelect.val('');
+            return;
+        }
+
+        var i = resp.content.indexOf('\n');
+        var r = resp.content.substr(i + 1);
+        objHistorySelect.val(r);
+    }
+
+    if (range === 0) {
+        objHistorySelect.val('');
+        return;
+    }
+
+    var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
+
+    ajxSendCommand(cmd, cb, hasqdLed);
 }
 
 function widHashcalcOninput() {
-	var objT = $('#hashcalc_textarea');
-	var objI = $('#hashcalc_input');
-	
+    var objT = $('#hashcalc_textarea');
+    var objI = $('#hashcalc_input');
+
     if (objT.val().length > 0) {
         objI.val(engGetHash(objT.val(), glHashCalcHash));
     } else {
@@ -456,14 +460,14 @@ function widSubmitButtonClick() {
     var nr_o = $('#newrec_o_input').val();
     var nr_d = $('#newrec_d_input').val();
     var cb = function (data) {
-		var objHistorySelect = $('#tokens_history_select');
-		var r = engGetParsedResponse(data)
-        widShowRecordsTabLog(r.message);
-		var i = objHistorySelect.get(0).selectedIndex;
-		var d = +objHistorySelect.get(0).options[i].text;
-		widTokensHistorySelect(d);
+        var objHistorySelect = $('#tokens_history_select');
+        var r = engGetParsedResponse(data)
+            widShowRecordsTabLog(r.message);
+        var i = objHistorySelect.get(0).selectedIndex;
+        var d = +objHistorySelect.get(0).options[i].text;
+        widTokensHistorySelect(d);
     }
-	
+
     var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetInParsedDataValue(nr_d);
 
     ajxSendCommand(nr, cb, hasqdLed);
