@@ -82,7 +82,7 @@ function widGetHTMLTokensInitialData() {
     r += '<table width="100%">\n';
     r += '<tr>\n';
     r += '<td width="100%">\n';
-    r += '<textarea rows="3" type="text" id="tokens_names_textarea" maxlength="16511" oninput="widTokensNamesOninput(this.value);" placeholder="Enter tokens \[raw names\] or hashes here."></textarea>\n';
+    r += '<textarea rows="3" type="text" id="tokens_names_textarea" maxlength="16511" oninput="widTokensNamesOninput($(this));" placeholder="Enter tokens \[raw names\] or hashes here."></textarea>\n';
     r += '</tr>\n';
     r += '</table width="100%">\n';
     r += '</tr>\n';
@@ -96,13 +96,13 @@ function widGetHTMLTokensInitialData() {
     r += '<td style="text-align:left">Base name&nbsp\n';
     r += '<td colspan="3" style="text-align:left"><input type="text" size="24" id="tokens_basename_input" value="">\n';
     r += '<td style="text-align:right" rowspan="2">\n';
-	r += '<button id="tokens_add_button" onclick="widMainButtonClick(this.id)" data-title="Add">Add</button>\n';
+	r += '<button id="tokens_add_button" onclick="widMainButtonClick($(this))" data-title="Add">Add</button>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td style="text-align:left">Start index&nbsp\n';
-    r += '<td style="text-align:left"><input type="text" size="3" id="tokens_first_idx_input" oninput="widTokensIdxOninput(this.id, this.value)">\n';
+    r += '<td style="text-align:left">Start index&nbsp\n'; 
+    r += '<td style="text-align:left"><input type="text" size="3" id="tokens_first_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
     r += '<td style="text-align:right">End index\n';
-    r += '<td style="text-align:right"><input type="text" size="3" id="tokens_last_idx_input" oninput="widTokensIdxOninput(this.id, this.value)">\n';
+    r += '<td style="text-align:right"><input type="text" size="3" id="tokens_last_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -142,7 +142,7 @@ function widGetHTMLTokensCreateTab() {
     r += '<div data-class="div">\n';
     r += '<table width="100%">\n';
     r += '<tr>\n';
-    r += '<td style="text-align:left"><button id="tokens_create_button" data-class="main" data-title="Create" onclick="widMainButtonClick(this.id)">Create</button>\n';
+    r += '<td style="text-align:left"><button id="tokens_create_button" data-class="main" data-title="Create" onclick="widMainButtonClick($(this))">Create</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -155,7 +155,7 @@ function widGetHTMLTokensVerifyTab() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button data-title="Verify" data-class="main" id="tokens_verify_button" onclick="widMainButtonClick(this.id)">Verify</button>\n';
+    r += '<button data-title="Verify" data-class="main" id="tokens_verify_button" onclick="widMainButtonClick($(this))">Verify</button>\n';
     r += '<td style="text-align:left">\n<div id="tokens_verify_led_div">\n</div>\n';
     r += '</tr>\n';
     r += '</table">\n';
@@ -184,8 +184,8 @@ function widGetHTMLTokensDataTab() {
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2" align="right">\n';
-    r += '<button id="tokens_data_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_data_update_button"  onclick="widMainButtonClick(this.id)" data-title="Update" data-class="main">Update</button>\n';
+    r += '<button id="tokens_data_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_data_update_button"  onclick="widMainButtonClick($(this))" data-title="Update" data-class="main">Update</button>\n';
     r += '<td data-class="hide" id="tokens_data_warning_text" style="background:pink" colspan="3" align="center">\n';
     r += '<pre>The specified range contains unknown tokens. Continue?</pre>\n';
     r += '</tr>\n';
@@ -221,8 +221,8 @@ function widGetHTMLTokensSS1() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_ss1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_ss1_showkeys_button" data-title="Initiate" data-class="main" onclick="widMainButtonClick(this.id)">Initiate</button>\n';
+    r += '<button id="tokens_ss1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_ss1_showkeys_button" data-title="Initiate" data-class="main" onclick="widMainButtonClick($(this))">Initiate</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_ss1_led_div"></div>\n';
     r += '<td id="tokens_ss1_warning_text" data-class="hide" style="background:pink" colspan="3" align="center">\n';
@@ -271,8 +271,8 @@ function widGetHTMLTokensSS2() {
 							r += '<td align="right">\n';
 								r += '<div id="tokens_ss2_led_div">\n</div>\n';
 							r += '<td align="right">\n';
-								r += '<button id="tokens_ss2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-								r += '<button id="tokens_ss2_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick(this.id)">Finalize</button>\n';
+								r += '<button id="tokens_ss2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+								r += '<button id="tokens_ss2_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick($(this))">Finalize</button>\n';
 						r += '</tr>\n';
 					r += '</table>\n';
 			r += '</tr>\n';
@@ -295,7 +295,7 @@ function widGetHTMLTokensSS3() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_ss3_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 1</button>\n';
+    r += '<button id="tokens_ss3_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick($(this))">Initiate Step 1</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_ss3_s1_led_div">\n</div>\n';
     r += '</tr>\n';
@@ -320,7 +320,7 @@ function widGetHTMLTokensSS3() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_ss3_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 2</button>\n';
+    r += '<button id="tokens_ss3_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick($(this))">Initiate Step 2</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_ss3_s2_led_div"></div>\n';
     r += '</tr>\n';
@@ -367,8 +367,8 @@ function widGetHTMLTokensSS4() {
     r += '<td align="left">\n';
     r += '<div id="tokens_ss4_s1_led_div"></div>\n';
     r += '<td align="right">\n';
-    r += '<button id="tokens_ss4_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_ss4_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 1</button>\n';
+    r += '<button id="tokens_ss4_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_ss4_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
@@ -395,8 +395,8 @@ function widGetHTMLTokensSS4() {
     r += '<td align="left">\n';
     r += '<div id="tokens_ss4_s2_led_div"></div>\n';
     r += '<td align="right">\n';
-    r += '<button id="tokens_ss4_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_ss4_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 2</button>\n';
+    r += '<button id="tokens_ss4_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_ss4_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
 
     r += '</tr>\n';
     r += '</table>\n';
@@ -448,8 +448,8 @@ function widGetHTMLTokensRS1() {
     r += '<td align="left">\n';
     r += '<div id="tokens_rs1_led_div"></div>\n';
     r += '<td align="right">\n';
-    r += '<button id="tokens_rs1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_rs1_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick(this.id)">Finalize</button>\n';
+    r += '<button id="tokens_rs1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_rs1_obtainkeys_button" data-title="Finalize" data-class="main" onclick="widMainButtonClick($(this))">Finalize</button>\n';
 
     r += '</tr>\n';
     r += '</table>\n';
@@ -473,8 +473,8 @@ function widGetHTMLTokensRS2() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_rs2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_rs2_showkeys_button" data-title="Initiate" data-class="main" onclick="widMainButtonClick(this.id)">Initiate</button>\n';
+    r += '<button id="tokens_rs2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_rs2_showkeys_button" data-title="Initiate" data-class="main" onclick="widMainButtonClick($(this))">Initiate</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_rs2_led_div"></div>\n';
     r += '<td id="tokens_rs2_warning_text" data-class="hide" style="background:pink" colspan="3" align="center">\n';
@@ -524,8 +524,8 @@ function widGetHTMLTokensRS3() {
     r += '<td align="left">\n';
     r += '<div id="tokens_rs3_s1_led_div"></div>\n';
     r += '<td align="right">\n';
-    r += '<button id="tokens_rs3_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_rs3_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 1</button>\n';
+    r += '<button id="tokens_rs3_s1_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_rs3_s1_obtainkeys_button" data-title="Finalize Step 1" data-class="main" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
 
     r += '</tr>\n';
     r += '</table>\n';
@@ -553,8 +553,8 @@ function widGetHTMLTokensRS3() {
     r += '<td align="left">\n';
     r += '<div id="tokens_rs3_s2_led_div"></div>\n';
     r += '<td align="right">\n';
-    r += '<button id="tokens_rs3_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick(this.id, true)">Hidden</button>\n';
-    r += '<button id="tokens_rs3_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Finalize Step 2</button>\n';
+    r += '<button id="tokens_rs3_s2_continue_button" data-title="Continue" data-class="hide" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
+    r += '<button id="tokens_rs3_s2_obtainkeys_button" data-title="Finalize Step 2" data-class="main" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
 
     r += '</tr>\n';
     r += '</table>\n';
@@ -577,7 +577,7 @@ function widGetHTMLTokensRS4() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_rs4_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 1</button>\n';
+    r += '<button id="tokens_rs4_s1_showkeys_button" data-title="Initiate Step 1" data-class="main" onclick="widMainButtonClick($(this))">Initiate Step 1</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_rs4_s1_led_div"></div>\n';
     r += '</tr>\n';
@@ -602,7 +602,7 @@ function widGetHTMLTokensRS4() {
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td style="text-align:left">\n';
-    r += '<button id="tokens_rs4_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick(this.id)">Initiate Step 2</button>\n';
+    r += '<button id="tokens_rs4_s2_showkeys_button" data-title="Initiate Step 2" data-class="main" onclick="widMainButtonClick($(this))">Initiate Step 2</button>\n';
     r += '<td style="text-align:left">\n';
     r += '<div id="tokens_rs4_s2_led_div"></div>\n';
     r += '</tr>\n';

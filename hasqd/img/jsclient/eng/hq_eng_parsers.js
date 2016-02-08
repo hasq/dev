@@ -1,46 +1,11 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
-
-function engGetKeysSetCheckResults(data, altName, sKey) {
-    var keys = data;
-    keys = keys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
-    var rawKeys = data;
-    rawKeys = rawKeys.replace(/\s/g, '');
-    var chkHash = 's22'
-        var r = {};
-    r.message = 'OK';
-    r.content = 'OK';
-    var hashLength = altName.length; //it may be need to check tokens length
-
-    if (sKey.length == 6 && (keys.length - 3) % 4 != 0) {
-        r.message = 'ERROR';
-        r.content = 'BAD_KEYS';
-    } else if (sKey.length == 4 && (keys.length - 3) % 3 != 0) {
-        r.message = 'ERROR';
-        r.content = 'BAD_KEYS';
-    } else if (rawKeys != engGetOnlyHex(rawKeys)) {
-        r.message = 'ERROR';
-        r.content = 'BAD_CHARS';
-    } else if (keys[keys.length - 1] != sKey) {
-        r.message = 'ERROR';
-        r.content = 'BAD_SC_CODE';
-    } else if (keys[keys.length - 2] != altName) {
-        r.message = 'ERROR';
-        r.content = 'BAD_DB_NAME';
-    } else if (keys[keys.length - 3] != engGetHash(keys.slice(0, keys.length - 3).join(''), chkHash).substring(0, 4)) {
-        r.message = 'ERROR';
-        r.content = 'BAD_RAWKEYS_HASH';
-    }
-    return r;
-}
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 function engGetParsedResponseInfoId(data) {
-    var r = engGetParsedResponse(data);
-    return r;
+    return engGetParsedResponse(data);
 }
 
 function engGetParsedResponseInfoSys(data) {
-    var r = engGetParsedResponse(data);
-    return r;
+    return engGetParsedResponse(data);
 }
 
 function engGetParsedResponseInfoFam(data) {
@@ -81,7 +46,57 @@ function engGetParsedResponseInfoFam(data) {
     return r;
 }
 
-function engIsTokensNamesGood(data, hash) {
+function engGetOnlyNumber(data) {
+    return (data.replace(/[^0-9]/g, '').length > 0) ? +data.replace(/[^0-9]/g, '') : '';
+}
+
+function engGetOnlyHex(data) {
+    return data.replace(/[^0-9a-f]/g, '');
+}
+
+function engIsNull(data) {
+    return (data === null) ? true : false;
+}
+
+function engIsNumber(data) {
+    return !/[^0-9]/.test(data)
+}
+
+function engGetTransferKeysCheckResults(transferKeys, protokolKeys, dbAltName) {
+	var rawKeys = transferKeys;
+
+    transferKeys = transferKeys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
+
+    rawKeys = rawKeys.replace(/\s/g, '');
+    var chkHash = 's22'
+        var r = {};
+    r.message = 'OK';
+    r.content = 'OK';
+    var hashLength = dbAltName.length; //it may be need to check tokens length
+
+    if (protokolKeys.length == 7 && (transferKeys.length - 3) % 4 != 0) {
+        r.message = 'ERROR';
+        r.content = 'BAD_KEYS';
+    } else if (protokolKeys.length == 5 && (transferKeys.length - 3) % 3 != 0) {
+        r.message = 'ERROR';
+        r.content = 'BAD_KEYS';
+    } else if (rawKeys != engGetOnlyHex(rawKeys)) {
+        r.message = 'ERROR';
+        r.content = 'BAD_CHARS';
+    } else if (transferKeys[transferKeys.length - 1] != protokolKeys) {
+        r.message = 'ERROR';
+        r.content = 'BAD_SC_CODE';
+    } else if (transferKeys[transferKeys.length - 2] != dbAltName) {
+        r.message = 'ERROR';
+        r.content = 'BAD_DB_NAME';
+    } else if (transferKeys[transferKeys.length - 3] != engGetHash(transferKeys.slice(0, transferKeys.length - 3).join(''), chkHash).substring(0, 4)) {
+        r.message = 'ERROR';
+        r.content = 'BAD_RAWKEYS_HASH';
+    }
+    return r;
+}
+
+function engIsToken(data, hash) {
     var n = data;
     n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
     n = n.split(/\s/);
@@ -104,16 +119,16 @@ function engIsTokensNamesGood(data, hash) {
     return true;
 }
 
-function engGetSortTokensNames(data) {
-    function sortStr(prop) {
-        return function (a, b) {
-            return ((a[prop] < b[prop]) ? -1 : ((a[prop] > b[prop]) ? 1 : 0))
-        }
+function engSortByProperties(prop) {
+	return function (a, b) {
+		return ((a[prop] < b[prop]) ? -1 : ((a[prop] > b[prop]) ? 1 : 0))
     }
-
+}
+	
+function engGetOrderedTokensList(data) {
     var r = data;
 
-    r.sort(sortStr('s'));
+    r.sort(engSortByProperties('s'));
 
     for (var i = 0; i < r.length - 1; i++) {
         if (r[i].s == r[i + 1].s && r[i].rawS == r[i + 1].rawS) {
@@ -131,12 +146,12 @@ function engGetSortTokensNames(data) {
     return r;
 }
 
-function engGetParsedTokens(data, hash) {
+function engGetParsedTokensList(data, hash) {
     var r = [];
-
     var n = data;
     n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
     n = n.split(/\s/);
+
     for (var i = 0; i < n.length; i++) {
         n[i] = n[i].replace(/^\s+/, '').replace(/\s+$/, '');
         if ((n[i].length == 0) || (n[i] === undefined) || (n[i] === null)) {
@@ -155,18 +170,18 @@ function engGetParsedTokens(data, hash) {
         }
     }
 
-    return engGetSortTokensNames(r);
+    return engGetOrderedTokensList(r);
 }
 
 function engGetParsedTransferKeys(data, sk) {
     var r = [];
     var rawKeys = data;
     var keys = rawKeys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
-    var sK1K2 = '123132';
-    var sG2O2 = '124252';
-    var sK1G1 = '123141';
-    var sK2 = '1232';
-    var sO1 = '1251';
+    var sK1K2 = '1231320';
+    var sG2O2 = '1242520';
+    var sK1G1 = '1231410';
+    var sK2 = '12320';
+    var sO1 = '12510';
 
     for (var i = 0; i < keys.length; i++) {
         keys[i] = keys[i].replace(/^\s+/, '').replace(/\s+$/, '');
@@ -240,13 +255,7 @@ function engGetParsedTransferKeys(data, sk) {
         }
     }
 
-    function sortStr(prop) {
-        return function (a, b) {
-            return ((a[prop] < b[prop]) ? -1 : ((a[prop] > b[prop]) ? 1 : 0))
-        }
-    };
-
-    r.sort(sortStr('s'));
+    r.sort(engSortByProperties('s'));
 
     for (var i = 0; i < r.length - 1; i++) {
         if (r[i].s == r[i + 1].s) {
@@ -260,11 +269,11 @@ function engGetParsedTransferKeys(data, sk) {
 
 function engGetUpdatedTransferKeys(data, p, h, m, sk) {
     var r = data;
-    var sK1K2 = '123132';
-    var sG2O2 = '124252';
-    var sK1G1 = '123141';
-    var sK2 = '1232';
-    var sO1 = '1251';
+    var sK1K2 = '1231320';
+    var sG2O2 = '1242520';
+    var sK1G1 = '1231410';
+    var sK2 = '12320';
+    var sO1 = '12510';
 
     for (var i = 0; i < r.length; i++) {
         switch (sk) {
@@ -385,16 +394,3 @@ function engGetTokensUpdatedNames(data0, data1) {
     return data0;
 }
 
-function engGetOnlyNumber(data) {
-    var r = +data.replace(/[^0-9]/g, '');
-    return r;
-}
-
-function engGetOnlyHex(data) {
-    var r = data.replace(/[^0-9a-f]/g, '');
-    return r;
-}
-
-function engIsNull(data) {
-    return data == null ? true : false;
-}

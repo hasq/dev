@@ -9,13 +9,13 @@ var glS1Key = '';
 var glS2Key = '';
 var glS3Key = '';
 var glS4Key = '';
-var glCRL = {};
-glCRL.items = [];			// The array of a commands.
-glCRL.idx = 0;			// contains a number of current array element to perform
-glCRL.counter = 100;		// countdown timer to repeat a failed operation
-var glVTL = {};			// The object contains information about a last records of a specified range
+var glCL = {};
+glCL.items = [];			// Commands list.
+glCL.idx = 0;			// Contains number of current item of commands list
+glCL.counter = 100;		// countdown timer to repeat a failed operation
+var glVTL = {};			// The object contains information about a last records of specified range
 glVTL.items = []			// The array which include the list of a last records of specified range.
-glVTL.known  = false;		// The objects property which indicate about presence of a known Hasq-tokens in a range
+glVTL.known  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
 glVTL.unknown  = false;	// The marker of mismatched tokens in the specified range
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
@@ -70,33 +70,33 @@ function doc_init() {
 				switch (glHashCalcHash) {
 				case 'md5': //md5
 					widHashcalcOninput();
-					//$('#hashcalc_smenu').get(0).selectedIndex = 0;
-					$('#hashcalc_smenu').val(0);
+					//$('#hashcalc_select').get(0).selectedIndex = 0;
+					$('#hashcalc_select').val(0);
 					break;
 				case 'r16': //r16
 					widHashcalcOninput();
-					$('#hashcalc_smenu').val(1);
+					$('#hashcalc_select').val(1);
 					break;
 				case 's22': //s22
 					widHashcalcOninput();
-					$('#hashcalc_smenu').val(2);
+					$('#hashcalc_select').val(2);
 					break;
 				case 's25': //s25
 					widHashcalcOninput();
-					$('#hashcalc_smenu').val(3);
+					$('#hashcalc_select').val(3);
 					break;
 				case 'smd': //s25
 					widHashcalcOninput();
-					$('#hashcalc_smenu').val(4);
+					$('#hashcalc_select').val(4);
 					break;					
 				case 'wrd': //wrd
 					widHashcalcOninput();
-					$('#hashcalc_smenu').val(5);
+					$('#hashcalc_select').val(5);
 					break;
 				default:
 					break;
 				}
-				$('#hashcalc_smenu').selectmenu('refresh');
+				$('#hashcalc_select').selectmenu('refresh');
 			}
 			return true;
 		}
@@ -108,7 +108,7 @@ function doc_init() {
 		select: function (event, ui) {
 			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
 			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-			var pwdCheckBoxIsOn = document.getElementById('onepass_checkbox').checked + document.getElementById('threepass_checkbox').checked
+			var pwdCheckBoxIsOn = document.getElementById('one_pwd_checkbox').checked + document.getElementById('three_pwd_checkbox').checked
 				glCurrentDB = glDataBase[this.selectedIndex];
 
 			$('#database_table').html(db_table);
@@ -116,13 +116,13 @@ function doc_init() {
 			widShowLastRecord();
 			widRawDNOninput();
 			if (pwdCheckBoxIsOn) {
-				widShowNewRecordOninput();
+				widShowNewRecOninput();
 			}
 			return true;
 		}
 	});
 
-	$('#hashcalc_smenu').selectmenu({
+	$('#hashcalc_select').selectmenu({
 		select : function (event, ui) {
 			switch (this.selectedIndex) {
 			case 0: //md5
@@ -267,20 +267,12 @@ function doc_init() {
 	//$( '#progressbar' ).progressbar({value: false});
 
 	$('[data-class="hide"]').hide();
-
-	$('#show_hide_input').click(function(){
-		if ($('.password').attr('type') == 'password') {
-			$('.password').attr('type', 'text');
-		} else {
-			$('.password').attr('type', 'password');
-		}
-	});
 	
 	$('#hasqd_led').html(picGry);
 
 	$('#server_host').html('' + location.host);
 
-	setTimeout(widServerRefreshButtonClick, 2000);
+	setTimeout(widRefreshButtonClick, 2000);
 
 	widAnimateProgbar();
 }

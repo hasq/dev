@@ -112,17 +112,12 @@ function docMain() {
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Set data';
+    item.title = 'Give data';
     item.data = widGetHTMLSetDataTab();
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Search';
-    item.data = widGetHTMLSearchTab();
-    tabs[tabs.length] = item;
-
-    item = {};
-    item.title = 'Send';
+    item.title = 'Give away';
     item.data = widGetHTMLSendTab();
     tabs[tabs.length] = item;
 
@@ -131,6 +126,11 @@ function docMain() {
     item.data = widGetHTMLReceiveTab();
     tabs[tabs.length] = item;
 
+	item = {};
+    item.title = 'Search';
+    item.data = widGetHTMLSearchTab();
+    tabs[tabs.length] = item;
+	
     var body = widGetHTMLBody(tabs);
 
     return body;

@@ -1,15 +1,9 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function widCleanCRL() {
-    glCRL.idx = 0;
-    glCRL.counter = 100;
-    glCRL.items.length = 0;
-}
-
-function widCleanVTL() {
-    glVTL.items.length = 0;
-    glVTL.known = false;
-    glVTL.unknown = false;
+function widCleanCL() {
+    glCL.idx = 0;
+    glCL.counter = 100;
+    glCL.items.length = 0;
 }
 
 function widCleanVerifyTab() {
@@ -95,15 +89,13 @@ function widCleanAllTabs() {
     widShowProgressbar(0);
 }
 
-function widTokensIdxOninput(id, data) {
-    if ($('#' + id).val() !== '') {
-        $('#' + id).val(engGetOnlyNumber(data));
-    }
+function widTokensIdxOninput(obj) {
+	obj.val(engGetOnlyNumber(obj.val()));
 }
 
 function widTokensPasswordOninput(data) {
     glPassword = data;
-    widCleanVTL();
+    glVTL = engGetVTL(glVTL);
     widCleanAllTabs();
 }
 
@@ -120,12 +112,12 @@ function widEnableTokensInput() {
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
 
-function widDisableAllTokensOperations(id) {
-    var obj = $('#tokens_tabs');
-    obj.tabs('option', 'disabled', true);
-    obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
-    $('#' + widGetClosestContinueButtonId(id)).prop('disabled', false);
-    $('#' + widGetClosestMainButtonId(id)).prop('disabled', false);
+function widDisableAllTokensOperations(obj) {
+    var tabs = $('#tokens_tabs');
+    tabs.tabs('option', 'disabled', true);
+    tabs.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
+    $(widGetClosestContinueButton(obj)).prop('disabled', false);
+    $(widGetClosestMainButton(obj)).prop('disabled', false);
 }
 
 function widEnableAllTokensOperations() {
@@ -134,23 +126,23 @@ function widEnableAllTokensOperations() {
     obj.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', false);
 }
 
-function widGetTokensNamesCheckResults() {
+function widGetTokensNamesState() {
     var r = {};
     r.message = 'OK';
     r.content = 'OK';
 
     if ($('#tokens_names_textarea').val() == '') {
         r.message = 'ERROR';
-        r.content = 'REQ_TOKENS_BAD';
-    } else if (widGetTokensPasswordCheckResults().message == 'ERROR') {
+        r.content = 'Bad tokens names!';
+    } else if (widGetPasswordState().message == 'ERROR') {
         r.message = 'ERROR';
-        r.content = widGetTokensPasswordCheckResults().content;
+        r.content = widGetPasswordState().content;
     }
 
     return r;
 }
 
-function widGetTokensPasswordCheckResults() {
+function widGetPasswordState() {
     var objPwd = $('#tokens_password_input');
     var r = {};
     r.message = 'OK';
@@ -164,7 +156,7 @@ function widGetTokensPasswordCheckResults() {
     return r;
 }
 
-function widGetTokensRangeCheckResults() {
+function widGetRangeDataState() {
     var objBasename = $('#tokens_basename_input');
     var idx0 = +$('#tokens_first_idx_input').val();
     var idx1 = +$('#tokens_last_idx_input').val();
@@ -189,41 +181,40 @@ function widGetTokensRangeCheckResults() {
     return r;
 }
 
-function widTokensNamesOninput(data) {
-    objNamesTextarea = $('#tokens_names_textarea')
-        widCleanVTL();
+function widTokensNamesOninput(obj) {
+    glVTL = engGetVTL(glVTL);
     widCleanAllTabs();
-    widShowBordersColor(objNamesTextarea);
+    widShowBordersColor(obj);
+	
+    var tokens = obj.val();
 
-    var namesArray = data;
-
-    if (!engIsTokensNamesGood(data, glCurrentDB.hash)) {
+    if (!engIsToken(tokens, glCurrentDB.hash)) {
         widDisableTokensInput();
-        widShowBordersColor(objNamesTextarea, '#FF0000'); //RED BORDER
+        widShowBordersColor(obj, '#FF0000'); //RED BORDER
         widShowTokensLog('Please enter a hashes or raw value in square brackets.');
-    } else if (namesArray.length >= 15479) {
+    } else if (tokens.length >= 15479) {
         widEnableTokensInput();
-        widShowBordersColor(objNamesTextarea, '#FFFF00'); //YELLOW BORDER
-        var l = 16511 - namesArray.length;
-        objNamesTextarea.prop('title', 'Warning! ' + l + ' chars left.');
+        widShowBordersColor(obj, '#FFFF00'); //YELLOW BORDER
+        var l = 16511 - tokens.length;
+        obj.prop('title', 'Warning! ' + l + ' chars left.');
         widShowTokensLog();
     } else {
         widEnableTokensInput();
-        widShowBordersColor(objNamesTextarea);
+        widShowBordersColor(obj);
         widShowTokensLog();
     }
 }
 
-function widTokensAdd(id, data) {
+function widAddTokens(id, data) {
     var objBasename = $('#tokens_basename_input')
         var objFirstIdx = $('#tokens_first_idx_input')
         var objLastIdx = $('#tokens_last_idx_input')
         var objNames = $('#tokens_names_textarea')
 
-        var tChk = widGetTokensRangeCheckResults();
+        var chk = widGetRangeDataState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(id, chk.content);
         return;
     }
 
@@ -262,15 +253,14 @@ function widTokensAdd(id, data) {
         objBasename.val('');
         objFirstIdx.val('');
         objLastIdx.val('');
-        widCancelByEvent(id, 'OK');
+        widDone(id, 'OK');
     } else {
-        widCancelByEvent(id, 'REQ_TOKENS_TOO_MANY');
+        widDone(id, 'REQ_TOKENS_TOO_MANY');
     }
 
 }
 
-function widSwitchShowHide(id) {
-    var obj = $('#' + id);
+function widSwitchShowHide(obj) {
     if (obj.css('display') === 'none') {
         obj.show();
     } else {
@@ -278,23 +268,17 @@ function widSwitchShowHide(id) {
     }
 }
 
-function widGetWarningsMode(id) {
-    var label = $('#' + id).button('option', 'label');
-
-    if (label == 'Continue') {
-        return true;
-    } else {
-        return false;
-    }
+function widGetWarningsMode(obj) {
+    return (obj.button('option', 'label') == 'Continue') ? true : false;
 }
 
-function widGetButtonsMode(id) {
-    var label = $('#' + id).button('option', 'label');
-    var title = document.getElementById(id).dataset.title;
-    var cId = widGetClosestContinueButtonId(id);
-    var cMode = widGetWarningsMode(cId);
-
-    if (id == cId && cMode) {
+function widGetButtonsMode(obj) {
+	var label = obj.button('option', 'label');
+    var title = obj.attr('data-title');
+    var objC = widGetClosestContinueButton(obj);
+    var cMode = widGetWarningsMode(objC);
+	
+    if (obj == objC && cMode) {
         return true;
     } else if (label == title) {
         return true; // Main button in action-mode is visible
@@ -303,88 +287,89 @@ function widGetButtonsMode(id) {
     }
 }
 
-function widGetFunctionToRun(id, data) {
-    widCleanCRL;
+function widGetFunctionById(obj, data) {
+	var id = obj.attr('id');
+    widCleanCL();
     switch (id) {
     case 'tokens_add_button':
         var f = function () {
-            widTokensAdd(id);
+            widAddTokens(obj);
         }
         break;
     case 'tokens_create_button':
         var f = function () {
-            widPrepareToCreate(id);
+            widPrepareToCreate(obj);
         }
         break;
     case 'tokens_verify_button':
         var f = function () {
-            widPrepareToVerify(id);
+            widPrepareToVerify(obj);
         }
         break;
     case 'tokens_data_update_button':
         var f = function () {
-            widPrepareToUpdate(id, data);
+            widPrepareToUpdate(obj, data);
         }
         break;
     case 'tokens_ss1_showkeys_button':
         var f = function () {
-            widPrepareToSS1ShowK1K2Keys(id);
+            widPrepareToSS1(obj);
         }
         break;
     case 'tokens_rs1_obtainkeys_button':
         var f = function () {
-            widPrepareToRS1ObtainK1K2Keys(id, data);
+            widPrepareToRS1(obj, data);
         }
         break;
     case 'tokens_ss2_obtainkeys_button':
         var f = function () {
-            widPrepareToSS2ObtainG2O2Keys(id, data);
+            widPrepareToSS2(obj, data);
         }
         break;
     case 'tokens_rs2_showkeys_button':
         var f = function () {
-            widPrepareToRS2ShowG2O2Keys(id);
+            widPrepareToRS2(obj);
         }
         break;
     case 'tokens_ss3_s1_showkeys_button':
         var f = function () {
-            widPrepareToSS3ShowK1G1Keys(id);
+            widPrepareToSS3S1(obj);
         }
         break;
     case 'tokens_ss3_s2_showkeys_button':
         var f = function () {
-            widPrepareToSS3ShowK2Keys(id);
+            widPrepareToSS3S2(obj);
         }
         break;
     case 'tokens_ss4_s1_obtainkeys_button':
         var f = function () {
-            widPrepareToSS4ObtainO1Keys(id, data);
+            widPrepareToSS4S1(obj, data);
         }
         break;
     case 'tokens_ss4_s2_obtainkeys_button':
         var f = function () {
-            widPrepareToSS4ObtainG2O2Keys(id, data);
+            widPrepareToSS4S2(obj, data);
         }
         break;
 
     case 'tokens_rs3_s1_obtainkeys_button':
         var f = function () {
-            widPrepareToRS3ObtainK1G1Keys(id, data);
+            widPrepareToRS3S1(obj, data);
         }
         break;
     case 'tokens_rs3_s2_obtainkeys_button':
         var f = function () {
-            widPrepareToRS3ObtainK2Keys(id, data);
+            widPrepareToRS3S2(obj, data);
         }
         break;
     case 'tokens_rs4_s1_showkeys_button':
         var f = function () {
-            widPrepareToRS4ShowO1Keys(id);
+            widPrepareToRS4S1(obj);
         }
         break;
     case 'tokens_rs4_s2_showkeys_button':
         var f = function () {
-            widPrepareToRS4ShowG2O2Keys(id);
+            widPrepareToRS4S2(obj);
         }
         break;
     default:
@@ -393,114 +378,118 @@ function widGetFunctionToRun(id, data) {
     return f;
 }
 
-function widCancelFunction(id, data) {
+
+function widGetClosestMainButton(obj) {
+    return obj.closest('div[data-class="div"]').find('button[data-class="main"]');
+}
+
+function widGetClosestContinueButton(obj) {
+    return obj.closest('div[data-class="div"]').find('button[data-class="hide"]');
+}
+
+function widGetClosestWarningMessage(obj) {
+    return obj.closest('div[data-class="div"]').find('td[data-class="hide"]');
+}
+
+function widGetClosestLed(obj) {
+    return obj.closest('div[data-class="div"]').find('div[id^="_led_"]');
+}
+
+function widGetClosestTextarea(obj) {
+    return obj.closest('div[data-class="div"]').find('textarea');
+}
+
+function widSwitchButtonsMode(obj) {
+    var title = obj.attr('data-title');
+    var label = obj.button('option', 'label');
+	
+    if (label === title && title === 'Continue') {
+        var objWarning = widGetClosestWarningMessage(obj);
+        widSwitchShowHide(obj);
+        widSwitchShowHide(objWarning);
+        obj.button('option', 'label', 'Hidden');
+    } else if (label !== title && title === 'Continue') {
+        obj.button('option', 'label', title);
+        var objWarning = widGetClosestWarningMessage(obj);
+        widSwitchShowHide(obj);
+        widSwitchShowHide(objWarning);
+    } else if (label === title) {
+        obj.button('option', 'label', 'Cancel');
+    } else {
+        obj.button('option', 'label', title);
+        var objContinue = widGetClosestContinueButton(obj);
+        var objWarning = widGetClosestWarningMessage(obj);
+        if (widGetWarningsMode(objContinue)) {
+            $(objContinue).button('option', 'label', 'Hidden');
+            widSwitchShowHide(objContinue);
+            widSwitchShowHide(objWarning);
+        }
+    }
+}
+
+function widMainButtonClick(obj, data) {
+	var f;
+	
+    if (widGetButtonsMode(obj)) {
+        widDisableAllTokensOperations(obj);
+        f = widGetFunctionById(obj);
+    } else {
+        f = function () {
+            widCancel(obj, data);
+        }
+    }
+    widSwitchButtonsMode(obj);
+    setTimeout(f);
+}
+
+function widDone(obj, data) {
+    widMainButtonClick(obj, data);
+}
+
+function widCancel(obj, data) {
+	excludeObj = $('#tokens_verify_button');
     if (typeof(data) != 'string') {
-        widCleanVTL();
-        data = 'CANCELLED_BY_USER';
-    } else if (id != 'tokens_verify_button') {
-        widCleanVTL();
+        glVTL = engGetVTL(glVTL);
+        data = 'Operation cancelled by user';
+    } else if (obj !== excludeObj) {
+        glVTL = engGetVTL(glVTL);
     }
 
-    widCleanCRL();
+    widCleanCL();
     widShowTokensLog(data);
     widEnableAllTokensOperations();
 }
 
-function widGetClosestMainButtonId(id) {
-    return $('#' + id).closest('div[data-class="div"]').find('button[data-class="main"]').attr('id');
-}
+function widContinueButtonClick(obj, data) {
+    widSwitchButtonsMode(obj);
 
-function widGetClosestContinueButtonId(id) {
-    return $('#' + id).closest('div[data-class="div"]').find('button[data-class="hide"]').attr('id');
-}
-
-function widGetClosestWarningMessageId(id) {
-    return $('#' + id).closest('div[data-class="div"]').find('td[data-class="hide"]').attr('id');
-}
-
-function widGetClosestLedId(id) {
-    return $('#' + id).closest('div[data-class="div"]').find('div[id^="_led_"]').attr('id');
-}
-
-function widGetClosestTextareaId(id) {
-    return $('#' + id).closest('div[data-class="div"]').find('textarea').attr('id');
-}
-
-function widSwitchButtonsMode(id) {
-    var obj = $('#' + id);
-    var dataset = document.getElementById(id).dataset.title;
     var label = obj.button('option', 'label');
-    if (label === dataset && dataset === 'Continue') {
-        var idM = widGetClosestWarningMessageId(id);
-        widSwitchShowHide(id);
-        widSwitchShowHide(idM);
-        obj.button('option', 'label', 'Hidden');
-    } else if (label !== dataset && dataset === 'Continue') {
-        obj.button('option', 'label', dataset);
-        var idM = widGetClosestWarningMessageId(id);
-        widSwitchShowHide(id);
-        widSwitchShowHide(idM);
-    } else if (label === dataset) {
-        obj.button('option', 'label', 'Cancel');
-    } else {
-        obj.button('option', 'label', dataset);
-        var idC = widGetClosestContinueButtonId(id);
-        var idM = widGetClosestWarningMessageId(id);
-        if (widGetWarningsMode(idC)) {
-            $('#' + idC).button('option', 'label', 'Hidden');
-            widSwitchShowHide(idC);
-            widSwitchShowHide(idM);
-        }
-    }
-}
 
-function widMainButtonClick(id, data) {
-    if (widGetButtonsMode(id)) {
-        widDisableAllTokensOperations(id);
-        var f = widGetFunctionToRun(id);
-    } else {
-        var f = function () {
-            widCancelFunction(id, data);
-        }
-    }
-    widSwitchButtonsMode(id);
-    setTimeout(f);
-}
-
-function widCancelByEvent(id, data) {
-    widMainButtonClick(id, data);
-}
-
-function widContinueButtonClick(id, data) {
-    widSwitchButtonsMode(id);
-    var label = $('#' + id).button('option', 'label');
-    var idC = widGetClosestContinueButtonId(id);
     if (data === true) {
-        var idB = widGetClosestMainButtonId(id);
-        var f = widGetFunctionToRun(idB, true);
-        setTimeout(f);
+        var objMainButton = widGetClosestMainButton(obj);
+        setTimeout(widGetFunctionById(objMainButton, true));
     }
 }
 
-function widPrepareToCreate(id) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToCreate(obj) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
 
-    var inp = 'tokens_names_textarea';
-    var tChk = widGetTokensNamesCheckResults();
+    var objNames = $('#tokens_names_textarea');
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    var tokensSet = engGetParsedTokens($('#' + inp).val(), glCurrentDB.hash);
-    widCreateTokens(id, tokensSet);
+    var tokens = engGetParsedTokensList(objNames.val(), glCurrentDB.hash);
+    widCreateTokens(obj, tokens);
 }
 
-function widCreateTokens(id, tokens) {
+function widCreateTokens(obj, tokens) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        if (glCRL.items.length == 0) {
+        if (glCL.items.length == 0) {
             return;
         }
 
@@ -509,11 +498,11 @@ function widCreateTokens(id, tokens) {
         var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message == 'ERROR') {
-            widCancelByEvent(id, cbResponse.content);
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+            widDone(obj, cbResponse.content);
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Creating... ');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -524,46 +513,47 @@ function widCreateTokens(id, tokens) {
         var zCmdIdx = (i == 0) ? 0 : i * 2;
         var lastCmdIdx = zCmdIdx + 1;
 
-        glCRL.items[zCmdIdx] = {};
-        glCRL.items[zCmdIdx].cmd = zCmd;
-        glCRL.items[zCmdIdx].rawS = tokens[i].rawS;
-        glCRL.items[zCmdIdx].s = tokens[i].s;
-        glCRL.items[lastCmdIdx] = {};
-        glCRL.items[lastCmdIdx].cmd = lastCmd;
-        glCRL.items[lastCmdIdx].rawS = tokens[i].rawS;
-        glCRL.items[lastCmdIdx].s = tokens[i].s;
+        glCL.items[zCmdIdx] = {};
+        glCL.items[zCmdIdx].cmd = zCmd;
+        glCL.items[zCmdIdx].rawS = tokens[i].rawS;
+        glCL.items[zCmdIdx].s = tokens[i].s;
+        glCL.items[lastCmdIdx] = {};
+        glCL.items[lastCmdIdx].cmd = lastCmd;
+        glCL.items[lastCmdIdx].rawS = tokens[i].rawS;
+        glCL.items[lastCmdIdx].s = tokens[i].s;
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToVerify(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToVerify(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
     widCleanVerifyTab();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    var inp = 'tokens_names_textarea';
-    var hid = 'tokens_verify_hidden_div';
+    var objNames = $('#tokens_names_textarea');
+    var objTable = $('#tokens_verify_hidden_div');
 
-    $('#' + hid).css('display', 'block');
-    var tokensSet = engGetParsedTokens($('#' + inp).val(), glCurrentDB.hash);
+    objTable.css('display', 'block');
+    var tokens = engGetParsedTokensList(objNames.val(), glCurrentDB.hash);
 
-    widVerifyTokens(id, tokensSet, null, null);
+    widVerifyTokens(obj, tokens, null, null);
 }
 
-function widPrintVerifyTableRow(data, pic) {
-    var table = 'tokens_verify_table';
-    $('#' + table).append(widGetHTMLTr(widGetHTMLTd(pic + data.message) + widGetHTMLTd(data.rawS) + widGetHTMLTd(data.s) + widGetHTMLTd(data.n) + widGetHTMLTd(data.d)));
+function widShowVerifyTableRow(data, pic) {
+    var table = $('#tokens_verify_table');
+	var row = widGetHTMLTr(widGetHTMLTd(pic + data.message) + widGetHTMLTd(data.rawS) + widGetHTMLTd(data.s) + widGetHTMLTd(data.n) + widGetHTMLTd(data.d));
+    table.append(row);
 }
 
-function widGetVerifyRowLed(data) {
+function widGetVerifyTebleRowLed(data) {
     switch (data) {
     case 'WRONG_PWD':
         return picYlw;
@@ -583,7 +573,7 @@ function widGetVerifyRowLed(data) {
     }
 }
 
-function widPrintVerifyMainLed(data) {
+function widShowVerifyTableStateLed(data) {
     var obj = $('#tokens_verify_led_div');
 
     if (data && obj.outerHTML != picRed) {
@@ -595,105 +585,100 @@ function widPrintVerifyMainLed(data) {
     }
 }
 
-function widVerifyTokens(id, tokens, nextFunc, nextFuncData) {
-    var cbFunc = function (cbData, cmdItemIdx, progress) {
-        if (glCRL.items.length == 0) {
+function widVerifyTokens(obj, tokens, nextFunc, nextFuncData) {
+    var cbFunc = function (data, idx, progress) {
+        if (glCL.items.length == 0) {
             return;
         }
 
-        var cbResponse = engGetParsedResponse(cbData);
+        var r = engGetParsedResponse(data);
 
-        if (cbResponse.message == 'ERROR') {
-            widCancelByEvent(id, cbResponse.content);
+        if (r.message == 'ERROR') {
+            widDone(obj, r.content);
             return;
         }
 
         widShowProgressbar(progress);
 
-        cbData = cbData.replace(/^\s+|\s+$/g, '');
-        glVTL = engAddVTLItem(cbData, cmdItemIdx, glVTL, glCRL.items);
+        glVTL = engGetVTL(glVTL, engGetTokensInfo(data, glCL.items[idx]));
 
         var idx = glVTL.items.length - 1;
-        var pic = widGetVerifyRowLed(glVTL.items[idx].message);
+        var pic = widGetVerifyTebleRowLed(glVTL.items[idx].message);
 
         if (nextFunc == null) {
-            widPrintVerifyTableRow(glVTL.items[idx], pic);
-            widPrintVerifyMainLed(glVTL.unknown);
+            widShowVerifyTableRow(glVTL.items[idx], pic);
+            widShowVerifyTableStateLed(glVTL.unknown);
         }
 
-        if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (idx + 1 < glCL.items.length) {
             widShowTokensLog('Verifying...');
         } else if (nextFunc != null) {
             widShowTokensLog('Verified tokens list is ready.');
-            widCleanCRL();
+            widCleanCL();
             var f = (nextFuncData === null) ? function () {
-                nextFunc(id);
+                nextFunc(obj);
             }
              : function () {
-                nextFunc(id, nextFuncData);
+                nextFunc(obj, nextFuncData);
             }
             setTimeout(f);
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
     for (var i = 0; i < tokens.length; i++) {
         var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
-        glCRL.items[i] = {};
-        glCRL.items[i].cmd = lastCmd;
-        glCRL.items[i].rawS = tokens[i].rawS;
-        glCRL.items[i].s = tokens[i].s;
+        glCL.items[i] = {};
+        glCL.items[i].cmd = lastCmd;
+        glCL.items[i].rawS = tokens[i].rawS;
+        glCL.items[i].s = tokens[i].s;
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToUpdate(id, data) {
-    widCleanCRL();
+function widPrepareToUpdate(obj, data) {
+    widCleanCL();
 
-    var tChk = widGetTokensNamesCheckResults();
-    var tblState = engCheckVTL(glVTL);
-
-    switch (tblState) {
+    var chk = widGetTokensNamesState();
+	var d = $('#tokens_data_newdata_input').val();
+    var inp = $('#tokens_names_textarea').val();	
+	
+    switch (engGetVTLContent(glVTL)) {
     case true:
-        var d = $('#' + 'tokens_data_newdata_input').val();
         if (d == '') {
-            widCancelByEvent(id, 'REQ_BAD_NEWDATA');
+            widDone(obj, 'REQ_BAD_NEWDATA');
             return;
         } else {
-            widUpdateTokens(id, d);
+            widUpdateTokens(obj, d);
         }
         break;
     case false:
-        widCancelByEvent(id, 'TOKENS_MISMATCH');
+        widDone(obj, 'TOKENS_MISMATCH');
         break;
     case undefined:
-        var d = $('#' + 'tokens_data_newdata_input').val();
         if (d == '') {
-            widCancelByEvent(id, 'REQ_BAD_NEWDATA');
+            widDone(obj, 'REQ_BAD_NEWDATA');
         } else if (data === true) {
-            widUpdateTokens(id, d);
+            widUpdateTokens(obj, d);
         } else {
-            var idC = widGetClosestContinueButtonId(id);
+            var idC = widGetClosestContinueButton(obj);
             widContinueButtonClick(idC);
         }
         break;
     default:
-        var d = $('#' + 'tokens_data_newdata_input').val();
-
-        if (tChk.message == 'ERROR') {
-            widCancelByEvent(id, tChk.content);
+        if (chk.message == 'ERROR') {
+            widDone(obj, chk.content);
             return;
         } else if (d == '') {
-            widCancelByEvent(id, 'REQ_BAD_NEWDATA');
+            widDone(obj, 'REQ_BAD_NEWDATA');
             return;
         }
 
-        var inp = $('#' + 'tokens_names_textarea').val();
-        var tokensSet = engGetParsedTokens(inp, glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(inp, glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokensSet, widPrepareToUpdate, false);
+            widVerifyTokens(obj, tokens, widPrepareToUpdate, false);
         }
 
         setTimeout(f);
@@ -702,10 +687,10 @@ function widPrepareToUpdate(id, data) {
     }
 }
 
-function widUpdateTokens(id, data) {
+function widUpdateTokens(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
-        if (glCRL.items.length === 0) {
-            widCancelByEvent(id, cbData);
+        if (glCL.items.length === 0) {
+            widDone(obj, cbData);
             return;
         }
 
@@ -714,11 +699,11 @@ function widUpdateTokens(id, data) {
         var cbResponse = engGetParsedResponse(cbData);
 
         if (cbResponse.message === 'ERROR') {
-            widCancelByEvent(id, cbResponse.content);
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+            widDone(obj, cbResponse.content);
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Update data... ');
         } else {
-            widCancelByEvent(id, 'OK');
+            widDone(obj, 'OK');
         }
     }
 
@@ -730,33 +715,32 @@ function widUpdateTokens(id, data) {
             var r = engGetNewRecord(n, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
             var addCmd = 'add *' + ' ' + glCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
-            var idx = (glCRL.items.length == 0) ? 0 : glCRL.items.length;
+            var idx = (glCL.items.length == 0) ? 0 : glCL.items.length;
 
-            glCRL.items[idx] = {};
-            glCRL.items[idx].cmd = addCmd;
-            glCRL.items[idx].rawS = glVTL.items[i].rawS;
-            glCRL.items[idx].s = glVTL.items[i].s;
+            glCL.items[idx] = {};
+            glCL.items[idx].cmd = addCmd;
+            glCL.items[idx].rawS = glVTL.items[i].rawS;
+            glCL.items[idx].s = glVTL.items[i].s;
 
             idx++;
 
-            glCRL.items[idx] = {};
-            glCRL.items[idx].cmd = lastCmd;
-            glCRL.items[idx].rawS = glVTL.items[i].rawS;
-            glCRL.items[idx].s = glVTL.items[i].s;
+            glCL.items[idx] = {};
+            glCL.items[idx].cmd = lastCmd;
+            glCL.items[idx].rawS = glVTL.items[i].rawS;
+            glCL.items[idx].s = glVTL.items[i].s;
         }
     }
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrintSendReceiveOut(id, data) {
-    var idOut = widGetClosestTextareaId(id);
+function widPrintSendReceiveOut(obj, data) {
+    var objTextarea = widGetClosestTextarea(obj);
     if (data != '') {
-        $('#' + idOut).val($('#' + idOut).val() + data);
+        $(objTextarea).val($(objTextarea).val() + data);
     }
 }
 
-function widPrintSendReceiveLed(id, data) {
-    var obj = $('#' + id);
+function widPrintSendReceiveLed(obj, data) {
     if (data) {
         obj.html(picGrn);
         obj.prop('title', 'OK');
@@ -766,53 +750,62 @@ function widPrintSendReceiveLed(id, data) {
     }
 }
 
-function widPrepareToSS1ShowK1K2Keys(id) {
-    widCleanCRL();
+function widPrepareToSS1(obj) {
+	var objTokens = $('#tokens_names_textarea');
+    var objLed = $('#tokens_ss1_led_div');
+	
+    widCleanCL();
     widCleanSS1();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
-
-    var led = 'tokens_ss1_led_div';
-    var tblState = engCheckVTL(glVTL);
-
-    switch (tblState) {
+	
+    switch (engGetVTLContent(glVTL)) {
     case true:
-        widPrintSendReceiveLed(led, true);
+        widPrintSendReceiveLed(objLed, true);
+		
         var f = function () {
-            widSS1ShowK1K2Keys(id, glVTL);
+            widSS1ShowK1K2Keys(obj, glVTL);
         }
+		
         setTimeout(f);
+		
         break;
     case false:
-        widPrintSendReceiveLed(led, false);
-        widCancelByEvent(id, 'TOKENS_MISMATCH');
+        widPrintSendReceiveLed(objLed, false);
+        widDone(obj, 'TOKENS_MISMATCH');
+		
         break;
     case undefined:
-        widPrintSendReceiveLed(led, false);
+        widPrintSendReceiveLed(objLed, false);
+		
         var f = function () {
-            widSS1ShowK1K2Keys(id, glVTL);
+            widSS1ShowK1K2Keys(obj, glVTL);
         }
+		
         setTimeout(f);
+		
         break;
     default:
-        var idInp = 'tokens_names_textarea';
-        var tokensSet = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokensSet, widPrepareToSS1ShowK1K2Keys, false);
+            widVerifyTokens(obj, tokens, widPrepareToSS1, false);
         }
+		
         setTimeout(f);
+		
         break;
     }
 }
 
-function widSS1ShowK1K2Keys(id, data) {
+function widSS1ShowK1K2Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
+		
         if (data.items[i].message == 'OK') {
             var r = data.items[i];
             var k1 = engGetKey(r.n + 1, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -822,18 +815,17 @@ function widSS1ShowK1K2Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
-    var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123132';
-    widPrintSendReceiveOut(id, lastRow);
-    widMainButtonClick(id, 'OK');
+    var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231320';
+    widPrintSendReceiveOut(obj, lastRow);
+    widMainButtonClick(obj, 'OK');
 }
 
-function widPrintUpdatedTokensNames(arr, id) {
-    var obj = $('#' + id);
+function widShowUpdatedTokensNames(arr, obj) {
     for (var i = 0; i < arr.length; i++) {
         if (i == 0) {
             obj.val(arr[i]);
@@ -843,68 +835,67 @@ function widPrintUpdatedTokensNames(arr, id) {
     }
 }
 
-function widPrepareToRS1ObtainK1K2Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToRS1(obj, data) {
+	var objTokens = $('#tokens_names_textarea');
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
     widCleanRS1();
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
-            return;
-        }
-
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '123132';
-
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
-
-    if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '1231320';
+
+    var chk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
+
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
+        return;
+    }
+
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
         var f = function () {
-            widRS1ObtainK1K2Keys(id, transferKeys);
+            widRS1ObtainK1K2Keys(obj, transferKeys);
         }
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widRS1ObtainK1K2Keys(id, data) {
+function widRS1ObtainK1K2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_rs1_led_div');
+        var objLed = $('#tokens_rs1_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -925,86 +916,86 @@ function widRS1ObtainK1K2Keys(id, data) {
 
         var idx = (i == 0) ? 0 : i * 2;
 
-        glCRL.items[idx] = {};
-        glCRL.items[idx].cmd = addCmd1;
-        glCRL.items[idx].s = s;
-        glCRL.items[idx].rawS = '';
+        glCL.items[idx] = {};
+        glCL.items[idx].cmd = addCmd1;
+        glCL.items[idx].s = s;
+        glCL.items[idx].rawS = '';
 
         idx++;
 
-        glCRL.items[idx] = {};
-        glCRL.items[idx].cmd = addCmd2;
-        glCRL.items[idx].s = s;
-        glCRL.items[idx].rawS = '';
+        glCL.items[idx] = {};
+        glCL.items[idx].cmd = addCmd2;
+        glCL.items[idx].s = s;
+        glCL.items[idx].rawS = '';
 
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToSS2ObtainG2O2Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToSS2(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
     widCleanSS2();
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
-            return;
-        }
-
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '124252';
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
-
-    if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+    var objTokens = $('#tokens_names_textarea');
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '1242520';
+	
+    var chk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
+
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
+        return;
+    }
+
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
 
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
 
         var f = function () {
-            widSS2ObtainG2O2Keys(id, transferKeys);
+            widSS2ObtainG2O2Keys(obj, transferKeys);
         }
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widSS2ObtainG2O2Keys(id, data) {
+function widSS2ObtainG2O2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_ss2_led_div');
+        var objLed = $('#tokens_ss2_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -1025,42 +1016,42 @@ function widSS2ObtainG2O2Keys(id, data) {
 
         var idx = (i == 0) ? 0 : i * 2;
 
-        glCRL.items[idx] = {};
-        glCRL.items[idx].cmd = addCmd1;
-        glCRL.items[idx].s = s;
-        glCRL.items[idx].rawS = '';
+        glCL.items[idx] = {};
+        glCL.items[idx].cmd = addCmd1;
+        glCL.items[idx].s = s;
+        glCL.items[idx].rawS = '';
 
         idx++;
 
-        glCRL.items[idx] = {};
-        glCRL.items[idx].cmd = addCmd2;
-        glCRL.items[idx].s = s;
-        glCRL.items[idx].rawS = '';
+        glCL.items[idx] = {};
+        glCL.items[idx].cmd = addCmd2;
+        glCL.items[idx].s = s;
+        glCL.items[idx].rawS = '';
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToRS2ShowG2O2Keys(id) {
-    widCleanCRL();
+function widPrepareToRS2(obj) {
+    widCleanCL();
     widCleanRS2();
+    
+	var chk = widGetTokensNamesState();
 
-    var tChk = widGetTokensNamesCheckResults();
-
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
-
-    var led = 'tokens_rs2_led_div';
-    var tblState = engCheckVTL(glVTL);
+	
+	var objTokens = $('#tokens_names_textarea');
+    var objLed = $('#tokens_rs2_led_div');
+    var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
     case null:
-        var idInp = 'tokens_names_textarea';
-        var tokens = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokens, widPrepareToRS2ShowG2O2Keys, false);
+            widVerifyTokens(obj, tokens, widPrepareToRS2, false);
         }
         setTimeout(f);
         break;
@@ -1073,20 +1064,20 @@ function widPrepareToRS2ShowG2O2Keys(id) {
             }
         }
         if (g) {
-            widPrintSendReceiveLed(led, true);
+            widPrintSendReceiveLed(objLed, true);
             var f = function () {
-                widRS2ShowG2O2Keys(id, glVTL);
+                widRS2ShowG2O2Keys(obj, glVTL);
             }
             setTimeout(f);
         } else {
-            widPrintSendReceiveLed(led, false);
-            widCancelByEvent(id, 'TOKENS_MISMATCH');
+            widPrintSendReceiveLed(objLed, false);
+            widDone(obj, 'TOKENS_MISMATCH');
         }
         break;
     }
 }
 
-function widRS2ShowG2O2Keys(id, data) {
+function widRS2ShowG2O2Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN') {
@@ -1101,62 +1092,62 @@ function widRS2ShowG2O2Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
-    idOut = widGetClosestTextareaId(id);
-    var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
-    widPrintSendReceiveOut(id, lastRow);
-    widMainButtonClick(id, 'OK');
+    idOut = widGetClosestTextarea(obj);
+    var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
+    widPrintSendReceiveOut(obj, lastRow);
+    widMainButtonClick(obj, 'OK');
 }
 
-function widPrepareToSS3ShowK1G1Keys(id) {
-    widCleanCRL();
+function widPrepareToSS3S1(obj) {
+    widCleanCL();
     widCleanSS3();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
-
-    var led = 'tokens_ss3_s1_led_div';
-    var tblState = engCheckVTL(glVTL);
+	
+    var objTokens = $('#tokens_names_textarea');
+    var objLed = $('#tokens_ss3_s1_led_div');
+    var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
     case true:
-        widPrintSendReceiveLed(led, true);
+        widPrintSendReceiveLed(objLed, true);
         var f = function () {
-            widSS3ShowK1G1Keys(id, glVTL);
+            widSS3ShowK1G1Keys(obj, glVTL);
         }
         setTimeout(f);
         break;
     case false:
-        widPrintSendReceiveLed(led, false);
-        widCancelByEvent(id, 'TOKENS_MISMATCH');
+        widPrintSendReceiveLed(objLed, false);
+        widDone(obj, 'TOKENS_MISMATCH');
         break;
     case undefined:
-        widPrintSendReceiveLed(led, false);
+        widPrintSendReceiveLed(objLed, false);
         var f = function () {
-            widSS3ShowK1G1Keys(id, glVTL);
+            widSS3ShowK1G1Keys(obj, glVTL);
         }
         setTimeout(f);
         break;
     default:
-        var idInp = 'tokens_names_textarea';
-        var tokensSet = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokensSet = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokensSet, widPrepareToSS3ShowK1G1Keys, false);
+            widVerifyTokens(obj, tokensSet, widPrepareToSS3S1, false);
         }
         setTimeout(f);
         break;
     }
 }
 
-function widSS3ShowK1G1Keys(id, data) {
+function widSS3ShowK1G1Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message == 'OK') {
@@ -1170,63 +1161,68 @@ function widSS3ShowK1G1Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
-    idOut = widGetClosestTextareaId(id);
-    var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123141';
-    widPrintSendReceiveOut(id, lastRow);
-    widMainButtonClick(id, 'OK');
+    idOut = widGetClosestTextarea(obj);
+    var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231410';
+    widPrintSendReceiveOut(obj, lastRow);
+    widMainButtonClick(obj, 'OK');
 }
 
-function widPrepareToSS3ShowK2Keys(id) {
-    widCleanCRL();
+function widPrepareToSS3S2(obj) {
+    widCleanCL();
     widCleanSS3();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
-
-    var led = 'tokens_ss3_s2_led_div';
-    var tblState = engCheckVTL(glVTL);
+    
+	var objTokens = $('#tokens_names_textarea');
+    var objLed = $('#tokens_ss3_s2_led_div');
+    var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
     case null:
-        var idInp = 'tokens_names_textarea';
-        var tokens = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokens, widPrepareToSS3ShowK2Keys, false);
+            widVerifyTokens(obj, tokens, widPrepareToSS3S2, false);
         }
+		
         setTimeout(f);
+		
         break;
     default:
         var g = false;
+		
         for (var i = 0; i < glVTL.items.length; i++) {
             if (glVTL.items[i].message !== 'IDX_NODN') { //WRONG_PWD
                 var g = true;
                 break;
             }
         }
+		
         if (g) {
-            widPrintSendReceiveLed(led, true);
+            widPrintSendReceiveLed(objLed, true);
             var f = function () {
-                widSS3ShowK2Keys(id, glVTL);
+                widSS3ShowK2Keys(obj, glVTL);
             }
             setTimeout(f);
         } else {
-            widPrintSendReceiveLed(led, false);
-            widCancelByEvent(id, 'TOKENS_MISMATCH');
+            widPrintSendReceiveLed(objLed, false);
+            widDone(obj, 'TOKENS_MISMATCH');
         }
+		
         break;
     }
 }
 
-function widSS3ShowK2Keys(id, data) {
+function widSS3ShowK2Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN' && data.items[i].n !== 0) {
@@ -1239,78 +1235,77 @@ function widSS3ShowK2Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
     if (newRow.length !== 0) {
-        var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-        var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1232';
-        widPrintSendReceiveOut(id, lastRow);
+        var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+        var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12320';
+        widPrintSendReceiveOut(obj, lastRow);
     }
 
-    widMainButtonClick(id, 'OK');
+    widMainButtonClick(obj, 'OK');
 }
 
-function widPrepareToRS3ObtainK1G1Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToRS3S1(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
-            return;
-        }
-
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '123141';
-
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
-
-    if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+	var objTokens = $('#tokens_names_textarea');
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '1231410';
+
+    var chk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
+
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
+        return;
+    }
+
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
         var f = function () {
-            widRS3ObtainK1G1Keys(id, transferKeys);
+            widRS3ObtainK1G1Keys(obj, transferKeys);
         }
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widRS3ObtainK1G1Keys(id, data) {
+function widRS3ObtainK1G1Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_rs3_s1_led_div');
+        var objLed = $('#tokens_rs3_s1_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -1324,77 +1319,76 @@ function widRS3ObtainK1G1Keys(id, data) {
 
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
-        glCRL.items[i] = {};
-        glCRL.items[i].cmd = addCmd;
-        glCRL.items[i].s = s;
-        glCRL.items[i].rawS = '';
+        glCL.items[i] = {};
+        glCL.items[i].cmd = addCmd;
+        glCL.items[i].s = s;
+        glCL.items[i].rawS = '';
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToRS3ObtainK2Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToRS3S2(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
+        if (chk.message == 'ERROR') {
+            widDone(obj, chk.content);
             return;
         }
 
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '1232';
+	var objTokens = $('#tokens_names_textarea');
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '12320';
 
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
+    var kChk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
 
     if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+        widDone(obj, kChk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
         var f = function () {
-            widRS3ObtainK2Keys(id, transferKeys);
+            widRS3ObtainK2Keys(obj, transferKeys);
         }
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widRS3ObtainK2Keys(id, data) {
+function widRS3ObtainK2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_rs3_s2_led_div');
+        var objLed = $('#tokens_rs3_s2_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -1407,78 +1401,77 @@ function widRS3ObtainK2Keys(id, data) {
         var o2 = data[i].o2;
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-        glCRL.items[i] = {};
-        glCRL.items[i].cmd = addCmd;
-        glCRL.items[i].s = s;
-        glCRL.items[i].rawS = '';
+        glCL.items[i] = {};
+        glCL.items[i].cmd = addCmd;
+        glCL.items[i].s = s;
+        glCL.items[i].rawS = '';
 
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToSS4ObtainO1Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToSS4S1(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
-            return;
-        }
-
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '1251';
-
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
-
-    if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+    var objTokens = $('#tokens_names_textarea');
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '12510';
+
+    var chk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
+
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
+        return;
+    }
+
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
 
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
         var f = function () {
-            widSS4ObtainO1Keys(id, transferKeys);
+            widSS4ObtainO1Keys(obj, transferKeys);
         }
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widSS4ObtainO1Keys(id, data) {
+function widSS4ObtainO1Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_ss4_s1_led_div' + idLed);
+        var objLed = $('#tokens_ss4_s1_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
 
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -1490,75 +1483,76 @@ function widSS4ObtainO1Keys(id, data) {
         var o1 = data[i].o1;
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
-        glCRL.items[i] = {};
-        glCRL.items[i].cmd = addCmd;
-        glCRL.items[i].s = s;
-        glCRL.items[i].rawS = '';
+        glCL.items[i] = {};
+        glCL.items[i].cmd = addCmd;
+        glCL.items[i].s = s;
+        glCL.items[i].rawS = '';
 
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToSS4ObtainG2O2Keys(id, data) {
-    widCleanCRL();
-    widCleanVTL();
+function widPrepareToSS4S2(obj, data) {
+    widCleanCL();
+    glVTL = engGetVTL(glVTL);
 
-    var pChk = widGetTokensPasswordCheckResults()
+    var chk = widGetPasswordState()
 
-        if (pChk.message == 'ERROR') {
-            widCancelByEvent(id, pChk.content);
-            return;
-        }
-
-        var idInp = 'tokens_names_textarea';
-    var rawTokens = $('#' + idInp).val();
-    var rawTransferKeys = $('#' + widGetClosestTextareaId(id)).val();
-    var sKey = '124252';
-
-    var kChk = engGetKeysSetCheckResults(rawTransferKeys, glCurrentDB.altname, sKey);
-
-    if (kChk.message == 'ERROR') {
-        widCancelByEvent(id, kChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    if (rawTokens == '' || data) {
+    var objTokens = $('#tokens_names_textarea');
+    var tokens = objTokens.val();
+    var rawTransferKeys = $(widGetClosestTextarea(obj)).val();
+    var sKey = '1242520';
+
+    var chk = engGetTransferKeysCheckResults(rawTransferKeys, sKey, glCurrentDB.altname);
+
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
+        return;
+    }
+
+    if (tokens == '' || data) {
         var transferKeys = engGetParsedTransferKeys(rawTransferKeys, sKey);
         transferKeys = engGetUpdatedTransferKeys(transferKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic, sKey);
-        var tokens = engGetParsedTokens(rawTokens, glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(tokens, glCurrentDB.hash);
         tokens = engGetTokensUpdatedNames(engGetTokensHashedNames(transferKeys), engGetTokensRawNames(tokens));
-        widPrintUpdatedTokensNames(tokens, idInp);
+        widShowUpdatedTokensNames(tokens, objTokens);
+		
         var f = function () {
-            widSS4ObtainG2O2Keys(id, transferKeys);
+            widSS4ObtainG2O2Keys(obj, transferKeys);
         }
+		
         setTimeout(f);
     } else {
-        var idC = widGetClosestContinueButtonId(id);
-        widContinueButtonClick(idC);
+        widContinueButtonClick(widGetClosestContinueButton(obj));
     }
 }
 
-function widSS4ObtainG2O2Keys(id, data) {
+function widSS4ObtainG2O2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objL = $('#tokens_ss4_s2_led_div');
+        var objLed = $('#tokens_ss4_s2_led_div');
 
-        if (cbResponse.message != 'ERROR' && objL.html() != picRed) {
-            objL.html(picGrn);
-            objL.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
-        } else if (cbResponse.message == 'ERROR' && objL.html() != picRed) {
-            objL.html(picRed);
-            objL.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
+        if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picGrn);
+            objLed.prop('title', 'Operation successfull.\nPlease, check the results on the Verify tab.');
+        } else if (cbResponse.message == 'ERROR' && objLed.html() != picRed) {
+            objLed.html(picRed);
+            objLed.prop('title', 'Operation error occurred.\nPlease use the \"Verify\" tab for more info\nor try to repeat operation.');
         }
         widShowProgressbar(progress);
 
-        if (glCRL.items.length == 0) {
-            widCancelByEvent(id, 'CANCELLED_BY_USER');
-        } else if (cmdItemIdx + 1 < glCRL.items.length) {
+        if (glCL.items.length == 0) {
+            widDone(obj, 'Operation cancelled by user');
+        } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(id, 'OK');
+            widMainButtonClick(obj, 'OK');
         }
     }
 
@@ -1571,35 +1565,35 @@ function widSS4ObtainG2O2Keys(id, data) {
 
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-        glCRL.items[i] = {};
-        glCRL.items[i].cmd = addCmd;
-        glCRL.items[i].s = s;
-        glCRL.items[i].rawS = '';
+        glCL.items[i] = {};
+        glCL.items[i].cmd = addCmd;
+        glCL.items[i].s = s;
+        glCL.items[i].rawS = '';
     }
 
-    engRunCRL(glCRL, cbFunc);
+    engRunCL(glCL, cbFunc);
 }
 
-function widPrepareToRS4ShowO1Keys(id) {
-    widCleanCRL();
+function widPrepareToRS4S1(obj) {
+    widCleanCL();
     widCleanRS4();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    var led = 'tokens_rs4_s1_led_div';
-    var tblState = engCheckVTL(glVTL);
+    var objTokens = $('#tokens_names_textarea');
+	var objLed = $('#tokens_rs4_s1_led_div');
+    var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
     case null:
-        var idInp = 'tokens_names_textarea';
-        var tokens = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokens, widPrepareToRS4ShowO1Keys, false);
+            widVerifyTokens(obj, tokens, widPrepareToRS4S1, false);
         }
         setTimeout(f);
         break;
@@ -1612,20 +1606,20 @@ function widPrepareToRS4ShowO1Keys(id) {
             }
         }
         if (g) {
-            widPrintSendReceiveLed(led, true);
+            widPrintSendReceiveLed(objLed, true);
             var f = function () {
-                widRS4ShowO1Keys(id, glVTL);
+                widRS4ShowO1Keys(obj, glVTL);
             }
             setTimeout(f);
         } else {
-            widPrintSendReceiveLed(led, false);
-            widCancelByEvent(id, 'TOKENS_MISMATCH');
+            widPrintSendReceiveLed(objLed, false);
+            widDone(obj, 'TOKENS_MISMATCH');
         }
         break;
     }
 }
 
-function widRS4ShowO1Keys(id, data) {
+function widRS4ShowO1Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN') {
@@ -1639,36 +1633,36 @@ function widRS4ShowO1Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
-    var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
-    widPrintSendReceiveOut(id, lastRow);
-    widMainButtonClick(id, 'OK');
+    var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+    var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12510';
+    widPrintSendReceiveOut(obj, lastRow);
+    widMainButtonClick(obj, 'OK');
 }
 
-function widPrepareToRS4ShowG2O2Keys(id) {
-    widCleanCRL();
+function widPrepareToRS4S2(obj) {
+    widCleanCL();
     widCleanRS4();
 
-    var tChk = widGetTokensNamesCheckResults();
+    var chk = widGetTokensNamesState();
 
-    if (tChk.message == 'ERROR') {
-        widCancelByEvent(id, tChk.content);
+    if (chk.message == 'ERROR') {
+        widDone(obj, chk.content);
         return;
     }
 
-    var led = 'tokens_rs4_s2_led_div';
-    var tblState = engCheckVTL(glVTL);
+	var objTokens = $('#tokens_names_textarea');
+    var objLed = $('#tokens_rs4_s2_led_div');
+    var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
     case null:
-        var idInp = 'tokens_names_textarea';
-        var tokens = engGetParsedTokens($('#' + idInp).val(), glCurrentDB.hash);
+        var tokens = engGetParsedTokensList(objTokens.val(), glCurrentDB.hash);
         var f = function () {
-            widVerifyTokens(id, tokens, widPrepareToRS4ShowG2O2Keys, false);
+            widVerifyTokens(obj, tokens, widPrepareToRS4S2, false);
         }
         setTimeout(f);
         break;
@@ -1681,20 +1675,20 @@ function widPrepareToRS4ShowG2O2Keys(id) {
             }
         }
         if (g) {
-            widPrintSendReceiveLed(led, true);
+            widPrintSendReceiveLed(objLed, true);
             var f = function () {
-                widRS4ShowG2O2Keys(id, glVTL);
+                widRS4ShowG2O2Keys(obj, glVTL);
             }
             setTimeout(f);
         } else {
-            widPrintSendReceiveLed(led, false);
-            widCancelByEvent(id, 'TOKENS_MISMATCH');
+            widPrintSendReceiveLed(objLed, false);
+            widDone(obj, 'TOKENS_MISMATCH');
         }
         break;
     }
 }
 
-function widRS4ShowG2O2Keys(id, data) {
+function widRS4ShowG2O2Keys(obj, data) {
     for (var i = 0; i < data.items.length; i++) {
         widShowProgressbar(100 * (i + 1) / data.items.length);
         if (data.items[i].message != 'IDX_NODN' && data.items[i].n !== 0) {
@@ -1710,15 +1704,15 @@ function widRS4ShowG2O2Keys(id, data) {
             var newRow = '';
         }
 
-        widPrintSendReceiveOut(id, newRow);
+        widPrintSendReceiveOut(obj, newRow);
         widShowTokensLog('Generation...');
     }
 
     if (newRow.length !== 0) {
-        var extractKeys = $('#' + widGetClosestTextareaId(id)).val().replace(/[\n|\s]/g, '');
-        var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
-        widPrintSendReceiveOut(id, lastRow);
+        var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
+        var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
+        widPrintSendReceiveOut(obj, lastRow);
     }
 
-    widMainButtonClick(id, 'OK');
+    widMainButtonClick(obj, 'OK');
 }

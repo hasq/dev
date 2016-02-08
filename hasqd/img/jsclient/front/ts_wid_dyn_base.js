@@ -72,8 +72,8 @@ function widStringsGrow(s, l) {
 function widGetToken(d, h) {
     //It returns hash of raw tokens value
 
-    if (engIsHash(d, h)) 
-	return d;
+    if (engIsHash(d, h))
+        return d;
 
     return engGetHash(d, h)
 }
@@ -114,19 +114,19 @@ function widShowData(d) {
 }
 
 function widShowToken() {
-// Shows hashed value of token (if the value is not a default hash)
-	var objT = $('#token_value_td');
-	var objH = $('#token_hint_input');
-	var tok = objH.val();
-	
-	if (tok.length == 0) {
-		objT.empty();
-		return;
-	} 
+    // Shows hashed value of token (if the value is not a default hash)
+    var objT = $('#token_hash_td');
+    var objH = $('#token_text_input');
+    var tok = objH.val();
 
-	tok = widGetToken(tok, glCurrentDB.hash);
+    if (tok.length == 0) {
+        objT.empty();
+        return;
+    }
 
-	objT.html(tok);
+    tok = widGetToken(tok, glCurrentDB.hash);
+
+    objT.html(tok);
 }
 
 function widSetLastRecChanges(d) {
@@ -155,7 +155,7 @@ function widShowTokenState(d) {
     if (arguments.length === 0) {
         obj.empty();
         widShowLog();
-    } else if (d === null) {
+    } else if (d === undefined) {
         obj.html(picL12);
         widShowLog('Searching for token...');
     } else if (d === true) {
@@ -167,22 +167,22 @@ function widShowTokenState(d) {
     }
 }
 
-function widTokenHintOninput(id) {
+function widTokenTextOninput(id) {
     // Events when tokens value changed.
     clearTimeout(glTimerId);
     glLastRec = {};
     widShowLog(); //clear log
     widShowData(); //clear and hide data field
-    widShowTokenState(null); // show animation
+    widShowTokenState(undefined); // show animation
 
-    var obj = $('#token_hint_input');
-    var hint = obj.val();
+    var obj = $('#token_text_input');
+    var tokenText = obj.val();
     glLastRec = {};
 
-    //widEnDisPasswordInput(hint);
+    //widEnDisPasswordInput(tokenText);
     widShowToken();
-    if (hint.length > 0) {
-        var s = widGetToken(hint, glCurrentDB.hash);
+    if (tokenText.length > 0) {
+        var s = widGetToken(tokenText, glCurrentDB.hash);
         var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
         engSendDeferredRequest(cmd, 1000, widSetLastRecChanges);
     } else {
@@ -241,21 +241,16 @@ function widShowPasswordMatch(lr) {
     }
 }
 
-function widGetPasswordGuessTime(d) {
+function widGetPasswordGuessTime(pwd) {
     // Returns guess time of specified password
-    if (String(d).length === 0) {
-        return '';
-    } else {
-        var r = zxcvbn(d);
-        return 'Guess time: ' + r.crack_times_display.offline_slow_hashing_1e4_per_second;
-    }
+    return 'Guess time: ' + zxcvbn(pwd).crack_times_display.offline_slow_hashing_1e4_per_second;
 }
 
 function widShowPasswordGuessTime(d) {
     // Shows password guess time
     var obj = $('#password_zxcvbn_td');
 
-    if (arguments.length !== 0 && String(d).length > 0) {
+    if (arguments.length > 0 && d != undefined) {
         obj.html(d);
     } else {
         obj.empty();
@@ -286,7 +281,7 @@ function widDisableTabsUI(f) {
 
 function widGetInitialDataState() {
     // Returns state of initial data
-    var objT = $('#token_hint_input');
+    var objT = $('#token_text_input');
     var objP = $('#password_input');
     var r = {};
     r.message = false;
@@ -305,9 +300,9 @@ function widGetInitialDataState() {
     return r;
 }
 
-function widButtonClick(id) {
+function widButtonClick(obj) {
     // Shared button click function
-    var obj = $('#' + id);
+    var obj = $(obj);
     var f = obj.attr('data-onclick');
 
     widDisableInitialDataUI();
@@ -325,7 +320,7 @@ function widCompleteEvent(t) {
 
 function widCreateButtonClick() {
     // Creates a new token record
-    var objT = $('#token_hint_input');
+    var objT = $('#token_text_input');
     var objP = $('#password_input');
     var s = engGetHash(objT.val(), glCurrentDB.hash);
     var e = widGetInitialDataState();
@@ -349,7 +344,7 @@ function widCreateButtonClick() {
         var r = engGetParsedResponse(d);
         if (r.message == 'OK') {
             widCompleteEvent(r.message);
-            widTokenHintOninput();
+            widTokenTextOninput();
         } else {
             widCompleteEvent(r.message + ':\n' + r.content);
         }
@@ -365,7 +360,7 @@ function widCreateButtonClick() {
 
 function widSetDataButtonClick() {
     // Adds a new record with a specified data
-    var objT = $('#token_hint_input');
+    var objT = $('#token_text_input');
     var objP = $('#password_input');
     var objP = $('#setdata_textarea');
 
@@ -388,7 +383,7 @@ function widSetDataButtonClick() {
         var r = engGetParsedResponse(d);
         if (r.message == 'OK') {
             widCompleteEvent(r.message);
-            widTokenHintOninput();
+            widTokenTextOninput();
         } else {
             widCompleteEvent(r.message + ':\n' + r.content);
         }
@@ -398,8 +393,8 @@ function widSetDataButtonClick() {
         ajxSendCommand(cmd, cb, hasqdLed)
     }
 
-    setTimeout(f, 1000);
-    widShowLog('Setting token data...');
+    widShowLog('Giving token data...');
+    setTimeout(f);
 }
 
 function widSearchButtonClick() {

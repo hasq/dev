@@ -67,7 +67,7 @@ function engGetDateRangeFolders(fromDate, toDate) {
 			day = 28;
 		}
 		return day;
-	}	
+	}
 	
     while (toY >= 2016) {
         if (toY == fromY && toM == fromM && toD == fromD) {
@@ -82,7 +82,7 @@ function engGetDateRangeFolders(fromDate, toDate) {
             while (toD > 0) {
                 var mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
                 var dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
-                var cmd = '/' + toY.toString() + '/' + mm + '/' + dd + '/';
+                var cmd = '/' + toY.toString() + '/' + mm + '/' + dd + '/' + toY.toString() + mm + dd + '-';
 
                 r[r.length] = cmd;
 

@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 function widGetHTMLTd(x) {
     return '<td>\n' + x + '';
@@ -95,7 +95,7 @@ function widGetHTMLServerTab() {
 
 function widGetHTMLRefreshButton() {
     var r = '';
-    r += '<button id="srv_refresh_button" onclick="widServerRefreshButtonClick()">Refresh</button>\n';
+    r += '<button id="srv_refresh_button" onclick="widRefreshButtonClick()">Refresh</button>\n';
     return r;
 }
 
@@ -178,7 +178,7 @@ function widGetHTMLRecordsTab() {
 			//r += '<td width="2%">\n';
 			r += '<td width="80px">\n';
 				r += '&nbspRecord #\n';
-			r += '<td><input type="text" id="lastrec_n_input" disabled>\n';
+			r += '<td><input type="text" id="lr_n_input" disabled>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td>\n';
@@ -187,7 +187,7 @@ function widGetHTMLRecordsTab() {
 			//r += '<td>\n';
 			r += '<td >&nbsp;' + 'Key&nbsp\n';
 			r += '<td >\n';
-				r += '<input type="text" id="lastrec_k_input" disabled>\n';
+				r += '<input type="text" id="lr_k_input" disabled>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  colspan="2">\n';
@@ -209,24 +209,24 @@ function widGetHTMLRecordsTab() {
 					r += '</tr>\n';
 					r += '<tr>\n';
 						r += '<td colspan="2" style="text-align:right">\n';
-						r += '<button id="lastrec_button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
+						r += '<button id="lr_button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
 					r += '</tr>\n';
 				r += '</table>\n';
 				
 			r += '<td >\n';
 				r += '&nbsp;Generator' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="lastrec_g_input" disabled>\n';
+				r += '<input type="text" id="lr_g_input" disabled>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td >&nbsp;' + 'Owner' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="lastrec_o_input" disabled>\n';
+				r += '<input type="text" id="lr_o_input" disabled>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="lastrec_d_input" disabled>\n';
+				r += '<input type="text" id="lr_d_input" disabled>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="4" rowspan="1"><hr/>\n';
@@ -235,42 +235,40 @@ function widGetHTMLRecordsTab() {
 			r += '<td colspan="2" rowspan="2"><b>New record</b>\n';
 			r += '<td >&nbsp;' + 'Record #' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_n_input" oninput="widShowNewRecordOninput();" >\n';
+				r += '<input type="text" id="nr_n_input" oninput="widShowNewRecOninput();" >\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td >&nbsp;' + 'Key' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_k_input" oninput="widShowKeysPropriety(this.id)">\n';
+				r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="120px" style="text-align:left">\n';
-				r += '<input type="checkbox" id="onepass_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
+				r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
 				r += '&nbsp;' + 'One password' + '&nbsp;\n';
 			r += '<td style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass0_input" oninput="widShowNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="nr_pwd0_input" oninput="widShowNewRecOninput()" disabled>\n';
 			r += '<td>&nbsp;' + 'Generator' + '&nbsp;\n';
 			r += '<td>\n';
-				r += '<input type="text" id="newrec_g_input" oninput="widShowKeysPropriety(this.id)">\n';
+				r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="checkbox" id="threepass_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
+				r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
 				r += '&nbsp;' + 'Three passwords' + '&nbsp;';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass1_input" oninput="widShowNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="nr_pwd1_input" oninput="widShowNewRecOninput()" disabled>\n';
 			r += '<td >&nbsp;' + 'Owner' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_o_input" oninput="widShowKeysPropriety(this.id)">\n';
+				r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td  style="text-align:left">';
-				r += '<input nowrap type="checkbox" id="show_hide_input"/>\n';
-				r += '<label for="show_hide_input" id="show_hide_label">&nbsp;' + 'Show passwords&nbsp;</label>\n';
 			r += '<td  style="text-align:left">\n';
-				r += '<input type="password" class="password" id="newrec_pass2_input" oninput="widShowNewRecordOninput()" disabled>\n';
+				r += '<input type="password" class="password" id="nr_pwd2_input" oninput="widShowNewRecOninput()" disabled>\n';
 			r += '<td >&nbsp;' + 'Data' + '&nbsp;\n';
 			r += '<td >\n';
-				r += '<input type="text" id="newrec_d_input" oninput="">\n';
+				r += '<input type="text" id="nr_d_input" oninput="">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="4" style="text-align:right">\n';
@@ -320,17 +318,17 @@ function widGetHTMLHashcalcTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td>\n';
-				r += '<textarea rows="5" type="text" id="hashcalc_textarea" oninput="widHashcalcOninput()"></textarea>';
+				r += '<textarea rows="5" type="text" id="hashcalc_in_textarea" oninput="widHashcalcOninput()"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td>';
-				r += '<textarea rows="3" type="text" id="hashcalc_input" readonly></textarea>';
+				r += '<textarea rows="3" type="text" id="hashcalc_out_textarea" readonly></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:right" nowrap>\n';
-				r += '<button id="send_to_k_button" onclick="return document.getElementById(\'newrec_k_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to K</button>\n';
-				r += '<button id="send_to_g_button" onclick="return document.getElementById(\'newrec_g_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to G</button>\n';
-				r += '<button id="send_to_o_button" onclick="return document.getElementById(\'newrec_o_input\').value = document.getElementById(\'hashcalc_input\').value;">Send to O</button>\n';
+				r += '<button id="send_to_k_button" onclick="return $(\'#newrec_k_input\').val($(\'#hashcalc_out_textarea\').val())">Send to K</button>\n';
+				r += '<button id="send_to_g_button" onclick="return $(\'#newrec_g_input\').val($(\'#hashcalc_out_textarea\').val())">Send to G</button>\n';
+				r += '<button id="send_to_o_button" onclick="return $(\'#newrec_o_input\').val($(\'#hashcalc_out_textarea\').val())">Send to O</button>\n';
 		r += '</tr>\n';
     r += '</table>\n';
 
@@ -340,7 +338,7 @@ function widGetHTMLHashcalcTab() {
 function widGetHTMLHashcalcSelect() {
     var r = '';
 
-    r += '<select id="hashcalc_smenu">\n';
+    r += '<select id="hashcalc_select">\n';
     r += '<option value="0">MD5</option>\n';
     r += '<option value="1">RIPEMD-160</option>\n';
     r += '<option value="2">SHA2-256</option>\n';

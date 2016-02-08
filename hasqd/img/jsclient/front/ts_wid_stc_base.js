@@ -51,20 +51,20 @@ function widGetHTMLInitialData() {
     r += '<table width="100%" border="0" id="initial_data_table" style="border: 1px solid #DDDDDD;">\n';
 		r += '<tr>\n';
 			r += '<td width="3%" style="text-align:left;" nowrap>\n'
-				r += '&nbsp;' + '<b>Token hint</b>' + '&nbsp;\n';
+				r += '&nbsp;' + '<b>Token text</b>' + '&nbsp;\n';
 			r += '<td colspan="2" style="text-align:right;" nowrap>\n';
-					r += '<input type="text" id="token_hint_input" oninput="widTokenHintOninput();" placeholder="Enter token hint"/>\n';
+					r += '<input type="text" id="token_text_input" oninput="widTokenTextOninput();" placeholder="Enter token text"/>\n';
 			r += '<td width="30%" id="token_pic_td" style="text-align:left">\n'; //picGry;
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="3%" style="text-align:right;" nowrap>\n';
-				r += '&nbsp;' + '<i>Token</i>' + '&nbsp;\n';
-			r += '<td id="token_value_td" colspan="2" class="monospace" style="font-style: italic;" nowrap>';
+				r += '&nbsp;' + '<b>Token hash</b>' + '&nbsp;\n';
+			r += '<td id="token_hash_td" colspan="2" class="monospace" style="font-style: italic;" nowrap>';
 			r += '<td width="30%">';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="3%" style="text-align:right">\n';
-				r += '&nbsp;' + '<b>Password</b>' + '&nbsp\n';
+				r += '&nbsp;' + '<b>Master key</b>' + '&nbsp\n';
 			r += '<td colspan="2" style="text-align:left">\n';
 				r += '<input type="password" id="password_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter token password" oninput=""/>\n'; // disabled/>\n';
 			r += '<td width="30%" id="password_pic_td" style="text-align:left">\n'; //picGry;
@@ -117,7 +117,7 @@ function widGetHTMLCreateTab() {
 	r += '<table>\n';
 		r += '<tr>\n';
 			r += '<td>\n'
-				r += '<button id="create_button" onclick="widButtonClick(this.id);" data-onclick="widCreateButtonClick()">Create';
+				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">Create';
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -136,10 +136,8 @@ function widGetHTMLSearchTab() {
 				r += '&nbsp' + 'to' + '&nbsp';
 			r += '<td>\n';
 				r += '<input id="to_datepicker_input" type="text">\n';
-		r += '</tr>\n';		
-		r += '<tr>\n';
-			r += '<td colspan="4" style="text-align:right">\n'
-				r += '<button id="search_button" onclick="widButtonClick(this.id);" data-onclick="widSearchButtonClick()">Search';
+			r += '<td>\n';
+				r += '<button id="search_button" onclick="widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
 		r += '</tr>\n';		
 	r += '</table>\n';	
 	return r;	
@@ -151,7 +149,7 @@ function widGetHTMLSendTab() {
 	r += '<table width="70%" border="0" >\n';
 		r += '<tr>\n';
 			r += '<td width="100%" style="text-align:left">\n';
-				r += '<button id="send_button" onclick="widButtonClick(this.id)" data-onclick="widSendButtonClick()" disabled>Send';
+				r += '<button id="send_button" onclick="widButtonClick(this)" data-onclick="widSendButtonClick()" disabled>Send';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%">\n'
@@ -173,7 +171,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" style="text-align:right">\n';
-				r += '<button id="receive_button" onclick="widButtonClick(this.id)" data-onclick="widReceiveButtonClick()" disabled>Receive';
+				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()" disabled>Receive';
 		r += '</tr>\n';
 	r += '</table>\n';
 
@@ -190,7 +188,7 @@ function widGetHTMLSetDataTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align:right">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this.id)" data-onclick="widSetDataButtonClick()">Set data';
+				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">Set data';
 		r += '</tr>\n';
 	r += '</table>\n';
 	

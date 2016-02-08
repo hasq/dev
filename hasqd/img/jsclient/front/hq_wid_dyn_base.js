@@ -10,9 +10,7 @@ HasqdLed.prototype.fail = function () {
 };
 
 HasqdLed.prototype.inc = function () {
-    setTimeout(function () {
-        $('#hasqd_led').html(picGryGrn);
-    }, 500);
+    setTimeout(function () { $('#hasqd_led').html(picGryGrn) }, 500);
 };
 
 HasqdLed.prototype.dec = function () {
@@ -29,6 +27,7 @@ function widAnimateProgbar() {
 
 function widShowBordersColor(obj, color) {
     var borders = ['borderLeftColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor'];
+	
     for (var i = 0; i < borders.length; i++) {
         if (color !== undefined) {
             obj.css(borders[i], color);
@@ -38,34 +37,34 @@ function widShowBordersColor(obj, color) {
     }
 }
 
-function widShowLastRecord(data) {
-    var objN = $('#lastrec_n_input');
-    var objK = $('#lastrec_k_input');
-    var objG = $('#lastrec_g_input');
-    var objO = $('#lastrec_o_input');
-    var objD = $('#lastrec_d_input');
+function widShowLastRecord(lastRec) {
+    var objN = $('#lr_n_input');
+    var objK = $('#lr_k_input');
+    var objG = $('#lr_g_input');
+    var objO = $('#lr_o_input');
+    var objD = $('#lr_d_input');
 
-    if (arguments.length === 0) {
+    if (arguments.length == 0) {
         objN.val('');
         objK.val('');
         objG.val('');
         objO.val('');
         objD.val('');
     } else {
-        objN.val(data.n);
-        objK.val(data.k);
-        objG.val(data.g);
-        objO.val(data.o);
-        objD.val(data.d);
+        objN.val(lastRec.n);
+        objK.val(lastRec.k);
+        objG.val(lastRec.g);
+        objO.val(lastRec.o);
+        objD.val(lastRec.d);
     }
 }
 
-function widShowNewRecord(data) {
-    var objN = $('#newrec_n_input');
-    var objK = $('#newrec_k_input');
-    var objG = $('#newrec_g_input');
-    var objO = $('#newrec_o_input');
-    var objD = $('#newrec_d_input');
+function widShowNewRecord(newRec) {
+    var objN = $('#nr_n_input');
+    var objK = $('#nr_k_input');
+    var objG = $('#nr_g_input');
+    var objO = $('#nr_o_input');
+    var objD = $('#nr_d_input');
 
     if (arguments.length === 0) {
         objN.val('');
@@ -77,10 +76,11 @@ function widShowNewRecord(data) {
         widShowBordersColor(objG);
         widShowBordersColor(objO);
     } else {
-        objN.val(data.n);
-        objK.val(data.k);
-        objG.val(data.g);
-        objO.val(data.o);
+        objN.val(newRec.n);
+        objK.val(newRec.k);
+        objG.val(newRec.g);
+        objO.val(newRec.o);
+		objD.val(''); //
     }
 }
 
@@ -90,7 +90,7 @@ function widCleanHistoryData() {
     obj.selectmenu('refresh');
 }
 
-function widServerRefreshButtonClick() {
+function widRefreshButtonClick() {
     var cb1 = function (d) {
         var r = engGetParsedResponseInfoId(d);
         var obj1 = $('#server_id');
@@ -150,7 +150,7 @@ function widServerRefreshButtonClick() {
 
                 glCurrentDB = glDataBase[0];
                 glHashCalcHash = glCurrentDB.hash; //
-                widShowNewRecordOninput();
+                widShowNewRecOninput();
                 break;
             default:
                 obj4.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh'); ;
@@ -179,12 +179,11 @@ function widRawDNOninput() {
     var objRawDn = $('#rdn_input');
     var objSubmitButton = $('submit_button');
 
+    widShowLastRecord();
     widShowNewRecord();
     widCleanHistoryData();
-    widShowLastRecord();
-
-    objDn.val('');
-    widShowLastRecord();
+	
+	objDn.val('');
 
     if (objRawDn.val() == '') {
         objHistorySelect.selectmenu('disable');
@@ -192,11 +191,11 @@ function widRawDNOninput() {
         widShowBordersColor(objSubmitButton);
         widShowRecordsTabLog();
     } else {
+		objHistorySelect.selectmenu('enable');
         widShowBordersColor(objDn);
-        objHistorySelect.selectmenu('enable');
-        widShowBordersColor(objSubmitButton);
+        widShowBordersColor(objSubmitButton);		
         objDn.val(engGetHash(objRawDn.val(), glCurrentDB.hash));
-        widShowNewRecordOninput();
+        widShowNewRecOninput();
         widShowRecordsTabLog('OK');
     }
 }
@@ -207,8 +206,8 @@ function widDNOninput() {
     var objSubmitButton = $('#submit_button');
     var s = objDn.val();
 
+	widShowLastRecord();
     widShowNewRecord();
-    widShowLastRecord();
     widCleanHistoryData();
 
     objDn.val(engGetOnlyHex(objDn.val()));
@@ -225,7 +224,7 @@ function widDNOninput() {
     } else {
         widShowBordersColor(objDn, 'red');
         widShowBordersColor(objSubmitButton, 'red');
-        widShowRecordsTabLog('BAD_HASH');
+        widShowRecordsTabLog('Dn is not a hash.');
     }
 }
 
@@ -254,7 +253,7 @@ function widShowKeysPropriety(id) {
         widShowRecordsTabLog('BAD_HASH');
     }
 
-    widShowNewRecordsCompability();
+    widShowNewRecCompability();
 }
 
 function widGetLastRecordButtonClick() {
@@ -277,13 +276,13 @@ function widGetLastRecordButtonClick() {
 }
 
 function widShowNewRecordAuto() {
-    var objLastRecN = $('#lastrec_n_input');
+    var objLastRecN = $('#lr_n_input');
     var objDn = $('#dn_input');
-    var objNewRecPwd0 = $('#newrec_pass0_input');
-    var objNewRecPwd1 = $('#newrec_pass1_input');
-    var objNewRecPwd2 = $('#newrec_pass2_input');
-    var objOnePwd = $('#onepass_checkbox');
-    var objThreePwd = $('#threepass_checkbox')
+    var objNewRecPwd0 = $('#nr_pwd0_input');
+    var objNewRecPwd1 = $('#nr_pwd1_input');
+    var objNewRecPwd2 = $('#nr_pwd2_input');
+    var objOnePwd = $('#one_pwd_checkbox');
+    var objThreePwd = $('#three_pwd_checkbox')
 
         var lr_n = objLastRecN.val();
     var s = objDn.val();
@@ -304,19 +303,19 @@ function widShowNewRecordAuto() {
         widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
     }
 
-    widShowNewRecordsCompability();
+    widShowNewRecCompability();
 }
 
-function widShowNewRecordOninput() {
-    var objNewRecN = $('#newrec_n_input');
-    var objNewRecK = $('#newrec_k_input');
-    var objNewRecG = $('#newrec_g_input');
-    var objNewRecO = $('#newrec_o_input');
-    var objOnePwd = $('#onepass_checkbox');
-    var objThreePwd = $('#threepass_checkbox');
-    var objNewRecPwd0 = $('#newrec_pass0_input');
-    var objNewRecPwd1 = $('#newrec_pass1_input');
-    var objNewRecPwd2 = $('#newrec_pass2_input');
+function widShowNewRecOninput() {
+    var objNewRecN = $('#nr_n_input');
+    var objNewRecK = $('#nr_k_input');
+    var objNewRecG = $('#nr_g_input');
+    var objNewRecO = $('#nr_o_input');
+    var objOnePwd = $('#one_pwd_checkbox');
+    var objThreePwd = $('#three_pwd_checkbox');
+    var objNewRecPwd0 = $('#nr_pwd0_input');
+    var objNewRecPwd1 = $('#nr_pwd1_input');
+    var objNewRecPwd2 = $('#nr_pwd2_input');
 
     var s = $('#dn_input').val();
     var nr_n = +objNewRecN.val();
@@ -342,27 +341,27 @@ function widShowNewRecordOninput() {
         widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
         widShowRecordsTabLog();
     }
-    widShowNewRecordsCompability();
+    widShowNewRecCompability();
 }
 
 function widRecordsOnePwdCheckboxClick(obj) {
     if (obj.checked == true) {
-        $('#threepass_checkbox').prop('checked', false);
-        $('#newrec_pass0_input').prop('disabled', false);
-        $('#newrec_pass1_input').prop('disabled', true);
-        $('#newrec_pass2_input').prop('disabled', true);
-        widShowNewRecordOninput();
+        $('#three_pwd_checkbox').prop('checked', false);
+        $('#nr_pwd0_input').prop('disabled', false);
+        $('#nr_pwd1_input').prop('disabled', true);
+        $('#nr_pwd2_input').prop('disabled', true);
+        widShowNewRecOninput();
     } else {
-        $('#newrec_pass0_input').prop('disabled', true);
-        widShowNewRecordsCompability();
+        $('#nr_pwd0_input').prop('disabled', true);
+        widShowNewRecCompability();
     }
 }
 
 function widRecordsThreePwdCheckboxClick(obj) {
-    var objNewRecPwd0 = $('#newrec_pass0_input');
-    var objNewRecPwd1 = $('#newrec_pass1_input');
-    var objNewRecPwd2 = $('#newrec_pass2_input');
-    var objNewRecOnePwdCheckbox = $('#onepass_checkbox');
+    var objNewRecPwd0 = $('#nr_pwd0_input');
+    var objNewRecPwd1 = $('#nr_pwd1_input');
+    var objNewRecPwd2 = $('#nr_pwd2_input');
+    var objNewRecOnePwdCheckbox = $('#one_pwd_checkbox');
 
     objNewRecPwd0.prop('disabled', !obj.checked);
     objNewRecPwd1.prop('disabled', !obj.checked);
@@ -370,25 +369,25 @@ function widRecordsThreePwdCheckboxClick(obj) {
 
     if (obj.checked) {
         objNewRecOnePwdCheckbox.prop('checked', !obj.checked);
-        widShowNewRecordOninput();
+        widShowNewRecOninput();
     } else {
-        widShowNewRecordsCompability();
+        widShowNewRecCompability();
     }
 }
 
-function widShowNewRecordsCompability() {
+function widShowNewRecCompability() {
     var s = $('#dn_input').val();
-    var p0 = $('#newrec_pass0_input').val();
-    var p1 = $('#newrec_pass1_input').val();
-    var p2 = $('#newrec_pass2_input').val();
-    var lr_n = $('#lastrec_n_input').val();
-    var lr_k = $('#lastrec_k_input').val();
-    var lr_g = $('#lastrec_g_input').val();
-    var lr_o = $('#lastrec_o_input').val();
-    var nr_n = $('#newrec_n_input').val();
-    var nr_k = $('#newrec_k_input').val();
-    var nr_g = $('#newrec_g_input').val();
-    var nr_o = $('#newrec_o_input').val();
+    var p0 = $('#nr_pwd0_input').val();
+    var p1 = $('#nr_pwd1_input').val();
+    var p2 = $('#nr_pwd2_input').val();
+    var lr_n = $('#lr_n_input').val();
+    var lr_k = $('#lr_k_input').val();
+    var lr_g = $('#lr_g_input').val();
+    var lr_o = $('#lr_o_input').val();
+    var nr_n = $('#nr_n_input').val();
+    var nr_k = $('#nr_k_input').val();
+    var nr_g = $('#nr_g_input').val();
+    var nr_o = $('#nr_o_input').val();
 
     var g0 = engGetKey(nr_n, s, nr_k, glCurrentDB.magic, glCurrentDB.hash);
     var o0 = engGetKey(nr_n, s, nr_g, glCurrentDB.magic, glCurrentDB.hash);
@@ -439,26 +438,27 @@ function widTokensHistorySelect(range) {
 }
 
 function widHashcalcOninput() {
-    var objT = $('#hashcalc_textarea');
-    var objI = $('#hashcalc_input');
+    var objIn = $('#hashcalc_in_textarea');
+    var objOut = $('#hashcalc_out_textarea');
 
-    if (objT.val().length > 0) {
-        objI.val(engGetHash(objT.val(), glHashCalcHash));
+    if (objIn.val().length > 0) {
+        objOut.val(engGetHash(objIn.val(), glHashCalcHash));
     } else {
-        objI.val('');
+        objOut.val('');
     }
 }
 
 function widSubmitButtonClick() {
     var s = $('#dn_input').val();
-    var p0 = $('#newrec_pass0_input').val();
-    var p1 = $('#newrec_pass1_input').val();
-    var p2 = $('#newrec_pass2_input').val();
-    var nr_n = $('#newrec_n_input').val();
-    var nr_k = $('#newrec_k_input').val();
-    var nr_g = $('#newrec_g_input').val();
-    var nr_o = $('#newrec_o_input').val();
-    var nr_d = $('#newrec_d_input').val();
+    var p0 = $('#nr_pwd0_input').val();
+    var p1 = $('#nr_pwd1_input').val();
+    var p2 = $('#nr_pwd2_input').val();
+    var nr_n = $('#nr_n_input').val();
+    var nr_k = $('#nr_k_input').val();
+    var nr_g = $('#nr_g_input').val();
+    var nr_o = $('#nr_o_input').val();
+    var nr_d = $('#nr_d_input').val();
+	
     var cb = function (data) {
         var objHistorySelect = $('#tokens_history_select');
         var r = engGetParsedResponse(data)
