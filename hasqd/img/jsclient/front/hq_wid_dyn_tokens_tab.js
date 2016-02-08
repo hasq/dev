@@ -8,50 +8,49 @@ function widCleanCL() {
 
 function widCleanVerifyTab() {
     $('#tokens_verify_table').find('tr:gt(0)').remove();
-    $('#tokens_verify_hidden_div').hide(); //css('display', 'none');
+    $('#tokens_verify_table_div').hide();
     $('#tokens_verify_led_div').empty();
 }
 
-function widCleanSS1() {
-    $('#tokens_ss1_led_div').empty();
-    $('#tokens_ss1_textarea').val('');
+function widCleanAllTabs() {
+	$('#tokens_tabs').each(function() {
+		$('div[class="verify-table"]').hide();
+		
+		$('div[data-class="capsule"]').each(function(){
+			$('div[data-class="led_div"]').empty();
+			$('textarea').val('');
+		});
+	});
+	
+	widCleanVerifyTab();
+    widShowProgressbar(0);
 }
 
-function widCleanSS2() {
-    $('#tokens_ss2_led_div').empty();
+function widCleanTokensTabsUI(id) {
+	$('#' + id).each(function(i, el) {
+		$('div[data-class="led_div"]').empty();
+		$('textarea').val('');
+	});	
 }
 
-function widCleanSS3() {
-    $('#tokens_ss3_s1_led_div').empty();
-    $('#tokens_ss3_s1_textarea').val('');
-    $('#tokens_ss3_s2_led_div').empty();
-    $('#tokens_ss3_s2_textarea').val('');
+function widGetClosestSharedButton(obj) {
+	return $(obj.closest('div[data-class="capsule"]').find('button[data-class="shared_button"]') );
 }
 
-function widCleanSS4() {
-    $('#tokens_ss3_s1_led_div').empty();
-    $('#tokens_ss3_s2_led_div').empty();
+function widGetClosestContinueButton(obj) {
+    return $(obj.closest('div[data-class="capsule"]').find('button[data-class="continue_button"]'));
 }
 
-function widCleanRS1() {
-    $('#tokens_rs1_led_div').empty();
+function widGetClosestWarningMessageTd(obj) {
+    return $(obj.closest('div[data-class="capsule"]').find('td[data-class="warning_text"]'));
 }
 
-function widCleanRS2() {
-    $('#tokens_rs2_led_div').empty();
-    $('#tokens_rs2_textarea').val('');
+function widGetClosestLedDiv(obj) {
+    return $(obj.closest('div[data-class="capsule"]').find('div[data-class="led_div"]'));
 }
 
-function widCleanRS3() {
-    $('#tokens_rs3_s1_led_div').empty();
-    $('#tokens_rs3_s2_led_div').empty();
-}
-
-function widCleanRS4() {
-    $('#tokens_rs4_s1_led_div').empty();
-    $('#tokens_rs4_s1_textarea').val('');
-    $('#tokens_rs4_s2_led_div').empty();
-    $('#tokens_rs4_s2_textarea').val('');
+function widGetClosestTextarea(obj) {
+    return $(obj.closest('div[data-class="capsule"]').find('textarea'));
 }
 
 function widShowProgressbar(data) {
@@ -74,19 +73,6 @@ function widShowTokensLog(data) {
         objLog.html(data);
     }
 
-}
-
-function widCleanAllTabs() {
-    widCleanVerifyTab();
-    widCleanSS1();
-    widCleanSS2();
-    widCleanSS3();
-    widCleanSS4();
-    widCleanRS1();
-    widCleanRS2();
-    widCleanRS3();
-    widCleanRS4();
-    widShowProgressbar(0);
 }
 
 function widTokensIdxOninput(obj) {
@@ -117,7 +103,7 @@ function widDisableAllTokensOperations(obj) {
     tabs.tabs('option', 'disabled', true);
     tabs.closest('div[id^="tabs"]').find('button, input, textarea').prop('disabled', true);
     $(widGetClosestContinueButton(obj)).prop('disabled', false);
-    $(widGetClosestMainButton(obj)).prop('disabled', false);
+    $(widGetClosestSharedButton(obj)).prop('disabled', false);
 }
 
 function widEnableAllTokensOperations() {
@@ -288,115 +274,15 @@ function widGetButtonsMode(obj) {
 }
 
 function widGetFunctionById(obj, data) {
-	var id = obj.attr('id');
-    widCleanCL();
-    switch (id) {
-    case 'tokens_add_button':
-        var f = function () {
-            widAddTokens(obj);
-        }
-        break;
-    case 'tokens_create_button':
-        var f = function () {
-            widPrepareToCreate(obj);
-        }
-        break;
-    case 'tokens_verify_button':
-        var f = function () {
-            widPrepareToVerify(obj);
-        }
-        break;
-    case 'tokens_data_update_button':
-        var f = function () {
-            widPrepareToUpdate(obj, data);
-        }
-        break;
-    case 'tokens_ss1_showkeys_button':
-        var f = function () {
-            widPrepareToSS1(obj);
-        }
-        break;
-    case 'tokens_rs1_obtainkeys_button':
-        var f = function () {
-            widPrepareToRS1(obj, data);
-        }
-        break;
-    case 'tokens_ss2_obtainkeys_button':
-        var f = function () {
-            widPrepareToSS2(obj, data);
-        }
-        break;
-    case 'tokens_rs2_showkeys_button':
-        var f = function () {
-            widPrepareToRS2(obj);
-        }
-        break;
-    case 'tokens_ss3_s1_showkeys_button':
-        var f = function () {
-            widPrepareToSS3S1(obj);
-        }
-        break;
-    case 'tokens_ss3_s2_showkeys_button':
-        var f = function () {
-            widPrepareToSS3S2(obj);
-        }
-        break;
-    case 'tokens_ss4_s1_obtainkeys_button':
-        var f = function () {
-            widPrepareToSS4S1(obj, data);
-        }
-        break;
-    case 'tokens_ss4_s2_obtainkeys_button':
-        var f = function () {
-            widPrepareToSS4S2(obj, data);
-        }
-        break;
+	widCleanCL();
+	var strFunc = (arguments.length > 1) ? obj.attr('data-function') + '(obj, data)' : obj.attr('data-function') + '(obj)';
+//    var f = function () {
+ //       eval(strFunc);
+ //   }	
 
-    case 'tokens_rs3_s1_obtainkeys_button':
-        var f = function () {
-            widPrepareToRS3S1(obj, data);
-        }
-        break;
-    case 'tokens_rs3_s2_obtainkeys_button':
-        var f = function () {
-            widPrepareToRS3S2(obj, data);
-        }
-        break;
-    case 'tokens_rs4_s1_showkeys_button':
-        var f = function () {
-            widPrepareToRS4S1(obj);
-        }
-        break;
-    case 'tokens_rs4_s2_showkeys_button':
-        var f = function () {
-            widPrepareToRS4S2(obj);
-        }
-        break;
-    default:
-        break;
-    }
-    return f;
-}
-
-
-function widGetClosestMainButton(obj) {
-    return obj.closest('div[data-class="div"]').find('button[data-class="main"]');
-}
-
-function widGetClosestContinueButton(obj) {
-    return obj.closest('div[data-class="div"]').find('button[data-class="hide"]');
-}
-
-function widGetClosestWarningMessage(obj) {
-    return obj.closest('div[data-class="div"]').find('td[data-class="hide"]');
-}
-
-function widGetClosestLed(obj) {
-    return obj.closest('div[data-class="div"]').find('div[id^="_led_"]');
-}
-
-function widGetClosestTextarea(obj) {
-    return obj.closest('div[data-class="div"]').find('textarea');
+    return function () {
+        eval(strFunc);
+    }	
 }
 
 function widSwitchButtonsMode(obj) {
@@ -404,13 +290,13 @@ function widSwitchButtonsMode(obj) {
     var label = obj.button('option', 'label');
 	
     if (label === title && title === 'Continue') {
-        var objWarning = widGetClosestWarningMessage(obj);
+        var objWarning = widGetClosestWarningMessageTd(obj);
         widSwitchShowHide(obj);
         widSwitchShowHide(objWarning);
         obj.button('option', 'label', 'Hidden');
     } else if (label !== title && title === 'Continue') {
         obj.button('option', 'label', title);
-        var objWarning = widGetClosestWarningMessage(obj);
+        var objWarning = widGetClosestWarningMessageTd(obj);
         widSwitchShowHide(obj);
         widSwitchShowHide(objWarning);
     } else if (label === title) {
@@ -418,7 +304,7 @@ function widSwitchButtonsMode(obj) {
     } else {
         obj.button('option', 'label', title);
         var objContinue = widGetClosestContinueButton(obj);
-        var objWarning = widGetClosestWarningMessage(obj);
+        var objWarning = widGetClosestWarningMessageTd(obj);
         if (widGetWarningsMode(objContinue)) {
             $(objContinue).button('option', 'label', 'Hidden');
             widSwitchShowHide(objContinue);
@@ -427,7 +313,7 @@ function widSwitchButtonsMode(obj) {
     }
 }
 
-function widMainButtonClick(obj, data) {
+function widSharedButtonClick(obj, data) {
 	var f;
 	
     if (widGetButtonsMode(obj)) {
@@ -443,7 +329,7 @@ function widMainButtonClick(obj, data) {
 }
 
 function widDone(obj, data) {
-    widMainButtonClick(obj, data);
+    widSharedButtonClick(obj, data);
 }
 
 function widCancel(obj, data) {
@@ -466,8 +352,8 @@ function widContinueButtonClick(obj, data) {
     var label = obj.button('option', 'label');
 
     if (data === true) {
-        var objMainButton = widGetClosestMainButton(obj);
-        setTimeout(widGetFunctionById(objMainButton, true));
+        var objSharedButton = widGetClosestSharedButton(obj);
+        setTimeout(widGetFunctionById(objSharedButton, true));
     }
 }
 
@@ -502,7 +388,7 @@ function widCreateTokens(obj, tokens) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Creating... ');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -539,7 +425,7 @@ function widPrepareToVerify(obj, data) {
     }
 
     var objNames = $('#tokens_names_textarea');
-    var objTable = $('#tokens_verify_hidden_div');
+    var objTable = $('#tokens_verify_table_div');
 
     objTable.css('display', 'block');
     var tokens = engGetParsedTokensList(objNames.val(), glCurrentDB.hash);
@@ -573,15 +459,15 @@ function widGetVerifyTebleRowLed(data) {
     }
 }
 
-function widShowVerifyTableStateLed(data) {
-    var obj = $('#tokens_verify_led_div');
+function widShowVerifyTableStateLed(obj, data) {
+	var objLed = widGetClosestLedDiv(obj);
 
-    if (data && obj.outerHTML != picRed) {
-        obj.html(picRed);
-        obj.prop('title', 'TOKENS MISMATCH DETECTED');
-    } else if (obj.outerHTML != picGrn) {
-        obj.html(picGrn);
-        obj.prop('title', 'OK');
+    if (data && objLed.outerHTML != picRed) {
+        objLed.html(picRed);
+        objLed.prop('title', 'Unknown tokens detected!');
+    } else if (objLed.outerHTML != picGrn) {
+        objLed.html(picGrn);
+        objLed.prop('title', 'OK');
     }
 }
 
@@ -607,7 +493,7 @@ function widVerifyTokens(obj, tokens, nextFunc, nextFuncData) {
 
         if (nextFunc == null) {
             widShowVerifyTableRow(glVTL.items[idx], pic);
-            widShowVerifyTableStateLed(glVTL.unknown);
+            widShowVerifyTableStateLed(obj, glVTL.unknown);
         }
 
         if (idx + 1 < glCL.items.length) {
@@ -623,7 +509,7 @@ function widVerifyTokens(obj, tokens, nextFunc, nextFuncData) {
             }
             setTimeout(f);
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -752,10 +638,10 @@ function widPrintSendReceiveLed(obj, data) {
 
 function widPrepareToSS1(obj) {
 	var objTokens = $('#tokens_names_textarea');
-    var objLed = $('#tokens_ss1_led_div');
+    var objLed = widGetClosestLedDiv(obj);
 	
     widCleanCL();
-    widCleanSS1();
+    widCleanTokensTabsUI('SS1');
 
     var chk = widGetTokensNamesState();
 
@@ -822,7 +708,7 @@ function widSS1ShowK1K2Keys(obj, data) {
     var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
     var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231320';
     widPrintSendReceiveOut(obj, lastRow);
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }
 
 function widShowUpdatedTokensNames(arr, obj) {
@@ -839,7 +725,7 @@ function widPrepareToRS1(obj, data) {
 	var objTokens = $('#tokens_names_textarea');
     widCleanCL();
     glVTL = engGetVTL(glVTL);
-    widCleanRS1();
+    widCleanTokensTabsUI('RS1');
 
     var chk = widGetPasswordState()
 
@@ -878,7 +764,7 @@ function widPrepareToRS1(obj, data) {
 function widRS1ObtainK1K2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_rs1_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -895,7 +781,7 @@ function widRS1ObtainK1K2Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -936,7 +822,7 @@ function widRS1ObtainK1K2Keys(obj, data) {
 function widPrepareToSS2(obj, data) {
     widCleanCL();
     glVTL = engGetVTL(glVTL);
-    widCleanSS2();
+    widCleanTokensTabsUI('SS2');
 
     var chk = widGetPasswordState()
 
@@ -978,7 +864,7 @@ function widPrepareToSS2(obj, data) {
 function widSS2ObtainG2O2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_ss2_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -995,7 +881,7 @@ function widSS2ObtainG2O2Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -1034,7 +920,7 @@ function widSS2ObtainG2O2Keys(obj, data) {
 
 function widPrepareToRS2(obj) {
     widCleanCL();
-    widCleanRS2();
+    widCleanTokensTabsUI('RS2');
     
 	var chk = widGetTokensNamesState();
 
@@ -1044,7 +930,7 @@ function widPrepareToRS2(obj) {
     }
 	
 	var objTokens = $('#tokens_names_textarea');
-    var objLed = $('#tokens_rs2_led_div');
+    var objLed = widGetClosestLedDiv(obj);
     var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
@@ -1100,12 +986,12 @@ function widRS2ShowG2O2Keys(obj, data) {
     var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
     var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
     widPrintSendReceiveOut(obj, lastRow);
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }
 
 function widPrepareToSS3S1(obj) {
     widCleanCL();
-    widCleanSS3();
+    widCleanTokensTabsUI('SS3');
 
     var chk = widGetTokensNamesState();
 
@@ -1115,7 +1001,7 @@ function widPrepareToSS3S1(obj) {
     }
 	
     var objTokens = $('#tokens_names_textarea');
-    var objLed = $('#tokens_ss3_s1_led_div');
+    var objLed = widGetClosestLedDiv(obj);
     var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
@@ -1169,12 +1055,12 @@ function widSS3ShowK1G1Keys(obj, data) {
     var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
     var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231410';
     widPrintSendReceiveOut(obj, lastRow);
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }
 
 function widPrepareToSS3S2(obj) {
     widCleanCL();
-    widCleanSS3();
+    widCleanTokensTabsUI('SS3');
 
     var chk = widGetTokensNamesState();
 
@@ -1184,7 +1070,7 @@ function widPrepareToSS3S2(obj) {
     }
     
 	var objTokens = $('#tokens_names_textarea');
-    var objLed = $('#tokens_ss3_s2_led_div');
+    var objLed = widGetClosestLedDiv(obj);
     var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
@@ -1245,7 +1131,7 @@ function widSS3ShowK2Keys(obj, data) {
         widPrintSendReceiveOut(obj, lastRow);
     }
 
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }
 
 function widPrepareToRS3S1(obj, data) {
@@ -1289,7 +1175,7 @@ function widPrepareToRS3S1(obj, data) {
 function widRS3ObtainK1G1Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_rs3_s1_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -1305,7 +1191,7 @@ function widRS3ObtainK1G1Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -1371,7 +1257,7 @@ function widRS3ObtainK2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_rs3_s2_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -1388,7 +1274,7 @@ function widRS3ObtainK2Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -1454,7 +1340,7 @@ function widSS4ObtainO1Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
 
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_ss4_s1_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -1471,7 +1357,7 @@ function widSS4ObtainO1Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -1536,7 +1422,7 @@ function widPrepareToSS4S2(obj, data) {
 function widSS4ObtainG2O2Keys(obj, data) {
     var cbFunc = function (cbData, cmdItemIdx, progress) {
         var cbResponse = engGetParsedResponse(cbData);
-        var objLed = $('#tokens_ss4_s2_led_div');
+        var objLed = widGetClosestLedDiv(obj);
 
         if (cbResponse.message != 'ERROR' && objLed.html() != picRed) {
             objLed.html(picGrn);
@@ -1552,7 +1438,7 @@ function widSS4ObtainG2O2Keys(obj, data) {
         } else if (cmdItemIdx + 1 < glCL.items.length) {
             widShowTokensLog('Obtaining keys...');
         } else {
-            widMainButtonClick(obj, 'OK');
+            widSharedButtonClick(obj, 'OK');
         }
     }
 
@@ -1576,7 +1462,7 @@ function widSS4ObtainG2O2Keys(obj, data) {
 
 function widPrepareToRS4S1(obj) {
     widCleanCL();
-    widCleanRS4();
+    widCleanTokensTabsUI('RS4');
 
     var chk = widGetTokensNamesState();
 
@@ -1586,7 +1472,7 @@ function widPrepareToRS4S1(obj) {
     }
 
     var objTokens = $('#tokens_names_textarea');
-	var objLed = $('#tokens_rs4_s1_led_div');
+	var objLed = widGetClosestLedDiv(obj);
     var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
@@ -1640,12 +1526,12 @@ function widRS4ShowO1Keys(obj, data) {
     var extractKeys = $(widGetClosestTextarea(obj)).val().replace(/[\n|\s]/g, '');
     var lastRow = engGetHash(extractKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12510';
     widPrintSendReceiveOut(obj, lastRow);
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }
 
 function widPrepareToRS4S2(obj) {
     widCleanCL();
-    widCleanRS4();
+    widCleanTokensTabsUI('RS4');
 
     var chk = widGetTokensNamesState();
 
@@ -1655,7 +1541,7 @@ function widPrepareToRS4S2(obj) {
     }
 
 	var objTokens = $('#tokens_names_textarea');
-    var objLed = $('#tokens_rs4_s2_led_div');
+    var objLed = widGetClosestLedDiv(obj);
     var tblState = engGetVTLContent(glVTL);
 
     switch (tblState) {
@@ -1714,5 +1600,5 @@ function widRS4ShowG2O2Keys(obj, data) {
         widPrintSendReceiveOut(obj, lastRow);
     }
 
-    widMainButtonClick(obj, 'OK');
+    widSharedButtonClick(obj, 'OK');
 }

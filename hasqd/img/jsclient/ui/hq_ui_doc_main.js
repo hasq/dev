@@ -58,7 +58,7 @@ function docMainInit() {
 }
 
 function doc_init() {
-	$('#tabs').tabs({
+	$('#main_tabs').tabs({
 		activate : function (event, ui) {
 			if (ui.newTab.index() == 3) {
 				if (glCurrentDB.hash != undefined && glCurrentDB.hash != '') {
@@ -102,9 +102,9 @@ function doc_init() {
 		}
 	});
 
-	$('#tabs').tabs().tabs('option', 'active', 2);
+	$('#main_tabs').tabs().tabs('option', 'active', 2);
 
-	$('#database_smenu').selectmenu({
+	$('#database_select').selectmenu({
 		select: function (event, ui) {
 			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
 			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
@@ -266,7 +266,9 @@ function doc_init() {
 	
 	//$( '#progressbar' ).progressbar({value: false});
 
-	$('[data-class="hide"]').hide();
+	$('[data-class="warning_text"]').hide();
+	$('[data-class="continue_button"]').hide();
+	$('[data-class="verify_table"]').hide();
 	
 	$('#hasqd_led').html(picGry);
 

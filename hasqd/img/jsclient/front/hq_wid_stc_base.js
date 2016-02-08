@@ -57,16 +57,16 @@ function widGetHTMLSpan(span_id) {
 function widGetHTMLTabs(items) {
     var r = '';
 
-    r += '<div id="tabs">\n';
+    r += '<div id="main_tabs">\n';
 
     r += '\t<ul>\n';
     for (var i = 0; i < items.length; i++)
-        r += '\t<li><a href="#tabs-' + (i + 1) + '">' + items[i].title + '</a>\n';
+        r += '\t<li><a href="#tabs-' + (i + 1) + '_li">' + items[i].title + '</a>\n';
 
     r += '\t</ul>\n';
 
     for (var i = 0; i < items.length; i++)
-        r += '\t<div id="tabs-' + (i + 1) + '">' + items[i].data + '</div>\n';
+        r += '\t<div id="tabs-' + (i + 1) + '_li">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 
@@ -141,7 +141,7 @@ function widGetHTMLDatabaseSelect() {
 
     r += '<table border="0" style=" table-layout:fixed ">\n';
     r += '<tr>\n';
-    r += '<td colspan="2"><select name="database_smenu" id="database_smenu">';
+    r += '<td colspan="2"><select name="database_select" id="database_select">';
     r += '<option>No database</option>\n';
     r += '</select>\n';
     r += '<td>\n';

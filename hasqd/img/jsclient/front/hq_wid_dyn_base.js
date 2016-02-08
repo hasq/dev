@@ -137,7 +137,7 @@ function widRefreshButtonClick() {
             return 'No database';
         }
 
-        var obj4 = $('#database_smenu'); //document.getElementById('database_smenu');
+        var obj4 = $('#database_select'); //document.getElementById('database_select');
         for (var i = 0; i < glDataBase.length; i++) {
             switch (i) {
             case 0:
