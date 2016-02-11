@@ -92,7 +92,7 @@ function widCleanHistoryData() {
 
 function widRefreshButtonClick() {
     var cb1 = function (d) {
-        var r = engGetParsedResponseInfoId(d);
+        var r = engGetResponseInfoId(d);
         var obj1 = $('#server_id');
 
         if (r.message == 'ERROR') {
@@ -105,7 +105,7 @@ function widRefreshButtonClick() {
     ajxSendCommand('info id', cb1, hasqdLed);
 
     var cb2 = function (d) {
-        var r = engGetParsedResponseInfoSys(d);
+        var r = engGetResponseInfoSys(d);
         var obj2 = $('#server_sys');
 
         if (r.message == 'ERROR') {
@@ -119,7 +119,7 @@ function widRefreshButtonClick() {
 
     var cb3 = function (d) {
         var obj3 = $('#server_fam');
-        var r = engGetParsedResponseInfoFam(d);
+        var r = engGetResponseInfoFam(d);
 
         if (r.message == 'OK') {
             table = widGetHTMLFamilyTable(r);
@@ -132,7 +132,7 @@ function widRefreshButtonClick() {
     ajxSendCommand('info fam', cb3, hasqdLed);
 
     var cb4 = function (d) {
-        glDataBase = engGetParsedResponseInfoDb(d);
+        glDataBase = engGetResponseInfoDb(d);
         if (glDataBase.length < 1) {
             return 'No database';
         }
@@ -261,7 +261,7 @@ function widGetLastRecordButtonClick() {
     var s = objDn.val();
     var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
     var cb = function (d) {
-        var r = engGetParsedResponseLast(d);
+        var r = engGetResponseLast(d);
 
         if (r.message == 'OK') {
             widShowLastRecord(r);
@@ -414,7 +414,7 @@ function widTokensHistorySelect(range) {
     var objHistorySelect = $('#tokens_history_textarea');
     var s = $('#dn_input').val();
     var cb = function (data) {
-        var resp = engGetParsedResponse(data);
+        var resp = engGetResponse(data);
         var objHistorySelect = $('#tokens_history_textarea');
 
         if (resp.message !== 'OK') {
@@ -461,14 +461,14 @@ function widSubmitButtonClick() {
 	
     var cb = function (data) {
         var objHistorySelect = $('#tokens_history_select');
-        var r = engGetParsedResponse(data)
+        var r = engGetResponse(data)
             widShowRecordsTabLog(r.message);
         var i = objHistorySelect.get(0).selectedIndex;
         var d = +objHistorySelect.get(0).options[i].text;
         widTokensHistorySelect(d);
     }
 
-    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetInParsedDataValue(nr_d);
+    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetInputDataValue(nr_d);
 
     ajxSendCommand(nr, cb, hasqdLed);
 }

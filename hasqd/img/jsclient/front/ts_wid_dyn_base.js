@@ -39,7 +39,7 @@ function widShowDBError() {
 function widSetDefaultDb(dbHash) {
     // Searching for database and save it in variable.
     var cb = function (d) {
-        var db = engGetParsedResponseInfoDb(d);
+        var db = engGetResponseInfoDb(d);
 
         if (db.length > 0) {
             for (var i = 0; i < db.length; i++) {
@@ -130,13 +130,13 @@ function widShowToken() {
 }
 
 function widSetLastRecChanges(d) {
-    glLastRec = engGetParsedResponseLast(d);
+    glLastRec = engGetResponseLast(d);
 
     if (glLastRec.message === 'OK') {
         widShowTokenState(true);
         widShowPasswordMatch(glLastRec);
         widShowPasswordGuessTime(widGetPasswordGuessTime(glPassword));
-        widShowData(engGetOutParsedDataValue(glLastRec.d));
+        widShowData(engGetOutputDataValue(glLastRec.d));
     } else if (glLastRec.message === 'IDX_NODN') {
         widShowTokenState(false);
         widShowPasswordMatch();
@@ -341,7 +341,7 @@ function widCreateButtonClick() {
     var cmd = 'z * ' + glCurrentDB.name + ' 0 ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 
     var cb = function (d) {
-        var r = engGetParsedResponse(d);
+        var r = engGetResponse(d);
         if (r.message == 'OK') {
             widCompleteEvent(r.message);
             widTokenTextOninput();
@@ -376,11 +376,11 @@ function widSetDataButtonClick() {
 
     var s = engGetHash(objT.val(), glCurrentDB.hash);
     var nr = engGetNewRecord(glLastRec.n + 1, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = engGetInParsedDataValue(objP.val());
+    var nr_d = engGetInputDataValue(objP.val());
     var cmd = 'add * ' + glCurrentDB.name + ' ' + nr.n + ' ' + s + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
 
     var cb = function (d) {
-        var r = engGetParsedResponse(d);
+        var r = engGetResponse(d);
         if (r.message == 'OK') {
             widCompleteEvent(r.message);
             widTokenTextOninput();

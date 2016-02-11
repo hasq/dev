@@ -1,20 +1,20 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetParsedResponseInfoId(data) {
-    return engGetParsedResponse(data);
+function engGetResponseInfoId(data) {
+    return engGetResponse(data);
 }
 
-function engGetParsedResponseInfoSys(data) {
-    return engGetParsedResponse(data);
+function engGetResponseInfoSys(data) {
+    return engGetResponse(data);
 }
 
-function engGetParsedResponseInfoFam(data) {
+function engGetResponseInfoFam(data) {
     var r = {};
     r.list = [];
     r.message = 'OK';
     r.content = '';
 
-    var response = engGetParsedResponse(data);
+    var response = engGetResponse(data);
 
     if (response.message != 'OK') {
         return response;
@@ -62,41 +62,7 @@ function engIsNumber(data) {
     return !/[^0-9]/.test(data)
 }
 
-function engGetTransferKeysCheckResults(transferKeys, protokolKeys, dbAltName) {
-	var rawKeys = transferKeys;
-
-    transferKeys = transferKeys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
-
-    rawKeys = rawKeys.replace(/\s/g, '');
-    var chkHash = 's22'
-        var r = {};
-    r.message = 'OK';
-    r.content = 'OK';
-    var hashLength = dbAltName.length; //it may be need to check tokens length
-
-    if (protokolKeys.length == 7 && (transferKeys.length - 3) % 4 != 0) {
-        r.message = 'ERROR';
-        r.content = 'BAD_KEYS';
-    } else if (protokolKeys.length == 5 && (transferKeys.length - 3) % 3 != 0) {
-        r.message = 'ERROR';
-        r.content = 'BAD_KEYS';
-    } else if (rawKeys != engGetOnlyHex(rawKeys)) {
-        r.message = 'ERROR';
-        r.content = 'BAD_CHARS';
-    } else if (transferKeys[transferKeys.length - 1] != protokolKeys) {
-        r.message = 'ERROR';
-        r.content = 'BAD_SC_CODE';
-    } else if (transferKeys[transferKeys.length - 2] != dbAltName) {
-        r.message = 'ERROR';
-        r.content = 'BAD_DB_NAME';
-    } else if (transferKeys[transferKeys.length - 3] != engGetHash(transferKeys.slice(0, transferKeys.length - 3).join(''), chkHash).substring(0, 4)) {
-        r.message = 'ERROR';
-        r.content = 'BAD_RAWKEYS_HASH';
-    }
-    return r;
-}
-
-function engIsToken(data, hash) {
+function engIsRawTokens(data, hash) {
     var n = data;
     n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
     n = n.split(/\s/);
@@ -125,272 +91,288 @@ function engSortByProperties(prop) {
     }
 }
 	
-function engGetOrderedTokensList(data) {
-    var r = data;
+function engGetOrderedTokens(tok) {
+	// sorts tokens list by names and hashes;
 
-    r.sort(engSortByProperties('s'));
+    tok.sort(engSortByProperties('s'));
 
-    for (var i = 0; i < r.length - 1; i++) {
-        if (r[i].s == r[i + 1].s && r[i].rawS == r[i + 1].rawS) {
-            r.splice(i + 1, 1);
+    for (var i = 0; i < tok.length - 1; i++) {
+        if (tok[i].s == tok[i + 1].s && tok[i].rawS == tok[i + 1].rawS) {
+            tok.splice(i + 1, 1);
             i--;
-        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i].rawS == '') {
-            r[i].rawS = r[i + 1].rawS;
-            r.splice(i + 1, 1);
+        } else if (tok[i].s == tok[i + 1].s && tok[i].rawS != tok[i + 1].rawS && tok[i].rawS == '') {
+            tok[i].rawS = tok[i + 1].rawS;
+            tok.splice(i + 1, 1);
             i--;
-        } else if (r[i].s == r[i + 1].s && r[i].rawS != r[i + 1].rawS && r[i + 1].rawS == '') {
-            r.splice(i + 1, 1);
+        } else if (tok[i].s == tok[i + 1].s && tok[i].rawS != tok[i + 1].rawS && tok[i + 1].rawS == '') {
+            tok.splice(i + 1, 1);
             i--;
         }
     }
-    return r;
+    return tok;
 }
 
-function engGetParsedTokensList(data, hash) {
+function engGetTokens(rawTok, hash) {
+	// returns parsed tokens list with names and hashes;
+    var tok = [];
+    rawTok = rawTok.replace(/^\s+|\s+$/, '').split(/\s/);; // remove all space-like symbols from the start and end of the string
+
+    for (var i = 0; i < rawTok.length; i++) {
+        rawTok[i] = rawTok[i].replace(/^\s+|\s+$/, '');
+        if ((rawTok[i].length == 0) || (rawTok[i] === undefined) || (rawTok[i] === null)) {
+            rawTok.splice(i, 1);
+            i--;
+        } else if (rawTok[i].charAt(0) == '[' && rawTok[i].charAt(rawTok[i].length - 1) == ']' && rawTok[i].length > 2) {
+            var l = tok.length;
+            tok[l] = {};
+            tok[l].rawS = rawTok[i].slice(1, -1);
+            tok[l].s = engGetHash(tok[l].rawS, hash);
+        } else if (engIsHash(rawTok[i], hash)) {
+            var l = tok.length;
+            tok[l] = {};
+            tok[l].rawS = '';
+            tok[l].s = rawTok[i];
+        }
+    }
+
+    return engGetOrderedTokens(tok);
+}
+
+//function engGetTokensFromTransKeys(transKeys)
+function engGetHashedTokensList(data) {
+	// returns hashed token names;
     var r = [];
-    var n = data;
-    n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
-    n = n.split(/\s/);
-
-    for (var i = 0; i < n.length; i++) {
-        n[i] = n[i].replace(/^\s+/, '').replace(/\s+$/, '');
-        if ((n[i].length == 0) || (n[i] === undefined) || (n[i] === null)) {
-            n.splice(i, 1);
-            i--;
-        } else if (n[i].charAt(0) == '[' && n[i].charAt(n[i].length - 1) == ']' && n[i].length > 2) {
-            var l = r.length;
-            r[l] = {};
-            r[l].rawS = n[i].slice(1, -1);
-            r[l].s = engGetHash(r[l].rawS, hash);
-        } else if (engIsHash(n[i], hash)) {
-            var l = r.length;
-            r[l] = {};
-            r[l].rawS = '';
-            r[l].s = n[i];
-        }
-    }
-
-    return engGetOrderedTokensList(r);
-}
-
-function engGetParsedTransferKeys(data, sk) {
-    var r = [];
-    var rawKeys = data;
-    var keys = rawKeys.replace(/^\s+/, '').replace(/\s+$/, '').split(/\s/);
-    var sK1K2 = '1231320';
-    var sG2O2 = '1242520';
-    var sK1G1 = '1231410';
-    var sK2 = '12320';
-    var sO1 = '12510';
-
-    for (var i = 0; i < keys.length; i++) {
-        keys[i] = keys[i].replace(/^\s+/, '').replace(/\s+$/, '');
-        if ((keys[i].length == 0) || (keys[i] === undefined) || (keys[i] === null)) {
-            keys.splice(i, 1);
-            i--;
-        }
-    }
-
-    keys = keys.slice(0, keys.length - 3); // remove transfer protocol;
-
-    for (var i = 0; i < keys.length; ) {
-        switch (sk) {
-        case sK1K2:
-            var idx = i / 4;
-            r[idx] = {};
-            var n = r[idx].n = +keys[i];
-            var s = r[idx].s = keys[i + 1];
-            var k1 = r[idx].k1 = keys[i + 2];
-            var k2 = r[idx].k2 = keys[i + 3];
-
-            i = i + 4;
-
-            break;
-        case sG2O2:
-            var idx = i / 4;
-            r[idx] = {};
-            var n = r[idx].n = +keys[i];
-            var s = r[idx].s = keys[i + 1];
-            var g2 = r[idx].g2 = keys[i + 2];
-            var o2 = r[idx].o2 = keys[i + 3];
-
-            i = i + 4;
-
-            break;
-        case sK1G1:
-            var idx = i / 4;
-            r[idx] = {};
-            var n = r[idx].n = +keys[i];
-            var s = r[idx].s = keys[i + 1];
-            var k1 = r[idx].k1 = keys[i + 2];
-            var g1 = r[idx].g1 = keys[i + 3];
-
-            i = i + 4;
-
-            break;
-        case sK2:
-            var idx = i / 3;
-            r[idx] = {};
-            var n = r[idx].n = +keys[i];
-            var s = r[idx].s = keys[i + 1];
-            var k2 = r[idx].k2 = keys[i + 2];
-
-            i = i + 3;
-
-            break;
-        case sO1:
-            var idx = i / 3;
-            r[idx] = {};
-            var n = r[idx].n = +keys[i];
-            var s = r[idx].s = keys[i + 1];
-            var o1 = r[idx].o1 = keys[i + 2];
-
-            i = i + 3;
-
-            break;
-        default:
-            return r;
-
-            break;
-        }
-    }
-
-    r.sort(engSortByProperties('s'));
-
-    for (var i = 0; i < r.length - 1; i++) {
-        if (r[i].s == r[i + 1].s) {
-            r.splice(i + 1, 1);
-            i--;
-        };
-    }
-
-    return r;
-}
-
-function engGetUpdatedTransferKeys(data, p, h, m, sk) {
-    var r = data;
-    var sK1K2 = '1231320';
-    var sG2O2 = '1242520';
-    var sK1G1 = '1231410';
-    var sK2 = '12320';
-    var sO1 = '12510';
-
-    for (var i = 0; i < r.length; i++) {
-        switch (sk) {
-        case sK1K2:
-            var n0 = r[i].n; //
-            var n1 = n0 + 1;
-            var s = r[i].s; //
-            var k1 = r[i].k1; //
-            var k2 = r[i].k2; //
-            var n2 = n0 + 2;
-            var g1 = r[i].g1 = engGetKey(n2, s, k2, m, h); //
-            var n3 = n0 + 3;
-            var k3 = engGetKey(n3, s, p, m, h);
-            var g2 = r[i].g2 = engGetKey(n3, s, k3, m, h); //
-            var o1 = r[i].o1 = engGetKey(n2, s, g2, m, h); //
-            var n4 = n0 + 4;
-            var k4 = engGetKey(n4, s, p, m, h);
-            var g3 = engGetKey(n4, s, k4, m, h);
-            var o2 = r[i].o2 = engGetKey(n3, s, g3, m, h); //
-
-            break;
-        case sG2O2:
-            var n0 = r[i].n; //
-            var n1 = r[i].n1 = n0 + 1; //
-            var n2 = r[i].n2 = n0 + 2; //
-            var s = r[i].s; //
-            var g2 = r[i].g2; //
-            var o2 = r[i].o2; //
-            var k1 = r[i].k1 = engGetKey(n1, s, p, m, h); //
-            var k2 = r[i].k2 = engGetKey(n2, s, p, m, h); //
-            var g1 = r[i].g1 = engGetKey(n2, s, k2, m, h); //
-            var o1 = r[i].o1 = engGetKey(n2, s, g2, m, h); //
-
-            break;
-        case sK1G1:
-            var n0 = r[i].n;
-            var n1 = n0 + 1;
-            var n2 = n0 + 2;
-            var n3 = n0 + 3;
-            var s = r[i].s;
-            var k1 = r[i].k1; //
-            var g1 = r[i].g1; //
-            var k3 = engGetKey(n3, s, p, m, h);
-            var g2 = engGetKey(n3, s, k3, m, h);
-            var o1 = r[i].o1 = engGetKey(n2, s, g2, m, h); //
-
-            break;
-        case sK2:
-            var n0 = r[i].n; //
-            var n1 = n0 + 1;
-            var n2 = n0 + 2; //
-            var n3 = n0 + 3;
-            var n4 = n0 + 4;
-            var s = r[i].s; //
-            var k2 = r[i].k2; //
-            var k3 = engGetKey(n3, s, p, m, h);
-            var g2 = r[i].g2 = engGetKey(n3, s, k3, m, h); //
-            var k4 = engGetKey(n4, s, p, m, h);
-            var g3 = engGetKey(n4, s, k4, m, h);
-            var o2 = r[i].o2 = engGetKey(n3, s, g3, m, h); //
-
-            break;
-        case sO1:
-            var n0 = r[i].n;
-            var n1 = r[i].n1 = n0 + 1;
-            var n2 = n0 + 2;
-            var s = r[i].s;
-            var k1 = r[i].k1 = engGetKey(n1, s, p, m, h); //
-            var k2 = engGetKey(n2, s, p, m, h);
-            var g1 = r[i].g1 = engGetKey(n2, s, k2, m, h); //
-            var o1 = r[i].o1; //
-
-            break;
-        default:
-            break;
-        }
-    }
-
-    return r;
-}
-
-function engGetTokensHashedNames(data) {
-    var r = [];
+	
     for (var i = 0; i < data.length; i++) {
         r[i] = data[i].s;
     }
+	
     return r;
 }
 
-function engGetTokensRawNames(data) {
+function engGetRawTokensList(data) {
+	// if exists raw token names returns its otherwise hash;
     var r = [];
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].rawS != '') {
-            r[i] = data[i].rawS;
-        } else {
-            r[i] = data[i].s;
-        }
 
+    for (var i = 0; i < data.length; i++) {
+        r[i] = (data[i].rawS != '') ? data[i].rawS : data[i].s;
     }
+
     return r;
 }
 
-function engGetTokensUpdatedNames(data0, data1) {
-    for (var k = 0; k < data0.length; k++) {
-        for (var t = 0; t < data1.length; t++) {
-            if (data0[k] == engGetHash(data1[t], glCurrentDB.hash)) {
-                var rawName = '[' + data1[t] + ']';
-                data0[k] = rawName;
-                data1.splice(t, 1);
+function engGetMergedTokensList(hashList, rawList, hash) {
+	// returns merged names from both lists transkeys and tokens;
+    for (var k = 0; k < hashList.length; k++) {
+        for (var t = 0; t < rawList.length; t++) {
+            if (hashList[k] == engGetHash(rawList[t], hash)) {
+                var rawName = '[' + rawList[t] + ']';
+                hashList[k] = rawName;
+                rawList.splice(t, 1);
                 t--;
                 break;
-            } else if (data0[k] == data1[t]) {
-                data1.splice(t, 1);
+            } else if (hashList[k] == rawList[t]) {
+                rawList.splice(t, 1);
                 t--;
             }
         }
     }
-    return data0;
+    return hashList;
 }
 
+function engIsRawTransKeys(rawKeys) {
+	if (rawKeys == '' || typeof rawKeys === 'undefined' || typeof rawKeys === 'null' || typeof rawKeys === 'NaN') return false;
+	if (rawKeys.replace(/\s/g, '') !== engGetOnlyHex(rawKeys.replace(/\s/g, ''))) return false;
+	
+    var line = rawKeys.replace(/^\s+|\s+$/, '').split(/\n/);
+	var prLine = line.splice(line.length - 1, 1); //get protocol line;
+	prLine = prLine[0].replace(/^\s+|\s+$/, '').split(/\s/); //split protocol line by spaces;
+	var prCode = prLine[prLine.length - 1]; //get protocol code;
+	var prCtrl = prLine[0]; //get protocol crc-code
+	var tkCtrl = engGetHash(line.join('').replace(/\s/g, ''), 's22').substring(0, 4);
+
+	if (prCtrl !== tkCtrl) return false;
+	
+	if (prCode.charAt(prCode.length - 1) == '0' && prLine.length == 3) {
+		true;
+	} else if (prCode.charAt(prCode.length - 1) !== '0' && prLine.length == 2) {
+		true;
+	} else {
+		return false;
+	}
+	
+	// check length of all keys;
+	var pattern, j;
+	
+	if (prCode.charAt(0) == '0') {
+		pattern = line[0].split(/\s/)[0].length; // pattern is first key length
+		j = 0;
+	} else if (prCode.charAt(0) == '1') {
+		pattern = prLine[1].length; // pattern is dbname length
+		j = 1;
+	}
+
+	for (var i = 0; i < line.length; i++) {
+		var el = line[i].split(/\s/);
+		
+		for (; j < el.length; j++)
+			if (el[j].length !== pattern) return false;
+	}	
+	
+	return true;
+}
+
+function engGetUpdatedTransKeys(transKeys, glVTL) {
+	for (var i = 0; i < transKeys.length; i++) {
+		transKeys[i].n = glVTL.items[i].n;
+	}
+	return transKeys;
+}
+
+function engGetTransKeys(rawKeys) {
+	var prK1K2 = '23132'; 
+    var prG2O2 = '24252';
+    var prK1G1 = '23141';
+    var prK2 = '232';
+    var prO1 = '251';
+
+	var transKeys = [];
+	
+	var keys = rawKeys.replace(/^\s+|\s+$/g, '').split(/\n/); //split by linefeed;
+	var prLine = keys.splice(keys.length - 1, 1)[0].split(/\s/); //get last (protocol) line and split by spaces;
+	var prCode = prLine[prLine.length - 1]; // get protocol key;
+	var numFlag = prCode.charAt(0);
+	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
+	var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+	
+	prK1K2 = numFlag + prK1K2 + dbFlag;
+	prG2O2 = numFlag + prG2O2 + dbFlag;
+	prK1G1 = numFlag + prK1G1 + dbFlag;
+	prK2 = numFlag + prK2 + dbFlag;
+	prO1 = numFlag + prO1 + dbFlag;
+	
+    for (var i = 0; i < keys.length; i++) {
+/*
+		keys[i] = keys[i].replace(/^\s+|\s+$/, '');
+        if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0)) {
+            keys.splice(i, 1);
+            i--;
+			break;
+        }
+*/		
+		var el = keys[i].split(/\s/);
+
+		transKeys[i] = {};
+		transKeys[i].protocode = prCode;
+		transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
+		transKeys[i].s = el[1 - coef];
+		
+		switch (prCode) {
+		case (prK1K2):
+			transKeys[i].k1 = el[2 - coef];
+			transKeys[i].k2 = el[3 - coef];
+			break;
+		case (prG2O2):
+			transKeys[i].g2 = el[2 - coef];
+			transKeys[i].o2 = el[3 - coef];
+			break;
+		case (prK1G1):
+			transKeys[i].k1 = el[2 - coef];
+			transKeys[i].g1 = el[3 - coef];
+			break;
+		case (prK2):
+			transKeys[i].k2 = el[2 - coef];
+			break;
+		case (prO1):
+			transKeys[i].o1 = el[2 - coef];
+			break;
+		default:
+			break;
+		}			
+    }
+
+    transKeys.sort(engSortByProperties('s'));
+
+	// if presents keys for same token;
+    for (var i = 0; i < transKeys.length - 1; i++) {
+        if (transKeys[i].s == transKeys[i + 1].s) {
+            transKeys.splice(i + 1, 1);
+            i--;
+        };
+    }
+
+    return transKeys;
+}
+
+function engGetEnrollKeys(transKeys, p, h, m) {
+    var enrollKeys = transKeys;
+	var prK1K2 = '23132'; 
+    var prG2O2 = '24252';
+    var prK1G1 = '23141';
+    var prK2 = '232';
+    var prO1 = '251';
+	
+	var prCode = transKeys[0].protocode; // get protocol key from first element;
+	var numFlag = prCode.charAt(0);
+	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
+	var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+	
+	prK1K2 = numFlag + prK1K2 + dbFlag;
+	prG2O2 = numFlag + prG2O2 + dbFlag;
+	prK1G1 = numFlag + prK1G1 + dbFlag;
+	prK2 = numFlag + prK2 + dbFlag;
+	prO1 = numFlag + prO1 + dbFlag;
+	
+    for (var i = 0; i < enrollKeys.length; i++) {
+		var n = enrollKeys[i].n
+		var s = enrollKeys[i].s;
+		var n1 = n + 1;
+		var n2 = n + 2;
+		var n3 = n + 3;
+		var n4 = n + 4;
+		
+        switch (enrollKeys[0].protocode) {
+        case prK1K2:
+            var k2 = enrollKeys[i].k2; //
+            enrollKeys[i].g1 = engGetKey(n2, enrollKeys[i].s, k2, m, h); //
+            var k3 = engGetKey(n3, s, p, m, h);
+            var g2 = enrollKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+            enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+            var k4 = engGetKey(n4, s, p, m, h);
+            var g3 = engGetKey(n4, s, k4, m, h);
+            enrollKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+            break;
+        case prG2O2:
+            enrollKeys[i].n1 = n1; //
+            enrollKeys[i].n2 = n2; //
+            var g2 = enrollKeys[i].g2; //
+            enrollKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+            var k2 = enrollKeys[i].k2 = engGetKey(n2, s, p, m, h); //
+            enrollKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+            enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+            break;
+        case prK1G1:
+            var k3 = engGetKey(n3, s, p, m, h);
+            var g2 = engGetKey(n3, s, k3, m, h);
+			enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+            break;
+        case prK2:
+            var k3 = engGetKey(n3, s, p, m, h);
+            var k4 = engGetKey(n4, s, p, m, h);
+            var g3 = engGetKey(n4, s, k4, m, h);
+			enrollKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+			enrollKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+            break;
+        case prO1:
+            enrollKeys[i].n1 = n + 1;
+            enrollKeys[i].k1 = engGetKey(enrollKeys[i].n1, s, p, m, h); //
+            var k2 = engGetKey(n2, s, p, m, h);
+            enrollKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+            enrollKeys[i].o1; //
+			break;
+        default:
+            break;
+        }
+    }
+    return enrollKeys;
+}

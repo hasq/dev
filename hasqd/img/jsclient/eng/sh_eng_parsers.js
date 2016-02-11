@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetParsedResponse(d) {
+function engGetResponse(d) {
     // returns response header
     var r = {};
     var response = d.replace(/\r|\s+$/g, '');
@@ -36,11 +36,11 @@ function engGetParsedResponse(d) {
     return r;
 }
 
-function engGetParsedResponseInfoDb(d) {
+function engGetResponseInfoDb(d) {
     // returns parsed 'info db' response
     var r = [];
 
-    var response = engGetParsedResponse(d);
+    var response = engGetResponse(d);
 
     if (response.message != 'OK' || response.length == 0) {
         return response;
@@ -101,13 +101,13 @@ function engGetParsedResponseInfoDb(d) {
     return r;
 }
 
-function engGetParsedResponseLast(d) {
+function engGetResponseLast(d) {
     // returns parsed 'last' response
     var r = {};
     r.content = 'OK';
     r.message = 'OK';
 
-    parsedData = engGetParsedResponse(d);
+    parsedData = engGetResponse(d);
 
     if (parsedData.message != 'OK' || parsedData.length == 0) {
         return parsedData;
@@ -244,18 +244,18 @@ function engGetHash(d, h) {
 
 function engGetTokensState(lr, nr) {
     // returns current matching of password
-    if ((lr.g === nr.g) && (lr.o === nr.o)) {
-        return 1; // Tokens keys is fully matched with a password
-    } else if (lr.g === nr.g) {
-        return 2; // Token is in a sending process
-    } else if (lr.o === nr.o) {
-        return 3; // Token is in a receiving process
-    } else {
-        return 0; // Tokens keys is not matched with a password
-    }
+	
+    // Tokens keys is fully matched with a password
+	if ((lr.g === nr.g) && (lr.o === nr.o)) return 1; 
+	// Token is in a sending process
+	if (lr.g === nr.g) return 2;
+	// Token is in a receiving process
+	if (lr.o === nr.o) return 3; 
+	// Tokens keys is not matched with a password
+	return 0; 
 }
 
-function engGetOutParsedDataValue(d) {
+function engGetOutputDataValue(d) {
     // returns parsed data for displaying
     var r = d;
     if (r !== undefined && r.length > 0) {
@@ -279,7 +279,7 @@ function engGetOutParsedDataValue(d) {
 
 }
 
-function engGetInParsedDataValue(d) {
+function engGetInputDataValue(d) {
     // returns parsed data for add into record
     var r = d.replace(/^\s+|\s+$/g, '');
     if (r !== undefined && r.length > 0) {

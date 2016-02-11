@@ -25,6 +25,7 @@ var picGrn = '<img src="img/grn_pnt.gif">';
 var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
 var picGry = '<img src="img/gry_pnt.gif">';
 var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
+var picL12 = '<img src="img/loading12.gif">';
 
 function newImage(arg) {
 	if (document.images) {
@@ -224,7 +225,7 @@ function doc_init() {
 
 	$('#tokens_tabs').tabs().tabs('option', 'active', 0);
 
-	$('#tokens_range_gen_accordion').accordion({
+	$('#tokens_add_range_accordion').accordion({
 		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
 		active : 'false',
 		heightStyle : 'content',
