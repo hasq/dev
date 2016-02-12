@@ -31,7 +31,7 @@ function widGetHTMLBody(tabs){
     r += '</tr>\n';
 
     r += '<tr>\n';
-    r += '<td width="800" colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);
+    r += '<td width="600" colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);
     r += '</tr>\n';
     r += '</table>\n';
     return r;

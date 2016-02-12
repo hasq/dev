@@ -62,16 +62,17 @@ var objLed = {
 		}
 	},
 	empty: function (jqObj){
-		widGetLedObj(jqObj).empty();
-	},
-	emptyall: function (){
-		
+		if (arguments.length === 0) {
+			$('#tokens_tabs').find('div[data-class="led_div"]').empty();			
+		} else {
+			widGetLedObj(jqObj).empty();
+		}
 	}
 }
 
 function widCleanUI(jqObj) {
 	if (arguments.length == 0) {
-		$('#tokens_tabs').find('div[data-class="led_div"]').empty();	
+		objLed.empty();	
 		$('div[data-class="capsule"]').find('textarea').val('');
 		widCleanVerifyTab();
 	} else {
@@ -251,7 +252,7 @@ function widTokensPasswordOninput(data) {
     glPassword = data;
     glVTL = engGetVTL(glVTL);
     widCleanVerifyTab();
-	widCleanUI();
+	objLed.empty();
 }
 
 function widGetRawTokens(data){
@@ -666,12 +667,14 @@ function widPreSimpleSend(jqObj) {
         break;
     case false:		// VTL contains only unavailable tokens
 		msg = 'All tokens are unavailable!';
-		objLed.show(jqObj, false, msg);	
+		objLed.show(jqObj, false, msg);
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
         widDone(jqObj, msg);
         break;
     case undefined:		/// VTL contains both kinds of tokens - available and unavailable
 		msg = 'Some tokens are unavailable!';
-		objLed.show(jqObj, false, msg);	
+		objLed.show(jqObj, false, msg);
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:		// VTL no contains any tokens then make new VTL 
@@ -861,7 +864,6 @@ function widPreSimpleAccept(jqObj, click) {
 	} 
 	
     widCleanCL();
-	widCleanUI(jqObj);
     glVTL = engGetVTL(glVTL);
 
 	var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
@@ -928,11 +930,13 @@ function widPreBlockingSendStep1(jqObj) {
     case false:		// VTL contains only unavailable tokens
 		msg = 'All tokens are unavailable!';
 		objLed.show(jqObj, false, msg);	
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
         widDone(jqObj, msg);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'Some tokens are unavailable!';
 		objLed.show(jqObj, false, msg);	
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:
@@ -983,9 +987,9 @@ function widPreBlockingSendStep2(jqObj) {
 
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
     case true:		// VTL contains only available tokens
-	    widCleanUI(jqObj);
-		msg = 'All All tokens in the list are already available!'
+		msg = 'All All tokens in the list are already available!';
         objLed.show(jqObj, false, msg); 
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
 		widDone(jqObj, msg);
         break;
     case false:		// VTL contains only unavailable tokens
@@ -993,8 +997,9 @@ function widPreBlockingSendStep2(jqObj) {
         widBlockingSendStep2(jqObj, glVTL);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
-		msg = 'Some All tokens in the list are already available!'
+		msg = 'Some All tokens in the list are already available!';
         objLed.show(jqObj, false, msg);
+		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:		// VTL no contains any tokens then make new VTL
@@ -1058,8 +1063,7 @@ function widPreBlockingReceiveStep1(jqObj, click) {
 	} 
 	
     widCleanCL();
-	widCleanUI(jqObj);
-    glVTL = engGetVTL(glVTL);
+	glVTL = engGetVTL(glVTL);
 
 	if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
 
@@ -1112,7 +1116,6 @@ function widPreBlockingReceiveStep2(jqObj, click) {
 	} 
 
  	widCleanCL();
-	widCleanUI(jqObj);
 	glVTL = engGetVTL(glVTL);
 	
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);		
@@ -1161,6 +1164,7 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
 
 function widPreBlockingRequestStep1(jqObj) {
     widCleanCL();
+	widCleanUI(jqObj);
 	var msg;
 	
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
@@ -1170,7 +1174,6 @@ function widPreBlockingRequestStep1(jqObj) {
         widDone(jqObj, msg);
         break;
     case false:		// VTL contains only unavailable tokens
-	    widCleanUI(jqObj);
 		objLed.show(jqObj, null);
 		widBlockingRequestStep1(jqObj, glVTL);
         break;
@@ -1196,6 +1199,7 @@ function widPreBlockingRequestStep1(jqObj) {
 function widBlockingRequestStep1(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
         if (list.items[i].message === 'WRONG_PWD') {
+			// includes only existing unknown tokens
             var r = list.items[i];
             var n0 = r.n;
             var k3 = engGetKey(n0 + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -1229,6 +1233,7 @@ function widBlockingRequestStep1(jqObj, list) {
 
 function widPreBlockingRequestStep2(jqObj) {
     widCleanCL();
+	widCleanUI(jqObj);
 	var msg;
 	
     switch (engGetVTLContent(glVTL)) { // checks the contents of the verified tokens list
@@ -1238,7 +1243,6 @@ function widPreBlockingRequestStep2(jqObj) {
 		widDone(jqObj, msg);
 		break;
     case false:		// VTL contains only unavailable tokens
-	    widCleanUI(jqObj);
 		objLed.show(jqObj, null);
         widBlockingRequestStep2(jqObj, glVTL);
         break;
@@ -1264,6 +1268,7 @@ function widPreBlockingRequestStep2(jqObj) {
 function widBlockingRequestStep2(jqObj, data) {
     for (var i = 0; i < data.items.length; i++) {
         if (data.items[i].message === 'TKN_RCVNG') {
+			// includes only existing tokens in blocking receiving state
             var r = data.items[i];
             var n0 = r.n - 1;
             var k3 = engGetKey(n0 + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -1309,7 +1314,6 @@ function widPreBlockingAcceptStep1(jqObj, click) {
 	} 
 	
     widCleanCL();
-	widCleanUI(jqObj);
     glVTL = engGetVTL(glVTL);
 
 	var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
@@ -1361,7 +1365,6 @@ function widPreBlockingAcceptStep2(jqObj, click) {
 	} 
 	
     widCleanCL();
-	widCleanUI(jqObj);
     glVTL = engGetVTL(glVTL);
 
 	var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);

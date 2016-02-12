@@ -100,7 +100,7 @@ function engRunCL(commandsList, cbFunc) {
             commandsList.idx++;
             commandsList.counter = 100;
         } else {
-			console.log('error: ' + commandsList.counter + ' try.');
+			// in case of an error repeating command 100 times then continue next command;
             commandsList.counter--;
             if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
 				commandsList.idx++; // upd
