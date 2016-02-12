@@ -192,7 +192,7 @@ function engIsRawTransKeys(rawKeys) {
 	var tkCtrl = engGetHash(line.join('').replace(/\s/g, ''), 's22').substring(0, 4);
 
 	if (prCtrl !== tkCtrl) return false;
-	
+
 	if (prCode.charAt(prCode.length - 1) == '0' && prLine.length == 3) {
 		true;
 	} else if (prCode.charAt(prCode.length - 1) !== '0' && prLine.length == 2) {
@@ -210,15 +210,32 @@ function engIsRawTransKeys(rawKeys) {
 	} else if (prCode.charAt(0) == '1') {
 		pattern = prLine[1].length; // pattern is dbname length
 		j = 1;
+	} else {
+		return false; //if protocol code 1st char is not 1 or 0
 	}
 
+	var keysQ; 
+	var l = prCode.length;
+	var ch = prCode.charAt(0);
+
+	if (l == 4 || l == 5) { //checks match of a protocol code and quantity of transkeys elements;
+		keysQ = (ch == '0') ? 2 : 3;
+	} else if (l == 6 || l == 7) {
+		keysQ = (ch == '0') ? 3 : 4;
+	} else {
+		return false;
+	}
+	
 	for (var i = 0; i < line.length; i++) {
 		var el = line[i].split(/\s/);
+		var l = el.length;
 		
-		for (; j < el.length; j++)
+		if (l !== keysQ) return false;
+		for (; j < l; j++) {
 			if (el[j].length !== pattern) return false;
+		}
 	}	
-	
+
 	return true;
 }
 
@@ -230,11 +247,11 @@ function engGetUpdatedTransKeys(transKeys, glVTL) {
 }
 
 function engGetTransKeys(rawKeys) {
-	var prK1K2 = '23132'; 
+	var prK1K2 = '23132';
     var prG2O2 = '24252';
-    var prK1G1 = '23141';
+    var prK1G1 = '23141'; 
     var prK2 = '232';
-    var prO1 = '251';
+    var prO1 = '251'; 
 
 	var transKeys = [];
 	

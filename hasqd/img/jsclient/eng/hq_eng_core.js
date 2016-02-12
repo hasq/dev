@@ -5,37 +5,41 @@ function engGetTokenInfo(data, rawS, s) {
 	var item = {};
     item.rawS = rawS;
     item.s = s;
-    item.n = -1;
-    item.d = '';
-    item.message = 'IDX_NODN';
-    item.unknown = true;
-	item.known = false;
+    item.avail = false;
+	item.unavail = false;
 	
 	if (response.message === 'OK') {
         var lr = engGetResponseLast(data);
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
-        item.known = true;
-		item.unknown = false;
+        item.avail = false;
+		item.unavail = false;
 		
         switch (engGetTokensState(lr, nr)) {
         case 1:
             item.message = 'OK';
+			item.avail = true;
             break;
         case 2:
             item.message = 'TKN_SNDNG';
+			item.unavail = true;
             break;
         case 3:
             item.message = 'TKN_RCVNG';
+			item.unavail = true;
             break;
         default:
             item.message = 'WRONG_PWD';
-			item.known = false;
-			item.unknown = true;
+			item.unavail = true;
             break;
         }
-    }
+    } else {
+		item.message = 'IDX_NODN';
+		item.unavail = true;
+		item.n = -1;	
+		item.d = '';		
+	}
 
     return item;
 }
@@ -44,8 +48,8 @@ function engGetVTL(list, item) {
 	if (arguments.length == 1) {
 		// clear list
 		list.items.length = 0;
-		list.known = false;
-		list.unknown = false;
+		list.avail = false;
+		list.unavail = false;
 		return list;
 	}
 		
@@ -57,30 +61,28 @@ function engGetVTL(list, item) {
     list.items[n].d = item.d;
 	list.items[n].message = item.message;
 	
-    if (item.known) {
-		list.known = true;
-	}
-	
-	if (item.unknown) {
-		list.unknown = true;
-	}
+    if (item.avail === true) list.avail = true;
+	if (item.unavail === true) list.unavail = true;
 
 	return list;
 	
 }
 
 
-function engGetVTLContent(tokensList) {
+function engGetVTLContent(list) {
 	// checks content of the VTL (verified tokens list) for known and unknown tokens
-    if (tokensList.known && !tokensList.unknown) {
+    if (list.avail === true && list.unavail === false) {
         return true; //only known tokens;
-    } else if (!tokensList.known && tokensList.unknown) {
+    } 
+	if (list.avail === false && list.unavail === true) {
         return false; //only unknown tokens
-    } else if (!tokensList.known && !tokensList.unknown) {
-        return null; //no has tokens
-    } else {
-        return undefined; //different tokens
     }
+	if (list.avail === true && list.unavail === true) {
+        return undefined; //different tokens
+    }	
+	
+	return null; //no has tokens
+
 }
 
 
@@ -98,10 +100,13 @@ function engRunCL(commandsList, cbFunc) {
             commandsList.idx++;
             commandsList.counter = 100;
         } else {
+			console.log('err ' + commandsList.counter);
             commandsList.counter--;
-            if (commandsList.counter < 0) {
+            if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
+				commandsList.idx++; // upd
+				commandsList.counter = 100; // upd
                 cbFunc(ajxData, commandsList.idx, progress);
-                commandsList.items.length = 0;
+                //commandsList.items.length = 0;
             }
         }
 

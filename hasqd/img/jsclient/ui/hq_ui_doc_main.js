@@ -15,8 +15,8 @@ glCL.idx = 0;			// Contains number of current item of commands list
 glCL.counter = 100;		// countdown timer to repeat a failed operation
 var glVTL = {};			// The object contains information about a last records of specified range
 glVTL.items = []			// The array which include the list of a last records of specified range.
-glVTL.known  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
-glVTL.unknown  = false;	// The marker of mismatched tokens in the specified range
+glVTL.avail  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
+glVTL.unavail  = false;	// The marker of mismatched tokens in the specified range
 
 var picYlw = '<img src="img/ylw_pnt.gif">';
 var picRed = '<img src="img/red_pnt.gif">';
