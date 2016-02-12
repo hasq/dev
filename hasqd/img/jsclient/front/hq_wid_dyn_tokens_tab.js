@@ -739,19 +739,12 @@ function widSimpleReceive(jqObj, enrollKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
 		
-        if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
-		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
-		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
         (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
 		
-		console.log(data);
-		console.log(glCL.items.length);
-		console.log(cmdIdx);
-		
-
-
-    }
+        if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
+		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
+	}
 	
     for (var i = 0; i < enrollKeys.length; i++) {
         var n0 = enrollKeys[i].n;
@@ -924,11 +917,11 @@ function widSimpleAccept(jqObj, enrollKeys) {
 
 function widPreBlockingSendStep1(jqObj) {
     widCleanCL();
-    widCleanUI(jqObj);
 	var msg;
 	
     switch (engGetVTLContent(glVTL)) {
     case true:		// VTL contains only available tokens
+	    widCleanUI(jqObj);
 	    objLed.show(jqObj, null);
         widBlockingSendStep1(jqObj, glVTL);
         break;
@@ -986,11 +979,11 @@ function widBlockingSendStep1(jqObj, list) {
 
 function widPreBlockingSendStep2(jqObj) {
     widCleanCL();
-    widCleanUI(jqObj);
 	var msg;
 
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
     case true:		// VTL contains only available tokens
+	    widCleanUI(jqObj);
 		msg = 'All All tokens in the list are already available!'
         objLed.show(jqObj, false, msg); 
 		widDone(jqObj, msg);
@@ -1155,7 +1148,7 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
         var o2 = enrollKeys[i].o2;
         
 		var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-		console.log(addCmd);
+		
         glCL.items[i] = {};
         glCL.items[i].cmd = addCmd;
         glCL.items[i].s = s;
@@ -1168,7 +1161,6 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
 
 function widPreBlockingRequestStep1(jqObj) {
     widCleanCL();
-    widCleanUI(jqObj);
 	var msg;
 	
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
@@ -1178,6 +1170,7 @@ function widPreBlockingRequestStep1(jqObj) {
         widDone(jqObj, msg);
         break;
     case false:		// VTL contains only unavailable tokens
+	    widCleanUI(jqObj);
 		objLed.show(jqObj, null);
 		widBlockingRequestStep1(jqObj, glVTL);
         break;
@@ -1236,7 +1229,6 @@ function widBlockingRequestStep1(jqObj, list) {
 
 function widPreBlockingRequestStep2(jqObj) {
     widCleanCL();
-    widCleanUI(jqObj);
 	var msg;
 	
     switch (engGetVTLContent(glVTL)) { // checks the contents of the verified tokens list
@@ -1246,6 +1238,7 @@ function widPreBlockingRequestStep2(jqObj) {
 		widDone(jqObj, msg);
 		break;
     case false:		// VTL contains only unavailable tokens
+	    widCleanUI(jqObj);
 		objLed.show(jqObj, null);
         widBlockingRequestStep2(jqObj, glVTL);
         break;

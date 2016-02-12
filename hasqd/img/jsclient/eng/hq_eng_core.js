@@ -100,7 +100,7 @@ function engRunCL(commandsList, cbFunc) {
             commandsList.idx++;
             commandsList.counter = 100;
         } else {
-			console.log('err ' + commandsList.counter);
+			console.log('error: ' + commandsList.counter + ' try.');
             commandsList.counter--;
             if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
 				commandsList.idx++; // upd
