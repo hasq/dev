@@ -1,4 +1,48 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
+function TextArea() {
+	
+}
+
+TextArea.prototype.val = function (jqObj, data) {
+		var jqText = widGetTextareaObj(jqObj);
+		if (typeof data == 'undefined') return jqText.val();
+		return jqText.val(jqText.val() + data);
+}
+
+TextArea.prototype.empty = function (jqObj) {
+		var jqText = widGetTextareaObj(jqObj);
+		return jqText.val('');
+}
+
+var textArea = new TextArea();
+
+function Led() {
+	
+}
+
+Led.prototype.show = function (jqObj, flag, title) {
+		var jqLed = widGetLedObj(jqObj);
+		if (flag === null) {
+			jqLed.html(picL12);
+			jqLed.prop('title', 'Please wait...');
+		} else if (flag) {
+			jqLed.html(picGrn);
+			(title === undefined) ? jqLed.prop('title', 'OK') : jqLed.prop('title', title);
+		} else {
+			jqLed.html(picRed);
+			(title === undefined) ? jqLed.prop('title', 'Inappropriate or unavailable tokens detected!') : jqLed.prop('title', title);
+		}
+}
+
+Led.prototype.empty = function (jqObj){
+		if (arguments.length === 0) {
+			$('#tokens_tabs').find('div[data-class="led_div"]').empty();			
+		} else {
+			widGetLedObj(jqObj).empty();
+		}
+}
+
+var led = new Led();
 
 function widCleanCL() {
     glCL.idx = 0;
@@ -34,50 +78,14 @@ function widShowOrderedTokensNames(arr) {
     }
 }
 
-var objIncTextareaVal = {
-//widShowGetTransKeysInc() {
-	val:	function (jqObj, data) {
-				var jqText = widGetTextareaObj(jqObj);
-				if (typeof data == 'undefined') return jqText.val();
-				return jqText.val(jqText.val() + data);
-			},
-	empty:	function (jqObj) {
-				var jqText = widGetTextareaObj(jqObj);
-				return jqText.val('');
-			}
-}
-
-var objLed = {
-	show: function (jqObj, flag, title) {
-		var jqLed = widGetLedObj(jqObj);
-		if (flag === null) {
-			jqLed.html(picL12);
-			jqLed.prop('title', 'Please wait...');
-		} else if (flag) {
-			jqLed.html(picGrn);
-			(title === undefined) ? jqLed.prop('title', 'OK') : jqLed.prop('title', title);
-		} else {
-			jqLed.html(picRed);
-			(title === undefined) ? jqLed.prop('title', 'Inappropriate or unavailable tokens detected!') : jqLed.prop('title', title);
-		}
-	},
-	empty: function (jqObj){
-		if (arguments.length === 0) {
-			$('#tokens_tabs').find('div[data-class="led_div"]').empty();			
-		} else {
-			widGetLedObj(jqObj).empty();
-		}
-	}
-}
-
 function widCleanUI(jqObj) {
 	if (arguments.length == 0) {
-		objLed.empty();	
+		led.empty();	
 		$('div[data-class="capsule"]').find('textarea').val('');
 		widCleanVerifyTab();
 	} else {
-		objLed.empty(jqObj);
-		objIncTextareaVal.empty(jqObj);
+		led.empty(jqObj);
+		textArea.empty(jqObj);
 	}
 	widShowProgressbar(0);
 	widShowTokensLog();	
@@ -252,7 +260,7 @@ function widTokensPasswordOninput(data) {
     glPassword = data;
     glVTL = engGetVTL(glVTL);
     widCleanVerifyTab();
-	objLed.empty();
+	led.empty();
 }
 
 function widGetRawTokens(data){
@@ -327,7 +335,6 @@ function widAddTokens(jqObj, data) {
     var jqLastIdx = $('#tokens_last_idx_input')
     //var objNames = $('#tokens_names_textarea')
     var chk = widGetRangeDataState();
-
     if (chk.message == 'ERROR') return widDone(jqObj, chk.content);
 
     var baseName = jqBasename.val();
@@ -391,16 +398,9 @@ function widCreateTokens(jqObj, tokens) {
         widShowProgressbar(progress);
 
         var cbResponse = engGetResponse(cbData);
-        if (cbResponse.message == 'ERROR') {
-            return widDone(jqObj, cbResponse.content);
-			
-        } 
+        if (cbResponse.message == 'ERROR') return widDone(jqObj, cbResponse.content);
 		
-		if (cmdIdx + 1 < glCL.items.length) {
-            widShowTokensLog('Creating... ');
-        } else {
-            return widDone(jqObj, 'OK');
-        }
+		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Creating... ') : widDone(jqObj, 'OK');
     }
 
     for (var i = 0; i < tokens.length; i++) {
@@ -423,14 +423,14 @@ function widCreateTokens(jqObj, tokens) {
     engRunCL(glCL, cbFunc);
 }
 
-function widShowVerifyTableRow(data, pic) {
+function widShowVerifyTableRow(rec, pic) {
     var table = $('#tokens_verify_table');
-	var row = widGetHTMLTr(widGetHTMLTd(pic + data.message) + widGetHTMLTd(data.rawS) + widGetHTMLTd(data.s) + widGetHTMLTd(data.n) + widGetHTMLTd(data.d));
+	var row = widGetHTMLTr(widGetHTMLTd(pic + rec.status) + widGetHTMLTd(rec.rawS) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
     table.append(row);
 }
 
-function widGetVerifyTableRowLed(data) {
-    switch (data) {
+function widGetVerifyTableRowLed(state) {
+    switch (state) {
     case 'WRONG_PWD':
         return picYlw;
         break;
@@ -449,7 +449,7 @@ function widGetVerifyTableRowLed(data) {
     }
 }
 
-function widPreVerify(jqObj, data) {
+function widPreVerify(jqObj) {
     widCleanCL();
     glVTL = engGetVTL(glVTL);
     widCleanVerifyTab();
@@ -472,11 +472,7 @@ function widVerifyTokens(jqObj, tokens) {
         }
 
         var r = engGetResponse(ajxData);
-
-        if (r.message == 'ERROR') {
-            widDone(jqObj, r.content);
-            return;
-        }
+        if (r.message == 'ERROR') return widDone(jqObj, r.content);
 
         widShowProgressbar(progress);
 		
@@ -484,16 +480,12 @@ function widVerifyTokens(jqObj, tokens) {
         glVTL = engGetVTL(glVTL, item); //add info to VTL about last processed token from CL;
 
         var idx = glVTL.items.length - 1;
-        var led = widGetVerifyTableRowLed(glVTL.items[idx].message);
+        var lineLed = widGetVerifyTableRowLed(glVTL.items[idx].status);
 
-		objLed.show(jqObj, !glVTL.unavail);
-        widShowVerifyTableRow(glVTL.items[idx], led);
+		led.show(jqObj, !glVTL.unavail);
+        widShowVerifyTableRow(glVTL.items[idx], lineLed);
 
-        if (glVTL.items.length < glCL.items.length) {
-            widShowTokensLog('Verifying...');
-        } else {
-			widDone(jqObj, 'OK');
-		}
+        (glVTL.items.length < glCL.items.length) ? widShowTokensLog('Verifying...') : widDone(jqObj, 'OK');
 	}
 
     for (var i = 0; i < tokens.length; i++) {
@@ -518,11 +510,7 @@ function widMakeVTL(jqObj, tokens, extCb) {
         }
 
         var r = engGetResponse(ajxData);
-
-        if (r.message == 'ERROR') {
-            widDone(jqObj, r.message + ': ' +r.content);
-            return;
-        }
+        if (r.message == 'ERROR') return widDone(jqObj, r.message + ': ' +r.content);
 		
         widShowProgressbar(progress);
 		
@@ -530,11 +518,7 @@ function widMakeVTL(jqObj, tokens, extCb) {
         glVTL = engGetVTL(glVTL, item); //add info to VTL about last processed token from CL;
         var idx = glVTL.items.length - 1;
 		
-        if (glVTL.items.length < glCL.items.length) {
-            widShowTokensLog('Verifying tokens...');
-		} else {
-	        setTimeout(extCb); // start external function;
-		}
+        (glVTL.items.length < glCL.items.length) ? widShowTokensLog('Verifying tokens...') : setTimeout(extCb); // start external function;
     }
 	
     for (var i = 0; i < tokens.length; i++) {
@@ -570,7 +554,7 @@ function widPreUpdate(jqObj, click) {
         }
         break;
     default:
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		if (!widIsRawTokens()) return widDone(jqObj, 'Empty or bad tokens!');
 		if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
         
@@ -595,18 +579,12 @@ function widUpdateTokens(jqObj, data) {
         widShowProgressbar(progress);
 
         var cbResponse = engGetResponse(cbData);
-
-        if (cbResponse.message === 'ERROR') {
-            widDone(jqObj, cbResponse.content);
-        } else if (cmdIdx + 1 < glCL.items.length) {
-            widShowTokensLog('Update data... ');
-        } else {
-            widDone(jqObj, 'OK');
-        }
+        if (cbResponse.message === 'ERROR') return widDone(jqObj, cbResponse.content);
+        (cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Update data... ') : widDone(jqObj, 'OK');
     }
 
     for (var i = 0; i < glVTL.items.length; i++) {
-        if (glVTL.items[i].message == 'OK' && glVTL.items[i].d != data) {
+        if (glVTL.items[i].status == 'OK' && glVTL.items[i].d != data) {
 
             var n = +glVTL.items[i].n + 1; //new records number;
             var s = engGetHash(glVTL.items[i].rawS, glCurrentDB.hash);
@@ -662,26 +640,26 @@ function widPreSimpleSend(jqObj) {
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
     case true:		// VTL contains only available tokens
 	    widCleanUI(jqObj);
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
         widSimpleSend(jqObj, glVTL);
         break;
     case false:		// VTL contains only unavailable tokens
 		msg = 'All tokens are unavailable!';
-		objLed.show(jqObj, false, msg);
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+		led.show(jqObj, false, msg);
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
         widDone(jqObj, msg);
         break;
     case undefined:		/// VTL contains both kinds of tokens - available and unavailable
 		msg = 'Some tokens are unavailable!';
-		objLed.show(jqObj, false, msg);
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+		led.show(jqObj, false, msg);
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:		// VTL no contains any tokens then make new VTL 
 		if (!widIsRawTokens()) return widDone(jqObj, 'Empty or bad tokens!');
 		if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
 		
-		objLed.show(jqObj, null);	
+		led.show(jqObj, null);	
 
         var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
         var extCb = function (data) {
@@ -694,13 +672,13 @@ function widPreSimpleSend(jqObj) {
 
 function widSimpleSend(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].message == 'OK') {
+        if (list.items[i].status == 'OK') {
 		// only own tokens will include;
             var k1 = engGetKey(list.items[i].n + 1, list.items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var k2 = engGetKey(list.items[i].n + 2, list.items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var tkLine = list.items[i].n + ' ' + list.items[i].s + ' ' + k1 + ' ' + k2 + '\n';
 			//tkLine = list.items[i].s + ' ' + k1 + ' ' + k2 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
         }
 		
 		widShowProgressbar(100 * (i + 1) / list.items.length);
@@ -711,13 +689,13 @@ function widSimpleSend(jqObj, list) {
     var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231320';
 	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0231320';
 	
-    objIncTextareaVal.val(jqObj, prLine);
-	objLed.show(jqObj, true);
+    textArea.val(jqObj, prLine);
+	led.show(jqObj, true);
     widDone(jqObj, 'OK');
 }
 
 function widPreSimpleReceive(jqObj, click) {
-	objLed.empty(jqObj);
+	led.empty(jqObj);
 	var rawTransKeys = widGetTextareaObj(jqObj).val();
 	if (!engIsRawTransKeys(rawTransKeys)) return widDone(jqObj, 'Bad TransKeys!');
 	if (!widIsPassword)	return widDone(jqObj, 'Empty password!');
@@ -743,7 +721,7 @@ function widSimpleReceive(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
+        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 		
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -790,16 +768,16 @@ function widPreSimpleRequest(jqObj) {
     switch (engGetVTLContent(glVTL)) { // checks the contents of the verified tokens list
 	case true: // VTL contains only available
 		msg = 'All tokens in the list are already available!';
-		objLed.show(jqObj, false, msg);
+		led.show(jqObj, false, msg);
 		widDone(jqObj, msg);
 		break;
     case false:		// VTL contains only unavailable tokens
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
         widSimpleRequest(jqObj, glVTL);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'There are some available tokens in the list!';
-		objLed.show(jqObj, false, msg);
+		led.show(jqObj, false, msg);
 		widDone(jqObj, msg);
         break;		
     default:
@@ -810,7 +788,7 @@ function widPreSimpleRequest(jqObj) {
         var extCb = function (data) {
 			widPreSimpleRequest(jqObj);
         }
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		widMakeVTL(jqObj, tok, extCb);
         break;
     }
@@ -818,7 +796,7 @@ function widPreSimpleRequest(jqObj) {
 
 function widSimpleRequest(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-		if (list.items[i].message === 'WRONG_PWD') {
+		if (list.items[i].status === 'WRONG_PWD') {
 			// includes only existing unknown tokens
             var r = list.items[i];
             var k3 = engGetKey(r.n + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -828,7 +806,7 @@ function widSimpleRequest(jqObj, list) {
             var o2 = engGetKey(r.n + 3, r.s, g3, glCurrentDB.magic, glCurrentDB.hash);
             var tkLine = r.n + ' ' + r.s + ' ' + g2 + ' ' + o2 + '\n';
 			//tkLine = r.s + ' ' + g2 + ' ' + o2 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
 		}
 
 		widShowProgressbar(100 * (i + 1) / list.items.length);
@@ -836,19 +814,19 @@ function widSimpleRequest(jqObj, list) {
     }
 	
 	var msg, flag;
-	if (objIncTextareaVal.val(jqObj).length == 0) {
+	if (textArea.val(jqObj).length == 0) {
 		msg = 'Inappropriate tokens!';
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
 		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
 		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0242520';
-		objIncTextareaVal.val(jqObj, prLine);
+		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
 	}
 	
-	objLed.show(jqObj, flag, msg);
+	led.show(jqObj, flag, msg);
     widDone(jqObj, msg);
 }
 
@@ -878,7 +856,7 @@ function widSimpleAccept(jqObj, enrollKeys) {
         widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
+        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -924,26 +902,26 @@ function widPreBlockingSendStep1(jqObj) {
     switch (engGetVTLContent(glVTL)) {
     case true:		// VTL contains only available tokens
 	    widCleanUI(jqObj);
-	    objLed.show(jqObj, null);
+	    led.show(jqObj, null);
         widBlockingSendStep1(jqObj, glVTL);
         break;
     case false:		// VTL contains only unavailable tokens
 		msg = 'All tokens are unavailable!';
-		objLed.show(jqObj, false, msg);	
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+		led.show(jqObj, false, msg);	
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
         widDone(jqObj, msg);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'Some tokens are unavailable!';
-		objLed.show(jqObj, false, msg);	
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+		led.show(jqObj, false, msg);	
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:
 		if (!widIsRawTokens()) return widDone(jqObj, 'Empty or bad tokens!');
 		if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
 		
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
         
 		var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
         var extCb = function (data) {
@@ -956,7 +934,7 @@ function widPreBlockingSendStep1(jqObj) {
 
 function widBlockingSendStep1(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].message === 'OK') {
+        if (list.items[i].status === 'OK') {
 			// includes only known tokens;
             var r = list.items[i];
             var n0 = r.n;
@@ -965,7 +943,7 @@ function widBlockingSendStep1(jqObj, list) {
             var g1 = engGetKey(r.n + 2, r.s, k2, glCurrentDB.magic, glCurrentDB.hash);
             var tkLine = n0 + ' ' + r.s + ' ' + k1 + ' ' + g1 + '\n';
 			//tkLine = r.s + ' ' + k1 + ' ' + g1 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
         }
 
 		widShowProgressbar(100 * (i + 1) / list.items.length);
@@ -976,8 +954,8 @@ function widBlockingSendStep1(jqObj, list) {
     var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231410';
 	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0231410';
 	
-    objIncTextareaVal.val(jqObj, prLine);
-	objLed.show(jqObj, true);
+    textArea.val(jqObj, prLine);
+	led.show(jqObj, true);
     widDone(jqObj, 'OK');
 }
 
@@ -988,25 +966,25 @@ function widPreBlockingSendStep2(jqObj) {
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
     case true:		// VTL contains only available tokens
 		msg = 'All All tokens in the list are already available!';
-        objLed.show(jqObj, false, msg); 
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+        led.show(jqObj, false, msg); 
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
 		widDone(jqObj, msg);
         break;
     case false:		// VTL contains only unavailable tokens
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
         widBlockingSendStep2(jqObj, glVTL);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'Some All tokens in the list are already available!';
-        objLed.show(jqObj, false, msg);
-		if (objIncTextareaVal.val(jqObj).length > 0) objIncTextareaVal.empty(jqObj);
+        led.show(jqObj, false, msg);
+		if (textArea.val(jqObj).length > 0) textArea.empty(jqObj);
         widDone(jqObj, msg);
         break;
     default:		// VTL no contains any tokens then make new VTL
 		if (!widIsRawTokens()) return widDone(jqObj, 'Empty or bad tokens!');
 		if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
 
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		
         var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
         var extCb = function (data) {
@@ -1019,7 +997,7 @@ function widPreBlockingSendStep2(jqObj) {
 	
 function widBlockingSendStep2(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].message === 'TKN_SNDNG') {
+        if (list.items[i].status === 'TKN_SNDNG') {
 			//include only tokens in sending state;
             var r = list.items[i];
             var n0 = r.n - 1;
@@ -1027,7 +1005,7 @@ function widBlockingSendStep2(jqObj, list) {
             var k2 = engGetKey(n2, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var tkLine = n0 + ' ' + r.s + ' ' + k2 + '\n';
 			//tkLine = r.s + ' ' + k2 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
         } 
 		
 		widShowProgressbar(100 * (i + 1) / list.items.length);
@@ -1035,19 +1013,19 @@ function widBlockingSendStep2(jqObj, list) {
     }
 
 	var msg, flag;
-	if (objIncTextareaVal.val(jqObj).length == 0) {
+	if (textArea.val(jqObj).length == 0) {
 		msg = 'Inappropriate tokens!';
 		flag = false;
 	} else {
 		var rawTransKeys = widGetTextareaObj(jqObj).val().replace(/\s/g, '');
 		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12320';
 		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '02320';
-		objIncTextareaVal.val(jqObj, prLine);
+		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
 	}
 	
-	objLed.show(jqObj, flag);
+	led.show(jqObj, flag);
     widDone(jqObj, 'OK');
 }
 
@@ -1079,7 +1057,7 @@ function widBlockingReceiveStep1(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
+        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -1131,9 +1109,9 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
 		var msg = engGetResponse(data);
 		
         if (engGetResponse(data).message !== 'ERROR') {
-			objLed.show(jqObj, true)
+			led.show(jqObj, true)
 		} else {
-			objLed.show(jqObj, false, msg.message + ': ' + msg.content);
+			led.show(jqObj, false, msg.message + ': ' + msg.content);
 			widDone(jqObj, msg.message + ': ' + msg.content);
 		}
 
@@ -1170,16 +1148,16 @@ function widPreBlockingRequestStep1(jqObj) {
     switch (engGetVTLContent(glVTL)) {	// checks the contents of the verified tokens list
     case true:		// VTL contains only available tokens
 		msg = 'All tokens in the list are already available!';
-		objLed.show(jqObj, false, msg);
+		led.show(jqObj, false, msg);
         widDone(jqObj, msg);
         break;
     case false:		// VTL contains only unavailable tokens
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		widBlockingRequestStep1(jqObj, glVTL);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'There are some available tokens in the list!';
-		objLed.show(jqObj, false, msg);	
+		led.show(jqObj, false, msg);	
         widDone(jqObj, msg);
         break;
     default:		// VTL no contains any tokens then make new VTL 
@@ -1190,7 +1168,7 @@ function widPreBlockingRequestStep1(jqObj) {
         var extCb = function (data) {
 			widPreBlockingRequestStep1(jqObj);
         }
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		widMakeVTL(jqObj, tok, extCb);
         break;
     }
@@ -1198,7 +1176,7 @@ function widPreBlockingRequestStep1(jqObj) {
 
 function widBlockingRequestStep1(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].message === 'WRONG_PWD') {
+        if (list.items[i].status === 'WRONG_PWD') {
 			// includes only existing unknown tokens
             var r = list.items[i];
             var n0 = r.n;
@@ -1207,7 +1185,7 @@ function widBlockingRequestStep1(jqObj, list) {
             var o1 = engGetKey(n0 + 2, r.s, g2, glCurrentDB.magic, glCurrentDB.hash);
             var tkLine = r.n + ' ' + r.s + ' ' + o1 + '\n';
 			//var tkLine = r.s + ' ' + o1 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
         }
         
         widShowProgressbar(100 * (i + 1) / list.items.length);
@@ -1215,19 +1193,19 @@ function widBlockingRequestStep1(jqObj, list) {
     }
 	
 	var msg, flag;
-	if (objIncTextareaVal.val(jqObj).length == 0) {
+	if (textArea.val(jqObj).length == 0) {
 		msg = 'Inappropriate tokens!';
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
 		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12510';
 		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '02510';
-		objIncTextareaVal.val(jqObj, prLine);
+		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
 	}
 	
-	objLed.show(jqObj, flag, msg);
+	led.show(jqObj, flag, msg);
     widDone(jqObj, msg);
 }
 
@@ -1239,16 +1217,16 @@ function widPreBlockingRequestStep2(jqObj) {
     switch (engGetVTLContent(glVTL)) { // checks the contents of the verified tokens list
 	case true: // VTL contains only available
 		msg = 'All tokens in the list are already available!';
-		objLed.show(jqObj, false, msg);
+		led.show(jqObj, false, msg);
 		widDone(jqObj, msg);
 		break;
     case false:		// VTL contains only unavailable tokens
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
         widBlockingRequestStep2(jqObj, glVTL);
         break;
     case undefined:		// VTL contains both kinds of tokens - available and unavailable
 		msg = 'There are some available tokens in the list!';
-		objLed.show(jqObj, false, msg);
+		led.show(jqObj, false, msg);
 		widDone(jqObj, msg);
         break;		
     default:
@@ -1259,7 +1237,7 @@ function widPreBlockingRequestStep2(jqObj) {
         var extCb = function (data) {
 			widPreBlockingRequestStep2(jqObj);
         }
-		objLed.show(jqObj, null);
+		led.show(jqObj, null);
 		widMakeVTL(jqObj, tok, extCb);
         break;
     }
@@ -1267,7 +1245,7 @@ function widPreBlockingRequestStep2(jqObj) {
 
 function widBlockingRequestStep2(jqObj, data) {
     for (var i = 0; i < data.items.length; i++) {
-        if (data.items[i].message === 'TKN_RCVNG') {
+        if (data.items[i].status === 'TKN_RCVNG') {
 			// includes only existing tokens in blocking receiving state
             var r = data.items[i];
             var n0 = r.n - 1;
@@ -1278,7 +1256,7 @@ function widBlockingRequestStep2(jqObj, data) {
             var o2 = engGetKey(n0 + 3, r.s, g3, glCurrentDB.magic, glCurrentDB.hash); //
             var tkLine = n0 + ' ' + r.s + ' ' + g2 + ' ' + o2 + '\n';
 			//var tkLine = r.s + ' ' + g2 + ' ' + o2 + '\n';
-			objIncTextareaVal.val(jqObj, tkLine);
+			textArea.val(jqObj, tkLine);
         } 
 		
 		widShowProgressbar(100 * (i + 1) / data.items.length);
@@ -1286,19 +1264,19 @@ function widBlockingRequestStep2(jqObj, data) {
     }
 	
 	var msg, flag;
-	if (objIncTextareaVal.val(jqObj).length == 0) {
+	if (textArea.val(jqObj).length == 0) {
 		msg = 'Inappropriate tokens!';
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
 		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
 		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0242520';
-		objIncTextareaVal.val(jqObj, prLine);
+		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
 	}
 	
-	objLed.show(jqObj, flag, msg);
+	led.show(jqObj, flag, msg);
     widDone(jqObj, msg);
 }
 
@@ -1328,7 +1306,7 @@ function widBlockingAcceptStep1(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
+        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -1379,7 +1357,7 @@ function widBlockingAcceptStep2(jqObj, enrollKeys) {
         widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? objLed.show(jqObj, true) : objLed.show(jqObj, false, err);
+        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');

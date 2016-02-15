@@ -32,8 +32,7 @@ function engSendPing(timeDelay) {
     var cb = function (data) {
         var now = new Date();
         var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-        console.log(ct);
-
+       // console.log(ct);
     }
 
     ajxSendCommand('ping', cb, hasqdLed)

@@ -57,7 +57,19 @@ function docInit() {
     $('#hasqd_led').html(picGry);
     $('button').button();
     $('#tokens_data_pre').hide();
-    $('#show_hide_input').click(function () {
+	$('#send_blocking_textarea').hide();
+    $('#send_type_checkbox').click(function () {
+		var jqObj0 = $('#send_simple_textarea');
+		var jqObj1 = $('#send_blocking_textarea');
+        if (this.checked) {
+            jqObj1.show();
+        } else {
+            jqObj1.hide();
+        }
+		jqObj0.val('');
+		jqObj1.val('');		
+    });	
+    $('#show_hide_checkbox').click(function () {
         if (this.checked) {
             $('.password').attr('type', 'text');
         } else {
@@ -112,11 +124,6 @@ function docMain() {
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Give data';
-    item.data = widGetHTMLSetDataTab();
-    tabs[tabs.length] = item;
-
-    item = {};
     item.title = 'Give away';
     item.data = widGetHTMLSendTab();
     tabs[tabs.length] = item;
@@ -126,6 +133,11 @@ function docMain() {
     item.data = widGetHTMLReceiveTab();
     tabs[tabs.length] = item;
 
+	item = {};
+    item.title = 'Give data';
+    item.data = widGetHTMLSetDataTab();
+    tabs[tabs.length] = item;
+	
 	item = {};
     item.title = 'Search';
     item.data = widGetHTMLSearchTab();

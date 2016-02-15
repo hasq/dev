@@ -16,26 +16,26 @@ function engGetTokenInfo(data, rawS, s) {
         item.avail = false;
 		item.unavail = false;
 		
-        switch (engGetTokensState(lr, nr)) {
+        switch (engGetTokensStatus(lr, nr)) {
         case 1:
-            item.message = 'OK';
+            item.status = 'OK';
 			item.avail = true;
             break;
         case 2:
-            item.message = 'TKN_SNDNG';
+            item.status = 'TKN_SNDNG';
 			item.unavail = true;
             break;
         case 3:
-            item.message = 'TKN_RCVNG';
+            item.status = 'TKN_RCVNG';
 			item.unavail = true;
             break;
         default:
-            item.message = 'WRONG_PWD';
+            item.status = 'WRONG_PWD';
 			item.unavail = true;
             break;
         }
     } else {
-		item.message = 'IDX_NODN';
+		item.status = 'IDX_NODN';
 		item.unavail = true;
 		item.n = -1;	
 		item.d = '';		
@@ -59,7 +59,7 @@ function engGetVTL(list, item) {
     list.items[n].s = item.s;
 	list.items[n].n = item.n;
     list.items[n].d = item.d;
-	list.items[n].message = item.message;
+	list.items[n].status = item.status;
 	
     if (item.avail === true) list.avail = true;
 	if (item.unavail === true) list.unavail = true;

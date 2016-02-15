@@ -52,18 +52,18 @@ function widGetHTMLInitialData() {
 		r += '<tr>\n';
 			r += '<td width="3%" style="text-align:left;" nowrap>\n'
 				r += '&nbsp;' + '<b>Token text</b>' + '&nbsp;\n';
-			r += '<td colspan="2" style="text-align:right;" nowrap>\n';
+			r += '<td colspan="2" style="text-align:left;" nowrap>\n';
 					r += '<input type="text" id="token_text_input" oninput="widTokenTextOninput();" placeholder="Enter token text"/>\n';
 			r += '<td width="30%" id="token_pic_td" style="text-align:left">\n'; //picGry;
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="3%" style="text-align:right;" nowrap>\n';
+			r += '<td width="3%" style="text-align:left;" nowrap>\n';
 				r += '&nbsp;' + '<b>Token hash</b>' + '&nbsp;\n';
 			r += '<td id="token_hash_td" colspan="2" class="monospace" style="font-style: italic;" nowrap>';
 			r += '<td width="30%">';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="3%" style="text-align:right">\n';
+			r += '<td width="3%" style="text-align:left">\n';
 				r += '&nbsp;' + '<b>Master key</b>' + '&nbsp\n';
 			r += '<td colspan="2" style="text-align:left">\n';
 				r += '<input type="password" id="password_input" oninput="widTokensPasswordOninput(this.id);" class="password" placeholder="Enter token password" oninput=""/>\n'; // disabled/>\n';
@@ -71,8 +71,8 @@ function widGetHTMLInitialData() {
 		r += '<tr>\n';
 			r += '<td width="3%">';
 			r += '<td width="100px" style="text-align:left">\n';
-				r += '<input type="checkbox" id="show_hide_input"/>\n';
-				r += '<label for="show_hide_input" id="show_hide_label">Show password</label>\n';
+				r += '<input type="checkbox" id="show_hide_checkbox"/>\n';
+				r += '<label for="show_hide_checkbox" id="show_hide_label">Show password</label>\n';
 			r += '<td id="password_zxcvbn_td" style="text-align:right; font-style: italic">\n';
 			r += '<td width="30%">';
 		r += '</tr>\n';
@@ -146,15 +146,21 @@ function widGetHTMLSearchTab() {
 function widGetHTMLSendTab() {
 	var r = '';
 	
-	r += '<table width="70%" border="0" >\n';
+	r += '<table width="70%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td width="100%" style="text-align:left">\n';
-				r += '<button id="send_button" onclick="widButtonClick(this)" data-onclick="widSendButtonClick()" disabled>Send';
+			r += '<td width="1%" style="text-align:left"/>\n';
+				r += '<button id="send_button" onclick="widButtonClick(this)" data-onclick="widSendButtonClick()">Show keys</button>';
+				r += '<input type="checkbox" id="send_type_checkbox">';
+				r += '<label for="send_type_checkbox">Blocking</label>\n';				
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%">\n'
-				r += '<textarea wrap="off" rows="4" type="text" id="send_textarea" readonly></textarea>';
+			r += '<td/>\n'
+				r += '<textarea wrap="off" rows="3" type="text" id="send_simple_textarea" readonly></textarea>';
 		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td>\n'
+				r += '<textarea wrap="off" rows="3" type="text" id="send_blocking_textarea" readonly></textarea>';
+		r += '</tr>\n';		
 	r += '</table>\n';
 	
 	return r;	
@@ -171,7 +177,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" style="text-align:right">\n';
-				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()" disabled>Receive';
+				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()" disabled>Take ownership';
 		r += '</tr>\n';
 	r += '</table>\n';
 
@@ -184,10 +190,10 @@ function widGetHTMLSetDataTab() {
 	r += '<table border="0">\n';
 		r += '<tr>\n';
 			r += '<td>\n';
-				r += '<textarea id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
+				r += '<textarea type="text" id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td style="text-align:right">\n'
+			r += '<td style="text-align:left">\n'
 				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">Set data';
 		r += '</tr>\n';
 	r += '</table>\n';

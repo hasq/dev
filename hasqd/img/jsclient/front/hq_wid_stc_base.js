@@ -1,7 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 function widGetHTMLTd(x) {
-    return '<td>\n' + x + '';
+    return '<td nowrap style="text-align: left">\n' + x + '';
 }
 
 function widGetHTMLTdSpan(x, y, z) {

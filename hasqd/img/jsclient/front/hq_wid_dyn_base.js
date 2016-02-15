@@ -284,11 +284,11 @@ function widShowNewRecordAuto() {
     var objOnePwd = $('#one_pwd_checkbox');
     var objThreePwd = $('#three_pwd_checkbox')
 
-        var lr_n = objLastRecN.val();
+    var lr_n = objLastRecN.val();
     var s = objDn.val();
     var p0 = objNewRecPwd0.val();
 
-    if (objOnePwd.prop('checked') === 'enabled') {
+    if (objOnePwd.prop('checked')) {
         var p1 = null;
         var p2 = null;
     } else if (objThreePwd.prop('checked')) {

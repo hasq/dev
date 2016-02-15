@@ -169,7 +169,7 @@ function widGetHTMLTokensVerifyTab() {
     r += '<tr>\n';
     r += '<td width="100%" colspan="2">\n<div class="verify-table" id="tokens_verify_table_div">\n';
     r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
-    r += '<tr><th>Status</th><th>Raw name</th><th>Hash</th><th>Last rec. N</th><th>Data</th></tr>\n';
+    r += '<tr><th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th></tr>\n';
     r += '</table>\n';
     r += '</div>\n';
     r += '</tr>\n';
@@ -264,7 +264,7 @@ function widGetHTMLTokensSS2() {
 				r += '<table width="100%">\n';
 					r += '<tr rowspan="5">\n';
 						r += '<td colspan="2">\n';
-							r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_ss2_textarea"></textarea>\n';
+							r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_ss2_textarea"></textarea>\n';
 					r += '</tr>\n';
 				r += '</table>\n';
 			r += '</tr>\n';
@@ -359,7 +359,7 @@ function widGetHTMLTokensSS4() {
     r += '<table width="100%">\n';
     r += '<tr rowspan="5">\n';
     r += '<td colspan="3">\n';
-    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_ss4_s1_textarea"></textarea>\n';
+    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_ss4_s1_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
@@ -387,7 +387,7 @@ function widGetHTMLTokensSS4() {
     r += '<table width="100%">\n';
     r += '<tr rowspan="5">\n';
     r += '<td colspan="3">\n';
-    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_ss4_s2_textarea"></textarea>\n';
+    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_ss4_s2_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
@@ -440,7 +440,7 @@ function widGetHTMLTokensRS1() {
     r += '<table width="100%">\n';
     r += '<tr rowspan="5">\n';
     r += '<td colspan="3">\n';
-    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_rs1_textarea"></textarea>\n';
+    r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_rs1_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
@@ -515,7 +515,7 @@ function widGetHTMLTokensRS3() {
 					r += '<table width="100%">\n';
 						r += '<tr rowspan="5">\n';
 							r += '<td colspan="3">\n';
-								r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_rs3_s1_textarea"></textarea>\n';
+								r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_rs3_s1_textarea"></textarea>\n';
 						r += '</tr>\n';
 					r += '</table>\n';
 			r += '</tr>\n';
@@ -544,7 +544,7 @@ function widGetHTMLTokensRS3() {
 					r += '<table width="100%">\n';
 						r += '<tr rowspan="5">\n';
 							r += '<td colspan="3">\n';
-								r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="objLed.empty($(this));" id="tokens_rs3_s2_textarea"></textarea>\n';
+								r += '<textarea wrap="off" rows="5" type="text" maxlength="66435" oninput="led.empty($(this));" id="tokens_rs3_s2_textarea"></textarea>\n';
 						r += '</tr>\n';
 					r += '</table>\n';
 			r += '</tr>\n';
