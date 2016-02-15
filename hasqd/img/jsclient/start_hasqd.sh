@@ -2,12 +2,19 @@
 # Hasq Technology Pty Ltd (C) 2013-2015
 
 PLAT=${PLAT:-msc}
-execdir=_bin_${PLAT}
+bin=_bin_${PLAT}
 
-#comm="../../src/$execdir/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
-comm="../../src/$execdir/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
+#comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
+comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
+
+error() {
+	[ -z "$1" ] || echo ">>> $1"
+	exit 1
+}
 
 ./createdb.sh
+ 
+[ "$?" -eq 0 ] || error
 
 if [ "$1" = "here" ]
 then
