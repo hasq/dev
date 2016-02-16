@@ -146,14 +146,17 @@ function widShowToken() {
 function widShowData(data) {
     // Shows tokens data field if it length greater then zero.
     var jqData = $('#tokens_data_pre');
-	var jqPattern = $('#initial_data_table');
-	
-	jqData.outerWidth(jqPattern.innerWidth() - 2);
 	
     if (arguments.length === 0) {
         jqData.hide();
         jqData.empty();
     } else if (String(data).length > 0) {
+		var jqInitData = $('#initial_data_table');
+		var jqBody = $('#body_table');
+		var maxHeight = ($(window).height() - jqBody.outerHeight())/3;		
+		jqData.outerWidth(jqInitData.innerWidth() - 4);
+		jqData.css('max-height',  maxHeight + 'px');
+
         jqData.show();
         jqData.html(data);
     } else {
@@ -311,7 +314,7 @@ function widTokenTextOninput(id) {
 function widPasswordOninput(jqPwd) {
     // Events when passwords value changed.
 	widShowLog();
-	textArea.emptyall();
+	//textArea.emptyall();
     glPassword = jqPwd.val();
 
     if (jqPwd.val().length == 0) {

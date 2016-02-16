@@ -124,6 +124,11 @@ function docMain() {
     item.data = widGetHTMLCreateTab();
     tabs[tabs.length] = item;
 
+	item = {};
+    item.title = 'Give data';
+    item.data = widGetHTMLSetDataTab();
+    tabs[tabs.length] = item;
+	
     item = {};
     item.title = 'Give away';
     item.data = widGetHTMLSendTab();
@@ -132,11 +137,6 @@ function docMain() {
     item = {};
     item.title = 'Receive';
     item.data = widGetHTMLReceiveTab();
-    tabs[tabs.length] = item;
-
-	item = {};
-    item.title = 'Give data';
-    item.data = widGetHTMLSetDataTab();
     tabs[tabs.length] = item;
 	
 	item = {};

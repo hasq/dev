@@ -43,7 +43,7 @@ function widGetHTMLSpan(span_id) {
 function widGetHTMLInitialData() {
 	var r = '';
 	
-	r += '<table id="initial_data_table" width="100%" border="1" style="border: 1px solid #DDDDDD;">\n';
+	r += '<table id="initial_data_table" width="100%" border="0" style="border: 1px solid #DDDDDD;">\n';
 		r += '<tr>\n';
 			r += '<td colspan="3" style="text-align: center; font: 140% monospace;">\n';
 				r += '<b>Token text</b>\n';
@@ -165,31 +165,29 @@ function widGetHTMLCreateTab() {
 	return r;
 }
 
-function widGetHTMLSearchTab() {
+function widGetHTMLSetDataTab() {
 	var r = '';
-	r += '<table border="0">\n';
+	
+	r += '<table width="100%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td>\n';
-				r += 'From' + '&nbsp';
-			r += '<td>\n';	
-				r += '<input id="from_datepicker_input" type="text">\n';
-			r += '<td>\n'
-				r += '&nbsp' + 'to' + '&nbsp';
-			r += '<td>\n';
-				r += '<input id="to_datepicker_input" type="text">\n';
-			r += '<td>\n';
-				r += '<button id="search_button" onclick="widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
-		r += '</tr>\n';		
-	r += '</table>\n';	
-	return r;	
+			r += '<td style="text-align:center">\n';
+				r += '<textarea type="text" id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td style="text-align:center">\n'
+				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">Set data';
+		r += '</tr>\n';
+	r += '</table>\n';
+	
+	return r;
 }
 
 function widGetHTMLSendTab() {
 	var r = '';
 	
-	r += '<table width="70%" border="0">\n';
+	r += '<table width="100%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td width="1%" style="text-align:left"/>\n';
+			r += '<td style="text-align:center"/>\n';
 				r += '<button id="send_button" onclick="widButtonClick(this)" data-onclick="widSendButtonClick()">Show keys</button>';
 				r += '<input type="checkbox" id="send_type_checkbox">';
 				r += '<label for="send_type_checkbox">Blocking</label>\n';				
@@ -211,36 +209,39 @@ function widGetHTMLReceiveTab() {
 	var r = '';
 	
 	
-	r += '<table width="70%" border="0" >\n';
+	r += '<table width="100%" border="0" >\n';
 		r += '<tr>\n';
-			r += '<td width="100%">\n'
+			r += '<td style="text-align: center">\n'
 				r += '<textarea wrap="off" rows="4" type="text" id="receive_textarea"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" style="text-align:right">\n';
-				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()" disabled>Take ownership';
+			r += '<td style="text-align: center">\n';
+				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()">Take ownership';
 		r += '</tr>\n';
 	r += '</table>\n';
 
 	return r;	
 }
 
-function widGetHTMLSetDataTab() {
+function widGetHTMLSearchTab() {
 	var r = '';
-	
 	r += '<table border="0">\n';
 		r += '<tr>\n';
 			r += '<td>\n';
-				r += '<textarea type="text" id="setdata_textarea" rows="5" cols="64" wrap="on"></textarea>';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td style="text-align:left">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">Set data';
-		r += '</tr>\n';
-	r += '</table>\n';
-	
-	return r;
+				r += 'From' + '&nbsp';
+			r += '<td>\n';	
+				r += '<input id="from_datepicker_input" type="text">\n';
+			r += '<td>\n'
+				r += '&nbsp' + 'to' + '&nbsp';
+			r += '<td>\n';
+				r += '<input id="to_datepicker_input" type="text">\n';
+			r += '<td>\n';
+				r += '<button id="search_button" onclick="widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
+		r += '</tr>\n';		
+	r += '</table>\n';	
+	return r;	
 }
+
 
 function widGetHTMLLogArea() {
     var r = '';
