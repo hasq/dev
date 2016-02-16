@@ -26,12 +26,13 @@ var hasqdLed = new HasqdLed();
 function TextArea() {}
 
 TextArea.prototype.val = function (jqObj, data) {
-	if (typeof data == 'undefined') return jqText.val();
+	if (typeof data == 'undefined') return jqObj.val();
 	return jqObj.val(jqObj.val() + data);
 }
 
-TextArea.prototype.empty = function (jqObj) {
-	return jqObj.val('');
+TextArea.prototype.empty = function (jqObj, data) {
+	if (typeof data == 'undefined') return jqObj.val('');
+	return jqObj.val(jqObj.empty(jqObj) + data);	
 }
 
 TextArea.prototype.emptyall = function () {
@@ -273,10 +274,8 @@ function widTokenTextOninput(id) {
     widShowTokRequestRes(undefined); // show animation
 	textArea.emptyall();
 
-    var jqTok = $('#token_text_textarea');
-    var tokText = jqTok.val();
-
-
+    var jqTokText = $('#token_text_textarea');
+    var tokText = jqTokText.val();
 
 	var cb = function (data) {
 		var resp = engGetResponse(data);
@@ -290,6 +289,7 @@ function widTokenTextOninput(id) {
 			var lr = engGetResponseLast(data);
 			var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 			glLastRec = lr;
+			glLastRec.rawS = jqTokText.val();
 			glLastRec.status = widGetTokenStatus(lr, nr);
 			widShowTokRequestRes(true);
 			
@@ -324,9 +324,9 @@ function widPasswordOninput(jqPwd) {
 		return;
     }	
 	    
-	var jqTok = $('#token_text_textarea');
+	var jqTokText = $('#token_text_textarea');
 	
-	if (jqTok.val().length == 0) {
+	if (jqTokText.val().length == 0) {
         widShowPwdMatch();
     } else {
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -489,6 +489,29 @@ function widSetDataButtonClick() {
     widShowLog('Giving token data...');
     setTimeout(f);
 }
+
+function widReceiveButtonClick() {
+	var rawTransKeys = $('#receive_textarea').val();
+	var jqTok = $('#token_text_textarea');
+	
+	if (!engIsRawTransKeys(rawTransKeys)) return widCompleteEvent('Bad TransKeys!');
+	if (!widIsPassword)	return widCompleteEvent('Empty password!');
+	
+    var tokText = [glLastRec.rawS]
+	var transKeys = engGetTransKeys(rawTransKeys);
+	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
+	tok = tok[0].replace(/\[|\]/g, '');
+
+	textArea.empty(jqTok);
+	textArea.val(jqTok, tok);
+	
+	widCompleteEvent('DONE');
+	
+	//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
+}
+
+
+
 
 function widSearchButtonClick() {
     var jqFrom = $('#from_datepicker_input');

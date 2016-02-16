@@ -444,3 +444,103 @@ function engGetEnrollKeys(transKeys, p, h, m) {
     }
     return enrollKeys;
 }
+
+function engIsRawTransKeys(rawKeys) {
+	if (rawKeys == '' || typeof rawKeys === 'undefined' || typeof rawKeys === 'null' || typeof rawKeys === 'NaN') return false;
+	if (rawKeys.replace(/\s/g, '') !== engGetOnlyHex(rawKeys.replace(/\s/g, ''))) return false;
+	
+    var line = rawKeys.replace(/^\s+|\s+$/, '').split(/\n/);
+	var prLine = line.splice(line.length - 1, 1); //get protocol line;
+	prLine = prLine[0].replace(/^\s+|\s+$/, '').split(/\s/); //split protocol line by spaces;
+	var prCode = prLine[prLine.length - 1]; //get protocol code;
+	var prCtrl = prLine[0]; //get protocol crc-code
+	var tkCtrl = engGetHash(line.join('').replace(/\s/g, ''), 's22').substring(0, 4);
+
+	if (prCtrl !== tkCtrl) return false;
+
+	if (prCode.charAt(prCode.length - 1) == '0' && prLine.length == 3) {
+		true;
+	} else if (prCode.charAt(prCode.length - 1) !== '0' && prLine.length == 2) {
+		true;
+	} else {
+		return false;
+	}
+	
+	// check length of all keys;
+	var pattern, j;
+	
+	if (prCode.charAt(0) == '0') {
+		pattern = line[0].split(/\s/)[0].length; // pattern is first key length
+		j = 0;
+	} else if (prCode.charAt(0) == '1') {
+		pattern = prLine[1].length; // pattern is dbname length
+		j = 1;
+	} else {
+		return false; //if protocol code 1st char is not 1 or 0
+	}
+
+	var keysQ; 
+	var l = prCode.length;
+	var ch = prCode.charAt(0);
+
+	if (l == 4 || l == 5) { //checks match of a protocol code and quantity of transkeys elements;
+		keysQ = (ch == '0') ? 2 : 3;
+	} else if (l == 6 || l == 7) {
+		keysQ = (ch == '0') ? 3 : 4;
+	} else {
+		return false;
+	}
+	
+	for (var i = 0; i < line.length; i++) {
+		var el = line[i].split(/\s/);
+		var l = el.length;
+		
+		if (l !== keysQ) return false;
+		for (; j < l; j++) {
+			if (el[j].length !== pattern) return false;
+		}
+	}	
+
+	return true;
+}
+
+function engGetMergedTokensList(hashList, rawList, hash) {
+	// returns merged names from both lists transkeys and tokens;
+    for (var k = 0; k < hashList.length; k++) {
+        for (var t = 0; t < rawList.length; t++) {
+            if (hashList[k] == engGetHash(rawList[t], hash)) {
+                var rawName = '[' + rawList[t] + ']';
+                hashList[k] = rawName;
+                rawList.splice(t, 1);
+                t--;
+                break;
+            } else if (hashList[k] == rawList[t]) {
+                rawList.splice(t, 1);
+                t--;
+            }
+        }
+    }
+    return hashList;
+}
+
+function engGetOnlyHex(data) {
+    return data.replace(/[^0-9a-f]/g, '');
+}
+
+function engSortByProperties(prop) {
+	return function (a, b) {
+		return ((a[prop] < b[prop]) ? -1 : ((a[prop] > b[prop]) ? 1 : 0))
+    }
+}
+
+
+function engGetHashedTokensList(list) {
+	// returns hashed token names;
+    var r = [];
+	
+    for (var i = 0; i < list.length; i++) {
+        r[i] = list[i].s;
+    }
+	
+    return r;
+}
