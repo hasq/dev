@@ -16,6 +16,7 @@
     
     body {
       font: 75% "Trebuchet MS", sans-serif;
+      /*background: #DEE7F4;*/
       margin: 50px;
     }
     
@@ -42,46 +43,49 @@
       margin: 0 4px;
     }
 
-    #tabs {
+    #tabs_div {
         white-space: nowrap;
         overflow: hidden;
+        text-align: center;
     }
     
-
-    #tabs ul li {
+    #tabs_div ul li {
         display: inline-block;
         float: none;
         vertical-align: bottom;
     }
     
     #body_table {
-      min-width: 550px;
+      min-width: 600px;
+      man-width: 1920px;
+      width: 70%;
+      margin: auto; 
     }
-    
+
     #tokens_data_pre {
         box-sizing: border-box;
         border: 2px solid CornflowerBlue;
         border-radius: 5px;
         background: #F0F0F0;
-        white-space:pre-wrap;
+        white-space: pre;
         overflow-x: auto;
         overflow-y: auto;
-        width: 100%;
         max-hight: 150px;
+        font: 120% monospace;
      }
      
      input[type='text'] {
       box-sizing: border-box;
       font-family: monospace;
-      width: 100%;
+      width: 90%;
       margin: 0px;
       border: 1px solid #DDDDDD;
     }
     
-    input[type='password'] {
+    input[class='password'] {
       box-sizing: border-box;
       font-family: monospace;
-      width: 100%;
+      width: 40%;
       margin: 0px;
       border: 1px solid #DDDDDD;
     }
@@ -92,16 +96,32 @@
       border-collapse:collapse;
     }
     
+    td tr {
+      box-sizing: border-box;
+    }    
+    
+    led {
+      text-align: center;
+      vertical-align: center;
+    }
+
+    td [class='token-hash'] {
+      font: 120% monospace;
+      font-style: italic;
+      background: #DEE7F4; 
+    }
+    
     textarea[type='text'] {
       box-sizing: border-box;
       font-family: monospace;
       width: 100%;
+      margin: 0px;
+      border: 1px solid #DDDDDD;
+      
       /*resize: none;*/
     } 
     
-    td tr {
-      box-sizing: border-box;
-    }
+
   </style>
 
   <script type="text/javascript" src="lib/jquery.js"></script>

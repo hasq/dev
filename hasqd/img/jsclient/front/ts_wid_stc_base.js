@@ -4,37 +4,33 @@ function widGetHTMLBody(tabs) {
 	var r = '';
     r += '<table width="100%" id="body_table" border="0" nowrap>\n';
 		r += '<tr>\n';
-			r += '<td nowrap>' + widGetHTMLTitle(glClientTitle) + '\n';
-			r += '<td style="text-align:right" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
+			r += '<td width="98%" style="text-align: center;" nowrap>\n';
+				r += '<span style="font-size:20px">\n' + glClientTitle + '</span>\n'
+			r += '<td width="2%" style="text-align: right;" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
 		r += '</tr>\n';	
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>' + widGetHTMLInitialData() + '\n';
+			r += '<td colspan="2" >' + widGetHTMLInitialData() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" colspan="2" nowrap>' + widGetHTMLMainTabs(tabs) + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
+			r += '<td width="100%" colspan="2" nowrap>\n';
+				r += '<hr/>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td width="100%" colspan="2" nowrap>' + widGetHTMLLogArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td width="100%" colspan="2" nowrap><hr/>\n';
+			r += '<td width="100%" colspan="2" nowrap>\n';
+				r += '<hr/>\n';
 		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="100%" style="text-align: right; font: monospace; font-style: italic;" nowrap>\n';
+				r += 'Hasq Technology Pty Ltd \u00A9 2013-2016 ';
+		r += '</tr>\n';		
     r += '</table>\n';
 	
-    return r;
-}
-
-function widGetHTMLTitle(text) {
-    var r = '';
-    r += '<table border="0">\n';
-		r += '<tr>\n';
-			r += '<td>\n';
-				r += '<div style="font-size:20px">\n' + text + '</div>\n';
-		r += '</tr>\n';
-		r += '</table>\n';
     return r;
 }
 
@@ -44,7 +40,50 @@ function widGetHTMLSpan(span_id) {
     return r;
 }
 
+function widGetHTMLInitialData() {
+	var r = '';
+	
+	r += '<table id="initial_data_table" width="100%" border="1" style="border: 1px solid #DDDDDD;">\n';
+		r += '<tr>\n';
+			r += '<td colspan="3" style="text-align: center; font: 140% monospace;">\n';
+				r += '<b>Token text</b>\n';
+			r += '<td id="token_pic_td" class="led" width="14px">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="4" style="text-align: center;">\n';
+					r += '<textarea id="token_text_textarea" oninput="widTokenTextOninput();" rows="1" type="text" placeholder="Enter token text"></textarea>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td width="90px" class="token-hash">\n';
+				r += '<i>Token hash:</i>\n';
+			r += '<td id="token_hash_td" class="token-hash" colspan="3" nowrap>\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="3" style="text-align: center; font: 140% monospace;">\n'
+				r += '<b>Master key</b>\n';
+			r += '<td>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="3" style="text-align: center;">\n'
+				r += '<input id="password_input" type="password" oninput="widPasswordOninput($(this));" oncontextmenu="return widPasswordContextMenu($(this));" class="password" placeholder="Enter token password" oninput=""/>\n';				
+			r += '<td class="led">'
+				r += '<span id="password_pic_td" class="led"></span>\n'
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td id="password_zxcvbn_td" colspan="3" style="text-align:center; font-style: italic">\n';
+			r += '<td>&nbsp\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="4">\n';
+				r += '<pre id="tokens_data_pre"></pre>';
+		r += '</tr>\n';	
 
+	r += '</table>';
+		
+	return r;
+}
+
+/*
 function widGetHTMLInitialData() {
     var r = '';
 
@@ -53,7 +92,7 @@ function widGetHTMLInitialData() {
 			r += '<td width="3%" style="text-align:left;" nowrap>\n'
 				r += '&nbsp;' + '<b>Token text</b>' + '&nbsp;\n';
 			r += '<td colspan="2" style="text-align:left;" nowrap>\n';
-					r += '<input type="text" id="token_text_input" oninput="widTokenTextOninput();" placeholder="Enter token text"/>\n';
+					r += '<input type="text" id="token_text_textarea" oninput="widTokenTextOninput();" placeholder="Enter token text"/>\n';
 			r += '<td width="30%" id="token_pic_td" style="text-align:left">\n'; //picGry;
 		r += '</tr>\n';
 		r += '<tr>\n';
@@ -77,11 +116,11 @@ function widGetHTMLInitialData() {
 			r += '<td width="30%">';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="4" style="text-align:left;">\n';
+			r += '<td colspan="4">\n';
 				r += '<table width="100%">\n';
 					r += '<tr>\n';
 						r += '<td>\n';
-							r += '<pre id="tokens_data_pre"></pre>';
+							r += '<pre id="tokens_data_pre"  style="white-space: pre"></pre>';
 					r += '</tr>\n';
 				r += '</table>\n';
 		r += '</tr>\n';
@@ -89,6 +128,8 @@ function widGetHTMLInitialData() {
 
     return r;
 }
+
+*/
 
 function widGetHTMLMainTabs(items) {
     var r = '';
@@ -114,9 +155,9 @@ function widGetHTMLMainTabs(items) {
 function widGetHTMLCreateTab() {
 	var r = '';
 	
-	r += '<table>\n';
+	r += '<table width="100%">\n';
 		r += '<tr>\n';
-			r += '<td>\n'
+			r += '<td style="text-align: center;">\n'
 				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">Create';
 		r += '</tr>\n';
 	r += '</table>\n';

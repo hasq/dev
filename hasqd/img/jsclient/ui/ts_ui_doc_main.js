@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-var glClientTitle = 'Tokenswap JavaScript Client';
+var glClientTitle = '&nbspTokenswap Client';
 var glRequiredDbHash = 'smd';
 var glPassword = '';
 
@@ -58,6 +58,7 @@ function docInit() {
     $('button').button();
     $('#tokens_data_pre').hide();
 	$('#send_blocking_textarea').hide();
+	
     $('#send_type_checkbox').click(function () {
 		var jqObj0 = $('#send_simple_textarea');
 		var jqObj1 = $('#send_blocking_textarea');
