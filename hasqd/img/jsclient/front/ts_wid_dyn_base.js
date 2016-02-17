@@ -131,7 +131,6 @@ function widShowPwdGuessTime(d) {
     }
 }
 
-
 function widShowToken() {
     // Shows hashed value of token (if the value is not a default hash)
     var jqTokText = $('#token_hash_td');
@@ -154,10 +153,10 @@ function widShowData(data) {
         jqData.hide();
         jqData.empty();
     } else if (String(data).length > 0) {
-		var jqInitData = $('#initial_data_table');
 		var jqBody = $('#body_table');
-		var maxHeight = ($(window).height() - jqBody.outerHeight())/3;		
-		jqData.outerWidth(jqInitData.innerWidth() - 4);
+		var maxHeight = ($(window).height() - jqBody.outerHeight())/3;
+		
+		jqData.outerWidth(jqData.closest('table').innerWidth()-4);
 		jqData.css('max-height',  maxHeight + 'px');
 
         jqData.show();
@@ -326,9 +325,7 @@ function widPasswordOninput(jqPwd) {
 		return;
     }	
 	    
-	var jqTokText = $('#token_text_textarea');
-	
-	if (jqTokText.val().length == 0 || glLastRec.status == 'IDX_NODN') {
+	if (glLastRec.status == 'IDX_NODN' || typeof glLastRec.status == 'undefined' ) {
         widShowPwdMatch();
     } else {
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);

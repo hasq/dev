@@ -70,6 +70,7 @@ function docInit() {
 		jqObj0.val('');
 		jqObj1.val('');		
     });	
+	
     $('#show_hide_checkbox').click(function () {
         if (this.checked) {
             $('.password').attr('type', 'text');
@@ -77,6 +78,7 @@ function docInit() {
             $('.password').attr('type', 'password');
         }
     });
+	
     $('#from_datepicker_input').datepicker({
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),

@@ -6,7 +6,7 @@ function widGetHTMLBody(tabs) {
 		r += '<tr>\n';
 			r += '<td align="center" nowrap>\n';
 				r += '<span style="font-size:40px">\n' + glClientTitle + '</span>\n'
-			r += '<td width="14px" align="right" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
+			r += '<td width="14px" align="right" valign="center" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
 		r += '</tr>\n';
 			r += '<tr>\n';
 				r += '<td colspan="2" nowrap>&nbsp\n';
@@ -46,9 +46,9 @@ function widGetHTMLSpan(span_id) {
 function widGetHTMLInitialData() {
 	var r = '';
 	
-	r += '<table width="100%" border="0" style="border: 1px solid #DDDDDD;">';
+	r += '<table id="initial_data_table" width="100%" border="0" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
-			r += '<td align="center">';
+			r += '<td align="center" style="font-size:15px">';
 				r += '<b>Token text<b>';
 		r += '</tr>';
 		r += '<tr>';
@@ -67,7 +67,7 @@ function widGetHTMLInitialData() {
 				r += '</table>';
 		r += '</tr>';
 		r += '<tr>';
-			r += '<td align="center">';
+			r += '<td align="center" style="font-size:15px">';
 				r += '<b>Master key<b>';
 		r += '</tr>';
 		r += '<tr>';
@@ -84,6 +84,18 @@ function widGetHTMLInitialData() {
 					r += '</tr>';					
 				r += '</table>';
 		r += '</tr>';
+		r += '<tr>';
+			r += '<td><hr/>';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td align="center" style="font-size:15px">';
+				r += '<b>Token data</b>';
+		r += '</tr>';		
+		r += '<tr>';
+			r += '<td>';
+				r += '<pre id="tokens_data_pre"></pre>';
+		r += '</tr>';		
+	
 	r += '</table>';
 
 
