@@ -32,7 +32,9 @@ TextArea.prototype.val = function (jqObj, data) {
 
 TextArea.prototype.empty = function (jqObj, data) {
 	if (typeof data == 'undefined') return jqObj.val('');
-	return jqObj.val(jqObj.empty(jqObj) + data);	
+	jqObj.val('');
+	jqObj.val(data);	
+	return;
 }
 
 TextArea.prototype.emptyall = function () {
@@ -326,7 +328,7 @@ function widPasswordOninput(jqPwd) {
 	    
 	var jqTokText = $('#token_text_textarea');
 	
-	if (jqTokText.val().length == 0) {
+	if (jqTokText.val().length == 0 || glLastRec.status == 'IDX_NODN') {
         widShowPwdMatch();
     } else {
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -338,7 +340,7 @@ function widPasswordOninput(jqPwd) {
 
 }
 
-function widPasswordContextMenu(jqObj) {
+function widPasswordOncontextmenu(jqObj) {
 	if (jqObj.val().length > 0) {
         (jqObj.attr('type') == 'text') ? jqObj.attr('type', 'password') : jqObj.attr('type', 'text');
 	} else {
@@ -502,10 +504,9 @@ function widReceiveButtonClick() {
 	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
 	tok = tok[0].replace(/\[|\]/g, '');
 
-	textArea.empty(jqTok);
-	textArea.val(jqTok, tok);
+	textArea.empty(jqTok, tok);
 	
-	widCompleteEvent('DONE');
+	widCompleteEvent('!!!!!!!11111');
 	
 	//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
 }
