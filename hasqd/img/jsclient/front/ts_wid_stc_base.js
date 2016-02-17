@@ -46,7 +46,7 @@ function widGetHTMLSpan(span_id) {
 function widGetHTMLInitialData() {
 	var r = '';
 	
-	r += '<table width="100%" border="0">';
+	r += '<table width="100%" border="0" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td align="center">';
 				r += '<b>Token text<b>';
