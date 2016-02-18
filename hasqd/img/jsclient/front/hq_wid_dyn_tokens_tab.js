@@ -94,7 +94,7 @@ function widCleanUI(jqObj) {
 
 function widCleanVerifyTab() {
     $('#tokens_verify_table').find('tr:gt(0)').remove();
-    $('#tokens_verify_table_div').hide();
+    $('#tokens_verify_table_pre').hide();
     $('#tokens_verify_led_div').empty();
 }
 
@@ -285,21 +285,21 @@ function widGetRangeDataState() {
     var idx0 = +$('#tokens_first_idx_input').val();
     var idx1 = +$('#tokens_last_idx_input').val();
     var r = {};
-    r.message = 'OK';
-    r.content = 'OK';
+    r.msg = 'OK';
+    r.cnt = 'OK';
 
     if (jqBasename.val() == '') {
-        r.message = 'ERROR';
-        r.content = 'Empty basename.';
+        r.msg = 'ERROR';
+        r.cnt = 'Empty basename.';
     } else if (/[\s]/g.test(jqBasename.val())) {
-        r.message = 'ERROR';
-        r.content = 'Incorrect basename. Please, remove spaces.';
+        r.msg = 'ERROR';
+        r.cnt = 'Incorrect basename. Please, remove spaces.';
     } else if (idx0 > idx1) {
-        r.message = 'ERROR';
-        r.content = 'Incorrect indexes. The start index should not be bigger the end index.';
+        r.msg = 'ERROR';
+        r.cnt = 'Incorrect indexes. The start index should not be bigger the end index.';
     } else if (idx1 - idx0 > 127) {
-        r.message = 'ERROR';
-        r.content = 'Too many tokens, the maximum quantity - 128';
+        r.msg = 'ERROR';
+        r.cnt = 'Too many tokens, the maximum quantity - 128';
     }
 
     return r;
@@ -335,7 +335,7 @@ function widAddTokens(jqObj, data) {
     var jqLastIdx = $('#tokens_last_idx_input')
     //var objNames = $('#tokens_names_textarea')
     var chk = widGetRangeDataState();
-    if (chk.message == 'ERROR') return widDone(jqObj, chk.content);
+    if (chk.msg == 'ERROR') return widDone(jqObj, chk.cnt);
 
     var baseName = jqBasename.val();
     var idx0 = jqFirstIdx.val();
@@ -397,8 +397,7 @@ function widCreateTokens(jqObj, tokens) {
 
         widShowProgressbar(progress);
 
-        var cbResponse = engGetResponse(cbData);
-        if (cbResponse.message == 'ERROR') return widDone(jqObj, cbResponse.content);
+        if (engGetResp(cbData).msg == 'ERROR') return widDone(jqObj, engGetResp(cbData).cnt);
 		
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Creating... ') : widDone(jqObj, 'OK');
     }
@@ -412,11 +411,11 @@ function widCreateTokens(jqObj, tokens) {
 
         glCL.items[zCmdIdx] = {};
         glCL.items[zCmdIdx].cmd = zCmd;
-        glCL.items[zCmdIdx].rawS = tokens[i].rawS;
+        glCL.items[zCmdIdx].r = tokens[i].r;
         glCL.items[zCmdIdx].s = tokens[i].s;
         glCL.items[lastCmdIdx] = {};
         glCL.items[lastCmdIdx].cmd = lastCmd;
-        glCL.items[lastCmdIdx].rawS = tokens[i].rawS;
+        glCL.items[lastCmdIdx].r = tokens[i].r;
         glCL.items[lastCmdIdx].s = tokens[i].s;
     }
 
@@ -424,9 +423,9 @@ function widCreateTokens(jqObj, tokens) {
 }
 
 function widShowVerifyTableRow(rec, pic) {
-    var table = $('#tokens_verify_table');
-	var row = widGetHTMLTr(widGetHTMLTd(pic + rec.status) + widGetHTMLTd(rec.rawS) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
-    table.append(row);
+    var jqTable = $('#tokens_verify_table');
+	var row = widGetHTMLTr(widGetHTMLTd(pic + rec.st) + widGetHTMLTd(rec.r) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
+    jqTable.append(row);
 }
 
 function widGetVerifyTableRowLed(state) {
@@ -457,30 +456,30 @@ function widPreVerify(jqObj) {
 	if (!widIsRawTokens()) return widDone(jqObj, 'Empty or bad tokens!');
 	if (!widIsPassword()) return widDone(jqObj, 'Empty password!');
 
-    var objTable = $('#tokens_verify_table_div');
+    var jqTable = $('#tokens_verify_table_pre');
+	var jqDiv = jqTable.closest('div');
+	var maxHeight = (($(window).height() - $('body').height()) > 200) ? ($(window).height() - $('body').height())/2 : 100;
 
-    objTable.css('display', 'block');
+	jqTable.outerWidth(jqDiv.innerWidth() - 4);
+	jqTable.css('max-height',  maxHeight + 'px');
+	jqTable.show();	
+	
     var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-
     widVerifyTokens(jqObj, tokens);
 }
 
 function widVerifyTokens(jqObj, tokens) {
     var cbFunc = function (ajxData, clIdx, progress) {
-        if (glCL.items.length == 0) {
-            return;
-        }
-
-        var r = engGetResponse(ajxData);
-        if (r.message == 'ERROR') return widDone(jqObj, r.content);
+        if (glCL.items.length == 0) return;
+        if (engGetResp(ajxData).msg == 'ERROR') return widDone(jqObj, engGetResp(ajxData).cnt);
 
         widShowProgressbar(progress);
 		
-		var item = engGetTokenInfo(ajxData, glCL.items[clIdx].rawS, glCL.items[clIdx].s)
+		var item = engGetTokenInfo(ajxData, glCL.items[clIdx].r, glCL.items[clIdx].s)
         glVTL = engGetVTL(glVTL, item); //add info to VTL about last processed token from CL;
 
         var idx = glVTL.items.length - 1;
-        var lineLed = widGetVerifyTableRowLed(glVTL.items[idx].status);
+        var lineLed = widGetVerifyTableRowLed(glVTL.items[idx].st);
 
 		led.show(jqObj, !glVTL.unavail);
         widShowVerifyTableRow(glVTL.items[idx], lineLed);
@@ -492,7 +491,7 @@ function widVerifyTokens(jqObj, tokens) {
         var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
         glCL.items[i] = {};
         glCL.items[i].cmd = lastCmd;
-        glCL.items[i].rawS = tokens[i].rawS;
+        glCL.items[i].r = tokens[i].r;
         glCL.items[i].s = tokens[i].s;
     }
 
@@ -504,17 +503,12 @@ function widMakeVTL(jqObj, tokens, extCb) {
     widCleanCL();
 	
     var cbFunc = function (ajxData, clIdx, progress) {
-
-        if (glCL.items.length == 0) {
-            return;
-        }
-
-        var r = engGetResponse(ajxData);
-        if (r.message == 'ERROR') return widDone(jqObj, r.message + ': ' +r.content);
+        if (glCL.items.length == 0) return;
+        if (engGetResp(ajxData).msg == 'ERROR') return widDone(jqObj, engGetResp(ajxData).cnt);
 		
         widShowProgressbar(progress);
 		
-		var item = engGetTokenInfo(ajxData, glCL.items[clIdx].rawS, glCL.items[clIdx].s)
+		var item = engGetTokenInfo(ajxData, glCL.items[clIdx].r, glCL.items[clIdx].s)
         glVTL = engGetVTL(glVTL, item); //add info to VTL about last processed token from CL;
         var idx = glVTL.items.length - 1;
 		
@@ -525,7 +519,7 @@ function widMakeVTL(jqObj, tokens, extCb) {
         var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
         glCL.items[i] = {};
         glCL.items[i].cmd = lastCmd;
-        glCL.items[i].rawS = (tokens[i].rawS !== undefined) ? tokens[i].rawS : ''; 
+        glCL.items[i].r = (tokens[i].r !== undefined) ? tokens[i].r : ''; 
         glCL.items[i].s = tokens[i].s;
     }
 	
@@ -571,23 +565,19 @@ function widPreUpdate(jqObj, click) {
 
 function widUpdateTokens(jqObj, data) {
 	var cbFunc = function (cbData, cmdIdx, progress) {
-        if (glCL.items.length === 0) {
-            widDone(jqObj, cbData);
-            return;
-        }
+        if (glCL.items.length === 0) return widDone(jqObj, cbData);
 
         widShowProgressbar(progress);
 
-        var cbResponse = engGetResponse(cbData);
-        if (cbResponse.message === 'ERROR') return widDone(jqObj, cbResponse.content);
+        if (engGetResp(cbData).msg === 'ERROR') return widDone(jqObj, engGetResp(cbData).cnt);
         (cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Update data... ') : widDone(jqObj, 'OK');
     }
 
     for (var i = 0; i < glVTL.items.length; i++) {
-        if (glVTL.items[i].status == 'OK' && glVTL.items[i].d != data) {
+        if (glVTL.items[i].st == 'OK' && glVTL.items[i].d != data) {
 
             var n = +glVTL.items[i].n + 1; //new records number;
-            var s = engGetHash(glVTL.items[i].rawS, glCurrentDB.hash);
+            var s = engGetHash(glVTL.items[i].r, glCurrentDB.hash);
             var r = engGetNewRecord(n, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
             var addCmd = 'add *' + ' ' + glCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
@@ -595,14 +585,14 @@ function widUpdateTokens(jqObj, data) {
 
             glCL.items[idx] = {};
             glCL.items[idx].cmd = addCmd;
-            glCL.items[idx].rawS = glVTL.items[i].rawS;
+            glCL.items[idx].r = glVTL.items[i].r;
             glCL.items[idx].s = glVTL.items[i].s;
 
             idx++;
 
             glCL.items[idx] = {};
             glCL.items[idx].cmd = lastCmd;
-            glCL.items[idx].rawS = glVTL.items[i].rawS;
+            glCL.items[idx].r = glVTL.items[i].r;
             glCL.items[idx].s = glVTL.items[i].s;
         }
     }
@@ -611,7 +601,7 @@ function widUpdateTokens(jqObj, data) {
 
 function widTransKeysUpdate(jqObj, transKeys, func){
 	widCleanCL();
-	var prCode = transKeys[0].protocode;
+	var prCode = transKeys[0].prcode;
 	
 	if (prCode.charAt(0) === '0' && glVTL.items.length === 0) {
         var extCb = function () {
@@ -672,7 +662,7 @@ function widPreSimpleSend(jqObj) {
 
 function widSimpleSend(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].status == 'OK') {
+        if (list.items[i].st == 'OK') {
 		// only own tokens will include;
             var k1 = engGetKey(list.items[i].n + 1, list.items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var k2 = engGetKey(list.items[i].n + 2, list.items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -721,7 +711,7 @@ function widSimpleReceive(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
+        (engGetResp(data).msg !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 		
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -747,14 +737,14 @@ function widSimpleReceive(jqObj, enrollKeys) {
         glCL.items[idx] = {};
         glCL.items[idx].cmd = addCmd1;
         glCL.items[idx].s = s;
-        glCL.items[idx].rawS = '';
+        glCL.items[idx].r = '';
 
         idx++;
 
         glCL.items[idx] = {};
         glCL.items[idx].cmd = addCmd2;
         glCL.items[idx].s = s;
-        glCL.items[idx].rawS = '';
+        glCL.items[idx].r = '';
     }
 
     engRunCL(glCL, cbFunc);
@@ -796,7 +786,7 @@ function widPreSimpleRequest(jqObj) {
 
 function widSimpleRequest(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-		if (list.items[i].status === 'WRONG_PWD') {
+		if (list.items[i].st === 'WRONG_PWD') {
 			// includes only existing unknown tokens
             var r = list.items[i];
             var k3 = engGetKey(r.n + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -856,7 +846,7 @@ function widSimpleAccept(jqObj, enrollKeys) {
         widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
+        (engGetResp(data).msg !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -882,14 +872,14 @@ function widSimpleAccept(jqObj, enrollKeys) {
         glCL.items[idx] = {};
         glCL.items[idx].cmd = addCmd1;
         glCL.items[idx].s = s;
-        glCL.items[idx].rawS = '';
+        glCL.items[idx].r = '';
 
         idx++;
 
         glCL.items[idx] = {};
         glCL.items[idx].cmd = addCmd2;
         glCL.items[idx].s = s;
-        glCL.items[idx].rawS = '';
+        glCL.items[idx].r = '';
     }
 
     engRunCL(glCL, cbFunc);
@@ -934,7 +924,7 @@ function widPreBlockingSendStep1(jqObj) {
 
 function widBlockingSendStep1(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].status === 'OK') {
+        if (list.items[i].st === 'OK') {
 			// includes only known tokens;
             var r = list.items[i];
             var n0 = r.n;
@@ -997,7 +987,7 @@ function widPreBlockingSendStep2(jqObj) {
 	
 function widBlockingSendStep2(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].status === 'TKN_SNDNG') {
+        if (list.items[i].st === 'TKN_SNDNG') {
 			//include only tokens in sending state;
             var r = list.items[i];
             var n0 = r.n - 1;
@@ -1057,7 +1047,7 @@ function widBlockingReceiveStep1(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
+        (engGetResp(data).msg !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -1076,7 +1066,7 @@ function widBlockingReceiveStep1(jqObj, enrollKeys) {
         glCL.items[i] = {};
         glCL.items[i].cmd = addCmd;
         glCL.items[i].s = s;
-        glCL.items[i].rawS = '';
+        glCL.items[i].r = '';
     }
 
     engRunCL(glCL, cbFunc);
@@ -1106,17 +1096,17 @@ function widPreBlockingReceiveStep2(jqObj, click) {
 function widBlockingReceiveStep2(jqObj, enrollKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
-		var msg = engGetResponse(data);
 		
-        if (engGetResponse(data).message !== 'ERROR') {
-			led.show(jqObj, true)
-		} else {
-			led.show(jqObj, false, msg.message + ': ' + msg.content);
-			widDone(jqObj, msg.message + ': ' + msg.content);
+		var resp = engGetResp(data);
+		
+        if (resp.msg == 'ERROR') {
+			led.show(jqObj, false, resp.msg + ': ' + resp.cnt);
+			return widDone(jqObj, resp.msg + ': ' + resp.cnt);			
 		}
+		
+		led.show(jqObj, true)
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
-
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'OK');
     }
 
@@ -1133,7 +1123,7 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
         glCL.items[i] = {};
         glCL.items[i].cmd = addCmd;
         glCL.items[i].s = s;
-        glCL.items[i].rawS = '';
+        glCL.items[i].r = '';
 
     }
 
@@ -1176,7 +1166,7 @@ function widPreBlockingRequestStep1(jqObj) {
 
 function widBlockingRequestStep1(jqObj, list) {
     for (var i = 0; i < list.items.length; i++) {
-        if (list.items[i].status === 'WRONG_PWD') {
+        if (list.items[i].st === 'WRONG_PWD') {
 			// includes only existing unknown tokens
             var r = list.items[i];
             var n0 = r.n;
@@ -1245,7 +1235,7 @@ function widPreBlockingRequestStep2(jqObj) {
 
 function widBlockingRequestStep2(jqObj, data) {
     for (var i = 0; i < data.items.length; i++) {
-        if (data.items[i].status === 'TKN_RCVNG') {
+        if (data.items[i].st === 'TKN_RCVNG') {
 			// includes only existing tokens in blocking receiving state
             var r = data.items[i];
             var n0 = r.n - 1;
@@ -1306,7 +1296,7 @@ function widBlockingAcceptStep1(jqObj, enrollKeys) {
 		widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
+        (engGetResp(data).msg !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -1324,7 +1314,7 @@ function widBlockingAcceptStep1(jqObj, enrollKeys) {
         glCL.items[i] = {};
         glCL.items[i].cmd = addCmd;
         glCL.items[i].s = s;
-        glCL.items[i].rawS = '';
+        glCL.items[i].r = '';
 
     }
 
@@ -1357,7 +1347,7 @@ function widBlockingAcceptStep2(jqObj, enrollKeys) {
         widShowProgressbar(progress);
 		
 		var err = 'Operation error occurred.\nPlease verify tokens state!';
-        (engGetResponse(data).message !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
+        (engGetResp(data).msg !== 'ERROR') ? led.show(jqObj, true) : led.show(jqObj, false, err);
 
         if (glCL.items.length == 0) return widDone(jqObj, 'Operation cancelled!');
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
@@ -1375,7 +1365,7 @@ function widBlockingAcceptStep2(jqObj, enrollKeys) {
         glCL.items[i] = {};
         glCL.items[i].cmd = addCmd;
         glCL.items[i].s = s;
-        glCL.items[i].rawS = '';
+        glCL.items[i].r = '';
     }
 
     engRunCL(glCL, cbFunc);

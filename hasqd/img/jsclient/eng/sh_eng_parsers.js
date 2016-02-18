@@ -1,65 +1,63 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetResponse(d) {
+function engGetResp(data) {
     // returns response header
-    var r = {};
-    var response = d.replace(/\r|\s+$/g, '');
-    var blocks = response.split(/\s/); // split by by \s (\s, \n, \t, \v);
-    var lines = response.split(/\n/); // split by \n only;
+    var resp = {};
+    var tmp = data.replace(/\r|\s+$/g, '');
+    var blocks = tmp.split(/\s/); // split by by \s (\s, \n, \t, \v);
+    var lines = tmp.split(/\n/); // split by \n only;
 
-    if (lines.length == 0 || blocks[0] == 0) {
-        r.content = 'NO_OUTPUT';
-        r.message = 'ERROR';
+	if (tmp.length == 0){
+        resp.msg = 'ERROR';
+        resp.cnt = 'NO_OUTPUT';
+		return resp;
+	}
+	
+    if (tmp.length == 0) {
+        resp.msg = 'ERROR';
+        resp.cnt = data;
     } else if (lines[0] === 'OK') {
-        r.content = response.replace(/^OK/, '');
-        r.message = 'OK'
+        resp.msg = 'OK'
     } else if (blocks[0] === 'OK') {
-        r.content = response.replace(/^OK\s/, '');
-        r.message = 'OK';
+        resp.msg = 'OK';
     } else if (blocks[0] === 'IDX_NODN') {
-        r.content = blocks[0];
-        r.message = blocks[0];
+        resp.msg = blocks[0];
+        resp.cnt = blocks[0];
     } else if (
+	    blocks[0] === 'URF_BAD_FORMAT' ||
         blocks[0] === 'REQ_HASHTYPE_BAD' ||
-        blocks[0] === 'URF_BAD_FORMAT' ||
         blocks[0] === 'REQ_MSG_HEAD' ||
         blocks[0] === 'REQ_DN_BAD' ||
         blocks[0] === 'REC_INIT_BAD_N' ||
         blocks[0] === 'REC_INIT_BAD_S' ||
         blocks[0] === 'REC_INIT_BAD_KGO') {
-        r.content = blocks[0];
-        r.message = 'ERROR';
+        resp.msg = 'ERROR';
+        resp.cnt = tmp;
     } else {
-        r.content = response;
-        r.message = 'ERROR';
+        resp.msg = 'ERROR';
+        resp.cnt = tmp;
     }
-    return r;
+    return resp;
 }
 
-function engGetResponseInfoDb(d) {
+function engGetRespInfoDb(data) {
     // returns parsed 'info db' response
-    var r = [];
+    var db = [];
+	var err = {};
+    var rawDb = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '').replace(/{\n|}+$/g, '').split(/}\n/);
 
-    var response = engGetResponse(d);
+    if (rawDb.length == 0) {
 
-    if (response.message != 'OK' || response.length == 0) {
-        return response;
+		err.msg = 'ERROR';
+		err.cnt = rawDB;
+        return err;
     }
 
-    var rawDbData = response.content;
-
-    rawDbData = rawDbData.replace(/{\n|}+$/g, '');
-    rawDbData = rawDbData.split(/}\n/);
-
-    if (rawDbData.length < 1) {
-        return rawDbData;
-    }
-
-    for (var i = 0; i < rawDbData.length; i++) {
-        r[i] = {};
+    for (var i = 0; i < rawDb.length; i++) {
+        db[i] = {};
         var traitLines = {};
 
-        traitLines[i] = rawDbData[i].split(/\n/);
+        traitLines[i] = rawDb[i].split(/\n/);
 
         var lines = traitLines[i];
         for (var j = 0; j < (lines.length - 1); j++) {
@@ -67,89 +65,78 @@ function engGetResponseInfoDb(d) {
 
             switch (parts[0]) {
             case 'name':
-                r[i].name = parts[1];
+                db[i].name = parts[1];
                 break;
             case 'hash':
-                r[i].hash = parts[1];
+                db[i].hash = parts[1];
                 break;
+/*
             case 'rawS':
-                r[i].rawS = parts[1];
+                db[i].r = parts[1];
                 break;
+*/
             case 'nG':
-                r[i].ng = parts[1];
+                db[i].ng = parts[1];
                 break;
             case 'magic':
-                r[i].magic = parts[1].replace(/^\[|\]$/g, '');
+                db[i].magic = parts[1].replace(/\[|\]/g, '');
                 break;
             case 'size':
-                r[i].size = parts[1];
+                db[i].size = parts[1];
                 break;
             case 'thin':
-                r[i].thin = parts[1];
+                db[i].thin = parts[1];
                 break;
             case 'datalimit':
-                r[i].datalim = parts[1];
+                db[i].datalim = parts[1];
                 break;
             case 'altname':
-                r[i].altname = parts[1];
+                db[i].altname = parts[1];
                 break;
             default:
                 break;
             }
         }
     }
-    return r;
+    return db;
 }
 
-function engGetResponseLast(d) {
+function engGetRespLast(data) {
     // returns parsed 'last' response
-    var r = {};
-    r.content = 'OK';
-    r.message = 'OK';
-
-    parsedData = engGetResponse(d);
-
-    if (parsedData.message != 'OK' || parsedData.length == 0) {
-        return parsedData;
-    }
-
-    var dataContent = parsedData.content;
-    var parts = dataContent.split(/\s/);
+    var rec = {};
+	var err = {};
+    var parts = data.replace(/^OK/g, '').replace(/^\s|\r|\s+$/g, '').split(/\s/);
+	
     if (parts.length < 5) {
-        r.message = 'ERROR';
-        r.content = parts;
+        err.msg = 'ERROR';
+        err.cnt = parts;
+		return err;
     } else if (parts.length == 5) {
-        r.n = +parts[0];
-        r.s = parts[1];
-        r.k = parts[2];
-        r.g = parts[3];
-        r.o = parts[4];
-        r.d = '';
+        rec.n = +parts[0];
+        rec.s = parts[1];
+        rec.k = parts[2];
+        rec.g = parts[3];
+        rec.o = parts[4];
+        rec.d = '';
     } else if (parts.length > 5) {
-        r.n = +parts[0];
-        r.s = parts[1];
-        r.k = parts[2];
-        r.g = parts[3];
-        r.o = parts[4];
-        d = [];
+        rec.n = +parts[0];
+        rec.s = parts[1];
+        rec.k = parts[2];
+        rec.g = parts[3];
+        rec.o = parts[4];
+        var d = [];
         for (var i = 5; i < parts.length; i++) {
             d[d.length] = parts[i];
         }
-        r.d = d.join(' ');
+        rec.d = d.join(' ');
     }
 
-    return r;
+    return rec;
 }
 
 function engGetNewRecord(n, s, p0, p1, p2, m, h) {
     // generates new record
-    var r = {};
-    r.n = '';
-    r.s = '';
-    r.k = '';
-    r.g = '';
-    r.o = '';
-
+    var rec = {};
     var n0 = +n;
     var n1 = +n + 1;
     var n2 = +n + 2;
@@ -168,13 +155,13 @@ function engGetNewRecord(n, s, p0, p1, p2, m, h) {
     var g1 = engGetKey(n2, s, k2, m, h);
     var o0 = engGetKey(n1, s, g1, m, h);
 
-    r.n = n0;
-    r.s = s;
-    r.k = k0;
-    r.g = g0;
-    r.o = o0;
+    rec.n = n0;
+    rec.s = s;
+    rec.k = k0;
+    rec.g = g0;
+    rec.o = o0;
 
-    return r;
+    return rec;
 }
 
 function engGetKey(n, s, p, m, h) {
@@ -187,10 +174,9 @@ function engGetKey(n, s, p, m, h) {
     return engGetHash(raw_k, h); ;
 }
 
-function engIsHash(d, h) {
+function engIsHash(data, h) {
     //checks string is hash or not hash
     var notHex = /[^0-9a-f]/g;
-    var r = true;
     switch (h) {
     case 'md5':
         var l = 32;
@@ -214,28 +200,28 @@ function engIsHash(d, h) {
         break;
     }
 
-    if (d.length != l || notHex.test(d)) { //mismatched length or not not hex chars contents
+    if (data.length != l || /[^0-9a-f]/g.test(data)) { //mismatched length or not not hex chars contents
         return false;
     } else {
         return true;
     };
 }
 
-function engGetHash(d, h) {
-    //returns specified hash of 'd'
+function engGetHash(data, h) {
+    //returns specified hash of 'data'
     switch (h) {
     case 'wrd':
-        return hex_md5(d).substring(0, 4);
+        return hex_md5(data).substring(0, 4);
     case 'md5':
-        return hex_md5(d);
+        return hex_md5(data);
     case 'r16':
-        return hex_rmd160(d);
+        return hex_rmd160(data);
     case 's22':
-        return hex_sha256(d);
+        return hex_sha256(data);
     case 's25':
-        return hex_sha512(d);
+        return hex_sha512(data);
     case 'smd':
-        return hex_smd(d);
+        return hex_smd(data);
     default:
         break;
     }
@@ -297,7 +283,80 @@ function engGetInputDataValue(d) {
     return r;
 }
 
-function engGetTransKeys(rawKeys) {
+function engIsRawTransKeys(keys) {
+	if (keys == '' || typeof keys === 'undefined' || typeof keys === 'null' || typeof keys === 'NaN') return false;
+	if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, ''))) return false; // checks for non hex chars;
+	
+    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split 
+	var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
+
+	var isRecNum, keysQty;
+	var prCode0Ch = prCode.charAt(0);
+	var prCodeLen = prCode.length;
+	// checks protocol code for record number exists into the transkeys;
+	if (prCode0Ch == '1') {
+		isRecNum = true;
+	} else if (prCode0Ch == '2') {
+		isRecNum = false;
+	} else {
+		return;
+	}
+	//checks match of a protocol code and quantity of transkeys elements;
+	if (prCodeLen == 3 || prCodeLen == 4) { 		
+		keysQty = (isRecNum) ? 3 : 2;
+	} else if (prCodeLen == 5 || prCodeLen == 6) {
+		keysQty = (isRecNum) ? 4 : 3;
+	} else {
+		return false;
+	}
+
+	var prCRC = '';
+	var tkCRC = '';
+	var tmpl = '';	
+	//if exists CRC extract it and compare with calculated CRC
+	//if exists db name it will be used like lengths template
+	if (keys[keys.length - 1].length == 4) {
+		prCRC = keys.splice(keys.length - 1, 1)[0];	//extracts CRC;
+		tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);	//calculates CRC
+	} else if (keys[keys.length - 2].length == 4) {
+		prCRC = keys.splice(keys.length - 2, 1)[0];	//extracts CRC;
+		tmpl = keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
+		tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);	//calculates CRC	
+	}
+
+	if (prCRC !== tkCRC) return false; //checks CRC
+
+	if (keys.length < keysQty) return false;
+	
+	if (tmpl.length == 0) {
+		var mod = keys.length % keysQty;
+		if ( mod == 1 ) {
+			tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+		} else if (mod == 0) {
+			tmpl = keys[keys.length - 1].length;
+		} else {
+			return false;
+		}
+	}
+	
+	if (isRecNum) {
+		for (var i = 0; i < keys.length; i = i + keysQty) {
+			if (!engIsNumber(keys[i])) return false;
+			keys.splice(i, 1);
+			i--;
+		}
+	}
+
+	
+	tmpl = (tmpl > 0) ? tmpl : keys[0].length;
+	for (var i = 0; i < keys.length; i++) {		
+		if (tmpl !== keys[i].length) return false;
+	}	
+	
+	return true;
+}
+
+function engGetTransKeys(keys) {
 	var prK1K2 = '23132';
     var prG2O2 = '24252';
     var prK1G1 = '23141'; 
@@ -305,33 +364,48 @@ function engGetTransKeys(rawKeys) {
     var prO1 = '251'; 
 
 	var transKeys = [];
+ 
+	keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split 
+	var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
 	
-	var keys = rawKeys.replace(/^\s+|\s+$/g, '').split(/\n/); //split by linefeed;
-	var prLine = keys.splice(keys.length - 1, 1)[0].split(/\s/); //get last (protocol) line and split by spaces;
-	var prCode = prLine[prLine.length - 1]; // get protocol key;
-	var numFlag = prCode.charAt(0);
-	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
-	var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+ 	var isRecNum, keysQty;
+	var prCode0Ch = prCode.charAt(0);
+	var prCodeLen = prCode.length;
+	// checks protocol code for record number exists into the transkeys;
+	if (prCode0Ch == '1') {
+		isRecNum = true;
+	} else if (prCode0Ch == '2') {
+		isRecNum = false;
+	} 
+	//checks match of a protocol code and quantity of transkeys elements;
+	if (prCodeLen == 3 || prCodeLen == 4) keysQty = (isRecNum) ? 3 : 2;
+	if (prCodeLen == 5 || prCodeLen == 6) keysQty = (isRecNum) ? 4 : 3;
+
+	//if exists CRC remove it
+	//if exists db name it will be used like lengths template
+	if (keys[keys.length - 1].length == 4) {
+		keys.splice(keys.length - 1, 1)[0];	//extracts CRC;
+	} else if (keys[keys.length - 2].length == 4) {
+		keys.splice(keys.length - 2, 1)[0];	//extracts CRC;
+		keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
+	}
+
+
+	var mod = keys.length % keysQty;
+	if (mod == 1) keys.splice(keys.length - 1, 1)[0].length;
 	
-	prK1K2 = numFlag + prK1K2 + dbFlag;
-	prG2O2 = numFlag + prG2O2 + dbFlag;
-	prK1G1 = numFlag + prK1G1 + dbFlag;
-	prK2 = numFlag + prK2 + dbFlag;
-	prO1 = numFlag + prO1 + dbFlag;
+	var coef = (prCode0Ch == '1') ? 1 : 2; // if protocol have record numbers;
+	
+	prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
+	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
+	prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
+	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+	prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
 	
     for (var i = 0; i < keys.length; i++) {
-/*
-		keys[i] = keys[i].replace(/^\s+|\s+$/, '');
-        if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0)) {
-            keys.splice(i, 1);
-            i--;
-			break;
-        }
-*/		
-		var el = keys[i].split(/\s/);
-
+	
 		transKeys[i] = {};
-		transKeys[i].protocode = prCode;
+		transKeys[i].prcode = prCode;
 		transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
 		transKeys[i].s = el[1 - coef];
 		
@@ -380,16 +454,16 @@ function engGetEnrollKeys(transKeys, p, h, m) {
     var prK2 = '232';
     var prO1 = '251';
 	
-	var prCode = transKeys[0].protocode; // get protocol key from first element;
-	var numFlag = prCode.charAt(0);
+	var prCode = transKeys[0].prcode; // get protocol key from first element;
+	var prCode0Ch = prCode.charAt(0);
 	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
-	var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+	var coef = (prCode0Ch == '0') ? 1 : 0; // if protocol have record numbers;
 	
-	prK1K2 = numFlag + prK1K2 + dbFlag;
-	prG2O2 = numFlag + prG2O2 + dbFlag;
-	prK1G1 = numFlag + prK1G1 + dbFlag;
-	prK2 = numFlag + prK2 + dbFlag;
-	prO1 = numFlag + prO1 + dbFlag;
+	prK1K2 = prCode0Ch + prK1K2 + dbFlag;
+	prG2O2 = prCode0Ch + prG2O2 + dbFlag;
+	prK1G1 = prCode0Ch + prK1G1 + dbFlag;
+	prK2 = prCode0Ch + prK2 + dbFlag;
+	prO1 = prCode0Ch + prO1 + dbFlag;
 	
     for (var i = 0; i < enrollKeys.length; i++) {
 		var n = enrollKeys[i].n
@@ -399,7 +473,7 @@ function engGetEnrollKeys(transKeys, p, h, m) {
 		var n3 = n + 3;
 		var n4 = n + 4;
 		
-        switch (enrollKeys[0].protocode) {
+        switch (enrollKeys[0].prcode) {
         case prK1K2:
             var k2 = enrollKeys[i].k2; //
             enrollKeys[i].g1 = engGetKey(n2, enrollKeys[i].s, k2, m, h); //
@@ -445,64 +519,7 @@ function engGetEnrollKeys(transKeys, p, h, m) {
     return enrollKeys;
 }
 
-function engIsRawTransKeys(rawKeys) {
-	if (rawKeys == '' || typeof rawKeys === 'undefined' || typeof rawKeys === 'null' || typeof rawKeys === 'NaN') return false;
-	if (rawKeys.replace(/\s/g, '') !== engGetOnlyHex(rawKeys.replace(/\s/g, ''))) return false;
-	
-    var line = rawKeys.replace(/^\s+|\s+$/, '').split(/\n/);
-	var prLine = line.splice(line.length - 1, 1); //get protocol line;
-	prLine = prLine[0].replace(/^\s+|\s+$/, '').split(/\s/); //split protocol line by spaces;
-	var prCode = prLine[prLine.length - 1]; //get protocol code;
-	var prCtrl = prLine[0]; //get protocol crc-code
-	var tkCtrl = engGetHash(line.join('').replace(/\s/g, ''), 's22').substring(0, 4);
 
-	if (prCtrl !== tkCtrl) return false;
-
-	if (prCode.charAt(prCode.length - 1) == '0' && prLine.length == 3) {
-		true;
-	} else if (prCode.charAt(prCode.length - 1) !== '0' && prLine.length == 2) {
-		true;
-	} else {
-		return false;
-	}
-	
-	// check length of all keys;
-	var pattern, j;
-	
-	if (prCode.charAt(0) == '0') {
-		pattern = line[0].split(/\s/)[0].length; // pattern is first key length
-		j = 0;
-	} else if (prCode.charAt(0) == '1') {
-		pattern = prLine[1].length; // pattern is dbname length
-		j = 1;
-	} else {
-		return false; //if protocol code 1st char is not 1 or 0
-	}
-
-	var keysQ; 
-	var l = prCode.length;
-	var ch = prCode.charAt(0);
-
-	if (l == 4 || l == 5) { //checks match of a protocol code and quantity of transkeys elements;
-		keysQ = (ch == '0') ? 2 : 3;
-	} else if (l == 6 || l == 7) {
-		keysQ = (ch == '0') ? 3 : 4;
-	} else {
-		return false;
-	}
-	
-	for (var i = 0; i < line.length; i++) {
-		var el = line[i].split(/\s/);
-		var l = el.length;
-		
-		if (l !== keysQ) return false;
-		for (; j < l; j++) {
-			if (el[j].length !== pattern) return false;
-		}
-	}	
-
-	return true;
-}
 
 function engGetMergedTokensList(hashList, rawList, hash) {
 	// returns merged names from both lists transkeys and tokens;
@@ -543,4 +560,8 @@ function engGetHashedTokensList(list) {
     }
 	
     return r;
+}
+
+function engIsNumber(num) {
+    return !/[^0-9]/.test(num)
 }

@@ -56,9 +56,8 @@ function docInit() {
     });
     $('#hasqd_led').html(picGry);
     $('button').button();
-    $('#tokens_data_pre').hide();
+    $('#token_data_td').hide();
 	$('#send_blocking_textarea').hide();
-	
     $('#send_type_checkbox').click(function () {
 		var jqObj0 = $('#send_simple_textarea');
 		var jqObj1 = $('#send_blocking_textarea');
@@ -70,7 +69,6 @@ function docInit() {
 		jqObj0.val('');
 		jqObj1.val('');		
     });	
-	
     $('#show_hide_checkbox').click(function () {
         if (this.checked) {
             $('.password').attr('type', 'text');
@@ -78,7 +76,6 @@ function docInit() {
             $('.password').attr('type', 'password');
         }
     });
-	
     $('#from_datepicker_input').datepicker({
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
@@ -92,7 +89,6 @@ function docInit() {
             $('#to_datepicker_input').datepicker('option', 'minDate', selectedDate);
         }
     });
-
     $('#to_datepicker_input').datepicker({
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
@@ -108,13 +104,14 @@ function docInit() {
     });
 
     widSetDefaultDb(glRequiredDbHash);
-    window.onerror = engDoNothing();
+	
     var ping = function () {
         engSendPing(5000)
     }
 
     glPingTimerId = setTimeout(ping, 5000);
-
+    window.onerror = engDoNothing();
+	glLastRec = widGetLastRec();
 }
 
 function docMain() {

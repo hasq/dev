@@ -1,15 +1,15 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
-function engGetTokenInfo(data, rawS, s) {
-	var response = engGetResponse(data);
+function engGetTokenInfo(data, r, s) {
+	var response = engGetResp(data);
 	
 	var item = {};
-    item.rawS = rawS;
+    item.r = r;
     item.s = s;
     item.avail = false;
 	item.unavail = false;
 	
-	if (response.message === 'OK') {
-        var lr = engGetResponseLast(data);
+	if (response.msg === 'OK') {
+        var lr = engGetRespLast(data);
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
@@ -18,24 +18,24 @@ function engGetTokenInfo(data, rawS, s) {
 		
         switch (engGetTokensStatus(lr, nr)) {
         case 1:
-            item.status = 'OK';
+            item.st = 'OK';
 			item.avail = true;
             break;
         case 2:
-            item.status = 'TKN_SNDNG';
+            item.st = 'TKN_SNDNG';
 			item.unavail = true;
             break;
         case 3:
-            item.status = 'TKN_RCVNG';
+            item.st = 'TKN_RCVNG';
 			item.unavail = true;
             break;
         default:
-            item.status = 'WRONG_PWD';
+            item.st = 'WRONG_PWD';
 			item.unavail = true;
             break;
         }
     } else {
-		item.status = 'IDX_NODN';
+		item.st = 'IDX_NODN';
 		item.unavail = true;
 		item.n = -1;	
 		item.d = '';		
@@ -55,11 +55,11 @@ function engGetVTL(list, item) {
 		
     var n = list.items.length;
     list.items[n] = {};
-    list.items[n].rawS = item.rawS;
+    list.items[n].r = item.r;
     list.items[n].s = item.s;
 	list.items[n].n = item.n;
     list.items[n].d = item.d;
-	list.items[n].status = item.status;
+	list.items[n].st = item.st;
 	
     if (item.avail === true) list.avail = true;
 	if (item.unavail === true) list.unavail = true;
@@ -93,7 +93,7 @@ function engRunCL(commandsList, cbFunc) {
         }
 
         var progress = 100 * (commandsList.idx + 1) / commandsList.items.length;
-        var r = engGetResponse(ajxData).message;
+        var r = engGetResp(ajxData).msg;
 
         if (r == 'OK' || r == 'IDX_NODN') {
             cbFunc(ajxData, commandsList.idx, progress);

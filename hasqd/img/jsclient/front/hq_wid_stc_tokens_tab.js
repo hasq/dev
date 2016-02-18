@@ -167,11 +167,12 @@ function widGetHTMLTokensVerifyTab() {
     r += '</table">\n';
     r += '<table width="100%">\n';
     r += '<tr>\n';
-    r += '<td width="100%" colspan="2">\n<div class="verify-table" id="tokens_verify_table_div">\n';
-    r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
-    r += '<tr><th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th></tr>\n';
-    r += '</table>\n';
-    r += '</div>\n';
+	r += '<td width="100%" colspan="2">\n';
+		r += '<pre id="tokens_verify_table_pre" class="hidden-pre">\n';
+		r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
+			r += '<tr><th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th></tr>\n';
+		r += '</table>\n';
+		r += '</pre>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';

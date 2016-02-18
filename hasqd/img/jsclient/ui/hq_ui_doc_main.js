@@ -274,7 +274,7 @@ function doc_init() {
 	$('#hasqd_led').html(picGry);
 
 	$('#server_host').html('' + location.host);
-
+	$('#tokens_verify_table_pre').hide();
 	setTimeout(widRefreshButtonClick, 2000);
 
 	widAnimateProgbar();

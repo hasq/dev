@@ -1,49 +1,70 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetResponseInfoId(data) {
-    return engGetResponse(data);
+function engGetRespInfoId(data) {
+    // returns response header
+    var err = {};
+    var infoId = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+	var lines = infoId.split(/\n/);
+
+    if (lines.length < 5) {
+        err.msg = 'ERROR';
+        err.cnt = 'NO_OUTPUT';
+		return err;
+    } 
+    
+	return infoId;
 }
 
-function engGetResponseInfoSys(data) {
-    return engGetResponse(data);
+function engGetRespInfoSys(data) {
+    var err = {};
+    var infoSys = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+	var lines = infoSys.split(/\n/);
+
+    if (lines.length < 5) {
+        err.msg = 'ERROR';
+        err.cnt = 'NO_OUTPUT';
+		return err;
+    } 
+    
+	return infoSys;
 }
 
-function engGetResponseInfoFam(data) {
-    var r = {};
-    r.list = [];
-    r.message = 'OK';
-    r.content = '';
+function engGetRespRange(data) {
+    var err = {};
+    var range = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
 
-    var response = engGetResponse(data);
+    if (range.length == 0) {
+        err.msg = 'ERROR';
+        err.cnt = range;
+		return err;
+    } 
+    
+	return range;
+}
 
-    if (response.message != 'OK') {
-        return response;
-    }
+function engGetRespInfoFam(data) {
+    var err = {};
+    list = [];
 
-    var rawFamData = response.content;
-    var lines = rawFamData.split(/\n/);
 
-    if (lines.length <= 1) {
-        r.message = 'OK';
-        r.content = 'NO_FAMILY';
-        return r;
-    }
+    var infoFam = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+	if (infoFam.length == 0) return list;
+    
+	var lines = rawFamData.split(/\n/);
 
     for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        var parts = line.split(/\s/);
-        if (parts.length != 5) {
-            break;
-        }
+        var parts = lines[i].split(/\s/);
+        if (parts.length != 5) break;
 
-        r.list[i] = {};
-        r.list[i].name = parts[0];
-        r.list[i].link = parts[1];
-        r.list[i].neighbor = (parts[2] == 'N');
-        r.list[i].alive = (parts[3] == 'A');
-        r.list[i].unlock = (parts[4] == 'U');
+        list[i] = {};
+        list[i].name = parts[0];
+        list[i].link = parts[1];
+        list[i].neighbor = (parts[2] == 'N');
+        list[i].alive = (parts[3] == 'A');
+        list[i].unlock = (parts[4] == 'U');
     }
-    return r;
+	
+    return list;
 }
 
 function engGetOnlyNumber(data) {
@@ -54,16 +75,12 @@ function engIsNull(data) {
     return (data === null) ? true : false;
 }
 
-function engIsNumber(data) {
-    return !/[^0-9]/.test(data)
-}
-
 function engIsRawTokens(data, hash) {
     var n = data;
-    n = n.replace(/^\s+/, '').replace(/\s+$/, ''); // remove all space-like symbols from the start and end of the string
+    n = n.replace(/^\s+|\s+$/g, ''); // remove all space-like symbols from the start and end of the string
     n = n.split(/\s/);
     for (var i = 0; i < n.length; i++) {
-        n[i] = n[i].replace(/^\s+/, '').replace(/\s+$/, '');
+        n[i] = n[i].replace(/^\s+|\s+$/g, '');
         if ((n[i].length == 0) || (n[i] === undefined) || (n[i] === null)) {
             true;
         } else if (n[i].charAt(0) == '[' && n[i].charAt(n[i].length - 1) == ']' && n[i].length > 2) {
@@ -87,14 +104,14 @@ function engGetOrderedTokens(tok) {
     tok.sort(engSortByProperties('s'));
 
     for (var i = 0; i < tok.length - 1; i++) {
-        if (tok[i].s == tok[i + 1].s && tok[i].rawS == tok[i + 1].rawS) {
+        if (tok[i].s == tok[i + 1].s && tok[i].r == tok[i + 1].r) {
             tok.splice(i + 1, 1);
             i--;
-        } else if (tok[i].s == tok[i + 1].s && tok[i].rawS != tok[i + 1].rawS && tok[i].rawS == '') {
-            tok[i].rawS = tok[i + 1].rawS;
+        } else if (tok[i].s == tok[i + 1].s && tok[i].r != tok[i + 1].r && tok[i].r == '') {
+            tok[i].r = tok[i + 1].r;
             tok.splice(i + 1, 1);
             i--;
-        } else if (tok[i].s == tok[i + 1].s && tok[i].rawS != tok[i + 1].rawS && tok[i + 1].rawS == '') {
+        } else if (tok[i].s == tok[i + 1].s && tok[i].r != tok[i + 1].r && tok[i + 1].r == '') {
             tok.splice(i + 1, 1);
             i--;
         }
@@ -105,22 +122,22 @@ function engGetOrderedTokens(tok) {
 function engGetTokens(rawTok, hash) {
 	// returns parsed tokens list with names and hashes;
     var tok = [];
-    rawTok = rawTok.replace(/^\s+|\s+$/, '').split(/\s/);; // remove all space-like symbols from the start and end of the string
+    rawTok = rawTok.replace(/^\s+|\s+$/g, '').split(/\s/);; // remove all space-like symbols from the start and end of the string
 
     for (var i = 0; i < rawTok.length; i++) {
-        rawTok[i] = rawTok[i].replace(/^\s+|\s+$/, '');
+        rawTok[i] = rawTok[i].replace(/^\s+|\s+$/g, '');
         if ((rawTok[i].length == 0) || (rawTok[i] === undefined) || (rawTok[i] === null)) {
             rawTok.splice(i, 1);
             i--;
         } else if (rawTok[i].charAt(0) == '[' && rawTok[i].charAt(rawTok[i].length - 1) == ']' && rawTok[i].length > 2) {
             var l = tok.length;
             tok[l] = {};
-            tok[l].rawS = rawTok[i].slice(1, -1);
-            tok[l].s = engGetHash(tok[l].rawS, hash);
+            tok[l].r = rawTok[i].slice(1, -1);
+            tok[l].s = engGetHash(tok[l].r, hash);
         } else if (engIsHash(rawTok[i], hash)) {
             var l = tok.length;
             tok[l] = {};
-            tok[l].rawS = '';
+            tok[l].r = '';
             tok[l].s = rawTok[i];
         }
     }
@@ -133,7 +150,7 @@ function engGetRawTokensList(data) {
     var r = [];
 
     for (var i = 0; i < data.length; i++) {
-        r[i] = (data[i].rawS != '') ? data[i].rawS : data[i].s;
+        r[i] = (data[i].r != '') ? data[i].r : data[i].s;
     }
 
     return r;
@@ -180,7 +197,7 @@ function engGetTransKeys(rawKeys) {
 		var el = keys[i].split(/\s/);
 
 		transKeys[i] = {};
-		transKeys[i].protocode = prCode;
+		transKeys[i].prcode = prCode;
 		transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
 		transKeys[i].s = el[1 - coef];
 		
@@ -229,7 +246,7 @@ function engGetEnrollKeys(transKeys, p, h, m) {
     var prK2 = '232';
     var prO1 = '251';
 	
-	var prCode = transKeys[0].protocode; // get protocol key from first element;
+	var prCode = transKeys[0].prcode; // get protocol key from first element;
 	var numFlag = prCode.charAt(0);
 	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
 	var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
@@ -248,7 +265,7 @@ function engGetEnrollKeys(transKeys, p, h, m) {
 		var n3 = n + 3;
 		var n4 = n + 4;
 		
-        switch (enrollKeys[0].protocode) {
+        switch (enrollKeys[0].prcode) {
         case prK1K2:
             var k2 = enrollKeys[i].k2; //
             enrollKeys[i].g1 = engGetKey(n2, enrollKeys[i].s, k2, m, h); //

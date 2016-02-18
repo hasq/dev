@@ -23,7 +23,7 @@ function widGetHTMLHref(x) {
 
 function widGetHTMLBody(tabs){
     var r = '';
-    r += '<table width="100%" border="0" nowrap>\n';
+    r += '<table width="100%" id="#body_table" border="0" nowrap>\n';
 
     r += '<tr>\n';
     r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
@@ -105,16 +105,14 @@ function widGetHTMLFamilyTable(data) {
     r += '<table border="1" style="font-family:monospace;">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
-    var contentData = data.content;
-
-    if (contentData != 'NO_FAMILY') {
-        for (var i = 0; i < contentData.list.length; i++) {
+    if (data != 'NO_FAMILY') {
+        for (var i = 0; i < data.list.length; i++) {
             r += '<tr>\n';
-			r += widGetHTMLTd(contentData.list[i].name);
-            r += widGetHTMLTd(widGetHTMLHref(contentData.list[i].link));
-            r += widGetHTMLTd(contentData.list[i].neighbor ? 'Yes' : 'No');
-            r += widGetHTMLTd(contentData.list[i].alive ? 'Yes' : 'No');
-            r += widGetHTMLTd(contentData.list[i].unlock ? 'No' : 'Yes');
+			r += widGetHTMLTd(data.list[i].name);
+            r += widGetHTMLTd(widGetHTMLHref(data.list[i].link));
+            r += widGetHTMLTd(data.list[i].neighbor ? 'Yes' : 'No');
+            r += widGetHTMLTd(data.list[i].alive ? 'Yes' : 'No');
+            r += widGetHTMLTd(data.list[i].unlock ? 'No' : 'Yes');
 			r += '</tr>\n';
         }
     }

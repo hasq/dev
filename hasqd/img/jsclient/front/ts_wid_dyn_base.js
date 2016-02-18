@@ -47,7 +47,25 @@ function widAnimateProgbar() {
     $('#hasqd_led').html(picGry);
 }
 
-
+function widGetLastRec(text) {
+	lr = {};
+	lr.r = '';
+	lr.s = '';
+	lr.n = -1;
+	lr.k = '';
+	lr.g = '';
+	lr.o = '';
+	lr.d = '';
+	lr.st = '';
+	
+	if (arguments.length > 0 ) {
+		lr.r = text;
+		lr.s = widGetToken(text, glCurrentDB.hash);
+		lr.st = 'IDX_NODN';		
+	}
+	
+	return lr;
+}
 function widButtonClick(obj) {
     // Shared button click function
     var obj = $(obj);
@@ -63,14 +81,14 @@ function widCompleteEvent(text) {
     // Completes actions and enables UI
     widDisableInitialDataUI(false);
     widDisableTabsUI(false);
-    if (arguments.length == 0) text = '&nbsp'
+    if (arguments.length == 0) text = '&nbsp';
 	return widShowLog(text);
 }
 
 function widSetDefaultDb(dbHash) {
     // Searching for database and save it in variable.
     var cb = function (d) {
-        var db = engGetResponseInfoDb(d);
+        var db = engGetRespInfoDb(d);
 
         if (db.length > 0) {
             for (var i = 0; i < db.length; i++) {
@@ -137,32 +155,28 @@ function widShowToken() {
     var jqTokHash = $('#token_text_textarea');
     var tok = jqTokHash.val();
 
-    if (tok.length == 0) {
-        jqTokText.empty();
-        return;
-    }
+    if (tok.length == 0) return jqTokText.empty();
 
     jqTokText.html(widGetToken(tok, glCurrentDB.hash));
 }
 
 function widShowData(data) {
     // Shows tokens data field if it length greater then zero.
-    var jqData = $('#tokens_data_pre');
+    var jqData = $('#token_data_pre');
+	var jqDataTd = jqData.closest('table').closest('td');
 	
     if (arguments.length === 0) {
-        jqData.hide();
+        jqDataTd.hide();
         jqData.empty();
     } else if (String(data).length > 0) {
-		var jqBody = $('#body_table');
-		var maxHeight = ($(window).height() - jqBody.outerHeight())/3;
-		
-		jqData.outerWidth(jqData.closest('table').innerWidth()-4);
-		jqData.css('max-height',  maxHeight + 'px');
+		var maxHeight = (($(window).height() - $('body').height()) > 200) ? ($(window).height() - $('body').height())/2 : 100;
 
-        jqData.show();
+		jqData.outerWidth(jqDataTd.closest('table').innerWidth()-4);
+		jqData.css('max-height',  maxHeight + 'px');
+        jqDataTd.show();
         jqData.html(data);
     } else {
-        jqData.hide();
+        jqDataTd.hide();
         jqData.empty();
     }
 }
@@ -204,12 +218,11 @@ function widIsTokenText() {
 	return ($('#token_text_textarea').val().length > 0);
 }
 
-function widGetToken(d, h) {
+function widGetToken(data, hash) {
     //It returns hash of raw tokens value
-    if (engIsHash(d, h))
-        return d;
+    if (engIsHash(data, hash)) return data;
 
-    return engGetHash(d, h)
+    return engGetHash(data, hash)
 }
 
 function widGetTokenStatus(lr, nr) {
@@ -265,8 +278,6 @@ function widGetPwdGuessTime(pwd) {
 
 function widTokenTextOninput(id) {
     // Events when tokens value changed.
-	glLastRec = {};
-    
 	clearTimeout(glTimerId);
     widShowLog(); //clear log
     widShowData(); //clear and hide data field
@@ -277,25 +288,27 @@ function widTokenTextOninput(id) {
 
     var jqTokText = $('#token_text_textarea');
     var tokText = jqTokText.val();
-
+	
 	var cb = function (data) {
-		var resp = engGetResponse(data);
+		var resp = engGetResp(data);
 		widShowTokRequestRes();
-		if (resp.message === 'ERROR') return widShowData(resp.message + ':\n' + resp.content);
+		if (resp.msg === 'ERROR') return widShowData(resp.msg + ':\n' + data);
 		
-		if (resp.message === 'IDX_NODN') {
+		if (resp.msg === 'IDX_NODN') {
 			widShowTokRequestRes(false);
-			glLastRec.status = resp.message;
+			glLastRec = widGetLastRec(tokText);
+			glLastRec.st = resp.msg;
 		} else {
-			var lr = engGetResponseLast(data);
+			var lr = engGetRespLast(data);
+			if (lr.msg === 'ERROR') return widShowData(resp.msg + ':\n' + data);
 			var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 			glLastRec = lr;
-			glLastRec.rawS = jqTokText.val();
-			glLastRec.status = widGetTokenStatus(lr, nr);
+			glLastRec.r = jqTokText.val();
+			glLastRec.st = widGetTokenStatus(lr, nr);
 			widShowTokRequestRes(true);
 			
 			if (glPassword.length > 0) {
-				widShowPwdMatch(glLastRec.status);
+				widShowPwdMatch(glLastRec.st);
 				widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 			}
 			widShowData(engGetOutputDataValue(glLastRec.d));
@@ -303,10 +316,11 @@ function widTokenTextOninput(id) {
 	}
 	
     if (tokText.length > 0) {
-        var tok = widGetToken(tokText, glCurrentDB.hash);
-        var cmd = 'last' + ' ' + glCurrentDB.name + ' ' + tok;
+		glLastRec = widGetLastRec(widGetToken(tokText, glCurrentDB.hash));
+        var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + glLastRec.s;
         engSendDeferredRequest(cmd, 1000, cb);
     } else {
+		glLastRec = widGetLastRec();
         widShowTokRequestRes();
 		widShowPwdMatch();
     }
@@ -319,18 +333,19 @@ function widPasswordOninput(jqPwd) {
     glPassword = jqPwd.val();
 
     if (jqPwd.val().length == 0) {
+		glLastRec.st = 'WRONG_PWD';
         widShowPwdMatch();
         widShowPwdGuessTime();
 		jqPwd.attr('type', 'password');
 		return;
     }	
 	    
-	if (glLastRec.status == 'IDX_NODN' || typeof glLastRec.status == 'undefined' ) {
+	if (glLastRec.st == 'IDX_NODN' || glLastRec.st == '' ) {
         widShowPwdMatch();
     } else {
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-		glLastRec.status = widGetTokenStatus(glLastRec, nr);		
-		widShowPwdMatch(glLastRec.status);
+		glLastRec.st = widGetTokenStatus(glLastRec, nr);		
+		widShowPwdMatch(glLastRec.st);
 	}
 	
     widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
@@ -348,25 +363,23 @@ function widPasswordOncontextmenu(jqObj) {
 
 function widCreateButtonClick() {
     // Creates a new token record
-    var jqTokText = $('#token_text_textarea');
     var jqPwd = $('#password_input');
-    var tok = engGetHash(jqTokText.val(), glCurrentDB.hash);
-	
-	if (glLastRec.status === 'OK') return widCompleteEvent('Token already exists.');
-	if (! widIsTokenText()) return widCompleteEvent('Empty token text!');
-	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 
-    var nr = engGetNewRecord(0, tok, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = (jqTokText.val().length <= 160) ? '[' + jqTokText.val() + ']' : '';
-    var cmd = 'z * ' + glCurrentDB.name + ' 0 ' + tok + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
+	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (glLastRec.st !== 'IDX_NODN') return widCompleteEvent('Token already exists.');
+	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
+	
+    var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr_d = (glLastRec.r.length <= 160) ? '[' + glLastRec.r + ']' : '';
+    var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
     var cb = function (d) {
-        var r = engGetResponse(d);
-        if (r.message == 'OK') {
-            widCompleteEvent(r.message);
+        var r = engGetResp(d);
+        if (r.msg == 'OK') {
+            widCompleteEvent(r.msg);
             widTokenTextOninput();
         } else {
-            widCompleteEvent(r.message + ':\n' + r.content);
+            widCompleteEvent(r.msg + ':\n' + r.cnt);
         }
     }
 
@@ -378,107 +391,28 @@ function widCreateButtonClick() {
     widShowLog('Creating token...');
 }
 
-function widSendButtonClick() {
-	var jqTokText = $('#token_text_textarea');
-    var jqPwd = $('#password_input');
-	var jqArea0 = $('#send_simple_textarea');
-	var jqArea1 = $('#send_blocking_textarea');
-	var jqSendType = $('#send_type_checkbox');
-	
-	if (! widIsTokenText()) return widCompleteEvent('Empty token text!');
-	if (glLastRec.status === 'IDX_NODN') return widCompleteEvent('First create a token!');
-	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
-	if (glLastRec.status !== 'OK' && glLastRec.status !== 'TKN_SNDNG' ) return widCompleteEvent('Unavailable token!');
-
-	textArea.empty(jqArea0);
-	textArea.empty(jqArea1);
-	
-	var tok = engGetHash(jqTokText.val(), glCurrentDB.hash);
-	var k1, k2, g1, tkLine, rawTransKeys, prLine;
-	
-	if (! jqSendType.prop('checked')) { // Simple Send
-		if (glLastRec.status !== 'OK') return widCompleteEvent('Unavailable token!');
-		
-		k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-		k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-		tkLine = glLastRec.n + ' ' + glLastRec.s + ' ' + k1 + ' ' + k2 + '\n';
-		
-		textArea.val(jqArea0, tkLine);
-
-		rawTransKeys = jqArea0.val().replace(/\s/g, '');
-		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231320';
-	
-		textArea.val(jqArea0, prLine);
-		
-		return widCompleteEvent('OK');
-	} 
-	
-	if (glLastRec.status == 'OK') {  // Blocking Send
-        k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
-        tkLine = glLastRec.n + ' ' + glLastRec.s + ' ' + k1 + ' ' + g1 + '\n';
-		textArea.val(jqArea0, tkLine);
-		
-		rawTransKeys = jqArea0.val().replace(/\s/g, '');
-		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231410';
-		
-		textArea.val(jqArea0, prLine);
-		
-        tkLine = glLastRec.n + ' ' + glLastRec.s + ' ' + k2 + '\n';
-		
-		textArea.val(jqArea1, tkLine);
-		
-		rawTransKeys = jqArea1.val().replace(/\s/g, '');
-		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12320';
-		
-		textArea.val(jqArea1, prLine);
-	
-		return widCompleteEvent('OK');
-	}
-	
-	if (glLastRec.status == 'TKN_SNDNG') {
-		textArea.empty(jqArea0);
-		
-        k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        tkLine = glLastRec.n - 1 + ' ' + glLastRec.s + ' ' + k2 + '\n';
-		
-		textArea.val(jqArea1, tkLine);
-		
-		rawTransKeys = jqArea1.val().replace(/\s/g, '');
-		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12320';
-		
-		textArea.val(jqArea1, prLine);
-		
-		return widCompleteEvent('OK');
-	}
-	
-}
-
 function widSetDataButtonClick() {
     // Adds a new record with a specified data
-    var jqTokText = $('#token_text_textarea');
     var jqPwd = $('#password_input');
     var jqData = $('#setdata_textarea');
 
-	if (! widIsTokenText()) return widCompleteEvent('Empty token text!');
-	if (glLastRec.status === 'IDX_NODN') return widCompleteEvent('First create a token!');	
+	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (glLastRec.st === 'IDX_NODN') return widCompleteEvent('First create a token!');	
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
-	if (glLastRec.status !== 'OK') return widCompleteEvent('Incorrect master key!');	
+	if (glLastRec.st !== 'OK') return widCompleteEvent('Incorrect master key!');	
 	
-    var tok = engGetHash(jqTokText.val(), glCurrentDB.hash);
-    var nr = engGetNewRecord(glLastRec.n + 1, tok, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = engGetInputDataValue(jqData.val());
-    var cmd = 'add * ' + glCurrentDB.name + ' ' + nr.n + ' ' + tok + ' ' + nr.k + ' ' + nr.g + ' ' + nr.o + ' ' + nr_d;
+    var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
     var cb = function (d) {
-        var r = engGetResponse(d);
-        if (r.message == 'OK') {
-            widCompleteEvent(r.message);
+        var r = engGetResp(d);
+        if (r.msg == 'OK') {
             widTokenTextOninput();
-        } else {
-            widCompleteEvent(r.message + ':\n' + r.content);
-        }
+			return widCompleteEvent(r.msg);
+        } 
+        
+		return widCompleteEvent(r.cnt);
     }
 
     var f = function () {
@@ -489,6 +423,82 @@ function widSetDataButtonClick() {
     setTimeout(f);
 }
 
+
+function widShowKeysButtonClick() {
+    var jqPwd = $('#password_input');
+	var jqArea0 = $('#send_simple_textarea');
+	var jqArea1 = $('#send_blocking_textarea');
+	var jqSendType = $('#send_type_checkbox');
+	
+	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (glLastRec.st === 'IDX_NODN') return widCompleteEvent('First create a token!');
+	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
+	if (glLastRec.st !== 'OK' && glLastRec.st !== 'TKN_SNDNG' ) return widCompleteEvent('Unavailable token!');
+
+	textArea.empty(jqArea0);
+	textArea.empty(jqArea1);
+	
+	var k1, k2, g1, tkLine, rawTransKeys, prLine;
+	
+	if (! jqSendType.prop('checked')) { // Simple Send
+		if (glLastRec.st !== 'OK') return widCompleteEvent('Unavailable token!');
+		
+		k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+		k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+		tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
+		
+		textArea.val(jqArea0, tkLine);
+
+		rawTransKeys = jqArea0.val().replace(/\s/g, '');
+		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
+	
+		textArea.val(jqArea0, prLine);
+		
+		return widCompleteEvent('OK');
+	} 
+	
+	if (glLastRec.st == 'OK') {  // Blocking Send
+        k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+        k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+        g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
+        tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
+		textArea.val(jqArea0, tkLine);
+		
+		rawTransKeys = jqArea0.val().replace(/\s/g, '');
+		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
+		
+		textArea.val(jqArea0, prLine);
+		
+        tkLine = glLastRec.s + '\u0020' + k2;
+		
+		textArea.val(jqArea1, tkLine);
+		
+		rawTransKeys = jqArea1.val().replace(/\s/g, '');
+		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
+		
+		textArea.val(jqArea1, prLine);
+	
+		return widCompleteEvent('OK');
+	}
+	
+	if (glLastRec.st == 'TKN_SNDNG') {
+		textArea.empty(jqArea0);
+		
+        k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+        tkLine = glLastRec.n - 1 + '\u0020' + glLastRec.s + '\u0020' + k2 + '\u0020';
+		
+		textArea.val(jqArea1, tkLine);
+		
+		rawTransKeys = jqArea1.val().replace(/\s/g, '');
+		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
+		
+		textArea.val(jqArea1, prLine);
+		
+		return widCompleteEvent('OK');
+	}
+	
+}
+
 function widReceiveButtonClick() {
 	var rawTransKeys = $('#receive_textarea').val();
 	var jqTok = $('#token_text_textarea');
@@ -496,10 +506,13 @@ function widReceiveButtonClick() {
 	if (!engIsRawTransKeys(rawTransKeys)) return widCompleteEvent('Bad TransKeys!');
 	if (!widIsPassword)	return widCompleteEvent('Empty password!');
 	
-    var tokText = [glLastRec.rawS]
+    var tokText = [glLastRec.r]
+	console.log(tokText);	
 	var transKeys = engGetTransKeys(rawTransKeys);
+	console.log(transKeys);
 	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
-	tok = tok[0].replace(/\[|\]/g, '');
+	console.log(tok);
+	//tok = tok[0].replace(/\[|\]/g, '');
 
 	textArea.empty(jqTok, tok);
 	
