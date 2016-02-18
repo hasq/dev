@@ -603,22 +603,18 @@ function widTransKeysUpdate(jqObj, transKeys, func){
 	widCleanCL();
 	var prCode = transKeys[0].prcode;
 	
-	if (prCode.charAt(0) === '0' && glVTL.items.length === 0) {
+	if (prCode.charAt(0) === '2' && glVTL.items.length === 0) {
         var extCb = function () {
 			widTransKeysUpdate(jqObj, transKeys, func);
         }
-		widMakeVTL(jqObj, transKeys, extCb);
-		return;
-	} else if (prCode.charAt(0) === '0' && glVTL.items.length > 0) {
+		return widMakeVTL(jqObj, transKeys, extCb);
+	} else if (prCode.charAt(0) === '2' && glVTL.items.length > 0) {
 		if (transKeys.length !== glVTL.items.length) return widDone(jqObj, 'TransKeys update error!');
 		transKeys = engGetUpdatedTransKeys(transKeys, glVTL);
 	}
 	
 	var enrollKeys = engGetEnrollKeys(transKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
-	var	f = function () {
-		func(jqObj, enrollKeys);
-	}
-	
+	var	f = function () { func(jqObj, enrollKeys); }
 	setTimeout(f);
 }
 
@@ -676,8 +672,8 @@ function widSimpleSend(jqObj, list) {
     }
 
     var rawTransKeys = widGetTextareaObj(jqObj).val().replace(/\s/g, '');
-    var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231320';
-	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0231320';
+    var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123132';
+	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23132';
 	
     textArea.val(jqObj, prLine);
 	led.show(jqObj, true);
@@ -809,8 +805,8 @@ function widSimpleRequest(jqObj, list) {
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
-		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
-		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0242520';
+		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
+		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24252';
 		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
@@ -863,10 +859,8 @@ function widSimpleAccept(jqObj, enrollKeys) {
         var k2 = enrollKeys[i].k2;
         var g2 = enrollKeys[i].g2;
         var o2 = enrollKeys[i].o2;
-
         var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-
         var idx = (i == 0) ? 0 : i * 2;
 
         glCL.items[idx] = {};
@@ -941,8 +935,8 @@ function widBlockingSendStep1(jqObj, list) {
     }
 
     var rawTransKeys = widGetTextareaObj(jqObj).val().replace(/\s/g, '');
-    var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231410';
-	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0231410';
+    var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123141';
+	//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23141';
 	
     textArea.val(jqObj, prLine);
 	led.show(jqObj, true);
@@ -1008,8 +1002,8 @@ function widBlockingSendStep2(jqObj, list) {
 		flag = false;
 	} else {
 		var rawTransKeys = widGetTextareaObj(jqObj).val().replace(/\s/g, '');
-		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12320';
-		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '02320';
+		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1232';
+		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '232';
 		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
@@ -1188,8 +1182,8 @@ function widBlockingRequestStep1(jqObj, list) {
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
-		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '12510';
-		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '02510';
+		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
+		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
 		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;
@@ -1259,8 +1253,8 @@ function widBlockingRequestStep2(jqObj, data) {
 		flag = false;
 	} else {
 		var rawTransKeys = $(widGetTextareaObj(jqObj)).val().replace(/\s/g, '');
-		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1242520';
-		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '0242520';
+		var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
+		//var prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24252';
 		textArea.val(jqObj, prLine);
 		msg = 'OK';
 		flag = true;

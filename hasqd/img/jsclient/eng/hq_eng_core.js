@@ -57,7 +57,7 @@ function engGetVTL(list, item) {
     list.items[n] = {};
     list.items[n].r = item.r;
     list.items[n].s = item.s;
-	list.items[n].n = item.n;
+	list.items[n].n = +item.n;
     list.items[n].d = item.d;
 	list.items[n].st = item.st;
 	
@@ -102,6 +102,7 @@ function engRunCL(commandsList, cbFunc) {
         } else {
 			// in case of an error repeating command 100 times then continue next command;
             commandsList.counter--;
+			console.log('ajxErr:' + ajxData);
             if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
 				commandsList.idx++; // upd
 				commandsList.counter = 100; // upd

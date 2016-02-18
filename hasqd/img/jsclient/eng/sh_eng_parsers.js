@@ -241,9 +241,9 @@ function engGetTokensStatus(lr, nr) {
 	return 0; 
 }
 
-function engGetOutputDataValue(d) {
+function engGetOutputDataValue(data) {
     // returns parsed data for displaying
-    var r = d;
+    var r = data;
     if (r !== undefined && r.length > 0) {
         var lf = '\u000a'; //unicode line-feed
 
@@ -265,9 +265,9 @@ function engGetOutputDataValue(d) {
 
 }
 
-function engGetInputDataValue(d) {
+function engGetInputDataValue(data) {
     // returns parsed data for add into record
-    var r = d.replace(/^\s+|\s+$/g, '');
+    var r = data.replace(/^\s+|\s+$/g, '');
     if (r !== undefined && r.length > 0) {
         for (var i = 0; i < r.length; i++) {
             if (r[i] === '\u0020' && r[i + 1] === '\u0020') {
@@ -289,8 +289,7 @@ function engIsRawTransKeys(keys) {
 	
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split 
 	var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
-
-	var isRecNum, keysQty;
+	var isRecNum, keysLen;
 	var prCode0Ch = prCode.charAt(0);
 	var prCodeLen = prCode.length;
 	// checks protocol code for record number exists into the transkeys;
@@ -303,9 +302,9 @@ function engIsRawTransKeys(keys) {
 	}
 	//checks match of a protocol code and quantity of transkeys elements;
 	if (prCodeLen == 3 || prCodeLen == 4) { 		
-		keysQty = (isRecNum) ? 3 : 2;
+		keysLen = (isRecNum) ? 3 : 2;
 	} else if (prCodeLen == 5 || prCodeLen == 6) {
-		keysQty = (isRecNum) ? 4 : 3;
+		keysLen = (isRecNum) ? 4 : 3;
 	} else {
 		return false;
 	}
@@ -323,13 +322,11 @@ function engIsRawTransKeys(keys) {
 		tmpl = keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
 		tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);	//calculates CRC	
 	}
-
-	if (prCRC !== tkCRC) return false; //checks CRC
-
-	if (keys.length < keysQty) return false;
 	
+	if (prCRC !== tkCRC) return false; //checks CRC
+	if (keys.length < keysLen) return false;
 	if (tmpl.length == 0) {
-		var mod = keys.length % keysQty;
+		var mod = keys.length % keysLen;
 		if ( mod == 1 ) {
 			tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
 		} else if (mod == 0) {
@@ -338,21 +335,19 @@ function engIsRawTransKeys(keys) {
 			return false;
 		}
 	}
-	
-	if (isRecNum) {
-		for (var i = 0; i < keys.length; i = i + keysQty) {
+	if (isRecNum) { //removes all records number, leaves only keys;
+		for (var i = 0; i < keys.length; i = i + keysLen) {
 			if (!engIsNumber(keys[i])) return false;
 			keys.splice(i, 1);
 			i--;
 		}
 	}
-
 	
 	tmpl = (tmpl > 0) ? tmpl : keys[0].length;
 	for (var i = 0; i < keys.length; i++) {		
-		if (tmpl !== keys[i].length) return false;
+		if (tmpl !== keys[i].length) return false; //checks coincidence of the keys length and template lenght
 	}	
-	
+
 	return true;
 }
 
@@ -363,24 +358,16 @@ function engGetTransKeys(keys) {
     var prK2 = '232';
     var prO1 = '251'; 
 
-	var transKeys = [];
- 
 	keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split 
 	var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
-	
- 	var isRecNum, keysQty;
+ 	var isRecNum, keysLen;
 	var prCode0Ch = prCode.charAt(0);
 	var prCodeLen = prCode.length;
 	// checks protocol code for record number exists into the transkeys;
-	if (prCode0Ch == '1') {
-		isRecNum = true;
-	} else if (prCode0Ch == '2') {
-		isRecNum = false;
-	} 
+	var isRecNum = (prCode0Ch == '1') ? true : false;
 	//checks match of a protocol code and quantity of transkeys elements;
-	if (prCodeLen == 3 || prCodeLen == 4) keysQty = (isRecNum) ? 3 : 2;
-	if (prCodeLen == 5 || prCodeLen == 6) keysQty = (isRecNum) ? 4 : 3;
-
+	if (prCodeLen == 3 || prCodeLen == 4) keysLen = (isRecNum) ? 3 : 2;
+	if (prCodeLen == 5 || prCodeLen == 6) keysLen = (isRecNum) ? 4 : 3;
 	//if exists CRC remove it
 	//if exists db name it will be used like lengths template
 	if (keys[keys.length - 1].length == 4) {
@@ -390,11 +377,7 @@ function engGetTransKeys(keys) {
 		keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
 	}
 
-
-	var mod = keys.length % keysQty;
-	if (mod == 1) keys.splice(keys.length - 1, 1)[0].length;
-	
-	var coef = (prCode0Ch == '1') ? 1 : 2; // if protocol have record numbers;
+	if ( keys.length % keysLen == 1) keys.splice(keys.length - 1, 1)[0].length;
 	
 	prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
 	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
@@ -402,39 +385,40 @@ function engGetTransKeys(keys) {
 	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 	prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
 	
-    for (var i = 0; i < keys.length; i++) {
-	
+	var keysQty = keys.length / keysLen;
+	var transKeys = [];
+    for (var i = 0; i < keysQty; i++) {
+		
+		var tmpKeys = keys.splice(0, keysLen);
 		transKeys[i] = {};
 		transKeys[i].prcode = prCode;
-		transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
-		transKeys[i].s = el[1 - coef];
-		
+		transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[i] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
+		transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[i];
 		switch (prCode) {
 		case (prK1K2):
-			transKeys[i].k1 = el[2 - coef];
-			transKeys[i].k2 = el[3 - coef];
+			transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+			transKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 			break;
 		case (prG2O2):
-			transKeys[i].g2 = el[2 - coef];
-			transKeys[i].o2 = el[3 - coef];
+			transKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+			transKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 			break;
 		case (prK1G1):
-			transKeys[i].k1 = el[2 - coef];
-			transKeys[i].g1 = el[3 - coef];
+			transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+			transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 			break;
 		case (prK2):
-			transKeys[i].k2 = el[2 - coef];
+			transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 			break;
 		case (prO1):
-			transKeys[i].o1 = el[2 - coef];
+			transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 			break;
 		default:
 			break;
-		}			
+		}
     }
-
     transKeys.sort(engSortByProperties('s'));
-
+	
 	// if presents keys for same token;
     for (var i = 0; i < transKeys.length - 1; i++) {
         if (transKeys[i].s == transKeys[i + 1].s) {
@@ -442,7 +426,6 @@ function engGetTransKeys(keys) {
             i--;
         };
     }
-
     return transKeys;
 }
 
@@ -454,16 +437,15 @@ function engGetEnrollKeys(transKeys, p, h, m) {
     var prK2 = '232';
     var prO1 = '251';
 	
-	var prCode = transKeys[0].prcode; // get protocol key from first element;
+	var prCode = enrollKeys[0].prcode; // get protocol key from first element;
 	var prCode0Ch = prCode.charAt(0);
-	var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
-	var coef = (prCode0Ch == '0') ? 1 : 0; // if protocol have record numbers;
+	var isRecNum = (prCode0Ch == '1') ? true : false; // if protocol have record numbers;
 	
-	prK1K2 = prCode0Ch + prK1K2 + dbFlag;
-	prG2O2 = prCode0Ch + prG2O2 + dbFlag;
-	prK1G1 = prCode0Ch + prK1G1 + dbFlag;
-	prK2 = prCode0Ch + prK2 + dbFlag;
-	prO1 = prCode0Ch + prO1 + dbFlag;
+	prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
+	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
+	prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
+	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+	prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
 	
     for (var i = 0; i < enrollKeys.length; i++) {
 		var n = enrollKeys[i].n

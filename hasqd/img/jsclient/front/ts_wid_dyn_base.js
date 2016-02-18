@@ -469,7 +469,7 @@ function widShowKeysButtonClick() {
 		
 		textArea.val(jqArea0, prLine);
 		
-        tkLine = glLastRec.s + '\u0020' + k2;
+        tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
 		
 		textArea.val(jqArea1, tkLine);
 		
@@ -507,17 +507,13 @@ function widReceiveButtonClick() {
 	if (!widIsPassword)	return widCompleteEvent('Empty password!');
 	
     var tokText = [glLastRec.r]
-	console.log(tokText);	
+
 	var transKeys = engGetTransKeys(rawTransKeys);
-	console.log(transKeys);
 	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
-	console.log(tok);
-	//tok = tok[0].replace(/\[|\]/g, '');
+	tok = tok[0].replace(/\[|\]/g, '');
 
 	textArea.empty(jqTok, tok);
-	
-	widCompleteEvent('!!!!!!!11111');
-	
+widCompleteEvent('11111');	
 	//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
 }
 
