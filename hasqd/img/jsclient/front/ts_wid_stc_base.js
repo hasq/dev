@@ -219,16 +219,13 @@ function widGetHTMLReceiveTab() {
 
 function widGetHTMLSearchTab() {
 	var r = '';
-	r += '<table width="60%" border="1">\n';
+	r += '<table align="center" border="0">\n';
 		r += '<tr>\n';
-			r += '<td>\n';
-				r += 'From' + '&nbsp';
 			r += '<td>\n';	
-				r += '<input id="from_datepicker_input" type="text">\n';
-			r += '<td>\n'
-				r += '&nbsp' + 'to' + '&nbsp';
-			r += '<td>\n';
-				r += '<input id="to_datepicker_input" type="text">\n';
+				r += '<label for="from_date">From:</label>';
+				r += '<input id="from_datepicker_input" name="from_date">\n';
+				r += '<label for="to_date">to:</label>';
+				r += '<input id="to_datepicker_input" name="to_date">\n';
 			r += '<td>\n';
 				r += '<button id="search_button" onclick="widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
 		r += '</tr>\n';		
