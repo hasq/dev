@@ -11,13 +11,13 @@ HasqdLed.prototype.fail = function () {
 
 HasqdLed.prototype.inc = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGryGrn);
+        $('#hasqd_led').html(picGreenGray);
     }, 500);
 };
 
 HasqdLed.prototype.dec = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGry);
+        $('#hasqd_led').html(picGray);
     }, 500);
 };
 
@@ -43,29 +43,6 @@ TextArea.prototype.emptyall = function () {
 
 var textArea = new TextArea();
 
-function widAnimateProgbar() {
-    $('#hasqd_led').html(picGry);
-}
-
-function widGetLastRec(text) {
-	lr = {};
-	lr.r = '';
-	lr.s = '';
-	lr.n = -1;
-	lr.k = '';
-	lr.g = '';
-	lr.o = '';
-	lr.d = '';
-	lr.st = '';
-	
-	if (arguments.length > 0 ) {
-		lr.r = text;
-		lr.s = widGetToken(text, glCurrentDB.hash);
-		lr.st = 'IDX_NODN';		
-	}
-	
-	return lr;
-}
 function widButtonClick(obj) {
     // Shared button click function
     var obj = $(obj);
@@ -149,13 +126,11 @@ function widShowPwdGuessTime(d) {
     }
 }
 
-function widShowToken() {
+function widShowToken(tok) {
     // Shows hashed value of token (if the value is not a default hash)
     var jqTokText = $('#token_hash_td');
-    var jqTokHash = $('#token_text_textarea');
-    var tok = jqTokHash.val();
-
-    if (tok.length == 0) return jqTokText.empty();
+	if (arguments.length == 0 || typeof tok == 'undefined') return jqTokText.empty();
+    if (tok.length == 0) return widShowToken();
 
     jqTokText.html(widGetToken(tok, glCurrentDB.hash));
 }
@@ -191,7 +166,7 @@ function widShowLog(text) {
     }
 }
 
-function widShowTokRequestRes(d) {
+function widShowTokenMsg(d) {
     // Shows message or image about tokens existense.
     var obj = $('#token_pic_td');
 
@@ -199,7 +174,7 @@ function widShowTokRequestRes(d) {
         obj.empty();
         widShowLog();
     } else if (d === undefined) {
-        obj.html(picL12);
+        obj.html(picLoading);
         widShowLog('Searching for token...');
     } else if (d === true) {
         widShowLog('Token exists.');
@@ -226,6 +201,7 @@ function widGetToken(data, hash) {
 }
 
 function widGetTokenStatus(lr, nr) {
+	if (lr.msg === 'IDX_NODN') return lr.msg;
 	switch (engGetTokensStatus(lr, nr)) {
     case 1:
         return 'OK';
@@ -244,15 +220,15 @@ function widGetPwdPic(status) {
 	r.title = status;
     switch (status) {
     case 'OK':
-		r.pic = picGrn;
+		r.pic = picGreen;
 		break;
     case 'TKN_SNDNG':
-        r.pic = picYlwGrn;
+        r.pic = picYellowGreen;
 		break;
     case 'TKN_RCVNG':
-        r.pic = picGrnYlw;
+        r.pic = picGreenYellow;
 		break;
-    default:
+    default: //'WRONG_PWD'
         r.pic = picRed;
 		break;
     }
@@ -275,97 +251,70 @@ function widGetPwdGuessTime(pwd) {
     return 'Guess time: ' + zxcvbn(pwd).crack_times_display.offline_slow_hashing_1e4_per_second;
 }
 
-
-function widTokenTextOninput(id) {
+function widTokenTextOninput() {
     // Events when tokens value changed.
 	clearTimeout(glTimerId);
     widShowLog(); //clear log
     widShowData(); //clear and hide data field
 	widShowPwdMatch();
-	widShowToken();
-    widShowTokRequestRes(undefined); // show animation
+	widShowTokenMsg();
 	textArea.emptyall();
-
+	glLastRec={};
+	
     var jqTokText = $('#token_text_textarea');
-    var tokText = jqTokText.val();
+	var tok = widGetToken(jqTokText.val(), glCurrentDB.hash);
+	widShowToken(tok);	
 	
 	var cb = function (data) {
 		var resp = engGetResp(data);
-		widShowTokRequestRes();
-		if (resp.msg === 'ERROR') return widShowData(resp.msg + ':\n' + data);
+		widShowTokenMsg();
+		if (resp.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
 		
 		if (resp.msg === 'IDX_NODN') {
-			widShowTokRequestRes(false);
-			glLastRec = widGetLastRec(tokText);
-			glLastRec.st = resp.msg;
+			glLastRec.st = 'IDX_NODN';
+			widShowTokenMsg(false);
 		} else {
-			var lr = engGetRespLast(data);
-			if (lr.msg === 'ERROR') return widShowData(resp.msg + ':\n' + data);
-			var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-			glLastRec = lr;
-			glLastRec.r = jqTokText.val();
-			glLastRec.st = widGetTokenStatus(lr, nr);
-			widShowTokRequestRes(true);
-			
-			if (glPassword.length > 0) {
-				widShowPwdMatch(glLastRec.st);
-				widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
-			}
+			glLastRec = engGetRespLast(data);
+			//if (lr.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
+			var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+			glLastRec.st = widGetTokenStatus(glLastRec, nr);
+			widShowTokenMsg(true);
 			widShowData(engGetOutputDataValue(glLastRec.d));
 		}
+		
+		glLastRec.r = tok;
+		widPasswordOninput(); //updates info about last records and password matching
 	}
 	
-    if (tokText.length > 0) {
-		glLastRec = widGetLastRec(widGetToken(tokText, glCurrentDB.hash));
-        var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + glLastRec.s;
+    if (tok.length > 0) {
+		widShowTokenMsg(undefined); // show animation
+        var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
         engSendDeferredRequest(cmd, 1000, cb);
-    } else {
-		glLastRec = widGetLastRec();
-        widShowTokRequestRes();
-		widShowPwdMatch();
     }
 }
 
 function widPasswordOninput(jqPwd) {
     // Events when passwords value changed.
-	widShowLog();
-	//textArea.emptyall();
-    glPassword = jqPwd.val();
-
-    if (jqPwd.val().length == 0) {
-		glLastRec.st = 'WRONG_PWD';
-        widShowPwdMatch();
-        widShowPwdGuessTime();
-		jqPwd.attr('type', 'password');
-		return;
-    }	
-	    
-	if (glLastRec.st == 'IDX_NODN' || glLastRec.st == '' ) {
-        widShowPwdMatch();
-    } else {
+	if (typeof jqPwd !== 'undefined') glPassword = jqPwd.val();
+	if (glPassword.length > 0) {
+		widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
+		if (typeof glLastRec.st === 'undefined') return;
+		if (glLastRec.st === 'IDX_NODN') return;
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-		glLastRec.st = widGetTokenStatus(glLastRec, nr);		
+		glLastRec.st = widGetTokenStatus(glLastRec, nr);
 		widShowPwdMatch(glLastRec.st);
+    } else {
+		widShowPwdMatch();
+		widShowPwdGuessTime();
+		if (glLastRec.st !== 'IDX_NODN') glLastRec.st = 'WRONG_PWD';
 	}
-	
-    widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
-
-}
-
-function widPasswordOncontextmenu(jqObj) {
-	if (jqObj.val().length > 0) {
-        (jqObj.attr('type') == 'text') ? jqObj.attr('type', 'password') : jqObj.attr('type', 'text');
-	} else {
-		jqObj.attr('type', 'password');
-	}
-	return false;
 }
 
 function widCreateButtonClick() {
     // Creates a new token record
     var jqPwd = $('#password_input');
 
-	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (typeof glLastRec.st === 'undefined') return widCompleteEvent('Empty token text!');
 	if (glLastRec.st !== 'IDX_NODN') return widCompleteEvent('Token already exists.');
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 	
@@ -373,13 +322,13 @@ function widCreateButtonClick() {
     var nr_d = (glLastRec.r.length <= 160) ? '[' + glLastRec.r + ']' : '';
     var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
-    var cb = function (d) {
-        var r = engGetResp(d);
+    var cb = function (data) {
+        var r = engGetResp(data);
         if (r.msg == 'OK') {
             widCompleteEvent(r.msg);
-            widTokenTextOninput();
+            widTokenTextOninput(); //update token info after create;
         } else {
-            widCompleteEvent(r.msg + ':\n' + r.cnt);
+            widCompleteEvent(r.msg + ': ' + r.cnt);
         }
     }
 
@@ -396,10 +345,10 @@ function widSetDataButtonClick() {
     var jqPwd = $('#password_input');
     var jqData = $('#setdata_textarea');
 
-	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (typeof glLastRec.st === 'undefined') return widCompleteEvent('Empty token text!');
 	if (glLastRec.st === 'IDX_NODN') return widCompleteEvent('First create a token!');	
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
-	if (glLastRec.st !== 'OK') return widCompleteEvent('Incorrect master key!');	
+	if (glLastRec.st !== 'OK') return widCompleteEvent('Incorrect master key - token is unavailable!');	
 	
     var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = engGetInputDataValue(jqData.val());
@@ -412,7 +361,7 @@ function widSetDataButtonClick() {
 			return widCompleteEvent(r.msg);
         } 
         
-		return widCompleteEvent(r.cnt);
+		return widCompleteEvent(r.msg + ': ' + r.cnt);
     }
 
     var f = function () {
@@ -430,7 +379,7 @@ function widShowKeysButtonClick() {
 	var jqArea1 = $('#send_blocking_textarea');
 	var jqSendType = $('#send_type_checkbox');
 	
-	if (glLastRec.st === '') return widCompleteEvent('Empty token text!');
+	if (typeof glLastRec.st === 'undefined') return widCompleteEvent('Empty token text!');
 	if (glLastRec.st === 'IDX_NODN') return widCompleteEvent('First create a token!');
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 	if (glLastRec.st !== 'OK' && glLastRec.st !== 'TKN_SNDNG' ) return widCompleteEvent('Unavailable token!');
@@ -457,7 +406,7 @@ function widShowKeysButtonClick() {
 		return widCompleteEvent('OK');
 	} 
 	
-	if (glLastRec.st == 'OK') {  // Blocking Send
+	if (glLastRec.st === 'OK') {  // Blocking Send
         k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
@@ -481,7 +430,7 @@ function widShowKeysButtonClick() {
 		return widCompleteEvent('OK');
 	}
 	
-	if (glLastRec.st == 'TKN_SNDNG') {
+	if (glLastRec.st === 'TKN_SNDNG') {
 		textArea.empty(jqArea0);
 		
         k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -513,6 +462,8 @@ function widReceiveButtonClick() {
 	tok = tok[0].replace(/\[|\]/g, '');
 
 	textArea.empty(jqTok, tok);
+	widTokenTextOninput();
+	
 widCompleteEvent('11111');	
 	//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
 }

@@ -8,14 +8,16 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var picYlw = '<img src="img/ylw_pnt.gif">';
-var picRed = '<img src="img/red_pnt.gif">';
-var picGrnYlw = '<img src="img/grn_ylw_pnt.gif">';
-var picGrn = '<img src="img/grn_pnt.gif">';
-var picYlwGrn = '<img src="img/ylw_grn_pnt.gif">';
-var picGry = '<img src="img/gry_pnt.gif">';
-var picGryGrn = '<img src="img/gry_grn_pnt.gif">';
-var picL12 = '<img src="img/loading12.gif">';
+var picYellow = '<img src="img/point_yellow.gif">';
+var picRed = '<img src="img/point_red.gif">';
+var picGreenYellow = '<img src="img/point_green_yellow.gif">';
+var picGreen = '<img src="img/point_green.gif">';
+var picYellowGreen = '<img src="img/point_yellow_green.gif">';
+var picGray = '<img src="img/point_gray.gif">';
+var picGreenGray = '<img src="img/point_green_gray.gif">';
+var picLoading = '<img src="img/loading.gif">';
+var picPwdShown = '<img src="img/pwd_shown.png">';
+var picPwdHidden = '<img src="img/pwd_hidden.png">';
 
 function newImage(arg) {
     if (document.images) {
@@ -49,12 +51,26 @@ function docMainInit() {
 }
 
 function docInit() {
+	
     $('#tabs_div').tabs({
         activate : function (event, ui) {
             widShowLog();
         }
     });
-    $('#hasqd_led').html(picGry);
+	
+    $('#hasqd_led').html(picGray);
+	$('#password_eye').html(picPwdShown);
+	$('#password_eye').click( function () {
+		var jqObj = $('#password_input');
+		if (jqObj.attr('type') == 'text') {
+			jqObj.attr('type', 'password')
+			$(this).html(picPwdShown);
+		} else {
+			jqObj.attr('type', 'text');
+			$(this).html(picPwdHidden);
+		}
+	});
+	
     $('button').button();
     $('#token_data_td').hide();
 	$('#send_blocking_textarea').hide();
@@ -111,7 +127,6 @@ function docInit() {
 
     glPingTimerId = setTimeout(ping, 5000);
     window.onerror = engDoNothing();
-	glLastRec = widGetLastRec();
 }
 
 function docMain() {

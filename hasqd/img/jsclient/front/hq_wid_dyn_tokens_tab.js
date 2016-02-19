@@ -23,10 +23,10 @@ function Led() {
 Led.prototype.show = function (jqObj, flag, title) {
 		var jqLed = widGetLedObj(jqObj);
 		if (flag === null) {
-			jqLed.html(picL12);
+			jqLed.html(picLoading);
 			jqLed.prop('title', 'Please wait...');
 		} else if (flag) {
-			jqLed.html(picGrn);
+			jqLed.html(picGreen);
 			(title === undefined) ? jqLed.prop('title', 'OK') : jqLed.prop('title', title);
 		} else {
 			jqLed.html(picRed);
@@ -431,16 +431,16 @@ function widShowVerifyTableRow(rec, pic) {
 function widGetVerifyTableRowLed(state) {
     switch (state) {
     case 'WRONG_PWD':
-        return picYlw;
+        return picYellow;
         break;
     case 'TKN_SNDNG':
-        return picYlwGrn;
+        return picYellowGreen;
         break;
     case 'TKN_RCVNG':
-        return picGrnYlw;
+        return picGreenYellow;
         break;
     case 'OK':
-        return picGrn;
+        return picGreen;
         break;
     default: // 'IDX_NODN':
         return picRed;
@@ -600,6 +600,7 @@ function widUpdateTokens(jqObj, data) {
 }
 
 function widTransKeysUpdate(jqObj, transKeys, func){
+//if transkeys not contains numbers of records , makes 'last' and update transkeys records numbers;
 	widCleanCL();
 	var prCode = transKeys[0].prcode;
 	

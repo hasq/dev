@@ -50,6 +50,7 @@ createclient: index.html
 #	shared
 	cp eng/sh_*.js slice/home/eng/
 	cp img/*.gif slice/home/img/
+	cp img/*.png slice/home/img/
 	cp lib/jquery-ui/jquery-ui.min.js slice/home/lib/
 	cp lib/jquery-ui/jquery-ui.min.css slice/home/lib/
 	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
@@ -78,3 +79,5 @@ checkin:
 	cp -f slice/home/eng/*.js eng/
 	cp -f slice/home/ui/*.js ui/
 	cp -f slice/home/*.html ./
+#	
+	chmod 0777 -R slice/home

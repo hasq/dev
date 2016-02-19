@@ -105,7 +105,7 @@
     }
 
     td [class='token-hash'] {
-      font: 120% monospace;
+      font: 130% monospace;
       font-style: italic;
       background: #DEE7F4; 
     }
@@ -120,7 +120,28 @@
       /*resize: none;*/
     } 
     
+    *:focus {outline: none;}
 
+    .initial_data input, .initial_data textarea { 
+      border:1px solid #aaa;
+      box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+      border-radius:2px;
+    }
+    
+    .initial_data input:focus, .initial_data textarea:focus {
+      background: #fff; 
+      border:1px solid #555; 
+      box-shadow: 0 0 3px #aaa; 
+    }
+    
+    .initial_data input:required:valid, .initial_data textarea:required:valid {
+      box-shadow: 0 0 5px #5cd053;
+      border-color: #28921f;
+    }
+    .initial_data input:focus:invalid, .initial_data textarea:focus:invalid {
+      box-shadow: 0 0 5px #d45252;
+      border-color: #b03535
+    }     
   </style>
 
   <script type="text/javascript" src="lib/jquery.js"></script>
@@ -141,7 +162,7 @@
 
 </head>
 
-<body onLoad="preloadImages('img/gry_grn_pnt.gif','img/red_pnt.gif','img/gry_pnt.gif')">
+<body onLoad="preloadImages('img/point_green_gray.gif.gif','img/point_red.gif','img/point_gray.gif')">
   <script>
     docMainWrite();
     docMainInit();

@@ -39,46 +39,50 @@ function widGetHTMLBody(tabs) {
 
 function widGetHTMLSpan(span_id) {
     var r = '';
-    r += '<span id="' + span_id + '"></span>\n';
+    r += '<span valign="center" align="center" id="' + span_id + '"></span>\n';
     return r;
 }
 
 function widGetHTMLInitialData() {
 	var r = '';
 	
+	r += '<form class="initial_data" name="initial_data_form">';
+	
 	r += '<table id="initial_data_table" width="100%" border="0" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
-			r += '<td align="center" style="font-size:15px">';
+			r += '<td align="center" style="font-size:16px">';
 				r += '<b>Token text<b>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td align="left" nowrap>\n';
-					r += '<textarea oninput="widTokenTextOninput();" id="token_text_textarea" type="text" rows="1" placeholder="Enter token text"></textarea>\n';
+					r += '<textarea oninput="widTokenTextOninput();" id="token_text_textarea" type="text" rows="1" placeholder="Enter token text" required></textarea>\n';
 					r += '</tr>';
 		r += '<tr>';
 			r += '<td align="right" class="token-hash">';
 				r += '<table>';
 					r += '<tr>';
-						r += '<td width="100" align="right" class="token-hash" nowrap>\n';
+						r += '<td width="95" align="right" nowrap>\n';
 							r += '<i>Token hash:&nbsp</i>\n';
-						r += '<td width="270" id="token_hash_td" colspan="2" class="token-hash" align="left" style="font-style: italic;" nowrap>';
-						r += '<td width="14" id="token_pic_td" align="right" valign="center" class="token-hash">\n';
+						r += '<td width="270" id="token_hash_td" colspan="2" align="left" style="font-style: italic;" nowrap>';
+						r += '<td width="14" id="token_pic_td" align="right" valign="center">\n';
 					r += '</tr>';
 				r += '</table>';
 		r += '</tr>';
 		r += '<tr>';
-			r += '<td align="center" style="font-size:15px">';
+			r += '<td align="center" style="font-size:16px">';
 				r += '<b>Master key<b>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td align="center">';
 				r += '<table border="0">';
 					r += '<tr>';
+						r += '<td width="14" valign="center" align="center">' + widGetHTMLSpan('password_eye');
 						r += '<td width="250">\n';
-							r += '<input oninput="widPasswordOninput($(this));" oncontextmenu="return widPasswordOncontextmenu($(this));" id="password_input" type="password" class="password" placeholder="Enter token password"/>\n';
-						r += '<td width="14" id="password_pic_td">\n';
+							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
+						r += '<td width="14" valign="center" id="password_pic_td">\n';
 					r += '</tr>';
 					r += '<tr>';
+						r += '<td>&nbsp';
 						r += '<td id="password_zxcvbn_td" align="right" style="font-style: italic">\n';
 						r += '<td>&nbsp';
 					r += '</tr>';					
@@ -93,7 +97,7 @@ function widGetHTMLInitialData() {
 			r += '<td align="center" id="token_data_td">';
 				r += '<table>';
 					r += '<tr>';
-						r += '<td align="center" style="font-size:15px">';
+						r += '<td align="center" style="font-size:16px">';
 							r += '<b>Token data</b>';
 					r += '</tr>';
 					r += '<tr>';
@@ -104,7 +108,7 @@ function widGetHTMLInitialData() {
 		r += '</tr>';		
 	r += '</table>';
 
-
+	r += '</form>';
 
 	
 	return r;

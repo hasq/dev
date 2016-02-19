@@ -10,19 +10,19 @@ HasqdLed.prototype.fail = function () {
 };
 
 HasqdLed.prototype.inc = function () {
-    setTimeout(function () { $('#hasqd_led').html(picGryGrn) }, 500);
+    setTimeout(function () { $('#hasqd_led').html(picGreenGray) }, 500);
 };
 
 HasqdLed.prototype.dec = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGry);
+        $('#hasqd_led').html(picGray);
     }, 500);
 };
 
 var hasqdLed = new HasqdLed();
 
 function widAnimateProgbar() {
-    $('#hasqd_led').html(picGry);
+    $('#hasqd_led').html(picGray);
 }
 
 function widShowBordersColor(obj, color) {
