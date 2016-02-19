@@ -37,16 +37,21 @@ function widGetHTMLBody(tabs) {
     return r;
 }
 
-function widGetHTMLSpan(span_id) {
-    var r = '';
-    r += '<span valign="center" align="center" id="' + span_id + '"></span>\n';
+function widGetHTMLSpan(span_id, func) {
+	var r = '';
+	if ( arguments.length > 1 ) {
+		r += '<span valign="center" align="center" id="' + span_id + '" onclick="' + func +'"></span>\n';
+	} else {
+		r += '<span valign="center" align="center" id="' + span_id + '"></span>\n';;
+	}
+
     return r;
 }
 
 function widGetHTMLInitialData() {
 	var r = '';
 	
-	r += '<form class="initial_data" name="initial_data_form">';
+	r += '<div class="initial-data-div">';
 	
 	r += '<table id="initial_data_table" width="100%" border="0" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
@@ -76,7 +81,7 @@ function widGetHTMLInitialData() {
 			r += '<td align="center">';
 				r += '<table border="0">';
 					r += '<tr>';
-						r += '<td width="14" valign="center" align="center">' + widGetHTMLSpan('password_eye');
+						r += '<td width="14" valign="center" align="center">' + widGetHTMLSpan('password_eye', 'widPasswordEyeClick($(this))');
 						r += '<td width="250">\n';
 							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
 						r += '<td width="14" valign="center" id="password_pic_td">\n';
@@ -102,13 +107,16 @@ function widGetHTMLInitialData() {
 					r += '</tr>';
 					r += '<tr>';
 						r += '<td>';
-							r += '<pre id="token_data_pre" class="hidden-pre"></pre>';
+							r += '<pre id="token_data_pre" class="hidden-data"></pre>';
 					r += '</tr>';		
 				r += '</table>';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td>';
 		r += '</tr>';		
 	r += '</table>';
 
-	r += '</form>';
+	r += '</div>';
 
 	
 	return r;
@@ -117,17 +125,17 @@ function widGetHTMLInitialData() {
 function widGetHTMLMainTabs(items) {
     var r = '';
 
-    r += '<div id="tabs_div">\n';
+    r += '<div id="tabs_div" class="tabs-div">\n';
     r += '\t<ul>\n';
 
     for (var i = 0; i < items.length; i++) {
-        r += '\t<li><a href="#tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
+        r += '\t<li><a href="#tabs_' + (i + 1) + '_div">' + items[i].title + '</a>\n';
 	}
 	
     r += '\t</ul>\n';
 
     for (var i = 0; i < items.length; i++) {
-        r += '\t<div id="tabs-' + (i + 1) + '_div">' + items[i].data + '</div>\n';
+        r += '\t<div id="tabs_' + (i + 1) + '_div">' + items[i].data + '</div>\n';
 	}
 	
     r += '</div>\n';
@@ -198,7 +206,7 @@ function widGetHTMLReceiveTab() {
 	r += '<table width="100%" border="0" >\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center">\n'
-				r += '<textarea wrap="on" rows="2" type="text" id="receive_textarea"></textarea>';
+				r += '<textarea wrap="on" rows="2" type="text" id="receive_textarea" required></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center">\n';
@@ -231,6 +239,6 @@ function widGetHTMLSearchTab() {
 
 function widGetHTMLLogArea() {
     var r = '';
-    r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
+    r += '<pre id="tokens_log_pre" class="log-area">&nbsp</pre>\n';
     return r;
 }

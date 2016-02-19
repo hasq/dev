@@ -16,77 +16,53 @@
     
     body {
       font: 75% "Trebuchet MS", sans-serif;
-      /*background: #DEE7F4;*/
-      margin: 50px;
-    }
-    
-    .monospace {
-      font: 120% monospace;
-    }    
-
-    #icons {
-      margin: 0;
-      padding: 0;
-    }
-
-    #icons li {
-      margin: 2px;
-      position: relative;
-      padding: 4px 0;
-      cursor: pointer;
-      float: left;
-      list-style: none;
-    }
-
-    #icons span.ui-icon {
-      float: left;
-      margin: 0 4px;
-    }
-
-    #tabs_div {
-        white-space: nowrap;
-        overflow: hidden;
-        text-align: center;
-    }
-    
-    #tabs_div ul li {
-        display: inline-block;
-        float: none;
-        vertical-align: bottom;
+      background: #FCFCFC;
+      margin: 30px;
     }
     
     #body_table {
       min-width: 600px;
-      man-width: 1920px;
-      width: 70%;
+      min-height: 300px;
+      width: 90%;
       margin: auto; 
     }
+    
+    *:focus {
+      outline: none;
+    }
 
-    .hidden-pre {
-        box-sizing: border-box;
-        border: 1px solid CornflowerBlue;
-        border-radius: 5px;
-        background: #F0F0F0;
-        white-space: pre;
-        overflow-x: auto;
-        overflow-y: auto;
-        font: 120% monospace;
-     }
-     
-     input[type='text'] {
-      box-sizing: border-box;
-      font-family: monospace;
-      width: 90%;
-      margin: 0px;
-      border: 1px solid #DDDDDD;
+    #tabs_div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+      background: #FCFCFC;
     }
     
-    input[class='password'] {
+    #tabs_div ul li {
+      display: inline-block;
+      float: none;
+      vertical-align: bottom;
+    }
+
+    .ui-tabs-active {
+      box-shadow: 0 0 2px 0 #aaa;
+      background: #FCFCFC;
+    }
+
+    .hidden-data {
       box-sizing: border-box;
-      font-family: monospace;
-      width: 100%;
-      margin: 0px;
-      border: 1px solid #DDDDDD;
+      white-space: pre;
+      overflow-x: auto;
+      overflow-y: auto;
+      border: 1px solid CornflowerBlue;
+      border-radius: 5px;
+      /*background: #F0F0F0;  */
+      box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
+      font: 120% monospace;
+    }
+    
+    .log-area {
+      font: 120% monospace;    
     }
     
     table {
@@ -104,42 +80,63 @@
       vertical-align: center;
     }
 
-    td [class='token-hash'] {
-      font: 130% monospace;
-      font-style: italic;
-      background: #DEE7F4; 
-    }
-    
-    textarea[type='text'] {
+    td[class='token-hash'] {
       box-sizing: border-box;
-      font-family: monospace;
-      width: 100%;
-      margin: 0px;
-      border: 1px solid #DDDDDD;
-      
-      /*resize: none;*/
-    } 
-    
-    *:focus {outline: none;}
+      font: 130% monospace;
+      border: 0px;
+      font-style: italic;
+      border-radius: 1px;
+      box-shadow: 0px 0px 0px #ccc, 0 5px 8px #eee inset;
+      width: 98%;
 
-    .initial_data input, .initial_data textarea { 
+    }
+      
+    textarea[type='text'] {
+      width: 100%;    
+      box-sizing: border-box;
+      font: 130% monospace;
+      margin: 0px;
       border:1px solid #aaa;
       box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
       border-radius:2px;
+    } 
+    
+    input[type='checkbox'] { 
+      box-sizing: border-box;
+      margin: 5px;    
+      border:1px solid #aaa;
+      box-shadow: 0px 0px 2px #ccc, 1px 1px 1px #eee inset;
+      border-radius:3px;
     }
     
-    .initial_data input:focus, .initial_data textarea:focus {
+    input[type='checkbox']:focus {
       background: #fff; 
       border:1px solid #555; 
-      box-shadow: 0 0 3px #aaa; 
+      box-shadow: 0 0 5px #aaa; 
+    }  
+    
+    input[type='text'], input[type='password'] { 
+      box-sizing: border-box;
+      font: 130% monospace;
+      width: 100%;
+      margin: 0px;    
+      border:1px solid #aaa;
+      box-shadow: 0px 0px 3px #ccc, 0 5px 7px #eee inset;
+      border-radius:2px;
+    }
+  
+    input[type='text']:focus, input[type='password']:focus, textarea:focus {
+      border:1px solid #555; 
+      box-shadow: 0 0 3px #aaa;
     }
     
-    .initial_data input:required:valid, .initial_data textarea:required:valid {
-      box-shadow: 0 0 5px #5cd053;
+    input:required:valid, textarea:required:valid {
+      box-shadow: 0 0 3px #5252d4;
       border-color: #28921f;
     }
-    .initial_data input:focus:invalid, .initial_data textarea:focus:invalid {
-      box-shadow: 0 0 5px #d45252;
+    
+    input:focus:invalid,  textarea:focus:invalid {
+      box-shadow: 0 0 3px #d45252;
       border-color: #b03535
     }     
   </style>

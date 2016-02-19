@@ -60,16 +60,7 @@ function docInit() {
 	
     $('#hasqd_led').html(picGray);
 	$('#password_eye').html(picPwdShown);
-	$('#password_eye').click( function () {
-		var jqObj = $('#password_input');
-		if (jqObj.attr('type') == 'text') {
-			jqObj.attr('type', 'password')
-			$(this).html(picPwdShown);
-		} else {
-			jqObj.attr('type', 'text');
-			$(this).html(picPwdHidden);
-		}
-	});
+	$('#password_eye').attr('title', 'Unmask password');	
 	
     $('button').button();
     $('#token_data_td').hide();

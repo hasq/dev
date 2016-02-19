@@ -306,7 +306,21 @@ function widPasswordOninput(jqPwd) {
     } else {
 		widShowPwdMatch();
 		widShowPwdGuessTime();
+		if (typeof glLastRec.st === 'undefined') return;
 		if (glLastRec.st !== 'IDX_NODN') glLastRec.st = 'WRONG_PWD';
+	}
+}
+
+function widPasswordEyeClick(jqEye){
+	var jqPwd = $('#password_input');
+	if (jqPwd.attr('type') == 'text') {
+		jqPwd.attr('type', 'password');
+		jqEye.html(picPwdShown);
+		jqEye.attr('title', 'Unmask password');
+	} else {
+		jqPwd.attr('type', 'text');
+		jqEye.html(picPwdHidden);
+		jqEye.attr('title', 'Mask password');
 	}
 }
 
