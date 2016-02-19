@@ -272,7 +272,6 @@ function widTokenTextOninput() {
 		
 		if (resp.msg === 'IDX_NODN') {
 			glLastRec.st = 'IDX_NODN';
-			glLastRec.r = jqTokText.val();
 			glLastRec.s = tok;
 			widShowTokenMsg(false);
 		} else {
@@ -284,7 +283,7 @@ function widTokenTextOninput() {
 			widShowData(engGetOutputDataValue(glLastRec.d));
 		}
 		
-		glLastRec.r = tok;
+		glLastRec.r = (jqTokText.val() !== tok) ? jqTokText.val() : '';
 		widPasswordOninput(); //updates info about last records and password matching
 	}
 	
@@ -335,7 +334,7 @@ function widCreateButtonClick() {
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 
     var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = (glLastRec.r.length <= 160) ? '[' + glLastRec.r + ']' : '';glLastRec.s
+    var nr_d = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
     var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
     var cb = function (data) {
