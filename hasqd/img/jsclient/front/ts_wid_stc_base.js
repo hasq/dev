@@ -60,12 +60,13 @@ function widGetHTMLInitialData() {
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td align="left" nowrap>\n';
-					r += '<textarea oninput="widTokenTextOninput();" id="token_text_textarea" type="text" rows="1" placeholder="Enter token text" required></textarea>\n';
+					r += '<textarea oninput="widTokenTextOninput();" id="token_text_textarea" type="text" rows="1" maxlength="65536" placeholder="Enter token text" required></textarea>\n';
 					r += '</tr>';
 		r += '<tr>';
 			r += '<td align="right" class="token-hash">';
 				r += '<table>';
 					r += '<tr>';
+					    r += '<td width="14" align="center" valign="center">' + widGetHTMLSpan('pic_reload', 'widTokenTextOninput()');
 						r += '<td width="95" align="right" nowrap>\n';
 							r += '<i>Token hash:&nbsp</i>\n';
 						r += '<td width="270" id="token_hash_td" colspan="2" align="left" style="font-style: italic;" nowrap>';
@@ -206,7 +207,7 @@ function widGetHTMLReceiveTab() {
 	r += '<table width="100%" border="0" >\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center">\n'
-				r += '<textarea wrap="on" rows="2" type="text" id="receive_textarea" required></textarea>';
+				r += '<textarea wrap="on" rows="2" type="text" id="receive_textarea" maxlength="65536" required></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center">\n';

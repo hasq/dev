@@ -313,6 +313,7 @@ function widPasswordOninput(jqPwd) {
 }
 
 function widPasswordEyeClick(jqEye){
+//shows/hides passwords	by click;
 	var jqPwd = $('#password_input');
 	if (jqPwd.attr('type') == 'text') {
 		jqPwd.attr('type', 'password');

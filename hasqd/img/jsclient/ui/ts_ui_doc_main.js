@@ -15,9 +15,10 @@ var picGreen = '<img src="img/point_green.gif">';
 var picYellowGreen = '<img src="img/point_yellow_green.gif">';
 var picGray = '<img src="img/point_gray.gif">';
 var picGreenGray = '<img src="img/point_green_gray.gif">';
-var picLoading = '<img src="img/loading.gif">';
 var picPwdShown = '<img src="img/pwd_shown.png">';
 var picPwdHidden = '<img src="img/pwd_hidden.png">';
+var picLoading = '<img src="img/loading.gif">';
+var picReload = '<img src="img/reload.gif">';
 
 function newImage(arg) {
     if (document.images) {
@@ -59,6 +60,7 @@ function docInit() {
     });
 	
     $('#hasqd_led').html(picGray);
+	$('#pic_reload').html(picReload);
 	$('#password_eye').html(picPwdShown);
 	$('#password_eye').attr('title', 'Unmask password');	
 	
