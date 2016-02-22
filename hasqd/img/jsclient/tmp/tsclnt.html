@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="us">
+
+<head>
+  <meta charset="utf-8"/>
+<!--   <meta name=viewport content="width=device-width, initial-scale=1"> -->
+  <link rel="stylesheet" type="text/css" href="tsclnt.css">
+  <title>Tokenswap</title>
+</head>
+
+<body>
+  <table id="main_table" border="0">
+    <tr>
+      <td class="title" colspan="2"/>
+        <table width="100%" border="0">
+          <tr>
+            <td/>
+              TOKENSWAP
+            <td width="50px"/>
+              <img  src="logo_300.png" width="50px" height="50px"/>
+          </tr>
+        </table>
+    </tr>
+    <tr>
+      <td class="menu" rowspan="2" width="110px" valign="top"/>
+        <table >
+          <tr>
+            <td/><button>Create</button>
+          </tr>
+          <tr>
+            <td/><button disabled>Give away</button>
+          </tr>
+          <tr>
+            <td/><button>Receive</button>
+          </tr>
+          <tr>
+            <td/><button>My tokens</button>
+          </tr>
+          <tr>
+            <td/><button>Update</button>
+          </tr>
+        </table>
+      <td class="initial-data" valign="top"/>
+         <table width="100%" border="0">
+           <tr>
+             <td align="center" style="font-size:16px">
+               <b>Token text<b>
+           </tr>
+           <tr>
+             <td align="left" nowrap>
+                 <textarea type="text" rows="1" maxlength="65536" placeholder="Enter token text" required></textarea>
+                 </tr>
+           <tr>
+             <td align="right" class="token-hash">
+               <table>
+                 <tr>
+                     <td width="14" align="center" valign="center">
+                   <td width="95" align="right" nowrap>
+                     <i>Token hash:&nbsp </i>
+                   <td width="270" colspan="2" align="left" style="font-style: italic;" nowrap>
+                   <td width="14" align="right" valign="center">
+                 </tr>
+               </table>
+           </tr>
+           <tr>
+             <td align="center" style="font-size:16px">
+               <b>Master key<b>
+           </tr>
+           <tr>
+             <td align="center">
+               <table border="0">
+                 <tr>
+                   <td width="14" valign="center" align="center">
+                   <td width="250">
+                     <input type="password" placeholder="Enter token master key" required/>
+                   <td width="14" valign="center" id="password_pic_td">
+                 </tr>
+                 <tr>
+                   <td>&nbsp
+                   <td id="password_zxcvbn_td" align="right" style="font-style: italic">
+                   <td>&nbsp
+                 </tr>					
+               </table>
+             </tr>       
+         </tr>
+       </table>
+      </tr> 
+      <tr>
+        <td/>
+          <table>
+            <tr>
+              <td/>
+                <textarea></textarea>
+            </tr>
+          </table>
+      </tr>
+ </table>      
+</body>
+</html>
