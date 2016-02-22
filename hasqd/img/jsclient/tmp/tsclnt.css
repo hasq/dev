@@ -7,11 +7,15 @@ BODY {
 	min-width: 600px;
 	min-height: 300px;
     background: #FCFCFC;
-    margin: 30px;
+    margin: 0px;
 }
 
 *:focus {
 	outline: none;
+}
+
+img {
+	vertical-align: center;	
 }
 
 .title {
@@ -86,37 +90,30 @@ BODY {
 	padding:0;
 }
 
-.initial-data textarea[type='text'] {
-  width: 100%;    
-  box-sizing: border-box;
-  font: 130% monospace;
-  margin: 0px;
-  border:1px solid #aaa;
-  box-shadow: 8px 8px 8px #696969, 0 0px 0px #eee inset;
-  border-radius:0px;
-} 
-
 .initial-data input[type='text'], input[type='password'] { 
-  box-sizing: border-box;
-  font: 130% monospace;
-  width: 100%;
-  margin: 0px;    
-  border: 1px solid #aaa;
-  box-shadow: 8px 8px 8px #696969, 0 0px 0px #eee inset;
-  border-radius:0px;
+	box-sizing: border-box;
+	font: 130% monospace;
+	width: 100%;
+	margin: 0px;    
+	border: 1px solid #aaa;
+	box-shadow: 8px 8px 8px #696969, 0 0px 0px #eee inset;
+	border-radius:0px;
 }
 
-.initial-data input[type='text']:focus, input[type='password']:focus, textarea:focus {
-  border:1px solid #555; 
-  box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #aaa;*/
+.initial-data input[type='text']:focus, input[type='password']:focus {
+	border:1px solid #555; 
+	box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #aaa;*/
 }
 
-input:required:valid, textarea:required:valid {
-  box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #5252d4;*/
-  border-color: #28921f;
+input:required:valid {
+	box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #5252d4;*/
+	border-color: #28921f;
 }
 
-.initial-data input:focus:invalid,  textarea:focus:invalid {
-  box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #d45252;*/
-  border-color: #b03535
-}     
+.initial-data input:focus:invalid {
+	box-shadow: 8px 8px 8px #696969, 0 0px 2px #eee inset; /*box-shadow: 0 0 3px #d45252;*/
+	border-color: #b03535
+}
+
+.token-hash {
+}

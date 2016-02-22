@@ -1,27 +1,27 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function HasqdLed() {
+function HasqLogo() {
     //this.counter = 0;
 }
 
-HasqdLed.prototype.fail = function () {
-    $('#hasqd_led').html(picRed);
-    widShowLog('Server connection failure!');
-};
-
-HasqdLed.prototype.inc = function () {
+HasqLogo.prototype.inc = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGreenGray);
+        $('#hasqd_logo').html(picLogoBlink);
     }, 500);
 };
 
-HasqdLed.prototype.dec = function () {
+HasqLogo.prototype.dec = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGray);
+        $('#hasqd_logo').html(picLogoBlue);
     }, 500);
 };
 
-var hasqdLed = new HasqdLed();
+HasqLogo.prototype.fail = function () {
+    $('#hasqd_logo').html(picLogoRed);
+    //widShowLog('Server connection failure!');
+};
+
+var hasqLogo = new HasqLogo();
 
 function TextArea() {}
 
@@ -81,7 +81,7 @@ function widSetDefaultDb(dbHash) {
         }
     }
 
-    ajxSendCommand('info db', cb, hasqdLed);
+    ajxSendCommand('info db', cb, hasqLogo);
 }
 
 function widShowDBError() {
@@ -349,7 +349,7 @@ function widCreateButtonClick() {
     }
 
     var f = function () {
-        ajxSendCommand(cmd, cb, hasqdLed);
+        ajxSendCommand(cmd, cb, hasqLogo);
     }
 
     setTimeout(f, 1000);
@@ -381,7 +381,7 @@ function widSetDataButtonClick() {
     }
 
     var f = function () {
-        ajxSendCommand(cmd, cb, hasqdLed)
+        ajxSendCommand(cmd, cb, hasqLogo)
     }
 
     widShowLog('Giving token data...');
@@ -474,17 +474,47 @@ function widReceiveButtonClick() {
     var tokText = [glLastRec.r]
 
 	var transKeys = engGetTransKeys(rawTransKeys);
+	console.log(transKeys);
 	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
 	tok = tok[0].replace(/\[|\]/g, '');
 
-	textArea.empty(jqTok, tok);
-	widTokenTextOninput();
+    var cb = function (data) {
+        var r = engGetResp(data);
+        if (r.msg !== 'OK') return widCompleteEvent(r.msg + ': ' + r.cnt);
+		var lr = engGetRespLast(data);
+		if (lr.msg === 'ERROR') return widCompleteEvent(lr.msg + ': ' + lr.cnt);
+		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+		lr.st = widGetTokenStatus(lr, nr);
+		if (lr.st === 'OK') return widCompleteEvent('Token already available!');
+		textArea.empty(jqTok, tok);
+		widSetTransKeys(transKeys);
+    }
+    
+	var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + transKeys[0].s;
 	
-widCompleteEvent('11111');	
-	//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
+    var f = function () {
+        ajxSendCommand(cmd, cb, hasqLogo);
+    }
+
+    setTimeout(f, 1000);
+    widShowLog('Receiving token...');
+		//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
 }
 
-
+function widSetTransKeys(keys){
+	keys = engGetEnrollKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+	switch (keys[0].prcode){
+		case '23132':
+			break;
+		case '23141':
+			break;
+		case '232':
+			break;
+		default:
+			return widCompleteEvent('Bad TransKeys!');
+	}
+	widCompleteEvent('OK');
+}
 
 
 function widSearchButtonClick() {

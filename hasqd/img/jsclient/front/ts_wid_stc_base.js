@@ -1,32 +1,40 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+function widGetHTMLSpan(span_id, func) {
+	var r = '';
+	if ( arguments.length > 1 ) {
+		r += '<span align="center" valign="middle" id="' + span_id + '" onclick="' + func +'"></span>\n';
+	} else {
+		r += '<span align="center" valign="middle" id="' + span_id + '"></span>\n';;
+	}
+
+    return r;
+}
+
 function widGetHTMLBody(tabs) {
 	var r = '';
-    r += '<table width="70%" id="body_table" border="0" nowrap>\n';
+    r += '<table width="100%" id="body_table" border="1" nowrap>\n';
 		r += '<tr>\n';
-			r += '<td align="center" nowrap>\n';
-				r += '<span style="font-size:40px">\n' + glClientTitle + '</span>\n'
-			r += '<td width="14px" align="right" valign="center" onclick="engSendPing(5000)">' + widGetHTMLSpan('hasqd_led') + '\n';
-		r += '</tr>\n';
-			r += '<tr>\n';
-				r += '<td colspan="2" nowrap>&nbsp\n';
+			r += '<td colspan="2" align="left">\n';
+				r += widGetHTMLTitle();
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>' + widGetHTMLInitialData() + '\n';
+			r += '<td colspan="2" nowrap>';
+				r += widGetHTMLTokenTextArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>' + widGetHTMLMainTabs(tabs) + '\n';
+			r += '<td nowrap>' + widGetHTMLMasterKeyArea() + '\n'; 
+			r += '<td width="100px">' + widGetHTMLCreateButtonArea() + '\n';
+		r += '</tr>\n';		
+		r += '<tr>\n';
+			r += '<td>';
+				r += widGetHTMLMainTabs(tabs) + '\n';
+			r += '<td width="100px" rowspan="2">';
+				r += widGetHTMLButtonsArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>\n';
-				r += '<hr/>\n';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>' + widGetHTMLLogArea() + '\n';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>\n';
-				r += '<hr/>\n';
+			r += '<td nowrap>';
+				r += widGetHTMLLogArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2" style="text-align: right; font: monospace; font-style: italic;" nowrap>\n';
@@ -37,16 +45,110 @@ function widGetHTMLBody(tabs) {
     return r;
 }
 
-function widGetHTMLSpan(span_id, func) {
-	var r = '';
-	if ( arguments.length > 1 ) {
-		r += '<span valign="center" align="center" id="' + span_id + '" onclick="' + func +'"></span>\n';
-	} else {
-		r += '<span valign="center" align="center" id="' + span_id + '"></span>\n';;
-	}
 
-    return r;
+function widGetHTMLTitle() {
+	var r = '';
+	r += '<table width="100%" border="1">';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<span style="font-size:40px">\n' + glClientTitle + '</span>\n';
+			r += '<td width="30px" align="center" valign="middle" onclick="engSendPing(5000)">';
+				r += widGetHTMLSpan('hasqd_logo') + '\n';
+		r += '<tr>';
+	r += '</table>';
+	
+	return r;
 }
+
+function widGetHTMLTokenTextArea() {
+	var r = '';
+	r += '<table width="100%" border="1">';
+		r += '<tr>';
+			r += '<td width="14" align="center" valign="center"/>' + widGetHTMLSpan('pic_reload', 'widTokenTextOninput()');		
+			r += '<td id="token_text_reload"/>';
+				r += '<b>Token text<b>';
+			r += '<td width="14"/>';
+		r += '</tr>';
+		
+		r += '<tr>';
+			r += '<td colspan="3" align="center" nowrap>\n';
+					r += '<textarea oninput="widTokenTextOninput();" id="token_text_textarea" type="text" rows="2" maxlength="65536" placeholder="Enter token text" required></textarea>\n';
+		r += '</tr>';
+		
+		r += '<tr>';
+			r += '<td colspan="3" align="right" class="token-hash">';
+				r += '<table>';
+					r += '<tr>';
+						r += '<td width="95" align="right" nowrap>\n';
+							r += '<i>Token hash:&nbsp</i>\n';
+						r += '<td width="270" id="token_hash_td" colspan="2" align="left" style="font-style: italic;" nowrap>';
+						r += '<td width="14" id="token_pic_td" align="right" valign="center">\n';
+					r += '</tr>';
+				r += '</table>';
+		r += '</tr>';
+		
+		
+	r += '</table>';
+	return r;
+}
+
+function widGetHTMLMasterKeyArea() {
+	var r = '';
+	r += '<table width="100%">';
+		r += '<tr>';
+			r += '<td align="center" style="font-size:16px">';
+				r += '<b>Master key<b>';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td align="center">';
+				r += '<table border="0">';
+					r += '<tr>';
+						r += '<td width="14" valign="center" align="center">' + widGetHTMLSpan('password_eye', 'widPasswordEyeClick($(this))');
+						r += '<td width="250">\n';
+							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
+						r += '<td width="14" valign="center" id="password_pic_td">\n';
+					r += '</tr>';
+					r += '<tr>';
+						r += '<td>&nbsp';
+						r += '<td id="password_zxcvbn_td" align="right" style="font-style: italic">\n';
+						r += '<td>&nbsp';
+					r += '</tr>';					
+				r += '</table>';
+		r += '</tr>';
+	r += '</table>';
+	return r;
+}
+
+function widGetHTMLCreateButtonArea() {
+	var r = '';
+	r += '<table width="100%">';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<button width="100px" height="50px">CREATE</button>';
+		r += '</tr>';
+	r += '</table>';
+	
+	return r;
+}
+function widGetHTMLButtonsArea() {
+	var r = '';
+	r += '<table width="100%">';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<button width="100px" height="50px">View tokens</button>';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<button width="100px" height="50px">GIVE AWAY</button>';
+		r += '</tr>';		
+		r += '<tr>';
+			r += '<td/>';
+				r += '<button width="100px" height="50px">RECEIVE</button>';
+		r += '</tr>';				
+	r += '</table>';
+	return r;	
+}
+
 
 function widGetHTMLInitialData() {
 	var r = '';
@@ -237,6 +339,19 @@ function widGetHTMLSearchTab() {
 
 function widGetHTMLLogArea() {
     var r = '';
-    r += '<pre id="tokens_log_pre" class="log-area">&nbsp</pre>\n';
+	r += '<table width="100%">';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<hr/>\n';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td/>';
+				r += '<pre id="tokens_log_pre" class="log-area">&nbsp</pre>\n';
+		r += '</tr>';		
+		r += '<tr>';
+			r += '<td/>';
+				r += '<hr/>\n';
+		r += '</tr>';		
+	r += '</table>';
     return r;
 }

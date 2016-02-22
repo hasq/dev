@@ -15,7 +15,7 @@ function engSendDeferredRequest(cmd, t, f) {
             clearTimeout(timerId);
         }
 
-        ajxSendCommand(cmd, cb, hasqdLed);
+        ajxSendCommand(cmd, cb, hasqLogo);
     }
 
     glTimerId = setTimeout(req, t);
@@ -32,10 +32,12 @@ function engSendPing(timeDelay) {
     var cb = function (data) {
         var now = new Date();
         var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-       // console.log(ct);
+        console.log(ct);
+		if (engGetResp(data).msg == 'OK') return hasqLogo.dec();
+		return hasqLogo.fail();
     }
-
-    ajxSendCommand('ping', cb, hasqdLed)
+	
+    ajxSendCommand('ping', cb, hasqLogo)
     var ping = function () {
         engSendPing(timeDelay)
     };

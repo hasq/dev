@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-var glClientTitle = '&nbspTokenswap Client';
+var glClientTitle = 'TOKENSWAP';
 var glRequiredDbHash = 'smd';
 var glPassword = '';
 
@@ -19,6 +19,9 @@ var picPwdShown = '<img src="img/pwd_shown.png">';
 var picPwdHidden = '<img src="img/pwd_hidden.png">';
 var picLoading = '<img src="img/loading.gif">';
 var picReload = '<img src="img/reload.gif">';
+var picLogoBlue = '<img width="28px" height="28px" src="img/logo_blue.png">';
+var picLogoRed = '<img width="28px" height="28px" src="img/logo_red.png">';
+var picLogoBlink = '<img width="28px" height="28px" src="img/logo_blink.gif">';
 
 function newImage(arg) {
     if (document.images) {
@@ -59,7 +62,7 @@ function docInit() {
         }
     });
 	
-    $('#hasqd_led').html(picGray);
+    $('#hasqd_logo').html(picLogoBlue);
 	$('#pic_reload').html(picReload);
 	$('#password_eye').html(picPwdShown);
 	$('#password_eye').attr('title', 'Unmask password');	

@@ -8,6 +8,7 @@ function ajxSendCommand(cmd, callback, led) {
     $.post('/', 'command=' + cmd, function (data) {})
 
     .done(function (data) {
+		console.log(data);
         //console.log('-done:' + data);
         //setTimeout(function() {callback(data)}, 1000);
         callback(data);
@@ -19,7 +20,8 @@ function ajxSendCommand(cmd, callback, led) {
         alert('Failed to connect to server!');
     })
 
-    .always(function () {});
+    .always(function () {
+	});
 
     //	.error(function() {
     //		led.fail();
