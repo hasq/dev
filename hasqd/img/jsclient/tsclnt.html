@@ -6,149 +6,9 @@
 <head>
   <meta charset="utf-8"/>
 <!--   <meta name=viewport content="width=device-width, initial-scale=1"> -->
-  <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
+  <!-- <link rel="stylesheet" href="lib/jquery-ui.min.css"/> -->
+  <link rel="stylesheet" type="text/css" href="css/tsclnt.css"/>
   <title>Tokenswap JavaScript Client</title>
-
-  <style>
-    html {
-      overflow-y: scroll;
-    }
-    
-    body {
-      font: 75% "Trebuchet MS", sans-serif;
-      background: #FCFCFC;
-      margin: auto;
-      width: 640px;
-      height: 480px;
-    }
-    
-    #body_table {
-      min-width: 600px;
-      min-height: 300px;
-      width: 90%;
-      margin: auto; 
-    }
-    
-    *:focus {
-      outline: none;
-    }
-
-    #tabs_div {
-      white-space: nowrap;
-      overflow: hidden;
-      text-align: center;
-      background: #FCFCFC;
-    }
-    
-    #tabs_div ul li {
-      display: inline-block;
-      float: none;
-      vertical-align: bottom;
-    }
-
-    .ui-tabs-active {
-      box-shadow: 0 0 2px 0 #aaa;
-      background: #FCFCFC;
-    }
-
-    .hidden-data {
-      box-sizing: border-box;
-      white-space: pre;
-      overflow-x: auto;
-      overflow-y: auto;
-      border: 1px solid CornflowerBlue;
-      border-radius: 2px;
-      box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
-      font: 120% monospace;
-    }
-    
-    .log-area {
-      font: 120% monospace;    
-    }
-    
-    table {
-      box-sizing: border-box;
-      padding:0;
-      border-collapse:collapse;
-    }
-    
-    td tr {
-      box-sizing: border-box;
-    }    
-    
-    led {
-      text-align: center;
-      vertical-align: center;
-    }
-
-    td[class='token-hash'] {
-      box-sizing: border-box;
-      font: 130% monospace;
-      border: 0px;
-      font-style: italic;
-      border-radius: 1px;
-      box-shadow: 0px 0px 0px #ccc, 0 5px 8px #eee inset;
-      width: 98%;
-
-    }
-      
-    textarea[type='text'] {
-      width: 100%;    
-      box-sizing: border-box;
-      font: 130% monospace;
-      margin: 0px;
-      border:1px solid #aaa;
-      box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-      border-radius:2px;
-    } 
-    
-    input[class='hasDatepicker'] {
-      box-sizing: border-box;
-      margin: 0px;  
-      border:1px solid #aaa;
-      box-shadow: 0px 0px 3px #ccc, 0 5px 7px #eee inset;
-      border-radius:2px;
-    }  
-    
-    input[type='checkbox'] { 
-      box-sizing: border-box;
-      margin: 5px;    
-      border:1px solid #aaa;
-      box-shadow: 0px 0px 2px #ccc, 1px 1px 1px #eee inset;
-      border-radius:3px;
-    }
-    
-    input[type='checkbox']:focus {
-      background: #fff; 
-      border:1px solid #555; 
-      box-shadow: 0 0 5px #aaa; 
-    }  
-    
-    input[type='text'], input[type='password'] { 
-      box-sizing: border-box;
-      font: 130% monospace;
-      width: 100%;
-      margin: 0px;    
-      border:1px solid #aaa;
-      box-shadow: 0px 0px 3px #ccc, 0 5px 7px #eee inset;
-      border-radius:2px;
-    }
-  
-    input[type='text']:focus, input[type='password']:focus, textarea:focus {
-      border:1px solid #555; 
-      box-shadow: 0 0 3px #aaa;
-    }
-    
-    input:required:valid, textarea:required:valid {
-      box-shadow: 0 0 3px #5252d4;
-      border-color: #28921f;
-    }
-    
-    input:focus:invalid,  textarea:focus:invalid {
-      box-shadow: 0 0 3px #d45252;
-      border-color: #b03535
-    }     
-  </style>
 
   <script type="text/javascript" src="lib/jquery.js"></script>
   <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
@@ -168,7 +28,7 @@
 
 </head>
 
-<body onLoad="preloadImages('img/logo_red.png','img/logo_blue.png','img/logo_blink.gif')">
+<body onLoad="preloadImages('img/logo_red.png','img/logo_blue.png','img/logo_blink.gif', 'img/eye_open.png', 'img/eye_closed.png')">
   <script>
     docMainWrite();
     docMainInit();

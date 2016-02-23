@@ -21,9 +21,9 @@ function ajxSendCommand(cmd, callback, led) {
     })
 
     .always(function () {
-	});
+	})
 
-    //	.error(function() {
-    //		led.fail();
-    //	});
+    .error(function() {
+    		led.fail();
+    });
 }

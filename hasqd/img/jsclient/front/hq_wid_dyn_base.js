@@ -5,24 +5,23 @@ function HasqdLed() {
 }
 
 HasqdLed.prototype.fail = function () {
-    $('#hasqd_led').html(picRed);
-    widShowRecordsTabLog('Connection failed!');
+    $('#hasqd_led').html(picLogoRed);
 };
 
 HasqdLed.prototype.inc = function () {
-    setTimeout(function () { $('#hasqd_led').html(picGreenGray) }, 500);
+    setTimeout(function () { $('#hasqd_led').html(picLogoBlink) }, 500);
 };
 
 HasqdLed.prototype.dec = function () {
     setTimeout(function () {
-        $('#hasqd_led').html(picGray);
+        $('#hasqd_led').html(picLogoBlue);
     }, 500);
 };
 
 var hasqdLed = new HasqdLed();
 
 function widAnimateProgbar() {
-    $('#hasqd_led').html(picGray);
+    $('#hasqd_led').html(picLogoBlue);
 }
 
 function widShowBordersColor(obj, color) {

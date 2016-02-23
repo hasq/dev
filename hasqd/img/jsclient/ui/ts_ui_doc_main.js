@@ -8,20 +8,29 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var picYellow = '<img src="img/point_yellow.gif">';
-var picRed = '<img src="img/point_red.gif">';
-var picGreenYellow = '<img src="img/point_green_yellow.gif">';
-var picGreen = '<img src="img/point_green.gif">';
-var picYellowGreen = '<img src="img/point_yellow_green.gif">';
-var picGray = '<img src="img/point_gray.gif">';
-var picGreenGray = '<img src="img/point_green_gray.gif">';
-var picPwdShown = '<img src="img/pwd_shown.png">';
-var picPwdHidden = '<img src="img/pwd_hidden.png">';
+var picPwdOk = '<img src="img/pwd_ok.png">';
+var picPwdWrong = '<img src="img/pwd_wrong.png">';
+var picPwdRcvng = '<img src="img/pwd_rcvng.png">';
+var picPwdSndng = '<img src="img/pwd_sndng.png">';
+
+var picEyeOpen = '<img src="img/eye_open.png">';
+var picEyeClosed = '<img src="img/eye_closed.png">';
+
 var picLoading = '<img src="img/loading.gif">';
-var picReload = '<img src="img/reload.gif">';
+var picReload = '<img src="img/reload.png">';
+
 var picLogoBlue = '<img width="28px" height="28px" src="img/logo_blue.png">';
 var picLogoRed = '<img width="28px" height="28px" src="img/logo_red.png">';
 var picLogoBlink = '<img width="28px" height="28px" src="img/logo_blink.gif">';
+
+var picLoading = '<img src="img/loading.gif">';
+var picReload = '<img src="img/reload.png">';
+
+var picTokCreate = '<img width="70px" height="70px" src="img/tok_create.png">';
+var picTokData = '<img width="70px" height="70px" src="img/tok_data.png">';
+var picTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
+var picTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
+var picTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
 
 function newImage(arg) {
     if (document.images) {
@@ -64,7 +73,7 @@ function docInit() {
 	
     $('#hasqd_logo').html(picLogoBlue);
 	$('#pic_reload').html(picReload);
-	$('#password_eye').html(picPwdShown);
+	$('#password_eye').html(picEyeOpen);
 	$('#password_eye').attr('title', 'Unmask password');	
 	
     $('button').button();
@@ -129,14 +138,15 @@ function docMain() {
     var tabs = [];
     var item;
 
-    item = {};
-    item.title = 'Create token';
-    item.data = widGetHTMLCreateTab();
-    tabs[tabs.length] = item;
 
 	item = {};
     item.title = 'Give data';
     item.data = widGetHTMLSetDataTab();
+    tabs[tabs.length] = item;
+	
+    item = {};
+    item.title = 'Create token';
+    item.data = widGetHTMLCreateTab();
     tabs[tabs.length] = item;
 	
     item = {};

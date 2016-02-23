@@ -220,16 +220,16 @@ function widGetPwdPic(status) {
 	r.title = status;
     switch (status) {
     case 'OK':
-		r.pic = picGreen;
+		r.pic = picPwdOk;
 		break;
     case 'TKN_SNDNG':
-        r.pic = picYellowGreen;
+        r.pic = picPwdSndng;
 		break;
     case 'TKN_RCVNG':
-        r.pic = picGreenYellow;
+        r.pic = picPwdRcvng;
 		break;
     default: //'WRONG_PWD'
-        r.pic = picRed;
+        r.pic = picPwdWrong;
 		break;
     }
 	return r;
@@ -317,11 +317,11 @@ function widPasswordEyeClick(jqEye){
 	var jqPwd = $('#password_input');
 	if (jqPwd.attr('type') == 'text') {
 		jqPwd.attr('type', 'password');
-		jqEye.html(picPwdShown);
+		jqEye.html(picEyeOpen);
 		jqEye.attr('title', 'Unmask password');
 	} else {
 		jqPwd.attr('type', 'text');
-		jqEye.html(picPwdHidden);
+		jqEye.html(picEyeClosed);
 		jqEye.attr('title', 'Mask password');
 	}
 }
@@ -531,3 +531,24 @@ function widSearchButtonClick() {
 
     widCompleteEvent();
 }
+
+
+function widDataArea() {
+	return;
+}
+
+function widCreateArea() {
+	return;
+}
+
+function widSendArea() {
+	return;
+}
+
+function widReceiveArea() {
+	return;
+}
+
+function widSearchArea() {
+	return;
+}widSearchArea

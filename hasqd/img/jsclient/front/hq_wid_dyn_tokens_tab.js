@@ -26,10 +26,10 @@ Led.prototype.show = function (jqObj, flag, title) {
 			jqLed.html(picLoading);
 			jqLed.prop('title', 'Please wait...');
 		} else if (flag) {
-			jqLed.html(picGreen);
+			jqLed.html(picOk);
 			(title === undefined) ? jqLed.prop('title', 'OK') : jqLed.prop('title', title);
 		} else {
-			jqLed.html(picRed);
+			jqLed.html(picWarning);
 			(title === undefined) ? jqLed.prop('title', 'Inappropriate or unavailable tokens detected!') : jqLed.prop('title', title);
 		}
 }
@@ -431,19 +431,19 @@ function widShowVerifyTableRow(rec, pic) {
 function widGetVerifyTableRowLed(state) {
     switch (state) {
     case 'WRONG_PWD':
-        return picYellow;
+        return picPwdWrong;
         break;
     case 'TKN_SNDNG':
-        return picYellowGreen;
+        return picPwdSndng;
         break;
     case 'TKN_RCVNG':
-        return picGreenYellow;
+        return picPwdRcvng;
         break;
     case 'OK':
-        return picGreen;
+        return picPwdOk;
         break;
     default: // 'IDX_NODN':
-        return picRed;
+        return picIdxNoDn;
         break;
     }
 }

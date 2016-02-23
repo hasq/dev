@@ -18,24 +18,20 @@ glVTL.items = []			// The array which include the list of a last records of spec
 glVTL.avail  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
 glVTL.unavail  = false;	// The marker of mismatched tokens in the specified range
 
-var picYellow = '<img src="img/ylw_pnt.gif">';
-var picRed = '<img src="img/red_pnt.gif">';
-var picGreenYellow = '<img src="img/grn_ylw_pnt.gif">';
-var picGreen = '<img src="img/grn_pnt.gif">';
-var picYellowGreen = '<img src="img/ylw_grn_pnt.gif">';
-var picGray = '<img src="img/gry_pnt.gif">';
-var picGreenGray = '<img src="img/gry_grn_pnt.gif">';
-var picLoading = '<img src="img/loading12.gif">';
+var picPwdOk = '<img src="img/pwd_ok.png">';
+var picPwdWrong = '<img src="img/pwd_wrong.png">';
+var picPwdRcvng = '<img src="img/pwd_rcvng.png">';
+var picPwdSndng = '<img src="img/pwd_sndng.png">';
+var picIdxNoDn = '<img src="img/idx_nodn.png">';
 
-var picYellow = '<img src="img/point_yellow.gif">';
-var picRed = '<img src="img/point_red.gif">';
-var picGreenYellow = '<img src="img/point_green_yellow.gif">';
-var picGreen = '<img src="img/point_green.gif">';
-var picYellowGreen = '<img src="img/point_yellow_green.gif">';
-var picGray = '<img src="img/point_gray.gif">';
-var picGreenGray = '<img src="img/point_green_gray.gif">';
+var picLogoBlue = '<img width="28px" height="28px" src="img/logo_blue.png">';
+var picLogoRed = '<img width="28px" height="28px" src="img/logo_red.png">';
+var picLogoBlink = '<img width="28px" height="28px" src="img/logo_blink.gif">';
+
+var picError = '<img src="img/notification_error.png">';
+var picOk = '<img src="img/notification_ok.png">';
+var picWarning = '<img src="img/notification_warning.png">';
 var picLoading = '<img src="img/loading.gif">';
-
 
 function newImage(arg) {
 	if (document.images) {
@@ -281,7 +277,7 @@ function doc_init() {
 	$('[data-class="continue_button"]').hide();
 	$('[data-class="verify_table"]').hide();
 	
-	$('#hasqd_led').html(picGray);
+	$('#hasqd_led').html(picLogoBlue);
 
 	$('#server_host').html('' + location.host);
 	$('#tokens_verify_table_pre').hide();
