@@ -1,6 +1,6 @@
-html {
+/* html {
   overflow-y: scroll;
-}
+} */
 
 body {
 	font: bold 100% Monospace;
@@ -125,7 +125,10 @@ table {
   border-collapse:collapse;
 }
 
-  
+p {
+       word-wrap: break-word;
+       white-space: normal;
+}
 
 led {
   text-align: center;

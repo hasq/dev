@@ -164,14 +164,22 @@ function widShowTokenMsg(d) {
     }
 }
 
-function widDisableDataArea(comm) {
+function widDisableDataTab(comm) {
     return $('#setdata_table').find('button, textarea').prop('disabled', comm);
 }
 
-/*
-function widDisableCreateTabButton(comm) {
-    return $('#create_tab_button').prop('disabled', comm);
-} */
+function widDisableCreateTab(comm) {
+    return $('#create_table').find('button').prop('disabled', comm);
+}
+
+function widDisableSendTab(comm) {
+    return $('#send_table').find('button, textarea, input').prop('disabled', comm);
+}
+
+function widDisableReceiveTab(comm) {
+    return $('#receive_table').find('button, textarea').prop('disabled', comm);
+}
+
 
 function widIsPassword() {
 	return ($('#password_input').val().length > 0);
@@ -246,9 +254,12 @@ function widTokenTextOninput() {
     widShowEmptyArea(); //clear and hide data field
 	widShowPwdMatch();
 	widShowTokenMsg();
-	widDisableDataArea(true);
 	textArea.emptyall();
 	glLastRec={};
+
+	widDisableDataTab(true);
+	widDisableCreateTab(true);
+	widDisableSendTab(true);
 	
     var jqTokText = $('#token_text_textarea');
 	var tok = widGetToken(jqTokText.val(), glCurrentDB.hash);
@@ -264,6 +275,7 @@ function widTokenTextOninput() {
 			glLastRec.s = tok;
 			widShowTokenMsg(false);
 			widShowCreateArea();
+			if (glPassword.length > 0) widDisableCreateTab(false);
 		} else {
 			glLastRec = engGetRespLast(data);
 			//if (lr.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
@@ -288,7 +300,7 @@ function widShowDataArea(data) {
 	$('#tabs_div').tabs('option', 'active', 1);
     // Shows tokens data field if it length greater then zero.
     var jqData = $('#setdata_textarea');
-	if (glLastRec.st == 'OK') widDisableDataArea(false);
+	if (glLastRec.st == 'OK') widDisableDataTab(false);
 	
     if (arguments.length === 0) {
         jqData.empty();
@@ -301,15 +313,25 @@ function widShowDataArea(data) {
 function widPasswordOninput(jqPwd) {
     // Events when passwords value changed.
 	if (typeof jqPwd !== 'undefined') glPassword = jqPwd.val();
-	widDisableDataArea(true);
+	widDisableDataTab(true);
+	widDisableCreateTab(true);
+	widDisableSendTab(true);
+	widDisableReceiveTab(true);
 	if (glPassword.length > 0) {
 		widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 		if (typeof glLastRec.st === 'undefined') return;
-		if (glLastRec.st === 'IDX_NODN') return;
+		if (glLastRec.st === 'IDX_NODN') return widDisableCreateTab(false);
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		glLastRec.st = widGetTokenStatus(glLastRec, nr);
 		widShowPwdMatch(glLastRec.st);
-		if (glLastRec.st == 'OK') widDisableDataArea(false);
+		if (glLastRec.st == 'OK') {
+			widDisableDataTab(false);
+			widDisableSendTab(false);
+			widDisableReceiveTab(true);
+			return;
+		} else {
+			widDisableReceiveTab(false);			
+		}
     } else {
 		widShowPwdMatch();
 		widShowPwdGuessTime();
