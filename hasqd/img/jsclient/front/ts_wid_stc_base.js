@@ -13,7 +13,7 @@ function widGetHTMLSpan(span_id, func) {
 
 function widGetHTMLBody(tabs) {
 	var r = '';
-    r += '<table width="100%" id="body_table" border="1" nowrap>\n';
+    r += '<table width="100%" id="body_table" border="0" nowrap>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2" align="left" nowrap>\n';
 				r += widGetHTMLTitleArea();
@@ -23,18 +23,24 @@ function widGetHTMLBody(tabs) {
 				r += widGetHTMLTokenTextArea() + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td nowrap>' + widGetHTMLMasterKeyArea() + '\n'; 
-			r += '<td width="84px" nowrap>' + widGetHTMLCreateButtonArea() + '\n';
+			r += '<td colspan="2"nowrap>' + widGetHTMLMasterKeyArea() + '\n'; 
+			//r += '<td width="84px" nowrap>' + widGetHTMLCreateButtonArea() + '\n';
 		r += '</tr>\n';		
 		r += '<tr>\n';
 			r += '<td nowrap>';
-				r += widGetHTMLMainTabs(tabs) + '\n';
-			r += '<td width="84px" rowspan="2">';
-				r += widGetHTMLButtonsArea() + '\n';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td nowrap>';
-				r += widGetHTMLLogArea() + '\n';
+				r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
+					r += '<tr>\n';
+						r += '<td/>\n';
+							r += widGetHTMLMainTabs(tabs) + '\n';
+						r += '<td width="84px" align="right" valign="top" rowspan="2"/>'
+							r += widGetHTMLButtonsArea() + '\n';
+					r += '</tr>\n';
+					r += '<tr>\n';
+						r += '<td valign="bottom"/>\n';
+							r += widGetHTMLLogArea() + '\n';
+					r += '</tr>\n';
+				r += '</table>';
+			
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2" class="info-td" align="right" nowrap>\n';
@@ -66,7 +72,7 @@ function widGetHTMLTitleArea() {
 
 function widGetHTMLTokenTextArea() {
 	var r = '';
-	r += '<table width="100%" border="0">';
+	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td class="subtitle-td" align="center"/>';
 				r += '<b>Token name<b>';
@@ -97,7 +103,7 @@ function widGetHTMLTokenTextArea() {
 
 function widGetHTMLMasterKeyArea() {
 	var r = '';
-	r += '<table width="100%">';
+	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td class="subtitle-td"/>';
 				r += 'Master key';
