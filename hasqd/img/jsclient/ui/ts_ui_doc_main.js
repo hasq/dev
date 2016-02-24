@@ -128,6 +128,7 @@ function docInit() {
     });
 
     widSetDefaultDb(glRequiredDbHash);
+	widShowEmptyArea();
 	
     var ping = function () {
         engSendPing(5000)
@@ -142,6 +143,11 @@ function docMain() {
     var item;
 
 
+	item = {};
+    item.title = 'Empty';
+    item.data = widGetHTMLEmptyTab();
+    tabs[tabs.length] = item;
+	
 	item = {};
     item.title = 'Give data';
     item.data = widGetHTMLSetDataTab();

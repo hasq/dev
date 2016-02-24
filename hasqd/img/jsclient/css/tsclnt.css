@@ -63,11 +63,11 @@ button:disabled, button:disabled:hover, button:disabled:focus {
   background: #FCFCFC;
 }
 
-/* .ui-tabs { 
+.ui-tabs-nav { 
 	display: none;
-} */
+}
 
-/* .ui-tabs {
+/* .ui-tabs-nav {
 	display:inline;
 }  */
 

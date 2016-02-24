@@ -122,12 +122,16 @@ function widGetHTMLMasterKeyArea() {
 	return r;
 }
 
+function widGetHTMLEmptyTab() {
+	return '';
+}
+
 function widGetHTMLCreateButtonArea() {
 	var r = '';
 	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widCreateArea()" disabled>' + picTokCreate + '</button>';
+				r += '<button id="create_tab_button" onclick="return widShowCreateArea()" data-state="off" disabled>' + picTokCreate + '</button>';
 		r += '</tr>';
 	r += '</table>';
 	
@@ -138,15 +142,15 @@ function widGetHTMLButtonsArea() {
 	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widSendArea()">' + picTokSend + '</button>';
+				r += '<button onclick="return widShowSendArea()" data-state="off">' + picTokSend + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widReceiveArea()">' + picTokReceive + '</button>';
+				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + picTokReceive + '</button>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widSearchArea()">' + picTokSearch + '</button>';
+				r += '<button onclick="return widShowSearchArea()" data-state="off">' + picTokSearch + '</button>';
 		r += '</tr>';		
 	r += '</table>';
 	return r;	
@@ -271,7 +275,7 @@ function widGetHTMLCreateTab() {
 	r += '<table width="100%">\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center;">\n'
-				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">Create';
+				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + picTokCreate + '</button>';
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -311,11 +315,9 @@ function widGetHTMLReceiveTab() {
 	r += '<table width="100%" border="0" >\n';
 		r += '<tr>\n';
 			r += '<td style="text-align: center">\n'
-				r += '<textarea wrap="on" rows="2" type="text" id="receive_textarea" maxlength="65536" required></textarea>';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td style="text-align: center">\n';
-				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()">Take ownership';
+				r += '<textarea id="receive_textarea" type="text" rows="4" cols="64" maxlength="65536" wrap="on" required></textarea>';
+			r += '<td width="84px" style="text-align: center">\n';
+				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()">Receive';
 		r += '</tr>\n';
 	r += '</table>\n';
 

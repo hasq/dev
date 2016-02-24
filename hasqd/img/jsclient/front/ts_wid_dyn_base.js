@@ -135,27 +135,6 @@ function widShowToken(tok) {
     jqTokText.html(widGetToken(tok, glCurrentDB.hash));
 }
 
-function widShowData(data) {
-    // Shows tokens data field if it length greater then zero.
-    var jqData = $('#token_data_pre');
-	var jqDataTd = jqData.closest('table').closest('td');
-	
-    if (arguments.length === 0) {
-        jqDataTd.hide();
-        jqData.empty();
-    } else if (String(data).length > 0) {
-		var maxHeight = (($(window).height() - $('body').height()) > 200) ? ($(window).height() - $('body').height())/2 : 100;
-
-		jqData.outerWidth(jqDataTd.closest('table').innerWidth()-4);
-		jqData.css('max-height',  maxHeight + 'px');
-        jqDataTd.show();
-        jqData.html(data);
-    } else {
-        jqDataTd.hide();
-        jqData.empty();
-    }
-}
-
 function widShowLog(text) {
     // Shows messages in log
     var jqLog = $('#' + 'tokens_log_pre');
@@ -184,6 +163,15 @@ function widShowTokenMsg(d) {
         widShowLog('No such token.');
     }
 }
+
+function widDisableDataArea(comm) {
+    return $('#setdata_table').find('button, textarea').prop('disabled', comm);
+}
+
+/*
+function widDisableCreateTabButton(comm) {
+    return $('#create_tab_button').prop('disabled', comm);
+} */
 
 function widIsPassword() {
 	return ($('#password_input').val().length > 0);
@@ -255,9 +243,10 @@ function widTokenTextOninput() {
     // Events when tokens value changed.
 	clearTimeout(glTimerId);
     widShowLog(); //clear log
-    widShowData(); //clear and hide data field
+    widShowEmptyArea(); //clear and hide data field
 	widShowPwdMatch();
 	widShowTokenMsg();
+	widDisableDataArea(true);
 	textArea.emptyall();
 	glLastRec={};
 	
@@ -274,13 +263,14 @@ function widTokenTextOninput() {
 			glLastRec.st = 'IDX_NODN';
 			glLastRec.s = tok;
 			widShowTokenMsg(false);
+			widShowCreateArea();
 		} else {
 			glLastRec = engGetRespLast(data);
 			//if (lr.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
 			var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 			glLastRec.st = widGetTokenStatus(glLastRec, nr);
 			widShowTokenMsg(true);
-			widShowData(engGetOutputDataValue(glLastRec.d));
+			widShowDataArea(engGetOutputDataValue(glLastRec.d));
 		}
 		
 		glLastRec.r = (jqTokText.val() !== tok) ? jqTokText.val() : '';
@@ -294,9 +284,24 @@ function widTokenTextOninput() {
     }
 }
 
+function widShowDataArea(data) {
+	$('#tabs_div').tabs('option', 'active', 1);
+    // Shows tokens data field if it length greater then zero.
+    var jqData = $('#setdata_textarea');
+	if (glLastRec.st == 'OK') widDisableDataArea(false);
+	
+    if (arguments.length === 0) {
+        jqData.empty();
+    } else { 
+		jqData.val(data);
+	}
+	return;
+}
+
 function widPasswordOninput(jqPwd) {
     // Events when passwords value changed.
 	if (typeof jqPwd !== 'undefined') glPassword = jqPwd.val();
+	widDisableDataArea(true);
 	if (glPassword.length > 0) {
 		widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 		if (typeof glLastRec.st === 'undefined') return;
@@ -304,6 +309,7 @@ function widPasswordOninput(jqPwd) {
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		glLastRec.st = widGetTokenStatus(glLastRec, nr);
 		widShowPwdMatch(glLastRec.st);
+		if (glLastRec.st == 'OK') widDisableDataArea(false);
     } else {
 		widShowPwdMatch();
 		widShowPwdGuessTime();
@@ -328,6 +334,7 @@ function widPasswordEyeClick(jqEye){
 
 function widCreateButtonClick() {
     // Creates a new token record
+	widShowEmptyArea();
     var jqPwd = $('#password_input');
 
 	if (typeof glLastRec.st === 'undefined') return widCompleteEvent('Empty token text!');
@@ -533,22 +540,23 @@ function widSearchButtonClick() {
 }
 
 
-function widDataArea() {
-	return;
+function widShowEmptyArea() {
+	return $('#tabs_div').tabs('option', 'active', 0);
 }
 
-function widCreateArea() {
-	return;
+
+function widShowCreateArea() {
+	return $('#tabs_div').tabs('option', 'active', 2);
 }
 
-function widSendArea() {
-	return;
+function widShowSendArea() {
+	return $('#tabs_div').tabs('option', 'active', 3);
 }
 
-function widReceiveArea() {
-	return;
+function widShowReceiveArea() {
+	return $('#tabs_div').tabs('option', 'active', 4);
 }
 
-function widSearchArea() {
-	return;
-}widSearchArea
+function widShowSearchArea() {
+	return $('#tabs_div').tabs('option', 'active', 5);
+}
