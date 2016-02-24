@@ -3,29 +3,58 @@ html {
 }
 
 body {
-	font: 15% monospace;
-	font-family: consolas;
+	font: bold 100% Monospace;
 	font-size: 100%;
-	background: #FCFCFC;;
+	background: #FCFCFC;
 	color: black;
-	width: 800;
+	width: 60%;
 	min-width: 640px;
 	min-height: 480px;	
     margin: auto;
 }
 
 *:focus {
-  outline: none;
+	outline: none;
 }
 
-#body_table {
-  min-width: 600px;
-  min-height: 300px;
-  width: 90%;
-  margin: auto; 
+* {
+	box-sizing: border-box;
+}
+
+button {
+	width: 80px;
+	height: 80px;
+	background: #87CEEB;
+	border: 0 solid black;
+	opacity: 0.8;
 }
 
 
+button:disabled {
+	border: 0;
+	background: #2F4F4F;
+	cursor: default;
+	opacity: 0.4; 
+}
+
+button:active {
+	background: #F0FFFF;
+	opacity: 0.5;
+}
+
+button:hover, button:focus {
+	border: 0;
+	cursor: pointer;
+	opacity: 1;
+	background: #F0FFFF;
+}
+
+button:disabled, button:disabled:hover, button:disabled:focus {
+	border: 0;
+	background: #2F4F4F;
+	cursor: default;
+	opacity: 0.4; 
+}
 
 #tabs_div {
   white-space: nowrap;
@@ -33,6 +62,15 @@ body {
   text-align: center;
   background: #FCFCFC;
 }
+
+/* .ui-tabs { 
+	display: none;
+} */
+
+/* .ui-tabs {
+	display:inline;
+}  */
+
 
 #tabs_div ul li {
   display: inline-block;
@@ -45,8 +83,30 @@ body {
   background: #FCFCFC;
 }
 
+
+.title-td {
+	text-align: left;
+	font: bold 100% Monospace;
+	font-size: 48px;
+	color: #1376BC;
+}
+
+.subtitle-td {
+	text-align: center;
+	font: bold 100% Monospace;
+	font-size: 20px;
+	color: #1376BC;
+}
+
+.info-td {
+  font: 120% Monospace;
+  border: 0px;
+  font-style: italic;
+  border-radius: 0px;
+}
+
+
 .hidden-data {
-  box-sizing: border-box;
   white-space: pre;
   overflow-x: auto;
   overflow-y: auto;
@@ -61,48 +121,44 @@ body {
 }
 
 table {
-  box-sizing: border-box;
   padding:0;
   border-collapse:collapse;
 }
 
-td tr {
-  box-sizing: border-box;
-}    
+  
 
 led {
   text-align: center;
   vertical-align: center;
 }
-
-td[class='token-hash'] {
-  box-sizing: border-box;
-  font: 130% monospace;
-  border: 0px;
-  font-style: italic;
-  border-radius: 1px;
-  width: 98%;
-
-}
   
 textarea[type='text'] {
   width: 100%;    
-  box-sizing: border-box;
   font: 130% monospace;
   margin: 0px;
   border:1px solid #aaa;
   border-radius: 0;
 } 
 
+
+/* input[placeholder], input::-webkit-input-placeholder, input::-moz-placeholder, input:-moz-placeholder, input:-ms-input-placeholder {
+	font: italic 90% Monospace;
+	text-overflow: ellipsis;
+	color: red;
+} 
+
+textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-placeholder, textarea:-moz-placeholder, textarea:-ms-textarea-placeholder {
+	font: italic 90% Monospace;
+	text-overflow: ellipsis;
+} */
+
 input[class='hasDatepicker'] {
-  box-sizing: border-box;
   margin: 0px;  
   border:1px solid #aaa;
   border-radius: 0;
 }  
 
 input[type='checkbox'] { 
-  box-sizing: border-box;
   margin: 5px;    
   border:1px solid #aaa;
   border-radius: 0;
@@ -114,11 +170,10 @@ input[type='checkbox']:focus {
 }  
 
 input[type='text'], input[type='password'] { 
-  box-sizing: border-box;
   font: 130% monospace;
   width: 100%;
   margin: 0px;    
-  border:1px solid #aaa;
+  border: 1px solid #aaa;
   border-radius: 0;
 }
 

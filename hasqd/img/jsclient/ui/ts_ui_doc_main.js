@@ -68,8 +68,11 @@ function docInit() {
     $('#tabs_div').tabs({
         activate : function (event, ui) {
             widShowLog();
-        }
+        },
+	
     });
+
+	$('#setdata_table').find('button, textarea').prop('disabled', true);
 	
     $('#hasqd_logo').html(picLogoBlue);
 	$('#pic_reload').html(picReload);

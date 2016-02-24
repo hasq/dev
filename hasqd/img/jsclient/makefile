@@ -30,6 +30,7 @@ slice/home/lib:
 	mkdir -p slice/home/lib
 		
 createclient: index.html 
+	mkdir -p slice/home/css
 	mkdir -p slice/home/ui
 	mkdir -p slice/home/lib
 	mkdir -p slice/home/lib/images
@@ -37,6 +38,7 @@ createclient: index.html
 	mkdir -p slice/home/eng
 	mkdir -p slice/home/img
 #	hqclnt
+	cp css/*.css slice/home/css/
 	cp eng/hq_*.js slice/home/eng/
 	cp front/hq_*.js slice/home/front/
 	mv -f front/help_tab.gen slice/home/front/hq_wid_stc_help_tab.js
@@ -79,5 +81,6 @@ checkin:
 	cp -f slice/home/eng/*.js eng/
 	cp -f slice/home/ui/*.js ui/
 	cp -f slice/home/*.html ./
+	cp -f slice/home/css/*.css css/
 #	
 	chmod 0777 -R slice/home

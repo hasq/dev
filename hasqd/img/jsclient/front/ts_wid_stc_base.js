@@ -249,6 +249,22 @@ function widGetHTMLMainTabs(items) {
     return r;
 }
 
+function widGetHTMLSetDataTab() {
+	var r = '';
+	
+	r += '<table id="setdata_table" width="100%" border="1">\n';
+		r += '<tr>\n';
+			r += '<td style="text-align:center">\n';
+				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="on"></textarea>';
+			r += '<td width="84px" style="text-align:center">\n'
+				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + picTokData;
+		r += '</tr>\n';
+	r += '</table>\n';
+	
+	return r;
+}
+
+
 function widGetHTMLCreateTab() {
 	var r = '';
 	
@@ -256,21 +272,6 @@ function widGetHTMLCreateTab() {
 		r += '<tr>\n';
 			r += '<td style="text-align: center;">\n'
 				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">Create';
-		r += '</tr>\n';
-	r += '</table>\n';
-	
-	return r;
-}
-
-function widGetHTMLSetDataTab() {
-	var r = '';
-	
-	r += '<table width="100%" border="0">\n';
-		r += '<tr>\n';
-			r += '<td style="text-align:center">\n';
-				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="on"></textarea>';
-			r += '<td style="text-align:center">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + picTokData;
 		r += '</tr>\n';
 	r += '</table>\n';
 	
