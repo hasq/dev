@@ -250,22 +250,28 @@ function widGetTokenStatus(lr, nr) {
 function widGetPwdPic(status) {
     // Returns an image displaying the password match
 	r = {};
-	r.title = status;
+
+	console.log(status)
     switch (status) {
     case 'OK':
 		r.pic = imgSrcPwdOk;
+		r.title = 'OK';
 		break;
     case 'TKN_SNDNG':
         r.pic = imgSrcPwdSndng;
+		r.title = 'Token is locked (sending)';
 		break;
     case 'TKN_RCVNG':
         r.pic = imgSrcPwdRcvng;
+		r.title = 'Token is locked (receiving)';		
 		break;
     case 'WRONG_PWD': //'WRONG_PWD'
         r.pic = imgSrcPwdWrong;
+		r.title = 'Token blocked (wrong password)';		
 		break;
 	default:
 		r.pic = imgSrcPwdNone;
+		r.title = '';
 		break;
     }
 	return r;
@@ -277,8 +283,9 @@ function widShowPwdMatch(status) {
     var objI = $('#password_input');
 
 	var r = widGetPwdPic(status);
+	
 	objT.find('img').attr('src', r.pic);
-	objT.prop('title', r.title);
+	objT.find('img').prop('title', r.title);
 }
 
 function widGetPwdGuessTime(pwd) {
