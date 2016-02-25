@@ -8,29 +8,32 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var picPwdOk = '<img src="img/pwd_ok.png">';
-var picPwdWrong = '<img src="img/pwd_wrong.png">';
-var picPwdRcvng = '<img src="img/pwd_rcvng.png">';
-var picPwdSndng = '<img src="img/pwd_sndng.png">';
+var pic = function (imgSrc) {
+	if (arguments.length == 0 ) imgSrc = '';
+	return '<img src="' + imgSrc + '">';
+}
 
-var picEyeOpen = '<img src="img/eye_open.png">';
-var picEyeClosed = '<img src="img/eye_closed.png">';
+var imgSrcPwdOk = 'img/pwd_ok.png';
+var imgSrcPwdWrong = 'img/pwd_wrong.png';
+var imgSrcPwdRcvng = 'img/pwd_rcvng.png';
+var imgSrcPwdSndng = 'img/pwd_sndng.png';
+var imgSrcPwdNone = 'img/pwd_none.png';
 
-var picLoading = '<img src="img/loading.gif">';
-var picReload = '<img src="img/reload.png">';
+var imgSrcLoading = 'img/loading.gif';
+var imgSrcReload = 'img/reload.png';
 
-var picLogoBlue = '<img width="28px" height="28px" src="img/logo_blue.png">';
-var picLogoRed = '<img width="28px" height="28px" src="img/logo_red.png">';
-var picLogoBlink = '<img width="28px" height="28px" src="img/logo_blink.gif">';
+var imgSrcEyeOpen = 'img/eye_open.png';
+var imgSrcEyeClosed = 'img/eye_closed.png';
 
-var picLoading = '<img src="img/loading.gif">';
-var picReload = '<img src="img/reload.png">';
+var imgSrcLogoBlue = 'img/logo_blue.png';
+var imgSrcLogoRed = 'img/logo_red.png';
+var imgSrcLogoBlink = 'img/logo_blink.gif';
 
-var picTokCreate = '<img width="70px" height="70px" src="img/tok_create.png">';
-var picTokData = '<img width="70px" height="70px" src="img/tok_data.png">';
-var picTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
-var picTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
-var picTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
+var imgTokCreate = '<img width="70px" height="70px" src="img/tok_create.png">';
+var imgTokData = '<img width="70px" height="70px" src="img/tok_data.png">';
+var imgTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
+var imgTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
+var imgTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
 
 function newImage(arg) {
     if (document.images) {
@@ -74,10 +77,15 @@ function docInit() {
 
 	$('#setdata_table').find('button, textarea').prop('disabled', true);
 	
-    $('#hasqd_logo').html(picLogoBlue);
-	$('#pic_reload').html(picReload);
-	$('#password_eye').html(picEyeOpen);
-	$('#password_eye').attr('title', 'Unmask password');	
+	$('#reload_span').find('img').attr('src', imgSrcReload);
+	$('#token_pic_span').find('img').attr('src', imgSrcLoading);
+	$('#token_pic_span').hide();
+	$('#password_pic_span').find('img').attr('src', imgSrcPwdNone);
+	$('#logo_span').find('img').attr('width', '28');
+	$('#logo_span').find('img').attr('height', '28');
+	$('#logo_span').find('img').attr('src', imgSrcLogoBlue);
+	$('#password_eye_span').find('img').attr('src', imgSrcEyeOpen);
+	$('#password_eye_span').find('img').attr('title', 'Unmask password');	
 	
     $('button').button();
     $('#token_data_td').hide();
@@ -131,7 +139,7 @@ function docInit() {
 	widShowEmptyArea();
 	
     var ping = function () {
-        engSendPing(5000)
+        widSendPing(5000)
     }
 
     glPingTimerId = setTimeout(ping, 5000);

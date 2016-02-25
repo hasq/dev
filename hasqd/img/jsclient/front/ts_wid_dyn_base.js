@@ -1,47 +1,87 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 function HasqLogo() {
-    //this.counter = 0;
+    var counter = 0;
+	return {
+		wait: function() {
+			counter++;
+			if (counter == 1) return $('#logo_span').find('img').attr('src', imgSrcLogoBlink);
+		},
+		done: function() {
+			counter--;
+			if (counter == 0) return setTimeout( function() {$('#logo_span').find('img').attr('src', imgSrcLogoBlue)}, 200);
+		},
+		fail: function() {
+			counter = 0;
+			console.log(counter);
+			$('#logo_span').find('img').attr('src', imgSrcLogoRed);
+		}
+	}
 }
-
-HasqLogo.prototype.inc = function () {
-    setTimeout(function () {
-        $('#hasqd_logo').html(picLogoBlink);
-    }, 500);
+/*
+HasqLogo.prototype.wait = function () {
+	console.log(counter);
+	if (counter > 1) return;
+	$('#logo_span').html(imgSrcLogoBlink);
 };
 
-HasqLogo.prototype.dec = function () {
-    setTimeout(function () {
-        $('#hasqd_logo').html(picLogoBlue);
-    }, 500);
+HasqLogo.prototype.done = function (counter) {
+	if (counter == 0) {
+		setTimeout(function () {
+			$('#logo_span').html(imgSrcLogoBlue);
+		}, 500);
+	}
 };
 
-HasqLogo.prototype.fail = function () {
-    $('#hasqd_logo').html(picLogoRed);
+HasqLogo.prototype.fail = function (counter) {
+    $('#logo_span').html(imgSrcLogoRed);
     //widShowLog('Server connection failure!');
 };
+*/
 
-var hasqLogo = new HasqLogo();
-
-function TextArea() {}
-
-TextArea.prototype.val = function (jqObj, data) {
-	if (typeof data == 'undefined') return jqObj.val();
-	return jqObj.val(jqObj.val() + data);
+function TextArea() {
+	return {
+		add: function (jqObj, data) {
+			jqObj.val(jqObj.val() + data);
+		},
+		clear: function (jqObj, data) {
+			if (typeof data == 'undefined') return jqObj.val('');
+			jqObj.val('');
+			jqObj.val(data);	
+		},
+		clearexcept: function (jqObj) {
+			$('textarea').not(jqObj).val('');
+		},		
+		val: function (jqObj) {
+			jqObj.val();
+		}
+	}
 }
 
-TextArea.prototype.empty = function (jqObj, data) {
-	if (typeof data == 'undefined') return jqObj.val('');
-	jqObj.val('');
-	jqObj.val(data);	
-	return;
-}
+var hasqLogo = HasqLogo();
+var textArea = TextArea();
 
-TextArea.prototype.emptyall = function () {
-	return $('textarea').not('#token_text_textarea').val('');
-}
+function widSendPing(timeDelay) {
+    // Ping server every 5s,10s,15s,...,60s,...,60s,...
+    var timerId = glPingTimerId;
 
-var textArea = new TextArea();
+    if (timeDelay < 60000) {
+        timeDelay += 5000;
+    }
+
+    var cb = function (data) {
+        var now = new Date();
+        var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+		if (engGetResp(data).msg !== 'OK') return widShowLog('Server gave a suspicious response to the ping!');
+    }
+	
+    ajxSendCommand('ping', cb, hasqLogo)
+    var ping = function () {
+        widSendPing(timeDelay)
+    };
+    glPingTimerId = setTimeout(ping, timeDelay);
+    clearInterval(timerId);
+}
 
 function widButtonClick(obj) {
     // Shared button click function
@@ -147,19 +187,16 @@ function widShowLog(text) {
 
 function widShowTokenMsg(d) {
     // Shows message or image about tokens existense.
-    var obj = $('#token_pic_td');
-
+    var obj = $('#token_pic_span');
+    obj.hide();
     if (arguments.length === 0) {
-        obj.empty();
         widShowLog();
     } else if (d === undefined) {
-        obj.html(picLoading);
+        obj.show();
         widShowLog('Searching for token...');
     } else if (d === true) {
         widShowLog('Token exists.');
-        obj.empty();
     } else if (d === false) {
-        obj.empty();
         widShowLog('No such token.');
     }
 }
@@ -216,16 +253,19 @@ function widGetPwdPic(status) {
 	r.title = status;
     switch (status) {
     case 'OK':
-		r.pic = picPwdOk;
+		r.pic = imgSrcPwdOk;
 		break;
     case 'TKN_SNDNG':
-        r.pic = picPwdSndng;
+        r.pic = imgSrcPwdSndng;
 		break;
     case 'TKN_RCVNG':
-        r.pic = picPwdRcvng;
+        r.pic = imgSrcPwdRcvng;
 		break;
-    default: //'WRONG_PWD'
-        r.pic = picPwdWrong;
+    case 'WRONG_PWD': //'WRONG_PWD'
+        r.pic = imgSrcPwdWrong;
+		break;
+	default:
+		r.pic = imgSrcPwdNone;
 		break;
     }
 	return r;
@@ -233,12 +273,11 @@ function widGetPwdPic(status) {
 
 function widShowPwdMatch(status) {
     // Shows an image displaying the password match
-    var objT = $('#password_pic_td');
+    var objT = $('#password_pic_span');
     var objI = $('#password_input');
 
-    if (arguments.length == 0 ) return objT.empty();
 	var r = widGetPwdPic(status);
-	objT.html(r.pic);
+	objT.find('img').attr('src', r.pic);
 	objT.prop('title', r.title);
 }
 
@@ -254,14 +293,10 @@ function widTokenTextOninput() {
     widShowEmptyArea(); //clear and hide data field
 	widShowPwdMatch();
 	widShowTokenMsg();
-	textArea.emptyall();
 	glLastRec={};
 
-	widDisableDataTab(true);
-	widDisableCreateTab(true);
-	widDisableSendTab(true);
-	
     var jqTokText = $('#token_text_textarea');
+	textArea.clearexcept(jqTokText);
 	var tok = widGetToken(jqTokText.val(), glCurrentDB.hash);
 	widShowToken(tok);	
 	
@@ -275,7 +310,6 @@ function widTokenTextOninput() {
 			glLastRec.s = tok;
 			widShowTokenMsg(false);
 			widShowCreateArea();
-			if (glPassword.length > 0) widDisableCreateTab(false);
 		} else {
 			glLastRec = engGetRespLast(data);
 			//if (lr.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
@@ -316,7 +350,8 @@ function widPasswordOninput(jqPwd) {
 	widDisableDataTab(true);
 	widDisableCreateTab(true);
 	widDisableSendTab(true);
-	widDisableReceiveTab(true);
+	widDisableReceiveTab(false);
+	
 	if (glPassword.length > 0) {
 		widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 		if (typeof glLastRec.st === 'undefined') return;
@@ -329,8 +364,9 @@ function widPasswordOninput(jqPwd) {
 			widDisableSendTab(false);
 			widDisableReceiveTab(true);
 			return;
-		} else {
-			widDisableReceiveTab(false);			
+		} 
+		if (glLastRec.st == 'TKN_SNDNG') {
+			return widDisableSendTab(false);
 		}
     } else {
 		widShowPwdMatch();
@@ -345,11 +381,11 @@ function widPasswordEyeClick(jqEye){
 	var jqPwd = $('#password_input');
 	if (jqPwd.attr('type') == 'text') {
 		jqPwd.attr('type', 'password');
-		jqEye.html(picEyeOpen);
+		jqEye.find('img').attr('src', imgSrcEyeOpen);
 		jqEye.attr('title', 'Unmask password');
 	} else {
 		jqPwd.attr('type', 'text');
-		jqEye.html(picEyeClosed);
+		jqEye.find('img').attr('src', imgSrcEyeClosed);
 		jqEye.attr('title', 'Mask password');
 	}
 }
@@ -410,7 +446,7 @@ function widSetDataButtonClick() {
     }
 
     var f = function () {
-        ajxSendCommand(cmd, cb, hasqLogo)
+        ajxSendCommand(cmd, cb, hasqLogo);
     }
 
     widShowLog('Giving token data...');
@@ -429,8 +465,8 @@ function widShowKeysButtonClick() {
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 	if (glLastRec.st !== 'OK' && glLastRec.st !== 'TKN_SNDNG' ) return widCompleteEvent('Unavailable token!');
 
-	textArea.empty(jqArea0);
-	textArea.empty(jqArea1);
+	textArea.clear(jqArea0);
+	textArea.clear(jqArea1);
 	
 	var k1, k2, g1, tkLine, rawTransKeys, prLine;
 	
@@ -441,12 +477,12 @@ function widShowKeysButtonClick() {
 		k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
 		tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
 		
-		textArea.val(jqArea0, tkLine);
+		textArea.add(jqArea0, tkLine);
 
 		rawTransKeys = jqArea0.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
 	
-		textArea.val(jqArea0, prLine);
+		textArea.add(jqArea0, prLine);
 		
 		return widCompleteEvent('OK');
 	} 
@@ -456,37 +492,37 @@ function widShowKeysButtonClick() {
         k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
         tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
-		textArea.val(jqArea0, tkLine);
+		textArea.add(jqArea0, tkLine);
 		
 		rawTransKeys = jqArea0.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
 		
-		textArea.val(jqArea0, prLine);
+		textArea.add(jqArea0, prLine);
 		
         tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
 		
-		textArea.val(jqArea1, tkLine);
+		textArea.add(jqArea1, tkLine);
 		
 		rawTransKeys = jqArea1.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
 		
-		textArea.val(jqArea1, prLine);
+		textArea.add(jqArea1, prLine);
 	
 		return widCompleteEvent('OK');
 	}
 	
 	if (glLastRec.st === 'TKN_SNDNG') {
-		textArea.empty(jqArea0);
+		textArea.clear(jqArea0);
 		
         k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        tkLine = glLastRec.n - 1 + '\u0020' + glLastRec.s + '\u0020' + k2 + '\u0020';
+        tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
 		
-		textArea.val(jqArea1, tkLine);
+		textArea.add(jqArea1, tkLine);
 		
 		rawTransKeys = jqArea1.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
 		
-		textArea.val(jqArea1, prLine);
+		textArea.add(jqArea1, prLine);
 		
 		return widCompleteEvent('OK');
 	}
@@ -515,7 +551,9 @@ function widReceiveButtonClick() {
 		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		lr.st = widGetTokenStatus(lr, nr);
 		if (lr.st === 'OK') return widCompleteEvent('Token already available!');
-		textArea.empty(jqTok, tok);
+		transKeys[0].n = lr.n;
+		textArea.clear(jqTok, tok);
+		console.log(transKeys);
 		widSetTransKeys(transKeys);
     }
     
@@ -524,27 +562,90 @@ function widReceiveButtonClick() {
     var f = function () {
         ajxSendCommand(cmd, cb, hasqLogo);
     }
-
-    setTimeout(f, 1000);
+	
     widShowLog('Receiving token...');
-		//widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 	
+    setTimeout(f, 1000);
 }
 
 function widSetTransKeys(keys){
 	keys = engGetEnrollKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
 	switch (keys[0].prcode){
 		case '23132':
+			widSimpleReceive(keys);
 			break;
 		case '23141':
+			widBlockingReceiveStep1(keys);
 			break;
 		case '232':
+			widBlockingReceiveStep2(keys);
 			break;
 		default:
 			return widCompleteEvent('Bad TransKeys!');
 	}
-	widCompleteEvent('OK');
 }
 
+function widSimpleReceive(keys) {
+	var n1 = keys[0].n + 1;
+	var n2 = keys[0].n + 2;
+	var s = keys[0].s;
+	var k1 = keys[0].k1;
+	var g1 = keys[0].g1;
+	var o1 = keys[0].o1;
+	var k2 = keys[0].k2;
+	var g2 = keys[0].g2;
+	var o2 = keys[0].o2;
+	
+	var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+	var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+	console.log(addCmd1);
+	console.log(addCmd2);
+    var cb2 = function (data) {
+		var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+	}
+	
+    var cb1 = function (data) {
+		var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
+	}
+	
+    ajxSendCommand(addCmd1, cb1, hasqLogo);
+}	
+
+
+function widBlockingReceiveStep1(keys) {
+    var n1 = keys[0].n + 1;
+    var s = keys[0].s;
+    var k1 = keys[0].k1;
+    var g1 = keys[0].g1;
+    var o1 = keys[0].o1;
+
+    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;	
+    
+	var cb = function (data) {
+		var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+	}
+	
+    ajxSendCommand(addCmd, cb, hasqLogo);
+}
+
+function widBlockingReceiveStep2(keys) {
+    var n2 = keys[0].n + 1;
+    var s = keys[0].s;
+    var k2 = keys[0].k2;
+    var g2 = keys[0].g2;
+    var o2 = keys[0].o2;
+
+    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;	
+    
+	var cb = function (data) {
+		var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+	}
+	
+    ajxSendCommand(addCmd, cb, hasqLogo);	
+}
 
 function widSearchButtonClick() {
     var jqFrom = $('#from_datepicker_input');

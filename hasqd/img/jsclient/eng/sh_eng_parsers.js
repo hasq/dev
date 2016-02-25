@@ -298,7 +298,8 @@ function engIsRawTransKeys(keys) {
 	} else if (prCode0Ch == '2') {
 		isRecNum = false;
 	} else {
-		return;
+console.log('0');
+		return false;
 	}
 	//checks match of a protocol code and quantity of transkeys elements;
 	if (prCodeLen == 3 || prCodeLen == 4) { 		
@@ -306,6 +307,7 @@ function engIsRawTransKeys(keys) {
 	} else if (prCodeLen == 5 || prCodeLen == 6) {
 		keysLen = (isRecNum) ? 4 : 3;
 	} else {
+console.log('1');
 		return false;
 	}
 
@@ -322,8 +324,9 @@ function engIsRawTransKeys(keys) {
 		tmpl = keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
 		tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);	//calculates CRC	
 	}
-	
-	if (prCRC !== tkCRC) return false; //checks CRC
+console.log('2');
+	if (prCRC !== tkCRC) return false;
+console.log('3');	//checks CRC
 	if (keys.length < keysLen) return false;
 	if (tmpl.length == 0) {
 		var mod = keys.length % keysLen;
@@ -332,11 +335,13 @@ function engIsRawTransKeys(keys) {
 		} else if (mod == 0) {
 			tmpl = keys[keys.length - 1].length;
 		} else {
+console.log('4');			
 			return false;
 		}
 	}
 	if (isRecNum) { //removes all records number, leaves only keys;
 		for (var i = 0; i < keys.length; i = i + keysLen) {
+console.log('5');			
 			if (!engIsNumber(keys[i])) return false;
 			keys.splice(i, 1);
 			i--;
@@ -344,8 +349,8 @@ function engIsRawTransKeys(keys) {
 	}
 	
 	tmpl = (tmpl > 0) ? tmpl : keys[0].length;
-	for (var i = 0; i < keys.length; i++) {		
-		if (tmpl !== keys[i].length) return false; //checks coincidence of the keys length and template lenght
+	for (var i = 0; i < keys.length; i++) {
+		if (tmpl !== keys[i].length) return false;	//checks coincidence of the keys length and template lenght
 	}	
 
 	return true;
@@ -431,24 +436,26 @@ function engGetTransKeys(keys) {
 
 function engGetEnrollKeys(transKeys, p, h, m) {
     var enrollKeys = transKeys;
-	var prK1K2 = '23132'; 
-    var prG2O2 = '24252';
-    var prK1G1 = '23141';
-    var prK2 = '232';
-    var prO1 = '251';
+	var prK1K2 = '23132'; //simple send;
+    var prK1G1 = '23141'; // blocking send, st1;
+    var prK2 = '232'; // blocking send, st2;
+    var prG2O2 = '24252'; // simple request; blocking request, st2;
+    var prO1 = '251'; // blocking request, st1;
 	
 	var prCode = enrollKeys[0].prcode; // get protocol key from first element;
 	var prCode0Ch = prCode.charAt(0);
 	var isRecNum = (prCode0Ch == '1') ? true : false; // if protocol have record numbers;
 	
 	prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
-	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
 	prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
-	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;	
+	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
 	prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
 	
     for (var i = 0; i < enrollKeys.length; i++) {
-		var n = enrollKeys[i].n
+		var n = enrollKeys[i].n;
+		console.log(enrollKeys[0].prcode);
+		console.log(n);
 		var s = enrollKeys[i].s;
 		var n1 = n + 1;
 		var n2 = n + 2;

@@ -1,11 +1,23 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function widGetHTMLSpan(span_id, func) {
+function widGetHTMLSpanImg(id, func) {
 	var r = '';
 	if ( arguments.length > 1 ) {
-		r += '<span align="center" valign="middle" id="' + span_id + '" onclick="' + func +'"></span>\n';
+		r += '<span id="' + id + '" onclick="' + func +'" align="center" valign="middle"><img src=""></img></span>\n';
 	} else {
-		r += '<span align="center" valign="middle" id="' + span_id + '"></span>\n';;
+		r += '<span id="' + id + '" align="center" valign="middle"><img src=""></img></span>\n';
+	}
+
+    return r;
+}
+
+
+function widGetHTMLSpan(id, func) {
+	var r = '';
+	if ( arguments.length > 1 ) {
+		r += '<span align="center" valign="middle" id="' + id + '" onclick="' + func +'"></span>\n';
+	} else {
+		r += '<span align="center" valign="middle" id="' + id + '"></span>\n';;
 	}
 
     return r;
@@ -62,8 +74,8 @@ function widGetHTMLTitleArea() {
 		r += '<tr>';
 			r += '<td class="title-td"/>';
 				r += '<span>\n' + glClientTitle + '</span>\n';
-			r += '<td width="30" align="center" valign="middle" onclick="engSendPing(5000)">';
-				r += widGetHTMLSpan('hasqd_logo') + '\n';
+			r += '<td width="30" height="30" align="center" valign="middle">';
+				r += widGetHTMLSpanImg('logo_span', 'widSendPing(5000)') + '\n';
 		r += '<tr>';
 	r += '</table>';
 	
@@ -87,11 +99,13 @@ function widGetHTMLTokenTextArea() {
 			r += '<td align="left" class="info-td">';
 				r += '<table>';
 					r += '<tr>';
-						r += '<td width="20" valign="center" title="Update token info"/>' + widGetHTMLSpan('pic_reload', 'widTokenTextOninput()');								
+						r += '<td width="20" height="20" valign="center" title="Update token info"/>';
+							r += widGetHTMLSpanImg('reload_span', 'widTokenTextOninput()');
 						r += '<td nowrap/>\n';
 							r += 'Token hash:&nbsp\n';
 						r += '<td width="280" id="token_hash_td" nowrap/>';
-						r += '<td width="20" id="token_pic_td"/>\n';
+						r += '<td width="20" height="20" />\n';
+							r += widGetHTMLSpanImg('token_pic_span', 'widTokenTextOninput()');
 					r += '</tr>';
 				r += '</table>';
 		r += '</tr>';
@@ -112,10 +126,12 @@ function widGetHTMLMasterKeyArea() {
 			r += '<td align="center">';
 				r += '<table border="0">';
 					r += '<tr>';
-						r += '<td width="20" valign="center" align="center">' + widGetHTMLSpan('password_eye', 'widPasswordEyeClick($(this))');
+						r += '<td width="20" valign="center" align="center">';
+							r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
 						r += '<td width="250"/>\n';
 							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
-						r += '<td width="20" valign="center" id="password_pic_td">\n';							
+						r += '<td width="20" valign="center">';
+							r += widGetHTMLSpanImg('password_pic_span');						
 					r += '</tr>';
 					r += '<tr>';
 						r += '<td width="20"/>&nbsp';
@@ -150,7 +166,7 @@ function widGetHTMLCreateButtonArea() {
 	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button id="create_tab_button" onclick="return widShowCreateArea()" data-state="off" disabled>' + picTokCreate + '</button>';
+				r += '<button id="create_tab_button" onclick="return widShowCreateArea()" data-state="off" disabled>' + imgTokCreate + '</button>';
 		r += '</tr>';
 	r += '</table>';
 	
@@ -161,15 +177,15 @@ function widGetHTMLButtonsArea() {
 	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSendArea()" data-state="off">' + picTokSend + '</button>';
+				r += '<button onclick="return widShowSendArea()" data-state="off">' + imgTokSend + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + picTokReceive + '</button>';
+				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + imgTokReceive + '</button>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSearchArea()" data-state="off">' + picTokSearch + '</button>';
+				r += '<button onclick="return widShowSearchArea()" data-state="off">' + imgTokSearch + '</button>';
 		r += '</tr>';		
 	r += '</table>';
 	return r;	
@@ -194,11 +210,11 @@ function widGetHTMLInitialData() {
 			r += '<td align="right" class="token-hash">';
 				r += '<table>';
 					r += '<tr>';
-					    r += '<td width="20" align="center" valign="center">' + widGetHTMLSpan('pic_reload', 'widTokenTextOninput()');
+					    r += '<td width="20" align="center" valign="center">' + widGetHTMLSpan('reload_span', 'widTokenTextOninput()');
 						r += '<td width="95" align="right" nowrap>\n';
 							r += '<i>Token hash:&nbsp</i>\n';
 						r += '<td width="270" id="token_hash_td" colspan="2" align="left" style="font-style: italic;" nowrap>';
-						r += '<td width="20" id="token_pic_td" align="right" valign="center">\n';
+						r += '<td width="20" id="token_pic_span" align="right" valign="center">\n';
 					r += '</tr>';
 				r += '</table>';
 		r += '</tr>';
@@ -210,10 +226,10 @@ function widGetHTMLInitialData() {
 			r += '<td align="center">';
 				r += '<table border="0">';
 					r += '<tr>';
-						r += '<td width="20" valign="center" align="center">' + widGetHTMLSpan('password_eye', 'widPasswordEyeClick($(this))');
+						r += '<td width="20" valign="center" align="center">' + widGetHTMLSpan('password_eye_span', 'widPasswordEyeClick($(this))');
 						r += '<td width="250">\n';
 							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
-						r += '<td width="20" valign="center" id="password_pic_td">\n';
+						r += '<td width="20" valign="center" id="password_pic_span">\n';
 					r += '</tr>';
 					r += '<tr>';
 						r += '<td>&nbsp';
@@ -259,7 +275,7 @@ function widGetHTMLSetDataTab() {
 			r += '<td align="center">\n';
 				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="off"></textarea>';
 			r += '<td width="84" align="center">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + picTokData;
+				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + imgTokData;
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -273,7 +289,7 @@ function widGetHTMLCreateTab() {
 	r += '<table id="create_table" width="100%">\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + picTokCreate + '</button>';
+				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgTokCreate + '</button>';
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -312,7 +328,6 @@ function widGetHTMLSendTab() {
 
 function widGetHTMLReceiveTab() {
 	var r = '';
-	
 	
 	r += '<table id="receive_table" width="100%" border="0" >\n';
 		r += '<tr>\n';

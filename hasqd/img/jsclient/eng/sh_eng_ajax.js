@@ -2,17 +2,16 @@
 
 function ajxSendCommand(cmd, callback, led) {
     //console.log('---start!');
-    led.inc();
+    led.wait();
     //$.get('/' + cmd, function (data) {})
     // use post to prevent caching
     $.post('/', 'command=' + cmd, function (data) {})
 
     .done(function (data) {
-		console.log(data);
         //console.log('-done:' + data);
-        //setTimeout(function() {callback(data)}, 1000);
-        callback(data);
-        led.dec();
+		led.done(); 	//setTimeout(function() {led.done()}, 5000);
+        callback(data); //setTimeout(function() {callback(data)}, 1000);
+
     })
 
     .fail(function () {
@@ -21,9 +20,6 @@ function ajxSendCommand(cmd, callback, led) {
     })
 
     .always(function () {
-	})
+	});
 
-    .error(function() {
-    		led.fail();
-    });
 }
