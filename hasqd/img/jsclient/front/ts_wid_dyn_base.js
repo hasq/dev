@@ -249,9 +249,8 @@ function widGetTokenStatus(lr, nr) {
 
 function widGetPwdPic(status) {
     // Returns an image displaying the password match
-	r = {};
+	var r = {};
 
-	console.log(status)
     switch (status) {
     case 'OK':
 		r.pic = imgSrcPwdOk;

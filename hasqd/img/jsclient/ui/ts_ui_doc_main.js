@@ -8,11 +8,6 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var pic = function (imgSrc) {
-	if (arguments.length == 0 ) imgSrc = '';
-	return '<img src="' + imgSrc + '">';
-}
-
 var imgSrcPwdOk = 'img/pwd_ok.png';
 var imgSrcPwdWrong = 'img/pwd_wrong.png';
 var imgSrcPwdRcvng = 'img/pwd_rcvng.png';
@@ -35,9 +30,13 @@ var imgTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
 var imgTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
 var imgTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
 
+var allImages = [imgSrcPwdOk,imgSrcPwdWrong,imgSrcPwdRcvng,imgSrcPwdSndng,imgSrcPwdNone,imgSrcLoading,
+imgSrcReload,imgSrcEyeOpen,imgSrcEyeClosed,imgSrcLogoBlue,imgSrcLogoRed,imgSrcLogoBlink];
+ 
 function newImage(arg) {
     if (document.images) {
-        result = new Image();
+        var result = new Image();
+		console.log(result);
         result.src = arg;
         return result;
     }
@@ -45,16 +44,19 @@ function newImage(arg) {
 
 var preloadFlag = false;
 
-function preloadImages() {
-    frame = []; //new Array();
-    arg = preloadImages.arguments;
+function preloadImages(img) {
+    var frame = [];
+    //var arg = preloadImages.arguments;
+
     if (document.images) {
-        for (i = 0; i < arg.length; i++) {
-            frame[i] = newImage(arg[i]);
+        for (i = 0; i < img.length; i++) { //for (i = 0; i < arg.length; i++) {
+            frame[i] = newImage(img[i]); //frame[i] = newImage(arg[i]);
         }
         preloadFlag = true;
     }
 }
+
+
 
 function docMainWrite() {
     document.write(docMain());
