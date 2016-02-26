@@ -70,8 +70,8 @@ function widSendPing(timeDelay) {
     }
 
     var cb = function (data) {
-        var now = new Date();
-        var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
+        //var now = new Date();
+        //var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
 		if (engGetResp(data).msg !== 'OK') return widShowLog('Server gave a suspicious response to the ping!');
     }
 	
@@ -545,7 +545,6 @@ function widReceiveButtonClick() {
     var tokText = [glLastRec.r]
 
 	var transKeys = engGetTransKeys(rawTransKeys);
-	console.log(transKeys);
 	var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
 	tok = tok[0].replace(/\[|\]/g, '');
 
@@ -557,9 +556,9 @@ function widReceiveButtonClick() {
 		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		lr.st = widGetTokenStatus(lr, nr);
 		if (lr.st === 'OK') return widCompleteEvent('Token already available!');
-		transKeys[0].n = lr.n;
+		transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n;
 		textArea.clear(jqTok, tok);
-		console.log(transKeys);
+
 		widSetTransKeys(transKeys);
     }
     
@@ -603,8 +602,7 @@ function widSimpleReceive(keys) {
 	
 	var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 	var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-	console.log(addCmd1);
-	console.log(addCmd2);
+
     var cb2 = function (data) {
 		var resp = engGetResp(data);
         (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
@@ -627,7 +625,7 @@ function widBlockingReceiveStep1(keys) {
     var o1 = keys[0].o1;
 
     var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;	
-    
+
 	var cb = function (data) {
 		var resp = engGetResp(data);
         (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
@@ -637,14 +635,14 @@ function widBlockingReceiveStep1(keys) {
 }
 
 function widBlockingReceiveStep2(keys) {
-    var n2 = keys[0].n + 1;
+    var n2 = keys[0].n + 2;
     var s = keys[0].s;
     var k2 = keys[0].k2;
     var g2 = keys[0].g2;
     var o2 = keys[0].o2;
 
     var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;	
-    
+console.log(addCmd);    
 	var cb = function (data) {
 		var resp = engGetResp(data);
         (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();

@@ -298,7 +298,6 @@ function engIsRawTransKeys(keys) {
 	} else if (prCode0Ch == '2') {
 		isRecNum = false;
 	} else {
-console.log('0');
 		return false;
 	}
 	//checks match of a protocol code and quantity of transkeys elements;
@@ -307,7 +306,6 @@ console.log('0');
 	} else if (prCodeLen == 5 || prCodeLen == 6) {
 		keysLen = (isRecNum) ? 4 : 3;
 	} else {
-console.log('1');
 		return false;
 	}
 
@@ -324,9 +322,7 @@ console.log('1');
 		tmpl = keys.splice(keys.length - 1, 1)[0].length;	//extracts DB name;
 		tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);	//calculates CRC	
 	}
-console.log('2');
-	if (prCRC !== tkCRC) return false;
-console.log('3');	//checks CRC
+	if (prCRC !== tkCRC) return false; //checks CRC
 	if (keys.length < keysLen) return false;
 	if (tmpl.length == 0) {
 		var mod = keys.length % keysLen;
@@ -335,13 +331,11 @@ console.log('3');	//checks CRC
 		} else if (mod == 0) {
 			tmpl = keys[keys.length - 1].length;
 		} else {
-console.log('4');			
 			return false;
 		}
 	}
 	if (isRecNum) { //removes all records number, leaves only keys;
 		for (var i = 0; i < keys.length; i = i + keysLen) {
-console.log('5');			
 			if (!engIsNumber(keys[i])) return false;
 			keys.splice(i, 1);
 			i--;
@@ -349,6 +343,7 @@ console.log('5');
 	}
 	
 	tmpl = (tmpl > 0) ? tmpl : keys[0].length;
+	
 	for (var i = 0; i < keys.length; i++) {
 		if (tmpl !== keys[i].length) return false;	//checks coincidence of the keys length and template lenght
 	}	
@@ -454,8 +449,6 @@ function engGetEnrollKeys(transKeys, p, h, m) {
 	
     for (var i = 0; i < enrollKeys.length; i++) {
 		var n = enrollKeys[i].n;
-		console.log(enrollKeys[0].prcode);
-		console.log(n);
 		var s = enrollKeys[i].s;
 		var n1 = n + 1;
 		var n2 = n + 2;

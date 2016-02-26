@@ -36,7 +36,7 @@ imgSrcReload,imgSrcEyeOpen,imgSrcEyeClosed,imgSrcLogoBlue,imgSrcLogoRed,imgSrcLo
 function newImage(arg) {
     if (document.images) {
         var result = new Image();
-		console.log(result);
+		//console.log(result);
         result.src = arg;
         return result;
     }

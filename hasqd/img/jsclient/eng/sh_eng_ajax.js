@@ -11,7 +11,6 @@ function ajxSendCommand(cmd, callback, led) {
         //console.log('-done:' + data);
 		led.done(); 	//setTimeout(function() {led.done()}, 5000);
         callback(data); //setTimeout(function() {callback(data)}, 1000);
-
     })
 
     .fail(function () {
