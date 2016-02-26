@@ -1,27 +1,28 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function HasqdLed() {
-    //this.counter = 0;
+function HasqLogo() {
+    var counter = 0;
+	return {
+		wait: function() {
+			counter++;
+			if (counter == 1) return $('#logo_span').find('img').attr('src', imgSrcLogoBlink);
+		},
+		done: function() {
+			counter--;
+			if (counter == 0) return setTimeout( function() {$('#logo_span').find('img').attr('src', imgSrcLogoBlue)}, 200);
+		},
+		fail: function() {
+			counter = 0;
+			console.log(counter);
+			$('#logo_span').find('img').attr('src', imgSrcLogoRed);
+		}
+	}
 }
 
-HasqdLed.prototype.fail = function () {
-    $('#hasqd_led').html(picLogoRed);
-};
-
-HasqdLed.prototype.inc = function () {
-    setTimeout(function () { $('#hasqd_led').html(picLogoBlink) }, 500);
-};
-
-HasqdLed.prototype.dec = function () {
-    setTimeout(function () {
-        $('#hasqd_led').html(picLogoBlue);
-    }, 500);
-};
-
-var hasqdLed = new HasqdLed();
+var hasqLogo = HasqLogo();
 
 function widAnimateProgbar() {
-    $('#hasqd_led').html(picLogoBlue);
+    $('#logo_span').html(picLogoBlue);
 }
 
 function widShowBordersColor(obj, color) {
@@ -100,7 +101,7 @@ function widRefreshButtonClick() {
         objId.html('<pre>' + infoId + '</pre>');
     }
 
-    ajxSendCommand('info id', cb1, hasqdLed);
+    ajxSendCommand('info id', cb1, hasqLogo);
 
     var cb2 = function (data) {
         var objSys = $('#server_sys');
@@ -112,7 +113,7 @@ function widRefreshButtonClick() {
 		objSys.html('<pre>' + infoSys + '</pre>');
     }
 
-    ajxSendCommand('info sys', cb2, hasqdLed);
+    ajxSendCommand('info sys', cb2, hasqLogo);
 
     var cb3 = function (data) {
         var objFam = $('#server_fam');
@@ -125,7 +126,7 @@ function widRefreshButtonClick() {
         objFam.html('<pre>' + table + '</pre>');
     }
 
-    ajxSendCommand('info fam', cb3, hasqdLed);
+    ajxSendCommand('info fam', cb3, hasqLogo);
 
     var cb4 = function (data) {
 		var resp = engGetResp(data);
@@ -155,7 +156,7 @@ function widRefreshButtonClick() {
         }
     }
 
-    ajxSendCommand('info db', cb4, hasqdLed);
+    ajxSendCommand('info db', cb4, hasqLogo);
 }
 
 function widCommandSendButtonClick() {
@@ -166,7 +167,7 @@ function widCommandSendButtonClick() {
         objCmdOutput.html(d);
     }
 
-    ajxSendCommand(cmd, cb, hasqdLed);
+    ajxSendCommand(cmd, cb, hasqLogo);
 }
 
 function widRawDNOninput() {
@@ -267,7 +268,7 @@ function widGetLastRecordButtonClick() {
     }
 	
     widShowLastRecord();
-    ajxSendCommand(getlast, cb, hasqdLed);
+    ajxSendCommand(getlast, cb, hasqLogo);
 }
 
 function widShowNewRecordAuto() {
@@ -422,7 +423,7 @@ function widTokensHistorySelect(range) {
 
     var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
 
-    ajxSendCommand(cmd, cb, hasqdLed);
+    ajxSendCommand(cmd, cb, hasqLogo);
 }
 
 function widHashcalcOninput() {
@@ -457,7 +458,7 @@ function widSubmitButtonClick() {
 
     var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetInputDataValue(nr_d);
 
-    ajxSendCommand(nr, cb, hasqdLed);
+    ajxSendCommand(nr, cb, hasqLogo);
 }
 
 function widSendCommandInputOnpresskey(d, e) {

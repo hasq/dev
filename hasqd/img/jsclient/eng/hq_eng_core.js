@@ -117,7 +117,7 @@ function engRunCL(commandsList, cbFunc) {
     }
 
     if (commandsList.items.length > 0 && commandsList.idx < commandsList.items.length) {
-        ajxSendCommand(commandsList.items[commandsList.idx].cmd, cb, hasqdLed);
+        ajxSendCommand(commandsList.items[commandsList.idx].cmd, cb, hasqLogo);
     } else if (commandsList.items.length === 0) {
         cbFunc('OK', 0, 0);
     }

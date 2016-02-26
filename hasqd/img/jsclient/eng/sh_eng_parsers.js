@@ -394,6 +394,7 @@ function engGetTransKeys(keys) {
 		transKeys[i].prcode = prCode;
 		transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[i] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
 		transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[i];
+		
 		switch (prCode) {
 		case (prK1K2):
 			transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
@@ -429,15 +430,15 @@ function engGetTransKeys(keys) {
     return transKeys;
 }
 
-function engGetEnrollKeys(transKeys, p, h, m) {
-    var enrollKeys = transKeys;
+function engGetTitleKeys(transKeys, p, h, m) {
+    var titleKeys = transKeys;
 	var prK1K2 = '23132'; //simple send;
     var prK1G1 = '23141'; // blocking send, st1;
     var prK2 = '232'; // blocking send, st2;
     var prG2O2 = '24252'; // simple request; blocking request, st2;
     var prO1 = '251'; // blocking request, st1;
 	
-	var prCode = enrollKeys[0].prcode; // get protocol key from first element;
+	var prCode = titleKeys[0].prcode; // get protocol key from first element;
 	var prCode0Ch = prCode.charAt(0);
 	var isRecNum = (prCode0Ch == '1') ? true : false; // if protocol have record numbers;
 	
@@ -447,58 +448,58 @@ function engGetEnrollKeys(transKeys, p, h, m) {
 	prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
 	prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
 	
-    for (var i = 0; i < enrollKeys.length; i++) {
-		var n = enrollKeys[i].n;
-		var s = enrollKeys[i].s;
+    for (var i = 0; i < titleKeys.length; i++) {
+		var n = titleKeys[i].n;
+		var s = titleKeys[i].s;
 		var n1 = n + 1;
 		var n2 = n + 2;
 		var n3 = n + 3;
 		var n4 = n + 4;
 		
-        switch (enrollKeys[0].prcode) {
+        switch (titleKeys[0].prcode) {
         case prK1K2:
-            var k2 = enrollKeys[i].k2; //
-            enrollKeys[i].g1 = engGetKey(n2, enrollKeys[i].s, k2, m, h); //
+            var k2 = titleKeys[i].k2; //
+            titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
             var k3 = engGetKey(n3, s, p, m, h);
-            var g2 = enrollKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-            enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+            var g2 = titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
             var k4 = engGetKey(n4, s, p, m, h);
             var g3 = engGetKey(n4, s, k4, m, h);
-            enrollKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
             break;
         case prG2O2:
-            enrollKeys[i].n1 = n1; //
-            enrollKeys[i].n2 = n2; //
-            var g2 = enrollKeys[i].g2; //
-            enrollKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            var k2 = enrollKeys[i].k2 = engGetKey(n2, s, p, m, h); //
-            enrollKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+            titleKeys[i].n1 = n1; //
+            titleKeys[i].n2 = n2; //
+            var g2 = titleKeys[i].g2; //
+            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+            var k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
+            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
             break;
         case prK1G1:
             var k3 = engGetKey(n3, s, p, m, h);
             var g2 = engGetKey(n3, s, k3, m, h);
-			enrollKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+			titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
             break;
         case prK2:
             var k3 = engGetKey(n3, s, p, m, h);
             var k4 = engGetKey(n4, s, p, m, h);
             var g3 = engGetKey(n4, s, k4, m, h);
-			enrollKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-			enrollKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+			titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+			titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
             break;
         case prO1:
-            enrollKeys[i].n1 = n + 1;
-            enrollKeys[i].k1 = engGetKey(enrollKeys[i].n1, s, p, m, h); //
+            titleKeys[i].n1 = n + 1;
+            titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
             var k2 = engGetKey(n2, s, p, m, h);
-            enrollKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            enrollKeys[i].o1; //
+            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+            titleKeys[i].o1; //
 			break;
         default:
             break;
         }
     }
-    return enrollKeys;
+    return titleKeys;
 }
 
 

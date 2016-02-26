@@ -27,7 +27,7 @@ function widGetHTMLBody(tabs){
 
     r += '<tr>\n';
     r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
-    r += '<td style="text-align:right;">&nbsp;' + '' + widGetHTMLSpan('hasqd_led');
+    r += '<td style="text-align:right;">&nbsp;' + '' + widGetHTMLSpan('logo_span');
     r += '</tr>\n';
 
     r += '<tr>\n';

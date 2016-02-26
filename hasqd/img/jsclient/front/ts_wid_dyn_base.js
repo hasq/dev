@@ -1,23 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function HasqLogo() {
-    var counter = 0;
-	return {
-		wait: function() {
-			counter++;
-			if (counter == 1) return $('#logo_span').find('img').attr('src', imgSrcLogoBlink);
-		},
-		done: function() {
-			counter--;
-			if (counter == 0) return setTimeout( function() {$('#logo_span').find('img').attr('src', imgSrcLogoBlue)}, 200);
-		},
-		fail: function() {
-			counter = 0;
-			console.log(counter);
-			$('#logo_span').find('img').attr('src', imgSrcLogoRed);
-		}
-	}
-}
+
 /*
 HasqLogo.prototype.wait = function () {
 	console.log(counter);
@@ -39,27 +22,6 @@ HasqLogo.prototype.fail = function (counter) {
 };
 */
 
-function TextArea() {
-	return {
-		add: function (jqObj, data) {
-			jqObj.val(jqObj.val() + data);
-		},
-		clear: function (jqObj, data) {
-			if (typeof data == 'undefined') return jqObj.val('');
-			jqObj.val('');
-			jqObj.val(data);	
-		},
-		clearexcept: function (jqObj) {
-			$('textarea').not(jqObj).val('');
-		},		
-		val: function (jqObj) {
-			jqObj.val();
-		}
-	}
-}
-
-var hasqLogo = HasqLogo();
-var textArea = TextArea();
 
 function widSendPing(timeDelay) {
     // Ping server every 5s,10s,15s,...,60s,...,60s,...
@@ -550,7 +512,7 @@ function widReceiveButtonClick() {
 }
 
 function widTokensTakeover(keys){
-	keys = engGetEnrollKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+	keys = engGetTitleKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
 	switch (keys[0].prcode){
 		case '23132':
 			widSimpleReceive(keys);

@@ -599,23 +599,23 @@ function widUpdateTokens(jqObj, data) {
     engRunCL(glCL, cbFunc);
 }
 
-function widTransKeysUpdate(jqObj, transKeys, func){
+function widUpgradeTransKeys(jqObj, transKeys, func){
 //if transkeys not contains numbers of records , makes 'last' and update transkeys records numbers;
 	widCleanCL();
 	var prCode = transKeys[0].prcode;
 	
 	if (prCode.charAt(0) === '2' && glVTL.items.length === 0) {
         var extCb = function () {
-			widTransKeysUpdate(jqObj, transKeys, func);
+			widUpgradeTransKeys(jqObj, transKeys, func);
         }
 		return widMakeVTL(jqObj, transKeys, extCb);
 	} else if (prCode.charAt(0) === '2' && glVTL.items.length > 0) {
 		if (transKeys.length !== glVTL.items.length) return widDone(jqObj, 'TransKeys update error!');
-		transKeys = engGetUpdatedTransKeys(transKeys, glVTL);
+		transKeys = engGetUpgradedTransKeys(transKeys, glVTL);
 	}
 	
-	var enrollKeys = engGetEnrollKeys(transKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
-	var	f = function () { func(jqObj, enrollKeys); }
+	var titleKeys = engGetTitleKeys(transKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+	var	f = function () { func(jqObj, titleKeys); }
 	setTimeout(f);
 }
 
@@ -700,10 +700,10 @@ function widPreSimpleReceive(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widSimpleReceive); 
+	widUpgradeTransKeys(jqObj, transKeys, widSimpleReceive); 
 }
 
-function widSimpleReceive(jqObj, enrollKeys) {
+function widSimpleReceive(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
 		
@@ -714,17 +714,17 @@ function widSimpleReceive(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
 	}
 	
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n0 = enrollKeys[i].n;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n0 = titleKeys[i].n;
         var n1 = n0 + 1;
         var n2 = n0 + 2;
-        var s = enrollKeys[i].s;
-        var k1 = enrollKeys[i].k1;
-        var g1 = enrollKeys[i].g1;
-        var o1 = enrollKeys[i].o1;
-        var k2 = enrollKeys[i].k2;
-        var g2 = enrollKeys[i].g2;
-        var o2 = enrollKeys[i].o2;
+        var s = titleKeys[i].s;
+        var k1 = titleKeys[i].k1;
+        var g1 = titleKeys[i].g1;
+        var o1 = titleKeys[i].o1;
+        var k2 = titleKeys[i].k2;
+        var g2 = titleKeys[i].g2;
+        var o2 = titleKeys[i].o2;
 
         var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
@@ -835,10 +835,10 @@ function widPreSimpleAccept(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash); 
 	widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widSimpleAccept); 
+	widUpgradeTransKeys(jqObj, transKeys, widSimpleAccept); 
 }
 
-function widSimpleAccept(jqObj, enrollKeys) {
+function widSimpleAccept(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
         widShowProgressbar(progress);
 		
@@ -849,17 +849,17 @@ function widSimpleAccept(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
     }
 
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n0 = enrollKeys[i].n;
-        var n1 = enrollKeys[i].n1;
-        var n2 = enrollKeys[i].n2;
-        var s = enrollKeys[i].s;
-        var k1 = enrollKeys[i].k1;
-        var g1 = enrollKeys[i].g1;
-        var o1 = enrollKeys[i].o1;
-        var k2 = enrollKeys[i].k2;
-        var g2 = enrollKeys[i].g2;
-        var o2 = enrollKeys[i].o2;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n0 = titleKeys[i].n;
+        var n1 = titleKeys[i].n1;
+        var n2 = titleKeys[i].n2;
+        var s = titleKeys[i].s;
+        var k1 = titleKeys[i].k1;
+        var g1 = titleKeys[i].g1;
+        var o1 = titleKeys[i].o1;
+        var k2 = titleKeys[i].k2;
+        var g2 = titleKeys[i].g2;
+        var o2 = titleKeys[i].o2;
         var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
         var idx = (i == 0) ? 0 : i * 2;
@@ -1034,10 +1034,10 @@ function widPreBlockingReceiveStep1(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widBlockingReceiveStep1); 
+	widUpgradeTransKeys(jqObj, transKeys, widBlockingReceiveStep1); 
 }
 
-function widBlockingReceiveStep1(jqObj, enrollKeys) {
+function widBlockingReceiveStep1(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
 		
@@ -1048,13 +1048,13 @@ function widBlockingReceiveStep1(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
     }
 
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n0 = enrollKeys[i].n;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n0 = titleKeys[i].n;
         var n1 = n0 + 1;
-        var s = enrollKeys[i].s;
-        var k1 = enrollKeys[i].k1;
-        var g1 = enrollKeys[i].g1;
-        var o1 = enrollKeys[i].o1;
+        var s = titleKeys[i].s;
+        var k1 = titleKeys[i].k1;
+        var g1 = titleKeys[i].g1;
+        var o1 = titleKeys[i].o1;
 
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
@@ -1085,10 +1085,10 @@ function widPreBlockingReceiveStep2(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widBlockingReceiveStep2); 
+	widUpgradeTransKeys(jqObj, transKeys, widBlockingReceiveStep2); 
 }
 
-function widBlockingReceiveStep2(jqObj, enrollKeys) {
+function widBlockingReceiveStep2(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
 		
@@ -1105,13 +1105,13 @@ function widBlockingReceiveStep2(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'OK');
     }
 
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n0 = enrollKeys[i].n;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n0 = titleKeys[i].n;
         var n2 = n0 + 2;
-        var s = enrollKeys[i].s;
-        var k2 = enrollKeys[i].k2;
-        var g2 = enrollKeys[i].g2;
-        var o2 = enrollKeys[i].o2;
+        var s = titleKeys[i].s;
+        var k2 = titleKeys[i].k2;
+        var g2 = titleKeys[i].g2;
+        var o2 = titleKeys[i].o2;
         
 		var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 		
@@ -1283,10 +1283,10 @@ function widPreBlockingAcceptStep1(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash); 
 	widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widBlockingAcceptStep1); 
+	widUpgradeTransKeys(jqObj, transKeys, widBlockingAcceptStep1); 
 }
 
-function widBlockingAcceptStep1(jqObj, enrollKeys) {
+function widBlockingAcceptStep1(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
 		widShowProgressbar(progress);
 		
@@ -1297,12 +1297,12 @@ function widBlockingAcceptStep1(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
     }
 
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n1 = enrollKeys[i].n1;
-        var s = enrollKeys[i].s;
-        var k1 = enrollKeys[i].k1;
-        var g1 = enrollKeys[i].g1;
-        var o1 = enrollKeys[i].o1;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n1 = titleKeys[i].n1;
+        var s = titleKeys[i].s;
+        var k1 = titleKeys[i].k1;
+        var g1 = titleKeys[i].g1;
+        var o1 = titleKeys[i].o1;
 		
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
@@ -1334,10 +1334,10 @@ function widPreBlockingAcceptStep2(jqObj, click) {
     var transKeys = engGetTransKeys(rawTransKeys);
 	tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash); 
 	widShowOrderedTokensNames(tok);
-	widTransKeysUpdate(jqObj, transKeys, widBlockingAcceptStep2); 
+	widUpgradeTransKeys(jqObj, transKeys, widBlockingAcceptStep2); 
 }
 
-function widBlockingAcceptStep2(jqObj, enrollKeys) {
+function widBlockingAcceptStep2(jqObj, titleKeys) {
     var cbFunc = function (data, cmdIdx, progress) {
         widShowProgressbar(progress);
 		
@@ -1348,12 +1348,12 @@ function widBlockingAcceptStep2(jqObj, enrollKeys) {
 		(cmdIdx + 1 < glCL.items.length) ? widShowTokensLog('Obtaining keys...') : widDone(jqObj, 'Done.');
     }
 
-    for (var i = 0; i < enrollKeys.length; i++) {
-        var n2 = enrollKeys[i].n2;
-        var s = enrollKeys[i].s;
-        var k2 = enrollKeys[i].k2;
-        var g2 = enrollKeys[i].g2;
-        var o2 = enrollKeys[i].o2;
+    for (var i = 0; i < titleKeys.length; i++) {
+        var n2 = titleKeys[i].n2;
+        var s = titleKeys[i].s;
+        var k2 = titleKeys[i].k2;
+        var g2 = titleKeys[i].g2;
+        var o2 = titleKeys[i].o2;
 
         var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
