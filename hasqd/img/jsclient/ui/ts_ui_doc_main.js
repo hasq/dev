@@ -69,7 +69,6 @@ function docMainInit() {
 }
 
 function docInit() {
-	
     $('#tabs_div').tabs({
         activate : function (event, ui) {
             widShowLog();
@@ -77,7 +76,7 @@ function docInit() {
 	
     });
 
-	$('#setdata_table').find('button, textarea').prop('disabled', true);
+	$('#setdata_table').find('button').prop('disabled', true);
 	
 	$('#reload_span').find('img').attr('src', imgSrcReload);
 	$('#token_pic_span').find('img').attr('src', imgSrcLoading);

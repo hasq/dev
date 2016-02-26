@@ -88,16 +88,12 @@ function widButtonClick(obj) {
     var obj = $(obj);
     var f = obj.attr('data-onclick');
 
-    widDisableInitialDataUI();
-    widDisableTabsUI();
-
     eval(f);
 }
 
 function widCompleteEvent(text) {
     // Completes actions and enables UI
-    widDisableInitialDataUI(false);
-    widDisableTabsUI(false);
+
     if (arguments.length == 0) text = '&nbsp';
 	return widShowLog(text);
 }
@@ -127,32 +123,17 @@ function widSetDefaultDb(dbHash) {
 function widShowDBError() {
     // displays error message and blocks all UI;
     var warning = 'Database is not accessible!';
-    alert(warning);
-    widShowLog(warning);
-    widDisableInitialDataUI(true);
-    widDisableTabsUI(true);
+	alert(warning);
 }
 
-function widDisableInitialDataUI(f) {
+function widDisableInitialDataUI(v) {
     // Disables UI
-    var jqInitData = $('#initial_data_table');
-
-    if (arguments.length == 0) {
-        var f = true;
-    }
-
-    jqInitData.find('input').prop('disabled', f); //closest('table[id^="initial"]').
+    $('#initial_data_table').find('input').prop('disabled', v); //closest('table[id^="initial"]').
 }
 
-function widDisableTabsUI(f) {
+function widDisableTabsUI(v) {
     // To enable/disable specified selectors into the tabs area
-    var obj = $('#tabs_div');
-
-    if (arguments.length == 0) {
-        var f = true;
-    }
-
-    obj.find('button, input, textarea').prop('disabled', f);
+    $('#tabs_div').find('button, input').prop('disabled', v);
 }
 
 function widShowPwdGuessTime(d) {
@@ -179,7 +160,7 @@ function widShowLog(text) {
     // Shows messages in log
     var jqLog = $('#' + 'tokens_log_pre');
     if (arguments.length === 0) {
-        jqLog.html('&nbsp');
+		jqLog.html('&nbsp');
     } else {
         jqLog.html(text);
     }
@@ -189,32 +170,30 @@ function widShowTokenMsg(d) {
     // Shows message or image about tokens existense.
     var obj = $('#token_pic_span');
     obj.hide();
-    if (arguments.length === 0) {
-        widShowLog();
-    } else if (d === undefined) {
+    if (arguments.length === 0) return widShowLog();
+    if (typeof d == 'undefined') {
         obj.show();
-        widShowLog('Searching for token...');
-    } else if (d === true) {
-        widShowLog('Token exists.');
-    } else if (d === false) {
-        widShowLog('No such token.');
-    }
+        return widShowLog('Searching for token...');
+	}
+    (d) ? widShowLog('Token exists.') : widShowLog('No such token.');
 }
 
 function widDisableDataTab(comm) {
-    return $('#setdata_table').find('button, textarea').prop('disabled', comm);
+	$('#setdata_table').find('textarea').prop('readonly', comm);
+	$('#setdata_table').find('button').prop('disabled', comm);
 }
 
 function widDisableCreateTab(comm) {
-    return $('#create_table').find('button').prop('disabled', comm);
+	$('#create_table').find('button').prop('disabled', comm);
 }
 
 function widDisableSendTab(comm) {
-    return $('#send_table').find('button, textarea, input').prop('disabled', comm);
+	$('#send_table').find('button, input').prop('disabled', comm);
 }
 
 function widDisableReceiveTab(comm) {
-    return $('#receive_table').find('button, textarea').prop('disabled', comm);
+	$('#receive_table').find('textarea').prop('readonly', comm);
+    $('#receive_table').find('button').prop('disabled', comm);
 }
 
 
@@ -227,10 +206,8 @@ function widIsTokenText() {
 }
 
 function widGetToken(data, hash) {
-    //It returns hash of raw tokens value
-    if (engIsHash(data, hash)) return data;
-
-    return engGetHash(data, hash)
+    //Returns hash of raw tokens value or 
+    return (engIsHash(data, hash)) ? data : engGetHash(data, hash);
 }
 
 function widGetTokenStatus(lr, nr) {
@@ -552,14 +529,14 @@ function widReceiveButtonClick() {
         var r = engGetResp(data);
         if (r.msg !== 'OK') return widCompleteEvent(r.msg + ': ' + r.cnt);
 		var lr = engGetRespLast(data);
-		if (lr.msg === 'ERROR') return widCompleteEvent(lr.msg + ': ' + lr.cnt);
+		if (lr.msg === 'ERROR') return widCompleteEvent(lr.msg + ': ' + lr.cnt);  //just in case
 		var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		lr.st = widGetTokenStatus(lr, nr);
 		if (lr.st === 'OK') return widCompleteEvent('Token already available!');
-		transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n;
+		transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n; // beacause '232' is code of the second step of the transfer process
 		textArea.clear(jqTok, tok);
 
-		widSetTransKeys(transKeys);
+		widTokensTakeover(transKeys);
     }
     
 	var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + transKeys[0].s;
@@ -572,7 +549,7 @@ function widReceiveButtonClick() {
     setTimeout(f, 1000);
 }
 
-function widSetTransKeys(keys){
+function widTokensTakeover(keys){
 	keys = engGetEnrollKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
 	switch (keys[0].prcode){
 		case '23132':

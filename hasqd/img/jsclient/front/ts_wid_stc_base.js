@@ -34,10 +34,9 @@ function widGetHTMLBody(tabs) {
 			r += '<td colspan="2" nowrap>';
 				r += widGetHTMLTokenTextArea() + '\n';
 		r += '</tr>\n';
-		r += '<tr>\n';
+		/*r += '<tr>\n';
 			r += '<td colspan="2"nowrap>' + widGetHTMLMasterKeyArea() + '\n'; 
-			//r += '<td width="84" nowrap>' + widGetHTMLCreateButtonArea() + '\n';
-		r += '</tr>\n';		
+		r += '</tr>\n';		*/
 		r += '<tr>\n';
 			r += '<td nowrap>';
 				r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
@@ -63,7 +62,6 @@ function widGetHTMLBody(tabs) {
 				r +='<sup>\u00A9</sup>';
 		r += '</tr>\n';		
     r += '</table>\n';
-	
     return r;
 }
 
@@ -109,7 +107,28 @@ function widGetHTMLTokenTextArea() {
 					r += '</tr>';
 				r += '</table>';
 		r += '</tr>';
-		
+		r += '<tr>';
+			r += '<td class="subtitle-td"/>';
+				r += 'Master key';
+		r += '</tr>';
+		r += '<tr>';
+			r += '<td align="center">';
+				r += '<table border="0">';
+					r += '<tr>';
+						r += '<td width="20" valign="center" align="center">';
+							r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
+						r += '<td width="250"/>\n';
+							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
+						r += '<td width="20" valign="center">';
+							r += widGetHTMLSpanImg('password_pic_span');						
+					r += '</tr>';
+					r += '<tr>';
+						r += '<td width="20"/>&nbsp';
+						r += '<td id="password_zxcvbn_td" align="left" style="font-style: italic"/>\n';
+						r += '<td/>';
+					r += '</tr>';					
+				r += '</table>';
+		r += '</tr>';		
 		
 	r += '</table>';
 	return r;
@@ -161,20 +180,9 @@ function widGetHTMLEmptyTab() {
 	return r;
 }
 
-function widGetHTMLCreateButtonArea() {
-	var r = '';
-	r += '<table width="100%">';
-		r += '<tr>';
-			r += '<td/>';
-				r += '<button id="create_tab_button" onclick="return widShowCreateArea()" data-state="off" disabled>' + imgTokCreate + '</button>';
-		r += '</tr>';
-	r += '</table>';
-	
-	return r;
-}
 function widGetHTMLButtonsArea() {
 	var r = '';
-	r += '<table width="100%">';
+	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td/>';
 				r += '<button onclick="return widShowSendArea()" data-state="off">' + imgTokSend + '</button>';
