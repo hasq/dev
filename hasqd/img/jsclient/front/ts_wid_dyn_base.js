@@ -1,27 +1,25 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-
-/*
-HasqLogo.prototype.wait = function () {
-	console.log(counter);
-	if (counter > 1) return;
-	$('#logo_span').html(imgSrcLogoBlink);
-};
-
-HasqLogo.prototype.done = function (counter) {
-	if (counter == 0) {
-		setTimeout(function () {
-			$('#logo_span').html(imgSrcLogoBlue);
-		}, 500);
+function TextArea() {
+	return {
+		add: function ($obj, data) {
+			$obj.val(this.val($obj) + data);
+		},
+		clear: function ($obj, data) {
+			if (typeof data == 'undefined') return $obj.val('');
+			$obj.val('');
+			$obj.val(data);	
+		},
+		clearexcept: function ($obj) {
+			(arguments.length == 0) ? $('textarea').val('') : $('textarea').not($obj).val('');
+		},		
+		val: function ($obj) {
+			return $obj.val();
+		}
 	}
-};
+}
 
-HasqLogo.prototype.fail = function (counter) {
-    $('#logo_span').html(imgSrcLogoRed);
-    //widShowLog('Server connection failure!');
-};
-*/
-
+var textArea = TextArea();
 
 function widSendPing(timeDelay) {
     // Ping server every 5s,10s,15s,...,60s,...,60s,...
@@ -186,29 +184,29 @@ function widGetTokenStatus(lr, nr) {
 	}
 }
 
-function widGetPwdPic(status) {
+function widGetTokenStateImg(status) {
     // Returns an image displaying the password match
 	var r = {};
 
     switch (status) {
     case 'OK':
-		r.pic = imgSrcPwdOk;
+		r.img = imgPwdOk;
 		r.title = 'OK';
 		break;
     case 'TKN_SNDNG':
-        r.pic = imgSrcPwdSndng;
+        r.img = imgPwdSndng;
 		r.title = 'Token is locked (sending)';
 		break;
     case 'TKN_RCVNG':
-        r.pic = imgSrcPwdRcvng;
+        r.img = imgPwdRcvng;
 		r.title = 'Token is locked (receiving)';		
 		break;
     case 'WRONG_PWD': //'WRONG_PWD'
-        r.pic = imgSrcPwdWrong;
-		r.title = 'Token blocked (wrong password)';		
+        r.img = imgPwdWrong;
+		r.title = 'Token locked (wrong password)';		
 		break;
 	default:
-		r.pic = imgSrcPwdNone;
+		r.img = imgNone;
 		r.title = '';
 		break;
     }
@@ -220,9 +218,9 @@ function widShowPwdMatch(status) {
     var objT = $('#password_pic_span');
     var objI = $('#password_input');
 
-	var r = widGetPwdPic(status);
+	var r = widGetTokenStateImg(status);
 	
-	objT.find('img').attr('src', r.pic);
+	objT.find('img').attr('src', r.img);
 	objT.find('img').prop('title', r.title);
 }
 
@@ -326,11 +324,11 @@ function widPasswordEyeClick(jqEye){
 	var jqPwd = $('#password_input');
 	if (jqPwd.attr('type') == 'text') {
 		jqPwd.attr('type', 'password');
-		jqEye.find('img').attr('src', imgSrcEyeOpen);
+		jqEye.find('img').attr('src', imgEyeOpen);
 		jqEye.attr('title', 'Unmask password');
 	} else {
 		jqPwd.attr('type', 'text');
-		jqEye.find('img').attr('src', imgSrcEyeClosed);
+		jqEye.find('img').attr('src', imgEyeClosed);
 		jqEye.attr('title', 'Mask password');
 	}
 }

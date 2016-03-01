@@ -44,6 +44,18 @@ function engGetTokenInfo(data, r, s) {
     return item;
 }
 
+var VTL = {
+	items: [],
+	avail: false,
+	unavail: false,
+	
+	clear: function () {
+		this.items.length = 0;
+		this.avail = false;
+		this.unavail = false;
+	}		
+}
+
 function engGetVTL(list, item) {
 	if (arguments.length == 1) {
 		// clear list

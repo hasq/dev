@@ -8,21 +8,20 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var imgSrcPwdOk = 'img/pwd_ok.png';
-var imgSrcPwdWrong = 'img/pwd_wrong.png';
-var imgSrcPwdRcvng = 'img/pwd_rcvng.png';
-var imgSrcPwdSndng = 'img/pwd_sndng.png';
-var imgSrcPwdNone = 'img/pwd_none.png';
+var imgNone = 'img/pwd_none.png';
+var imgLoading = 'img/loading.gif';
+var imgReload = 'img/reload.png';
+var imgEyeOpen = 'img/eye_open.png';
+var imgEyeClosed = 'img/eye_closed.png';
 
-var imgSrcLoading = 'img/loading.gif';
-var imgSrcReload = 'img/reload.png';
+var imgLogoBlue = 'img/logo_blue.png';
+var imgLogoRed = 'img/logo_red.png';
+var imgLogoBlink = 'img/logo_blink.gif';
 
-var imgSrcEyeOpen = 'img/eye_open.png';
-var imgSrcEyeClosed = 'img/eye_closed.png';
-
-var imgSrcLogoBlue = 'img/logo_blue.png';
-var imgSrcLogoRed = 'img/logo_red.png';
-var imgSrcLogoBlink = 'img/logo_blink.gif';
+var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdWrong = 'img/pwd_wrong.png';
+var imgPwdRcvng = 'img/pwd_rcvng.png';
+var imgPwdSndng = 'img/pwd_sndng.png';
 
 var imgTokCreate = '<img width="70px" height="70px" src="img/tok_create.png">';
 var imgTokData = '<img width="70px" height="70px" src="img/tok_data.png">';
@@ -30,34 +29,9 @@ var imgTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
 var imgTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
 var imgTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
 
-var allImages = [imgSrcPwdOk,imgSrcPwdWrong,imgSrcPwdRcvng,imgSrcPwdSndng,imgSrcPwdNone,imgSrcLoading,
-imgSrcReload,imgSrcEyeOpen,imgSrcEyeClosed,imgSrcLogoBlue,imgSrcLogoRed,imgSrcLogoBlink];
+var allImages = [imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgNone,imgLoading,
+imgReload,imgEyeOpen,imgEyeClosed,imgLogoBlue,imgLogoRed,imgLogoBlink];
  
-function newImage(arg) {
-    if (document.images) {
-        var result = new Image();
-		//console.log(result);
-        result.src = arg;
-        return result;
-    }
-}
-
-var preloadFlag = false;
-
-function preloadImages(img) {
-    var frame = [];
-    //var arg = preloadImages.arguments;
-
-    if (document.images) {
-        for (i = 0; i < img.length; i++) { //for (i = 0; i < arg.length; i++) {
-            frame[i] = newImage(img[i]); //frame[i] = newImage(arg[i]);
-        }
-        preloadFlag = true;
-    }
-}
-
-
-
 function docMainWrite() {
     document.write(docMain());
 }
@@ -78,14 +52,14 @@ function docInit() {
 
 	$('#setdata_table').find('button').prop('disabled', true);
 	
-	$('#reload_span').find('img').attr('src', imgSrcReload);
-	$('#token_pic_span').find('img').attr('src', imgSrcLoading);
+	$('#reload_span').find('img').attr('src', imgReload);
+	$('#token_pic_span').find('img').attr('src', imgLoading);
 	$('#token_pic_span').hide();
-	$('#password_pic_span').find('img').attr('src', imgSrcPwdNone);
+	$('#password_pic_span').find('img').attr('src', imgNone);
 	$('#logo_span').find('img').attr('width', '28');
 	$('#logo_span').find('img').attr('height', '28');
-	$('#logo_span').find('img').attr('src', imgSrcLogoBlue);
-	$('#password_eye_span').find('img').attr('src', imgSrcEyeOpen);
+	$('#logo_span').find('img').attr('src', imgLogoBlue);
+	$('#password_eye_span').find('img').attr('src', imgEyeOpen);
 	$('#password_eye_span').find('img').attr('title', 'Unmask password');	
 	
     $('button').button();

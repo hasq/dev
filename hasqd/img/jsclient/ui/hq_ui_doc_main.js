@@ -18,41 +18,25 @@ glVTL.items = []			// The array which include the list of a last records of spec
 glVTL.avail  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
 glVTL.unavail  = false;	// The marker of mismatched tokens in the specified range
 
-var picPwdOk = '<img src="img/pwd_ok.png">';
-var picPwdWrong = '<img src="img/pwd_wrong.png">';
-var picPwdRcvng = '<img src="img/pwd_rcvng.png">';
-var picPwdSndng = '<img src="img/pwd_sndng.png">';
-var picIdxNoDn = '<img src="img/idx_nodn.png">';
+var imgOk = 'img/notification_ok.png';
+var imgWarning = 'img/notification_warning.png';
+var imgError = 'img/notification_error.png';
+var imgLoading = 'img/loading.gif';
 
-var picLogoBlue = '<img width="28px" height="28px" src="img/logo_blue.png">';
-var picLogoRed = '<img width="28px" height="28px" src="img/logo_red.png">';
-var picLogoBlink = '<img width="28px" height="28px" src="img/logo_blink.gif">';
+var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdWrong = 'img/pwd_wrong.png';
+var imgPwdRcvng = 'img/pwd_rcvng.png';
+var imgPwdSndng = 'img/pwd_sndng.png';
+var imgNoDN = 'img/idx_nodn.png';
+var imgNone = 'img/pwd_none.png';
 
-var picError = '<img src="img/notification_error.png">';
-var picOk = '<img src="img/notification_ok.png">';
-var picWarning = '<img src="img/notification_warning.png">';
-var picLoading = '<img src="img/loading.gif">';
+var imgLogoBlue = 'img/logo_blue.png';
+var imgLogoRed = 'img/logo_red.png';
+var imgLogoBlink = 'img/logo_blink.gif';
 
-function newImage(arg) {
-	if (document.images) {
-		result = new Image();
-		result.src = arg;
-		return result;
-	}
-}
-
-preloadFlag = false;
-
-function preloadImages() {
-	frame = []; //new Array();
-	arg = preloadImages.arguments;
-	if (document.images) {
-		for (i = 0; i < arg.length; i++) {
-			frame[i] = newImage(arg[i]);
-		}
-		preloadFlag = true;
-	}
-}
+var allImages = [imgOk,imgWarning,imgError,imgLoading,imgNone,imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,
+imgNoDN,imgLogoBlue,imgLogoRed,imgLogoBlink];
+ 
 
 function docMainWrite() {
 	document.write(docMain());
@@ -121,7 +105,7 @@ function doc_init() {
 			$('#database_table').html(db_table);
 			$('#current_db').html(current_db);
 			widShowLastRecord();
-			widRawDNOninput();
+			widTokenNameOninput();
 			if (pwdCheckBoxIsOn) {
 				widShowNewRecOninput();
 			}
@@ -273,17 +257,17 @@ function doc_init() {
 	
 	//$( '#progressbar' ).progressbar({value: false});
 
-	$('[data-class="warning_text"]').hide();
-	$('[data-class="continue_button"]').hide();
-	$('[data-class="verify_table"]').hide();
+	$('.warning-td').hide();
+	$('.continue-button').hide();
+	$('.verify-table').hide();
 	
-	$('#hasqd_led').html(picLogoBlue);
+	$('#logo_span').find('img').attr('width', '28');
+	$('#logo_span').find('img').attr('height', '28');
+	$('#logo_span').find('img').attr('src', imgLogoBlue);
 
 	$('#server_host').html('' + location.host);
-	$('#tokens_verify_table_pre').hide();
+	$('#tokens_verify_pre').hide();
 	setTimeout(widRefreshButtonClick, 2000);
-
-	widAnimateProgbar();
 }
 
 function docMain() {

@@ -1,104 +1,74 @@
 body {
-  font: 75% "Trebuchet MS", sans-serif;
-  margin: 50px;
+	font: 75% sans-serif;
+	font-family: monospace, serif;
+	width: 50%;
+	min-width: 600px;
+	min-height: 480px;	
+    margin: auto;  
 }
 
 html {
-  overflow-y: scroll;
-}
-
-.demoHeaders {
-  margin-top: 2em;
-}
-
-#dialog-link {
-  padding: .4em 1em .4em 20px;
-  text-decoration: none;
-  position: relative;
-}
-
-#dialog-link span.ui-icon {
-  margin: 0 5px 0 0;
-  position: absolute;
-  left: .2em;
-  top: 50%;
-  margin-top: -8px;
-}
-
-#icons {
-  margin: 0;
-  padding: 0;
-}
-
-#icons li {
-  margin: 2px;
-  position: relative;
-  padding: 4px 0;
-  cursor: pointer;
-  float: left;
-  list-style: none;
-}
-
-#icons span.ui-icon {
-  float: left;
-  margin: 0 4px;
-}
-
-#tabs {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-#tabs ul li {
-    display: inline-block;
-    float: none;
-    vertical-align: bottom;
-}
-
-.fakewindowcontain .ui-widget-overlay {
-  position: absolute;
+	overflow-y: scroll;
 }
 
 select {
-  width: 200px;
+	width: 200px;
 }
 
 td tr {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 p {
-   word-wrap: break-word;
-   white-space: normal;
+	word-wrap: break-word;
+	white-space: normal;
 }
 
 table {
-  box-sizing: border-box;
-  padding:0;
-  border-collapse:collapse;
+	box-sizing: border-box;
+	padding: 0;
+	border-collapse:collapse;
+	width: 100%;
 }
 
-input[type='text'] {
-  box-sizing: border-box;
-  font-family: monospace;
-  width: 100%;
-  margin: 0px;
-  border: 1px solid;
+textarea, textarea:focus {
+	font: 120% monospace !important;
+	border: 1px solid;
+	border-color: #DDDDDD;
+	box-sizing: border-box;
+	width: 100%;
+	outline: none;
 }
 
-input[type='password'] {
-  box-sizing: border-box;
-  font-family: monospace;
-  width: 100%;
-  margin: 0px;
-  border: 1px solid;
+input {
+	box-sizing: border-box;
+	margin: 0px;	
 }
 
-textarea[type='text'] {
-  box-sizing: border-box;
-  font-family: monospace;
-  width: 100%;
-  /*resize: none;*/
+input[type='text'], input[type='password'] {
+	font: 110% monospace !important;
+	border: 1px solid #DDDDDD;
+	width: 100%;
+}
+
+/* classes */
+
+.text {
+	font-family: Arial, Helvetica, sans-serif;
+	white-space: nowrap;
+	align: left;
+}
+
+.title-td {
+	text-align: left;
+	font: bold 16px Arial;
+	color: #1376BC;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.fakewindowcontain .ui-widget-overlay {
+	position: absolute;
 }
 
 .hidden-pre {
@@ -110,13 +80,66 @@ textarea[type='text'] {
 }
 
 .ui-progressbar {
-  position: relative;
-  height: 20px;
+	position: relative;
+	height: 20px;
+}
+
+.ui-accordion .ui-accordion-content {
+	padding: 4px;
+}
+
+.ui-accordion .ui-accordion-header{
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 4px;
+}
+
+/* .ui-widget-header {
+    font-weight: bold;
+    height: 30px
+}
+
+.ui-widget-header ul {
+    height: 26px;   
+}
+
+.ui-tabs .ui-tabs-nav li {
+    height: 26px;
+    font-size: 1em;
+}
+.ui-tabs-nav .ui-tabs-anchor {
+    height: 26px;
+	outline: none;
+}
+.ui-tabs .ui-tabs-nav li a {
+    position:relative;
+    top:-2px ;
+} */
+
+.warning-td {
+	background: pink;
+	font: 100% monospace;
+	text-align: center;
 }
 
 .tokens-progressbar-label {
-  position: absolute;
-  left: 46%;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 #fff;
+	position: absolute;
+	left: 46%;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+}
+/* id's */
+
+#tabs {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#tabs ul li {
+    display: inline-block;
+    float: none;
+    vertical-align: bottom;
 }

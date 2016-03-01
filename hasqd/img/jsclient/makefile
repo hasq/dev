@@ -50,6 +50,7 @@ createclient: index.html
 	cp ui/ts_*.js slice/home/ui/
 	cp tsclnt.html slice/home/tsclnt.html
 #	shared
+	cp front/sh_*.js slice/home/front/
 	cp eng/sh_*.js slice/home/eng/
 	cp img/*.gif slice/home/img/
 	cp img/*.png slice/home/img/

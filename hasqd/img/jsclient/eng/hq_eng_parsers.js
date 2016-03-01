@@ -156,9 +156,9 @@ function engGetRawTokensList(data) {
     return r;
 }
 
-function engGetUpgradedTransKeys(transKeys, glVTL) {
+function engGetUpgradedTransKeys(transKeys, list) {
 	for (var i = 0; i < transKeys.length; i++) {
-		transKeys[i].n = glVTL.items[i].n;
+		transKeys[i].n = list.items[i].n;
 	}
 	return transKeys;
 }
