@@ -1,5 +1,3 @@
-
-
 function HasqLogo() {
     var counter = 0;
 	return {
@@ -41,12 +39,13 @@ HasqLogo.prototype.fail = function (counter) {
 
 var hasqLogo = HasqLogo();
 
-var preloadImg = [];
-function preload(images) {
+var preloadImg = new Array();	
+function preload(container) {
     if (document.images) {
-        for (i = 0; i < images.length; i++) {
+        for (i = 0; i < container.length; i++) {
 			preloadImg[i] = new Image();
-            preloadImg[i].src = images[i];
-        }
+			preloadImg[i].onload = function () { };
+            preloadImg[i].src = container[i];
+		}
     }
 }

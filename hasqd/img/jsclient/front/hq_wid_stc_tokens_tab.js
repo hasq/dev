@@ -94,7 +94,7 @@ function widGetHTMLTokensInitialData() {
 					r += '<div>\n';
 						r += '<table style="width:auto">\n';
 							r += '<tr>\n';
-								r += '<td align="left" />\n';
+								r += '<td class="label-td" align="left" />\n';
 									r += 'Base name&nbsp\n';
 								r += '<td colspan="3" align="left" />\n';
 									r += '<input type="text" size="24" id="tokens_basename_input" value="">\n';
@@ -102,11 +102,11 @@ function widGetHTMLTokensInitialData() {
 									r += '<button onclick="widMainButtonClick($(this))" data-title="Add" data-function="widAddTokens">Add</button>\n';
 							r += '</tr>\n';
 							r += '<tr>\n';
-								r += '<td align="left" />\n'; 
+								r += '<td class="label-td" align="left" />\n'; 
 									r += 'Start index&nbsp\n'; 
 								r += '<td align="left" />\n'; 
 									r += '<input type="text" size="3" id="tokens_first_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
-								r += '<td align="right" />\n'; 
+								r += '<td class="label-td" align="right" />\n'; 
 									r += 'End index\n';
 								r += '<td align="right" />\n'; 
 									r += '<input type="text" size="3" id="tokens_last_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
@@ -119,7 +119,7 @@ function widGetHTMLTokensInitialData() {
 			r += '<td align="left" />\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';
-						r += '<td align="left" />\n';
+						r += '<td class="label-td" align="left" />\n';
 							r += 'Password&nbsp\n';
 						r += '<td align="left" />\n';
 							r += '<input type="text" id="tokens_password_input" placeholder="Enter a password" oninput="widTokensPasswordOninput(this.value);" />\n';
@@ -168,13 +168,13 @@ function widGetHTMLTokensVerifyTab() {
 				r += widGetHTMLSpanImg('', 'led-span') + '\n';
 		r += '</tr>\n';
 	r += '</table>\n'; 
-	r += '<pre id="tokens_verify_pre" class="hidden-pre">\n';
+	r += '<div id="tokens_verify_pre" class="verify-hidden-area-div">\n';
 		r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
 			r += '<tr>\n';
 				r +='<th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th>\n';
 			r += '</tr>\n';
 		r += '</table>\n';
-	r += '</pre>\n';
+	r += '</div>\n';
 	return r;
 }
 
@@ -183,14 +183,14 @@ function widGetHTMLTokensDataTab() {
 
     r += '<table class="wrap">\n';
 		r += '<tr>\n';
-			r += '<td class="text" style="width:70px" align="left" />\n';
+			r += '<td class="label-td" style="width:70px" align="left" />\n';
 				r += 'New data&nbsp;\n';
 			r += '<td align="right" />\n';
 				r += '<input type="text" id="tokens_data_input" size="28" title="Enter a new data." value="">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="right" colspan="2"/>\n';
-				r += '<table class="wrap" style="width:auto;">\n';
+				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';		
 						r += '<td class="warning-td" align="center">\n';
 							r += '&nbsp;The specified range contains unknown tokens. Continue?&nbsp;\n';

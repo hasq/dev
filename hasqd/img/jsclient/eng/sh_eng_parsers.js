@@ -345,7 +345,7 @@ function engIsRawTransKeys(keys) {
 	tmpl = (tmpl > 0) ? tmpl : keys[0].length;
 	
 	for (var i = 0; i < keys.length; i++) {
-		if (tmpl !== keys[i].length) return false;	//checks coincidence of the keys length and template lenght
+		if (tmpl !== keys[i].length) return false;	//checks coincidence of the keys length and template length
 	}	
 
 	return true;
@@ -388,12 +388,12 @@ function engGetTransKeys(keys) {
 	var keysQty = keys.length / keysLen;
 	var transKeys = [];
     for (var i = 0; i < keysQty; i++) {
-		
+
 		var tmpKeys = keys.splice(0, keysLen);
 		transKeys[i] = {};
 		transKeys[i].prcode = prCode;
-		transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[i] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
-		transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[i];
+		transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[0] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
+		transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
 		
 		switch (prCode) {
 		case (prK1K2):
@@ -417,6 +417,7 @@ function engGetTransKeys(keys) {
 		default:
 			break;
 		}
+
     }
     transKeys.sort(engSortByProperties('s'));
 	

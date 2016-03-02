@@ -1,5 +1,4 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
-
 function TextArea() {
 	return {
 		add: function ($obj, data) {

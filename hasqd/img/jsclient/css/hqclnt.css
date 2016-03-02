@@ -53,13 +53,17 @@ input[type='text'], input[type='password'] {
 
 /* classes */
 
-.text {
+.fakewindowcontain .ui-widget-overlay {
+	position: absolute;
+}
+
+.label-td {
 	font-family: Arial, Helvetica, sans-serif;
 	white-space: nowrap;
 	align: left;
 }
 
-.title-td {
+.records-title-td {
 	text-align: left;
 	font: bold 16px Arial;
 	color: #1376BC;
@@ -67,11 +71,7 @@ input[type='text'], input[type='password'] {
 	text-align: left;
 }
 
-.fakewindowcontain .ui-widget-overlay {
-	position: absolute;
-}
-
-.hidden-pre {
+.verify-hidden-area-div {
     box-sizing: border-box;
     white-space: pre;
     overflow-x: auto;

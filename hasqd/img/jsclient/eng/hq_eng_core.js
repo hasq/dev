@@ -97,14 +97,11 @@ function engGetVTLContent(list) {
 
 }
 
-
 function engRunCL(commandsList, cbFunc) {
     var cb = function (ajxData) {
-        if (commandsList.items.length == 0 && commandsList.idx >= commandsList.items.length) {
-            return;
-        }
+        if (commandsList.items.length == 0 && commandsList.idx >= commandsList.items.length) return;
 
-        var progress = 100 * (commandsList.idx + 1) / commandsList.items.length;
+        var progress = ((commandsList.idx + 1) / commandsList.items.length) * 100;
         var r = engGetResp(ajxData).msg;
 
         if (r == 'OK' || r == 'IDX_NODN') {
@@ -112,14 +109,12 @@ function engRunCL(commandsList, cbFunc) {
             commandsList.idx++;
             commandsList.counter = 100;
         } else {
-			// in case of an error repeating command 100 times then continue next command;
+			// in case of an error repeats command 100 times then continue next command;
             commandsList.counter--;
-			console.log('ajxErr:' + ajxData);
             if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
-				commandsList.idx++; // upd
-				commandsList.counter = 100; // upd
+				commandsList.idx++; // go to the next command in the list
+				commandsList.counter = 100; // restore counter
                 cbFunc(ajxData, commandsList.idx, progress);
-                //commandsList.items.length = 0;
             }
         }
 
