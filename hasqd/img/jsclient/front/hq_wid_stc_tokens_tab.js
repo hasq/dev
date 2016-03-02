@@ -97,7 +97,7 @@ function widGetHTMLTokensInitialData() {
 								r += '<td class="label-td" align="left" />\n';
 									r += 'Base name&nbsp\n';
 								r += '<td colspan="3" align="left" />\n';
-									r += '<input type="text" size="24" id="tokens_basename_input" value="">\n';
+									r += '<input type="text" size="24" id="tokens_basename_input" >\n';
 								r += '<td align="right" valign="middle" rowspan="2" />\n';
 									r += '<button onclick="widMainButtonClick($(this))" data-title="Add" data-function="widAddTokens">Add</button>\n';
 							r += '</tr>\n';
@@ -186,7 +186,7 @@ function widGetHTMLTokensDataTab() {
 			r += '<td class="label-td" style="width:70px" align="left" />\n';
 				r += 'New data&nbsp;\n';
 			r += '<td align="right" />\n';
-				r += '<input type="text" id="tokens_data_input" size="28" title="Enter a new data." value="">\n';
+				r += '<input type="text" id="tokens_data_input" size="28" placeholder="Enter a new data" />\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="right" colspan="2"/>\n';
@@ -194,8 +194,10 @@ function widGetHTMLTokensDataTab() {
 					r += '<tr>\n';		
 						r += '<td class="warning-td" align="center">\n';
 							r += '&nbsp;The specified range contains unknown tokens. Continue?&nbsp;\n';
+						r += '<td align="right">\n';							
+							r += widGetHTMLSpanImg('', 'led-span') + '\n';							
 						r += '<td align="right">\n';
-							r += '<button class="continue-button" onclick="widContinueButtonClick($(this), true)" data-title="Continue">Hidden</button>\n';
+							r += '<button class="continue-button" onclick="return widContinueButtonClick($(this), true)" data-title="Continue">Hidden</button>\n';
 							r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreUpdate" data-title="Update">Update</button>\n';
 					r += '</tr>\n';
 				r += '</table>\n';

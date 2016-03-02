@@ -5,96 +5,43 @@ function engGetTokenInfo(data, r, s) {
 	var item = {};
     item.r = r;
     item.s = s;
-    item.avail = false;
-	item.unavail = false;
+    item.fit = false;
+	item.unfit = false;
 	
 	if (response.msg === 'OK') {
         var lr = engGetRespLast(data);
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
-        item.avail = false;
-		item.unavail = false;
+        item.fit = false;
+		item.unfit = false;
 		
         switch (engGetTokensStatus(lr, nr)) {
         case 1:
             item.st = 'OK';
-			item.avail = true;
+			item.fit = true;
             break;
         case 2:
             item.st = 'TKN_SNDNG';
-			item.unavail = true;
+			item.unfit = true;
             break;
         case 3:
             item.st = 'TKN_RCVNG';
-			item.unavail = true;
+			item.unfit = true;
             break;
         default:
             item.st = 'WRONG_PWD';
-			item.unavail = true;
+			item.unfit = true;
             break;
         }
     } else {
 		item.st = 'IDX_NODN';
-		item.unavail = true;
+		item.unfit = true;
 		item.n = -1;	
 		item.d = '';		
 	}
 
     return item;
-}
-
-var VTL = {
-	items: [],
-	avail: false,
-	unavail: false,
-	
-	clear: function () {
-		this.items.length = 0;
-		this.avail = false;
-		this.unavail = false;
-	}		
-}
-
-function engGetVTL(list, item) {
-	if (arguments.length == 1) {
-		// clear list
-		list.items.length = 0;
-		list.avail = false;
-		list.unavail = false;
-		return list;
-	}
-		
-    var n = list.items.length;
-    list.items[n] = {};
-    list.items[n].r = item.r;
-    list.items[n].s = item.s;
-	list.items[n].n = +item.n;
-    list.items[n].d = item.d;
-	list.items[n].st = item.st;
-	
-    if (item.avail === true) list.avail = true;
-	if (item.unavail === true) list.unavail = true;
-
-	return list;
-	
-}
-
-
-function engGetVTLContent(list) {
-	// checks content of the VTL (verified tokens list) for known and unknown tokens
-    if (list.avail === true && list.unavail === false) {
-        return true; //only known tokens;
-    } 
-	if (list.avail === false && list.unavail === true) {
-        return false; //only unknown tokens
-    }
-	if (list.avail === true && list.unavail === true) {
-        return undefined; //different tokens
-    }	
-	
-	return null; //no has tokens
-
 }
 
 function engRunCL(commandsList, cbFunc) {

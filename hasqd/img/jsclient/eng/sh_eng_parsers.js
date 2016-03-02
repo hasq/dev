@@ -17,9 +17,11 @@ function engGetResp(data) {
         resp.msg = 'ERROR';
         resp.cnt = data;
     } else if (lines[0] === 'OK') {
-        resp.msg = 'OK'
+        resp.msg = 'OK';
+		resp.cnt = 'OK';
     } else if (blocks[0] === 'OK') {
         resp.msg = 'OK';
+		resp.cnt = 'OK';
     } else if (blocks[0] === 'IDX_NODN') {
         resp.msg = blocks[0];
         resp.cnt = blocks[0];
