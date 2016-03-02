@@ -41,13 +41,12 @@ HasqLogo.prototype.fail = function (counter) {
 
 var hasqLogo = HasqLogo();
 
-function preloadImages(img) {
-    var image = [];
-
+var preloadImg = [];
+function preload(images) {
     if (document.images) {
-        for (i = 0; i < img.length; i++) {
-            image[i] = new Image();
-			image[i].src = img[i];
+        for (i = 0; i < images.length; i++) {
+			preloadImg[i] = new Image();
+            preloadImg[i].src = images[i];
         }
     }
 }

@@ -29,9 +29,11 @@ var imgTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
 var imgTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
 var imgTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
 
-var allImages = [imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgNone,imgLoading,
-imgReload,imgEyeOpen,imgEyeClosed,imgLogoBlue,imgLogoRed,imgLogoBlink];
- 
+var allImages = [ imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgNone,imgLoading,
+imgReload,imgEyeOpen,imgEyeClosed,imgLogoBlue,imgLogoRed,imgLogoBlink ];
+
+
+
 function docMainWrite() {
     document.write(docMain());
 }

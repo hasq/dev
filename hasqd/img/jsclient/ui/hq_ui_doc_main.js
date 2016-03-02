@@ -36,7 +36,6 @@ var imgLogoBlink = 'img/logo_blink.gif';
 
 var allImages = [imgOk,imgWarning,imgError,imgLoading,imgNone,imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,
 imgNoDN,imgLogoBlue,imgLogoRed,imgLogoBlink];
- 
 
 function docMainWrite() {
 	document.write(docMain());
