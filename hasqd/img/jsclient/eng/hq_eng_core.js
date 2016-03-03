@@ -44,35 +44,35 @@ function engGetTokenInfo(data, r, s) {
     return item;
 }
 
-function engRunCL(commandsList, cbFunc) {
+function engRunCmdList(cmdList, cbFunc) {
     var cb = function (ajxData) {
-        if (commandsList.items.length == 0 && commandsList.idx >= commandsList.items.length) return;
+        if (cmdList.items.length == 0 && cmdList.idx >= cmdList.items.length) return;
 
-        var progress = ((commandsList.idx + 1) / commandsList.items.length) * 100;
+        var progress = ((cmdList.idx + 1) / cmdList.items.length) * 100;
         var r = engGetResp(ajxData).msg;
 
         if (r == 'OK' || r == 'IDX_NODN') {
-            cbFunc(ajxData, commandsList.idx, progress);
-            commandsList.idx++;
-            commandsList.counter = 100;
+            cbFunc(ajxData, cmdList.idx, progress);
+            cmdList.idx++;
+            cmdList.counter = 100;
         } else {
 			// in case of an error repeats command 100 times then continue next command;
-            commandsList.counter--;
-            if (commandsList.counter == 0) { //if (commandsList.counter < 0) {
-				commandsList.idx++; // go to the next command in the list
-				commandsList.counter = 100; // restore counter
-                cbFunc(ajxData, commandsList.idx, progress);
+            cmdList.counter--;
+            if (cmdList.counter == 0) { //if (cmdList.counter < 0) {
+				cmdList.idx++; // go to the next command in the list
+				cmdList.counter = 100; // restore counter
+                cbFunc(ajxData, cmdList.idx, progress);
             }
         }
 
-        if (commandsList.items.length != 0 && commandsList.idx < commandsList.items.length) {
-            engRunCL(commandsList, cbFunc)
+        if (cmdList.items.length != 0 && cmdList.idx < cmdList.items.length) {
+            engRunCmdList(cmdList, cbFunc)
         }
     }
 
-    if (commandsList.items.length > 0 && commandsList.idx < commandsList.items.length) {
-        ajxSendCommand(commandsList.items[commandsList.idx].cmd, cb, hasqLogo);
-    } else if (commandsList.items.length === 0) {
+    if (cmdList.items.length > 0 && cmdList.idx < cmdList.items.length) {
+        ajxSendCommand(cmdList.items[cmdList.idx].cmd, cb, hasqLogo);
+    } else if (cmdList.items.length === 0) {
         cbFunc('OK', 0, 0);
     }
 }

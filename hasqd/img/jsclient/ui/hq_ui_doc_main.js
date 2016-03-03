@@ -9,10 +9,22 @@ var glS1Key = '';
 var glS2Key = '';
 var glS3Key = '';
 var glS4Key = '';
+/*
 var glCL = {};
 glCL.items = [];			// Commands list.
 glCL.idx = 0;			// Contains number of current item of commands list
 glCL.counter = 100;		// countdown timer to repeat a failed operation
+*/
+var glCmdList = {
+	items: [],
+	idx: 0,
+	counter: 100,
+	clear: function () {
+		this.items.length = 0;
+		this.idx = 0;
+		this.counter = 100;
+	}
+}
 var glTokList = {
 	fit: false,
 	unfit: false,
@@ -28,44 +40,41 @@ var glTokList = {
 		this.unfit = false;
 	},
 	state: function () {
-		//console.log(this);
-		//console.log(this.fit);
-		//console.log(this.unfit);
-		if (this.fit === true && this.unfit === false) {
-			return true; //only known tokens;
+		if (this.fit === true && this.unfit === false) { //contains only known tokens;
+			return true; 
 		} 
-		if (this.fit === false && this.unfit === true) {
-			return false; //only unknown tokens
+		if (this.fit === false && this.unfit === true) { //contains only unknown tokens
+			return false;
 		}
-		if (this.fit === true && this.unfit === true) {
-			return undefined; //different tokens
+		if (this.fit === true && this.unfit === true) { //contains different tokens
+			return undefined; 
 		}	
-		return null; //no has tokens		
+		return null; //not contains any tokens		
 	}
 }
-//var glVTL = {};			// The object contains information about a last records of specified range
-//glVTL.items = []			// The array which include the list of a last records of specified range.
-//glVTL.avail  = false;		// The objects property which indicate about presence of a known Hasq-tokens in range
-//glVTL.unavail  = false;	// The marker of mismatched tokens in the specified range
 
-var imgOk = 'img/notification_ok.png';
-var imgWarning = 'img/notification_warning.png';
-var imgError = 'img/notification_error.png';
-var imgLoading = 'img/loading.gif';
+var imgMsgOk = 'img/msg_ok.png';
+var imgMsgWarning = 'img/msg_warning.png';
+var imgMsgError = 'img/msg_error.png';
+var imgMsgLoading = 'img/msg_loading.gif';
+var imgMsgBlink = 'img/msg_blink.gif';
 
-var imgPwdOk = 'img/pwd_ok.png';
-var imgPwdWrong = 'img/pwd_wrong.png';
-var imgPwdRcvng = 'img/pwd_rcvng.png';
-var imgPwdSndng = 'img/pwd_sndng.png';
-var imgNoDN = 'img/idx_nodn.png';
-var imgNone = 'img/pwd_none.png';
+var imgTknOk = 'img/tkn_ok.png';
+var imgTknWrong = 'img/tkn_wrongpwd.png';
+var imgTknRcvng = 'img/tkn_rcvng.png';
+var imgTknSndng = 'img/tkn_sndng.png';
+var imgTknNodn = 'img/tkn_nodn.png';
+var imgPwdDummy = 'img/pwd_dummy.png';
 
 var imgLogoBlue = 'img/logo_blue.png';
 var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
 
-var allImages = [imgOk,imgWarning,imgError,imgLoading,imgNone,imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,
-imgNoDN,imgLogoBlue,imgLogoRed,imgLogoBlink];
+var allImages = [
+imgMsgOk,imgMsgWarning,imgMsgError,imgMsgLoading,imgMsgBlink,
+imgPwdDummy,imgTknOk,imgTknWrong,imgTknRcvng,imgTknSndng,imgTknNodn,
+imgLogoBlue,imgLogoRed,imgLogoBlink
+];
 
 function docMainWrite() {
 	document.write(docMain());
@@ -128,7 +137,7 @@ function doc_init() {
 		select: function (event, ui) {
 			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
 			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-			var pwdCheckBoxIsOn = document.getElementById('one_pwd_checkbox').checked + document.getElementById('three_pwd_checkbox').checked
+			var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
 				glCurrentDB = glDataBase[this.selectedIndex];
 
 			$('#database_table').html(db_table);

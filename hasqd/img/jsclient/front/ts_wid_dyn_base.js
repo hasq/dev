@@ -189,23 +189,23 @@ function widGetTokenStateImg(status) {
 
     switch (status) {
     case 'OK':
-		r.img = imgPwdOk;
+		r.img = imgTknOk;
 		r.title = 'OK';
 		break;
     case 'TKN_SNDNG':
-        r.img = imgPwdSndng;
+        r.img = imgTknSndng;
 		r.title = 'Token is locked (sending)';
 		break;
     case 'TKN_RCVNG':
-        r.img = imgPwdRcvng;
+        r.img = imgTknRcvng;
 		r.title = 'Token is locked (receiving)';		
 		break;
     case 'WRONG_PWD': //'WRONG_PWD'
-        r.img = imgPwdWrong;
+        r.img = imgTknWrong;
 		r.title = 'Token locked (wrong password)';		
 		break;
 	default:
-		r.img = imgNone;
+		r.img = imgPwdDummy;
 		r.title = '';
 		break;
     }

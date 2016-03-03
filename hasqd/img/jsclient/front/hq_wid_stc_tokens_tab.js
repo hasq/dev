@@ -149,10 +149,12 @@ function widGetHTMLTokensLog() {
 
 function widGetHTMLTokensCreateTab() {
     var r = '';
-    r += '<table class="wrap">\n';
+    r += '<table class="wrap" style="width: auto;">\n';
 		r += '<tr>\n';
 			r += '<td align="left">\n';
 				r += '<button class="shared-button" data-title="Create" data-function="widPreCreate" onclick="widMainButtonClick($(this))">Create</button>\n';
+			r += '<td align="right">\n';							
+				r += widGetHTMLSpanImg('', 'led-span') + '\n';					
 		r += '</tr>\n';
     r += '</table>\n';
     return r;

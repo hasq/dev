@@ -185,15 +185,15 @@ function widGetHTMLButtonsArea() {
 	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSendArea()" data-state="off">' + imgTokSend + '</button>';
+				r += '<button onclick="return widShowSendArea()" data-state="off">' + imgBtnSend + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + imgTokReceive + '</button>';
+				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + imgBtnReceive + '</button>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSearchArea()" data-state="off">' + imgTokSearch + '</button>';
+				r += '<button onclick="return widShowSearchArea()" data-state="off">' + imgBtnSearch + '</button>';
 		r += '</tr>';		
 	r += '</table>';
 	return r;	
@@ -283,7 +283,7 @@ function widGetHTMLSetDataTab() {
 			r += '<td align="center">\n';
 				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="off"></textarea>';
 			r += '<td width="84" align="center">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + imgTokData;
+				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + imgBtnData;
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -297,7 +297,7 @@ function widGetHTMLCreateTab() {
 	r += '<table id="create_table" width="100%">\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgTokCreate + '</button>';
+				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgBtnCreate + '</button>';
 		r += '</tr>\n';
 	r += '</table>\n';
 	

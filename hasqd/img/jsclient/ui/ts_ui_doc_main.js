@@ -8,9 +8,9 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var imgNone = 'img/pwd_none.png';
-var imgLoading = 'img/loading.gif';
-var imgReload = 'img/reload.png';
+var imgPwdDummy = 'img/pwd_dummy.png';
+var imgMsgLoading = 'img/msg_loading.gif';
+
 var imgEyeOpen = 'img/eye_open.png';
 var imgEyeClosed = 'img/eye_closed.png';
 
@@ -18,19 +18,23 @@ var imgLogoBlue = 'img/logo_blue.png';
 var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
 
-var imgPwdOk = 'img/pwd_ok.png';
-var imgPwdWrong = 'img/pwd_wrong.png';
-var imgPwdRcvng = 'img/pwd_rcvng.png';
-var imgPwdSndng = 'img/pwd_sndng.png';
+var imgTknOk = 'img/tkn_ok.png';
+var imgTknWrong = 'img/tkn_wrongpwd.png';
+var imgTknRcvng = 'img/tkn_rcvng.png';
+var imgTknSndng = 'img/tkn_sndng.png';
 
-var imgTokCreate = '<img width="70px" height="70px" src="img/tok_create.png">';
-var imgTokData = '<img width="70px" height="70px" src="img/tok_data.png">';
-var imgTokSearch = '<img width="70px" height="70px" src="img/tok_search.png">';
-var imgTokSend = '<img width="70px" height="70px" src="img/tok_send.png">';
-var imgTokReceive = '<img width="70px" height="70px" src="img/tok_receive.png">';
+var imgClkReload = 'img/clk_reload.png';
+var imgBtnCreate = '<img width="70px" height="70px" src="img/btn_create.png">';
+var imgBtnData = '<img width="70px" height="70px" src="img/btn_data.png">';
+var imgBtnSearch = '<img width="70px" height="70px" src="img/btn_search.png">';
+var imgBtnSend = '<img width="70px" height="70px" src="img/btn_send.png">';
+var imgBtnReceive = '<img width="70px" height="70px" src="img/btn_receive.png">';
 
-var allImages = [ imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgNone,imgLoading,
-imgReload,imgEyeOpen,imgEyeClosed,imgLogoBlue,imgLogoRed,imgLogoBlink ];
+var allImages = [
+imgTknOk,imgTknWrong,imgTknRcvng,imgTknSndng,imgPwdDummy,
+imgMsgLoading,imgClkReload,imgEyeOpen,imgEyeClosed,
+imgLogoBlue,imgLogoRed,imgLogoBlink
+];
 
 function docMainWrite() {
     document.write(docMain());
@@ -52,10 +56,10 @@ function docInit() {
 
 	$('#setdata_table').find('button').prop('disabled', true);
 	
-	$('#reload_span').find('img').attr('src', imgReload);
-	$('#token_pic_span').find('img').attr('src', imgLoading);
+	$('#reload_span').find('img').attr('src', imgClkReload);
+	$('#token_pic_span').find('img').attr('src', imgMsgLoading);
 	$('#token_pic_span').hide();
-	$('#password_pic_span').find('img').attr('src', imgNone);
+	$('#password_pic_span').find('img').attr('src', imgPwdDummy);
 	$('#logo_span').find('img').attr('width', '28');
 	$('#logo_span').find('img').attr('height', '28');
 	$('#logo_span').find('img').attr('src', imgLogoBlue);
