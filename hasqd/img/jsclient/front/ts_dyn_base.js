@@ -1,24 +1,21 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
-function TextArea() {
+function textArea($textarea) {
 	return {
-		add: function ($obj, data) {
-			$obj.val(this.val($obj) + data);
+		add: function (data) {
+			$textarea.val(this.val($textarea) + data);
 		},
-		clear: function ($obj, data) {
-			if (typeof data == 'undefined') return $obj.val('');
-			$obj.val('');
-			$obj.val(data);	
+		clear: function (data) {
+			data = data || '';
+			$textarea.val(data);	
 		},
-		clearexcept: function ($obj) {
-			(arguments.length == 0) ? $('textarea').val('') : $('textarea').not($obj).val('');
+		clearExcept: function ($exceptTextarea) {
+			$('textarea').not($exceptTextarea).val('');
 		},		
-		val: function ($obj) {
-			return $obj.val();
+		val: function () {
+			return $textarea.val();
 		}
 	}
 }
-
-var textArea = TextArea();
 
 function widSendPing(timeDelay) {
     // Ping server every 5s,10s,15s,...,60s,...,60s,...
@@ -238,7 +235,7 @@ function widTokenTextOninput() {
 	glLastRec={};
 
     var jqTokText = $('#token_text_textarea');
-	textArea.clearexcept(jqTokText);
+	textArea().clearExcept(jqTokText);
 	var tok = widGetToken(jqTokText.val(), glCurrentDB.hash);
 	widShowToken(tok);	
 	
@@ -407,8 +404,8 @@ function widShowKeysButtonClick() {
 	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
 	if (glLastRec.st !== 'OK' && glLastRec.st !== 'TKN_SNDNG' ) return widCompleteEvent('Unavailable token!');
 
-	textArea.clear(jqArea0);
-	textArea.clear(jqArea1);
+	textArea(jqArea0).clear();
+	textArea(jqArea1).clear();
 	
 	var k1, k2, g1, tkLine, rawTransKeys, prLine;
 	
@@ -419,12 +416,12 @@ function widShowKeysButtonClick() {
 		k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
 		tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
 		
-		textArea.add(jqArea0, tkLine);
+		textArea(jqArea0).add(tkLine);
 
 		rawTransKeys = jqArea0.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
 	
-		textArea.add(jqArea0, prLine);
+		textArea(jqArea0).add(prLine);
 		
 		return widCompleteEvent('OK');
 	} 
@@ -434,37 +431,37 @@ function widShowKeysButtonClick() {
         k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
         tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
-		textArea.add(jqArea0, tkLine);
+		textArea(jqArea0).add(tkLine);
 		
 		rawTransKeys = jqArea0.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
 		
-		textArea.add(jqArea0, prLine);
+		textArea(jqArea0).add(prLine);
 		
         tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
 		
-		textArea.add(jqArea1, tkLine);
+		textArea(jqArea1).add(tkLine);
 		
 		rawTransKeys = jqArea1.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
 		
-		textArea.add(jqArea1, prLine);
+		textArea(jqArea1).add(prLine);
 	
 		return widCompleteEvent('OK');
 	}
 	
 	if (glLastRec.st === 'TKN_SNDNG') {
-		textArea.clear(jqArea0);
+		textArea(jqArea0).clear();
 		
         k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
 		
-		textArea.add(jqArea1, tkLine);
+		textArea(jqArea1).add(jqArea1);
 		
 		rawTransKeys = jqArea1.val().replace(/\s/g, '');
 		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
 		
-		textArea.add(jqArea1, prLine);
+		textArea(jqArea1).add(jqArea1);
 		
 		return widCompleteEvent('OK');
 	}
@@ -493,7 +490,7 @@ function widReceiveButtonClick() {
 		lr.st = widGetTokenStatus(lr, nr);
 		if (lr.st === 'OK') return widCompleteEvent('Token already available!');
 		transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n; // beacause '232' is code of the second step of the transfer process
-		textArea.clear(jqTok, tok);
+		textArea(jqTok).clear(tok);
 
 		widTokensTakeover(transKeys);
     }
