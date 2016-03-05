@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd ( C ) 2013-2015
 
 var glClientTitle = '&nbspHasq Client';
 var glDataBase = {};
@@ -6,7 +6,7 @@ var glCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
 var glPassword = ''; // The specified password
 
-var hasqLogo = HasqLogo('logo_span');
+var hasqLogo = HasqLogo( 'logo_span' );
 var preloadImg = new Array();
 
 var glCmdList = {
@@ -24,10 +24,10 @@ var glTokList = {
 	fit: false,
 	unfit: false,
 	items: [],
-	add: function (item) {
+	add: function ( item ) {
 		this.items[this.items.length] = item;
-		if (item.fit) this.fit = true;
-		if (item.unfit) this.unfit = true;
+		if ( item.fit ) this.fit = true;
+		if ( item.unfit ) this.unfit = true;
 	},
 	clear: function () {
 		this.items = [];
@@ -35,13 +35,13 @@ var glTokList = {
 		this.unfit = false;
 	},
 	state: function () {
-		if (this.fit === true && this.unfit === false) { //contains only known tokens;
+		if ( this.fit === true && this.unfit === false ) { //contains only known tokens;
 			return true; 
 		} 
-		if (this.fit === false && this.unfit === true) { //contains only unknown tokens
+		if ( this.fit === false && this.unfit === true ) { //contains only unknown tokens
 			return false;
 		}
-		if (this.fit === true && this.unfit === true) { //contains different tokens
+		if ( this.fit === true && this.unfit === true ) { //contains different tokens
 			return undefined; 
 		}	
 		return null; //not contains any tokens		
@@ -72,83 +72,83 @@ imgLogoBlue,imgLogoRed,imgLogoBlink
 ];
 
 function docMainWrite() {
-	document.write(docMain());
+	document.write( docMain() );
 }
 
 function docMainInit() {
-	$(document).ready(function () {
+	$( document ).ready( function () {
 		doc_init();
-	});
+	} );
 }
 
 function doc_init() {
-	$('#main_tabs').tabs({
-		activate : function (event, ui) {
-			if (ui.newTab.index() == 3) {
-				if (glCurrentDB.hash != undefined && glCurrentDB.hash != '') {
+	$( '#main_tabs' ).tabs( {
+		activate : function ( event, ui ) {
+			if ( ui.newTab.index() == 3 ) {
+				if ( glCurrentDB.hash != undefined && glCurrentDB.hash != '' ) {
 					glHashCalcHash = glCurrentDB.hash;
 				} else {
 					glHashCalcHash = 'md5';
 				}
 
-				switch (glHashCalcHash) {
+				switch ( glHashCalcHash ) {
 				case 'md5': //md5
 					widHashcalcOninput();
-					//$('#hashcalc_select').get(0).selectedIndex = 0;
-					$('#hashcalc_select').val(0);
+					//$( '#hashcalc_select' ).get( 0 ).selectedIndex = 0;
+					$( '#hashcalc_select' ).val( 0 );
 					break;
 				case 'r16': //r16
 					widHashcalcOninput();
-					$('#hashcalc_select').val(1);
+					$( '#hashcalc_select' ).val( 1 );
 					break;
 				case 's22': //s22
 					widHashcalcOninput();
-					$('#hashcalc_select').val(2);
+					$( '#hashcalc_select' ).val( 2 );
 					break;
 				case 's25': //s25
 					widHashcalcOninput();
-					$('#hashcalc_select').val(3);
+					$( '#hashcalc_select' ).val( 3 );
 					break;
 				case 'smd': //s25
 					widHashcalcOninput();
-					$('#hashcalc_select').val(4);
+					$( '#hashcalc_select' ).val( 4 );
 					break;					
 				case 'wrd': //wrd
 					widHashcalcOninput();
-					$('#hashcalc_select').val(5);
+					$( '#hashcalc_select' ).val( 5 );
 					break;
 				default:
 					break;
 				}
-				$('#hashcalc_select').selectmenu('refresh');
+				$( '#hashcalc_select' ).selectmenu( 'refresh' );
 			}
 			return true;
 		}
-	});
+	} );
 
-	$('#main_tabs').tabs().tabs('option', 'active', 2);
+	$( '#main_tabs' ).tabs().tabs( 'option', 'active', 2 );
 
-	$('#database_select').selectmenu({
-		select: function (event, ui) {
-			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
-			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-			var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
+	$( '#database_select' ).selectmenu( {
+		select: function ( event, ui ) {
+			var db_table = widGetHTMLDatabaseTraitTable( glDataBase[this.selectedIndex] );
+			var current_db = glDataBase[this.selectedIndex].name + '( ' + glDataBase[this.selectedIndex].hash + ' )';
+			var pwdCheckBoxIsOn = document.getElementById( 'one_tkn_checkbox' ).checked + document.getElementById( 'three_tkn_checkbox' ).checked
 				glCurrentDB = glDataBase[this.selectedIndex];
 
-			$('#database_table').html(db_table);
-			$('#current_db').html(current_db);
+			$( '#database_table' ).html( db_table );
+			$( '#current_db' ).html( current_db );
 			widShowLastRecord();
 			widTokenNameOninput();
-			if (pwdCheckBoxIsOn) {
+			if ( pwdCheckBoxIsOn ) {
 				widShowNewRecOninput();
 			}
 			return true;
 		}
-	});
+	} );
 
-	$('#hashcalc_select').selectmenu({
-		select : function (event, ui) {
-			switch (this.selectedIndex) {
+	$( '#hashcalc_select' ).selectmenu( {
+		select : function ( event, ui ) {
+			switch ( this.selectedIndex ) {
 			case 0: //md5
 				glHashCalcHash = 'md5';
 				widHashcalcOninput();
@@ -177,18 +177,18 @@ function doc_init() {
 				break;
 			}
 		}
-	});
+	} );
 
-	$('#tokens_history_select').selectmenu({
+	$( '#tokens_history_select' ).selectmenu( {
 		disabled: true,
 		width: '60px',
-		select: function(event, data) {
+		select: function( event, data ) {
 			var d = +this.options[this.selectedIndex].text;
-			widTokensHistorySelect(d);
+			widTokensHistorySelect( d );
 		}
-	});	
+	} );	
 	
-	$('button').button();
+	$( 'button' ).button();
 
 	var cmdinputHints = [
 		'ping',
@@ -197,110 +197,110 @@ function doc_init() {
 		'info id'
 	];
 
-	$('#cmd_input').autocomplete({
+	$( '#cmd_input' ).autocomplete( {
 		source : cmdinputHints
-	});
+	} );
 	
-	var progressbar = $('#tokens_progressbar');
-	var progressbarLabel = $('.tokens-progressbar-label');
+	var progressbar = $( '#tokens_progressbar' );
+	var progressbarLabel = $( '.tokens-progressbar-label' );
 	
-	progressbar.progressbar({
+	progressbar.progressbar( {
 		value : 0,
-		change: function (event, ui){
-					var val = progressbar.progressbar('value');
-					if (val > 0) {
-						progressbarLabel.text(val + '%');
+		change: function ( event, ui ){
+					var val = progressbar.progressbar( 'value' );
+					if ( val > 0 ) {
+						progressbarLabel.text( val + '%' );
 					} else {
-						progressbarLabel.text('');
-						progressbar.progressbar('value', 0);
+						progressbarLabel.text( '' );
+						progressbar.progressbar( 'value', 0 );
 					}
 				},
-		complete: function (event, ui) {
-					progressbarLabel.text('Complete!');
+		complete: function ( event, ui ) {
+					progressbarLabel.text( 'Complete!' );
 				}
-	});
+	} );
 	
-	$('#tokens_tabs').tabs({
-		activate : function (event, ui) {
-			widShowProgressbar(0);
-			switch (ui.newTab.index()) {
+	$( '#tokens_tabs' ).tabs( {
+		activate : function ( event, ui ) {
+			widShowProgressbar( 0 );
+			switch ( ui.newTab.index() ) {
 			case 0: 
-				widShowTokensLog('Create');
+				widShowTokensLog( 'Create' );
 				break;
 			case 1: 
-				widShowTokensLog('Verify');
+				widShowTokensLog( 'Verify' );
 				break;
 			case 2: 
-				widShowTokensLog('Update');
+				widShowTokensLog( 'Update' );
 				break;
 			case 3:
-				widShowTokensLog('Keys generation for Sender');
+				widShowTokensLog( 'Keys generation for Sender' );
 				break;
 			case 4: 
-				widShowTokensLog('Keys generation for Receiver');
+				widShowTokensLog( 'Keys generation for Receiver' );
 				break;
 			default:
-				widShowTokensLog('&nbsp');
+				widShowTokensLog( '&nbsp' );
 				break;
 			}
 		}
-	})
+	} )
 
-	$('#tokens_tabs').tabs().tabs('option', 'active', 0);
+	$( '#tokens_tabs' ).tabs().tabs( 'option', 'active', 0 );
 
-	$('#tokens_add_range_accordion').accordion({
+	$( '#tokens_add_range_accordion' ).accordion( {
 		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
 		active : 'false',
 		heightStyle : 'content',
 		collapsible : 'true',
 		header : 'h3',
-	});
+	} );
 
-	$('#tokens_send_accordion').accordion({
+	$( '#tokens_send_accordion' ).accordion( {
 		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
 		active : 0,
 		heightStyle : 'content',
 		collapsible : 'true',
 		header : 'h3',
-	});
+	} );
 
-	$('#tokens_receive_accordion').accordion({
+	$( '#tokens_receive_accordion' ).accordion( {
 		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
 		active : 0,
 		heightStyle : 'content',
 		collapsible : 'true',
 		header : 'h3',
-	});
+	} );
 
-	$('#main_help_accordion').accordion({
+	$( '#main_help_accordion' ).accordion( {
 		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
 		active : 'false',
 		heightStyle : 'content',
 		collapsible : 'true',
 		header : 'h3',
-	});
+	} );
 	
-	$('#tokens_tab_help_accordion').accordion({
+	$( '#tokens_tab_help_accordion' ).accordion( {
 		icons: { 'header': 'ui-icon-plus', 'activeHeader': 'ui-icon-minus' },
 		active : 'false',
 		heightStyle : 'content',
 		collapsible : 'false',
 		header : 'h2',
-	});
+	} );
 	
-	//$( '#progressbar' ).progressbar({value: false});
+	//$( '#progressbar' ).progressbar( {value: false} );
 
-	$('.warning-td').hide();
-	$('.continue-button').hide();
-	$('.verify-table').hide();
+	$( '.warning-td' ).hide();
+	$( '.continue-button' ).hide();
+	$( '.verify-table' ).hide();
 	
-	$('#logo_span').find('img').attr('width', '28');
-	$('#logo_span').find('img').attr('height', '28');
-	$('#logo_span').find('img').attr('src', imgLogoBlue);
+	$( '#logo_span' ).find( 'img' ).attr( 'width', '28' );
+	$( '#logo_span' ).find( 'img' ).attr( 'height', '28' );
+	$( '#logo_span' ).find( 'img' ).attr( 'src', imgLogoBlue );
 
-	$('#server_host').html('' + location.host);
-	$('#tokens_verify_pre').hide();
-	setTimeout(widRefreshButtonClick, 2000);
+	$( '#server_host' ).html( '' + location.host );
+	$( '#tokens_verify_pre' ).hide();
+	setTimeout( widRefreshButtonClick, 2000 );
 }
 
 function docMain() {
@@ -342,7 +342,7 @@ function docMain() {
 	item.data = widHelpTab();
 	tabs[tabs.length] = item;
 
-	var body = widGetHTMLBody(tabs);
+	var body = widGetHTMLBody( tabs );
 
 	return body;
 }

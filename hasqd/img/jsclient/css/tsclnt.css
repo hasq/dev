@@ -62,7 +62,7 @@ button.tab-button-on {
     background: black;
     display: block;
     opacity: 0.05;
-    filter: alpha(opacity=5);
+    filter: alpha( opacity=5 );
     width: 100%;
     height: 100%;
 }
@@ -89,9 +89,45 @@ button.tab-button-on {
   vertical-align: bottom;
 }
 
-.ui-tabs-active {
-  box-shadow: 0 0 2px 0 #aaa;
-  background: #FCFCFC;
+.info-td {
+  font: 120% Monospace;
+  border: 0px;
+  font-style: italic;
+  border-radius: 0px;
+}
+
+.hidden-data {
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid CornflowerBlue;
+  border-radius: 2px;
+  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
+  font: 120% monospace;
+}
+
+.log-area-div {
+  font: italic 100% monospace;    
+}
+
+.subtitle-td {
+	text-align: center;
+	font: bold 100% Monospace;
+	font-size: 20px;
+	color: #1376BC;
+}
+
+.subscribe-td {
+	font: 60% Monospace;
+	border: 0px;
+	font-style: italic;
+	border-radius: 0px;
+	text-align: right;
+	vertical-align: top;
+}
+
+.tab-buttons-table{
+	border: 0px solid #DDDDDD;
 }
 
 .text-align-right{
@@ -113,43 +149,25 @@ button.tab-button-on {
 	color: #1376BC;
 }
 
-.subtitle-td {
-	text-align: center;
-	font: bold 100% Monospace;
-	font-size: 20px;
-	color: #1376BC;
+.ui-tabs-active {
+	box-shadow: 0 0 2px 0 #aaa;
+	background: #FCFCFC;
 }
 
-.info-td {
-  font: 120% Monospace;
-  border: 0px;
-  font-style: italic;
-  border-radius: 0px;
-}
-
-
-.hidden-data {
-  white-space: pre;
-  overflow-x: auto;
-  overflow-y: auto;
-  border: 1px solid CornflowerBlue;
-  border-radius: 2px;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
-  font: 120% monospace;
-}
-
-.log-area {
-  font: 120% monospace;    
+.welcome-p {
+	padding: 10px;
+	text-align: justify;
+	font: 100% Tahoma;
 }
 
 table {
-  padding:0;
-  border-collapse:collapse;
+	padding:0;
+	border-collapse:collapse;
 }
 
 p {
-       word-wrap: break-word;
-       white-space: normal;
+	word-wrap: break-word;
+    white-space: normal;
 }
 
 led {
