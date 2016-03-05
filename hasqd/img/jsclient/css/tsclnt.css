@@ -8,8 +8,9 @@ body {
 	background: #FCFCFC;
 	color: black;
 	width: 60%;
-	min-width: 640px;
-	min-height: 480px;	
+	min-width: 620px;
+	min-height: 480px;
+	align: justify;
     margin: auto;
 }
 
@@ -21,39 +22,38 @@ body {
 	box-sizing: border-box;
 }
 
-button {
-	width: 80px;
-	height: 80px;
+button, button.tab-button-off{
+	width: 70px;
+	height: 70px;
 	background: #F0FFFF;
 	border: 0 solid black;
 	opacity: 0.8;
 }
 
-
-button:disabled {
+button:disabled, button:disabled:hover  {
 	border: 0;
 	background: #2F4F4F;
 	cursor: default;
-	opacity: 0.4; 
+	opacity: 0.4;
 }
 
-button:active {
-	background: #87CEEB;
-	opacity: 0.5;
-}
-
-button:hover, button:focus {
+button:hover {
+	background: #87CEEB;	
 	border: 0;
 	cursor: pointer;
-	opacity: 1;
-	background: #87CEEB;
 }
 
-button:disabled, button:disabled:hover, button:disabled:focus {
-	border: 0;
+button.tab-button-off:active:hover {
 	background: #2F4F4F;
-	cursor: default;
-	opacity: 0.4; 
+	border: 0 solid #DDDDDD;
+	color: white;
+}
+
+button.tab-button-on {
+	width: 70px;
+	height: 70px;
+	background: #90EE90;
+	border: 0 solid black;
 }
 
 #modal_overlay {
@@ -94,11 +94,22 @@ button:disabled, button:disabled:hover, button:disabled:focus {
   background: #FCFCFC;
 }
 
+.text-align-right{
+	text-align: right;
+}
+
+.text-align-left{
+	text-align: left;
+}
+
+.text-align-center{
+	text-align: center;
+}
 
 .title-td {
 	text-align: left;
 	font: bold 100% Monospace;
-	font-size: 48px;
+	font-size: 36px;
 	color: #1376BC;
 }
 

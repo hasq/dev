@@ -2,14 +2,17 @@
 function textArea($textarea) {
 	return {
 		add: function (data) {
-			$textarea.val(this.val($textarea) + data);
+			return $textarea.val(this.val($textarea) + data);
+		},
+		set: function(data) {
+			return $textarea.val(data);
 		},
 		clear: function (data) {
 			data = data || '';
-			$textarea.val(data);	
+			return $textarea.val(data);	
 		},
 		clearExcept: function ($exceptTextarea) {
-			$('textarea').not($exceptTextarea).val('');
+			return $('textarea').not($exceptTextarea).val('');
 		},		
 		val: function () {
 			return $textarea.val();
@@ -82,6 +85,93 @@ function widShowDBError() {
 	alert(warning);
 }
 
+function widEmptyTab() {
+	var $Tabs = $('#tabs_div');
+	return {
+		show: function () {
+			$Tabs.tabs('option', 'active', 0);			
+		}		
+	}
+}
+
+function widDataTab() {
+	var $Textarea = $('#setdata_textarea');
+	var $Table = $('#setdata_table');
+	var $Tabs = $('#tabs_div');
+
+	return {
+		set: function (data) {
+			data = data || '';
+			textArea($Textarea).set(data);
+		},
+		disable: function (comm) {
+			$Table.find('textarea').prop('readonly', comm);
+			$Table.find('button').prop('disabled', comm);			
+		},
+		show: function () {
+			if (glLastRec.st == 'OK') this.disable(false);	
+			$Tabs.tabs('option', 'active', 1);			
+		}
+	}
+}
+
+function widCreateTab() {
+	var $Table = $('#create_table');
+	var $Tabs = $('#tabs_div');
+	
+	return {
+		disable: function (comm) {
+			$Table.find('button').prop('disabled', comm);
+		},
+		show: function () {
+			$Tabs.tabs('option', 'active', 2);
+		}
+	}
+}
+
+function widSendTab() {
+	var $Table = $('#send_table');
+	var $Tabs = $('#tabs_div');
+	
+	return {
+		disable: function (comm) {
+			$Table.find('button, input').prop('disabled', comm);
+		},
+		show: function () {
+			$Tabs.tabs('option', 'active', 3);
+		}		
+	}
+}
+
+function widReceiveTab() {
+	var $Table = $('#receive_table');
+	var $Tabs = $('#tabs_div');
+
+	return {
+		disable: function (comm) {
+			$Table.find('textarea').prop('readonly', comm);
+			$Table.find('button').prop('disabled', comm);
+		},
+		show: function () {
+			$Tabs.tabs('option', 'active', 4);
+		}	
+	}
+}
+
+function widSearchTab() {
+	var $Table = $('#search_table');
+	var $Tabs = $('#tabs_div');
+	
+	return {
+		disable: function (comm) {
+			$Table.find('button, input').prop('disabled', comm);			
+		},
+		show: function () {
+			$Tabs.tabs('option', 'active', 5);
+		}
+	}
+}
+
 function widDisableInitialDataUI(v) {
     // Disables UI
     $('#initial_data_table').find('input').prop('disabled', v); //closest('table[id^="initial"]').
@@ -132,24 +222,6 @@ function widShowTokenMsg(d) {
         return widShowLog('Searching for token...');
 	}
     (d) ? widShowLog('Token exists.') : widShowLog('No such token.');
-}
-
-function widDisableDataTab(comm) {
-	$('#setdata_table').find('textarea').prop('readonly', comm);
-	$('#setdata_table').find('button').prop('disabled', comm);
-}
-
-function widDisableCreateTab(comm) {
-	$('#create_table').find('button').prop('disabled', comm);
-}
-
-function widDisableSendTab(comm) {
-	$('#send_table').find('button, input').prop('disabled', comm);
-}
-
-function widDisableReceiveTab(comm) {
-	$('#receive_table').find('textarea').prop('readonly', comm);
-    $('#receive_table').find('button').prop('disabled', comm);
 }
 
 
@@ -229,7 +301,7 @@ function widTokenTextOninput() {
     // Events when tokens value changed.
 	clearTimeout(glTimerId);
     widShowLog(); //clear log
-    widShowEmptyArea(); //clear and hide data field
+    widEmptyTab().show(); //clear and hide data field
 	widShowPwdMatch();
 	widShowTokenMsg();
 	glLastRec={};
@@ -248,14 +320,15 @@ function widTokenTextOninput() {
 			glLastRec.st = 'IDX_NODN';
 			glLastRec.s = tok;
 			widShowTokenMsg(false);
-			widShowCreateArea();
+			widCreateTab().show();
 		} else {
 			glLastRec = engGetRespLast(data);
 			//if (lr.msg === 'ERROR') return widShowLog(resp.msg + ': ' + data);
 			var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 			glLastRec.st = widGetTokenStatus(glLastRec, nr);
 			widShowTokenMsg(true);
-			widShowDataArea(engGetOutputDataValue(glLastRec.d));
+			widDataTab().show();
+			widDataTab().set(engGetOutputDataValue(glLastRec.d));
 		}
 		
 		glLastRec.r = (jqTokText.val() !== tok) ? jqTokText.val() : '';
@@ -269,44 +342,35 @@ function widTokenTextOninput() {
     }
 }
 
-function widShowDataArea(data) {
-	$('#tabs_div').tabs('option', 'active', 1);
-    // Shows tokens data field if it length greater then zero.
-    var jqData = $('#setdata_textarea');
-	if (glLastRec.st == 'OK') widDisableDataTab(false);
-	
-    if (arguments.length === 0) {
-        jqData.empty();
-    } else { 
-		jqData.val(data);
-	}
-	return;
-}
-
 function widPasswordOninput(jqPwd) {
     // Events when passwords value changed.
 	if (typeof jqPwd !== 'undefined') glPassword = jqPwd.val();
-	widDisableDataTab(true);
-	widDisableCreateTab(true);
-	widDisableSendTab(true);
-	widDisableReceiveTab(false);
+	widDataTab().disable(true);
+	widCreateTab().disable(true);
+	widSendTab().disable(true);
+	widReceiveTab().disable(true);
+	widSearchTab().disable(true);
 	
 	if (glPassword.length > 0) {
 		widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
+		widSearchTab().disable(false);
+		
 		if (typeof glLastRec.st === 'undefined') return;
-		if (glLastRec.st === 'IDX_NODN') return widDisableCreateTab(false);
+		if (glLastRec.st === 'IDX_NODN') return widCreateTab().disable(false);
+		
 		var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 		glLastRec.st = widGetTokenStatus(glLastRec, nr);
 		widShowPwdMatch(glLastRec.st);
+		
+	
 		if (glLastRec.st == 'OK') {
-			widDisableDataTab(false);
-			widDisableSendTab(false);
-			widDisableReceiveTab(true);
+			widDataTab().disable(false);
+			widSendTab().disable(false);
+			widReceiveTab().disable(true);
 			return;
-		} 
-		if (glLastRec.st == 'TKN_SNDNG') {
-			return widDisableSendTab(false);
 		}
+		if (glLastRec.st == 'TKN_SNDNG') return widSendTab().disable(false);
+		if (glLastRec.st == 'WRONG_PWD' || glLastRec.st == 'TKN_RCVNG') return widReceiveTab().disable(false);
     } else {
 		widShowPwdMatch();
 		widShowPwdGuessTime();
@@ -331,12 +395,12 @@ function widPasswordEyeClick(jqEye){
 
 function widCreateButtonClick() {
     // Creates a new token record
-	widShowEmptyArea();
+	widEmptyTab().show();
     var jqPwd = $('#password_input');
 
 	if (typeof glLastRec.st === 'undefined') return widCompleteEvent('Empty token text!');
 	if (glLastRec.st !== 'IDX_NODN') return widCompleteEvent('Token already exists.');
-	if (! widIsPassword()) return widCompleteEvent('Empty master key!');
+	if (!widIsPassword()) return widCompleteEvent('Empty master key!');
 
     var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
@@ -575,7 +639,7 @@ function widBlockingReceiveStep2(keys) {
     var o2 = keys[0].o2;
 
     var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;	
-console.log(addCmd);    
+   
 	var cb = function (data) {
 		var resp = engGetResp(data);
         (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
@@ -599,24 +663,36 @@ function widSearchButtonClick() {
     widCompleteEvent();
 }
 
-
-function widShowEmptyArea() {
-	return $('#tabs_div').tabs('option', 'active', 0);
+function widSendTabButtonClick($obj) {
+	if (glLastRec.st == 'OK') {
+		//event.preventDefault();
+		$obj.toggleClass('tab-button-on tab-button-off');
+		$('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
+		return ($obj.hasClass('tab-button-on')) ? widSendTab().show() : widDataTab().show();
+	}
 }
 
-
-function widShowCreateArea() {
-	return $('#tabs_div').tabs('option', 'active', 2);
+function widReceiveTabButtonClick($obj) {
+	console.log(glLastRec.st);
+	if (glLastRec.st == 'WRONG_PWD' || glLastRec.st == 'TKN_RCVNG' || typeof glLastRec.st == 'undefined') {
+		//event.preventDefault();
+		$obj.toggleClass('tab-button-on tab-button-off');
+		$('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
+		if (typeof glLastRec.st == 'undefined') {
+			return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widEmptyTab().show();
+		} 
+		return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widDataTab().show();
+	}
 }
 
-function widShowSendArea() {
-	return $('#tabs_div').tabs('option', 'active', 3);
-}
-
-function widShowReceiveArea() {
-	return $('#tabs_div').tabs('option', 'active', 4);
-}
-
-function widShowSearchArea() {
-	return $('#tabs_div').tabs('option', 'active', 5);
+function widSearchTabButtonClick($obj) {
+	if (glLastRec.st !== 'IDX_NODN') {
+		event.preventDefault();
+		$obj.toggleClass('tab-button-on tab-button-off');
+		$('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
+		if (typeof glLastRec.st == 'undefined') {
+			return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widEmptyTab().show();
+		} 		
+		return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widDataTab().show();	
+	}
 }

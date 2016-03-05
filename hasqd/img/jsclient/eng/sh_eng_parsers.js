@@ -49,7 +49,6 @@ function engGetRespInfoDb(data) {
     var rawDb = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '').replace(/{\n|}+$/g, '').split(/}\n/);
 
     if (rawDb.length == 0) {
-
 		err.msg = 'ERROR';
 		err.cnt = rawDB;
         return err;

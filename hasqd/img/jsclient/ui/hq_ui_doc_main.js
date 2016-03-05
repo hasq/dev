@@ -1,20 +1,14 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-var glClientTitle = '&nbspHasq JavaScript Client';
+var glClientTitle = '&nbspHasq Client';
 var glDataBase = {};
 var glCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
 var glPassword = ''; // The specified password
-var glS1Key = '';
-var glS2Key = '';
-var glS3Key = '';
-var glS4Key = '';
-/*
-var glCL = {};
-glCL.items = [];			// Commands list.
-glCL.idx = 0;			// Contains number of current item of commands list
-glCL.counter = 100;		// countdown timer to repeat a failed operation
-*/
+
+var hasqLogo = HasqLogo('logo_span');
+var preloadImg = new Array();
+
 var glCmdList = {
 	items: [],
 	idx: 0,
@@ -25,6 +19,7 @@ var glCmdList = {
 		this.counter = 100;
 	}
 }
+
 var glTokList = {
 	fit: false,
 	unfit: false,

@@ -43,7 +43,7 @@ function widGetHTMLBody(tabs) {
 					r += '<tr>\n';
 						r += '<td/>\n';
 							r += widGetHTMLMainTabs(tabs) + '\n';
-						r += '<td width="84" align="right" valign="top" rowspan="2"/>'
+						r += '<td width="74" align="right" valign="top" rowspan="2"/>'
 							r += widGetHTMLButtonsArea() + '\n';
 					r += '</tr>\n';
 					r += '<tr>\n';
@@ -185,15 +185,15 @@ function widGetHTMLButtonsArea() {
 	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSendArea()" data-state="off">' + imgBtnSend + '</button>';
+				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widSendTabButtonClick($(this));">' + imgBtnSend + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowReceiveArea()" data-state="off">' + imgBtnReceive + '</button>';
+				r += '<button id="show_receive_tab_button" class="tab-button-off" onclick="return widReceiveTabButtonClick($(this));">' + imgBtnReceive + '</button>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button onclick="return widShowSearchArea()" data-state="off">' + imgBtnSearch + '</button>';
+				r += '<button id="show_search_tab_button" class="tab-button-off" onclick="return widSearchTabButtonClick($(this));">' + imgBtnSearch + '</button>';
 		r += '</tr>';		
 	r += '</table>';
 	return r;	
@@ -282,8 +282,8 @@ function widGetHTMLSetDataTab() {
 		r += '<tr>\n';
 			r += '<td align="center">\n';
 				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="off"></textarea>';
-			r += '<td width="84" align="center">\n'
-				r += '<button id="setdata_button" onclick="widButtonClick(this)" data-onclick="widSetDataButtonClick()">' + imgBtnData;
+			r += '<td width="74" align="center">\n'
+				r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widSetDataButtonClick()">' + imgBtnData;
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -297,7 +297,7 @@ function widGetHTMLCreateTab() {
 	r += '<table id="create_table" width="100%">\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<button id="create_button" onclick="widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgBtnCreate + '</button>';
+				r += '<button id="create_button" onclick="return widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgBtnCreate + '</button>';
 		r += '</tr>\n';
 	r += '</table>\n';
 	
@@ -307,11 +307,11 @@ function widGetHTMLCreateTab() {
 function widGetHTMLSendTab() {
 	var r = '';
 	
-	r += '<table id="send_table" width="100%" border="0">\n';
+	r += '<table id="send_table" width="100%" border="1">\n';
 		r += '</tr>\n';
 				r += '<tr>\n';
-			r += '<td width="84" align="left" />\n';
-				r += '<button id="send_button" onclick="widButtonClick(this)" data-onclick="widShowKeysButtonClick()">Show keys</button>';
+			r += '<td width="74" height="82" align="left" />\n';
+				r += '<button id="send_button" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">Show keys</button>';
 			r += '<td align="left" valign="top" rowspan="2" />\n';
 				r += '<table width="100%">';
 					r += '<tr>';
@@ -341,8 +341,8 @@ function widGetHTMLReceiveTab() {
 		r += '<tr>\n';
 			r += '<td align="center">\n'
 				r += '<textarea id="receive_textarea" type="text" rows="4" cols="64" maxlength="65536" wrap="on" required></textarea>';
-			r += '<td width="84" style="text-align: center">\n';
-				r += '<button id="receive_button" onclick="widButtonClick(this)" data-onclick="widReceiveButtonClick()">Receive';
+			r += '<td width="74" style="text-align: center">\n';
+				r += '<button id="receive_button" onclick="return widButtonClick(this)" data-onclick="widReceiveButtonClick()">Receive';
 		r += '</tr>\n';
 	r += '</table>\n';
 
@@ -359,7 +359,7 @@ function widGetHTMLSearchTab() {
 				r += '<label for="to_date">to:</label>';
 				r += '<input id="to_datepicker_input" name="to_date">\n';
 			r += '<td>\n';
-				r += '<button id="search_button" onclick="widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
+				r += '<button id="search_button" onclick="return widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
 		r += '</tr>\n';		
 	r += '</table>\n';	
 	return r;	

@@ -10,31 +10,31 @@ var glTimerId, glPingTimerId;
 
 var imgPwdDummy = 'img/pwd_dummy.png';
 var imgMsgLoading = 'img/msg_loading.gif';
-
 var imgEyeOpen = 'img/eye_open.png';
 var imgEyeClosed = 'img/eye_closed.png';
-
 var imgLogoBlue = 'img/logo_blue.png';
 var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
-
 var imgTknOk = 'img/tkn_ok.png';
 var imgTknWrong = 'img/tkn_wrongpwd.png';
 var imgTknRcvng = 'img/tkn_rcvng.png';
 var imgTknSndng = 'img/tkn_sndng.png';
-
 var imgClkReload = 'img/clk_reload.png';
-var imgBtnCreate = '<img width="70px" height="70px" src="img/btn_create.png">';
-var imgBtnData = '<img width="70px" height="70px" src="img/btn_data.png">';
-var imgBtnSearch = '<img width="70px" height="70px" src="img/btn_search.png">';
-var imgBtnSend = '<img width="70px" height="70px" src="img/btn_send.png">';
-var imgBtnReceive = '<img width="70px" height="70px" src="img/btn_receive.png">';
+var imgBtnCreate = '<img width="60px" height="60px" src="img/btn_create.png">';
+var imgBtnData = '<img width="60px" height="60px" src="img/btn_data.png">';
+var imgBtnSearch = '<img width="60px" height="60px" src="img/btn_search.png">';
+var imgBtnSend = '<img width="60px" height="60px" src="img/btn_send.png">';
+var imgBtnReceive = '<img width="60px" height="60px" src="img/btn_receive.png">';
 
 var allImages = [
 imgTknOk,imgTknWrong,imgTknRcvng,imgTknSndng,imgPwdDummy,
 imgMsgLoading,imgClkReload,imgEyeOpen,imgEyeClosed,
 imgLogoBlue,imgLogoRed,imgLogoBlink
 ];
+
+
+var hasqLogo = HasqLogo('logo_span');
+var preloadImg = new Array();
 
 function docMainWrite() {
     document.write(docMain());
@@ -51,11 +51,9 @@ function docInit() {
         activate : function (event, ui) {
             widShowLog();
         },
-	
     });
 
 	$('#setdata_table').find('button').prop('disabled', true);
-	
 	$('#reload_span').find('img').attr('src', imgClkReload);
 	$('#token_pic_span').find('img').attr('src', imgMsgLoading);
 	$('#token_pic_span').hide();
@@ -115,7 +113,7 @@ function docInit() {
     });
 
     widSetDefaultDb(glRequiredDbHash);
-	widShowEmptyArea();
+	widEmptyTab();
 	
     var ping = function () {
         widSendPing(5000)
@@ -123,6 +121,13 @@ function docInit() {
 
     glPingTimerId = setTimeout(ping, 5000);
     window.onerror = engDoNothing();
+	
+	widDataTab().disable(true);
+	widCreateTab().disable(true);
+	widSendTab().disable(true);
+	widReceiveTab().disable(true);	
+	widSearchTab().disable(true);
+	
 }
 
 function docMain() {
