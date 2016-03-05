@@ -106,14 +106,25 @@ function widShowDBError()
     alert( warning );
 }
 
+function widButtonsTable()
+{
+	var $Buttons = $( '.tab-buttons-table' );
+
+    return {
+        toggleOff: function ()
+        {
+			$Buttons.find( '.tab-button-on' ).toggleClass( 'tab-button-on tab-button-off' );
+        }
+    }
+}
+
 function widEmptyTab()
 {
     var $Tabs = $( '#tabs_div' );
-	var $Buttons = $( '.tab-buttons-table' ).find('.tab-button-on');
+	
     return {
-        show : function ()
+        show: function ()
         {
-			$Buttons.toggleClass( 'tab-button-on tab-button-off' );			
             $Tabs.tabs( 'option', 'active', 0 );
         }
     }
@@ -368,6 +379,7 @@ function widTokenTextOninput()
     // Events when tokens value changed.
     clearTimeout( glTimerId );
     widEmptyTab().show();
+	widButtonsTable().toggleOff();
     widShowPwdMatch();
     widShowTokenSearchProcess();
 
@@ -380,11 +392,15 @@ function widTokenTextOninput()
 
     var cb = function ( data )
     {
-        var resp = engGetResp( data );
         widShowTokenSearchProcess();
+		var resp = engGetResp( data );
+		
         if ( resp.msg === 'ERROR' )
             return widShowLog( resp.msg + ': ' + data );
+		
 
+		widButtonsTable().toggleOff();
+		
         if ( resp.msg === 'IDX_NODN' )
         {
             glLastRec.st = 'IDX_NODN';
