@@ -1,7 +1,7 @@
-// Hasq Technology Pty Ltd ( C ) 2013-2016
-function widGetHTMLSpanImg( id, htmlClass ) {
+// Hasq Technology Pty Ltd (C) 2013-2016
+function widGetHTMLSpanImg(id, htmlClass) {
 	var r = '';
-	if ( arguments.length > 1 ) {
+	if (arguments.length > 1) {
 		r += '<span id="' + id + '" class="' + htmlClass +'" align="center" valign="middle"><img></img></span>\n';
 	} else {
 		r += '<span id="' + id + '" align="center" valign="middle"><img></img></span>\n';
@@ -10,43 +10,43 @@ function widGetHTMLSpanImg( id, htmlClass ) {
     return r;
 }
 
-function widGetHTMLTd( x ) {
+function widGetHTMLTd(x) {
     return '<td nowrap style="text-align: left">\n' + x + '';
 }
 
-function widGetHTMLTdSpan( x, y, z ) {
-    if ( !y )
+function widGetHTMLTdSpan(x, y, z) {
+    if (!y)
         y = '';
     return '<td>\n<span id="' + x + '"></span>&nbsp;' + '' + y + '';
 }
 
-function widGetHTMLTr( x ) {
+function widGetHTMLTr(x) {
     var r = '<tr>\n' + x + '</tr>\n';
     return r;
 }
 
-function widGetHTMLHref( x ) {
+function widGetHTMLHref(x) {
     var r = '';
     r += '<a href="http://' + x + '"><b>' + x + '</b></a>\n';
     return r;
 }
 
-function widGetHTMLBody( tabs ){
+function widGetHTMLBody(tabs){
     var r = '';
     r += '<table id="#body_table" border="0" nowrap>\n';
 		r += '<tr>\n';
-			r += '<td nowrap>\n' + widGetHTMLTitle( glClientTitle );
+			r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
 			r += '<td style="text-align:right;">&nbsp;';
-				r += widGetHTMLSpanImg( 'logo_span' ) + '\n';
+				r += widGetHTMLSpanImg('logo_span') + '\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += '<td colspan="2" nowrap>\n' + widGetHTMLTabs( tabs );
+			r += '<td colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);
 		r += '</tr>\n';
     r += '</table>\n';
     return r;
 }
 
-function widGetHTMLTitle( text ) {
+function widGetHTMLTitle(text) {
     var r = '';
     r += '<table border="0">\n';
     r += '<tr>\n';
@@ -57,25 +57,25 @@ function widGetHTMLTitle( text ) {
     return r;
 }
 
-function widGetHTMLSpan( span_id ) {
+function widGetHTMLSpan(span_id) {
     var r = '';
     r += '<span id="' + span_id + '"></span>\n';
     return r;
 }
 
-function widGetHTMLTabs( items ) {
+function widGetHTMLTabs(items) {
     var r = '';
 
     r += '<div id="main_tabs">\n';
 
     r += '\t<ul>\n';
-    for ( var i = 0; i < items.length; i++ )
-        r += '\t<li><a href="#tabs-' + ( i + 1 ) + '_div">' + items[i].title + '</a>\n';
+    for (var i = 0; i < items.length; i++)
+        r += '\t<li><a href="#tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
 
     r += '\t</ul>\n';
 
-    for ( var i = 0; i < items.length; i++ )
-        r += '\t<div id="tabs-' + ( i + 1 ) + '_div">' + items[i].data + '</div>\n';
+    for (var i = 0; i < items.length; i++)
+        r += '\t<div id="tabs-' + (i + 1) + '_div">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 
@@ -89,9 +89,9 @@ function widGetHTMLServerTab() {
 		r += '<tr>\n';
 			r += '<td>\n';
 				r += '<table border="1" style="width:auto; font-family:monospace;">\n';
-					r += '<tr>\n' + widGetHTMLTd( 'Host' ) + widGetHTMLTdSpan( 'server_host', widGetHTMLRefreshButton() ) + '</tr>\n';
-					r += '<tr>\n' + widGetHTMLTd( 'Server' ) + widGetHTMLTdSpan( 'server_id' ) + '</tr>\n';
-					r += '<tr>\n' + widGetHTMLTd( 'System' ) + widGetHTMLTdSpan( 'server_sys' ) + '</tr>\n';
+					r += '<tr>\n' + widGetHTMLTd('Host') + widGetHTMLTdSpan('server_host', widGetHTMLRefreshButton()) + '</tr>\n';
+					r += '<tr>\n' + widGetHTMLTd('Server') + widGetHTMLTdSpan('server_id') + '</tr>\n';
+					r += '<tr>\n' + widGetHTMLTd('System') + widGetHTMLTdSpan('server_sys') + '</tr>\n';
 				r += '</table>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
@@ -99,7 +99,7 @@ function widGetHTMLServerTab() {
 			r += '<hr/>\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
-			r += widGetHTMLTdSpan( 'server_fam' ) + '\n';
+			r += widGetHTMLTdSpan('server_fam') + '\n';
 		r += '</tr>\n';
     r += '</table>\n';
 	
@@ -112,20 +112,20 @@ function widGetHTMLRefreshButton() {
     return r;
 }
 
-function widGetHTMLFamilyTable( data ) {
+function widGetHTMLFamilyTable(data) {
     var r = '';
 
     r += '<table border="1" style="width:auto; font-family:monospace;">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
-    if ( data != 'NO_FAMILY' ) {
-        for ( var i = 0; i < data.list.length; i++ ) {
+    if (data != 'NO_FAMILY') {
+        for (var i = 0; i < data.list.length; i++) {
             r += '<tr>\n';
-			r += widGetHTMLTd( data.list[i].name );
-            r += widGetHTMLTd( widGetHTMLHref( data.list[i].link ) );
-            r += widGetHTMLTd( data.list[i].neighbor ? 'Yes' : 'No' );
-            r += widGetHTMLTd( data.list[i].alive ? 'Yes' : 'No' );
-            r += widGetHTMLTd( data.list[i].unlock ? 'No' : 'Yes' );
+			r += widGetHTMLTd(data.list[i].name);
+            r += widGetHTMLTd(widGetHTMLHref(data.list[i].link));
+            r += widGetHTMLTd(data.list[i].neighbor ? 'Yes' : 'No');
+            r += widGetHTMLTd(data.list[i].alive ? 'Yes' : 'No');
+            r += widGetHTMLTd(data.list[i].unlock ? 'No' : 'Yes');
 			r += '</tr>\n';
         }
     }
@@ -141,7 +141,7 @@ function widGetHTMLDatabaseTab() {
     r += '<table>\n';
 		r += '<tr>\n';
 			r += '<td>\n';
-				r += '<div>' + widGetHTMLTdSpan( 'server_db', widGetHTMLDatabaseSelect() ) + '</div>\n';
+				r += '<div>' + widGetHTMLTdSpan('server_db', widGetHTMLDatabaseSelect()) + '</div>\n';
 		r += '</tr>\n';
     r += '</table>\n';
 	
@@ -167,13 +167,13 @@ function widGetHTMLDatabaseSelect() {
     return r;
 }
 
-function widGetHTMLDatabaseTraitTable( data ) {
+function widGetHTMLDatabaseTraitTable(data) {
     var r = '';
 	
     r += '<table border="1" style="width:auto;font-family:monospace;">\n';
     r += '<tr><th>Trait</th><th>Value</th></tr>\n';
 
-    for ( var key in data ) {
+    for (var key in data) {
         r += '<tr><td>' + key + '<td>' + data[key] + '</tr>\n';
     }
 	
@@ -264,14 +264,14 @@ function widGetHTMLRecTabPwdArea() {
 		r += '</tr>\n';		
 		r += '<tr>\n';
 			r += '<td class="td-label" width="40%" align="left" />\n';
-				r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick( this );" unchecked>\n';
+				r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
 				r += '&nbsp;' + 'One password' + '&nbsp;\n';
 			r += '<td align="left">\n';
 				r += '<input type="password" class="password" id="nr_pwd0_input" oninput="widShowNewRecOninput()" disabled>\n';
 
 		r += '<tr>\n';
 			r += '<td class="td-label" />\n';
-				r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick( this )" unchecked/>\n';
+				r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
 				r += '&nbsp;' + 'Three passwords' + '&nbsp;';
 			r += '<td align="left" />\n';
 				r += '<input type="password" class="password" id="nr_pwd1_input" oninput="widShowNewRecOninput()" disabled>\n';
@@ -299,19 +299,19 @@ function widGetHTMLRecTabNRArea() {
 			r += '<td class="td-label"/>\n';
 				r += '&nbsp;Key&nbsp;\n';
 			r += '<td />\n';
-				r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety( this.id )">\n';
+				r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';		
 		r += '<tr>\n';
 			r += '<td class="td-label"/>\n';
 				r += '&nbsp;Generator&nbsp;\n';
 			r += '<td />\n';
-				r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety( this.id )">\n';
+				r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td class="td-label"/>\n';
 				r += '&nbsp;Owner&nbsp;\n';
 			r += '<td />\n';
-				r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety( this.id )">\n';
+				r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety(this.id)">\n';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td class="td-label"/>\n';
@@ -416,9 +416,9 @@ function widGetHTMLHashcalcTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="right" nowrap>\n';
-				r += '<button id="send_to_k_button" onclick="return $( \'#newrec_k_input\' ).val( $( \'#hashcalc_out_textarea\' ).val() )">Send to K</button>\n';
-				r += '<button id="send_to_g_button" onclick="return $( \'#newrec_g_input\' ).val( $( \'#hashcalc_out_textarea\' ).val() )">Send to G</button>\n';
-				r += '<button id="send_to_o_button" onclick="return $( \'#newrec_o_input\' ).val( $( \'#hashcalc_out_textarea\' ).val() )">Send to O</button>\n';
+				r += '<button id="send_to_k_button" onclick="return $(\'#newrec_k_input\').val($(\'#hashcalc_out_textarea\').val())">Send to K</button>\n';
+				r += '<button id="send_to_g_button" onclick="return $(\'#newrec_g_input\').val($(\'#hashcalc_out_textarea\').val())">Send to G</button>\n';
+				r += '<button id="send_to_o_button" onclick="return $(\'#newrec_o_input\').val($(\'#hashcalc_out_textarea\').val())">Send to O</button>\n';
 		r += '</tr>\n';
     r += '</table>\n';
 
@@ -448,7 +448,7 @@ function widGetHTMLCommandTab() {
 			r += '<td width="70"/>\n';
 				r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
 			r += '<td align="left" />\n';
-				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey( this.value, event );"/>\n';						
+				r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';						
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2"/>\n';

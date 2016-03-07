@@ -148,7 +148,7 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
     background: black;
     display: block;
     opacity: 0.05;
-    filter: alpha( opacity=5 );
+    filter: alpha(opacity=5);
     width: 100%;
     height: 100%;
 }

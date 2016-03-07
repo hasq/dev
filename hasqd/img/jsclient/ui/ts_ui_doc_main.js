@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd ( C ) 2013-2016
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 var glClientTitle = 'TOKENSWAP';
 var glRequiredDbHash = 'smd';
@@ -32,55 +32,55 @@ var allImages = [
     imgLogoBlue, imgLogoRed, imgLogoBlink
 ];
 
-var hasqLogo = HasqLogo( 'logo_span' );
+var hasqLogo = HasqLogo('logo_span');
 var preloadImg = new Array();
 
 function docMainWrite() {
-    document.write( docMain() );
+    document.write(docMain());
 }
 
 function docMainInit() {
-    $( document ).ready( function () {
+    $(document).ready(function () {
         docInit();
-    } );
+    });
 }
 
 function docInit() 
 {
-	$( 'input, select, textarea' ).attr( 'autocomplete', 'off' );
-	$( 'input, textarea' ).val( '' );
-	$( 'input, select, textarea' ).prop( 'disabled', true );
-	$( 'input, select, textarea' ).prop( 'disabled', false );
+	$('input, select, textarea').attr('autocomplete', 'off');
+	$('input, textarea').val('');
+	$('input, select, textarea').prop('disabled', true);
+	$('input, select, textarea').prop('disabled', false);
 	
-    $( '#tabs_div' ).tabs( 
+    $('#tabs_div').tabs(
 	{
-        activate : function ( event, ui ) 
+        activate : function (event, ui) 
 		{
             widShowLog();
         },
-    } );
+    });
 
-    $( '#setdata_table' ).find( 'button' ).prop( 'disabled', true );
-    $( '#reload_span' ).find( 'img' ).attr( 'src', imgClkReload );
-    $( '#token_pic_span' ).find( 'img' ).attr( 'src', imgMsgLoading );
-    $( '#token_pic_span' ).hide();
-    $( '#password_pic_span' ).find( 'img' ).attr( 'src', imgPwdDummy );
-    $( '#logo_span' ).find( 'img' ).attr( 'width', '28' );
-    $( '#logo_span' ).find( 'img' ).attr( 'height', '28' );
-    $( '#logo_span' ).find( 'img' ).attr( 'src', imgLogoBlue );
-    $( '#password_eye_span' ).find( 'img' ).attr( 'src', imgEyeOpen );
-    $( '#password_eye_span' ).find( 'img' ).attr( 'title', 'Unmask password' );
+    $('#setdata_table').find('button').prop('disabled', true);
+    $('#reload_span').find('img').attr('src', imgClkReload);
+    $('#token_pic_span').find('img').attr('src', imgMsgLoading);
+    $('#token_pic_span').hide();
+    $('#password_pic_span').find('img').attr('src', imgPwdDummy);
+    $('#logo_span').find('img').attr('width', '28');
+    $('#logo_span').find('img').attr('height', '28');
+    $('#logo_span').find('img').attr('src', imgLogoBlue);
+    $('#password_eye_span').find('img').attr('src', imgEyeOpen);
+    $('#password_eye_span').find('img').attr('title', 'Unmask password');
 
-    $( 'button' ).button();
+    $('button').button();
 
-    $( '#token_data_td' ).hide();
-    $( '#send_blocking_textarea' ).hide();
-    $( '#send_type_checkbox' ).click( function () 
+    $('#token_data_td').hide();
+    $('#send_blocking_textarea').hide();
+    $('#send_type_checkbox').click(function () 
 	{
-        var jqObj0 = $( '#send_simple_textarea' );
-        var jqObj1 = $( '#send_blocking_textarea' );
+        var jqObj0 = $('#send_simple_textarea');
+        var jqObj1 = $('#send_blocking_textarea');
 
-        if ( this.checked ) 
+        if (this.checked) 
 		{
             jqObj1.show();
         } 
@@ -89,70 +89,64 @@ function docInit()
             jqObj1.hide();
         }
 
-        jqObj0.val( '' );
-        jqObj1.val( '' );
-    } );
+        jqObj0.val('');
+        jqObj1.val('');
+    });
 	
-    $( '#show_hide_checkbox' ).click( function () 
+    $('#show_hide_checkbox').click(function () 
 	{
-        if ( this.checked ) 
+        if (this.checked) 
 		{
-            $( '.password' ).attr( 'type', 'text' );
+            $('.password').attr('type', 'text');
         } 
 		else
 		{
-            $( '.password' ).attr( 'type', 'password' );
+            $('.password').attr('type', 'password');
         }
-    } );
+    });
 	
-    $( '#from_datepicker_input' ).datepicker( 
+    $('#from_datepicker_input').datepicker(
 	{
         dateFormat : 'yy/mm/dd',
-        minDate : new Date( 2016, 0, 1 ),
+        minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
         showMonthAfterYear : true,
         showOtherMonths : true,
         selectOtherMonths : true,
         changeMonth : true,
         changeYear : true,
-        onClose : function ( selectedDate ) 
+        onClose : function (selectedDate) 
 		{
-            $( '#to_datepicker_input' ).datepicker( 'option', 'minDate', selectedDate );
+            $('#to_datepicker_input').datepicker('option', 'minDate', selectedDate);
         }
-    } );
+    });
 	
-    $( '#to_datepicker_input' ).datepicker( 
+    $('#to_datepicker_input').datepicker(
 	{
         dateFormat : 'yy/mm/dd',
-        minDate : new Date( 2016, 0, 1 ),
+        minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
         showMonthAfterYear : true,
         showOtherMonths : true,
         selectOtherMonths : true,
         changeMonth : true,
         changeYear : true,
-        onClose : function ( selectedDate ) 
+        onClose : function (selectedDate) 
 		{
-            $( '#from_datepicker_input' ).datepicker( 'option', 'maxDate', selectedDate );
+            $('#from_datepicker_input').datepicker('option', 'maxDate', selectedDate);
         }
-    } );
+    });
 
-    widSetDefaultDb( glRequiredDbHash );
+    widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 
     var ping = function() 
 	{
-        widSendPing( 5000 )
+        widSendPing(5000)
     }
 
-    glPingTimerId = setTimeout( ping, 5000 );
+    glPingTimerId = setTimeout(ping, 5000);
     window.onerror = engDoNothing();
-
-    widDataTab().disable( true );
-    widCreateTab().disable( true );
-    widSendTab().disable( true );
-    widReceiveTab().disable( true );
-    widSearchTab().disable( true );
 
 }
 
@@ -191,7 +185,7 @@ function docMain()
     item.data = widGetHTMLSearchTab();
     tabs[tabs.length] = item;
 
-    var body = widGetHTMLBody( tabs );
+    var body = widGetHTMLBody(tabs);
 
     return body;
 }
