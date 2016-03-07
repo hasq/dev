@@ -95,7 +95,7 @@ function widCleanUI( $obj ) {
 function widCleanVerifyTab() {
     $( '#tokens_verify_table' ).find( 'tr:gt( 0 )' ).remove();
 	led( $( '#tokens_verify_button' ) ).clear();
-    $( '.verify-hidden-area-div' ).hide();
+    $( '.div-hidden' ).hide();
 }
 
 function widGetClosestMainButton( $obj ) {
@@ -107,7 +107,7 @@ function widGetClosestContinueButton( $obj ) {
 }
 
 function widGetClosestWarningTd( $obj ) {
-    return $obj.closest( '.wrap' ).find( $( 'td .warning-td' ) );
+    return $obj.closest( '.wrap' ).find( $( 'td .td-warning' ) );
 }
 
 function widGetClosestLed( $obj ) {
@@ -467,7 +467,7 @@ function widPreVerify( $obj ) {
 	if ( !widIsRawTokens() ) return widDone( $obj, 'Empty or bad tokens!' );
 	if ( !widIsPassword() ) return widDone( $obj, 'Empty password!' );
 
-    var $TableArea = $( '.verify-hidden-area-div' );
+    var $TableArea = $( '.div-hidden' );
 	var width = $obj.closest( '.wrap' ).outerWidth() - 6;
 	var maxHeight = ( ( $( window ).height() - $( 'body' ).height() ) > 200 ) ? ( $( window ).height() - $( 'body' ).height() )/2 : 100;
 

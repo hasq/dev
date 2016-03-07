@@ -20,11 +20,11 @@ var imgTknWrong = 'img/tkn_wrongpwd.png';
 var imgTknRcvng = 'img/tkn_rcvng.png';
 var imgTknSndng = 'img/tkn_sndng.png';
 var imgClkReload = 'img/clk_reload.png';
-var imgBtnCreate = '<img width="60px" height="60px" src="img/btn_create.png">';
-var imgBtnData = '<img width="60px" height="60px" src="img/btn_data.png">';
-var imgBtnSearch = '<img width="60px" height="60px" src="img/btn_search.png">';
-var imgBtnSend = '<img width="60px" height="60px" src="img/btn_send.png">';
-var imgBtnReceive = '<img width="60px" height="60px" src="img/btn_receive.png">';
+var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
+var imgBtnData = '<img width="40px" height="40px" src="img/btn_data.png"><br/>Edit data';
+var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>View';
+var imgBtnSend = '<img width="40px" height="40px" src="img/btn_send.png"><br/>Give away';
+var imgBtnReceive = '<img width="40px" height="40px" src="img/btn_receive.png"><br/>Receive';
 
 var allImages = [
     imgTknOk, imgTknWrong, imgTknRcvng, imgTknSndng, imgPwdDummy,
@@ -47,6 +47,11 @@ function docMainInit() {
 
 function docInit() 
 {
+	$( 'input, select, textarea' ).attr( 'autocomplete', 'off' );
+	$( 'input, textarea' ).val( '' );
+	$( 'input, select, textarea' ).prop( 'disabled', true );
+	$( 'input, select, textarea' ).prop( 'disabled', false );
+	
     $( '#tabs_div' ).tabs( 
 	{
         activate : function ( event, ui ) 
@@ -67,6 +72,7 @@ function docInit()
     $( '#password_eye_span' ).find( 'img' ).attr( 'title', 'Unmask password' );
 
     $( 'button' ).button();
+
     $( '#token_data_td' ).hide();
     $( '#send_blocking_textarea' ).hide();
     $( '#send_type_checkbox' ).click( function () 

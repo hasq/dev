@@ -94,7 +94,7 @@ function widGetHTMLTokensInitialData() {
 					r += '<div>\n';
 						r += '<table style="width:auto">\n';
 							r += '<tr>\n';
-								r += '<td class="label-td" align="left" />\n';
+								r += '<td class="td-label" align="left" />\n';
 									r += 'Base name&nbsp\n';
 								r += '<td colspan="3" align="left" />\n';
 									r += '<input type="text" size="24" id="tokens_basename_input" >\n';
@@ -102,11 +102,11 @@ function widGetHTMLTokensInitialData() {
 									r += '<button onclick="widMainButtonClick( $( this ) )" data-title="Add" data-function="widAddTokens">Add</button>\n';
 							r += '</tr>\n';
 							r += '<tr>\n';
-								r += '<td class="label-td" align="left" />\n'; 
+								r += '<td class="td-label" align="left" />\n'; 
 									r += 'Start index&nbsp\n'; 
 								r += '<td align="left" />\n'; 
 									r += '<input type="text" size="3" id="tokens_first_idx_input" oninput="return $( this ).val( engGetOnlyNumber( $( this ).val() ) )">\n';
-								r += '<td class="label-td" align="right" />\n'; 
+								r += '<td class="td-label" align="right" />\n'; 
 									r += 'End index\n';
 								r += '<td align="right" />\n'; 
 									r += '<input type="text" size="3" id="tokens_last_idx_input" oninput="return $( this ).val( engGetOnlyNumber( $( this ).val() ) )">\n';
@@ -119,7 +119,7 @@ function widGetHTMLTokensInitialData() {
 			r += '<td align="left" />\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';
-						r += '<td class="label-td" align="left" />\n';
+						r += '<td class="td-label" align="left" />\n';
 							r += 'Password&nbsp\n';
 						r += '<td align="left" />\n';
 							r += '<input type="text" id="tokens_password_input" placeholder="Enter a password" oninput="widTokensPasswordOninput( this.value );" />\n';
@@ -170,7 +170,7 @@ function widGetHTMLTokensVerifyTab() {
 				r += widGetHTMLSpanImg( '', 'led-span' ) + '\n';
 		r += '</tr>\n';
 	r += '</table>\n'; 
-	r += '<div id="tokens_verify_pre" class="verify-hidden-area-div">\n';
+	r += '<div id="tokens_verify_pre" class="div-hidden">\n';
 		r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
 			r += '<tr>\n';
 				r +='<th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th>\n';
@@ -185,7 +185,7 @@ function widGetHTMLTokensDataTab() {
 
     r += '<table class="wrap">\n';
 		r += '<tr>\n';
-			r += '<td class="label-td" style="width:70px" align="left" />\n';
+			r += '<td class="td-label" style="width:70px" align="left" />\n';
 				r += 'New data&nbsp;\n';
 			r += '<td align="right" />\n';
 				r += '<input type="text" id="tokens_data_input" size="28" placeholder="Enter a new data" />\n';
@@ -194,7 +194,7 @@ function widGetHTMLTokensDataTab() {
 			r += '<td align="right" colspan="2"/>\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';		
-						r += '<td class="warning-td" align="center">\n';
+						r += '<td class="td-warning" align="center">\n';
 							r += '&nbsp;The specified range contains unknown tokens. Continue?&nbsp;\n';
 						r += '<td align="right">\n';							
 							r += widGetHTMLSpanImg( '', 'led-span' ) + '\n';							
@@ -260,7 +260,7 @@ function widGetHTMLTokensSS2() {
 			r += '<td align="right" />\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';
-						r += '<td class="warning-td" align="center" />\n';
+						r += '<td class="td-warning" align="center" />\n';
 							r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 						r += '<td align="right" />\n';
 							r += widGetHTMLSpanImg( 'tokens_ss2_led_span', 'led-span' ) + '\n';
@@ -332,7 +332,7 @@ function widGetHTMLTokensSS4() {
 			r += '<td align="right" />\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';
-						r += '<td class="warning-td">\n';
+						r += '<td class="td-warning">\n';
 							r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 						r += '<td align="right" />\n';
 							r += widGetHTMLSpanImg( 'tokens_ss4_s1_led_span', 'led-span' ) + '\n';		
@@ -353,7 +353,7 @@ function widGetHTMLTokensSS4() {
 			r += '<td align="right" />\n';
 				r += '<table style="width:auto;">\n';
 					r += '<tr>\n';
-						r += '<td class="warning-td" />\n';
+						r += '<td class="td-warning" />\n';
 							r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 						r += '<td align="right" />\n';
 							r += widGetHTMLSpanImg( 'tokens_ss4_s2_led_span', 'led-span' ) + '\n';
@@ -398,7 +398,7 @@ function widGetHTMLTokensRS1() {
 			r += '<td align="right" />\n';
 				r += '<table style="width:auto">\n';
 					r += '<tr>\n';
-						r += '<td class="warning-td" align="center" />\n';
+						r += '<td class="td-warning" align="center" />\n';
 							r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 						r += '<td align="right">\n';
 							r += widGetHTMLSpanImg( 'tokens_rs1_led_span', 'led-span' ) + '\n';
@@ -427,7 +427,7 @@ function widGetHTMLTokensRS2() {
 							r += '<button data-function="widPreSimpleRequest" data-title="Initiate" class="shared-button" onclick="widMainButtonClick( $( this ) )">Initiate</button>\n';
 						r += '<td align="left" />\n';
 							r += widGetHTMLSpanImg( 'tokens_rs2_led_span', 'led-span' ) + '\n';
-						r += '<td class="warning-td" align="center" />\n';
+						r += '<td class="td-warning" align="center" />\n';
 							r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 					r += '</tr>\n';
 				r += '</table>\n';
@@ -453,7 +453,7 @@ function widGetHTMLTokensRS3() {
 				r += '<td align="right" />\n';
 					r += '<table style="width:auto">\n';
 						r += '<tr>\n';
-							r += '<td class="warning-td" align="center" />\n';
+							r += '<td class="td-warning" align="center" />\n';
 								r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 							r += '<td align="right" />\n';
 								r += widGetHTMLSpanImg( 'tokens_rs3_s1_led_span', 'led-span' ) + '\n';
@@ -474,7 +474,7 @@ function widGetHTMLTokensRS3() {
 				r += '<td align="right" />\n';
 					r += '<table style="width:auto">\n';
 						r += '<tr>\n';
-							r += '<td class="warning-td" align="center" />\n';
+							r += '<td class="td-warning" align="center" />\n';
 								r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
 							r += '<td align="left" />\n';
 								r += widGetHTMLSpanImg( 'tokens_rs3_s2_led_span', 'led-span' ) + '\n';

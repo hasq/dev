@@ -48,7 +48,7 @@ function widGetHTMLBody( tabs ) {
 		r += '<tr>\n';
 			r += '<td />\n';
 				r += widGetHTMLLogArea() + '\n';
-			r += '<td class="subscribe-td" width="160" nowrap>\n';
+			r += '<td class="td-subscribe" width="160" nowrap>\n';
 				r += 'Powered by ' + '<a href="http://hasq.org">' + 'Hasq Technology' + '</a>' + '<sup>\u00A9</sup>' + '2016';
 		r += '</tr>\n';		
     r += '</table>\n';
@@ -60,7 +60,7 @@ function widGetHTMLTitleArea() {
 	var r = '';
 	r += '<table width="100%" border="0">';
 		r += '<tr>';
-			r += '<td class="title-td"/>';
+			r += '<td class="td-title"/>';
 				r += '<span>\n' + glClientTitle + '</span>\n';
 			r += '<td width="30" height="30" align="center" valign="middle">';
 				r += widGetHTMLSpanImg( 'logo_span', 'widSendPing( 5000 )' ) + '\n';
@@ -74,7 +74,7 @@ function widGetHTMLTokenTextArea() {
 	var r = '';
 	r += '<table width="100%" style="border: 0px solid #DDDDDD;">';
 		r += '<tr>';
-			r += '<td class="subtitle-td" align="center"/>';
+			r += '<td class="td-subtitle" align="center"/>';
 				r += '<b>Token name<b>';
 		r += '</tr>';
 		
@@ -84,7 +84,7 @@ function widGetHTMLTokenTextArea() {
 		r += '</tr>';
 		
 		r += '<tr>';
-			r += '<td align="left" class="info-td">';
+			r += '<td align="left" class="td-info">';
 				r += '<table>';
 					r += '<tr>';
 						r += '<td width="20" height="20" valign="center" title="Update token info"/>';
@@ -98,7 +98,7 @@ function widGetHTMLTokenTextArea() {
 				r += '</table>';
 		r += '</tr>';
 		r += '<tr>';
-			r += '<td class="subtitle-td"/>';
+			r += '<td class="td-subtitle"/>';
 				r += 'Master key';
 		r += '</tr>';
 		r += '<tr>';
@@ -128,7 +128,7 @@ function widGetHTMLMasterKeyArea() {
 	var r = '';
 	r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 		r += '<tr>';
-			r += '<td class="subtitle-td"/>';
+			r += '<td class="td-subtitle"/>';
 				r += 'Master key';
 		r += '</tr>';
 		r += '<tr>';
@@ -266,12 +266,17 @@ function widGetHTMLSetDataTab() {
 	
 	r += '<table id="setdata_table" width="100%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td class="subtitle-td" align="center" colspan="2" >\n';
+			r += '<td height="10">\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" />\n';
 				r += 'Token data';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n';
-				r += '<textarea type="text" id="setdata_textarea" rows="4" cols="64" wrap="off"></textarea>';
+				r += '<textarea id="setdata_textarea" oninput="return widTokenDataTextareaOninput($(this))" type="text" rows="4" cols="64"></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';				
 			r += '<td width="74" align="center">\n'
 				r += '<button id="setdata_button" onclick="return widButtonClick( this );" data-onclick="widSetDataButtonClick()">' + imgBtnData;
 		r += '</tr>\n';
@@ -280,13 +285,15 @@ function widGetHTMLSetDataTab() {
 	return r;
 }
 
-
 function widGetHTMLCreateTab() {
 	var r = '';
 	
 	r += '<table id="create_table" width="100%">\n';
 		r += '<tr>\n';
-			r += '<td class="subtitle-td" align="center" colspan="2" >\n';
+			r += '<td height="10">\n';
+		r += '</tr>\n';	
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" colspan="2" >\n';
 				r += 'Create new token';
 		r += '</tr>\n';	
 		r += '<tr>\n';
@@ -301,31 +308,36 @@ function widGetHTMLCreateTab() {
 function widGetHTMLSendTab() {
 	var r = '';
 	
-	r += '<table id="send_table" width="100%" border="1">\n';
+	r += '<table id="send_table" width="100%" border="0">\n';
 		r += '<tr>\n';
-			r += '<td class="subtitle-td" align="center" colspan="2" >\n';
+			r += '<td height="10" />\n';
+		r += '</tr>\n';	
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" >\n';
 				r += 'Give away token';
 		r += '</tr>\n';	
 		r += '<tr>\n';
-			r += '<td width="74" height="82" align="left" />\n';
-				r += '<button id="send_button" onclick="return widButtonClick( this )" data-onclick="widShowKeysButtonClick()">Show keys</button>';
-			r += '<td align="left" valign="top" rowspan="2" />\n';
+			r += '<td align="center" />\n';
+				r += '<button id="show_keys_button" onclick="return widButtonClick( this )" data-onclick="widShowKeysButtonClick()">Show keys</button>';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td align="center" />\n';
+				r += '<input type="checkbox" id="send_type_checkbox">';
+				r += '<label for="send_type_checkbox" style="font:70% monospace"><i>Blocking</i></label>\n';	
+		r += '</tr>\n';			
+		r += '<tr>\n';				
+			r += '<td rowspan="2" />\n';
 				r += '<table width="100%">';
 					r += '<tr>';
-						r += '<td/>';
-							r += '<textarea wrap="on" rows="2" type="text" id="send_simple_textarea" readonly></textarea>';
+						r += '<td />';
+							r += '<textarea class="textarea-transkeys" wrap="on" rows="3" type="text" id="send_simple_textarea" readonly></textarea>';
 					r += '</tr>';
 					r += '<tr>';
-						r += '<td/>';
-							r += '<textarea wrap="on" rows="2" type="text" id="send_blocking_textarea" readonly></textarea>';
+						r += '<td />';
+							r += '<textarea class="textarea-transkeys" wrap="on" rows="3" type="text" id="send_blocking_textarea" readonly></textarea>';
 					r += '</tr>';					
 				r += '</table>';
 		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td align="left" />\n';
-				r += '<input type="checkbox" id="send_type_checkbox">';
-				r += '<label for="send_type_checkbox" style="font:70% monospace"><i>Blocking</i></label>\n';	
-		r += '</tr>\n';		
 	r += '</table>\n';
 	
 	return r;	
@@ -336,12 +348,17 @@ function widGetHTMLReceiveTab() {
 	
 	r += '<table id="receive_table" width="100%" border="0" >\n';
 		r += '<tr>\n';
-			r += '<td class="subtitle-td" align="center" colspan="2" >\n';
+			r += '<td height="10" />\n';
+		r += '</tr>\n';	
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" />\n';
 				r += 'Receive token';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center">\n'
 				r += '<textarea id="receive_textarea" type="text" rows="4" cols="64" maxlength="65536" wrap="on" required></textarea>';
+		r += '</tr>\n';	
+		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
 				r += '<button id="receive_button" onclick="return widButtonClick( this )" data-onclick="widReceiveButtonClick()">Receive';
 		r += '</tr>\n';
@@ -354,7 +371,10 @@ function widGetHTMLSearchTab() {
 	var r = '';
 	r += '<table id="search_table" align="center" border="0">\n';
 		r += '<tr>\n';
-			r += '<td class="subtitle-td" align="center" colspan="2" >\n';
+			r += '<td height="10" />\n';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" />\n';
 				r += 'View my token';
 		r += '</tr>\n';	
 		r += '<tr>\n';
@@ -363,6 +383,8 @@ function widGetHTMLSearchTab() {
 				r += '<input id="from_datepicker_input" name="from_date">\n';
 				r += '<label for="to_date">to:</label>';
 				r += '<input id="to_datepicker_input" name="to_date">\n';
+		r += '</tr>\n';		
+		r += '<tr>\n';				
 			r += '<td>\n';
 				r += '<button id="search_button" onclick="return widButtonClick( this );" data-onclick="widSearchButtonClick()">Search';
 		r += '</tr>\n';		
@@ -376,7 +398,7 @@ function widGetHTMLLogArea() {
 	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<div id="tokens_log_div" class="log-area-div" >&nbsp</div>\n';
+				r += '<div id="tokens_log_div" class="div-log-area" >&nbsp</div>\n';
 		r += '</tr>';		
 	r += '</table>';
     return r;

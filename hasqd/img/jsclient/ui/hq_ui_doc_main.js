@@ -82,6 +82,18 @@ function docMainInit() {
 }
 
 function doc_init() {
+	/*$( 'input, textarea' ).val( '' );
+	$( 'input, select, textarea' ).attr( 'autocomplete', 'off' );
+	$( 'input, select, textarea' ).prop( 'disabled', true );
+	setTimeout( 
+		function () 
+		{
+			$( 'input, select, textarea' ).prop( 'disabled', false )
+		}
+		, 50 
+	);
+	*/
+	
 	$( '#main_tabs' ).tabs( {
 		activate : function ( event, ui ) {
 			if ( ui.newTab.index() == 3 ) {
@@ -290,7 +302,7 @@ function doc_init() {
 	
 	//$( '#progressbar' ).progressbar( {value: false} );
 
-	$( '.warning-td' ).hide();
+	$( '.td-warning' ).hide();
 	$( '.continue-button' ).hide();
 	$( '.verify-table' ).hide();
 	

@@ -106,125 +106,6 @@ function widShowDBError()
     alert( warning );
 }
 
-function widButtonsTable()
-{
-	var $Buttons = $( '.tab-buttons-table' );
-
-    return {
-        toggleOff: function ()
-        {
-			$Buttons.find( '.tab-button-on' ).toggleClass( 'tab-button-on tab-button-off' );
-        }
-    }
-}
-
-function widEmptyTab()
-{
-    var $Tabs = $( '#tabs_div' );
-	
-    return {
-        show: function ()
-        {
-            $Tabs.tabs( 'option', 'active', 0 );
-        }
-    }
-}
-
-function widDataTab()
-{
-    var $Textarea = $( '#setdata_textarea' );
-    var $Table = $( '#setdata_table' );
-    var $Tabs = $( '#tabs_div' );
-
-    return {
-        set : function ( data )
-        {
-            data = data || '';
-            textArea( $Textarea ).set( data );
-        },
-        disable : function ( comm )
-        {
-            $Table.find( 'textarea' ).prop( 'readonly', comm );
-            $Table.find( 'button' ).prop( 'disabled', comm );
-        },
-        show : function ()
-        {
-            if ( glLastRec.st == 'OK' )
-                this.disable( false );
-            $Tabs.tabs( 'option', 'active', 1 );
-        }
-    }
-}
-
-function widCreateTab()
-{
-    var $Table = $( '#create_table' );
-    var $Tabs = $( '#tabs_div' );
-
-    return {
-        disable : function ( comm )
-        {
-            $Table.find( 'button' ).prop( 'disabled', comm );
-        },
-        show : function ()
-        {
-            $Tabs.tabs( 'option', 'active', 2 );
-        }
-    }
-}
-
-function widSendTab()
-{
-    var $Table = $( '#send_table' );
-    var $Tabs = $( '#tabs_div' );
-
-    return {
-        disable : function ( comm )
-        {
-            $Table.find( 'button, input' ).prop( 'disabled', comm );
-        },
-        show : function ()
-        {
-            $Tabs.tabs( 'option', 'active', 3 );
-        }
-    }
-}
-
-function widReceiveTab()
-{
-    var $Table = $( '#receive_table' );
-    var $Tabs = $( '#tabs_div' );
-
-    return {
-        disable : function ( comm )
-        {
-            $Table.find( 'textarea' ).prop( 'readonly', comm );
-            $Table.find( 'button' ).prop( 'disabled', comm );
-        },
-        show : function ()
-        {
-            $Tabs.tabs( 'option', 'active', 4 );
-        }
-    }
-}
-
-function widSearchTab()
-{
-    var $Table = $( '#search_table' );
-    var $Tabs = $( '#tabs_div' );
-
-    return {
-        disable : function ( comm )
-        {
-            $Table.find( 'button, input' ).prop( 'disabled', comm );
-        },
-        show : function ()
-        {
-            $Tabs.tabs( 'option', 'active', 5 );
-        }
-    }
-}
-
 function widDisableInitialDataUI( v )
 {
     // Disables UI
@@ -413,8 +294,9 @@ function widTokenTextOninput()
             glLastRec = engGetRespLast( data );
             var nr = engGetNewRecord( glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash );
             glLastRec.st = widGetTokenStatus( glLastRec, nr );
+			widDataTab().show();
+			( glLastRec.st == 'OK' )  ? widDataTab().disable( false ) : widDataTab().disable( true );
             widDataTab().set( engGetOutputDataValue( glLastRec.d ) );
-            widDataTab().show();
             widShowTokenSearchProcess().show( true );
         }
 
@@ -498,86 +380,6 @@ function widPasswordEyeClick( jqEye )
         jqEye.find( 'img' ).attr( 'src', imgEyeClosed );
         jqEye.attr( 'title', 'Mask password' );
     }
-}
-
-function widCreateButtonClick()
-{
-    // Creates a new token record
-    widEmptyTab().show();
-    var jqPwd = $( '#password_input' );
-
-    if ( typeof glLastRec.st === 'undefined' )
-        return widCompleteEvent( 'Empty token text!' );
-    if ( glLastRec.st !== 'IDX_NODN' )
-        return widCompleteEvent( 'Token already exists.' );
-    if ( !widIsPassword() )
-        return widCompleteEvent( 'Empty master key!' );
-
-    var nr = engGetNewRecord( 0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash );
-    var nr_d = ( glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s ) ? '[' + glLastRec.r + ']' : '';
-    var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
-
-    var cb = function ( data )
-    {
-        var r = engGetResp( data );
-        if ( r.msg == 'OK' )
-        {
-            widCompleteEvent( r.msg );
-            widTokenTextOninput(); //update token info after create;
-        }
-        else
-        {
-            widCompleteEvent( r.msg + ': ' + r.cnt );
-        }
-    }
-
-    var f = function ()
-    {
-        ajxSendCommand( cmd, cb, hasqLogo );
-    }
-
-    setTimeout( f, 1000 );
-    widShowLog( 'Creating token...' );
-}
-
-function widSetDataButtonClick()
-{
-    // Adds a new record with a specified data
-    var jqPwd = $( '#password_input' );
-    var jqData = $( '#setdata_textarea' );
-
-    if ( typeof glLastRec.st === 'undefined' )
-        return widCompleteEvent( 'Empty token text!' );
-    if ( glLastRec.st === 'IDX_NODN' )
-        return widCompleteEvent( 'First create a token!' );
-    if ( !widIsPassword() )
-        return widCompleteEvent( 'Empty master key!' );
-    if ( glLastRec.st !== 'OK' )
-        return widCompleteEvent( 'Incorrect master key - token is unavailable!' );
-
-    var nr = engGetNewRecord( glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash );
-    var nr_d = engGetInputDataValue( jqData.val() );
-    var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
-
-    var cb = function ( d )
-    {
-        var r = engGetResp( d );
-        if ( r.msg == 'OK' )
-        {
-            widTokenTextOninput();
-            return widCompleteEvent( r.msg );
-        }
-
-        return widCompleteEvent( r.msg + ': ' + r.cnt );
-    }
-
-    var f = function ()
-    {
-        ajxSendCommand( cmd, cb, hasqLogo );
-    }
-
-    widShowLog( 'Giving token data...' );
-    setTimeout( f );
 }
 
 function widShowKeysButtonClick()
@@ -669,6 +471,247 @@ function widShowKeysButtonClick()
 
 }
 
+function widTokensTakeover( keys )
+{
+    keys = engGetTitleKeys( keys, glPassword, glCurrentDB.hash, glCurrentDB.magic );
+    switch ( keys[0].prcode )
+    {
+    case '23132':
+        widSimpleReceive( keys );
+        break;
+    case '23141':
+        widBlockingReceiveStep1( keys );
+        break;
+    case '232':
+        widBlockingReceiveStep2( keys );
+        break;
+    default:
+        return widCompleteEvent( 'Bad TransKeys!' );
+    }
+}
+
+function widButtonsTable()
+{
+	var $Buttons = $( '.tab-buttons-table' );
+
+    return {
+        toggleOff: function ()
+        {
+			$Buttons.find( '.tab-button-on' ).toggleClass( 'tab-button-on tab-button-off' );
+        }
+    }
+}
+
+function widEmptyTab()
+{
+    var $Tabs = $( '#tabs_div' );
+	
+    return {
+        show: function ()
+        {
+            $Tabs.tabs( 'option', 'active', 0 );
+        }
+    }
+}
+
+function widDataTab()
+{
+    var $Tabs = $( '#tabs_div' );
+    var $Button = $( '#setdata_table' ).find( 'button' );
+    var $Textarea = $( '#setdata_textarea' );
+
+    return {
+        set: function ( data )
+        {
+            data = data || '';
+            textArea( $Textarea ).set( data );
+        },
+        disable: function ( comm )
+        {
+            this.disableButton( true );
+			$Textarea.prop( 'readonly', comm );
+        },
+		disableButton: function ( comm )
+		{
+			$Button.prop( 'disabled', comm );
+		},
+        show: function ()
+        {
+            $Tabs.tabs( 'option', 'active', 1 );
+        }
+    }
+}
+
+
+function widSetDataButtonClick()
+{
+    // Adds a new record with a specified data
+    var jqPwd = $( '#password_input' );
+    var jqData = $( '#setdata_textarea' );
+
+    if ( typeof glLastRec.st === 'undefined' )
+        return widCompleteEvent( 'Empty token text!' );
+    if ( glLastRec.st === 'IDX_NODN' )
+        return widCompleteEvent( 'First create a token!' );
+    if ( !widIsPassword() )
+        return widCompleteEvent( 'Empty master key!' );
+    if ( glLastRec.st !== 'OK' )
+        return widCompleteEvent( 'Incorrect master key - token is unavailable!' );
+
+    var nr = engGetNewRecord( glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash );
+    var nr_d = engGetInputDataValue( jqData.val() );
+    var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
+
+    var cb = function ( d )
+    {
+        var r = engGetResp( d );
+        if ( r.msg == 'OK' )
+        {
+            widTokenTextOninput();
+            return widCompleteEvent( r.msg );
+        }
+
+        return widCompleteEvent( r.msg + ': ' + r.cnt );
+    }
+
+    var f = function ()
+    {
+        ajxSendCommand( cmd, cb, hasqLogo );
+    }
+
+    widShowLog( 'Giving token data...' );
+    setTimeout( f );
+}
+
+function widTokenDataTextareaOninput($obj)
+{
+	var dataVal = $obj.val();
+	
+	( dataVal === glLastRec.d ) ? widDataTab().disableButton( true ) : widDataTab().disableButton( false );
+
+}
+
+function widCreateTab()
+{
+    var $Table = $( '#create_table' );
+    var $Tabs = $( '#tabs_div' );
+
+    return {
+        disable : function ( comm )
+        {
+            $Table.find( 'button' ).prop( 'disabled', comm );
+        },
+        show : function ()
+        {
+            $Tabs.tabs( 'option', 'active', 2 );
+        }
+    }
+}
+
+function widCreateButtonClick()
+{
+    // Creates a new token record
+    widEmptyTab().show();
+    var jqPwd = $( '#password_input' );
+
+    if ( typeof glLastRec.st === 'undefined' )
+        return widCompleteEvent( 'Empty token text!' );
+    if ( glLastRec.st !== 'IDX_NODN' )
+        return widCompleteEvent( 'Token already exists.' );
+    if ( !widIsPassword() )
+        return widCompleteEvent( 'Empty master key!' );
+
+    var nr = engGetNewRecord( 0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash );
+    var nr_d = ( glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s ) ? '[' + glLastRec.r + ']' : '';
+    var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
+
+    var cb = function ( data )
+    {
+        var r = engGetResp( data );
+        if ( r.msg == 'OK' )
+        {
+            widCompleteEvent( r.msg );
+            widTokenTextOninput(); //update token info after create;
+        }
+        else
+        {
+            widCompleteEvent( r.msg + ': ' + r.cnt );
+        }
+    }
+
+    var f = function ()
+    {
+        ajxSendCommand( cmd, cb, hasqLogo );
+    }
+
+    setTimeout( f, 1000 );
+    widShowLog( 'Creating token...' );
+}
+
+function widSendTab()
+{
+    var $Table = $( '#send_table' );
+    var $Tabs = $( '#tabs_div' );
+
+    return {
+        disable : function ( comm )
+        {
+            $Table.find( 'button, input' ).prop( 'disabled', comm );
+        },
+        show : function ()
+        {
+            $Tabs.tabs( 'option', 'active', 3 );
+        }
+    }
+}
+
+function widSendTabButtonClick( $obj )
+{
+    $obj.toggleClass( 'tab-button-on tab-button-off' );
+    $( '.tab-button-on' ).not( $obj ).toggleClass( 'tab-button-on tab-button-off' );
+
+    if ( typeof glLastRec.st == 'undefined' )
+        return ( $obj.hasClass( 'tab-button-on' ) ) ? widSendTab().show() : widEmptyTab().show();
+	
+    if ( glLastRec.st == 'IDX_NODN' )
+        return ( $obj.hasClass( 'tab-button-on' ) ) ? widSendTab().show() : widCreateTab().show();
+	
+    return ( $obj.hasClass( 'tab-button-on' ) ) ? widSendTab().show() : widDataTab().show();
+}
+
+function widReceiveTab()
+{
+    var $Table = $( '#receive_table' );
+    var $Tabs = $( '#tabs_div' );
+
+    return {
+        disable : function ( comm )
+        {
+            $Table.find( 'textarea' ).prop( 'readonly', comm );
+            $Table.find( 'button' ).prop( 'disabled', comm );
+        },
+        show : function ()
+        {
+            $Tabs.tabs( 'option', 'active', 4 );
+        }
+    }
+}
+
+function widReceiveTabButtonClick( $obj )
+{
+    $obj.toggleClass( 'tab-button-on tab-button-off' );
+    $( '.tab-button-on' ).not( $obj ).toggleClass( 'tab-button-on tab-button-off' );
+
+    if ( typeof glLastRec.st == 'undefined' )
+        return ( $obj.hasClass( 'tab-button-on' ) ) ? widReceiveTab().show() : widEmptyTab().show();
+	
+    if ( glLastRec.st == 'IDX_NODN' )
+        return ( $obj.hasClass( 'tab-button-on' ) ) ? widReceiveTab().show() : widCreateTab().show();
+	
+    return ( $obj.hasClass( 'tab-button-on' ) ) ? widReceiveTab().show() : widDataTab().show();
+
+}
+
 function widReceiveButtonClick()
 {
     var rawTransKeys = $( '#receive_textarea' ).val();
@@ -712,25 +755,6 @@ function widReceiveButtonClick()
 
     widShowLog( 'Receiving token...' );
     setTimeout( f, 1000 );
-}
-
-function widTokensTakeover( keys )
-{
-    keys = engGetTitleKeys( keys, glPassword, glCurrentDB.hash, glCurrentDB.magic );
-    switch ( keys[0].prcode )
-    {
-    case '23132':
-        widSimpleReceive( keys );
-        break;
-    case '23141':
-        widBlockingReceiveStep1( keys );
-        break;
-    case '232':
-        widBlockingReceiveStep2( keys );
-        break;
-    default:
-        return widCompleteEvent( 'Bad TransKeys!' );
-    }
 }
 
 function widSimpleReceive( keys )
@@ -801,61 +825,21 @@ function widBlockingReceiveStep2( keys )
     ajxSendCommand( addCmd, cb, hasqLogo );
 }
 
-function widSearchButtonClick()
+function widSearchTab()
 {
-    var jqFrom = $( '#from_datepicker_input' );
-    var jqTo = $( '#to_datepicker_input' );
+    var $Table = $( '#search_table' );
+    var $Tabs = $( '#tabs_div' );
 
-    var fromDate = new Date( jqFrom.datepicker( 'getDate' ) );
-    var toDate = new Date( jqTo.datepicker( 'getDate' ) );
-
-    // needs to check correctness of specified date range if entered manually
-    console.log( fromDate );
-    console.log( toDate );
-    var folders = engGetDateRangeFolders( fromDate, toDate );
-
-    widCompleteEvent();
-}
-
-function widSendTabButtonClick( $obj )
-{
-    if ( glLastRec.st == 'WRONG_PWD' && $obj.hasClass( 'tab-button-on' ) ) 
-	{
-		$obj.toggleClass( 'tab-button-on tab-button-off' );
-		return widDataTab().show();
-	}
-	
-    if ( glLastRec.st == 'OK' || glLastRec.st == 'TKN_SNDNG' )
-    {
-        $obj.toggleClass( 'tab-button-on tab-button-off' );
-        $( '.tab-button-on' ).not( $obj ).toggleClass( 'tab-button-on tab-button-off' );
-		
-        return ( $obj.hasClass( 'tab-button-on' ) ) ? widSendTab().show() : widDataTab().show();
+    return {
+        disable : function ( comm )
+        {
+            $Table.find( 'button, input' ).prop( 'disabled', comm );
+        },
+        show : function ()
+        {
+            $Tabs.tabs( 'option', 'active', 5 );
+        }
     }
-}
-
-function widReceiveTabButtonClick( $obj )
-{
-    if ( glLastRec.st == 'OK' && $obj.hasClass( 'tab-button-on' ) )
-	{
-		$obj.toggleClass( 'tab-button-on tab-button-off' );
-		return widDataTab().show();
-	}	
-	
-	if ( typeof glLastRec.st == 'undefined' ) 
-	{
-		$obj.toggleClass( 'tab-button-on tab-button-off' );
-		$( '.tab-button-on' ).not( $obj ).toggleClass( 'tab-button-on tab-button-off' );
-        return ( $obj.hasClass( 'tab-button-on' ) ) ? widReceiveTab().show() : widEmptyTab().show();		
-	}
-	
-    if ( glLastRec.st == 'WRONG_PWD' || glLastRec.st == 'TKN_RCVNG' )
-	{
-		$obj.toggleClass( 'tab-button-on tab-button-off' );
-		$( '.tab-button-on' ).not( $obj ).toggleClass( 'tab-button-on tab-button-off' );
-        return ( $obj.hasClass( 'tab-button-on' ) ) ? widReceiveTab().show() : widDataTab().show();		
-	}
-
 }
 
 function widSearchTabButtonClick( $obj )
@@ -870,4 +854,20 @@ function widSearchTabButtonClick( $obj )
         return ( $obj.hasClass( 'tab-button-on' ) ) ? widSearchTab().show() : widCreateTab().show();
 	
     return ( $obj.hasClass( 'tab-button-on' ) ) ? widSearchTab().show() : widDataTab().show();
+}
+
+function widSearchButtonClick()
+{
+    var jqFrom = $( '#from_datepicker_input' );
+    var jqTo = $( '#to_datepicker_input' );
+
+    var fromDate = new Date( jqFrom.datepicker( 'getDate' ) );
+    var toDate = new Date( jqTo.datepicker( 'getDate' ) );
+
+    // needs to check correctness of specified date range if entered manually
+    console.log( fromDate );
+    console.log( toDate );
+    var folders = engGetDateRangeFolders( fromDate, toDate );
+
+    widCompleteEvent();
 }

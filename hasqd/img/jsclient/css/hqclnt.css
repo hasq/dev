@@ -57,21 +57,7 @@ input[type='text'], input[type='password'] {
 	position: absolute;
 }
 
-.label-td {
-	font-family: Arial, Helvetica, sans-serif;
-	white-space: nowrap;
-	align: left;
-}
-
-.records-title-td {
-	text-align: left;
-	font: bold 16px Arial;
-	color: #1376BC;
-	white-space: nowrap;
-	text-align: left;
-}
-
-.verify-hidden-area-div {
+.div-hidden {
     box-sizing: border-box;
     white-space: pre;
     overflow-x: auto;
@@ -119,7 +105,22 @@ input[type='text'], input[type='password'] {
     top:-2px ;
 } */
 
-.warning-td {
+
+.td-label {
+	font-family: Arial, Helvetica, sans-serif;
+	white-space: nowrap;
+	align: left;
+}
+
+.td-records-title {
+	text-align: left;
+	font: bold 16px Arial;
+	color: #1376BC;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.td-warning {
 	background: pink;
 	font: 100% monospace;
 	text-align: center;
