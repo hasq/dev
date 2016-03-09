@@ -163,15 +163,15 @@ function widGetHTMLButtonsArea() {
 	r += '<table class="tab-buttons-table">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widSendTabButtonClick($(this));">' + imgBtnSend + '</button>';
+				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widSendTabButtonClick($(this));">' + imgTabShowKeys + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button id="show_receive_tab_button" class="tab-button-off" onclick="return widReceiveTabButtonClick($(this));">' + imgBtnReceive + '</button>';
+				r += '<button id="show_receive_tab_button" class="tab-button-off" onclick="return widReceiveTabButtonClick($(this));">' + imgTabReceiveKeys + '</button>';
 		r += '</tr>';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button id="show_search_tab_button" class="tab-button-off" onclick="return widSearchTabButtonClick($(this));">' + imgBtnSearch + '</button>';
+				r += '<button id="show_search_tab_button" class="tab-button-off" onclick="return widSearchTabButtonClick($(this));">' + imgTabSearchTokens + '</button>';
 		r += '</tr>';		
 	r += '</table>';
 	return r;	
@@ -255,7 +255,7 @@ function widGetHTMLSendTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center" />\n';
-				r += '<button id="show_keys_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">Show keys</button>';
+				r += '<button id="show_keys_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys + '</button>';
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="center" />\n';
@@ -297,7 +297,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
-				r += '<button id="receive_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widReceiveButtonClick()">Receive';
+				r += '<button id="receive_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widReceiveButtonClick()">' + imgBtnReceiveKeys + '</button>';
 		r += '</tr>\n';
 	r += '</table>\n';
 
@@ -323,7 +323,7 @@ function widGetHTMLSearchTab() {
 		r += '</tr>\n';		
 		r += '<tr>\n';				
 			r += '<td>\n';
-				r += '<button id="search_button" class="button-off" onclick="return widButtonClick(this);" data-onclick="widSearchButtonClick()">Search';
+				r += '<button id="search_button" class="button-off" onclick="return widButtonClick(this);" data-onclick="widSearchButtonClick()">' + imgBtnSearch + '</button>';
 		r += '</tr>\n';		
 	r += '</table>\n';	
 	return r;	

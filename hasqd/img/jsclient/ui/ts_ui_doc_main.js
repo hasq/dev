@@ -21,10 +21,13 @@ var imgTknRcvng = 'img/tkn_rcvng.png';
 var imgTknSndng = 'img/tkn_sndng.png';
 var imgClkReload = 'img/clk_reload.png';
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
-var imgBtnData = '<img width="40px" height="40px" src="img/btn_data.png"><br/>Assign';
+var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Assign';
+var imgBtnShowKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Give away';
+var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Receive';
 var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>View';
-var imgBtnSend = '<img width="40px" height="40px" src="img/btn_send.png"><br/>Give away';
-var imgBtnReceive = '<img width="40px" height="40px" src="img/btn_receive.png"><br/>Receive';
+var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
+var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
+var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
 
 var allImages = [
     imgTknOk, imgTknWrong, imgTknRcvng, imgTknSndng, imgPwdDummy,
