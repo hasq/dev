@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-var glClientTitle = 'TOKENSWAP';
+var glClientTitle = 'TokenSwap';
 var glRequiredDbHash = 'smd';
 var glPassword = '';
 
@@ -21,7 +21,7 @@ var imgTknRcvng = 'img/tkn_rcvng.png';
 var imgTknSndng = 'img/tkn_sndng.png';
 var imgClkReload = 'img/clk_reload.png';
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
-var imgBtnData = '<img width="40px" height="40px" src="img/btn_data.png"><br/>Edit data';
+var imgBtnData = '<img width="40px" height="40px" src="img/btn_data.png"><br/>Assign';
 var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>View';
 var imgBtnSend = '<img width="40px" height="40px" src="img/btn_send.png"><br/>Give away';
 var imgBtnReceive = '<img width="40px" height="40px" src="img/btn_receive.png"><br/>Receive';
@@ -47,10 +47,8 @@ function docMainInit() {
 
 function docInit() 
 {
+	$('#modal_window_div').css('display', 'none');
 	$('input, select, textarea').attr('autocomplete', 'off');
-	$('input, textarea').val('');
-	$('input, select, textarea').prop('disabled', true);
-	$('input, select, textarea').prop('disabled', false);
 	
     $('#tabs_div').tabs(
 	{
@@ -60,7 +58,6 @@ function docInit()
         },
     });
 
-    $('#setdata_table').find('button').prop('disabled', true);
     $('#reload_span').find('img').attr('src', imgClkReload);
     $('#token_pic_span').find('img').attr('src', imgMsgLoading);
     $('#token_pic_span').hide();
@@ -147,7 +144,6 @@ function docInit()
 
     glPingTimerId = setTimeout(ping, 5000);
     window.onerror = engDoNothing();
-
 }
 
 function docMain() 
@@ -161,27 +157,27 @@ function docMain()
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Give data';
-    item.data = widGetHTMLSetDataTab();
-    tabs[tabs.length] = item;
-
-    item = {};
     item.title = 'Create token';
     item.data = widGetHTMLCreateTab();
     tabs[tabs.length] = item;
 
+	item = {};
+    item.title = 'Assign data';
+    item.data = widGetHTMLSetDataTab();
+    tabs[tabs.length] = item;
+	
     item = {};
-    item.title = 'Give away';
+    item.title = 'Give token away';
     item.data = widGetHTMLSendTab();
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Receive';
+    item.title = 'Receive token';
     item.data = widGetHTMLReceiveTab();
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Search';
+    item.title = 'View my tokens';
     item.data = widGetHTMLSearchTab();
     tabs[tabs.length] = item;
 
