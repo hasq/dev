@@ -146,7 +146,6 @@ function docInit()
     }
 
     glPingTimerId = setTimeout(ping, 5000);
-    window.onerror = engDoNothing();
 }
 
 function docMain() 
@@ -155,8 +154,8 @@ function docMain()
     var item;
 
     item = {};
-    item.title = 'Empty';
-    item.data = widGetHTMLEmptyTab();
+    item.title = 'Welcome';
+    item.data = widGetHTMLWelcomeTab();
     tabs[tabs.length] = item;
 
     item = {};
@@ -184,6 +183,11 @@ function docMain()
     item.data = widGetHTMLSearchTab();
     tabs[tabs.length] = item;
 
+	item = {};
+    item.title = 'Empty';
+    item.data = widGetHTMLEmptyTab();
+    tabs[tabs.length] = item;
+	
     var body = widGetHTMLBody(tabs);
 
     return body;

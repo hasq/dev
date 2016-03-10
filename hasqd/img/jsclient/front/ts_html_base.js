@@ -141,7 +141,7 @@ function widGetHTMLInitialDataArea() {
 	return r;
 }
 
-function widGetHTMLEmptyTab() {
+function widGetHTMLWelcomeTab() {
 	var r ='';
 	r += '<table width="100%" border="0">';
 		r += '<tr>';
@@ -158,12 +158,22 @@ function widGetHTMLEmptyTab() {
 	return r;
 }
 
+function widGetHTMLEmptyTab() {
+	var r ='';
+	r += '<table width="100%" border="0">';
+		r += '<tr>';
+			r += '<td />';
+		r += '</tr>';
+	r += '</table>';	
+	return r;
+}
+
 function widGetHTMLButtonsArea() {
 	var r = '';
 	r += '<table class="tab-buttons-table">';
 		r += '<tr>';
 			r += '<td/>';
-				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widSendTabButtonClick($(this));">' + imgTabShowKeys + '</button>';
+				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widShowKeysTabButtonClick($(this));">' + imgTabShowKeys + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
 			r += '<td/>';
@@ -211,11 +221,11 @@ function widGetHTMLSetDataTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n';
-				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widSetDataTextareaOninput()" type="text" rows="4" cols="64"></textarea>';
+				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="4" cols="64"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';				
 			r += '<td width="74" align="center">\n'
-				r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widSetDataButtonClick()">' + imgBtnData;
+				r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widAssignDataButtonClick()">' + imgBtnData;
 		r += '</tr>\n';
 	r += '</table>\n';
 	
