@@ -251,7 +251,7 @@ function widGetHTMLSendTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td class="td-subtitle" align="center" >\n';
-				r += 'Give away token';
+				r += 'Give token away';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center" />\n';

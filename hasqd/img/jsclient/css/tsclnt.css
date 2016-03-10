@@ -31,7 +31,7 @@ button.tab-button-off
 	text-align: center;
 	width: 70px;
 	height: 70px;
-	background: #F0FFFF;
+	background: #AFEEEE;
 	border: 0;
 	opacity: 0.8;
     -webkit-transition: background 0.20s;
@@ -39,39 +39,55 @@ button.tab-button-off
     -o-transition: background 0.20s;	
 }
 
-button:hover
+button.tab-button-on 
+{
+	width: 70px;
+	height: 70px;
+	background: #00CED1;
+	border: 0;
+}
+
+button:hover, /* button cursor*/
+button.tab-button-off:hover,
+button.tab-button-on:hover,
+button.button-enabled:hover
 {
 	background: #87CEEB;	
 	border: 0;
 	cursor: pointer;
 }
 
-button:disabled,
-button:disabled:hover, 
-button.button-disabled,
-button.button-disabled:hover
+button.tab-button-off:active:hover,
+button.tab-button-on:active:hover 
+{
+	background: #20B2AA;
+}
+
+button.button-disabled:active:hover
 {
 	border: 0;
 	background: #2F4F4F;
+	color: #F5F5F5;
+	opacity: 0.4;	
+}
+
+button.button-disabled:hover
+{
+	border: 0;
+	background: #808080; /*2F4F4F;*/
 	color: #F5F5F5;
 	/* cursor: default; */
 	opacity: 0.4;
 }
 
-button.tab-button-on 
+button.button-disabled
 {
-	width: 70px;
-	height: 70px;
-	background: #90EE90;
 	border: 0;
+	background: #808080; /*2F4F4F;*/
+	color: #F5F5F5;
+	/* cursor: default; */
+	opacity: 0.4;
 }
-
-button.tab-button-off:active:hover 
-{
-	background: #3CB371;
-	border: 0;
-}
-
 
 
 /* input[placeholder], input::-webkit-input-placeholder, input::-moz-placeholder, input:-moz-placeholder, input:-ms-input-placeholder {
