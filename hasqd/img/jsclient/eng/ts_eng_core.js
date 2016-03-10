@@ -5,7 +5,7 @@ function engDoNothing()
 
 function engSendDeferredRequest(cmd, t, f) 
 {
-    // Sends ajax request with 1000ms delay.
+    // Sends ajax request with 500ms delay.
     // the request will be ignored if token value will be changed during this 1000ms
     var req = function () {
         var timerId = glTimerId;

@@ -51,7 +51,7 @@ function widGetHTMLBody(tabs) {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2" nowrap>';
-				r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
+				r += '<table width="100%" style="border: 0px solid #DDDDDD;">';
 					r += '<tr>\n';
 						r += '<td valign="top" />\n';
 							r += widGetHTMLMainTabs(tabs) + '\n';
@@ -89,7 +89,7 @@ function widGetHTMLTitleArea() {
 
 function widGetHTMLInitialDataArea() {
 	var r = '';
-	r += '<table width="100%" style="border: 0px solid #DDDDDD;">';
+	r += '<table width="100%">';
 		r += '<tr>';
 			r += '<td class="td-subtitle" align="center"/>';
 				r += '<b>Token name<b>';

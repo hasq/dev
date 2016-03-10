@@ -36,7 +36,7 @@ function widModalWindow(msg, func)
 		if (func) 
 			func();
 
-		$(this).unbind('click');
+		$(this).off('click');
 	});
 	
 	$('#modal_window_div').css('display', 'block');
@@ -304,7 +304,6 @@ function widTokenTextOninput()
 
 	glLastRec = {}; 				//clear last record
     clearTimeout(glTimerId);		//clear last request to hasqd 
-    widEmptyTab().show();			//shows title tab
 	widButtonsTable().toggleOff();	//disable tabs switch buttons
     widShowPwdMatch();				//clear info about password match
     widShowTokenSearchProcess();
@@ -347,10 +346,13 @@ function widTokenTextOninput()
 
     if (tok.length > 0)
     {
+		widEmptyTab().show();
         widShowTokenSearchProcess().show();
         var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
-        return engSendDeferredRequest(cmd, 1000, cb);
+        return engSendDeferredRequest(cmd, 500, cb);
     }
+	
+	widWelcomeTab().show();
 }
 
 function widPasswordOninput()
