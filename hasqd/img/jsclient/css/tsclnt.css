@@ -99,58 +99,58 @@ button.button-disabled
 
 input[class='hasDatepicker'] 
 {
-  margin: 0px;  
-  border:1px solid #aaa;
-  border-radius: 0;
+	margin: 0px;  
+	border: 1px solid #aaa;
+	border-radius: 0;
 }  
 
 input[type='checkbox'] 
 { 
-  margin: 5px;    
-  border:1px solid #aaa;
-  border-radius: 0;
+	margin: 5px;    
+	border: 1px solid #aaa;
+	border-radius: 0;
 }
 
 input[type='checkbox']:focus
 {
-  background: #fff; 
-  border:1px solid #555; 
+	background: #fff; 
+	border: 1px solid #555; 
 }  
 
 input[type='text'], 
 input[type='password'] 
 { 
-  font: 100% Consolas;
-  width: 100%;
-  margin: 0px;    
-  border: 1px solid #aaa;
-  border-radius: 0;
+	font: 14px Consolas;
+	width: 100%;
+	margin: 0px;    
+	border: 1px solid #aaa;
+	border-radius: 0;
 }
 
 input[type='text']:focus, 
 input[type='password']:focus, 
 textarea:focus 
 {
-  border:1px solid #555; 
+	border: 1px solid #555; 
 }
 
 input:required:valid,
 textarea:required:valid 
 {
-  border-color: #28921f;
+	border-color: #28921f;
 }
 
 input:focus:invalid,
 textarea:focus:invalid
 {
-  border-color: #b03535
+	border-color: #b03535
 } 
 
 
 led 
 {
-  text-align: center;
-  vertical-align: center;
+	text-align: center;
+	vertical-align: center;
 }
   
 p
@@ -164,11 +164,14 @@ table
 	padding:0;
 	border-collapse:collapse;
 }
-
+td
+{
+	vertical-align: middle;
+}
 textarea[type='text']
 {
   width: 100%;    
-  font: 100% Consolas !important;
+  font: 14px Consolas !important;
   margin: 0px;
   border:1px solid #aaa;
   border-radius: 0;
@@ -177,7 +180,7 @@ textarea[type='text']
 textarea.textarea-transkeys
 {
   width: 100%;    
-  font: 70% Consolas !important;
+  font: 13px Consolas !important;
   margin: 0px;
   border:1px solid #aaa;
   border-radius: 0;
@@ -207,7 +210,18 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 	border: 1px solid CornflowerBlue;
 	border-radius: 2px;
 	box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
-	font: 120% Consolas;
+	font: 12px Consolas;
+}
+
+.tab-area
+{
+	vertical-align: top;
+	padding: 6px 6px 6px 6px;
+}
+
+.tab-button-area{
+	vertical-align: top;
+	padding: 6px 6px 6px 0;
 }
 
 .tab-buttons-table
@@ -226,7 +240,7 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 .td-subtitle 
 {
 	text-align: center;
-	font: bold 20px Consolas;
+	font: bold 18px Consolas;
 	color: #1376BC;
 }
 
@@ -242,8 +256,8 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 .td-title
  {
 	text-align: left;
-	font: bold 100% Consolas;
-	font-size: 36px;
+	font: bold 32px Consolas;
+	font-size: 32px;
 	color: #1376BC;
 }
 
@@ -270,7 +284,7 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 
 .welcome-p 
 {
-	padding: 10px;
+	padding: 6px;
 	text-align: justify;
 	font: 100% Consolas;
 }
@@ -321,24 +335,25 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
     animation-duration: 0.4s;
 	cursor: pointer;
 	text-align: center;
-	font: bold 140% Consolas;
+	font: bold 18px Consolas;
 }
 
 #modal_content_header_div
 {
-    padding: 10px 16px;
+    padding: 1px 1px;
     background-color: #FF0000;
     color: white;
 }
 
 #modal_content_body_div
 {
-	padding: 10px 16px;
+	padding: 10px 10px;
+	background-color: #FF0000;
 }
 
 #modal_content_footer_div
 {
-    padding: 10px 16px;
+    padding: 1px 1px;
     background-color: #FF0000;
     color: white;
 }

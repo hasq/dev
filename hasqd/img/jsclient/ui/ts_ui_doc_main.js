@@ -165,12 +165,12 @@ function docMain()
 
 	item = {};
     item.title = 'Assign data';
-    item.data = widGetHTMLSetDataTab();
+    item.data = widGetHTMLAssignDataTab();
     tabs[tabs.length] = item;
 	
     item = {};
     item.title = 'Give token away';
-    item.data = widGetHTMLSendTab();
+    item.data = widGetHTMLShowKeysTab();
     tabs[tabs.length] = item;
 
     item = {};

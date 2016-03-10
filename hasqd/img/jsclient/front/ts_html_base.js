@@ -18,9 +18,9 @@ function widGetModalWindow()
 function widGetHTMLSpanImg(id, func) {
 	var r = '';
 	if (arguments.length > 1) {
-		r += '<span id="' + id + '" onclick="' + func +'" align="center" valign="middle"><img src=""></img></span>\n';
+		r += '<span id="' + id + '" onclick="' + func +'" align="center"><img src=""></img></span>\n';
 	} else {
-		r += '<span id="' + id + '" align="center" valign="middle"><img src=""></img></span>\n';
+		r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
 	}
 
     return r;
@@ -30,9 +30,9 @@ function widGetHTMLSpanImg(id, func) {
 function widGetHTMLSpan(id, func) {
 	var r = '';
 	if (arguments.length > 1) {
-		r += '<span align="center" valign="middle" id="' + id + '" onclick="' + func +'"></span>\n';
+		r += '<span align="center" id="' + id + '" onclick="' + func +'"></span>\n';
 	} else {
-		r += '<span align="center" valign="middle" id="' + id + '"></span>\n';;
+		r += '<span align="center" id="' + id + '"></span>\n';;
 	}
 
     return r;
@@ -51,11 +51,11 @@ function widGetHTMLBody(tabs) {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td colspan="2" nowrap>';
-				r += '<table width="100%" style="border: 0px solid #DDDDDD;">';
+				r += '<table width="100%" style="border: 1px solid #DDDDDD;">';
 					r += '<tr>\n';
-						r += '<td valign="top" />\n';
+						r += '<td class="tab-area" />\n';
 							r += widGetHTMLMainTabs(tabs) + '\n';
-						r += '<td width="74" align="right" valign="top" />'
+						r += '<td class="tab-button-area" width="74" align="right" />'
 							r += widGetHTMLButtonsArea() + '\n';
 					r += '</tr>\n';
 				r += '</table>';
@@ -79,7 +79,7 @@ function widGetHTMLTitleArea() {
 		r += '<tr>';
 			r += '<td class="td-title"/>';
 				r += '<span>\n' + glClientTitle + '</span>\n';
-			r += '<td width="30" height="30" align="center" valign="middle">';
+			r += '<td width="30" height="30" align="center">';
 				r += widGetHTMLSpanImg('logo_span', 'widSendPing(5000)') + '\n';
 		r += '<tr>';
 	r += '</table>';
@@ -104,7 +104,7 @@ function widGetHTMLInitialDataArea() {
 			r += '<td align="left" class="td-info">';
 				r += '<table>';
 					r += '<tr>';
-						r += '<td width="20" valign="center" title="Update token info"/>';
+						r += '<td width="20" title="Update token info"/>';
 							r += widGetHTMLSpanImg('reload_span', 'widTokenTextOninput()');
 						r += '<td class="td-info" nowrap/>\n';
 							r += '<div>Token hash:&nbsp</div>\n';
@@ -122,11 +122,11 @@ function widGetHTMLInitialDataArea() {
 			r += '<td align="center">';
 				r += '<table border="0">';
 					r += '<tr>';
-						r += '<td width="20" valign="center" align="center">';
+						r += '<td width="20" align="center">';
 							r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
 						r += '<td width="250"/>\n';
 							r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
-						r += '<td width="20" valign="center">';
+						r += '<td width="20">';
 							r += widGetHTMLSpanImg('password_pic_span');						
 					r += '</tr>';
 					r += '<tr>';
@@ -141,46 +141,19 @@ function widGetHTMLInitialDataArea() {
 	return r;
 }
 
-function widGetHTMLWelcomeTab() {
-	var r ='';
-	r += '<table width="100%" border="0">';
-		r += '<tr>';
-			r += '<td class="welcome-p" />';
-				r += '<p>';
-					r += 'Welcome to TokenSwap. This is a place where you can create your own tokens, ';
-					r += 'associate data with them, pass the ownership to another person, or to receive ';
-					r += 'the ownership from somebody else. A token is a hash taken from any text or file. ';
-					r += 'The master key is a secure password to control your tokens. It is not shared if ';
-					r += 'you pass your token to another person.';
-				r += '</p>';
-		r += '</tr>';
-	r += '</table>';	
-	return r;
-}
-
-function widGetHTMLEmptyTab() {
-	var r ='';
-	r += '<table width="100%" border="0">';
-		r += '<tr>';
-			r += '<td />';
-		r += '</tr>';
-	r += '</table>';	
-	return r;
-}
-
 function widGetHTMLButtonsArea() {
 	var r = '';
 	r += '<table class="tab-buttons-table">';
 		r += '<tr>';
-			r += '<td/>';
+			r += '<td style="padding: 0 0"/>';
 				r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widShowKeysTabButtonClick($(this));">' + imgTabShowKeys + '</button>';
 		r += '</tr>';		
 		r += '<tr>';
-			r += '<td/>';
+			r += '<td style="padding: 6px 0"/>';
 				r += '<button id="show_receive_tab_button" class="tab-button-off" onclick="return widReceiveTabButtonClick($(this));">' + imgTabReceiveKeys + '</button>';
 		r += '</tr>';
 		r += '<tr>';
-			r += '<td/>';
+			r += '<td style="padding: 0 0"/>';
 				r += '<button id="show_search_tab_button" class="tab-button-off" onclick="return widSearchTabButtonClick($(this));">' + imgTabSearchTokens + '</button>';
 		r += '</tr>';		
 	r += '</table>';
@@ -208,27 +181,24 @@ function widGetHTMLMainTabs(items) {
     return r;
 }
 
-function widGetHTMLSetDataTab() {
-	var r = '';
-	
-	r += '<table id="setdata_table" width="100%" border="0">\n';
+function widGetHTMLWelcomeTab() {
+	var r ='';
+	r += '<table width="100%" border="0">';
 		r += '<tr>\n';
-			r += '<td height="10">\n';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td class="td-subtitle" align="center" />\n';
-				r += 'Token data';
-		r += '</tr>\n';
-		r += '<tr>\n';
-			r += '<td align="center">\n';
-				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="4" cols="64"></textarea>';
-		r += '</tr>\n';
-		r += '<tr>\n';				
-			r += '<td width="74" align="center">\n'
-				r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widAssignDataButtonClick()">' + imgBtnData;
-		r += '</tr>\n';
-	r += '</table>\n';
-	
+			r += '<td class="td-subtitle" align="center">\n';
+				r += 'Welcome to TokenSwap';
+		r += '</tr>\n';		
+		r += '<tr>';
+			r += '<td class="welcome-p" />';
+				r += '<p>';
+					r += 'This is a place where you can create your own tokens, ';
+					r += 'associate data with them, pass the ownership to another person, or to receive ';
+					r += 'the ownership from somebody else. A token is a hash taken from any text or file. ';
+					r += 'The master key is a secure password to control your tokens. It is not shared if ';
+					r += 'you pass your token to another person.';
+				r += '</p>';
+		r += '</tr>';
+	r += '</table>';	
 	return r;
 }
 
@@ -236,9 +206,6 @@ function widGetHTMLCreateTab() {
 	var r = '';
 	
 	r += '<table id="create_table" width="100%">\n';
-		r += '<tr>\n';
-			r += '<td height="10">\n';
-		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td class="td-subtitle" align="center" colspan="2" >\n';
 				r += 'Create new token';
@@ -252,36 +219,63 @@ function widGetHTMLCreateTab() {
 	return r;
 }
 
-function widGetHTMLSendTab() {
+function widGetHTMLAssignDataTab() {
+	var r = '';
+	
+	r += '<table id="setdata_table" width="100%" border="0">\n';
+		r += '<tr>\n';
+			r += '<td class="td-subtitle" align="center" />\n';
+				r += 'Token data';
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td align="center">\n';
+				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="3" cols="64"></textarea>';
+		r += '</tr>\n';
+		r += '<tr>\n';				
+			r += '<td width="74" align="center">\n'
+				r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widAssignDataButtonClick()">' + imgBtnData;
+		r += '</tr>\n';
+	r += '</table>\n';
+	
+	return r;
+}
+
+function widGetHTMLShowKeysTab() {
 	var r = '';
 	
 	r += '<table id="send_table" width="100%" border="0">\n';
-		r += '<tr>\n';
-			r += '<td height="10" />\n';
-		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td class="td-subtitle" align="center" >\n';
 				r += 'Give token away';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center" />\n';
-				r += '<button id="show_keys_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys + '</button>';
+				r += '<table>';
+					r += '<tr>';
+						r += '<td align="center" style="padding-right: 3px"/>\n';
+							r += '<button id="show_keys_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys + '</button>';
+						r += '<td align="center" style="padding-left: 3px"/>\n';
+							r += '<button id="show_keys_button2" class="button-off">' + imgBtnShowKeys + '</button>';
+					r += '</tr>';
+				r += '</table>';
 		r += '</tr>\n';
+/*		
 		r += '<tr>\n';
 			r += '<td align="center" />\n';
 				r += '<input type="checkbox" id="send_type_checkbox">';
 				r += '<label for="send_type_checkbox" style="font:italic 10px consolas">2-step transfer</label>\n';	
 		r += '</tr>\n';			
+*/
 		r += '<tr>\n';				
 			r += '<td rowspan="2" />\n';
 				r += '<table width="100%">';
 					r += '<tr>';
 						r += '<td />';
-							r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="2" type="text" readonly></textarea>';
+							r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="3" type="text" readonly></textarea>';
 					r += '</tr>';
 					r += '<tr>';
 						r += '<td />';
-							r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="2" type="text" readonly></textarea>';
+							r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="3" type="text" readonly></textarea>';
 					r += '</tr>';					
 				r += '</table>';
 		r += '</tr>\n';
@@ -295,15 +289,12 @@ function widGetHTMLReceiveTab() {
 	
 	r += '<table id="receive_table" width="100%" border="0" >\n';
 		r += '<tr>\n';
-			r += '<td height="10" />\n';
-		r += '</tr>\n';	
-		r += '<tr>\n';
 			r += '<td class="td-subtitle" align="center" />\n';
 				r += 'Receive token';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="4" cols="64" maxlength="65536" wrap="on" required></textarea>';
+				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="3" cols="64" maxlength="65536" wrap="on" required></textarea>';
 		r += '</tr>\n';	
 		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
@@ -317,9 +308,6 @@ function widGetHTMLReceiveTab() {
 function widGetHTMLSearchTab() {
 	var r = '';
 	r += '<table id="search_table" align="center" border="0">\n';
-		r += '<tr>\n';
-			r += '<td height="10" />\n';
-		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td class="td-subtitle" align="center" />\n';
 				r += 'View my token';
@@ -337,6 +325,17 @@ function widGetHTMLSearchTab() {
 		r += '</tr>\n';		
 	r += '</table>\n';	
 	return r;	
+}
+
+
+function widGetHTMLEmptyTab() {
+	var r ='';
+	r += '<table width="100%" border="0">';
+		r += '<tr>';
+			r += '<td />';
+		r += '</tr>';
+	r += '</table>';	
+	return r;
 }
 
 
