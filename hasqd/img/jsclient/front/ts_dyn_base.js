@@ -269,10 +269,13 @@ function widToggleUI(lr, pwd) {
 		if (widReceiveTab().isTransKeys())
 			widReceiveTab().disable(false);	
 
-		var newData = widAssignDataTab().val() || '';
+		var newData = engGetInputDataValue(widAssignDataTab().val()) || '';
 		widAssignDataTab().readonly(false);
 
-		(tokData !== newData) ? widAssignDataTab().disable(false) : widAssignDataTab().disable(true);
+		if (tokData !== newData) {
+			widAssignDataTab().disable(false);
+		}
+			
 		
 		widShowKeysTab().disable(false);
 	}
@@ -543,7 +546,7 @@ function widAssignDataButtonClick()
     if (glLastRec.st !== 'OK')
         return widModalWindow('Token is unaccessible.<br/>Incorrect master key.', function() { $Pwd.focus() } );
 	
-	if ($Data.val() == glLastRec.d) 
+	if (engGetInputDataValue($Data.val()) === glLastRec.d) 
 	{
 		return widModalWindow('Token data is not changed...', function() { $Data.focus() } );
 	}

@@ -348,7 +348,7 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 #modal_content_body_div
 {
 	padding: 10px 10px;
-	background-color: #FF0000;
+	background-color: #FCFCFC;
 }
 
 #modal_content_footer_div

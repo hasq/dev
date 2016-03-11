@@ -229,7 +229,7 @@ function widGetHTMLAssignDataTab() {
 		r += '</tr>\n';
 		r += '<tr>\n';
 			r += '<td align="center">\n';
-				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="3" cols="64"></textarea>';
+				r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="3" cols="64" wrap="off"></textarea>';
 		r += '</tr>\n';
 		r += '<tr>\n';				
 			r += '<td width="74" align="center">\n'
