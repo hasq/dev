@@ -308,9 +308,9 @@ function engGetOutputDataValue(data)
                 // "\n" > LF
                 r = r.substring(0, i) + LF + r.substr(i + 2);
             }
-            else if (r[i] === backslash && r[i - 1] === space && r[i + 1] === space)
+            else if (r[i - 1] === space && r[i] === backslash && r[i + 1] === space)
             {
-                // "a \ a" > "a, "a \ \ a" > "a   a", "a\ " > "a\ "
+                // "a \ a" > "a  a", "a \ \ a" > "a   a", "a\ " > "a\"
                 r = r.substring(0, i) + r.substr(i + 1);
             }
         }
@@ -320,38 +320,30 @@ function engGetOutputDataValue(data)
 }
 
 function engGetInputDataValue(data)
-{
-    // returns parsed data for add into record
-    var r = data.replace(/^\s+|\s+$/g, '');
+{	// returns parsed data for add into record
+    
+	// removes all spaces from the begin and the end of each lines;
+    var r = data.replace(/^\s+|\s+$/g, '').replace(/\u0020+$/mg, '').replace(/((\u0020\u005c\u0020){1,})+$/mg, '');
+
+    var LF = '\u000a'; //unicode line-feed
+    var space = '\u0020';
+    var backslash = '\u005c';
+    var n = '\u006e';	
+
     if (r) //(r !== undefined && r.length > 0) {
     {
-        var LF = '\u000a'; //unicode line-feed
-        var space = '\u0020';
-        var backslash = '\u005c';
-        var n = '\u006e';
 
         for (var i = 0; i < r.length; i++)
         {
             if (r[i] === space && r[i + 1] === space)
-            {
-                // "a  a" -> "a \ a", "  " -> ""
+			{
                 r = r.substring(0, i + 1) + backslash + r.substr(i + 1);
-                i++;
-            }
+				i++;
+			}
             else if (r[i] === LF)
-            {
-                // LF  > "\n"
-				var beforeLen = r.substring(0, i).length;
-				console.log('beforeLen: ' + beforeLen);
-				var preR = r.substring(0, i).replace(/[\s\\]+$/g, ''); // remove all spaces befor LF
-				var remLen = beforeLen - preR.length;
-				console.log('remLen: ' + remLen);
-				console.log('i: ' + i);
-				r = preR + backslash + n + r.substr(i + 1);
-				i = i - remLen;
-				
-				//r = r.substring(0, i) + backslash + n + r.substr(i + 1);
-            }
+			{
+				r = r.substring(0, i) + backslash + n + r.substr(i + 1);
+			}
         }
     }
     return r;
