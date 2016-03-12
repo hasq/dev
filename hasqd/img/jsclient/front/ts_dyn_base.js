@@ -137,10 +137,8 @@ function widShowToken(tok)
 {
     // Shows hashed value of token (if the value is not a default hash)
     var $TokenText = $('#token_hash_td');
-    if (arguments.length == 0 || typeof tok == 'undefined')
+    if (!tok)
         return $TokenText.empty();
-    if (tok.length == 0)
-        return widShowToken();
 
     $TokenText.html(widGetToken(tok, glCurrentDB.hash));
 }
@@ -269,7 +267,7 @@ function widToggleUI(lr, pwd) {
 		if (widReceiveTab().isTransKeys())
 			widReceiveTab().disable(false);	
 
-		var newData = engGetInputDataValue(widAssignDataTab().val()) || '';
+		var newData = engGetDataValToRecord(widAssignDataTab().val()) || '';
 		widAssignDataTab().readonly(false);
 
 		if (tokData !== newData) {
@@ -339,7 +337,7 @@ function widTokenTextOninput()
             var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
             glLastRec.st = engGetTokensStatus(glLastRec, nr);
 			widShowTokenSearchProcess().show(true);
-            widAssignDataTab().set(engGetOutputDataValue(glLastRec.d));
+            widAssignDataTab().set(engGetDataValToDisplay(glLastRec.d));
 			widAssignDataTab().show();
         }
 
@@ -347,12 +345,12 @@ function widTokenTextOninput()
         widPasswordOninput(); //updates info about last records and password matching
     }
 
-    if (tok.length > 0)
+    if (tok)
     {
 		widEmptyTab().show();
         widShowTokenSearchProcess().show();
         var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
-        return engSendDeferredRequest(cmd, 500, cb);
+        return engSendDeferredRequest(cmd, 1000, cb);
     }
 	
 	widWelcomeTab().show();
@@ -368,16 +366,10 @@ function widPasswordOninput()
 	
 	if (glLastRec.st == 'IDX_NODN' || typeof glLastRec.st == 'undefined')
 		return widToggleUI(glLastRec, glPassword);
+
+	var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 	
-    if (glPassword.length > 0)
-    {
-        var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-        glLastRec.st = engGetTokensStatus(glLastRec, nr);
-    }
-    else
-    {
-		glLastRec.st = 'WRONG_PWD';
-    }
+    glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, nr) : glLastRec.st = 'WRONG_PWD';
 	
 	widShowPwdMatch(glLastRec.st);	
 	widToggleUI(glLastRec, glPassword);
@@ -546,14 +538,14 @@ function widAssignDataButtonClick()
     if (glLastRec.st !== 'OK')
         return widModalWindow('Token is unaccessible.<br/>Incorrect master key.', function() { $Pwd.focus() } );
 	
-	if (engGetInputDataValue($Data.val()) === glLastRec.d) 
+	if (engGetDataValToRecord($Data.val()) === glLastRec.d) 
 	{
 		return widModalWindow('Token data is not changed...', function() { $Data.focus() } );
 	}
         
 	
     var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = engGetInputDataValue($Data.val());
+    var nr_d = engGetDataValToRecord($Data.val());
     var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
     var cb = function (d)

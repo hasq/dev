@@ -1,22 +1,25 @@
 function HasqLogo(id) {
     var counter = 0;
     var $obj = $('#' + id).find('img');
+	console.log($obj);
     return {
-        wait : function () {
+        wait : function () 
+		{
             counter++;
-            if (counter == 1)
-                return $obj.attr('src', imgLogoBlink);
+			if (counter >= 1) {
+				return $obj.attr('src', imgLogoBlink);
+			}
         },
-        done : function () {
+        done : function () 
+		{
             if (counter > 0)
-                counter--;
-            if (counter == 0)
-                return setTimeout(function () {
-                    $obj.attr('src', imgLogoBlue)
-                },
-				200);
+				counter--;
+        
+			if (counter == 0)
+                return setTimeout(function () { $obj.attr('src', imgLogoBlue) }, 200);
         },
-        fail : function () {
+        fail : function () 
+		{
             counter = 0;
             $obj.attr('src', imgLogoRed);
         }

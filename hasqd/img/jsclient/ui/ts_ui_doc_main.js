@@ -32,8 +32,7 @@ var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"
 var allImages = [
     imgTknOk, imgTknWrong, imgTknRcvng, imgTknSndng, imgPwdDummy,
     imgMsgLoading, imgClkReload, imgEyeOpen, imgEyeClosed,
-    imgLogoBlue, imgLogoRed, imgLogoBlink
-];
+    imgLogoBlue, imgLogoRed, imgLogoBlink ];
 
 var hasqLogo = HasqLogo('logo_span');
 var preloadImg = new Array();
