@@ -1,7 +1,10 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 function closestTextArea($obj) {
 	var $textarea = undefined;
-	if (arguments.length > 0) $textarea = $obj.closest('.wrap').find('textarea');	
+	
+	if ($obj) 
+		$textarea = $obj.closest('.wrap').find('textarea');	
+	
 	return {
 		add: function (data) {
 			$textarea.val($textarea.val() + data);
@@ -22,7 +25,10 @@ function closestTextArea($obj) {
 
 function led($obj) {
 	var $led = undefined;
-	if (arguments.length > 0) $led = $obj.closest('.wrap').find('img');
+	
+	if ($obj) 
+		$led = $obj.closest('.wrap').find('img');
+	
 	return {
 		set: function (img, title) {
 			if (typeof img == 'undefined') return this.clear($obj);

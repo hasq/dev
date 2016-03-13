@@ -44,32 +44,6 @@ function widModalWindow(msg, func)
 	
 }
 
-function widSendPing(timeDelay)
-{
-    // Ping server every 5s,10s,15s,...,60s,...,60s,...
-    var timerId = glPingTimerId;
-
-    if (timeDelay < 60000)
-    {
-        timeDelay += 5000;
-    }
-
-    var cb = function (data)
-    {
-        //var now = new Date();
-        //var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-        if (engGetResp(data).msg !== 'OK')
-            return widShowLog('Server gave a suspicious response to the ping!');
-    }
-
-    ajxSendCommand('ping', cb, hasqLogo)
-    var ping = function ()
-    {
-        widSendPing(timeDelay)
-    };
-    glPingTimerId = setTimeout(ping, timeDelay);
-    clearInterval(timerId);
-}
 
 function widButtonClick(obj)
 {
@@ -146,12 +120,12 @@ function widShowToken(tok)
 function widShowLog(text)
 {
     // Shows messages in log
-    var jqLog = $('#' + 'log_area_div');
+    var $Log = $('#' + 'log_area_div');
     text = text || '';
-    jqLog.html(text);
+    $Log.html(text);
 }
 
-function widShowTokenSearchProcess()
+function widShowSearch()
 { // Shows message or image about tokens existense.
     var $Pic = $('#token_pic_span');
     $Pic.hide();
@@ -160,14 +134,20 @@ function widShowTokenSearchProcess()
     return {
         show : function (d)
         {
-            if (typeof d == 'undefined')
+            if (!d)
             {
                 $Pic.show();
                 return widShowLog('Searching for token...');
             }
 
-            (d) ? widShowLog('Token exists.') : widShowLog('No such token.');
-        }
+            if (d === 'IDX_NODN') 
+				return widShowLog('No such token.');
+			
+			if (d === 'OK')
+				return widShowLog('Token exists.');
+			
+			return widShowLog(d);			
+        },
     }
 }
 
@@ -307,40 +287,44 @@ function widTokenTextOninput()
     clearTimeout(glTimerId);		//clear last request to hasqd 
 	widButtonsTable().toggleOff();	//disable tabs switch buttons
     widShowPwdMatch();				//clear info about password match
-    widShowTokenSearchProcess();
+    widShowSearch();
 
     var $TokText = $('#token_text_textarea');
     textArea().clearExcept($TokText);
+	
     var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
     widShowToken(tok);
 
     var cb = function (data)
     {
-        widShowTokenSearchProcess();
 		var resp = engGetResp(data);
 		
         if (resp.msg === 'ERROR')
-            return widShowLog(resp.msg + ': ' + data);
+		{
+			widShowSearch();
+			return widShowLog(resp.msg + ': ' + data);
+		}
 
-		widButtonsTable().toggleOff();
+		//widButtonsTable().toggleOff();
 		
         if (resp.msg === 'IDX_NODN')
         {
-			widShowTokenSearchProcess().show(false);
-            glLastRec.st = 'IDX_NODN';
+            glLastRec.st = resp.msg;
             glLastRec.s = tok;
             widCreateTab().show();
         }
         else
         {
             glLastRec = engGetRespLast(data);
+			
             var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+			
             glLastRec.st = engGetTokensStatus(glLastRec, nr);
-			widShowTokenSearchProcess().show(true);
             widAssignDataTab().set(engGetDataValToDisplay(glLastRec.d));
 			widAssignDataTab().show();
         }
-
+		
+		widShowSearch().show(resp.msg);
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
     }
@@ -348,9 +332,11 @@ function widTokenTextOninput()
     if (tok)
     {
 		widEmptyTab().show();
-        widShowTokenSearchProcess().show();
+		widShowSearch().show();
+        
         var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
-        return engSendDeferredRequest(cmd, 1000, cb);
+        
+		return engSendDeferredRequest(cmd, 1000, cb);
     }
 	
 	widWelcomeTab().show();
@@ -379,7 +365,8 @@ function widPasswordEyeClick($obj)
 {
     //shows/hides passwords	by click;
     var $Pwd = $('#password_input');
-	var $Eye = $obj.find('img')
+	var $Eye = $obj.find('img');
+	
     if ($Pwd.attr('type') == 'text')
     {
         $Pwd.attr('type', 'password');

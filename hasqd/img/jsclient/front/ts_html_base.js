@@ -17,7 +17,7 @@ function widGetModalWindow()
 
 function widGetHTMLSpanImg(id, func) {
 	var r = '';
-	if (arguments.length > 1) {
+	if (func) {
 		r += '<span id="' + id + '" onclick="' + func +'" align="center"><img src=""></img></span>\n';
 	} else {
 		r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
@@ -78,10 +78,10 @@ function widGetHTMLTitleArea() {
 	r += '<table width="100%" border="0">';
 		r += '<tr>';
 			r += '<td class="td-title"/>';
-				r += '<span>\n' + glClientTitle + '</span>\n';
-			r += '<td width="30" height="30" align="center">';
-				r += widGetHTMLSpanImg('logo_span', 'widSendPing(5000)') + '\n';
-		r += '<tr>';
+				r += '<span>' + glClientTitle + '</span>\n';
+			r += '<td width="30" height="30" align="center" />';
+				r += widGetHTMLSpanImg('logo_span', 'engSendPing()') + '\n';
+		r += '</tr>';
 	r += '</table>';
 	
 	return r;

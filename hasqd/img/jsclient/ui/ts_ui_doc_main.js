@@ -20,6 +20,7 @@ var imgTknWrong = 'img/tkn_wrongpwd.png';
 var imgTknRcvng = 'img/tkn_rcvng.png';
 var imgTknSndng = 'img/tkn_sndng.png';
 var imgClkReload = 'img/clk_reload.png';
+
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Assign';
 var imgBtnShowKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Give away';
@@ -28,14 +29,14 @@ var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
-
 var allImages = [
     imgTknOk, imgTknWrong, imgTknRcvng, imgTknSndng, imgPwdDummy,
     imgMsgLoading, imgClkReload, imgEyeOpen, imgEyeClosed,
-    imgLogoBlue, imgLogoRed, imgLogoBlink ];
-
-var hasqLogo = HasqLogo('logo_span');
+    imgLogoBlue, imgLogoRed, imgLogoBlink 
+];
 var preloadImg = new Array();
+var hasqLogo = HasqLogo('logo_span');
+
 
 function docMainWrite() {
     document.write(docMain());
@@ -60,15 +61,15 @@ function docInit()
         },
     });
 
-    $('#reload_span').find('img').attr('src', imgClkReload);
-    $('#token_pic_span').find('img').attr('src', imgMsgLoading);
+    $('#reload_span img').attr('src', imgClkReload);
+    $('#token_pic_span img').attr('src', imgMsgLoading);
     $('#token_pic_span').hide();
-    $('#password_pic_span').find('img').attr('src', imgPwdDummy);
-    $('#logo_span').find('img').attr('width', '28');
-    $('#logo_span').find('img').attr('height', '28');
-    $('#logo_span').find('img').attr('src', imgLogoBlue);
-    $('#password_eye_span').find('img').attr('src', imgEyeOpen);
-    $('#password_eye_span').find('img').attr('title', 'Unmask password');
+    $('#password_pic_span img').attr('src', imgPwdDummy);
+    $('#logo_span img').attr('width', '28');
+    $('#logo_span img').attr('height', '28');
+    $('#logo_span img').attr('src', imgLogoBlue);
+    $('#password_eye_span img').attr('src', imgEyeOpen);
+    $('#password_eye_span img').attr('title', 'Unmask password');
 
     $('button').button();
 
@@ -139,12 +140,7 @@ function docInit()
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 
-    var ping = function() 
-	{
-        widSendPing(5000)
-    }
-
-    glPingTimerId = setTimeout(ping, 5000);
+    engSendPing(0);
 }
 
 function docMain() 
