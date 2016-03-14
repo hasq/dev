@@ -19,6 +19,7 @@ struct Worker2
         gl::Token tok;
         const char ** mime;
         bool encrypted;
+        const os::net::Socket * sock;
 
     private:
         string info();
@@ -43,13 +44,15 @@ struct Worker2
         string pleb();
         string admin();
 
-        er::Code fetchRecord(int dbIndex, db::Dn * dn, gl::intint n, bool first, db::Record * record);
+        er::Code fetchRecord(int dbIndex, db::Dn * dn,
+                             gl::intint n, bool first, db::Record * record);
 
 
     public:
 
-        Worker2(GlobalSpace * g, const string * s, const char ** m, bool e)
-            : gs(g), tok(s), mime(m), encrypted(e) {}
+        Worker2(GlobalSpace * g, const string * s,
+                const char ** m, bool e, const os::net::Socket * t)
+            : gs(g), tok(s), mime(m), encrypted(e), sock(t) {}
 
         string process(bool *);
         static string proxy(GlobalSpace * gs, const string & ipport, const string & cmd);

@@ -22,8 +22,11 @@ class WorkerCore
     public:
         WorkerCore(GlobalSpace * g): gs(g) {}
 
-        string process(const string & msg, const char ** mime);
-        string process(const string & msg, const char ** mime, bool encrypted);
+        string process(const string & msg, const char ** mime,
+                       const os::net::Socket * sock);
+
+        string process(const string & msg, const char ** mime,
+                       bool encrypted, const os::net::Socket * sock);
 };
 
 class Worker : public os::Blockable

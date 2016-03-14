@@ -75,6 +75,7 @@ class Config
         int cpuLoadCycle;
 
         gl::NetworkLimits netLimits;
+        int wkrAreaLimSize;
         int wkrAreaJobSize;
         int cedAreaSize;
         int binAreaSize;

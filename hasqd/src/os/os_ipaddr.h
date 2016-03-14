@@ -34,6 +34,7 @@ class IpAddr
 
         void reset_port(unsigned short p) { port = p; }
         void reset_ip(const char * s) { initip(s); }
+        PlaceholderAddr getPlaceholder() const { return ip; }
 };
 
 } // os

@@ -53,6 +53,7 @@ string er::tos(CodeType e)
     IFF( REQ_PRX_CMD_BAD )
     IFF( REQ_PRX_DEAD )
     IFF( REQ_BAD_CRYPT )
+    IFF( REQ_ZERO_POLICY )
 
     IFF( REC_INIT_BAD_N )
     IFF( REC_INIT_BAD_S )

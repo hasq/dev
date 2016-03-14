@@ -298,8 +298,6 @@ string Worker2::job()
 
 string Worker2::zero()
 {
-    string ip = "aaa";
-
     // check zeroLimit as a short cut to avoid mutex call
     if (!encrypted && gs->config->zeroLimit >= 0 )
     {
@@ -307,7 +305,7 @@ string Worker2::zero()
         sgl::Mutex mutex_wa(wa.mutex);
         ZeroPolicy & z = wa.policy;
 
-        if ( !z.request(ip) )
+        if ( !z.request(sock) )
             return er::Code(er::REQ_ZERO_POLICY);
     }
 

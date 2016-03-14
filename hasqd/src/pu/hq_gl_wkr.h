@@ -3,6 +3,8 @@
 #ifndef _HQ_GL_WKR
 #define _HQ_GL_WKR
 
+#include <deque>
+
 #include "os_net.h"
 
 class JobQueue
@@ -27,15 +29,24 @@ class JobQueue
 
 class ZeroPolicy
 {
+        struct Lrec
+        {
+            os::PlaceholderAddr ip;
+            int counter;
+            Lrec(os::PlaceholderAddr a): ip(a), counter(0) {}
+            bool issame(os::PlaceholderAddr b) const;
+        };
+
         string today;
-        typedef std::map<string, int> msi;
-        msi requests;
+        typedef std::deque<Lrec> dq;
+        dq requests;
         int limit;
+        int maxSz;
 
     public:
 
-        ZeroPolicy(int zl): limit(zl) {}
-        bool request(const string & ip);
+        ZeroPolicy(int sz, int zlim): limit(zlim), maxSz(sz) {}
+        bool request(const os::net::Socket * s);
 };
 
 struct WkrArea
@@ -45,7 +56,9 @@ struct WkrArea
     JobQueue jobSockets;
     ZeroPolicy policy;
 
-    WkrArea(int sz, int zl): mutex(1), jobSockets(sz), policy(zl) {}
+    WkrArea(int jsz, int zsz, int zlim):
+        mutex(1), jobSockets(jsz), policy(zsz, zlim) {}
+
     ~WkrArea() {}
 };
 

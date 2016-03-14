@@ -20,11 +20,12 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
     , reorgToutS(60 * 60 * 3)
     , cpuLoadCycle(0)
 
-    , zeroLimit(-1) // no limit
-    , wkrAreaJobSize(10)
-    , cedAreaSize(10)
-    , binAreaSize(10)
-    , svtAreaSize(100)
+    , zeroLimit(-1) // no limit // zlim
+    , wkrAreaLimSize(1000) 	// qlim
+    , wkrAreaJobSize(100)	// qwkr
+    , cedAreaSize(100)		// qced
+    , binAreaSize(100)		// qbin
+    , svtAreaSize(200)		// qsvt
 
     , dbcfg()
     , servantFile()
@@ -267,6 +268,9 @@ void Config::processOptionKeyVal(const string & k, const string & v)
 
     else if ( k == "zlim" )
         zeroLimit = gl::toi(v);
+
+    else if ( k == "qlim" )
+        wkrAreaLimSize = gl::toi(v);
 
     else if ( k == "qwkr" )
         wkrAreaJobSize = gl::toi(v);

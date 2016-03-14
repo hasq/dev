@@ -25,7 +25,7 @@ void GlobalSpace::stopPublisherSignal()
 
 GlobalSpace::GlobalSpace(const Config * c) :
     config(c)
-    , wkrArea(c->wkrAreaJobSize, c->zeroLimit)
+    , wkrArea(c->wkrAreaJobSize, c->wkrAreaLimSize, c->zeroLimit)
     , cedArea(c->cedAreaSize)
     , binArea(c->binAreaSize)
     , svtArea(c->svtAreaSize)

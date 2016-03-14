@@ -18,7 +18,7 @@ void Worker::runOnceUnconditionally()
     string msg = s->getReceivedMessage();
 
     const char ** mime = &s->accessRequest().accessPmd().mime;
-    string reply = workerCore.process(msg, mime);
+    string reply = workerCore.process(msg, mime, s);
     s->send_msg(reply);
     string ip = s->getAddr().strIp();
     delete s;
@@ -62,20 +62,22 @@ os::net::Socket * Worker::grabJob()
     return jobs.extractJob();
 }
 
-string WorkerCore::process(const string & message, const char ** mime)
+string WorkerCore::process(const string & message,
+                           const char ** mime, const os::net::Socket * sock)
 {
     if ( message.empty() || message[0] != '#' )
-        return process(message, mime, false);
+        return process(message, mime, false, sock);
 
     string em = decrypt(message.substr(1));
 
     if ( em.empty() )
         return er::Code(er::REQ_BAD_CRYPT);
 
-    return process(em, mime, true);
+    return process(em, mime, true, sock);
 }
 
-string WorkerCore::process(const string & message, const char ** mime, bool enc)
+string WorkerCore::process(const string & message, const char ** mime,
+                           bool enc, const os::net::Socket * sock)
 {
     const string & prx = gs->config->proxyIpport;
 
@@ -83,10 +85,10 @@ string WorkerCore::process(const string & message, const char ** mime, bool enc)
         return Worker2::proxy(gs, prx, message);
 
     if ( message.empty() && !gs->config->webhome.empty() )
-        return process(gs->config->webhome, mime);
+        return process(gs->config->webhome, mime, sock);
 
     bool recog;
-    const string & reply = Worker2(gs, &message, mime, enc).process(&recog);
+    const string & reply = Worker2(gs, &message, mime, enc, sock).process(&recog);
 
     if ( !gs->config->homevalid ) // no valid web dirs
         return reply;
@@ -109,7 +111,7 @@ string WorkerCore::process(const string & message, const char ** mime, bool enc)
         if ( vdsz < msg2.size() && msg2[vdsz] != '/' ) continue;
 
         msg2.replace(0, vdsz, "/" + gs->config->ddirs[i]);
-        return Worker2(gs, &msg2, mime, enc).process(0);
+        return Worker2(gs, &msg2, mime, enc, sock).process(0);
     }
 
     return reply;

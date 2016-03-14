@@ -1,6 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
 #include <iostream>
+#include <cstring>
 
 #include "gl_err.h"
 #include "gl_defs.h"
@@ -73,7 +74,7 @@ os::net::Socket * JobQueue::extractJob()
     return s;
 }
 
-bool ZeroPolicy::request(const string & ip)
+bool ZeroPolicy::request(const os::net::Socket * sk)
 {
     if ( limit <= 0 )
         return (limit < 0);
@@ -86,6 +87,23 @@ bool ZeroPolicy::request(const string & ip)
         requests.clear();
     }
 
-    return ( ++requests[ip] <= limit );
+    os::PlaceholderAddr a = sk->getAddr().getPlaceholder();
+    for ( dq::iterator i = requests.begin(); i != requests.end(); i++ )
+    {
+        if ( !i->issame(a) )
+            continue;
+
+        return ++(*i).counter < limit;
+    }
+
+    requests.push_front(Lrec(a));
+
+    while ( (int)requests.size() > maxSz ) requests.pop_back();
+
+    return true;
 }
 
+bool ZeroPolicy::Lrec::issame(os::PlaceholderAddr b) const
+{
+	return !memcmp(&ip,&b,sizeof(b));
+}
