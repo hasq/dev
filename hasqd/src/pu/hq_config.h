@@ -75,10 +75,11 @@ class Config
         int cpuLoadCycle;
 
         gl::NetworkLimits netLimits;
-        int wkrAreaSize;
+        int wkrAreaJobSize;
         int cedAreaSize;
         int binAreaSize;
         int svtAreaSize;
+        int zeroLimit;
 
         db::DbCfg dbcfg;
         string servantFile;

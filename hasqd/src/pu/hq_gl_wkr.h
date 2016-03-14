@@ -25,13 +25,27 @@ class JobQueue
 
 };
 
+class ZeroPolicy
+{
+        string today;
+        typedef std::map<string, int> msi;
+        msi requests;
+        int limit;
+
+    public:
+
+        ZeroPolicy(int zl): limit(zl) {}
+        bool request(const string & ip);
+};
+
 struct WkrArea
 {
     os::Semaphore workerSemaphore;
     os::Semaphore mutex;
     JobQueue jobSockets;
+    ZeroPolicy policy;
 
-    WkrArea(int sz): mutex(1), jobSockets(sz) {}
+    WkrArea(int sz, int zl): mutex(1), jobSockets(sz), policy(zl) {}
     ~WkrArea() {}
 };
 

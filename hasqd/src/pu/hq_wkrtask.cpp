@@ -51,7 +51,7 @@ string Worker2::process(bool * recog)
         return add();
 
     else if ( ( tok.is("zero") || tok.is("z") ) && (en || pn.zero) )
-        return add();
+        return zero();
 
     else if ( ( tok.is("last") || tok.is("l") ) && (en || pn.last) )
         return record(true, false, false);
@@ -294,6 +294,24 @@ string Worker2::job()
 
     er::Code x = ba.queue.getStatus(jid);
     return x;
+}
+
+string Worker2::zero()
+{
+    string ip = "aaa";
+
+    // check zeroLimit as a short cut to avoid mutex call
+    if (!encrypted && gs->config->zeroLimit >= 0 )
+    {
+        WkrArea & wa = gs->wkrArea;
+        sgl::Mutex mutex_wa(wa.mutex);
+        ZeroPolicy & z = wa.policy;
+
+        if ( !z.request(ip) )
+            return er::Code(er::REQ_ZERO_POLICY);
+    }
+
+    return add();
 }
 
 string Worker2::add()

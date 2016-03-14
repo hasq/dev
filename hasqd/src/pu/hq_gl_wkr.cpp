@@ -5,6 +5,8 @@
 #include "gl_err.h"
 #include "gl_defs.h"
 
+#include "os_timer.h"
+
 #include "sg_mutex.h"
 #include "sg_cout.h"
 
@@ -69,5 +71,21 @@ os::net::Socket * JobQueue::extractJob()
     if ( jobs.empty() ) mjobs.erase(i);
 
     return s;
+}
+
+bool ZeroPolicy::request(const string & ip)
+{
+    if ( limit <= 0 )
+        return (limit < 0);
+
+    string now = os::Timer::getGmd();
+
+    if ( now != today )
+    {
+        today = now;
+        requests.clear();
+    }
+
+    return ( ++requests[ip] <= limit );
 }
 

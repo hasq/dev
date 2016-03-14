@@ -20,7 +20,8 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
     , reorgToutS(60 * 60 * 3)
     , cpuLoadCycle(0)
 
-    , wkrAreaSize(10)
+    , zeroLimit(-1) // no limit
+    , wkrAreaJobSize(10)
     , cedAreaSize(10)
     , binAreaSize(10)
     , svtAreaSize(100)
@@ -264,8 +265,11 @@ void Config::processOptionKeyVal(const string & k, const string & v)
     else if ( k == "nbs" )
         conCloseSize_ini = gl::toi(v);
 
+    else if ( k == "zlim" )
+        zeroLimit = gl::toi(v);
+
     else if ( k == "qwkr" )
-        wkrAreaSize = gl::toi(v);
+        wkrAreaJobSize = gl::toi(v);
 
     else if ( k == "qced" )
         cedAreaSize = gl::toi(v);

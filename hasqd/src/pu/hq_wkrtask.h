@@ -30,6 +30,7 @@ struct Worker2
         string info_id();
         string job();
         string add();
+        string zero();
         string record(bool last, bool dat, bool first);
         string lastdata();
         string range();
