@@ -486,7 +486,15 @@ string Worker2::range()
 
     std::vector<db::Record *> records;
     gl::intint would_be_count;
-    er::Code k = db.getRange(dbIndex, *dn, begin, end, gs->config->rangeMax, would_be_count, records);
+
+    int rmax = gs->config->rangeMax;
+
+    if (encrypted)
+        rmax = 0;
+
+    er::Code k = db.getRange(dbIndex, *dn, begin, end,
+                             rmax, would_be_count, records);
+
     delete dn;
 
     if (k)

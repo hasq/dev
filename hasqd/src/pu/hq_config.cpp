@@ -21,11 +21,11 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
     , cpuLoadCycle(0)
 
     , zeroLimit(-1) // no limit // zlim
-    , wkrAreaLimSize(1000) 	// qlim
-    , wkrAreaJobSize(100)	// qwkr
-    , cedAreaSize(100)		// qced
-    , binAreaSize(100)		// qbin
-    , svtAreaSize(200)		// qsvt
+    , wkrAreaLimSize(1000)  // qlim
+    , wkrAreaJobSize(100)   // qwkr
+    , cedAreaSize(100)      // qced
+    , binAreaSize(100)      // qbin
+    , svtAreaSize(200)      // qsvt
 
     , dbcfg()
     , servantFile()

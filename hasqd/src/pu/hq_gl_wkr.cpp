@@ -105,5 +105,5 @@ bool ZeroPolicy::request(const os::net::Socket * sk)
 
 bool ZeroPolicy::Lrec::issame(os::PlaceholderAddr b) const
 {
-	return !memcmp(&ip,&b,sizeof(b));
+    return !memcmp(&ip, &b, sizeof(b));
 }
