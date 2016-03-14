@@ -139,7 +139,7 @@ string db::Traits::str() const
     os << "magic=" << "[" << data.magic << "]" << gl::CRLF;
     os << "size=" << data.sliceKb << gl::CRLF;
     os << "thin=" << data.thinness << gl::CRLF;
-    os << "datalimit=" << data.dl.ssize << gl::CRLF;
+    os << "datalimit=" << data.dl.size << gl::CRLF;
     os << "altname=" << altName << gl::CRLF;
     os << "}" << gl::CRLF;
     return os.str();
