@@ -21,10 +21,10 @@ sleeping
 <svt> noterecv
 <svt> quit
 =============
-<wkr> [info id] -> [OK\naaa\nFamily: []\nVersion: 0.3.1\nSkcKeys: 0\nPublicKey: 0,0\n]
-<wkr> [info nbs] -> [OK\n127.0.0.1:13131\n]
-<wkr> [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
-<wkr> [note b692 0 a7c4 aaa] -> [OK]
+<wkr> (127.0.0.1)[info id] -> [OK\naaa\nFamily: []\nVersion: 0.4.0\n...]
+<wkr> (127.0.0.1)[info nbs] -> [OK\n127.0.0.1:13131\n]
+<wkr> (127.0.0.1)[zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> [OK 1000]
+<wkr> (127.0.0.1)[note b692 0 a7c4 aaa] -> [OK]
 =============
 <ced> job:1000 [0 a7c4 0000 d9e6 fbfc] -> OK
 =============

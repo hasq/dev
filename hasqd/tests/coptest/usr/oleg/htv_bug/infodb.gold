@@ -77,6 +77,17 @@ datalimit=-1
 altname=84f247e8faa9b30f786e607f210cc713aecba1aee56505a02894284ae57d16debe639bac006da9d9d3c979e92399b34df5c9399f0299d87963bf7c7270a2b91d
 }
 {
+name=_smd
+hash=smd
+description=SHA256+MD5
+nG=1
+magic=[]
+size=100
+thin=0
+datalimit=-1
+altname=9f48f6962e8ff4dad9f7120e9033b418
+}
+{
 name=_wrd
 hash=wrd
 description=Md5-2bytes

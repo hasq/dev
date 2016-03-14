@@ -9,7 +9,7 @@ Database on disk erased successfully
 <sec> Submitting job [range _wrd 2 2 a7c4]
 <svt> print tcp self { [ range _wrd 2 2 ] hash wrd [ rdn ] }
 <svt> quit
+<wkr> (127.0.0.1)[range _wrd 2 2 a7c4] -> [IDX_HIGH]
 <wkr> Getrange error [a7c4] -> IDX_HIGH
-<wkr> [range _wrd 2 2 a7c4] -> [IDX_HIGH]
 <zdb> erasedisk
 Database on disk erased successfully
