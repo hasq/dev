@@ -1,42 +1,81 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 0 [] 1 0
-Hasq server 0.3.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=w3zh13131 ip=192.168.197.129 port=13131
 Database: OK
 Starting with threads: all
 <svt> print expect 0 OK 50 tcp self { [ ping ] }
 OK
 <svt> quit
-Hasq server 0.3.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=w3zh13131 ip=192.168.197.129 port=13131
 Database: OK
 Starting with threads: all
 <svt> print expect 0 OK 50 tcp self { [ ping ] }
 OK
 <svt> quit
-Hasq server 0.3.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=w3zh13131 ip=192.168.197.129 port=13131
 Database: OK
 Starting with threads: all
 <svt> print expect 0 OK 50 tcp self { [ ping ] }
 OK
 <svt> quit
-Hasq server 0.3.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=w3zh13131 ip=192.168.197.129 port=13131
 Database: OK
 Starting with threads: all
 <svt> print expect 0 OK 50 tcp self { [ ping ] }
 OK
 <svt> quit
-Hasq server 0.3.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=cranky-ой13131 ip=192.168.15.145 port=13131
+Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=w3zh13131 ip=192.168.197.129 port=13131
 Database: OK
 Starting with threads: all
 <svt> print expect 0 OK 50 tcp self { [ ping ] }
-Expect error: [busy] expected [OK] at [0]
+Expect error: [] expected [OK] at [0]
 error
 <svt> quit
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
+Job [ping] discarded
 Job [ping] discarded
 Job [ping] discarded
 Job [ping] discarded
