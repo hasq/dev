@@ -25,10 +25,10 @@ string b64dec(const string & s);
 
 struct Output
 {
-    virtual Output & operator<<(unsigned)=0;
-    virtual Output & operator<<(char)=0;
-    virtual Output & operator<<(const char *)=0;
-    virtual Output & operator<<(const string &)=0;
+    virtual Output & operator<<(unsigned) = 0;
+    virtual Output & operator<<(char) = 0;
+    virtual Output & operator<<(const char *) = 0;
+    virtual Output & operator<<(const string &) = 0;
 };
 
 }

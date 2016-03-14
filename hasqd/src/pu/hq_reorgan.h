@@ -22,7 +22,7 @@ class Reorganiser
 
         Reorganiser(GlobalSpace * g);
 
-        Reorganiser& discoverNet();
+        Reorganiser & discoverNet();
         void reorgNbs();
         void updateFamily_safe();
 
