@@ -16,8 +16,8 @@ int main()
                   << '\t' << i << '\t' << m.str() << '\n';
     }
 
-	if( Invertor<Num>(7, m).get() != 19 ) return 1;
-	if( Invertor<Num>(9, m).isOk() ) return 1;
+    if ( Invertor<Num>(7, m).get() != 19 ) return 1;
+    if ( Invertor<Num>(9, m).isOk() ) return 1;
 }
 
 #include "euclid/meuclid.inc"

@@ -48,7 +48,7 @@ try
     else
     {
         string s;
-        for ( int i = 1; i < ac; i++ ) s += string()+' ' + av[i];
+        for ( int i = 1; i < ac; i++ ) s += string() + ' ' + av[i];
         std::istringstream is(s);
         interactive = false;
         gin = &is; mmc();
@@ -774,12 +774,12 @@ Token Token::opout(Token t, char op, Token * b) const
 
     else if ( op == 'o' )
     {
-        if( mod.iszero() ) return Unumber(0);
+        if ( mod.iszero() ) return Unumber(0);
         Unumber r = m.num;
-        for( Unumber i=1; i<mod; ++i )
+        for ( Unumber i = 1; i < mod; ++i )
         {
-                if( r==1 ) return i;
-                r = r.mul(m.num, mod);
+            if ( r == 1 ) return i;
+            r = r.mul(m.num, mod);
         }
         return Unumber(0);
     }
@@ -792,8 +792,8 @@ Token Token::opout(Token t, char op, Token * b) const
     else if ( op == 'l' )
     {
         Unumber g = ma::gcd(t.num, m.num);
-        if( g.iszero() ) return 0;
-        return t.num/g*m.num;
+        if ( g.iszero() ) return 0;
+        return t.num / g * m.num;
     }
 
     else if ( op == '^' )

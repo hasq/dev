@@ -1,9 +1,9 @@
-set EXE=..\tools\AStyle\AStyle.exe
-set OPT=--options=..\tools\AStyle\ht_style.options
+set EXE=c:\app\AStyle\AStyle.exe
+set OPT=--options=c:\app\AStyle\ht_style.options
 
 %EXE% %OPT% db/*.cpp
 %EXE% %OPT% ../src/db/*.cpp
-exit
+
 %EXE% %OPT% ../src/db/*.h
 %EXE% %OPT% ../src/db/*.inc
 
