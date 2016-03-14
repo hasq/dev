@@ -276,10 +276,10 @@ function engGetTokensStatus(lr, nr)
         return 'OK';
     
     if (lr.g === nr.g) // Token is in a sending process
-        return 'TKN_SNDNG';
+        return 'pwd_sndng';
     
     if (lr.o === nr.o) // Token is in a receiving process
-        return 'TKN_RCVNG';
+        return 'pwd_rcvng';
     
     return 'WRONG_PWD';// Tokens keys is not matched with a password
 }

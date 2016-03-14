@@ -74,7 +74,7 @@ button.button-disabled:active:hover
 button.button-disabled:hover
 {
 	border: 0;
-	background: #808080; /*2F4F4F;*/
+	background: #808080;
 	color: #F5F5F5;
 	/* cursor: default; */
 	opacity: 0.4;
@@ -83,7 +83,7 @@ button.button-disabled:hover
 button.button-disabled
 {
 	border: 0;
-	background: #808080; /*2F4F4F;*/
+	background: #808080;
 	color: #F5F5F5;
 	/* cursor: default; */
 	opacity: 0.4;
@@ -100,21 +100,56 @@ button.button-disabled
 input[class='hasDatepicker'] 
 {
 	margin: 0px;  
-	border: 1px solid #aaa;
+	border: 1px solid #DDDDDD; /*#aaa;*/
 	border-radius: 0;
 }  
+
+input[placeholder]
+{
+	font: italic 14px Consolas;
+	text-align: left;
+	text-overflow: ellipsis;
+} 
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder
+{
+	font: italic 14px Consolas;
+	text-align: left;
+	text-overflow: ellipsis;
+} 
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder
+{
+	font: italic 14px Consolas;
+	text-align: left;
+	text-overflow: ellipsis;
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder
+{
+	font: italic 14px Consolas;
+	text-align: left;
+	text-overflow: ellipsis;
+} 
+
+input::-moz-placeholder, textarea::-moz-placeholder
+{
+	font: italic 14px Consolas;
+	text-align: left;
+	text-overflow: ellipsis;
+} 
 
 input[type='checkbox'] 
 { 
 	margin: 5px;    
-	border: 1px solid #aaa;
+	border: 1px solid #DDDDDD;
 	border-radius: 0;
 }
 
 input[type='checkbox']:focus
 {
 	background: #fff; 
-	border: 1px solid #555; 
+	border: 1px solid #DDDDDD; 
 }  
 
 input[type='text'], 
@@ -123,7 +158,7 @@ input[type='password']
 	font: 14px Consolas;
 	width: 100%;
 	margin: 0px;    
-	border: 1px solid #aaa;
+	border: 1px solid #DDDDDD;
 	border-radius: 0;
 }
 
@@ -131,19 +166,19 @@ input[type='text']:focus,
 input[type='password']:focus, 
 textarea:focus 
 {
-	border: 1px solid #555; 
+	border: 1px solid #DDDDDD; 
 }
 
 input:required:valid,
 textarea:required:valid 
 {
-	border-color: #28921f;
+	border-color: green;
 }
 
 input:focus:invalid,
 textarea:focus:invalid
 {
-	border-color: #b03535
+	border-color: red;
 } 
 
 
@@ -173,7 +208,7 @@ textarea[type='text']
   width: 100%;    
   font: 14px Consolas !important;
   margin: 0px;
-  border:1px solid #aaa;
+  border:1px solid #DDDDDD;
   border-radius: 0;
 } 
 
@@ -182,7 +217,7 @@ textarea.textarea-transkeys
   width: 100%;    
   font: 13px Consolas !important;
   margin: 0px;
-  border:1px solid #aaa;
+  border:1px solid #DDDDDD;
   border-radius: 0;
 } 
 
@@ -244,6 +279,13 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 	color: #1376BC;
 }
 
+.td-subsubtitle 
+{
+	text-align: center;
+	font: bold 18px Consolas;
+	color: #00CED1;
+}
+
 .td-subscribe 
 {
 	font: italic 8px Consolas;
@@ -278,7 +320,7 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 
 .ui-tabs-active
 {
-	box-shadow: 0 0 2px 0 #aaa;
+	box-shadow: 0 0 2px 0 #DDDDDD;
 	background: #FCFCFC;
 }
 

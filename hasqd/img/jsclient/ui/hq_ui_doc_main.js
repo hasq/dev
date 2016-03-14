@@ -51,23 +51,24 @@ var glTokList = {
 var imgMsgOk = 'img/msg_ok.png';
 var imgMsgWarning = 'img/msg_warning.png';
 var imgMsgError = 'img/msg_error.png';
-var imgMsgLoading = 'img/msg_loading.gif';
+var imgMsgWait = 'img/msg_wait.gif';
 var imgMsgBlink = 'img/msg_blink.gif';
 
-var imgTknOk = 'img/tkn_ok.png';
-var imgTknWrong = 'img/tkn_wrongpwd.png';
-var imgTknRcvng = 'img/tkn_rcvng.png';
-var imgTknSndng = 'img/tkn_sndng.png';
-var imgTknNodn = 'img/tkn_nodn.png';
+var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdWrong = 'img/pwd_wrong.png';
+var imgPwdRcvng = 'img/pwd_rcvng.png';
+var imgPwdSndng = 'img/pwd_sndng.png';
 var imgPwdDummy = 'img/pwd_dummy.png';
+
+var imgTknNodn = 'img/tkn_nodn.png';
 
 var imgLogoBlue = 'img/logo_blue.png';
 var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
 
 var allImages = [
-imgMsgOk,imgMsgWarning,imgMsgError,imgMsgLoading,imgMsgBlink,
-imgPwdDummy,imgTknOk,imgTknWrong,imgTknRcvng,imgTknSndng,imgTknNodn,
+imgMsgOk,imgMsgWarning,imgMsgError,imgMsgWait,imgMsgBlink,
+imgPwdDummy,imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgTknNodn,
 imgLogoBlue,imgLogoRed,imgLogoBlink
 ];
 

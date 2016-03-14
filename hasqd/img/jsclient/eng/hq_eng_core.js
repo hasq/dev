@@ -20,10 +20,10 @@ function engGetTokenInfo(data, r, s) {
         case 'OK':
 			item.fit = true;
             break;
-        case 'TKN_SNDNG':
+        case 'pwd_sndng':
 			item.unfit = true;
             break;
-        case 'TKN_RCVNG':
+        case 'pwd_rcvng':
 			item.unfit = true;
             break;
         case 'WRONG_PWD':

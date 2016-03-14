@@ -442,19 +442,19 @@ function widGetTokenStateImg(status) {
 
     switch (status) {
     case 'OK':
-		r.img = imgTknOk;
+		r.img = imgPwdOk;
 		r.title = 'OK';
 		break;
-    case 'TKN_SNDNG':
-        r.img = imgTknSndng;
+    case 'pwd_sndng':
+        r.img = imgPwdSndng;
 		r.title = 'Token is locked by sending';
 		break;
-    case 'TKN_RCVNG':
-        r.img = imgTknRcvng;
+    case 'pwd_rcvng':
+        r.img = imgPwdRcvng;
 		r.title = 'Token is locked by receiving';		
 		break;
     case 'WRONG_PWD': //'WRONG_PWD'
-        r.img = imgTknWrong;
+        r.img = imgPwdWrong;
 		r.title = 'Wrong password';		
 		break;
 	default:
@@ -1007,7 +1007,7 @@ function widPreBlockingSendStep2($obj) {
 	
 function widBlockingSendStep2($obj, items) {
     for (var i = 0; i < items.length; i++) {
-        if (items[i].st === 'TKN_SNDNG') {
+        if (items[i].st === 'pwd_sndng') {
 			//include only tokens in sending state;
             var r = items[i];
             var n0 = r.n - 1;
@@ -1234,7 +1234,7 @@ function widPreBlockingRequestStep2($obj) {
 
 function widBlockingRequestStep2($obj, items) {
     for (var i = 0; i < items.length; i++) {
-        if (items[i].st === 'TKN_RCVNG') {
+        if (items[i].st === 'pwd_rcvng') {
 			// includes only existing tokens in blocking receiving state
             var r = items[i];
             var n0 = r.n - 1;

@@ -127,26 +127,38 @@ function widShowLog(text)
 
 function widShowSearch()
 { // Shows message or image about tokens existense.
-    var $Pic = $('#token_pic_span');
-    $Pic.hide();
+    var $Pic = $('#token_pic_span img');
+	$Pic.removeAttr('src').removeProp('title').hide();
     widShowLog();
 
     return {
         show : function (d)
         {
+			var title, src;
+			
             if (!d)
             {
-                $Pic.show();
-                return widShowLog('Searching for token...');
+				title = 'Searching for token...';
+                src = imgMsgWait;
             }
 
             if (d === 'IDX_NODN') 
-				return widShowLog('No such token.');
+			{
+				title = 'No such token.';
+				src = imgLockOpen;
+			}
+				
 			
 			if (d === 'OK')
-				return widShowLog('Token exists.');
+			{
+				title = 'Token exists.';
+				src = imgLockClosed;
+			}
 			
-			return widShowLog(d);			
+			$Pic.attr('src', src).prop('title', title).show();
+			widShowLog(title);
+			
+			return true;
         },
     }
 }
@@ -175,19 +187,19 @@ function widGetTokenStateImg(status)
     switch (status)
     {
     case 'OK':
-        r.img = imgTknOk;
+        r.img = imgPwdOk;
         r.title = 'OK';
         break;
-    case 'TKN_SNDNG':
-        r.img = imgTknSndng;
+    case 'pwd_sndng':
+        r.img = imgPwdSndng;
         r.title = 'Token is locked (sending)';
         break;
-    case 'TKN_RCVNG':
-        r.img = imgTknRcvng;
+    case 'pwd_rcvng':
+        r.img = imgPwdRcvng;
         r.title = 'Token is locked (receiving)';
         break;
     case 'WRONG_PWD': //'WRONG_PWD'
-        r.img = imgTknWrong;
+        r.img = imgPwdWrong;
         r.title = 'Token locked (wrong password)';
         break;
     default:
@@ -266,12 +278,12 @@ function widToggleUI(lr, pwd) {
 			widReceiveTab().disable(false);	
 	}
 
-	if (tokState == 'TKN_SNDNG')
+	if (tokState == 'pwd_sndng')
 	{ 
 		widShowKeysTab().disable(false);
 	}
 
-	if (tokState == 'TKN_RCVNG')
+	if (tokState == 'pwd_rcvng')
 	{ 
 		widReceiveTab().readonly(false);
 		
@@ -618,7 +630,7 @@ function widShowKeysButtonClick()
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
 	
-    if (glLastRec.st !== 'OK' && glLastRec.st !== 'TKN_SNDNG')
+    if (glLastRec.st !== 'OK' && glLastRec.st !== 'pwd_sndng')
         return widModalWindow('Token is unaccessible</br>or incorrect master key.', function() { $Pwd.focus() } );
 
     textArea($Area0).clear();
@@ -675,7 +687,7 @@ function widShowKeysButtonClick()
         return widCompleteEvent('OK');
     }
 
-    if (glLastRec.st === 'TKN_SNDNG')
+    if (glLastRec.st === 'pwd_sndng')
     {
         textArea($Area0).clear();
 

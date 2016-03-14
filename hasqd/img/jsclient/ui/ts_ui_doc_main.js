@@ -8,17 +8,24 @@ var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId, glPingTimerId;
 
-var imgPwdDummy = 'img/pwd_dummy.png';
-var imgMsgLoading = 'img/msg_loading.gif';
+var imgMsgWait = 'img/msg_wait.gif';
+
+var imgLockOpen = 'img/lock_open.png';
+var imgLockClosed = 'img/lock_closed.png';
+
 var imgEyeOpen = 'img/eye_open.png';
 var imgEyeClosed = 'img/eye_closed.png';
+
 var imgLogoBlue = 'img/logo_blue.png';
 var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
-var imgTknOk = 'img/tkn_ok.png';
-var imgTknWrong = 'img/tkn_wrongpwd.png';
-var imgTknRcvng = 'img/tkn_rcvng.png';
-var imgTknSndng = 'img/tkn_sndng.png';
+
+var imgPwdDummy = 'img/pwd_dummy.png';
+var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdWrong = 'img/pwd_wrong.png';
+var imgPwdRcvng = 'img/pwd_rcvng.png';
+var imgPwdSndng = 'img/pwd_sndng.png';
+
 var imgClkReload = 'img/clk_reload.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
@@ -30,9 +37,9 @@ var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
 var allImages = [
-    imgTknOk, imgTknWrong, imgTknRcvng, imgTknSndng, imgPwdDummy,
-    imgMsgLoading, imgClkReload, imgEyeOpen, imgEyeClosed,
-    imgLogoBlue, imgLogoRed, imgLogoBlink 
+    imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
+    imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed, 
+    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink 
 ];
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('logo_span');
@@ -62,9 +69,8 @@ function docInit()
     });
 
     $('#reload_span img').attr('src', imgClkReload);
-    $('#token_pic_span img').attr('src', imgMsgLoading);
-    $('#token_pic_span').hide();
     $('#password_pic_span img').attr('src', imgPwdDummy);
+	$('#token_pic_span img').hide();
     $('#logo_span img').attr('width', '28');
     $('#logo_span img').attr('height', '28');
     $('#logo_span img').attr('src', imgLogoBlue);
