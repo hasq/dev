@@ -29,7 +29,7 @@ var imgPwdSndng = 'img/pwd_sndng.png';
 var imgClkReload = 'img/clk_reload.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
-var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Assign';
+var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Set';
 var imgBtnShowKeys1 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
 var imgBtnShowKeys2 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Choke';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Receive';

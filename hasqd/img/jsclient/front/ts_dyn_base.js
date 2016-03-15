@@ -922,10 +922,17 @@ function widSearchButtonClick()
 
 	if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
+
+    ///var sfr = date26(fromDate);
+    ///var sto = date26(toDate);
 	
     // needs to check correctness of specified date range if entered manually
     console.log(fromDate);
     console.log(toDate);
+
+    if( fromDate > toDate )
+        return widModalWindow('Date "From" must be earlier than "To"', function() {} );
+
     var folders = engGetDateRangeFolders(fromDate, toDate);
 
     widCompleteEvent();
