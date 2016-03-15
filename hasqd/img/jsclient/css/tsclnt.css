@@ -281,22 +281,25 @@ td
     vertical-align: bottom;
 }
 
+textarea
+{
+	margin-bottom: 0px;
+}
+
 textarea[type='text']
 {
-  width: 100%;    
-  font: 14px Consolas !important;
-  margin: 0px;
-  border:1px solid #DDDDDD;
-  border-radius: 0;
+	width: 100%;    
+	font: 14px Consolas !important;
+	border:1px solid #DDDDDD;
+	border-radius: 0;
 } 
 
 textarea.textarea-transkeys
 {
-  width: 100%;    
-  font: 13px Consolas !important;
-  margin: 0px;
-  border:1px solid #DDDDDD;
-  border-radius: 0;
+	width: 100%;    
+	font: 13px Consolas !important;
+	border:1px solid #DDDDDD;
+	border-radius: 0;
 } 
 
 /*
