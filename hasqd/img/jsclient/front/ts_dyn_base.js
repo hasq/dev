@@ -28,20 +28,20 @@ function textArea($textarea)
 
 function widModalWindow(msg, func) 
 {
-	$('#modal_window_content').click(function () 
-	{
-		$(this).find('p').empty();
-		$('#modal_window').css('display', 'none');
+    $('#modal_window_content').click(function () 
+    {
+        $(this).find('p').empty();
+        $('#modal_window').css('display', 'none');
 
-		if (func) 
-			func();
+        if (func) 
+            func();
 
-		$(this).off('click');
-	});
-	
-	$('#modal_window').css('display', 'block');
-	$('#modal_window_content').find('p').html(msg);
-	
+        $(this).off('click');
+    });
+    
+    $('#modal_window').css('display', 'block');
+    $('#modal_window_content').find('p').html(msg);
+    
 }
 
 
@@ -92,11 +92,11 @@ function widSetDefaultDb(dbHash)
 function widShowDBError()
 {
     // displays error message and blocks all UI;
-	var f = function()
-	{
-		location.reload(true);
-	}
-	
+    var f = function()
+    {
+        location.reload(true);
+    }
+    
     widModalWindow('Database is not accessible!', f);
 }
 
@@ -128,37 +128,37 @@ function widShowLog(text)
 function widShowSearch()
 { // Shows message or image about tokens existense.
     var $Pic = $('#token_pic_span img');
-	$Pic.removeAttr('src').removeProp('title').hide();
+    $Pic.removeAttr('src').removeProp('title').hide();
     widShowLog();
 
     return {
         show : function (d)
         {
-			var title, src;
-			
+            var title, src;
+            
             if (!d)
             {
-				title = 'Searching for token...';
+                title = 'Searching for token...';
                 src = imgMsgWait;
             }
 
             if (d === 'IDX_NODN') 
-			{
-				title = 'No such token.';
-				src = imgLockOpen;
-			}
-				
-			
-			if (d === 'OK')
-			{
-				title = 'Token exists.';
-				src = imgLockClosed;
-			}
-			
-			$Pic.attr('src', src).prop('title', title).show();
-			widShowLog(title);
-			
-			return true;
+            {
+                title = 'No such token.';
+                src = imgLockOpen;
+            }
+                
+            
+            if (d === 'OK')
+            {
+                title = 'Token exists.';
+                src = imgLockClosed;
+            }
+            
+            $Pic.attr('src', src).prop('title', title).show();
+            widShowLog(title);
+            
+            return true;
         },
     }
 }
@@ -222,103 +222,103 @@ function widShowPwdMatch(status)
 function widGetPwdGuessTime(pwd)
 {
     // Returns guess time of specified password
-	return (pwd) ? ('Guess time: ' + zxcvbn(pwd).crack_times_display.offline_slow_hashing_1e4_per_second) : undefined;
+    return (pwd) ? ('Guess time: ' + zxcvbn(pwd).crack_times_display.offline_slow_hashing_1e4_per_second) : undefined;
 }
 
 function widToggleUI(lr, pwd) {
-	var tokState = lr.st;
-	var tokData = lr.d;
+    var tokState = lr.st;
+    var tokData = lr.d;
 
-	widCreateTab().disable(true);
-	widAssignDataTab().disable(true);
-	widAssignDataTab().readonly(true);	
-	widReceiveTab().disable(true);
-	widReceiveTab().readonly(true);
-	widShowKeysTab().disable(true);
-	
-	(pwd) ? widSearchTab().disable(false) : widSearchTab().disable(true);
-	
-	if (typeof tokState == 'undefined')
-	{ 
-		widReceiveTab().readonly(false);
-		
-		if (widReceiveTab().isTransKeys() && pwd)
-			widReceiveTab().disable(false);
-	}
-	
-	if (tokState == 'IDX_NODN')
-	{ 
-		if (pwd)
-			widCreateTab().disable(false);
-	}
-	
-	if (tokState == 'OK')
-	{
-		widReceiveTab().readonly(false);
-		
-		if (widReceiveTab().isTransKeys())
-			widReceiveTab().disable(false);	
+    widCreateTab().disable(true);
+    widAssignDataTab().disable(true);
+    widAssignDataTab().readonly(true);  
+    widReceiveTab().disable(true);
+    widReceiveTab().readonly(true);
+    widShowKeysTab().disable(true);
+    
+    (pwd) ? widSearchTab().disable(false) : widSearchTab().disable(true);
+    
+    if (typeof tokState == 'undefined')
+    { 
+        widReceiveTab().readonly(false);
+        
+        if (widReceiveTab().isTransKeys() && pwd)
+            widReceiveTab().disable(false);
+    }
+    
+    if (tokState == 'IDX_NODN')
+    { 
+        if (pwd)
+            widCreateTab().disable(false);
+    }
+    
+    if (tokState == 'OK')
+    {
+        widReceiveTab().readonly(false);
+        
+        if (widReceiveTab().isTransKeys())
+            widReceiveTab().disable(false); 
 
-		var newData = engGetDataValToRecord(widAssignDataTab().val()) || '';
-		widAssignDataTab().readonly(false);
+        var newData = engGetDataValToRecord(widAssignDataTab().val()) || '';
+        widAssignDataTab().readonly(false);
 
-		if (tokData !== newData) {
-			widAssignDataTab().disable(false);
-		}
-			
-		
-		widShowKeysTab().disable(false);
-	}
-	
-	if (tokState == 'WRONG_PWD')
-	{ 
-		widReceiveTab().readonly(false);
-		
-		if (widReceiveTab().isTransKeys())
-			widReceiveTab().disable(false);	
-	}
+        if (tokData !== newData) {
+            widAssignDataTab().disable(false);
+        }
+            
+        
+        widShowKeysTab().disable(false);
+    }
+    
+    if (tokState == 'WRONG_PWD')
+    { 
+        widReceiveTab().readonly(false);
+        
+        if (widReceiveTab().isTransKeys())
+            widReceiveTab().disable(false); 
+    }
 
-	if (tokState == 'pwd_sndng')
-	{ 
-		widShowKeysTab().disable(false);
-	}
+    if (tokState == 'pwd_sndng')
+    { 
+        widShowKeysTab().disable(false);
+    }
 
-	if (tokState == 'pwd_rcvng')
-	{ 
-		widReceiveTab().readonly(false);
-		
-		if (widReceiveTab().isTransKeys())
-			widReceiveTab().disable(false);	
-	}
+    if (tokState == 'pwd_rcvng')
+    { 
+        widReceiveTab().readonly(false);
+        
+        if (widReceiveTab().isTransKeys())
+            widReceiveTab().disable(false); 
+    }
 }
 
 function widTokenTextOninput()
 {    // Events when tokens value changed.
 
-	glLastRec = {}; 				//clear last record
-    clearTimeout(glTimerId);		//clear last request to hasqd 
-	widButtonsTable().toggleOff();	//disable tabs switch buttons
-    widShowPwdMatch();				//clear info about password match
+    glLastRec = {};                 //clear last record
+    clearTimeout(glTimerId);        //clear last request to hasqd 
+    widButtonsTable().toggleOff();  //disable tabs switch buttons
+    widShowPwdMatch();              //clear info about password match
     widShowSearch();
 
     var $TokText = $('#token_text_textarea');
     textArea().clearExcept($TokText);
-	
+    
     var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
     widShowToken(tok);
 
     var cb = function (data)
     {
-		var resp = engGetResp(data);
-		
+        var resp = engGetResp(data);
+        
         if (resp.msg === 'ERROR')
-		{
-			widShowSearch();
-			return widShowLog(resp.msg + ': ' + data);
-		}
+        {
+            widShowSearch();
+            return widShowLog(resp.msg + ': ' + data);
+        }
 
-		//widButtonsTable().toggleOff();
-		
+        //widButtonsTable().toggleOff();
+        
         if (resp.msg === 'IDX_NODN')
         {
             glLastRec.st = resp.msg;
@@ -328,57 +328,57 @@ function widTokenTextOninput()
         else
         {
             glLastRec = engGetRespLast(data);
-			
+            
             var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-			
+            
             glLastRec.st = engGetTokensStatus(glLastRec, nr);
             widAssignDataTab().set(engGetDataValToDisplay(glLastRec.d));
-			widAssignDataTab().show();
+            widAssignDataTab().show();
         }
-		
-		widShowSearch().show(resp.msg);
+        
+        widShowSearch().show(resp.msg);
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
     }
 
     if (tok)
     {
-		widEmptyTab().show();
-		widShowSearch().show();
+        widEmptyTab().show();
+        widShowSearch().show();
         
         var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
         
-		return engSendDeferredRequest(cmd, 1000, cb);
+        return engSendDeferredRequest(cmd, 1000, cb);
     }
-	
-	widWelcomeTab().show();
+    
+    widWelcomeTab().show();
 }
 
 function widPasswordOninput()
 {
     // Events when passwords value changed.
     var $Pwd = $('#password_input');
-	
-	glPassword = $Pwd.val() || '';
-	widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
-	
-	if (glLastRec.st == 'IDX_NODN' || typeof glLastRec.st == 'undefined')
-		return widToggleUI(glLastRec, glPassword);
+    
+    glPassword = $Pwd.val() || '';
+    widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
+    
+    if (glLastRec.st == 'IDX_NODN' || typeof glLastRec.st == 'undefined')
+        return widToggleUI(glLastRec, glPassword);
 
-	var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-	
+    var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    
     glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, nr) : glLastRec.st = 'WRONG_PWD';
-	
-	widShowPwdMatch(glLastRec.st);	
-	widToggleUI(glLastRec, glPassword);
+    
+    widShowPwdMatch(glLastRec.st);  
+    widToggleUI(glLastRec, glPassword);
 }
 
 function widPasswordEyeClick($obj)
 {
-    //shows/hides passwords	by click;
+    //shows/hides passwords by click;
     var $Pwd = $('#password_input');
-	var $Eye = $obj.find('img');
-	
+    var $Eye = $obj.find('img');
+    
     if ($Pwd.attr('type') == 'text')
     {
         $Pwd.attr('type', 'password');
@@ -414,12 +414,12 @@ function widTokensTakeover(keys)
 
 function widButtonsTable()
 {
-	var $Buttons = $('.tab-buttons-table');
+    var $Buttons = $('.tab-buttons-table');
 
     return {
         toggleOff: function ()
         {
-			$Buttons.find('.tab-button-on').toggleClass('tab-button-on tab-button-off');
+            $Buttons.find('.tab-button-on').toggleClass('tab-button-on tab-button-off');
         }
     }
 }
@@ -427,8 +427,8 @@ function widButtonsTable()
 function widWelcomeTab()
 {
     var $Tabs = $('#tabs');
-	widPasswordOninput();
-	
+    widPasswordOninput();
+    
     return {
         show: function ()
         {
@@ -440,17 +440,17 @@ function widWelcomeTab()
 function widCreateTab()
 {
     var $Table = $('#create_table');
-    var $Button = $Table.find('button');	
+    var $Button = $Table.find('button');    
     var $Tabs = $('#tabs');
 
     return {
         disable : function (comm)
         {
-			(comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
+            (comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
         },
         show : function ()
         {
-			$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
+            $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
             $Tabs.tabs('option', 'active', 1);
         }
     }
@@ -464,8 +464,8 @@ function widCreateButtonClick()
     if (!widIsPassword())
         return widModalWindow('Enter master key.', function() { $Pwd.focus() } );
 
-	widEmptyTab().show();
-	
+    widEmptyTab().show();
+    
     var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
     var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
@@ -489,8 +489,8 @@ function widCreateButtonClick()
         ajxSendCommand(cmd, cb, hasqLogo);
     }
 
-	widShowLog('Creating token...');
-	
+    widShowLog('Creating token...');
+    
     setTimeout(f);
 }
 
@@ -508,20 +508,20 @@ function widAssignDataTab()
         },
         readonly: function (comm)
         {
-			$Textarea.prop('readonly', comm);
+            $Textarea.prop('readonly', comm);
         },
-		disable: function (comm)
-		{
-			(comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
-		},
+        disable: function (comm)
+        {
+            (comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
+        },
         show: function ()
         {
-			$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
+            $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
             $Tabs.tabs('option', 'active', 2);
         },
-		val: function () {
-			return textArea($Textarea).val();
-		}
+        val: function () {
+            return textArea($Textarea).val();
+        }
     }
 }
 
@@ -536,13 +536,13 @@ function widAssignDataButtonClick()
 
     if (glLastRec.st !== 'OK')
         return widModalWindow('Token is unaccessible.<br/>Incorrect master key.', function() { $Pwd.focus() } );
-	
-	if (engGetDataValToRecord($Data.val()) === glLastRec.d) 
-	{
-		return widModalWindow('Token data is not changed...', function() { $Data.focus() } );
-	}
+    
+    if (engGetDataValToRecord($Data.val()) === glLastRec.d) 
+    {
+        return widModalWindow('Token data is not changed...', function() { $Data.focus() } );
+    }
         
-	
+    
     var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = engGetDataValToRecord($Data.val());
     var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
@@ -570,27 +570,27 @@ function widAssignDataButtonClick()
 
 function widAssignDataTextareaOninput()
 {
-	widToggleUI(glLastRec, glPassword);
+    widToggleUI(glLastRec, glPassword);
 }
 
 function widShowKeysTab()
 {
     var $Table = $('#send_table');
-	var $Button = $Table.find('button');
+    var $Button = $Table.find('button');
     var $Tabs = $('#tabs');
 
     return {
         disable: function (comm)
         {
-			(comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
+            (comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
             $Table.find('input').prop('disabled', comm);
         },
-		firstdStep: function () {
-			
-		},
-		secondStep: function () {
-			
-		},		
+        firstdStep: function () {
+            
+        },
+        secondStep: function () {
+            
+        },      
         show: function ()
         {
             $Tabs.tabs('option', 'active', 3);
@@ -600,23 +600,23 @@ function widShowKeysTab()
 
 function widShowKeysTabButtonClick($obj)
 {
-	widPasswordOninput();
+    widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
     if (typeof glLastRec.st === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widWelcomeTab().show();
-	
+    
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widCreateTab().show();
-	
+    
     return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widAssignDataTab().show();
 }
 
 function widShowKeysButtonClick()
 {
     var $Pwd = $('#password_input');
-	var $Token = $('#token_text_textarea');
+    var $Token = $('#token_text_textarea');
     var $Area0 = $('#send_simple_textarea');
     var $Area1 = $('#send_blocking_textarea');
     var $SendType = $('#send_type_checkbox');
@@ -629,7 +629,7 @@ function widShowKeysButtonClick()
 
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
-	
+    
     if (glLastRec.st !== 'OK' && glLastRec.st !== 'pwd_sndng')
         return widModalWindow('Token is unaccessible</br>or incorrect master key.', function() { $Pwd.focus() } );
 
@@ -708,10 +708,10 @@ function widShowKeysButtonClick()
 
 function widReceiveTab()
 {
-	var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs');
     var $Table = $('#receive_table');
-	var $Textarea = $Table.find('textarea');
-	var $Button = $Table.find('button');
+    var $Textarea = $Table.find('textarea');
+    var $Button = $Table.find('button');
 
     return {
         readonly : function (comm)
@@ -720,39 +720,39 @@ function widReceiveTab()
         },
         disable : function (comm)
         {
-			(comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
-        },		
+            (comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');
+        },      
         show : function ()
         {
             $Tabs.tabs('option', 'active', 4);
         },
-		isTransKeys: function () {
-			return engIsRawTransKeys(textArea($Textarea).val());
-		}
+        isTransKeys: function () {
+            return engIsRawTransKeys(textArea($Textarea).val());
+        }
     }
 }
 
 function widReceiveTabButtonClick($obj)
 {
-	widPasswordOninput();
+    widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
     if (typeof glLastRec.st === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widWelcomeTab().show();
-	
+    
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widCreateTab().show();
-	
+    
     return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widAssignDataTab().show();
 
 }
 
 function widReceiveButtonClick()
 {
-	var $TransKeysArea = $('#receive_textarea');
-    var $Token = $('#token_text_textarea');	
-	var $Pwd = $('password_input');
+    var $TransKeysArea = $('#receive_textarea');
+    var $Token = $('#token_text_textarea'); 
+    var $Pwd = $('password_input');
     var rawTransKeys = $('#receive_textarea').val();
 
     if (typeof glLastRec.st === 'undefined')
@@ -761,9 +761,9 @@ function widReceiveButtonClick()
     if (glLastRec.st === 'IDX_NODN')
         return widModalWindow('Token is free</br>You can assign it...', function() { widCreateTab().show() } );
     
-	if (!widIsPassword())
+    if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
-	
+    
     if (!engIsRawTransKeys(rawTransKeys))
         return widModalWindow('Transkeys is missing or corrupt.</br>Enter correct keys...', function() { $TransKeysArea.focus() } );
 
@@ -785,9 +785,9 @@ function widReceiveButtonClick()
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         lr.st = engGetTokensStatus(lr, nr);
         /*
-		if (lr.st === 'OK')
+        if (lr.st === 'OK')
             return widCompleteEvent('Token already available!');
-		*/
+        */
         transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n; // beacause '232' is code of the second step of the transfer process
         textArea($Token).clear(tok);
 
@@ -807,7 +807,7 @@ function widReceiveButtonClick()
 
 function widReceiveTextareaOninput()
 {
-	widToggleUI(glLastRec, glPassword);
+    widToggleUI(glLastRec, glPassword);
 }
 
 function widSimpleReceive(keys)
@@ -881,13 +881,13 @@ function widBlockingReceiveStep2(keys)
 function widSearchTab()
 {
     var $Table = $('#search_table');
-	var $Button = $Table.find('button');
+    var $Button = $Table.find('button');
     var $Tabs = $('#tabs');
 
     return {
         disable : function (comm)
         {
-			(comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');			
+            (comm) ? $Button.addClass('button-disabled').removeClass('button-enabled') : $Button.addClass('button-enabled').removeClass('button-disabled');         
         },
         show : function ()
         {
@@ -898,34 +898,34 @@ function widSearchTab()
 
 function widSearchTabButtonClick($obj)
 {
-	widPasswordOninput();
+    widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
     if (typeof glLastRec.st == 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widWelcomeTab().show();
-	
+    
     if (glLastRec.st == 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widCreateTab().show();
-	
+    
     return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widAssignDataTab().show();
 }
 
 function widSearchButtonClick()
 {
-	var $Pwd = $('#password_input');
+    var $Pwd = $('#password_input');
     var $From = $('#from_datepicker_input');
     var $To = $('#to_datepicker_input');
 
     var fromDate = new Date($From.datepicker('getDate'));
     var toDate = new Date($To.datepicker('getDate'));
 
-	if (!widIsPassword())
+    if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
 
     ///var sfr = date26(fromDate);
     ///var sto = date26(toDate);
-	
+    
     // needs to check correctness of specified date range if entered manually
     console.log(fromDate);
     console.log(toDate);
@@ -942,8 +942,8 @@ function widSearchButtonClick()
 function widEmptyTab()
 {
     var $Tabs = $('#tabs');
-	widPasswordOninput();
-	
+    widPasswordOninput();
+    
     return {
         show: function ()
         {

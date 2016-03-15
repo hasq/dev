@@ -3,28 +3,28 @@ function HasqLogo(id) {
 
     return {
         wait : function () 
-		{
-			var $Logo = $('#' + id + ' img');
-			
+        {
+            var $Logo = $('#' + id + ' img');
+            
             counter++;
 
-			if (counter > 0)
-				return $Logo.attr('src', imgLogoBlink);
+            if (counter > 0)
+                return $Logo.attr('src', imgLogoBlink);
         },
         done : function () 
-		{
-			var $Logo = $('#' + id + ' img');
+        {
+            var $Logo = $('#' + id + ' img');
             
-			if (counter > 0)
-				counter--;
+            if (counter > 0)
+                counter--;
         
-			if (counter == 0)
+            if (counter == 0)
                 return setTimeout(function () { $Logo.attr('src', imgLogoBlue) }, 200);
         },
         fail : function () 
-		{
-			var $Logo = $('#' + id + ' img');
-			
+        {
+            var $Logo = $('#' + id + ' img');
+            
             counter = 0;
             return $Logo.attr('src', imgLogoRed);
         }

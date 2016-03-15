@@ -58,20 +58,20 @@ function docMainInit() {
 
 function docInit() 
 {
-	$('#modal_window').css('display', 'none');
-	$('input, select, textarea').attr('autocomplete', 'off');
-	
+    $('#modal_window').css('display', 'none');
+    $('input, select, textarea').attr('autocomplete', 'off');
+    
     $('#tabs').tabs(
-	{
+    {
         activate : function (event, ui) 
-		{
+        {
             widShowLog();
         },
     });
 
     $('#reload_span img').attr('src', imgClkReload);
     $('#password_pic_span img').attr('src', imgPwdDummy);
-	$('#token_pic_span img').hide();
+    $('#token_pic_span img').hide();
     $('#logo_span img').attr('width', '28');
     $('#logo_span img').attr('height', '28');
     $('#logo_span img').attr('src', imgLogoBlue);
@@ -83,37 +83,37 @@ function docInit()
     $('#token_data_td').hide();
     $('#send_blocking_textarea').hide();
     $('#send_type_checkbox').click(function () 
-	{
+    {
         var jqObj0 = $('#send_simple_textarea');
         var jqObj1 = $('#send_blocking_textarea');
 
         if (this.checked) 
-		{
+        {
             jqObj1.show();
         } 
-		else
-		{
+        else
+        {
             jqObj1.hide();
         }
 
         jqObj0.val('');
         jqObj1.val('');
     });
-	
+    
     $('#show_hide_checkbox').click(function () 
-	{
+    {
         if (this.checked) 
-		{
+        {
             $('.password').attr('type', 'text');
         } 
-		else
-		{
+        else
+        {
             $('.password').attr('type', 'password');
         }
     });
-	
+    
     $('#from_datepicker_input').datepicker(
-	{
+    {
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
@@ -123,13 +123,13 @@ function docInit()
         changeMonth : true,
         changeYear : true,
         onClose : function (selectedDate) 
-		{
+        {
             $('#to_datepicker_input').datepicker('option', 'minDate', selectedDate);
         }
     });
-	
+    
     $('#to_datepicker_input').datepicker(
-	{
+    {
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
@@ -139,7 +139,7 @@ function docInit()
         changeMonth : true,
         changeYear : true,
         onClose : function (selectedDate) 
-		{
+        {
             $('#from_datepicker_input').datepicker('option', 'maxDate', selectedDate);
         }
     });
@@ -165,11 +165,11 @@ function docMain()
     item.data = widGetHTMLCreateTab();
     tabs[tabs.length] = item;
 
-	item = {};
+    item = {};
     item.title = 'Assign data';
     item.data = widGetHTMLAssignDataTab();
     tabs[tabs.length] = item;
-	
+    
     item = {};
     item.title = 'Give token away';
     item.data = widGetHTMLShowKeysTab();
@@ -185,11 +185,11 @@ function docMain()
     item.data = widGetHTMLSearchTab();
     tabs[tabs.length] = item;
 
-	item = {};
+    item = {};
     item.title = 'Empty';
     item.data = widGetHTMLEmptyTab();
     tabs[tabs.length] = item;
-	
+    
     var body = widGetHTMLBody(tabs);
 
     return body;

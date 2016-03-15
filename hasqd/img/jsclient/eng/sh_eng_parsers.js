@@ -288,41 +288,41 @@ function engGetDataValToDisplay(data)
 {
     // returns parsed data for displaying
     var r = data || '';
-	
+    
     var LF = '\u000a'; //unicode line-feed
     var space = '\u0020';
     var backslash = '\u005c';
     var n = '\u006e';
 
-	for (var i = 0; i < r.length; i++) 
-	{ // replaces all not escaped '\n' by LF;
-		if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n) 
-			r = r.substring(0, i) + LF + r.substr(i + 2);
+    for (var i = 0; i < r.length; i++) 
+    { // replaces all not escaped '\n' by LF;
+        if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n) 
+            r = r.substring(0, i) + LF + r.substr(i + 2);
     }
 
-	r = r.replace(/(\u0020\u005c)(?=\u0020)/g,'\u0020'); //replaces all double spaces by " \ ";
-	r = r.replace(/(\u005c\u005c)(?!(\u006e))/g,'\u005c'); //replaces all double backslash by single;
+    r = r.replace(/(\u0020\u005c)(?=\u0020)/g,'\u0020'); //replaces all double spaces by " \ ";
+    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g,'\u005c'); //replaces all double backslash by single;
 
-	
+    
     return r;
 
 }
 
 function engGetDataValToRecord(data)
-{	// returns parsed data for add into record
-	var r = data || '';
-	
+{   // returns parsed data for add into record
+    var r = data || '';
+    
     var LF = '\u000a'; //unicode line-feed
     var space = '\u0020';
     var backslash = '\u005c';
-    var n = '\u006e';	
+    var n = '\u006e';   
     
-	r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg,'\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
-	r = r.replace(/(\u0020(?=\u0020))/g,'\u0020\u005c'); //replace all double spaces by " \ ";
-	r = r.replace(/\u000a/g,'\u005c\u006e'); // 'LF' > '\n';
-	
-	console.log(r);
-	console.log(engGetDataValToDisplay(r));
+    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg,'\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
+    r = r.replace(/(\u0020(?=\u0020))/g,'\u0020\u005c'); //replace all double spaces by " \ ";
+    r = r.replace(/\u000a/g,'\u005c\u006e'); // 'LF' > '\n';
+    
+    console.log(r);
+    console.log(engGetDataValToDisplay(r));
     return r;
 }
 
@@ -330,34 +330,34 @@ function engIsRawTransKeys(keys)
 {
     if (!keys)
         return false;
-	
+    
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
         return false; // checks for non hex chars;
 
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var prCode0Ch = prCode.charAt(0);
-	
+    
     // checks protocol code for record number exists into the transkeys;
-	if (prCode0Ch !== '1' && prCode0Ch !== '2')
-		return false;
+    if (prCode0Ch !== '1' && prCode0Ch !== '2')
+        return false;
 
     var isRecNum = (prCode0Ch == '1') ?  true :  false;
-	
+    
     //checks match of a protocol code and quantity of transkeys elements;
-	var keysLen;
-	var prCodeLen = prCode.length;
-	
-	if (prCodeLen < 3 || prCodeLen > 6)
-		return false;
-	
+    var keysLen;
+    var prCodeLen = prCode.length;
+    
+    if (prCodeLen < 3 || prCodeLen > 6)
+        return false;
+    
     if (prCodeLen == 3 || prCodeLen == 4)
         keysLen = (isRecNum) ? 3 : 2;
     
-	if (prCodeLen == 5 || prCodeLen == 6)
+    if (prCodeLen == 5 || prCodeLen == 6)
         keysLen = (isRecNum) ? 4 : 3;
 
-	//if exists CRC extract it and compare with calculated CRC
+    //if exists CRC extract it and compare with calculated CRC
     //if exists db name it will be used like lengths template
     var prCRC = '';
     var tkCRC = '';
@@ -374,19 +374,19 @@ function engIsRawTransKeys(keys)
         tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
         tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
     }
-	
+    
     if (prCRC !== tkCRC)
         return false; //checks CRC
-	
+    
     if (keys.length < keysLen)
         return false;
-	
+    
     if (tmpl.length == 0)
     {
         var mod = keys.length % keysLen;
 
-		if (mod !== 0 && mod !== 1)
-			return false;
+        if (mod !== 0 && mod !== 1)
+            return false;
 
         tmpl = (mod == 0) ? keys[keys.length - 1].length : keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
     }
@@ -397,7 +397,7 @@ function engIsRawTransKeys(keys)
         {
             if (!engIsNumber(keys[i]))
                 return false;
-			
+            
             keys.splice(i, 1);
             i--;
         }
@@ -433,7 +433,7 @@ function engGetTransKeys(keys)
     //checks match of a protocol code and quantity of transkeys elements;
     if (prCodeLen == 3 || prCodeLen == 4)
         keysLen = (isRecNum) ? 3 : 2;
-	
+    
     if (prCodeLen == 5 || prCodeLen == 6)
         keysLen = (isRecNum) ? 4 : 3;
     //if exists CRC remove it

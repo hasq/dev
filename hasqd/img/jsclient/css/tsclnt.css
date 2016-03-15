@@ -4,47 +4,47 @@
 
 body 
 {
-	font-family: Consolas, "Courier New";
-	background: #FCFCFC;
-	color: black;
-	width: 60%;
-	min-width: 620px;
-	min-height: 480px;
-	text-align: justify;
+    font-family: Consolas, "Courier New";
+    background: #FCFCFC;
+    color: black;
+    width: 60%;
+    min-width: 620px;
+    min-height: 480px;
+    text-align: justify;
     margin: auto;
 }
 
 *:focus 
 {
-	outline: none;
+    outline: none;
 }
 
 * 
 {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 button, 
 button.tab-button-off
 {
-	font: 12px Consolas;
-	text-align: center;
-	width: 70px;
-	height: 70px;
-	background: #AFEEEE;
-	border: 0;
-	opacity: 0.8;
+    font: 12px Consolas;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    background: #AFEEEE;
+    border: 0;
+    opacity: 0.8;
     -webkit-transition: background 0.20s;
     -moz-transition: background 0.20s;
-    -o-transition: background 0.20s;	
+    -o-transition: background 0.20s;    
 }
 
 button.tab-button-on 
 {
-	width: 70px;
-	height: 70px;
-	background: #00CED1;
-	border: 0;
+    width: 70px;
+    height: 70px;
+    background: #00CED1;
+    border: 0;
 }
 
 button:hover, /* button cursor*/
@@ -52,56 +52,56 @@ button.tab-button-off:hover,
 button.tab-button-on:hover,
 button.button-enabled:hover
 {
-	background: #87CEEB;	
-	border: 0;
-	cursor: pointer;
+    background: #87CEEB;    
+    border: 0;
+    cursor: pointer;
 }
 
 button.tab-button-off:active:hover,
 button.tab-button-on:active:hover 
 {
-	background: #20B2AA;
+    background: #20B2AA;
 }
 
 button.button-disabled:active:hover
 {
-	border: 0;
-	background: #2F4F4F;
-	color: #F5F5F5;
-	opacity: 0.4;	
+    border: 0;
+    background: #2F4F4F;
+    color: #F5F5F5;
+    opacity: 0.4;   
 }
 
 button.button-disabled:hover
 {
-	border: 0;
-	background: #808080;
-	color: #F5F5F5;
-	/* cursor: default; */
-	opacity: 0.4;
+    border: 0;
+    background: #808080;
+    color: #F5F5F5;
+    /* cursor: default; */
+    opacity: 0.4;
 }
 
 button.button-disabled
 {
-	border: 0;
-	background: #808080;
-	color: #F5F5F5;
-	/* cursor: default; */
-	opacity: 0.4;
+    border: 0;
+    background: #808080;
+    color: #F5F5F5;
+    /* cursor: default; */
+    opacity: 0.4;
 }
 
 div#tabs
 {
-	white-space: nowrap;
-	overflow: hidden;
-	text-align: center;
-	background: #FCFCFC;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    background: #FCFCFC;
 }
 
 div#tabs ul li
 {
-	display: inline-block;
-	float: none;
-	vertical-align: bottom;
+    display: inline-block;
+    float: none;
+    vertical-align: bottom;
 }
 
 div#modal_window  /* modal window */
@@ -117,7 +117,7 @@ div#modal_window  /* modal window */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	transparent: 0.8;
+    transparent: 0.8;
 }
 
 div#modal_window_content  /* modal window content box */
@@ -133,9 +133,9 @@ div#modal_window_content  /* modal window content box */
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
-	cursor: pointer;
-	text-align: center;
-	font: bold 18px Consolas;
+    cursor: pointer;
+    text-align: center;
+    font: bold 18px Consolas;
 }
 
 
@@ -156,8 +156,8 @@ div#modal_window_content_header
 
 div#modal_window_content_body
 {
-	padding: 10px 10px;
-	background-color: #FCFCFC;
+    padding: 10px 10px;
+    background-color: #FCFCFC;
 }
 
 div#modal_window_content_footer
@@ -169,110 +169,110 @@ div#modal_window_content_footer
  
 input[class='hasDatepicker'] 
 {
-	margin: 0px;  
-	border: 1px solid #DDDDDD; /*#aaa;*/
-	border-radius: 0;
+    margin: 0px;  
+    border: 1px solid #DDDDDD; /*#aaa;*/
+    border-radius: 0;
 }  
 
 input[placeholder]
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	text-overflow: ellipsis;
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
 } 
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	text-overflow: ellipsis;
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
 } 
 
 input:-ms-input-placeholder, textarea:-ms-input-placeholder
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	text-overflow: ellipsis;
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
 }
 
 input:-moz-placeholder, textarea:-moz-placeholder
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	text-overflow: ellipsis;
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
 } 
 
 input::-moz-placeholder, textarea::-moz-placeholder
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	text-overflow: ellipsis;
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
 } 
 
 input[type='checkbox'] 
 { 
-	margin: 5px;    
-	border: 1px solid #DDDDDD;
-	border-radius: 0;
+    margin: 5px;    
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
 }
 
 input[type='checkbox']:focus
 {
-	background: #fff; 
-	border: 1px solid #DDDDDD; 
+    background: #fff; 
+    border: 1px solid #DDDDDD; 
 }  
 
 input[type='text'], 
 input[type='password'] 
 { 
-	font: 14px Consolas;
-	width: 100%;
-	margin: 0px;    
-	border: 1px solid #DDDDDD;
-	border-radius: 0;
+    font: 14px Consolas;
+    width: 100%;
+    margin: 0px;    
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
 }
 
 input[type='text']:focus, 
 input[type='password']:focus, 
 textarea:focus 
 {
-	border: 1px solid #DDDDDD; 
+    border: 1px solid #DDDDDD; 
 }
 
 input:required:valid,
 textarea:required:valid 
 {
-	border-color: green;
+    border-color: green;
 }
 
 input:focus:invalid,
 textarea:focus:invalid
 {
-	border-color: red;
+    border-color: red;
 } 
 
 
 led 
 {
-	text-align: center;
-	vertical-align: center;
+    text-align: center;
+    vertical-align: center;
 }
   
 p
 {
-	word-wrap: break-word;
+    word-wrap: break-word;
     white-space: normal;
 }
 
 table
 {
-	padding:0;
-	border-collapse:collapse;
+    padding:0;
+    border-collapse:collapse;
 }
 
 td
 {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 textarea[type='text']
@@ -295,110 +295,110 @@ textarea.textarea-transkeys
 
 /*
 textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-placeholder, textarea:-moz-placeholder, textarea:-ms-textarea-placeholder {
-	font: italic 90% Consolas;
-	text-overflow: ellipsis;
+    font: italic 90% Consolas;
+    text-overflow: ellipsis;
 }
 */
 
 .ui-tabs-nav
 { 
-	display: none;
+    display: none;
 }
 
 /* .ui-tabs-nav {
-	display:inline;
+    display:inline;
 }  */
 
 .div-hidden 
 {
-	white-space: pre;
-	overflow-x: auto;
-	overflow-y: auto;
-	border: 1px solid CornflowerBlue;
-	border-radius: 2px;
-	box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
-	font: 12px Consolas;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid CornflowerBlue;
+    border-radius: 2px;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;      
+    font: 12px Consolas;
 }
 
 .tab-area
 {
-	vertical-align: top;
-	padding: 6px 6px 6px 6px;
+    vertical-align: top;
+    padding: 6px 6px 6px 6px;
 }
 
 .tab-button-area{
-	vertical-align: top;
-	padding: 6px 6px 6px 0;
+    vertical-align: top;
+    padding: 6px 6px 6px 0;
 }
 
 .tab-buttons-table
 {
-	border: 0px solid #DDDDDD;
+    border: 0px solid #DDDDDD;
 }
 
 .td-info
 {
-	font: italic 14px Consolas;
-	text-align: left;
-	border: 0px;
-	border-radius: 0px;
+    font: italic 14px Consolas;
+    text-align: left;
+    border: 0px;
+    border-radius: 0px;
 }
 
 .td-subtitle 
 {
-	text-align: center;
-	font: bold 18px Consolas;
-	color: #1376BC;
+    text-align: center;
+    font: bold 18px Consolas;
+    color: #1376BC;
 }
 
 .td-subsubtitle 
 {
-	text-align: center;
-	font: bold 18px Consolas;
-	color: #009070;
+    text-align: center;
+    font: bold 18px Consolas;
+    color: #009070;
 }
 
 .td-subscribe 
 {
-	font: italic 8px Consolas;
-	border: 0px;
-	border-radius: 0px;
-	text-align: right;
-	vertical-align: top;
+    font: italic 8px Consolas;
+    border: 0px;
+    border-radius: 0px;
+    text-align: right;
+    vertical-align: top;
 }
 
 .td-title
  {
-	text-align: left;
-	font: bold 32px Consolas;
-	font-size: 32px;
-	color: #1376BC;
+    text-align: left;
+    font: bold 32px Consolas;
+    font-size: 32px;
+    color: #1376BC;
 }
 
 .text-align-right
 {
-	text-align: right;
+    text-align: right;
 }
 
 .text-align-left
 {
-	text-align: left;
+    text-align: left;
 }
 
 .text-align-center
 {
-	text-align: center;
+    text-align: center;
 }
 
 .ui-tabs-active
 {
-	box-shadow: 0 0 2px 0 #DDDDDD;
-	background: #FCFCFC;
+    box-shadow: 0 0 2px 0 #DDDDDD;
+    background: #FCFCFC;
 }
 
 .welcome-p 
 {
-	padding: 6px;
-	text-align: justify;
-	font: 100% Consolas;
+    padding: 6px;
+    text-align: justify;
+    font: 100% Consolas;
 }
