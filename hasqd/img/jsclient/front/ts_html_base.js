@@ -2,26 +2,33 @@
 
 function widGetModalWindow()
 {
-	var r = '';
-	r += '<div id="modal_window_div">\n';
-		r += '<div id="modal_content_div">\n';
-			r += '<div id="modal_content_header_div"></div>\n';
-			r += '<div id="modal_content_body_div">\n';
-				r += '<p></p>\n';
-			r += '</div>\n';
-			r += '<div id="modal_content_footer_div"></div>\n';					
-		r += '</div>\n';
-	r += '</div>\n';
-	return r;
+    var r = '';
+    r += '<div id="modal_window_div">\n';
+    {
+        r += '<div id="modal_content_div">\n';
+        {
+            r += '<div id="modal_content_header_div"></div>\n';
+            r += '<div id="modal_content_body_div">\n';
+            {
+                r += '<p></p>\n';
+            }
+            r += '</div>\n';
+            r += '<div id="modal_content_footer_div"></div>\n';
+        }
+        r += '</div>\n';
+    }
+    r += '</div>\n';
+    return r;
 }
 
-function widGetHTMLSpanImg(id, func) {
-	var r = '';
-	if (func) {
-		r += '<span id="' + id + '" onclick="' + func +'" align="center"><img src=""></img></span>\n';
-	} else {
-		r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
-	}
+function widGetHTMLSpanImg(id, func)
+{
+    var r = '';
+
+    if (func)
+        r += '<span id="' + id + '" onclick="' + func + '" align="center"><img src=""></img></span>\n';
+    else
+        r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
 
     return r;
 }
@@ -248,16 +255,16 @@ function widGetHTMLShowKeysTab() {
 	r += '<table id="send_table" width="100%" border="0">\n';
 		r += '<tr>\n';
 			r += '<td class="td-subsubtitle" align="center" >\n';
-				r += 'Give token away';
+				r += 'Show keys';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center" />\n';
 				r += '<table>\n';
 					r += '<tr>\n';
 						r += '<td align="center" style="padding-right: 3px"/>\n';
-							r += '<button id="show_keys_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys + '</button>\n';
+							r += '<button id="show_keys_button1" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys1 + '</button>\n';
 						r += '<td align="center" style="padding-left: 3px"/>\n';
-							r += '<button id="show_keys_button2" class="button-off">' + imgBtnShowKeys + '</button>\n';
+							r += '<button id="show_keys_button2" class="button-off">' + imgBtnShowKeys2 + '</button>\n';
 					r += '</tr>\n';
 				r += '</table>\n';
 		r += '</tr>\n';
@@ -273,11 +280,11 @@ function widGetHTMLShowKeysTab() {
 				r += '<table width="100%">\n';
 					r += '<tr>\n';
 						r += '<td />\n';
-							r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="3" type="text" readonly></textarea>\n';
+							r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="7" type="text" readonly></textarea>\n';
 					r += '</tr>\n';
 					r += '<tr>\n';
 						r += '<td />\n';
-							r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;" wrap="on" rows="3" type="text" readonly></textarea>\n';
+							r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;" rows="7" type="text" readonly></textarea>\n';
 					r += '</tr>\n';					
 				r += '</table>\n';
 		r += '</tr>\n';
@@ -296,7 +303,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="3" cols="64" maxlength="65536" wrap="on" required></textarea>\n';
+				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="7" cols="64" maxlength="65536" wrap="on" required></textarea>\n';
 		r += '</tr>\n';	
 		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
@@ -312,7 +319,7 @@ function widGetHTMLSearchTab() {
 	r += '<table id="search_table" align="center" border="0">\n';
 		r += '<tr>\n';
 			r += '<td class="td-subsubtitle" align="center" />\n';
-				r += 'View my token';
+				r += 'Search for tokens';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td>\n';	
@@ -320,9 +327,9 @@ function widGetHTMLSearchTab() {
 				r += '<input id="from_datepicker_input" name="from_date">\n';
 				r += '<label for="to_date">to:</label>\n';
 				r += '<input id="to_datepicker_input" name="to_date">\n';
-		r += '</tr>\n';		
-		r += '<tr>\n';				
-			r += '<td>\n';
+///		r += '</tr>\n';		
+///		r += '<tr>\n';				
+///			r += '<td>\n';
 				r += '<button id="search_button" class="button-off" onclick="return widButtonClick(this);" data-onclick="widSearchButtonClick()">' + imgBtnSearch + '</button>\n';
 		r += '</tr>\n';		
 	r += '</table>\n';	
