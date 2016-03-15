@@ -28,10 +28,10 @@ function textArea($textarea)
 
 function widModalWindow(msg, func) 
 {
-	$('#modal_content_div').click(function () 
+	$('#modal_window_content').click(function () 
 	{
 		$(this).find('p').empty();
-		$('#modal_window_div').css('display', 'none');
+		$('#modal_window').css('display', 'none');
 
 		if (func) 
 			func();
@@ -39,8 +39,8 @@ function widModalWindow(msg, func)
 		$(this).off('click');
 	});
 	
-	$('#modal_window_div').css('display', 'block');
-	$('#modal_content_div').find('p').html(msg);
+	$('#modal_window').css('display', 'block');
+	$('#modal_window_content').find('p').html(msg);
 	
 }
 
@@ -426,7 +426,7 @@ function widButtonsTable()
 
 function widWelcomeTab()
 {
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
 	widPasswordOninput();
 	
     return {
@@ -441,7 +441,7 @@ function widCreateTab()
 {
     var $Table = $('#create_table');
     var $Button = $Table.find('button');	
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
 
     return {
         disable : function (comm)
@@ -496,7 +496,7 @@ function widCreateButtonClick()
 
 function widAssignDataTab()
 {
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
     var $Button = $('#setdata_table').find('button');
     var $Textarea = $('#setdata_table').find('textarea');
 
@@ -577,7 +577,7 @@ function widShowKeysTab()
 {
     var $Table = $('#send_table');
 	var $Button = $Table.find('button');
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
 
     return {
         disable: function (comm)
@@ -708,7 +708,7 @@ function widShowKeysButtonClick()
 
 function widReceiveTab()
 {
-	var $Tabs = $('#tabs_div');
+	var $Tabs = $('#tabs');
     var $Table = $('#receive_table');
 	var $Textarea = $Table.find('textarea');
 	var $Button = $Table.find('button');
@@ -882,7 +882,7 @@ function widSearchTab()
 {
     var $Table = $('#search_table');
 	var $Button = $Table.find('button');
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
 
     return {
         disable : function (comm)
@@ -941,7 +941,7 @@ function widSearchButtonClick()
 
 function widEmptyTab()
 {
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#tabs');
 	widPasswordOninput();
 	
     return {

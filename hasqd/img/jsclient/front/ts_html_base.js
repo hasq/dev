@@ -3,17 +3,17 @@
 function widGetModalWindow()
 {
     var r = '';
-    r += '<div id="modal_window_div">\n';
+    r += '<div id="modal_window">\n';
     {
-        r += '<div id="modal_content_div">\n';
+        r += '<div id="modal_window_content">\n';
         {
-            r += '<div id="modal_content_header_div"></div>\n';
-            r += '<div id="modal_content_body_div">\n';
+            r += '<div id="modal_window_content_header"></div>\n';
+            r += '<div id="modal_window_content_body">\n';
             {
                 r += '<p></p>\n';
             }
             r += '</div>\n';
-            r += '<div id="modal_content_footer_div"></div>\n';
+            r += '<div id="modal_window_content_footer"></div>\n';
         }
         r += '</div>\n';
     }
@@ -172,7 +172,7 @@ function widGetHTMLButtonsArea() {
 function widGetHTMLMainTabs(items) {
     var r = '';
 
-    r += '<div id="tabs_div" class="tabs-div">\n';
+    r += '<div id="tabs" class="tabs-div">\n';
     r += '\t<ul>\n';
 
     for (var i = 0; i < items.length; i++) {

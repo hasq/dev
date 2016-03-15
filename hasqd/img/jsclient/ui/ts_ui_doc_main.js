@@ -58,10 +58,10 @@ function docMainInit() {
 
 function docInit() 
 {
-	$('#modal_window_div').css('display', 'none');
+	$('#modal_window').css('display', 'none');
 	$('input, select, textarea').attr('autocomplete', 'off');
 	
-    $('#tabs_div').tabs(
+    $('#tabs').tabs(
 	{
         activate : function (event, ui) 
 		{
