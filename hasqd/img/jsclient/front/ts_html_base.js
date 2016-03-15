@@ -324,7 +324,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center">\n'
-				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="7" cols="64" maxlength="65536" wrap="on" required></textarea>\n';
+				r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="6" cols="64" maxlength="65536" wrap="on" required></textarea>\n';
 		r += '</tr>\n';	
 		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
