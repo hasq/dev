@@ -32,7 +32,7 @@ var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Set';
 var imgBtnShowKeys1 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Instant';
 var imgBtnShowKeys2 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>On Hold';
-var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Receive';
+var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
 var imgBtnSearch = '<img width="40px" height="20px" src="img/btn_search.png"><br/>Start';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';

@@ -299,7 +299,7 @@ function widGetHTMLReceiveTab() {
 	r += '<table id="receive_table" width="100%" border="0" >\n';
 		r += '<tr>\n';
 			r += '<td class="td-subsubtitle" align="center" />\n';
-				r += 'Receive token';
+				r += 'Paste keys';
 		r += '</tr>\n';	
 		r += '<tr>\n';
 			r += '<td align="center">\n'
