@@ -25,7 +25,8 @@ body
 }
 
 button, 
-button.tab-button-off
+button.tab-button-off,
+button.button-off
 {
     font: 12px Consolas;
     text-align: center;
@@ -39,7 +40,8 @@ button.tab-button-off
     -o-transition: background 0.20s;    
 }
 
-button.tab-button-on 
+button.tab-button-on,
+button.button-on
 {
     width: 70px;
     height: 70px;
@@ -50,6 +52,8 @@ button.tab-button-on
 button:hover, /* button cursor*/
 button.tab-button-off:hover,
 button.tab-button-on:hover,
+button.button-off:hover,
+button.button-on:hover,
 button.button-enabled:hover
 {
     background: #87CEEB;    
@@ -58,7 +62,9 @@ button.button-enabled:hover
 }
 
 button.tab-button-off:active:hover,
-button.tab-button-on:active:hover 
+button.tab-button-on:active:hover,
+button.button-off:active:hover,
+button.button-on:active:hover 
 {
     background: #20B2AA;
 }

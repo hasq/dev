@@ -276,12 +276,12 @@ function engGetTokensStatus(lr, nr)
         return 'OK';
     
     if (lr.g === nr.g) // Token is in a sending process
-        return 'pwd_sndng';
+        return 'PWD_SNDNG';
     
     if (lr.o === nr.o) // Token is in a receiving process
-        return 'pwd_rcvng';
+        return 'PWD_RCVNG';
     
-    return 'WRONG_PWD';// Tokens keys is not matched with a password
+    return 'PWD_WRONG';// Tokens keys is not matched with a password
 }
 
 function engGetDataValToDisplay(data)
@@ -321,8 +321,6 @@ function engGetDataValToRecord(data)
     r = r.replace(/(\u0020(?=\u0020))/g,'\u0020\u005c'); //replace all double spaces by " \ ";
     r = r.replace(/\u000a/g,'\u005c\u006e'); // 'LF' > '\n';
     
-    console.log(r);
-    console.log(engGetDataValToDisplay(r));
     return r;
 }
 

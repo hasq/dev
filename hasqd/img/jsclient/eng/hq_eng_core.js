@@ -20,13 +20,13 @@ function engGetTokenInfo(data, r, s) {
         case 'OK':
 			item.fit = true;
             break;
-        case 'pwd_sndng':
+        case 'PWD_SNDNG':
 			item.unfit = true;
             break;
-        case 'pwd_rcvng':
+        case 'PWD_RCVNG':
 			item.unfit = true;
             break;
-        case 'WRONG_PWD':
+        case 'PWD_WRONG':
 			item.unfit = true;
             break;
         }

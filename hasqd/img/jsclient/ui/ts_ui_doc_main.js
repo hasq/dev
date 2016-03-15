@@ -89,25 +89,10 @@ function docInit()
     $('button').button();
 
     $('#token_data_td').hide();
-    $('#send_blocking_textarea').hide();
-    $('#send_type_checkbox').click(function () 
-    {
-        var jqObj0 = $('#send_simple_textarea');
-        var jqObj1 = $('#send_blocking_textarea');
-
-        if (this.checked) 
-        {
-            jqObj1.show();
-        } 
-        else
-        {
-            jqObj1.hide();
-        }
-
-        jqObj0.val('');
-        jqObj1.val('');
-    });
-    
+	
+	$('#send_simple_textarea').hide();
+	$('#send_blocking_textarea').hide();
+	
     $('#show_hide_checkbox').click(function () 
     {
         if (this.checked) 

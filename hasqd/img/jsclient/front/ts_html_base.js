@@ -243,7 +243,7 @@ function widGetHTMLCreateTab()
         r += '</tr>\n'; 
         r += '<tr>\n';
             r += '<td align="center">\n'
-                r += '<button id="create_button" class="button-off" onclick="return widButtonClick(this);" data-onclick="widCreateButtonClick()">' + imgBtnCreate + '</button>\n';
+                r += '<button id="create_button" class="button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
         r += '</tr>\n';
     r += '</table>\n';
     
@@ -265,7 +265,7 @@ function widGetHTMLAssignDataTab()
         r += '</tr>\n';
         r += '<tr>\n';              
             r += '<td width="74" align="center">\n'
-                r += '<button id="setdata_button" onclick="return widButtonClick(this);" data-onclick="widAssignDataButtonClick()">' + imgBtnData;
+                r += '<button id="setdata_button" onclick="return widAssignDataButtonClick($(this));">' + imgBtnData + '</button>\n';
         r += '</tr>\n';
     r += '</table>\n';
     
@@ -286,29 +286,23 @@ function widGetHTMLShowKeysTab()
                 r += '<table>\n';
                     r += '<tr>\n';
                         r += '<td align="center" style="padding-right: 3px"/>\n';
-                            r += '<button id="show_keys_button1" class="button-off" onclick="return widButtonClick(this)" data-onclick="widShowKeysButtonClick()">' + imgBtnShowKeys1 + '</button>\n';
+                            r += '<button id="show_instant_button" class="button-off" onclick="return widInstantButtonClick($(this))">' + imgBtnShowKeys1 + '</button>\n';
                         r += '<td align="center" style="padding-left: 3px"/>\n';
-                            r += '<button id="show_keys_button2" class="button-off">' + imgBtnShowKeys2 + '</button>\n';
+                            r += '<button id="show_on_hold_button" class="button-off" onclick="return widOnHoldButtonClick($(this))">' + imgBtnShowKeys2 + '</button>\n';
                     r += '</tr>\n';
                 r += '</table>\n';
         r += '</tr>\n';
-/*      
-        r += '<tr>\n';
-            r += '<td align="center" />\n';
-                r += '<input type="checkbox" id="send_type_checkbox">\n';
-                r += '<label for="send_type_checkbox" style="font:italic 10px consolas">2-step transfer</label>\n'; 
-        r += '</tr>\n';         
-*/
+
         r += '<tr>\n';              
             r += '<td rowspan="2" />\n';
                 r += '<table width="100%">\n';
                     r += '<tr>\n';
                         r += '<td />\n';
-                            r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="7" type="text" readonly></textarea>\n';
+                            r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
                     r += '</tr>\n';
                     r += '<tr>\n';
                         r += '<td />\n';
-                            r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;" rows="7" type="text" readonly></textarea>\n';
+                            r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
                     r += '</tr>\n';                 
                 r += '</table>\n';
         r += '</tr>\n';
@@ -331,7 +325,7 @@ function widGetHTMLReceiveTab() {
 		r += '</tr>\n';	
 		r += '<tr>\n';				
 			r += '<td width="74" style="text-align: center">\n';
-				r += '<button id="receive_button" class="button-off" onclick="return widButtonClick(this)" data-onclick="widReceiveButtonClick()">' + imgBtnReceiveKeys + '</button>\n';
+				r += '<button id="receive_button" class="button-off" onclick="return widReceiveButtonClick($(this))">' + imgBtnReceiveKeys + '</button>\n';
 		r += '</tr>\n';
 	r += '</table>\n';
 
@@ -352,7 +346,7 @@ function widGetHTMLSearchTab()
                 r += '<input id="from_datepicker_input" name="from_date">\n';
                 r += '<label for="to_date">to:</label>\n';
                 r += '<input id="to_datepicker_input" name="to_date">\n';
-                r += '<button id="search_button" class="button-off" onclick="return widButtonClick(this);" data-onclick="widSearchButtonClick()">' + imgBtnSearch + '</button>\n';
+                r += '<button id="search_button" class="button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
         r += '</tr>\n';     
     r += '</table>\n';  
     return r;   

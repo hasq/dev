@@ -445,15 +445,15 @@ function widGetTokenStateImg(status) {
 		r.img = imgPwdOk;
 		r.title = 'OK';
 		break;
-    case 'pwd_sndng':
+    case 'PWD_SNDNG':
         r.img = imgPwdSndng;
 		r.title = 'Token is locked by sending';
 		break;
-    case 'pwd_rcvng':
+    case 'PWD_RCVNG':
         r.img = imgPwdRcvng;
 		r.title = 'Token is locked by receiving';		
 		break;
-    case 'WRONG_PWD': //'WRONG_PWD'
+    case 'PWD_WRONG': //'PWD_WRONG'
         r.img = imgPwdWrong;
 		r.title = 'Wrong password';		
 		break;
@@ -814,7 +814,7 @@ function widPreSimpleRequest($obj) {
 
 function widSimpleRequest($obj, items) {
     for (var i = 0; i < items.length; i++) {
-		if (items[i].st === 'WRONG_PWD') {
+		if (items[i].st === 'PWD_WRONG') {
 			// includes only existing unknown tokens
             var r = items[i];
 			var k3 = engGetKey(r.n + 3, r.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -1007,7 +1007,7 @@ function widPreBlockingSendStep2($obj) {
 	
 function widBlockingSendStep2($obj, items) {
     for (var i = 0; i < items.length; i++) {
-        if (items[i].st === 'pwd_sndng') {
+        if (items[i].st === 'PWD_SNDNG') {
 			//include only tokens in sending state;
             var r = items[i];
             var n0 = r.n - 1;
@@ -1165,7 +1165,7 @@ function widPreBlockingRequestStep1($obj) {
 
 function widBlockingRequestStep1($obj, items) {
     for (var i = 0; i < items.length; i++) {
-        if (items[i].st === 'WRONG_PWD') {
+        if (items[i].st === 'PWD_WRONG') {
 			// includes only existing unknown tokens
             var r = items[i];
             var n0 = r.n;
@@ -1234,7 +1234,7 @@ function widPreBlockingRequestStep2($obj) {
 
 function widBlockingRequestStep2($obj, items) {
     for (var i = 0; i < items.length; i++) {
-        if (items[i].st === 'pwd_rcvng') {
+        if (items[i].st === 'PWD_RCVNG') {
 			// includes only existing tokens in blocking receiving state
             var r = items[i];
             var n0 = r.n - 1;
