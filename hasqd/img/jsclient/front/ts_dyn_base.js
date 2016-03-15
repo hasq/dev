@@ -625,7 +625,7 @@ function widShowKeysButtonClick()
         return widModalWindow('Enter token name...', function() { $Token.focus() } );
 
     if (glLastRec.st === 'IDX_NODN')
-        return widModalWindow('Create token first...', function() { widCreateTab().show() } );
+        return widModalWindow('Create token first...');
 
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );
@@ -759,7 +759,7 @@ function widReceiveButtonClick()
         return widModalWindow('Enter token name...', function() { $Token.focus() } );
 
     if (glLastRec.st === 'IDX_NODN')
-        return widModalWindow('Token is free</br>You can assign it...', function() { widCreateTab().show() } );
+        return widModalWindow('Token is free</br>You can assign it...');
     
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $Pwd.focus() } );

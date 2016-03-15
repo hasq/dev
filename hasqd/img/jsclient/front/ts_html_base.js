@@ -97,6 +97,9 @@ function widGetHTMLTitleArea()
             r += '<td class="td-title"/>\n';
                 r += '<span>' + glClientTitle + '</span>\n';
             r += '<td width="30" height="30" align="center" />\n';
+                r += widGetHTMLSpanImg('info_span', 'widModalWindow(\'FIX ME\')') + '\n';
+			r += '<td width="30" height="30" align="center" />\n';				
+            r += '<td width="30" height="30" align="center" />\n';
                 r += widGetHTMLSpanImg('logo_span', 'engSendPing()') + '\n';
         r += '</tr>\n';
     r += '</table>\n';

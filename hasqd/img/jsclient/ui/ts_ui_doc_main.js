@@ -27,6 +27,7 @@ var imgPwdRcvng = 'img/pwd_rcvng.png';
 var imgPwdSndng = 'img/pwd_sndng.png';
 
 var imgClkReload = 'img/clk_reload.png';
+var imgClkInfo = 'img/clk_info.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Set';
@@ -37,6 +38,7 @@ var imgBtnSearch = '<img width="40px" height="20px" src="img/btn_search.png"><br
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
+
 var allImages = [
     imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
     imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed, 
@@ -68,13 +70,19 @@ function docInit()
             widShowLog();
         },
     });
+	
+	$('#info_span img').attr('src', imgClkInfo);
+    $('#info_span img').attr('width', '28');
+    $('#info_span img').attr('height', '28');
 
-    $('#reload_span img').attr('src', imgClkReload);
-    $('#password_pic_span img').attr('src', imgPwdDummy);
-    $('#token_pic_span img').hide();
     $('#logo_span img').attr('width', '28');
     $('#logo_span img').attr('height', '28');
     $('#logo_span img').attr('src', imgLogoBlue);
+
+    $('#reload_span img').attr('src', imgClkReload);	
+    $('#password_pic_span img').attr('src', imgPwdDummy);
+    $('#token_pic_span img').hide();
+
     $('#password_eye_span img').attr('src', imgEyeOpen);
     $('#password_eye_span img').attr('title', 'Unmask password');
 
