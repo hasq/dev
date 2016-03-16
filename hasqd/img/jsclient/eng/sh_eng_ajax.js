@@ -6,17 +6,17 @@ function ajxSendCommand(cmd, callback, logo) {
 
     .done(function (data) 
     {
-        callback(data);     
+        callback(data);
         logo.done(); 
     })
 
     .fail(function () 
     {
-        callback('An error occurred while processing your request!'); //FIXME
+        callback('An error occurred while processing your request!');
         logo.fail();
         alert('Failed to connect to server!');
     })
 
     .always(function () {});
-
 }
+
