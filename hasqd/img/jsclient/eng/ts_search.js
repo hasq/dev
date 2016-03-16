@@ -14,7 +14,7 @@ function engSearchClick(fromDate, toDate, progr)
     g_searchOn = !g_searchOn;
 
     if( g_searchOn )
-        return engSearchStart(fromDate, toDate);
+        return engSearchStart(fromDate, toDate, progr);
 
     return engSearchStop();
 }
@@ -37,7 +37,7 @@ function engSearchStart(fromDate, toDate, progr)
 
 function engSearchStop()
 {
-    // hare cancel ajax request FIXME
+    // here cancel ajax request FIXME
 
     return {from:g_fromDate, to:g_toDate};
 }
