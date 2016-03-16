@@ -31,9 +31,9 @@ var imgClkInfo = 'img/clk_info.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Set';
-var imgBtnShowKeys1 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Instant';
-var imgBtnShowKeys2 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>On Hold';
-var imgBtnShowKeys3 = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
+var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Instant';
+var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>On Hold';
+var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
 var imgBtnSearch = '<img width="40px" height="20px" src="img/btn_search.png"><br/>Start';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
@@ -69,7 +69,7 @@ function docInit()
         activate : function (event, ui) 
         {
             widShowLog();
-        },
+        }
     });
 	
 	$('#info_span img').attr('src', imgClkInfo);
@@ -91,19 +91,12 @@ function docInit()
 
     $('#token_data_td').hide();
 	
-	$('#send_simple_textarea').hide();
-	$('#send_blocking_textarea').hide();
-	
     $('#show_hide_checkbox').click(function () 
     {
         if (this.checked) 
-        {
             $('.password').attr('type', 'text');
-        } 
         else
-        {
             $('.password').attr('type', 'password');
-        }
     });
     
     $('#from_datepicker_input').datepicker(

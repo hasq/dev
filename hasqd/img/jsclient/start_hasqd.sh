@@ -5,7 +5,7 @@ PLAT=${PLAT:-msc}
 bin=_bin_${PLAT}
 
 #comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 cycle=10000"
-comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 dwkr=1 cycle=10000 zlim=2"
+comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 dwkr=1 cycle=10000 zlim=10"
 
 error() {
 	[ -z "$1" ] || echo ">>> $1"

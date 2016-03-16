@@ -158,7 +158,7 @@ function engGetRawTokensList(data) {
 
 function engGetUpgradedTransKeys(transKeys, list) {
 	for (var i = 0; i < transKeys.length; i++) {
-		transKeys[i].n = list[i].n;//list.items[i].n;
+		transKeys[i].n = list[i].n;
 	}
 	return transKeys;
 }

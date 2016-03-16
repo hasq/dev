@@ -272,7 +272,7 @@ p
 
 table
 {
-    padding:0;
+    padding: 0;
     border-collapse:collapse;
 }
 
@@ -290,14 +290,6 @@ textarea[type='text']
 {
 	width: 100%;    
 	font: 14px Consolas !important;
-	border:1px solid #DDDDDD;
-	border-radius: 0;
-} 
-
-textarea.textarea-transkeys
-{
-	width: 100%;    
-	font: 13px Consolas !important;
 	border:1px solid #DDDDDD;
 	border-radius: 0;
 } 
@@ -349,8 +341,15 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 {
     font: italic 14px Consolas;
     text-align: left;
-    border: 0px;
     border-radius: 0px;
+}
+
+.td-log
+{
+    font: italic 14px Consolas;
+    text-align: left;
+    border-radius: 0px;
+	visibility: hidden;
 }
 
 .td-subtitle 
@@ -370,7 +369,6 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 .td-subscribe 
 {
     font: italic 8px Consolas;
-    border: 0px;
     border-radius: 0px;
     text-align: right;
     vertical-align: top;

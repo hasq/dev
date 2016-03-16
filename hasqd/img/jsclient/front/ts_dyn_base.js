@@ -1,7 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 function textArea($textarea)
-{
-    return {
+{	
+    var obj =
+	{
         add : function (data)
         {
             return $textarea.val(this.val($textarea) + data);
@@ -23,7 +24,9 @@ function textArea($textarea)
         {
             return $textarea.val();
         }
-    }
+	}
+	
+	return obj;
 }
 
 function widModalWindow(msg, func) 
@@ -42,15 +45,6 @@ function widModalWindow(msg, func)
     $('#modal_window').css('display', 'block');
     $('#modal_window_content').find('p').html(msg);
     
-}
-
-function widCompleteEvent(text)
-{
-    // Completes actions and enables UI
-
-    if (arguments.length == 0)
-        text = '&nbsp';
-    return widShowLog(text);
 }
 
 function widSetDefaultDb(dbHash)
@@ -101,6 +95,7 @@ function widShowToken(tok)
 {
     // Shows hashed value of token (if the value is not a default hash)
     var $TokenText = $('#token_hash_td');
+	
     if (!tok)
         return $TokenText.empty();
 
@@ -111,6 +106,7 @@ function widShowLog(text)
 {
     // Shows messages in log
     var $Log = $('#' + 'log_area_div');
+	
     text = text || '';
     $Log.html(text);
 }
@@ -119,9 +115,9 @@ function widShowSearch()
 { // Shows message or image about tokens existense.
     var $Pic = $('#token_pic_span img');
     $Pic.removeAttr('src').removeProp('title').hide();
-    widShowLog();
-
-    return {
+ 
+    var obj = 
+	{
         show : function (d)
         {
             var title, src;
@@ -146,11 +142,12 @@ function widShowSearch()
             }
             
             $Pic.attr('src', src).prop('title', title).show();
-            widShowLog(title);
             
             return true;
         },
     }
+	
+	return obj;
 }
 
 function widIsPassword()
@@ -228,56 +225,62 @@ function widToggleUI(lr, pwd) {
     
     (pwd) ? widSearchTab().disable(false) : widSearchTab().disable(true);
     
-    if (typeof tokState === 'undefined')
+    if ( typeof tokState === 'undefined' )
     { 
         widReceiveTab().readonly(false);
         
-        if (widReceiveTab().isTransKeys() && pwd)
+        if ( widReceiveTab().isTransKeys() && pwd )
             widReceiveTab().disable(false);
     }
     
-    if (tokState === 'IDX_NODN')
+    if ( tokState === 'IDX_NODN' )
     { 
         if (pwd)
             widCreateTab().disable(false);
     }
     
-    if (tokState === 'OK')
+    if ( tokState === 'OK' )
     {
         widReceiveTab().readonly(false);
         
-        if (widReceiveTab().isTransKeys())
+        if ( widReceiveTab().isTransKeys() )
             widReceiveTab().disable(false); 
 
         var newData = engGetDataValToRecord(widAssignDataTab().val()) || '';
         widAssignDataTab().readonly(false);
 
-        if (tokData !== newData) {
+        if ( tokData !== newData )
             widAssignDataTab().disable(false);
-        }
-            
         
         widShowKeysTab().disable(false);
+		widShowKeysTab().release(false);
     }
     
-    if (tokState === 'PWD_WRONG')
+    if ( tokState === 'PWD_WRONG' )
     { 
         widReceiveTab().readonly(false);
         
-        if (widReceiveTab().isTransKeys())
+        if ( widReceiveTab().isTransKeys() )
             widReceiveTab().disable(false); 
     }
 
     if (tokState === 'PWD_SNDNG')
-    { 
-        widShowKeysTab().onhold(true);
-    }
+	{
+		widShowKeysTab().onhold(true);
+		widReceiveTab().readonly(false);
+        
+        if ( widReceiveTab().isTransKeys() )
+            widReceiveTab().disable(false); 		
+	}
+	
+		
 
     if (tokState === 'PWD_RCVNG')
     { 
+		widShowKeysTab().release(true);
         widReceiveTab().readonly(false);
         
-        if (widReceiveTab().isTransKeys())
+        if ( widReceiveTab().isTransKeys() )
             widReceiveTab().disable(false); 
     }
 }
@@ -304,7 +307,7 @@ function widTokenTextOninput()
         if (resp.msg === 'ERROR')
         {
             widShowSearch();
-            return widShowLog(resp.msg + ': ' + data);
+            return widModalWindow(resp.msg + ': ' + data);
         }
 
         //widButtonsTable().toggleOff();
@@ -394,11 +397,14 @@ function widTokensTakeover(keys)
     case '23141':
         widBlockingReceiveStep1(keys);
         break;
-    case '232':
+    case '231':
         widBlockingReceiveStep2(keys);
         break;
+    case '241':
+        widReceiveWithdrawal(keys);
+        break;		
     default:
-        return widCompleteEvent('Bad TransKeys!');
+        return widModalWindow('Bad TransKeys!');
     }
 }
 
@@ -464,14 +470,9 @@ function widCreateButtonClick()
     {
         var r = engGetResp(data);
         if (r.msg == 'OK')
-        {
-            widCompleteEvent(r.msg);
             widTokenTextOninput(); //update token info after create;
-        }
         else
-        {
-            widCompleteEvent(r.msg + ': ' + r.cnt);
-        }
+            widModalWindow(r.msg + ': ' + r.cnt);
     }
 
     var f = function ()
@@ -479,8 +480,6 @@ function widCreateButtonClick()
         ajxSendCommand(cmd, cb, hasqLogo);
     }
 
-    widShowLog('Creating token...');
-    
     setTimeout(f);
 }
 
@@ -541,12 +540,9 @@ function widAssignDataButtonClick()
     {
         var r = engGetResp(d);
         if (r.msg == 'OK')
-        {
             widTokenTextOninput();
-            return widCompleteEvent(r.msg);
-        }
-
-        return widCompleteEvent(r.msg + ': ' + r.cnt);
+        else 
+			widModalWindow(r.msg + ': ' + r.cnt);
     }
 
     var f = function ()
@@ -554,7 +550,6 @@ function widAssignDataButtonClick()
         ajxSendCommand(cmd, cb, hasqLogo);
     }
 
-    widShowLog('Assigning token data...');
     setTimeout(f);
 }
 
@@ -567,13 +562,9 @@ function widShowKeysTab()
 {
     var $Table = $('#send_table');
     var $Tabs = $('#tabs');
-    var $KeyArea0 = $('#send_simple_textarea');
-	var $KeyArea1 = $('#send_blocking_textarea');
 	var $AllButton = $Table.find('button');
 	var $OnHoldButton = $('#show_on_hold_button');
-	
-	$KeyArea0.hide();
-	$KeyArea1.hide();	
+	var $ReleaseButton = $('#show_release_button');
     
 	return {
         disable: function (comm)
@@ -586,12 +577,14 @@ function widShowKeysTab()
 		{
 			(comm) ? $OnHoldButton.addClass('button-enabled').removeClass('button-disabled') : $OnHoldButton.addClass('button-disabled').removeClass('button-enabled');
 		},
+		release: function (comm)
+		{
+			(comm) ? $ReleaseButton.addClass('button-enabled').removeClass('button-disabled') : $ReleaseButton.addClass('button-disabled').removeClass('button-enabled');
+		},
         show: function ()
         {
             $Tabs.tabs('option', 'active', 3);
 			$('.button-on').toggleClass('button-on button-off');
-			//$KeyArea0.hide();
-			//$KeyArea1.hide();
         }
     }
 }
@@ -611,20 +604,15 @@ function widShowKeysTabButtonClick($obj)
     return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widAssignDataTab().show();
 }
 
-function widInstantButtonClick($obj)
+function widShowInstantButtonClick($obj)
 {
-	
 	var $PwdInp = $('#password_input');
     var $TokenArea = $('#token_text_textarea');
-    var $KeyArea0 = $('#send_simple_textarea');
-	var $KeyArea1 = $('#send_blocking_textarea');
+    var $KeyArea = $('#show_keys_textarea');
 
-    textArea($KeyArea0).clear();
-	textArea($KeyArea1).clear();
-	
-	$KeyArea0.hide();
-	$KeyArea1.hide();
-	
+    textArea($KeyArea).clear();
+	$('.button-on').not($obj).toggleClass('button-on button-off');
+		
     if ( $obj.hasClass('button-disabled') )
 	{
 		if ( $obj.hasClass('button-on') )
@@ -642,57 +630,45 @@ function widInstantButtonClick($obj)
 		if ( glLastRec.st === 'PWD_SNDNG' )
 		{
 			$('.button-on').toggleClass('button-on button-off');
-			return widModalWindow('Token is locked.</br>Use \"On Hold\" button.', function() { $PwdInp.focus() } );
+			return widModalWindow('Token is locked.</br>Use \"On Hold\" button.');
 		}
-			
+
+		if ( glLastRec.st === 'PWD_RCVNG' )
+		{
+			$('.button-on').toggleClass('button-on button-off');
+			return widModalWindow('Token is locked.</br>Use \"Release\" button.');
+		}		
 
 		if ( glLastRec.st !== 'OK' )
 			return widModalWindow('Token is unaccessible</br>or incorrect master key.', function() { $PwdInp.focus() } );		
 	}
 		
 	$obj.toggleClass('button-on button-off');
-	$('.button-on').not($obj).toggleClass('button-on button-off');
 	
 	if ( $obj.hasClass('button-on') )
 	{
-		var k1,
-		k2,
-		g1,
-		tkLine,
-		rawTransKeys,
-		prLine;
-		
-		$KeyArea0.show();
-		
-		k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-		k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-		tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
+		var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+		var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+		var line = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
 
-		textArea($KeyArea0).add(tkLine);
+		textArea($KeyArea).add(line);
 
-		rawTransKeys = $KeyArea0.val().replace(/\s/g, '');
-		prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
+		var mergedKeys = $KeyArea.val().replace(/\s/g, '');
+		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
 
-		textArea($KeyArea0).add(prLine);
-
-		return widCompleteEvent('OK');
+		textArea($KeyArea).add(line);
 	}
-	
 }
 
-function widOnHoldButtonClick($obj)
+function widShowOnHoldButtonClick($obj)
 {
 	var $PwdInp = $('#password_input');
     var $TokenArea = $('#token_text_textarea');
-    var $KeyArea0 = $('#send_simple_textarea');
-	var $KeyArea1 = $('#send_blocking_textarea');
-
-	$KeyArea0.hide();
-	$KeyArea1.hide();
+    var $KeyArea = $('#show_keys_textarea');
 	
-    textArea($KeyArea0).clear();
-    textArea($KeyArea1).clear();
-
+    textArea($KeyArea).clear();
+	$('.button-on').not($obj).toggleClass('button-on button-off');
+	
     if ( $obj.hasClass('button-disabled') )
 	{
 		if ( $obj.hasClass('button-on') )
@@ -712,55 +688,101 @@ function widOnHoldButtonClick($obj)
 	}
 
 	$obj.toggleClass('button-on button-off');
-	$('.button-on').not($obj).toggleClass('button-on button-off');
 	
 	if ( $obj.hasClass('button-on') )
 	{
-		$KeyArea0.show();
+		var k2, line, mergedKeys;
 		
 		if ( glLastRec.st === 'OK' )
 		{ // Blocking Send
-			$KeyArea1.show();
-			
-			k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+			var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
 			k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-			g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
-			tkLine = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
-			textArea($KeyArea0).add(tkLine);
+			var g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
+			line = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
+			
+			textArea($KeyArea).add(line);
 
-			rawTransKeys = $KeyArea0.val().replace(/\s/g, '');
-			prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
+			mergedKeys = $KeyArea.val().replace(/\s/g, '');
+			line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
 
-			textArea($KeyArea0).add(prLine);
+			textArea($KeyArea).add(line);
 
-			tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
+			if (0)
+			{
+				line = glLastRec.s + '\u0020' + k2 + '\u0020';
+				textArea($KeyArea).add(line);
 
-			textArea($KeyArea1).add(tkLine);
+				mergedKeys = $KeyArea.val().replace(/\s/g, '');
+				line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
 
-			rawTransKeys = $KeyArea1.val().replace(/\s/g, '');
-			prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
-
-			textArea($KeyArea1).add(prLine);
-
-			return widCompleteEvent('OK');
+				textArea($KeyArea).add(line);
+			}
 		}
 
 		if (glLastRec.st === 'PWD_SNDNG')
 		{
 			k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-			tkLine = glLastRec.s + '\u0020' + k2 + '\u0020';
+			line = glLastRec.s + '\u0020' + k2 + '\u0020';
 
-			textArea($KeyArea0).add(tkLine);
+			textArea($KeyArea).add(line);
 
-			rawTransKeys = $KeyArea0.val().replace(/\s/g, '');
-			prLine = engGetHash(rawTransKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
+			mergedKeys = $KeyArea.val().replace(/\s/g, '');
+			line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
 
-			textArea($KeyArea0).add(prLine);
-
-			return widCompleteEvent('OK');
+			textArea($KeyArea).add(line);
 		}	
 	}
-  
+}
+
+function widShowReleaseButtonClick($obj)
+{
+	var $PwdInp = $('#password_input');
+    var $TokenArea = $('#token_text_textarea');
+    var $KeyArea = $('#show_keys_textarea');
+
+    textArea($KeyArea).clear();
+	$('.button-on').not($obj).toggleClass('button-on button-off');
+	
+    if ( $obj.hasClass('button-disabled') )
+	{
+		if ( $obj.hasClass('button-on') )
+			return $obj.toggleClass('button-on button-off');
+		
+		if ( typeof glLastRec.st === 'undefined' )
+			return widModalWindow('Enter token name...', function() { $TokenArea.focus() } );
+
+		if ( glLastRec.st === 'IDX_NODN' )
+			return widModalWindow('Create token first...');
+
+		if ( !widIsPassword() )
+			return widModalWindow('Enter master key...', function() { $PwdInp.focus() } );
+
+		if ( glLastRec.st === 'OK' )
+			return widModalWindow('Token is fully accessible.');		
+		
+		if ( glLastRec.st !== 'PWD_RCVNG' )
+		{
+			$('.button-on').toggleClass('button-on button-off');
+			return widModalWindow('Token is unaccessible</br>or incorrect master key.', function() { $PwdInp.focus() });
+		}		
+	}
+		
+	$obj.toggleClass('button-on button-off');
+	
+	if ( $obj.hasClass('button-on') )
+	{
+		var n2 = glLastRec.n + 2;
+		var k2 = engGetKey(n2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+		var g1 = engGetKey(n2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash); //
+		var line = glLastRec.s + '\u0020' + g1 + '\u0020';
+
+		textArea($KeyArea).add(line);
+
+		var mergedKeys = $KeyArea.val().replace(/\s/g, '');
+		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '241';
+
+		textArea($KeyArea).add(line);
+	}
 }
 
 function widReceiveTab()
@@ -784,7 +806,7 @@ function widReceiveTab()
             $Tabs.tabs('option', 'active', 4);
         },
         isTransKeys: function () {
-            return engIsRawTransKeys(textArea($Textarea).val());
+            return engIsTransKeys(textArea($Textarea).val());
         }
     }
 }
@@ -821,7 +843,7 @@ function widReceiveButtonClick()
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function() { $PwdInp.focus() } );
     
-    if (!engIsRawTransKeys(rawTransKeys))
+    if (!engIsTransKeys(rawTransKeys))
         return widModalWindow('Transkeys is missing or corrupt.</br>Enter correct keys...', function() { $TransKeysArea.focus() } );
 
 
@@ -834,18 +856,19 @@ function widReceiveButtonClick()
     var cb = function (data)
     {
         var r = engGetResp(data);
+		
         if (r.msg !== 'OK')
-            return widCompleteEvent(r.msg + ': ' + r.cnt);
+            return widModalWindow(r.msg + ': ' + r.cnt);
+		
         var lr = engGetRespLast(data);
+
         if (lr.msg === 'ERROR')
-            return widCompleteEvent(lr.msg + ': ' + lr.cnt); //just in case
+            return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
+
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+
         lr.st = engGetTokensStatus(lr, nr);
-        /*
-        if (lr.st === 'OK')
-            return widCompleteEvent('Token already available!');
-        */
-        transKeys[0].n = (transKeys[0].prcode == '232') ? lr.n - 1 : lr.n; // beacause '232' is code of the second step of the transfer process
+        transKeys[0].n = (transKeys[0].prcode == '231') ? lr.n - 1 : lr.n;
         textArea($TokenArea).clear(tok);
 
         widTokensTakeover(transKeys);
@@ -858,7 +881,6 @@ function widReceiveButtonClick()
         ajxSendCommand(cmd, cb, hasqLogo);
     }
 
-    widShowLog('Receiving token...');
     setTimeout(f);
 }
 
@@ -885,13 +907,13 @@ function widSimpleReceive(keys)
     var cb2 = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
 
     var cb1 = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
     }
 
     ajxSendCommand(addCmd1, cb1, hasqLogo);
@@ -910,7 +932,7 @@ function widBlockingReceiveStep1(keys)
     var cb = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
 
     ajxSendCommand(addCmd, cb, hasqLogo);
@@ -929,9 +951,29 @@ function widBlockingReceiveStep2(keys)
     var cb = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widCompleteEvent(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
 
+    ajxSendCommand(addCmd, cb, hasqLogo);
+}
+
+function widReceiveWithdrawal(keys)
+{
+    var n1 = keys[0].n + 1;
+    var s = keys[0].s;
+	var k1 = keys[0].k1;
+    var g1 = keys[0].g1;
+	var o1 = keys[0].o1;
+	
+    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+    var cb = function (data)
+    {
+        var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+    }
+
+	console.log('addCmd\n' + addCmd);
     ajxSendCommand(addCmd, cb, hasqLogo);
 }
 
@@ -988,7 +1030,6 @@ function widSearchButtonClick()
 
     // set new dates FIXME
 
-    widCompleteEvent();
 }
 
 

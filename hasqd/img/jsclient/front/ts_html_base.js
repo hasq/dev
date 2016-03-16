@@ -83,16 +83,18 @@ function widGetHTMLBody(tabs)
         r += '<tr>\n';
         {
             r += '<td />\n';
-            r += '<table width="100%">\n'; //style="border: 1px solid #DDDDDD;">\n';
+            r += '<table width="100%" border="0">\n'; //style="border: 1px solid #DDDDDD;">\n';
             {
                 r += '<tr>\n';
                 {
-                    r += '<td class="tab-area" />\n';
-                    r += widGetHTMLLogArea() + '\n';
-                    r += '<td class="td-subscribe" width="60" nowrap>\n';
-                    r += '<a href="hqclnt.html">HqClnt</a>\n';
-                    r += '<td class="td-subscribe" width="160" nowrap>\n';
-                    r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a><sup>\u00A9</sup>2016';
+					r += '<td class="td-subscribe" width="80" style="text-align: left;" />\n';
+						r += 'TokenSwap&nbsp;\u00A9&nbsp;2016\n';
+                    r += '<td class="td-subscribe" width="40" />\n';
+						r += '<a href="hqclnt.html">HqClnt</a>\n';					
+					r += '<td class="td-log" />\n';
+						r += widGetHTMLLogArea() + '\n';
+                    r += '<td class="td-subscribe" width="160" />\n';
+						r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>&nbsp;\u00A9&nbsp;2016\n';
                 }
                 r += '</tr>\n';
             }
@@ -363,11 +365,11 @@ function widGetHTMLShowKeysTab()
                     r += '<tr>\n';
                     {
                         r += '<td align="center" style="padding-right: 3px"/>\n';
-                        r += '<button id="show_instant_button" class="button-off" onclick="return widInstantButtonClick($(this))">' + imgBtnShowKeys1 + '</button>\n';
+                        r += '<button id="show_instant_button" class="button-off" onclick="return widShowInstantButtonClick($(this))">' + imgBtnInstantKeys + '</button>\n';
                         r += '<td align="center" style="padding-left: 3px"/>\n';
-                        r += '<button id="show_on_hold_button" class="button-off" onclick="return widOnHoldButtonClick($(this))">' + imgBtnShowKeys2 + '</button>\n';
+                        r += '<button id="show_on_hold_button" class="button-off" onclick="return widShowOnHoldButtonClick($(this))">' + imgBtnOnHoldKeys + '</button>\n';
                         r += '<td align="center" style="padding-left: 3px"/>\n';
-                        r += '<button id="show_release_button" class="button-off" onclick="return widReleaseButtonClick($(this))">' + imgBtnShowKeys3 + '</button>\n';
+                        r += '<button id="show_release_button" class="button-off" onclick="return widShowReleaseButtonClick($(this))">' + imgBtnReleaseKeys + '</button>\n';
                     }
                     r += '</tr>\n';
                 }
@@ -385,15 +387,17 @@ function widGetHTMLShowKeysTab()
                     r += '<tr>\n';
                     {
                         r += '<td />\n';
-                        r += '<textarea id="send_simple_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
+                        r += '<textarea id="show_keys_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="7" type="text" readonly></textarea>\n';
                     }
                     r += '</tr>\n';
+/*
                     r += '<tr>\n';
                     {
                         r += '<td />\n';
-                        r += '<textarea id="send_blocking_textarea" class="textarea-transkeys" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
+                        r += '<textarea id="send_blocking_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
                     }
                     r += '</tr>\n';
+*/
                 }
                 r += '</table>\n';
             }
@@ -421,6 +425,7 @@ function widGetHTMLReceiveTab()
         {
             r += '<td align="center" />\n';
             r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="6" cols="64" maxlength="65536" wrap="on"></textarea>\n';
+			r += '</td>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
