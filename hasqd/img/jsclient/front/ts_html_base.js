@@ -69,12 +69,12 @@ function widGetHTMLBody(tabs)
             r += '<table width="100%" style="border: 1px solid #DDDDDD;">\n';
             {
                 r += '<tr>\n';
-				{
-					r += '<td class="tab-area" />\n';
-					r += widGetHTMLMainTabs(tabs) + '\n';
-					r += '<td class="tab-button-area" width="74" align="right" />'
-					r += widGetHTMLButtonsArea() + '\n';
-				}
+                {
+                    r += '<td class="tab-area" />\n';
+                    r += widGetHTMLMainTabs(tabs) + '\n';
+                    r += '<td class="tab-button-area" width="74" align="right" />'
+                         r += widGetHTMLButtonsArea() + '\n';
+                }
                 r += '</tr>\n';
             }
             r += '</table>\n';
@@ -86,14 +86,14 @@ function widGetHTMLBody(tabs)
             r += '<table width="100%">\n'; //style="border: 1px solid #DDDDDD;">\n';
             {
                 r += '<tr>\n';
-				{
-					r += '<td class="tab-area" />\n';
-					r += widGetHTMLLogArea() + '\n';
-					r += '<td class="td-subscribe" width="60" nowrap>\n';
-					r += '<a href="hqclnt.html">HqClnt</a>\n';
-					r += '<td class="td-subscribe" width="160" nowrap>\n';
-					r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a><sup>\u00A9</sup>2016';
-				}
+                {
+                    r += '<td class="tab-area" />\n';
+                    r += widGetHTMLLogArea() + '\n';
+                    r += '<td class="td-subscribe" width="60" nowrap>\n';
+                    r += '<a href="hqclnt.html">HqClnt</a>\n';
+                    r += '<td class="td-subscribe" width="160" nowrap>\n';
+                    r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a><sup>\u00A9</sup>2016';
+                }
                 r += '</tr>\n';
             }
             r += '</table>\n';
@@ -303,7 +303,7 @@ function widGetHTMLCreateTab()
         r += '<tr>\n';
         {
             r += '<td align="center">\n'
-            r += '<button id="create_button" class="button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
+                 r += '<button id="create_button" class="button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -333,7 +333,7 @@ function widGetHTMLAssignDataTab()
         r += '<tr>\n';
         {
             r += '<td width="74" align="center">\n'
-            r += '<button id="setdata_button" onclick="return widAssignDataButtonClick($(this));">' + imgBtnData + '</button>\n';
+                 r += '<button id="setdata_button" onclick="return widAssignDataButtonClick($(this));">' + imgBtnData + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -419,7 +419,7 @@ function widGetHTMLReceiveTab()
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center" />\n'
+            r += '<td align="center" />\n';
             r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="6" cols="64" maxlength="65536" wrap="on"></textarea>\n';
         }
         r += '</tr>\n';
