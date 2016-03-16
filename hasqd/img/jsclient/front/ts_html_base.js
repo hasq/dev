@@ -26,64 +26,73 @@ function widGetHTMLSpanImg(id, func)
     var r = '';
 
     if (func)
-    {
         r += '<span id="' + id + '" onclick="' + func + '" align="center"><img src=""></img></span>\n';
-    } 
     else
-    {
         r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
-    }
 
     return r;
 }
 
 
-function widGetHTMLSpan(id, func) 
+function widGetHTMLSpan(id, func)
 {
     var r = '';
-    
+
     if (func)
-    {
-        r += '<span align="center" id="' + id + '" onclick="' + func +'"></span>\n';
-    } 
-    else 
-    {
+        r += '<span align="center" id="' + id + '" onclick="' + func + '"></span>\n';
+    else
         r += '<span align="center" id="' + id + '"></span>\n';;
-    }
 
     return r;
 }
 
-function widGetHTMLBody(tabs) {
+function widGetHTMLBody(tabs)
+{
     var r = '';
+
     r += '<table width="100%" id="body_table" border="0" nowrap>\n';
+    {
         r += '<tr>\n';
+        {
             r += '<td colspan="2" align="left" nowrap>\n';
-                r += widGetHTMLTitleArea();
+            r += widGetHTMLTitleArea();
+        }
         r += '</tr>\n';
         r += '<tr>\n';
+        {
             r += '<td colspan="2" nowrap>\n';
-                r += widGetHTMLInitialDataArea() + '\n';
+            r += widGetHTMLInitialDataArea() + '\n';
+        }
         r += '</tr>\n';
         r += '<tr>\n';
+        {
             r += '<td colspan="2" nowrap>\n';
-                r += '<table width="100%" style="border: 1px solid #DDDDDD;">\n';
-                    r += '<tr>\n';
-                        r += '<td class="tab-area" />\n';
-                            r += widGetHTMLMainTabs(tabs) + '\n';
-                        r += '<td class="tab-button-area" width="74" align="right" />'
-                            r += widGetHTMLButtonsArea() + '\n';
-                    r += '</tr>\n';
-                r += '</table>\n';
+            r += '<table width="100%" style="border: 1px solid #DDDDDD;">\n';
+            {
+                r += '<tr>\n';
+                r += '<td class="tab-area" />\n';
+                r += widGetHTMLMainTabs(tabs) + '\n';
+                r += '<td class="tab-button-area" width="74" align="right" />'
+                     r += widGetHTMLButtonsArea() + '\n';
+                r += '</tr>\n';
+            }
+            r += '</table>\n';
+        }
         r += '</tr>\n';
         r += '<tr>\n';
+        {
             r += '<td />\n';
-                r += widGetHTMLLogArea() + '\n';
+            r += widGetHTMLLogArea() + '\n';
             r += '<td class="td-subscribe" width="160" nowrap>\n';
-                r += 'Powered by ' + '<a href="http://hasq.org">' + 'Hasq Technology' + '</a>' + '<sup>\u00A9</sup>' + '2016';
-        r += '</tr>\n';     
+            r += '<a href="hqclnt.html">HqClnt</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n';
+            r += 'Powered by ' + '<a href="http://hasq.org">' + 'Hasq Technology' + '</a>' 
+                + ' <sup>\u00A9</sup> ' + '2016';
+        }
+        r += '</tr>\n';
+    }
     r += '</table>\n';
-        r += widGetModalWindow();
+
+    r += widGetModalWindow();
 
     return r;
 }
