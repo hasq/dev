@@ -978,19 +978,15 @@ function widSearchButtonClick()
     var toDate = new Date($To.datepicker('getDate'));
 
     if (!widIsPassword())
-        return widModalWindow('Enter master key...', function() { $PwdInp.focus() } );
-
-    ///var sfr = date26(fromDate);
-    ///var sto = date26(toDate);
-    
-    // needs to check correctness of specified date range if entered manually
-    console.log(fromDate);
-    console.log(toDate);
+        return widModalWindow('Master key is empty', function() { $PwdInp.focus() } );
 
     if( fromDate > toDate )
         return widModalWindow('Date "From" must be earlier than "To"', function() {} );
 
-    var folders = engGetDateRangeFolders(fromDate, toDate);
+    var progr = function(){};
+    var dates = engSearchClick(fromDate, toDate, progr);
+
+    // set new dates FIXME
 
     widCompleteEvent();
 }

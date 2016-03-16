@@ -298,6 +298,8 @@ function widGetHTMLShowKeysTab()
                             r += '<button id="show_instant_button" class="button-off" onclick="return widInstantButtonClick($(this))">' + imgBtnShowKeys1 + '</button>\n';
                         r += '<td align="center" style="padding-left: 3px"/>\n';
                             r += '<button id="show_on_hold_button" class="button-off" onclick="return widOnHoldButtonClick($(this))">' + imgBtnShowKeys2 + '</button>\n';
+                        r += '<td align="center" style="padding-left: 3px"/>\n';
+                            r += '<button id="show_release_button" class="button-off" onclick="return widReleaseButtonClick($(this))">' + imgBtnShowKeys3 + '</button>\n';
                     r += '</tr>\n';
                 r += '</table>\n';
         r += '</tr>\n';
