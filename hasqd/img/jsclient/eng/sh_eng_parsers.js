@@ -8,19 +8,15 @@ function engGetResp(data)
     var blocks = tmp.split(/\s/); // split by by \s (\s, \n, \t, \v);
     var lines = tmp.split(/\n/); // split by \n only;
 
-    if (tmp.length == 0)
+    if (!tmp)
     {
         resp.msg = 'ERROR';
         resp.cnt = 'NO_OUTPUT';
+		
         return resp;
     }
 
-    if (tmp.length == 0)
-    {
-        resp.msg = 'ERROR';
-        resp.cnt = data;
-    }
-    else if (lines[0] === 'OK')
+    if (lines[0] === 'OK')
     {
         resp.msg = 'OK';
         resp.cnt = 'OK';
@@ -42,7 +38,8 @@ function engGetResp(data)
         blocks[0] === 'REQ_DN_BAD' ||
         blocks[0] === 'REC_INIT_BAD_N' ||
         blocks[0] === 'REC_INIT_BAD_S' ||
-        blocks[0] === 'REC_INIT_BAD_KGO')
+        blocks[0] === 'REC_INIT_BAD_KGO'
+		)
     {
         resp.msg = 'ERROR';
         resp.cnt = tmp;
@@ -62,10 +59,10 @@ function engGetRespInfoDb(data)
     var err = {};
     var rawDb = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '').replace(/{\n|}+$/g, '').split(/}\n/);
 
-    if (rawDb.length == 0)
+    if (!rawDb)
     {
         err.msg = 'ERROR';
-        err.cnt = rawDB;
+        err.cnt = data;
         return err;
     }
 
@@ -77,6 +74,7 @@ function engGetRespInfoDb(data)
         traitLines[i] = rawDb[i].split(/\n/);
 
         var lines = traitLines[i];
+		
         for (var j = 0; j < (lines.length - 1); j++)
         {
             var parts = lines[j].split('=');
@@ -127,13 +125,15 @@ function engGetRespLast(data)
     var err = {};
     var parts = data.replace(/^OK/g, '').replace(/^\s|\r|\s+$/g, '').split(/\s/);
 
-    if (parts.length < 5)
+    if ( parts.length < 5 )
     {
         err.msg = 'ERROR';
         err.cnt = parts;
+		
         return err;
     }
-    else if (parts.length == 5)
+    
+	if ( parts.length == 5 )
     {
         rec.n = +parts[0];
         rec.s = parts[1];
@@ -142,7 +142,7 @@ function engGetRespLast(data)
         rec.o = parts[4];
         rec.d = '';
     }
-    else if (parts.length > 5)
+    else if ( parts.length > 5 )
     {
         rec.n = +parts[0];
         rec.s = parts[1];
@@ -150,10 +150,10 @@ function engGetRespLast(data)
         rec.g = parts[3];
         rec.o = parts[4];
         var d = [];
+		
         for (var i = 5; i < parts.length; i++)
-        {
             d[d.length] = parts[i];
-        }
+
         rec.d = d.join(' ');
     }
 
@@ -167,10 +167,9 @@ function engGetNewRecord(n, s, p0, p1, p2, m, h)
     var n0 = +n;
     var n1 = +n + 1;
     var n2 = +n + 2;
-
     var k0 = engGetKey(n0, s, p0, m, h);
 
-    if ((p1 == null) || (p2 == null))
+    if ( p1 == null || p2 == null )
     {
         var k1 = engGetKey(n1, s, p0, m, h);
         var k2 = engGetKey(n2, s, p0, m, h);
@@ -196,52 +195,45 @@ function engGetNewRecord(n, s, p0, p1, p2, m, h)
 
 function engGetKey(n, s, p, m, h)
 {
-    var raw_k = n + ' ' + s + ' ' + p;
+    var rawKey = (m) ? ( n + ' ' + s + ' ' + p + ' ' + m ) : ( n + ' ' + s + ' ' + p );
 
-    if (m != '')
-    {
-        raw_k += ' ' + m;
-    }
-
-    return engGetHash(raw_k, h); ;
+    return engGetHash(rawKey, h); ;
 }
 
 function engIsHash(data, h)
 {
     //checks string is hash or not hash
     var notHex = /[^0-9a-f]/g;
+	var l;
+	
     switch (h)
     {
     case 'md5':
-        var l = 32;
+        l = 32;
         break;
     case 'r16':
-        var l = 40;
+        l = 40;
         break;
     case 's22':
-        var l = 64;
+        l = 64;
         break;
     case 's25':
-        var l = 128;
+        l = 128;
         break;
     case 'wrd':
-        var l = 4;
+        l = 4;
         break;
     case 'smd':
-        var l = 32;
+        l = 32;
         break;
     default:
-        break;
+		return false;
     }
 
-    if (data.length != l || /[^0-9a-f]/g.test(data))
-    { //mismatched length or not not hex chars contents
-        return false;
-    }
+    if (data.length != l || /[^0-9a-f]/g.test(data)) //mismatched length or not not hex chars contents
+		return false;
     else
-    {
         return true;
-    };
 }
 
 function engGetHash(data, h)
@@ -264,21 +256,22 @@ function engGetHash(data, h)
     default:
         break;
     }
+	
     return null;
 }
 
 function engGetTokensStatus(lr, nr)
 {
     if (!lr) // returns current matching of password
-        return;
+        return false;
     
-    if ((lr.g === nr.g) && (lr.o === nr.o)) // Tokens keys is fully matched with a password
+    if ( lr.g === nr.g && lr.o === nr.o ) // Tokens keys is fully matched with a password
         return 'OK';
     
-    if (lr.g === nr.g) // Token is in a sending process
+    if ( lr.g === nr.g ) // Token is in a sending process
         return 'PWD_SNDNG';
     
-    if (lr.o === nr.o) // Token is in a receiving process
+    if ( lr.o === nr.o ) // Token is in a receiving process
         return 'PWD_RCVNG';
     
     return 'PWD_WRONG';// Tokens keys is not matched with a password
@@ -418,9 +411,9 @@ function engGetTransKeys(keys)
 	var prG2O2 = '24252';
     var prG1O1 = '24151';
     var prK1G1 = '23141';
-    var prK2 = '231';
+    var prK1 = '231';
     var prO1 = '251';
-	var prG1 = '241';
+	var prK2 = '232';
 
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
@@ -453,9 +446,9 @@ function engGetTransKeys(keys)
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
 	prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
     prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
-    prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+    prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
     prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
-	prG1 = (isRecNum) ? prCode0Ch + prG1 : prG1;
+	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     var keysQty = keys.length / keysLen;
     var transKeys = [];
@@ -491,7 +484,7 @@ function engGetTransKeys(keys)
             transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 			
             break;
-        case (prK2):
+        case (prK1):
             transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 			
             break;
@@ -499,8 +492,8 @@ function engGetTransKeys(keys)
             transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 			
             break;
-        case (prG1):
-            transKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+        case (prK2):
+            transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 			
             break;			
         default:
@@ -529,10 +522,10 @@ function engGetTitleKeys(transKeys, p, h, m)
     var prK1K2 = '23132'; //simple send;
 	var prG2O2 = '24252'; // simple request;
     var prK1G1 = '23141'; // blocking send, st1;
-    var prK2 = '231'; // blocking send, st2;
+    var prK1 = '231'; // blocking send, st2;
 	var prO1 = '251'; // blocking request, st1;
 	var prG1O1 = '24151'; //blocking request, st2;
-	var prG1 = '241'; // cancellation of transfer with blocking, st2;
+	var prK2 = '232'; // blocking receive revert;
 
     var prCode = titleKeys[0].prcode; // get protocol key from first element;
     var prCode0Ch = prCode.charAt(0);
@@ -540,11 +533,11 @@ function engGetTitleKeys(transKeys, p, h, m)
 
     prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
-    prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+    prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
 	prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
     prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
-	prG1 = (isRecNum) ? prCode0Ch + prG1 : prG1;
+	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     for (var i = 0; i < titleKeys.length; i++)
     {
@@ -585,7 +578,7 @@ function engGetTitleKeys(transKeys, p, h, m)
             titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
 			
             break;
-        case prK2:
+        case prK1:
             k2 = engGetKey(n2, s, p, m, h);
             k3 = engGetKey(n3, s, p, m, h);
             g2 = engGetKey(n3, s, k3, m, h);
@@ -606,13 +599,18 @@ function engGetTitleKeys(transKeys, p, h, m)
             titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
 
             break;			
-        case prG1:
+        case prK2:
             titleKeys[i].n1 = n1;
+			titleKeys[i].n2 = n2;
             titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            k3 = engGetKey(n3, s, p, m, h);
-            g2 = engGetKey(n3, s, k3, m, h);
-			titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
-			console.log(titleKeys[i]);
+            titleKeys[i].g1 = engGetKey(n2, s, titleKeys[i].k2, m, h);
+			var k3 = engGetKey(n3, s, p, m, h);
+			titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
+			titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
+			var k4 = engGetKey(n4, s, p, m, h);
+			var g3 = engGetKey(n4, s, k4, m, h);
+			titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
+
             break;			
         default:
             break;

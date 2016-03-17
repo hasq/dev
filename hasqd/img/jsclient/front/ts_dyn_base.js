@@ -389,19 +389,20 @@ function widPasswordEyeClick($obj)
 function widTokensTakeover(keys)
 {
     keys = engGetTitleKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+	
     switch (keys[0].prcode)
     {
     case '23132':
-        widSimpleReceive(keys);
+        widInstantReceive(keys);
         break;
     case '23141':
-        widBlockingReceiveStep1(keys);
+        widBlockingReceiveOnHold(keys);
         break;
     case '231':
-        widBlockingReceiveStep2(keys);
+        widBlockingReceiveFull(keys);
         break;
-    case '241':
-        widReceiveWithdrawal(keys);
+    case '232':
+        widBlockingReceiveRevert(keys);
         break;		
     default:
         return widModalWindow('Bad TransKeys!');
@@ -653,7 +654,7 @@ function widShowInstantButtonClick($obj)
 
 		textArea($KeyArea).add(line);
 
-		var mergedKeys = $KeyArea.val().replace(/\s/g, '');
+		var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
 		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
 
 		textArea($KeyArea).add(line);
@@ -702,17 +703,17 @@ function widShowOnHoldButtonClick($obj)
 			
 			textArea($KeyArea).add(line);
 
-			mergedKeys = $KeyArea.val().replace(/\s/g, '');
+			mergedKeys = $KeyArea.val().replace(/\s+/g, '');
 			line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
 
 			textArea($KeyArea).add(line);
 
 			if (0)
 			{
-				line = glLastRec.s + '\u0020' + k2 + '\u0020';
+				line = glLastRec.s + '\u0020' + k1 + '\u0020';
 				textArea($KeyArea).add(line);
 
-				mergedKeys = $KeyArea.val().replace(/\s/g, '');
+				mergedKeys = $KeyArea.val().replace(/\s+/g, '');
 				line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
 
 				textArea($KeyArea).add(line);
@@ -721,12 +722,12 @@ function widShowOnHoldButtonClick($obj)
 
 		if (glLastRec.st === 'PWD_SNDNG')
 		{
-			k2 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-			line = glLastRec.s + '\u0020' + k2 + '\u0020';
+			k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+			line = glLastRec.s + '\u0020' + k1 + '\u0020';
 
 			textArea($KeyArea).add(line);
 
-			mergedKeys = $KeyArea.val().replace(/\s/g, '');
+			mergedKeys = $KeyArea.val().replace(/\s+/g, '');
 			line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
 
 			textArea($KeyArea).add(line);
@@ -773,13 +774,12 @@ function widShowReleaseButtonClick($obj)
 	{
 		var n2 = glLastRec.n + 2;
 		var k2 = engGetKey(n2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-		var g1 = engGetKey(n2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash); //
-		var line = glLastRec.s + '\u0020' + g1;
+		var line = glLastRec.s + '\u0020' + k2 + '\u0020';
 
 		textArea($KeyArea).add(line);
 
-		var mergedKeys = $KeyArea.val().replace(/\s/g, '');
-		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '241';
+		var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
 
 		textArea($KeyArea).add(line);
 	}
@@ -889,7 +889,7 @@ function widReceiveTextareaOninput()
     widToggleUI(glLastRec, glPassword);
 }
 
-function widSimpleReceive(keys)
+function widInstantReceive(keys)
 {
     var n1 = keys[0].n + 1;
     var n2 = keys[0].n + 2;
@@ -919,7 +919,7 @@ function widSimpleReceive(keys)
     ajxSendCommand(addCmd1, cb1, hasqLogo);
 }
 
-function widBlockingReceiveStep1(keys)
+function widBlockingReceiveOnHold(keys)
 {
     var n1 = keys[0].n + 1;
     var s = keys[0].s;
@@ -938,7 +938,7 @@ function widBlockingReceiveStep1(keys)
     ajxSendCommand(addCmd, cb, hasqLogo);
 }
 
-function widBlockingReceiveStep2(keys)
+function widBlockingReceiveFull(keys)
 {
     var n2 = keys[0].n + 2;
     var s = keys[0].s;
@@ -957,24 +957,34 @@ function widBlockingReceiveStep2(keys)
     ajxSendCommand(addCmd, cb, hasqLogo);
 }
 
-function widReceiveWithdrawal(keys)
+function widBlockingReceiveRevert(keys)
 {
-    var n1 = keys[0].n + 1;
+    var n1 = keys[0].n1;
+	var n2 = keys[0].n2;
     var s = keys[0].s;
 	var k1 = keys[0].k1;
     var g1 = keys[0].g1;
 	var o1 = keys[0].o1;
+	var k2 = keys[0].k2;
+    var g2 = keys[0].g2;
+	var o2 = keys[0].o2;
 	
-    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+    var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+    var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-    var cb = function (data)
+    var cb2 = function (data)
     {
         var resp = engGetResp(data);
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
+	
+    var cb1 = function (data)
+    {
+        var resp = engGetResp(data);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
+    }
 
-	console.log('addCmd\n' + addCmd);
-    ajxSendCommand(addCmd, cb, hasqLogo);
+    ajxSendCommand(addCmd1, cb1, hasqLogo);
 }
 
 function widSearchTab()

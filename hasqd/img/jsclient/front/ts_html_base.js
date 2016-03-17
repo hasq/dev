@@ -89,10 +89,10 @@ function widGetHTMLBody(tabs)
                 {
                     r += '<td class="td-subscribe" width="160" style="text-align: left;"/>\n';
 						r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>\n';					
-                    r += '<td class="td-subscribe" width="40" />\n';
-						r += '<a href="hqclnt.html">HqClnt</a>\n';					
 					r += '<td class="td-log" />\n';
 						r += widGetHTMLLogArea() + '\n';
+                    r += '<td class="td-subscribe" width="40" />\n';
+						r += '<a href="hqclnt.html">HqClnt</a>\n';							
 					r += '<td class="td-subscribe" width="80"/>\n';
 						r += 'TokenSwap&nbsp;\u00A9&nbsp;2016\n';
                 }
