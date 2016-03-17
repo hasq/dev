@@ -285,9 +285,10 @@ function widToggleUI(lr, pwd)
     }
 }
 
-function widTokenTextOninput()
+function widTokenTextOninput(delay)
 { // Events when tokens value changed.
-
+	delay = +delay || 0;
+	
     glLastRec = {}; //clear last record
     clearTimeout(glTimerId); //clear last request to hasqd
     widButtonsTable().toggleOff(); //disable tabs switch buttons
@@ -341,7 +342,7 @@ function widTokenTextOninput()
 
         var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
 
-        return engSendDeferredRequest(cmd, 1000, cb);
+        return engSendDeferredRequest(cmd, cb, delay);
     }
 
     widWelcomeTab().show();

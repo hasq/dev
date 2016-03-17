@@ -6,7 +6,7 @@ var glPassword = '';
 
 var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
-var glTimerId, glPingTimerId;
+var glTimerId;
 
 var imgMsgWait = 'img/msg_wait.gif';
 

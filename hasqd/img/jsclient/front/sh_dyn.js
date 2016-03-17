@@ -29,8 +29,8 @@ function HasqLogo(id)
         fail : function ()
         {
             var $Logo = $('#' + id + ' img');
-
             counter = 0;
+			
             return $Logo.attr('src', imgLogoRed);
         }
     }

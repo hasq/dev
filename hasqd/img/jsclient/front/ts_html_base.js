@@ -145,7 +145,7 @@ function widGetHTMLInitialDataArea()
 
         r += '<tr>\n';
         r += '<td align="center" nowrap>\n';
-        r += '<textarea id="token_text_textarea" oninput="widTokenTextOninput();" style="overflow-x:hidden;" type="text" rows="2" maxlength="65536" placeholder="Enter token text" required></textarea>\n';
+        r += '<textarea id="token_text_textarea" oninput="widTokenTextOninput(500);" style="overflow-x:hidden;" type="text" rows="2" maxlength="65536" placeholder="Enter token text" required></textarea>\n';
         r += '</tr>\n';
 
         r += '<tr>\n';

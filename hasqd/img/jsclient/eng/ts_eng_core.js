@@ -1,35 +1,9 @@
-/*
-function engSendRequest(ajxCmd, delay, cbFunc)
-{
-
-return {
-start: function ()
-{
-var cb = function (data)
-{
-if (timerId === glTimerId)
-cbFunc(data);
-
-clearTimeout(timerId);
-}
-
-var send = function ()
-{
-ajxSendCommand(ajxCmd, cb, hasqLogo);
-}
-
-},
-clear: function (tId) {
-clearTimeout(timerId);
-}
-
-}
-}
- */
-function engSendDeferredRequest(cmd, t, f)
+function engSendDeferredRequest(cmd, f, t)
 {
     // Sends ajax request with 500ms delay.
     // the request will be ignored if token value will be changed during this 1000ms
+	t = +t || 0;
+	
     var req = function ()
     {
         var timerId = glTimerId;
@@ -54,7 +28,7 @@ function engSendPing(timeDelay)
         var now = new Date();
         var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
 
-        console.log(ct);
+        //console.log(ct);
 
         var resp = engGetResp(data);
 
