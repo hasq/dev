@@ -12,7 +12,7 @@ function engGetResp(data)
     {
         resp.msg = 'ERROR';
         resp.cnt = 'NO_OUTPUT';
-		
+
         return resp;
     }
 
@@ -38,8 +38,7 @@ function engGetResp(data)
         blocks[0] === 'REQ_DN_BAD' ||
         blocks[0] === 'REC_INIT_BAD_N' ||
         blocks[0] === 'REC_INIT_BAD_S' ||
-        blocks[0] === 'REC_INIT_BAD_KGO'
-		)
+        blocks[0] === 'REC_INIT_BAD_KGO')
     {
         resp.msg = 'ERROR';
         resp.cnt = tmp;
@@ -74,7 +73,7 @@ function engGetRespInfoDb(data)
         traitLines[i] = rawDb[i].split(/\n/);
 
         var lines = traitLines[i];
-		
+
         for (var j = 0; j < (lines.length - 1); j++)
         {
             var parts = lines[j].split('=');
@@ -125,15 +124,15 @@ function engGetRespLast(data)
     var err = {};
     var parts = data.replace(/^OK/g, '').replace(/^\s|\r|\s+$/g, '').split(/\s/);
 
-    if ( parts.length < 5 )
+    if (parts.length < 5)
     {
         err.msg = 'ERROR';
         err.cnt = parts;
-		
+
         return err;
     }
-    
-	if ( parts.length == 5 )
+
+    if (parts.length == 5)
     {
         rec.n = +parts[0];
         rec.s = parts[1];
@@ -142,7 +141,7 @@ function engGetRespLast(data)
         rec.o = parts[4];
         rec.d = '';
     }
-    else if ( parts.length > 5 )
+    else if (parts.length > 5)
     {
         rec.n = +parts[0];
         rec.s = parts[1];
@@ -150,7 +149,7 @@ function engGetRespLast(data)
         rec.g = parts[3];
         rec.o = parts[4];
         var d = [];
-		
+
         for (var i = 5; i < parts.length; i++)
             d[d.length] = parts[i];
 
@@ -169,7 +168,7 @@ function engGetNewRecord(n, s, p0, p1, p2, m, h)
     var n2 = +n + 2;
     var k0 = engGetKey(n0, s, p0, m, h);
 
-    if ( p1 == null || p2 == null )
+    if (p1 == null || p2 == null)
     {
         var k1 = engGetKey(n1, s, p0, m, h);
         var k2 = engGetKey(n2, s, p0, m, h);
@@ -195,7 +194,7 @@ function engGetNewRecord(n, s, p0, p1, p2, m, h)
 
 function engGetKey(n, s, p, m, h)
 {
-    var rawKey = (m) ? ( n + ' ' + s + ' ' + p + ' ' + m ) : ( n + ' ' + s + ' ' + p );
+    var rawKey = (m) ? (n + ' ' + s + ' ' + p + ' ' + m) : (n + ' ' + s + ' ' + p);
 
     return engGetHash(rawKey, h); ;
 }
@@ -204,8 +203,8 @@ function engIsHash(data, h)
 {
     //checks string is hash or not hash
     var notHex = /[^0-9a-f]/g;
-	var l;
-	
+    var l;
+
     switch (h)
     {
     case 'md5':
@@ -227,11 +226,11 @@ function engIsHash(data, h)
         l = 32;
         break;
     default:
-		return false;
+        return false;
     }
 
     if (data.length != l || /[^0-9a-f]/g.test(data)) //mismatched length or not not hex chars contents
-		return false;
+        return false;
     else
         return true;
 }
@@ -256,7 +255,7 @@ function engGetHash(data, h)
     default:
         break;
     }
-	
+
     return null;
 }
 
@@ -264,56 +263,56 @@ function engGetTokensStatus(lr, nr)
 {
     if (!lr) // returns current matching of password
         return false;
-    
-    if ( lr.g === nr.g && lr.o === nr.o ) // Tokens keys is fully matched with a password
+
+    if (lr.g === nr.g && lr.o === nr.o) // Tokens keys is fully matched with a password
         return 'OK';
-    
-    if ( lr.g === nr.g ) // Token is in a sending process
+
+    if (lr.g === nr.g) // Token is in a sending process
         return 'PWD_SNDNG';
-    
-    if ( lr.o === nr.o ) // Token is in a receiving process
+
+    if (lr.o === nr.o) // Token is in a receiving process
         return 'PWD_RCVNG';
-    
-    return 'PWD_WRONG';// Tokens keys is not matched with a password
+
+    return 'PWD_WRONG'; // Tokens keys is not matched with a password
 }
 
 function engGetDataValToDisplay(data)
 {
     // returns parsed data for displaying
     var r = data || '';
-    
+
     var LF = '\u000a'; //unicode line-feed
     var space = '\u0020';
     var backslash = '\u005c';
     var n = '\u006e';
 
-    for (var i = 0; i < r.length; i++) 
+    for (var i = 0; i < r.length; i++)
     { // replaces all not escaped '\n' by LF;
-        if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n) 
+        if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n)
             r = r.substring(0, i) + LF + r.substr(i + 2);
     }
 
-    r = r.replace(/(\u0020\u005c)(?=\u0020)/g,'\u0020'); //replaces all double spaces by " \ ";
-    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g,'\u005c'); //replaces all double backslash by single;
+    r = r.replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020'); //replaces all double spaces by " \ ";
+    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g, '\u005c'); //replaces all double backslash by single;
 
-    
+
     return r;
 
 }
 
 function engGetDataValToRecord(data)
-{   // returns parsed data for add into record
+{ // returns parsed data for add into record
     var r = data || '';
-    
+
     var LF = '\u000a'; //unicode line-feed
     var space = '\u0020';
     var backslash = '\u005c';
-    var n = '\u006e';   
-    
-    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg,'\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
-    r = r.replace(/(\u0020(?=\u0020))/g,'\u0020\u005c'); //replace all double spaces by " \ ";
-    r = r.replace(/\u000a/g,'\u005c\u006e'); // 'LF' > '\n';
-    
+    var n = '\u006e';
+
+    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
+    r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c'); //replace all double spaces by " \ ";
+    r = r.replace(/\u000a/g, '\u005c\u006e'); // 'LF' > '\n';
+
     return r;
 }
 
@@ -321,30 +320,30 @@ function engIsTransKeys(keys)
 {
     if (!keys)
         return false;
-    
+
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
         return false; // checks for non hex chars;
 
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var prCode0Ch = prCode.charAt(0);
-    
+
     // checks protocol code for record number exists into the transkeys;
     if (prCode0Ch !== '1' && prCode0Ch !== '2')
         return false;
 
-    var isRecNum = (prCode0Ch == '1') ?  true :  false;
-    
+    var isRecNum = (prCode0Ch == '1') ? true : false;
+
     //checks match of a protocol code and quantity of transkeys elements;
     var keysLen;
     var prCodeLen = prCode.length;
-    
+
     if (prCodeLen < 3 || prCodeLen > 6)
         return false;
-    
+
     if (prCodeLen == 3 || prCodeLen == 4)
         keysLen = (isRecNum) ? 3 : 2;
-    
+
     if (prCodeLen == 5 || prCodeLen == 6)
         keysLen = (isRecNum) ? 4 : 3;
 
@@ -365,13 +364,13 @@ function engIsTransKeys(keys)
         tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
         tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
     }
-    
+
     if (prCRC !== tkCRC)
         return false; //checks CRC
-    
+
     if (keys.length < keysLen)
         return false;
-    
+
     if (tmpl.length == 0)
     {
         var mod = keys.length % keysLen;
@@ -388,7 +387,7 @@ function engIsTransKeys(keys)
         {
             if (!engIsNumber(keys[i]))
                 return false;
-            
+
             keys.splice(i, 1);
             i--;
         }
@@ -408,12 +407,12 @@ function engIsTransKeys(keys)
 function engGetTransKeys(keys)
 {
     var prK1K2 = '23132';
-	var prG2O2 = '24252';
+    var prG2O2 = '24252';
     var prG1O1 = '24151';
     var prK1G1 = '23141';
     var prK1 = '231';
     var prO1 = '251';
-	var prK2 = '232';
+    var prK2 = '232';
 
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
@@ -423,10 +422,10 @@ function engGetTransKeys(keys)
     var prCodeLen = prCode.length;
     var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the transkeys;
 
-    if (prCodeLen == 3 || prCodeLen == 4)     //checks match of a protocol code and quantity of transkeys elements;
+    if (prCodeLen == 3 || prCodeLen == 4) //checks match of a protocol code and quantity of transkeys elements;
         keysLen = (isRecNum) ? 3 : 2;
-    
-    if (prCodeLen == 5 || prCodeLen == 6)     //checks match of a protocol code and quantity of transkeys elements;
+
+    if (prCodeLen == 5 || prCodeLen == 6) //checks match of a protocol code and quantity of transkeys elements;
         keysLen = (isRecNum) ? 4 : 3;
 
     if (keys[keys.length - 1].length == 4)
@@ -444,15 +443,15 @@ function engGetTransKeys(keys)
 
     prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
-	prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
+    prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
     prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
     prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
     prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
-	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+    prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     var keysQty = keys.length / keysLen;
     var transKeys = [];
-	
+
     for (var i = 0; i < keysQty; i++)
     {
 
@@ -467,44 +466,44 @@ function engGetTransKeys(keys)
         case (prK1K2):
             transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
             transKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
-			
+
             break;
         case (prG2O2):
             transKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
             transKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
-			
+
             break;
         case (prG1O1):
             transKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
             transKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
-			
-            break;			
+
+            break;
         case (prK1G1):
             transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
             transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
-			
+
             break;
         case (prK1):
             transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-			
+
             break;
         case (prO1):
             transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-			
+
             break;
         case (prK2):
             transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-			
-            break;			
+
+            break;
         default:
             return false;
         }
 
     }
-	
+
     transKeys.sort(engSortByProperties('s'));
 
-    for (var i = 0; i < transKeys.length - 1; i++)   // if presents keys for same token;
+    for (var i = 0; i < transKeys.length - 1; i++) // if presents keys for same token;
     {
         if (transKeys[i].s == transKeys[i + 1].s)
         {
@@ -512,7 +511,7 @@ function engGetTransKeys(keys)
             i--;
         }
     }
-	
+
     return transKeys;
 }
 
@@ -520,12 +519,12 @@ function engGetTitleKeys(transKeys, p, h, m)
 {
     var titleKeys = transKeys;
     var prK1K2 = '23132'; //simple send;
-	var prG2O2 = '24252'; // simple request;
+    var prG2O2 = '24252'; // simple request;
     var prK1G1 = '23141'; // blocking send, st1;
     var prK1 = '231'; // blocking send, st2;
-	var prO1 = '251'; // blocking request, st1;
-	var prG1O1 = '24151'; //blocking request, st2;
-	var prK2 = '232'; // blocking receive revert;
+    var prO1 = '251'; // blocking request, st1;
+    var prG1O1 = '24151'; //blocking request, st2;
+    var prK2 = '232'; // blocking receive revert;
 
     var prCode = titleKeys[0].prcode; // get protocol key from first element;
     var prCode0Ch = prCode.charAt(0);
@@ -535,9 +534,9 @@ function engGetTitleKeys(transKeys, p, h, m)
     prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
     prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
-	prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
+    prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
     prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
-	prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+    prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     for (var i = 0; i < titleKeys.length; i++)
     {
@@ -547,8 +546,15 @@ function engGetTitleKeys(transKeys, p, h, m)
         var n2 = n + 2;
         var n3 = n + 3;
         var n4 = n + 4;
-		var k1, k2, k3, k4, g1, g2, g3, o1;
-		
+        var k1,
+        k2,
+        k3,
+        k4,
+        g1,
+        g2,
+        g3,
+        o1;
+
         switch (titleKeys[0].prcode)
         {
         case prK1K2:
@@ -560,7 +566,7 @@ function engGetTitleKeys(transKeys, p, h, m)
             k4 = engGetKey(n4, s, p, m, h);
             g3 = engGetKey(n4, s, k4, m, h);
             titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
-			
+
             break;
         case prG2O2:
             titleKeys[i].n1 = n1; //
@@ -570,13 +576,13 @@ function engGetTitleKeys(transKeys, p, h, m)
             k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
             titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
             titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
-			
+
             break;
         case prK1G1:
             k3 = engGetKey(n3, s, p, m, h);
             g2 = engGetKey(n3, s, k3, m, h);
             titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
-			
+
             break;
         case prK1:
             k2 = engGetKey(n2, s, p, m, h);
@@ -584,7 +590,7 @@ function engGetTitleKeys(transKeys, p, h, m)
             g2 = engGetKey(n3, s, k3, m, h);
             titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
             titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
-			
+
             break;
         case prO1:
             titleKeys[i].n1 = n1;
@@ -592,26 +598,26 @@ function engGetTitleKeys(transKeys, p, h, m)
             k2 = engGetKey(n2, s, p, m, h);
             titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
             titleKeys[i].o1; //
-			
+
             break;
         case prG1O1:
             titleKeys[i].n1 = n1; //
             titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
 
-            break;			
+            break;
         case prK2:
             titleKeys[i].n1 = n1;
-			titleKeys[i].n2 = n2;
+            titleKeys[i].n2 = n2;
             titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
             titleKeys[i].g1 = engGetKey(n2, s, titleKeys[i].k2, m, h);
-			var k3 = engGetKey(n3, s, p, m, h);
-			titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
-			titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
-			var k4 = engGetKey(n4, s, p, m, h);
-			var g3 = engGetKey(n4, s, k4, m, h);
-			titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
+            var k3 = engGetKey(n3, s, p, m, h);
+            titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
+            titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
+            var k4 = engGetKey(n4, s, p, m, h);
+            var g3 = engGetKey(n4, s, k4, m, h);
+            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
 
-            break;			
+            break;
         default:
             break;
         }
@@ -632,7 +638,7 @@ function engGetMergedTokensList(hashList, rawList, hash)
                 hashList[k] = rawName;
                 rawList.splice(t, 1);
                 t--;
-				
+
                 break;
             }
             else if (hashList[k] == rawList[t])

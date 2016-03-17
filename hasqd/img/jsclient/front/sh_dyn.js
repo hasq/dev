@@ -2,9 +2,9 @@ function HasqLogo(id)
 {
     var counter = 0;
 
-    var ret =
+    var retObj =
     {
-    wait : function ()
+        wait : function ()
         {
             var $Logo = $('#' + id + ' img');
 
@@ -13,7 +13,7 @@ function HasqLogo(id)
             if (counter > 0)
                 return $Logo.attr('src', imgLogoBlink);
         },
-    done : function ()
+        done : function ()
         {
             var $Logo = $('#' + id + ' img');
 
@@ -22,11 +22,11 @@ function HasqLogo(id)
 
             if (counter == 0)
                 return setTimeout(function ()
-            {
-                $Logo.attr('src', imgLogoBlue)
-            }, 200);
+                {
+                    $Logo.attr('src', imgLogoBlue)
+                }, 200);
         },
-    fail : function ()
+        fail : function ()
         {
             var $Logo = $('#' + id + ' img');
 
@@ -34,7 +34,7 @@ function HasqLogo(id)
             return $Logo.attr('src', imgLogoRed);
         }
     }
-    return ret;
+    return retObj;
 }
 
 function preload(container)

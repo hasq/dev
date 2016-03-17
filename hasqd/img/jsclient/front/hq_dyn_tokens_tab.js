@@ -6,7 +6,7 @@ function closestTextArea($obj)
     if ($obj)
         $textarea = $obj.closest('.wrap').find('textarea');
 
-    return {
+    var retObj = {
         add : function (data)
         {
             $textarea.val($textarea.val() + data);
@@ -27,6 +27,8 @@ function closestTextArea($obj)
             return $textarea.val();
         }
     }
+	
+	return retObj;
 }
 
 function led($obj)
@@ -36,7 +38,7 @@ function led($obj)
     if ($obj)
         $led = $obj.closest('.wrap').find('img');
 
-    return {
+    var retObj = {
         set : function (img, title)
         {
             if (typeof img == 'undefined')
@@ -66,6 +68,8 @@ function led($obj)
                 return $led.attr('src');
         }
     }
+	
+	return retObj;
 }
 
 function widWarningLed($obj, image, text)
@@ -108,7 +112,7 @@ function widCleanUI($obj)
     widShowProgressbar();
     widShowTokensLog();
 
-    return {
+    var retObj = {
         full : function ()
         {
             led().clear();
@@ -121,6 +125,8 @@ function widCleanUI($obj)
             closestTextArea($obj).clear();
         }
     }
+	
+	return retObj;
 }
 
 function widCleanVerifyTab()

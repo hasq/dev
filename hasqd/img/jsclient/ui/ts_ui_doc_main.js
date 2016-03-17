@@ -42,37 +42,41 @@ var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"
 
 var allImages = [
     imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
-    imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed, 
-    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink 
+    imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed,
+    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink
 ];
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('logo_span');
 
-
-function docMainWrite() {
+function docMainWrite()
+{
     document.write(docMain());
 }
 
-function docMainInit() {
-    $(document).ready(function () {
+function docMainInit()
+{
+    $(document).ready(function ()
+    {
         docInit();
-    });
+    }
+    );
 }
 
-function docInit() 
+function docInit()
 {
     $('#modal_window').css('display', 'none');
     $('input, select, textarea').attr('autocomplete', 'off');
-    
+
     $('#tabs').tabs(
     {
-        activate : function (event, ui) 
+        activate : function (event, ui)
         {
             widShowLog();
         }
-    });
-	
-	$('#info_span img').attr('src', imgClkInfo);
+    }
+    );
+
+    $('#info_span img').attr('src', imgClkInfo);
     $('#info_span img').attr('width', '28');
     $('#info_span img').attr('height', '28');
 
@@ -80,7 +84,7 @@ function docInit()
     $('#logo_span img').attr('height', '28');
     $('#logo_span img').attr('src', imgLogoBlue);
 
-    $('#reload_span img').attr('src', imgClkReload);	
+    $('#reload_span img').attr('src', imgClkReload);
     $('#password_pic_span img').attr('src', imgPwdDummy);
     $('#token_pic_span img').hide();
 
@@ -90,15 +94,16 @@ function docInit()
     $('button').button();
 
     $('#token_data_td').hide();
-	
-    $('#show_hide_checkbox').click(function () 
+
+    $('#show_hide_checkbox').click(function ()
     {
-        if (this.checked) 
+        if (this.checked)
             $('.password').attr('type', 'text');
         else
             $('.password').attr('type', 'password');
-    });
-    
+    }
+    );
+
     $('#from_datepicker_input').datepicker(
     {
         dateFormat : 'yy/mm/dd',
@@ -109,12 +114,13 @@ function docInit()
         selectOtherMonths : true,
         changeMonth : true,
         changeYear : true,
-        onClose : function (selectedDate) 
+        onClose : function (selectedDate)
         {
             $('#to_datepicker_input').datepicker('option', 'minDate', selectedDate);
         }
-    });
-    
+    }
+    );
+
     $('#to_datepicker_input').datepicker(
     {
         dateFormat : 'yy/mm/dd',
@@ -125,11 +131,12 @@ function docInit()
         selectOtherMonths : true,
         changeMonth : true,
         changeYear : true,
-        onClose : function (selectedDate) 
+        onClose : function (selectedDate)
         {
             $('#from_datepicker_input').datepicker('option', 'maxDate', selectedDate);
         }
-    });
+    }
+    );
 
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
@@ -137,7 +144,7 @@ function docInit()
     engSendPing(0);
 }
 
-function docMain() 
+function docMain()
 {
     var tabs = [];
     var item;
@@ -156,7 +163,7 @@ function docMain()
     item.title = 'Assign data';
     item.data = widGetHTMLAssignDataTab();
     tabs[tabs.length] = item;
-    
+
     item = {};
     item.title = 'Give token away';
     item.data = widGetHTMLShowKeysTab();
@@ -176,7 +183,7 @@ function docMain()
     item.title = 'Empty';
     item.data = widGetHTMLEmptyTab();
     tabs[tabs.length] = item;
-    
+
     var body = widGetHTMLBody(tabs);
 
     return body;

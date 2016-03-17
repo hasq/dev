@@ -1,6 +1,6 @@
 var g_searchOn = false;
 var g_fromDate; // remove later
-var g_toDate;   // remove later
+var g_toDate; // remove later
 var g_search = {};
 var g_result = {};
 
@@ -13,7 +13,7 @@ function engSearchClick(fromDate, toDate, progr)
 {
     g_searchOn = !g_searchOn;
 
-    if( g_searchOn )
+    if (g_searchOn)
         return engSearchStart(fromDate, toDate, progr);
 
     return engSearchStop();
@@ -30,19 +30,29 @@ function engSearchStart(fromDate, toDate, progr)
     g_search.number = 0;
 
     // start process
-    setTimeout(processDates,10);
+    setTimeout(processDates, 10);
 
-    return {from:fromDate, to:toDate};
+    var retObj = {
+        from : fromDate,
+        to : toDate
+    };
+	
+	return retObj;
 }
 
 function engSearchStop()
 {
     // here cancel ajax request FIXME
 
-    return {from:g_fromDate, to:g_toDate};
+    var retObj = {
+        from : g_fromDate,
+        to : g_toDate
+    };
+	
+	return retObj;	
 }
 
-function engGetDateRangeFolders(fromDate, toDate) 
+function engGetDateRangeFolders(fromDate, toDate)
 {
     var r = [];
     var fromY = fromDate.getFullYear();
@@ -52,60 +62,57 @@ function engGetDateRangeFolders(fromDate, toDate)
     var toM = toDate.getMonth() + 1;
     var toD = toDate.getDate();
 
-    var getD = function (month, year) 
-	{
+    var getD = function (month, year)
+    {
         // returns the number of the days in a month
         var day;
 
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) 
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
             day = 31;
 
-		if (month == 4 || month == 6 || month == 9 || month == 11 || month == 10 || month == 12) 
-			day = 30;
-		
-		if (month == 2)
-			day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
-		
+        if (month == 4 || month == 6 || month == 9 || month == 11 || month == 10 || month == 12)
+            day = 30;
+
+        if (month == 2)
+            day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
+
         return day;
     }
-	
-    while (toY >= 2016) 
-	{
-        if (toY == fromY && toM == fromM && toD == fromD) 
+    while (toY >= 2016)
+    {
+        if (toY == fromY && toM == fromM && toD == fromD)
             break;
-		
-		if (toM == 0) 
-			toM = 12;
-		
-        while (toM > 0) 
-		{
-            if (toD == 0) 
-                toD = getD(toM, toY);
 
-            while (toD > 0) 
-			{
+        if (toM == 0)
+            toM = 12;
+        while (toM > 0)
+        {
+            if (toD == 0)
+                toD = getD(toM, toY);
+            while (toD > 0)
+            {
                 var mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
                 var dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
                 var cmd = '/' + toY.toString() + '/' + mm + '/' + dd + '/' + toY.toString() + mm + dd + '-';
 
                 r[r.length] = cmd;
 
-				if (toY == fromY && toM == fromM && toD == fromD)
-					break;
-				
-				toD--;
+                if (toY == fromY && toM == fromM && toD == fromD)
+                    break;
+
+                toD--;
             }
 
             if (toY == fromY && toM == fromM && toD == fromD)
-				break;
+                break;
 
-			toM--;
+            toM--;
         }
 
-        if (toY == fromY && toM == fromM && toD == fromD) 
-			break;
-		
-		toY--;
+        if (toY == fromY && toM == fromM && toD == fromD)
+            break;
+
+        toY--;
     }
 
     return r;
@@ -119,9 +126,10 @@ function processDone()
 
 function processDates()
 {
-    if( !g_searchOn ) return;
+    if (!g_searchOn)
+        return;
 
-    if( g_search.folders.length == 0 ) 
+    if (g_search.folders.length == 0)
         return processDone();
 
     // pick the first date
@@ -136,7 +144,6 @@ function processDates()
 
     console.log(current_name);
     console.log(current_file);
-
 
     // FIXME request ajax
 
