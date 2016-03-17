@@ -774,7 +774,7 @@ function widShowReleaseButtonClick($obj)
 		var n2 = glLastRec.n + 2;
 		var k2 = engGetKey(n2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
 		var g1 = engGetKey(n2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash); //
-		var line = glLastRec.s + '\u0020' + g1 + '\u0020';
+		var line = glLastRec.s + '\u0020' + g1;
 
 		textArea($KeyArea).add(line);
 

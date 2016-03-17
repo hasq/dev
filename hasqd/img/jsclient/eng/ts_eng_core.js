@@ -1,8 +1,31 @@
-function engDoNothing() 
+/*
+function engSendRequest(ajxCmd, delay, cbFunc) 
 {
-    return true;
-}
+	
+	return {
+		start: function ()
+		{
+			var cb = function (data) 
+			{
+				if (timerId === glTimerId)
+					cbFunc(data);
+				
+				clearTimeout(timerId);
+			}
+			
+			var send = function () 
+			{
+				ajxSendCommand(ajxCmd, cb, hasqLogo);
+			}
 
+		},
+		clear: function (tId) {
+			clearTimeout(timerId);			
+		}
+		
+	}
+}
+*/
 function engSendDeferredRequest(cmd, t, f) 
 {
     // Sends ajax request with 500ms delay.
@@ -13,10 +36,12 @@ function engSendDeferredRequest(cmd, t, f)
         var cb = function (data) {
             if (timerId === glTimerId)
                 f(data);
+			
             clearTimeout(timerId);
         }
         ajxSendCommand(cmd, cb, hasqLogo);
     }
+	
     glTimerId = setTimeout(req, t);
 }
 
@@ -31,8 +56,8 @@ function engSendPing(timeDelay)
         
         var resp = engGetResp(data);
         
-        if (resp.msg !== 'OK')
-            return widShowLog(resp.msg + ': ' + resp.cnt);
+        //if (resp.msg !== 'OK')
+            //return widShowLog(resp.msg + ': ' + resp.cnt);
     }
     
     ajxSendCommand('ping', cb, hasqLogo);
