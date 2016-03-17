@@ -132,16 +132,16 @@ div#modal_window_content  /* modal window content box */
     background-color: #fefefe;
     margin: auto;
     padding: 0;
-    border: 1px solid #888;
+    border: 2px solid #1376BC;
     width: 70%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	box-shadow: 0 0 20px 4px #C9C9C9;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
     cursor: pointer;
     text-align: center;
-    font: bold 18px Consolas;
+    font: 14px Consolas;
 }
 
 
@@ -156,7 +156,7 @@ div#modal_window_content:focus
 div#modal_window_content_header
 {
     padding: 1px 1px;
-    background-color: #FF0000;
+   /*  background-color: #FF0000; */
     color: white;
 }
 
@@ -169,7 +169,7 @@ div#modal_window_content_body
 div#modal_window_content_footer
 {
     padding: 1px 1px;
-    background-color: #FF0000;
+    /* background-color: #FF0000; */
     color: white;
 }
  
