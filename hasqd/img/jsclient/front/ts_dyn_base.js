@@ -902,10 +902,10 @@ function widReceiveTabButtonClick($obj)
 
 function widReceiveButtonClick()
 {
-    var $TransKeysArea = $('#receive_textarea');
+    var $TransKeysArea = $('#receive_keys_textarea');
     var $TokenArea = $('#token_text_textarea');
     var $PwdInp = $('password_input');
-    var rawTransKeys = $('#receive_textarea').val();
+    var rawTransKeys = $('#receive_keys_textarea').val();
 
     if (typeof glLastRec.st === 'undefined')
         return widModalWindow('Enter token name...', function ()

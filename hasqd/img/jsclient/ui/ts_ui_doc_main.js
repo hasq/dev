@@ -68,11 +68,13 @@ function docInit()
     $('input, select, textarea').attr('autocomplete', 'off');
 
     $('#tabs').tabs(
-    {
+    {	
         activate : function (event, ui)
         {
             widShowLog();
-        }
+        },
+		hide: 'fade',
+		show: 'fade'
     }
     );
 
