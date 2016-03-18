@@ -1,6 +1,8 @@
-/* html {
-  overflow-y: scroll;
-} */
+html 
+{
+  /* overflow-y: scroll; */
+  	height: 100%;
+} 
 
 body 
 {
@@ -8,7 +10,8 @@ body
     background: #FCFCFC;
     color: black;
     width: 60%;
-    min-width: 620px;
+	height: 100%;
+    min-width: 630px;
     min-height: 480px;
     text-align: justify;
     margin: auto;
@@ -36,7 +39,8 @@ button
 }
 
 button.tab-button-off,
-button.button-off
+button.show-keys-button-off,
+button.button-enabled
 {
     background: #AFEEEE;
     opacity: 0.8;
@@ -46,7 +50,7 @@ button.button-off
 }
 
 button.tab-button-on,
-button.button-on
+button.show-keys-button-on
 {
     background: #00CED1;
 	opacity: 1;
@@ -55,8 +59,8 @@ button.button-on
 button:hover,
 button.tab-button-off:hover,
 button.tab-button-on:hover,
-button.button-off:hover,
-button.button-on:hover,
+button.show-keys-button-off:hover,
+button.show-keys-button-on:hover,
 button.button-enabled:hover
 {
     background: #87CEEB;    
@@ -65,8 +69,8 @@ button.button-enabled:hover
 
 button.tab-button-off:active:hover,
 button.tab-button-on:active:hover,
-button.button-off:active:hover,
-button.button-on:active:hover 
+button.show-keys-button-off:active:hover,
+button.show-keys-button-on:active:hover 
 {
     background: #20B2AA;
 }
@@ -242,8 +246,14 @@ input[type='password']:focus
 
 input:required:valid
 {
-    border-color: green;
+    border: 1px solid #DDDDDD;
 }
+
+input:invalid
+{
+    border: 1px solid #DDDDDD;
+	box-shadow: none;
+} 
 
 input:focus:invalid
 {
@@ -269,14 +279,20 @@ table
     border-collapse:collapse;
 }
 
+table#set_data_table
+{
+    width: 100%;
+}
+
 td
 {
     vertical-align: bottom;
 }
 
-td#assign_data_textarea_td
+td#set_data_textarea_td
 {
 	padding: 0 0 6px 0;
+	text-align: center;
 	
 }
 
@@ -292,21 +308,6 @@ td#receive_keys_textarea_td
 	
 }
 
-textarea:focus 
-{
-    border: 1px solid #DDDDDD; 
-}
-
-textarea:focus:invalid
-{
-    border-color: red;
-} 
-
-textarea:required:valid 
-{
-    border-color: green;
-}
-
 textarea[type='text']
 {
 	width: 100%;    
@@ -314,7 +315,32 @@ textarea[type='text']
 	border:1px solid #DDDDDD;
 	border-radius: 0;
 	display: block;
+	margin-top: 0;
+	margin-bottom: 0;	
 } 
+
+textarea:focus 
+{
+    border: 1px solid #DDDDDD;
+}
+
+textarea:focus:invalid
+{
+    border: 1px solid red;
+	box-shadow: none;
+} 
+
+textarea:invalid
+{
+    border: 1px solid #DDDDDD;
+	box-shadow: none;
+} 
+
+textarea:required:valid 
+{
+    border: 1px solid #DDDDDD;
+}
+
 
 textarea::-webkit-input-placeholder
 {
@@ -344,6 +370,13 @@ textarea::-moz-placeholder
     text-overflow: ellipsis;
 } 
 
+textarea#set_data_textarea,
+textarea#show_keys_textarea,
+textarea#receive_keys_textarea
+{
+    height: 122px;
+} 
+
 .ui-tabs-nav
 { 
     display: none;
@@ -368,10 +401,13 @@ textarea::-moz-placeholder
 {
     vertical-align: top;
     padding: 6px 6px 6px 6px;
+	height: 100%;
 }
 
 .tab-button-area
 {
+	width: 74px;
+	text-align: right;
     vertical-align: top;
     padding: 6px 6px 6px 0;
 }
@@ -392,6 +428,7 @@ textarea::-moz-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
+	vertical-align: middle;
     border-radius: 0px;
 }
 

@@ -158,7 +158,7 @@ function docMain()
 
     item = {};
     item.title = 'Assign data';
-    item.data = widGetHTMLAssignDataTab();
+    item.data = widGetHTMLSetDataTab();
     tabs[tabs.length] = item;
 
     item = {};

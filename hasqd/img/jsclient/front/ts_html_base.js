@@ -26,9 +26,9 @@ function widGetHTMLSpanImg(id, func)
     var r = '';
 
     if (func)
-        r += '<span id="' + id + '" onclick="' + func + '" align="center"><img src=""></img></span>\n';
+        r += '<span id="' + id + '" onclick="' + func + '" style="text-align:center;"><img src=""></img></span>\n';
     else
-        r += '<span id="' + id + '" align="center"><img src=""></img></span>\n';
+        r += '<span id="' + id + '" style="text-align:center;"><img src=""></img></span>\n';
 
     return r;
 }
@@ -38,9 +38,9 @@ function widGetHTMLSpan(id, func)
     var r = '';
 
     if (func)
-        r += '<span align="center" id="' + id + '" onclick="' + func + '"></span>\n';
+        r += '<span style="text-align:center;" id="' + id + '" onclick="' + func + '"></span>\n';
     else
-        r += '<span align="center" id="' + id + '"></span>\n'; ;
+        r += '<span style="text-align:center;" id="' + id + '"></span>\n'; ;
 
     return r;
 }
@@ -49,11 +49,11 @@ function widGetHTMLBody(tabs)
 {
     var r = '';
 
-    r += '<table width="100%" id="body_table" border="0" nowrap>\n';
+    r += '<table id="body_table" style="width: 100%" border="0" nowrap>\n';
     {
         r += '<tr>\n';
         {
-            r += '<td align="left" nowrap>\n';
+            r += '<td style="text-align:left;" nowrap>\n';
             r += widGetHTMLTitleArea();
         }
         r += '</tr>\n';
@@ -66,13 +66,13 @@ function widGetHTMLBody(tabs)
         r += '<tr>\n';
         {
             r += '<td nowrap>\n';
-            r += '<table width="100%" style="border: 1px solid #DDDDDD;">\n';
+            r += '<table style="border: 1px solid #DDDDDD; width: 100%;">\n';
             {
                 r += '<tr>\n';
                 {
                     r += '<td class="tab-area" />\n';
                     r += widGetHTMLMainTabs(tabs) + '\n';
-                    r += '<td class="tab-button-area" width="74" align="right" />'
+                    r += '<td class="tab-button-area" />'
                          r += widGetHTMLButtonsArea() + '\n';
                 }
                 r += '</tr>\n';
@@ -83,18 +83,18 @@ function widGetHTMLBody(tabs)
         r += '<tr>\n';
         {
             r += '<td />\n';
-            r += '<table width="100%" border="0">\n'; //style="border: 1px solid #DDDDDD;">\n';
+            r += '<table style="width: 100%" border="0">\n'; //style="border: 1px solid #DDDDDD;">\n';
             {
                 r += '<tr>\n';
 
                 {
-                    r += '<td class="td-subscribe" width="160" style="text-align: left;"/>\n';
+                    r += '<td class="td-subscribe" style="text-align: left; width: 160px;"/>\n';
                     r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>\n';
                     r += '<td class="td-log" />\n';
                     r += widGetHTMLLogArea() + '\n';
-                    r += '<td class="td-subscribe" width="40" />\n';
+                    r += '<td class="td-subscribe" style="width: 40px;" />\n';
                     r += '<a href="hqclnt.html">HqClnt</a>\n';
-                    r += '<td class="td-subscribe" width="80"/>\n';
+                    r += '<td class="td-subscribe" style="width: 80px;"/>\n';
                     r += 'TokenSwap&nbsp;\u00A9&nbsp;2016\n';
                 }
                 r += '</tr>\n';
@@ -114,16 +114,16 @@ function widGetHTMLTitleArea()
 {
     var r = '';
 
-    r += '<table width="100%" border="0">\n';
+    r += '<table style="width: 100%" border="0">\n';
     {
         r += '<tr>\n';
         {
             r += '<td class="td-title"/>\n';
             r += '<span>' + glClientTitle + '</span>\n';
-            r += '<td width="30" height="30" align="center" />\n';
+            r += '<td style="width: 30px; height: 30px; text-align: center;"/>\n';
             r += widGetHTMLSpanImg('info_span', 'widModalWindow(\'FIX ME\')') + '\n';
-            r += '<td width="30" height="30" align="center" />\n';
-            r += '<td width="30" height="30" align="center" />\n';
+            r += '<td style="width: 30px; height: 30px; text-align: center;" />\n';
+            r += '<td style="width: 30px; height: 30px; text-align: center;" />\n';
             r += widGetHTMLSpanImg('logo_span', 'engSendPing()') + '\n';
         }
         r += '</tr>\n';
@@ -136,34 +136,34 @@ function widGetHTMLTitleArea()
 function widGetHTMLInitialDataArea()
 {
     var r = '';
-    r += '<table width="100%">\n';
+    r += '<table style="width: 100%">\n';
     {
         r += '<tr>\n';
-        r += '<td class="td-subtitle" align="center"/>\n';
+        r += '<td class="td-subtitle"/>\n';
         r += '<b>Token name<b>\n';
         r += '</tr>\n';
 
         r += '<tr>\n';
-        r += '<td align="center" nowrap>\n';
+        r += '<td style="text-align:center;" nowrap>\n';
         r += '<textarea id="token_text_textarea" oninput="widTokenTextOninput(500);" style="overflow-x:hidden;" type="text" rows="2" maxlength="65536" placeholder="Enter token text" required></textarea>\n';
         r += '</tr>\n';
 
         r += '<tr>\n';
         {
-            r += '<td align="left" class="td-info">\n';
+            r += '<td style="text-align:left;" class="td-info">\n';
             {
                 r += '<table>\n';
                 {
                     r += '<tr>\n';
                     {
-                        r += '<td width="20" title="Update token info"/>\n';
+                        r += '<td style="width: 20px;" title="Update token info"/>\n';
                         r += widGetHTMLSpanImg('reload_span', 'widTokenTextOninput()');
                         r += '<td class="td-info" nowrap/>\n';
                         r += '<div>Token hash:&nbsp</div>\n';
                         r += '<td id="token_hash_td" class="td-info" nowrap/>\n';
                         r += '<td />\n';
                         r += '&nbsp';
-                        r += '<td width="20" class="td-info" height="20" />\n';
+                        r += '<td style="width: 20px;" class="td-info" height="20" />\n';
                         r += widGetHTMLSpanImg('token_pic_span');
                     }
                     r += '</tr>\n';
@@ -180,23 +180,23 @@ function widGetHTMLInitialDataArea()
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center">\n';
+            r += '<td />\n';
             {
-                r += '<table border="0">\n';
+                r += '<table style="margin: auto;" border="0">\n';
                 {
                     r += '<tr>\n';
                     {
-                        r += '<td width="20" align="center">\n';
+                        r += '<td style="width: 20px; text-align: center">\n';
                         r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
-                        r += '<td width="250"/>\n';
+                        r += '<td style="width: 250px; text-align: center"/>\n';
                         r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
-                        r += '<td width="20">\n';
+                        r += '<td style="width: 20px; text-align: center">\n';
                         r += widGetHTMLSpanImg('password_pic_span');
                     }
                     r += '</tr>\n';
                     r += '<tr>\n';
                     {
-                        r += '<td width="20"/>&nbsp';
+                        r += '<td style="width: 20px;"/>&nbsp';
                         r += '<td id="password_zxcvbn_td" class="td-info"/>\n';
                         r += '<td/>\n';
                     }
@@ -263,11 +263,11 @@ function widGetHTMLWelcomeTab()
 {
     var r = '';
 
-    r += '<table width="100%" border="0">\n';
+    r += '<table style="width: 100%;" border="0">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-tab-subtitle" align="center">\n';
+            r += '<td class="td-tab-subtitle">\n';
             r += 'Welcome to TokenSwap';
         }
         r += '</tr>\n';
@@ -295,18 +295,18 @@ function widGetHTMLCreateTab()
 {
     var r = '';
 
-    r += '<table id="create_table" width="100%">\n';
+    r += '<table id="create_table" style="width: 100%">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-tab-subtitle" align="center" colspan="2" >\n';
+            r += '<td class="td-tab-subtitle" colspan="2" />\n';
             r += 'Create new token';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center">\n'
-                 r += '<button id="create_button" class="button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
+            r += '<td style="text-align:center;" />\n'
+                 r += '<button id="create_button" class="show-keys-button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -315,11 +315,11 @@ function widGetHTMLCreateTab()
     return r;
 }
 
-function widGetHTMLAssignDataTab()
+function widGetHTMLSetDataTab()
 {
     var r = '';
 
-    r += '<table id="setdata_table" width="100%" border="0">\n';
+    r += '<table id="set_data_table" border="0">\n';
     {
         r += '<tr>\n';
         {
@@ -329,14 +329,14 @@ function widGetHTMLAssignDataTab()
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center" id="assign_data_textarea_td">\n';
-            r += '<textarea id="assign_data_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="5" cols="64" wrap="off"></textarea>\n';
+            r += '<td id="set_data_textarea_td">\n';
+            r += '<textarea id="set_data_textarea" oninput="return widAssignDataTextareaOninput()" type="text" wrap="off"></textarea>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
             r += '<td class="td-button">\n'
-                 r += '<button id="setdata_button" onclick="return widAssignDataButtonClick($(this));">' + imgBtnData + '</button>\n';
+                 r += '<button id="set_data_button" class="button-disabled" onclick="return widSetDataButtonClick($(this));">' + imgBtnData + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -349,7 +349,7 @@ function widGetHTMLShowKeysTab()
 {
     var r = '';
 
-    r += '<table id="show_keys_table" width="100%" border="0">\n';
+    r += '<table id="show_keys_table" style="width: 100%">\n';
     {
         r += '<tr>\n';
         {
@@ -359,18 +359,18 @@ function widGetHTMLShowKeysTab()
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center" style="padding:0;"/>\n';
+            r += '<td style="padding:0;"/>\n';
             {
-                r += '<table>\n';
+                r += '<table style="margin:auto">\n';
                 {
                     r += '<tr>\n';
                     {
                         r += '<td class="td-button" />\n';
-                        r += '<button id="show_instant_button" class="button-off" onclick="return widShowInstantButtonClick($(this))">' + imgBtnInstantKeys + '</button>\n';
+                        r += '<button id="show_instant_button" class="show-keys-button-off" onclick="return widShowInstantButtonClick($(this))">' + imgBtnInstantKeys + '</button>\n';
                         r += '<td class="td-button" style="padding-left: 6px; padding-right: 6px"/>\n';
-                        r += '<button id="show_on_hold_button" class="button-off" onclick="return widShowOnHoldButtonClick($(this))">' + imgBtnOnHoldKeys + '</button>\n';
+                        r += '<button id="show_on_hold_button" class="show-keys-button-off" onclick="return widShowOnHoldButtonClick($(this))">' + imgBtnOnHoldKeys + '</button>\n';
                         r += '<td class="td-button" />\n';
-                        r += '<button id="show_release_button" class="button-off" onclick="return widShowReleaseButtonClick($(this))">' + imgBtnReleaseKeys + '</button>\n';
+                        r += '<button id="show_release_button" class="show-keys-button-off" onclick="return widShowReleaseButtonClick($(this))">' + imgBtnReleaseKeys + '</button>\n';
                     }
                     r += '</tr>\n';
                 }
@@ -396,7 +396,7 @@ function widGetHTMLReceiveTab()
 {
     var r = '';
 
-    r += '<table id="receive_table" width="100%" border="0">\n';
+    r += '<table id="receive_table" style="width: 100%" border="0">\n';
     {
         r += '<tr>\n';
         {
@@ -414,7 +414,7 @@ function widGetHTMLReceiveTab()
         r += '<tr>\n';
         {
             r += '<td class="td-button" />\n';
-            r += '<button id="receive_button" class="button-off" onclick="return widReceiveButtonClick($(this))">' + imgBtnReceiveKeys + '</button>\n';
+            r += '<button id="receive_button" class="show-keys-button-off" onclick="return widReceiveButtonClick($(this))">' + imgBtnReceiveKeys + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -427,11 +427,11 @@ function widGetHTMLSearchTab()
 {
     var r = '';
 
-    r += '<table id="search_table" align="center" border="0">\n';
+    r += '<table id="search_table" style="margin: auto;" border="0">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-tab-subtitle" align="center" />\n';
+            r += '<td class="td-tab-subtitle" />\n';
             r += 'Search for tokens';
         }
         r += '</tr>\n';
@@ -443,7 +443,7 @@ function widGetHTMLSearchTab()
                 r += '<input id="from_datepicker_input" name="from_date">\n';
                 r += '<label for="to_date">to:</label>\n';
                 r += '<input id="to_datepicker_input" name="to_date">\n';
-                r += '<button id="search_button" class="button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
+                r += '<button id="search_button" class="show-keys-button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
             }
         }
         r += '</tr>\n';
@@ -456,7 +456,7 @@ function widGetHTMLEmptyTab()
 {
     var r = '';
 
-    r += '<table width="100%" border="0">\n';
+    r += '<table style="width: 100%" border="0">\n';
     {
         r += '<tr>\n';
         r += '<td />\n';
@@ -471,7 +471,7 @@ function widGetHTMLLogArea()
 {
     var r = '';
 
-    r += '<table width="100%">\n';
+    r += '<table style="width: 100%">\n';
     {
         r += '<tr>\n';
         r += '<td class="td-info" />\n';

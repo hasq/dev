@@ -132,13 +132,13 @@ function widShowSearch()
 
             if (d === 'IDX_NODN')
             {
-                title = 'No such token.';
+                title = 'No such token';
                 src = imgLockOpen;
             }
 
             if (d === 'OK')
             {
-                title = 'Token exists.';
+                title = 'Token exists';
                 src = imgLockClosed;
             }
 
@@ -433,7 +433,6 @@ function widWelcomeTab()
     {
         show : function ()
         {
-			console.log('welcome');
             return $Tabs.tabs('option', 'active', 0);
         }
     }
@@ -501,8 +500,8 @@ function widCreateButtonClick()
 function widAssignDataTab()
 {
     var $Tabs = $('#tabs');
-    var $Button = $('#setdata_table').find('button');
-    var $Textarea = $('#setdata_table').find('textarea');
+    var $Button = $('#set_data_table').find('button');
+    var $Textarea = $('#set_data_table').find('textarea');
 
     var retObj =
     {
@@ -533,11 +532,11 @@ function widAssignDataTab()
     return retObj;
 }
 
-function widAssignDataButtonClick()
+function widSetDataButtonClick()
 {
     // Adds a new record with a specified data
     var $PwdInp = $('#password_input');
-    var $Data = $('#assign_data_textarea');
+    var $Data = $('#set_data_textarea');
 
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function ()
@@ -601,7 +600,7 @@ function widShowKeysTab()
         disable : function (comm)
         {
             (comm) ? $AllButton.addClass('button-disabled').removeClass('button-enabled') : $AllButton.addClass('button-enabled').removeClass('button-disabled');
-            $('.button-on').toggleClass('button-on button-off');
+            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
         },
         onhold : function (comm)
         {
@@ -614,7 +613,7 @@ function widShowKeysTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 3);
-            $('.button-on').toggleClass('button-on button-off');
+            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
         }
     }
 
@@ -626,7 +625,10 @@ function widShowKeysTabButtonClick($obj)
     widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
-
+    
+	var $KeyArea = $('#show_keys_textarea');
+    textArea($KeyArea).clear();
+	
     if (typeof glLastRec.st === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widWelcomeTab().show();
 
@@ -643,12 +645,12 @@ function widShowInstantButtonClick($obj)
     var $KeyArea = $('#show_keys_textarea');
 
     textArea($KeyArea).clear();
-    $('.button-on').not($obj).toggleClass('button-on button-off');
+    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('button-on'))
-            return $obj.toggleClass('button-on button-off');
+        if ($obj.hasClass('show-keys-button-on'))
+            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof glLastRec.st === 'undefined')
             return widModalWindow('Enter token name...', function ()
@@ -669,13 +671,13 @@ function widShowInstantButtonClick($obj)
 
         if (glLastRec.st === 'PWD_SNDNG')
         {
-            $('.button-on').toggleClass('button-on button-off');
+            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
             return widModalWindow('Token is locked.</br>Use \"On Hold\" button.');
         }
 
         if (glLastRec.st === 'PWD_RCVNG')
         {
-            $('.button-on').toggleClass('button-on button-off');
+            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
             return widModalWindow('Token is locked.</br>Use \"Release\" button.');
         }
 
@@ -687,9 +689,9 @@ function widShowInstantButtonClick($obj)
             );
     }
 
-    $obj.toggleClass('button-on button-off');
+    $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-on'))
+    if ($obj.hasClass('show-keys-button-on'))
     {
         var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
         var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -711,12 +713,12 @@ function widShowOnHoldButtonClick($obj)
     var $KeyArea = $('#show_keys_textarea');
 
     textArea($KeyArea).clear();
-    $('.button-on').not($obj).toggleClass('button-on button-off');
+    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('button-on'))
-            return $obj.toggleClass('button-on button-off');
+        if ($obj.hasClass('show-keys-button-on'))
+            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof glLastRec.st === 'undefined')
             return widModalWindow('Enter token name...', function ()
@@ -743,9 +745,9 @@ function widShowOnHoldButtonClick($obj)
             );
     }
 
-    $obj.toggleClass('button-on button-off');
+    $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-on'))
+    if ($obj.hasClass('show-keys-button-on'))
     {
         var k2,
         line,
@@ -799,12 +801,12 @@ function widShowReleaseButtonClick($obj)
     var $KeyArea = $('#show_keys_textarea');
 
     textArea($KeyArea).clear();
-    $('.button-on').not($obj).toggleClass('button-on button-off');
+    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('button-on'))
-            return $obj.toggleClass('button-on button-off');
+        if ($obj.hasClass('show-keys-button-on'))
+            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof glLastRec.st === 'undefined')
             return widModalWindow('Enter token name...', function ()
@@ -828,7 +830,7 @@ function widShowReleaseButtonClick($obj)
 
         if (glLastRec.st !== 'PWD_RCVNG')
         {
-            $('.button-on').toggleClass('button-on button-off');
+            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
             return widModalWindow('Token is unaccessible</br>or incorrect master key.', function ()
             {
                 $PwdInp.focus()
@@ -837,9 +839,9 @@ function widShowReleaseButtonClick($obj)
         }
     }
 
-    $obj.toggleClass('button-on button-off');
+    $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-on'))
+    if ($obj.hasClass('show-keys-button-on'))
     {
         var n2 = glLastRec.n + 2;
         var k2 = engGetKey(n2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -890,6 +892,9 @@ function widReceiveTabButtonClick($obj)
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
+	var $KeyArea = $('#show_keys_textarea');
+    textArea($KeyArea).clear();
+	
     if (typeof glLastRec.st === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widWelcomeTab().show();
 
@@ -904,7 +909,7 @@ function widReceiveButtonClick()
 {
     var $TransKeysArea = $('#receive_keys_textarea');
     var $TokenArea = $('#token_text_textarea');
-    var $PwdInp = $('password_input');
+    var $PwdInp = $('#password_input');
     var rawTransKeys = $('#receive_keys_textarea').val();
 
     if (typeof glLastRec.st === 'undefined')
@@ -1098,6 +1103,9 @@ function widSearchTabButtonClick($obj)
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
+	var $KeyArea = $('#show_keys_textarea');
+    textArea($KeyArea).clear();
+
     if (typeof glLastRec.st == 'undefined')
         return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widWelcomeTab().show();
 
@@ -1144,7 +1152,6 @@ function widEmptyTab()
     {
         show : function ()
         {
-			console.log('empty');
             $Tabs.tabs('option', 'active', 6);
         }
     }
