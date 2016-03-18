@@ -66,12 +66,9 @@ function docInit()
 {
     $('#modal_window').css('display', 'none');
     $('input, select, textarea').attr('autocomplete', 'off');
-
-    $('#tabs').tabs(
-    {	
-		
-    }
-    );
+	$('input, textarea').attr('maxlength', '65536');
+	
+    $('#tabs').tabs();
 
     $('#info_span img').attr('src', imgClkInfo);
     $('#info_span img').attr('width', '28');

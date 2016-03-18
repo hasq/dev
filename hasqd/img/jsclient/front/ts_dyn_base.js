@@ -553,13 +553,11 @@ function widSetDataButtonClick()
         );
 
     if (engGetDataValToRecord($Data.val()) === glLastRec.d)
-    {
         return widModalWindow('Token data is not changed...', function ()
         {
             $Data.focus()
         }
         );
-    }
 
     var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var nr_d = engGetDataValToRecord($Data.val());
