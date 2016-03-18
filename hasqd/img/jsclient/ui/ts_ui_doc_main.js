@@ -73,7 +73,6 @@ function docInit()
         {
             widShowLog();
         },
-		hide: 'fade',
 		show: 'fade'
     }
     );
