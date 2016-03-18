@@ -6,7 +6,7 @@ html
 
 body 
 {
-    font-family: Consolas, "Courier New";
+    font-family: Consolas, "Courier New", monospace;
     background: #FCFCFC;
     color: black;
     width: 60%;
