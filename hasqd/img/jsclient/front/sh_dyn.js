@@ -7,7 +7,6 @@ function HasqLogo(id)
         wait : function ()
         {
             var $Logo = $('#' + id + ' img');
-
             counter++;
 
             if (counter > 0)

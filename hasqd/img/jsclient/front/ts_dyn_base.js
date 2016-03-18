@@ -537,7 +537,7 @@ function widAssignDataButtonClick()
 {
     // Adds a new record with a specified data
     var $PwdInp = $('#password_input');
-    var $Data = $('#setdata_textarea');
+    var $Data = $('#assign_data_textarea');
 
     if (!widIsPassword())
         return widModalWindow('Enter master key...', function ()
@@ -590,7 +590,7 @@ function widAssignDataTextareaOninput()
 
 function widShowKeysTab()
 {
-    var $Table = $('#send_table');
+    var $Table = $('#show_keys_table');
     var $Tabs = $('#tabs');
     var $AllButton = $Table.find('button');
     var $OnHoldButton = $('#show_on_hold_button');
@@ -602,7 +602,6 @@ function widShowKeysTab()
         {
             (comm) ? $AllButton.addClass('button-disabled').removeClass('button-enabled') : $AllButton.addClass('button-enabled').removeClass('button-disabled');
             $('.button-on').toggleClass('button-on button-off');
-            $Table.find('input').prop('disabled', comm);
         },
         onhold : function (comm)
         {

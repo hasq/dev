@@ -267,7 +267,7 @@ function widGetHTMLWelcomeTab()
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center">\n';
+            r += '<td class="td-tab-subtitle" align="center">\n';
             r += 'Welcome to TokenSwap';
         }
         r += '</tr>\n';
@@ -299,7 +299,7 @@ function widGetHTMLCreateTab()
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center" colspan="2" >\n';
+            r += '<td class="td-tab-subtitle" align="center" colspan="2" >\n';
             r += 'Create new token';
         }
         r += '</tr>\n';
@@ -323,19 +323,19 @@ function widGetHTMLAssignDataTab()
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center" />\n';
+            r += '<td class="td-tab-subtitle" />\n';
             r += 'Token data';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center">\n';
-            r += '<textarea id="setdata_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="3" cols="64" wrap="off"></textarea>\n';
+            r += '<td align="center" id="assign_data_textarea_td">\n';
+            r += '<textarea id="assign_data_textarea" class="button-off" oninput="return widAssignDataTextareaOninput()" type="text" rows="5" cols="64" wrap="off"></textarea>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td width="74" align="center">\n'
+            r += '<td class="td-button">\n'
                  r += '<button id="setdata_button" onclick="return widAssignDataButtonClick($(this));">' + imgBtnData + '</button>\n';
         }
         r += '</tr>\n';
@@ -349,27 +349,27 @@ function widGetHTMLShowKeysTab()
 {
     var r = '';
 
-    r += '<table id="send_table" width="100%" border="0">\n';
+    r += '<table id="show_keys_table" width="100%" border="0">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center" >\n';
+            r += '<td class="td-tab-subtitle" />\n';
             r += 'Show keys';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center" />\n';
+            r += '<td align="center" style="padding:0;"/>\n';
             {
                 r += '<table>\n';
                 {
                     r += '<tr>\n';
                     {
-                        r += '<td align="center" style="padding-right: 3px"/>\n';
+                        r += '<td class="td-button" />\n';
                         r += '<button id="show_instant_button" class="button-off" onclick="return widShowInstantButtonClick($(this))">' + imgBtnInstantKeys + '</button>\n';
-                        r += '<td align="center" style="padding-left: 3px"/>\n';
+                        r += '<td class="td-button" style="padding-left: 6px; padding-right: 6px"/>\n';
                         r += '<button id="show_on_hold_button" class="button-off" onclick="return widShowOnHoldButtonClick($(this))">' + imgBtnOnHoldKeys + '</button>\n';
-                        r += '<td align="center" style="padding-left: 3px"/>\n';
+                        r += '<td class="td-button" />\n';
                         r += '<button id="show_release_button" class="button-off" onclick="return widShowReleaseButtonClick($(this))">' + imgBtnReleaseKeys + '</button>\n';
                     }
                     r += '</tr>\n';
@@ -381,27 +381,9 @@ function widGetHTMLShowKeysTab()
 
         r += '<tr>\n';
         {
-            r += '<td rowspan="2" />\n';
-            {
-                r += '<table width="100%">\n';
-                {
-                    r += '<tr>\n';
-                    {
-                        r += '<td />\n';
-                        r += '<textarea id="show_keys_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="7" type="text" readonly></textarea>\n';
-                    }
-                    r += '</tr>\n';
-/*
-                    r += '<tr>\n';
-                    {
-                        r += '<td />\n';
-                        r += '<textarea id="send_blocking_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="3" type="text" readonly></textarea>\n';
-                    }
-                    r += '</tr>\n';
-*/
-                }
-                r += '</table>\n';
-            }
+            r += '<td id="show_keys_textarea_td" />\n';
+                r += '<textarea id="show_keys_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="6" type="text" readonly></textarea>\n';
+
         }
         r += '</tr>\n';
     }
@@ -414,24 +396,24 @@ function widGetHTMLReceiveTab()
 {
     var r = '';
 
-    r += '<table id="receive_table" width="100%" border="0" >\n';
+    r += '<table id="receive_table" width="100%" border="0">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center" />\n';
+            r += '<td class="td-tab-subtitle" />\n';
             r += 'Paste keys';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td align="center" />\n';
-            r += '<textarea id="receive_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden;" type="text" rows="6" cols="64" maxlength="65536" wrap="on"></textarea>\n';
+            r += '<td id="receive_keys_textarea_td"/>\n';
+            r += '<textarea id="receive_keys_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden; white-space:pre-wrap;" type="text" rows="6" cols="64" maxlength="65536" wrap="on"></textarea>\n';
 			r += '</td>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td width="74" style="text-align:center;" />\n';
+            r += '<td class="td-button" />\n';
             r += '<button id="receive_button" class="button-off" onclick="return widReceiveButtonClick($(this))">' + imgBtnReceiveKeys + '</button>\n';
         }
         r += '</tr>\n';
@@ -449,7 +431,7 @@ function widGetHTMLSearchTab()
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-subsubtitle" align="center" />\n';
+            r += '<td class="td-tab-subtitle" align="center" />\n';
             r += 'Search for tokens';
         }
         r += '</tr>\n';

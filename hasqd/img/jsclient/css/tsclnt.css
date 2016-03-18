@@ -24,16 +24,21 @@ body
     box-sizing: border-box;
 }
 
-button, 
-button.tab-button-off,
-button.button-off
+button
 {
     font: 12px Consolas;
     text-align: center;
     width: 70px;
     height: 70px;
+	border: 0;	
+	margin: 0;
+	padding: 0;
+}
+
+button.tab-button-off,
+button.button-off
+{
     background: #AFEEEE;
-    border: 0;
     opacity: 0.8;
     -webkit-transition: background 0.20s;
     -moz-transition: background 0.20s;
@@ -43,13 +48,11 @@ button.button-off
 button.tab-button-on,
 button.button-on
 {
-    width: 70px;
-    height: 70px;
     background: #00CED1;
-    border: 0;
+	opacity: 1;
 }
 
-button:hover, /* button cursor*/
+button:hover,
 button.tab-button-off:hover,
 button.tab-button-on:hover,
 button.button-off:hover,
@@ -57,7 +60,6 @@ button.button-on:hover,
 button.button-enabled:hover
 {
     background: #87CEEB;    
-    border: 0;
     cursor: pointer;
 }
 
@@ -71,7 +73,6 @@ button.button-on:active:hover
 
 button.button-disabled:active:hover
 {
-    border: 0;
     background: #2F4F4F;
     color: #F5F5F5;
     opacity: 0.4;   
@@ -79,20 +80,16 @@ button.button-disabled:active:hover
 
 button.button-disabled:hover
 {
-    border: 0;
     background: #808080;
     color: #F5F5F5;
-    /* cursor: default; */
     opacity: 0.4;
 }
 
 button.button-disabled
 {
-    border: 0;
     background: #808080;
     color: #F5F5F5;
-    /* cursor: default; */
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 div#tabs
@@ -132,8 +129,8 @@ div#modal_window_content  /* modal window content box */
     background-color: #fefefe;
     margin: auto;
     padding: 0;
-    border: 2px solid #1376BC;
-    width: 70%;
+    border: 1px solid #13A0F0;
+    width: 500px;
 	box-shadow: 0 0 20px 4px #C9C9C9;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -187,28 +184,28 @@ input[placeholder]
     text-overflow: ellipsis;
 } 
 
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder
+input::-webkit-input-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
 } 
 
-input:-ms-input-placeholder, textarea:-ms-input-placeholder
+input:-ms-input-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-input:-moz-placeholder, textarea:-moz-placeholder
+input:-moz-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
 } 
 
-input::-moz-placeholder, textarea::-moz-placeholder
+input::-moz-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
@@ -239,20 +236,17 @@ input[type='password']
 }
 
 input[type='text']:focus, 
-input[type='password']:focus, 
-textarea:focus 
+input[type='password']:focus
 {
     border: 1px solid #DDDDDD; 
 }
 
-input:required:valid,
-textarea:required:valid 
+input:required:valid
 {
     border-color: green;
 }
 
-input:focus:invalid,
-textarea:focus:invalid
+input:focus:invalid
 {
     border-color: red;
 } 
@@ -281,9 +275,37 @@ td
     vertical-align: bottom;
 }
 
-textarea
+td#assign_data_textarea_td
 {
-	margin-bottom: 0px;
+	padding: 0 0 6px 0;
+	
+}
+
+td#show_keys_textarea_td
+{
+	padding: 6px 0 0 0;
+	
+}
+
+td#receive_keys_textarea_td
+{
+	padding: 0 0 6px 0;
+	
+}
+
+textarea:focus 
+{
+    border: 1px solid #DDDDDD; 
+}
+
+textarea:focus:invalid
+{
+    border-color: red;
+} 
+
+textarea:required:valid 
+{
+    border-color: green;
 }
 
 textarea[type='text']
@@ -292,14 +314,36 @@ textarea[type='text']
 	font: 14px Consolas !important;
 	border:1px solid #DDDDDD;
 	border-radius: 0;
+	display: block;
 } 
 
-/*
-textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-placeholder, textarea:-moz-placeholder, textarea:-ms-textarea-placeholder {
-    font: italic 90% Consolas;
+textarea::-webkit-input-placeholder
+{
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+textarea:-ms-input-placeholder
+{
+    font: italic 14px Consolas;
+    text-align: left;
     text-overflow: ellipsis;
 }
-*/
+
+textarea:-moz-placeholder
+{
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+textarea::-moz-placeholder
+{
+    font: italic 14px Consolas;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
 
 .ui-tabs-nav
 { 
@@ -327,7 +371,8 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
     padding: 6px 6px 6px 6px;
 }
 
-.tab-button-area{
+.tab-button-area
+{
     vertical-align: top;
     padding: 6px 6px 6px 0;
 }
@@ -335,6 +380,13 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
 .tab-buttons-table
 {
     border: 0px solid #DDDDDD;
+}
+
+.td-button
+{
+    border: 0px solid;
+    padding: 0;
+	text-align: center;
 }
 
 .td-info
@@ -359,9 +411,10 @@ textarea[placeholder], textarea::-webkit-textarea-placeholder, textarea::-moz-pl
     color: #1376BC;
 }
 
-.td-subsubtitle 
+.td-tab-subtitle 
 {
     text-align: center;
+	vertical-align: top;
     font: bold 18px Consolas;
     color: #009070;
 }
