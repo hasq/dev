@@ -247,12 +247,12 @@ function widGetHTMLMainTabs(items)
     r += '\t<ul>\n';
 
     for (var i = 0; i < items.length; i++)
-        r += '\t<li><a href="#tabs_' + (i + 1) + '_div">' + items[i].title + '</a>\n';
+        r += '\t<li><a href="#tabs_' + i + '_div">' + items[i].title + '</a>\n';
 
     r += '\t</ul>\n';
 
     for (var i = 0; i < items.length; i++)
-        r += '\t<div id="tabs_' + (i + 1) + '_div">' + items[i].data + '</div>\n';
+        r += '\t<div id="tabs_' + i + '_div">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 

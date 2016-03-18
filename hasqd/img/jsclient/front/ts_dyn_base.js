@@ -198,7 +198,7 @@ function widGetTokenStateImg(status)
     return r;
 }
 
-function widShowPwdMatch(status)
+function widShowPwdInfo(status)
 {
     // Shows an image displaying the password match
     var $Span = $('#password_pic_span');
@@ -289,10 +289,10 @@ function widTokenTextOninput(delay)
 { // Events when tokens value changed.
 	delay = +delay || 0;
 	
-    glLastRec = {}; //clear last record
-    clearTimeout(glTimerId); //clear last request to hasqd
-    widButtonsTable().toggleOff(); //disable tabs switch buttons
-    widShowPwdMatch(); //clear info about password match
+    glLastRec = {};
+    clearTimeout(glTimerId)
+    widButtonsTable().toggleOff(); 
+    widShowPwdInfo();
     widShowSearch();
 
     var $TokText = $('#token_text_textarea');
@@ -301,6 +301,9 @@ function widTokenTextOninput(delay)
     var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
     widShowToken(tok);
 
+    if (!tok)
+		return widWelcomeTab().show();
+	
     var cb = function (data)
     {
         var resp = engGetResp(data);
@@ -334,18 +337,14 @@ function widTokenTextOninput(delay)
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
     }
+	
+    widEmptyTab().show();
+    widShowSearch().show();
+	
+    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
 
-    if (tok)
-    {
-        widEmptyTab().show();
-        widShowSearch().show();
+    return engSendDeferredRequest(cmd, cb, delay);
 
-        var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
-
-        return engSendDeferredRequest(cmd, cb, delay);
-    }
-
-    widWelcomeTab().show();
 }
 
 function widPasswordOninput()
@@ -363,7 +362,7 @@ function widPasswordOninput()
 
     glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, nr) : glLastRec.st = 'PWD_WRONG';
 
-    widShowPwdMatch(glLastRec.st);
+    widShowPwdInfo(glLastRec.st);
     widToggleUI(glLastRec, glPassword);
 }
 
@@ -434,7 +433,8 @@ function widWelcomeTab()
     {
         show : function ()
         {
-            $Tabs.tabs('option', 'active', 0);
+			console.log('welcome');
+            return $Tabs.tabs('option', 'active', 0);
         }
     }
 
@@ -1144,6 +1144,7 @@ function widEmptyTab()
     {
         show : function ()
         {
+			console.log('empty');
             $Tabs.tabs('option', 'active', 6);
         }
     }

@@ -69,11 +69,7 @@ function docInit()
 
     $('#tabs').tabs(
     {	
-        activate : function (event, ui)
-        {
-            widShowLog();
-        },
-		show: 'fade'
+		
     }
     );
 
