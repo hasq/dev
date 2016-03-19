@@ -1,8 +1,3 @@
-var g_searchOn = false;
-var g_fromDate; // remove later
-var g_toDate; // remove later
-var g_search = {};
-var g_result = {};
 
 // progr must have functions
 //  1   Set button according to g_searchOn
@@ -11,9 +6,9 @@ var g_result = {};
 
 function engSearchClick(fromDate, toDate, progr)
 {
-    g_searchOn = !g_searchOn;
+    glSearch.isOn = !glSearch.isOn;
 
-    if (g_searchOn)
+    if (glSearch.isOn)
         return engSearchStart(fromDate, toDate, progr);
 
     return engSearchStop();
@@ -21,35 +16,39 @@ function engSearchClick(fromDate, toDate, progr)
 
 function engSearchStart(fromDate, toDate, progr)
 {
-    g_search.progr = progr;
-    g_fromDate = fromDate;
-    g_toDate = toDate;
 
-    g_search.folders = engGetDateRangeFolders(fromDate, toDate);
-    console.log(g_search.folders);
-    g_search.number = 0;
+    var o = glSearch.o;
+
+    o.progr = progr;
+    o.fromDate = fromDate;
+    o.toDate = toDate;
+
+    o.folders = engGetDateRangeFolders(fromDate, toDate);
+    console.log(o.folders);
+    o.number = 0;
 
     // start process
     setTimeout(processDates, 10);
 
-    var retObj = {
-        from : fromDate,
-        to : toDate
+    var retObj =
+    {
+    from : fromDate,
+    to : toDate
     };
-	
-	return retObj;
+
+    return retObj;
 }
 
 function engSearchStop()
 {
-    // here cancel ajax request FIXME
-
-    var retObj = {
-        from : g_fromDate,
-        to : g_toDate
+    var o = glSearch.o;
+    var retObj =
+    {
+    from : o.fromDate,
+    to : o.toDate
     };
-	
-	return retObj;	
+
+    return retObj;
 }
 
 function engGetDateRangeFolders(fromDate, toDate)
@@ -120,25 +119,27 @@ function engGetDateRangeFolders(fromDate, toDate)
 
 function processDone()
 {
-    g_searchOn = false;
+    glSearch.isOn = false;
     g_search = {};
 }
 
 function processDates()
 {
-    if (!g_searchOn)
+    if (!glSearch.isOn)
         return;
 
-    if (g_search.folders.length == 0)
+    var o = glSearch.o;
+
+    if (o.folders.length == 0)
         return processDone();
 
     // pick the first date
-    var current_name = g_search.folders[0];
+    var current_name = o.folders[0];
 
     // select the next number
-    ++g_search.number;
+    ++o.number;
 
-    current_name = current_name + g_search.number;
+    current_name = current_name + o.number;
 
     var current_file = current_name + ".smd.txt";
 

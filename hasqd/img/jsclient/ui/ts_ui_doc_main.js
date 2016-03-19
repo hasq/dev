@@ -7,6 +7,8 @@ var glPassword = '';
 var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId;
+var glSearch = { isOn : false, o : {}, result : {} };
+
 
 var imgMsgWait = 'img/msg_wait.gif';
 
@@ -35,7 +37,8 @@ var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys.
 var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>On Hold';
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
-var imgBtnSearch = '<img width="40px" height="20px" src="img/btn_search.png"><br/>Start';
+var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
+var imgBtnStop  = '<img width="40px" height="40px" src="img/btn_stop.png"><br/>Stop';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
