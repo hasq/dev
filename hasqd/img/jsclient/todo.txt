@@ -3,6 +3,9 @@ Critical things
 
 Major things
 ------------
+* style v "front" lomaet code - ne rabotaet - ne razbiralsja
+* unbalanced tree - firefox warning - find out
 
 Minor things
 ------------
+* fix makefile to remove action if not necessary
