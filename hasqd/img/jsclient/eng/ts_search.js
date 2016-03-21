@@ -77,39 +77,39 @@ function engGetDateRangeFolders(fromDate, toDate)
 
         return day;
     }
+	
+	var slicePath = function (y, m, d)
+	{
+		var mm = (m < 10) ? '0' + m.toString() : m.toString();
+        var dd = (d < 10) ? '0' + d.toString() : d.toString();
+        var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
+		
+		return path;
+		
+	}
+
     while (toY >= 2016)
     {
-        if (toY == fromY && toM == fromM && toD == fromD)
-            break;
-
         if (toM == 0)
             toM = 12;
+		
         while (toM > 0)
         {
             if (toD == 0)
                 toD = getD(toM, toY);
+			
             while (toD > 0)
             {
-                var mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
-                var dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
-                var cmd = '/' + toY.toString() + '/' + mm + '/' + dd + '/' + toY.toString() + mm + dd + '-';
-
-                r[r.length] = cmd;
-
+				r[r.length] = slicePath(toY, toM, toD);
+				
                 if (toY == fromY && toM == fromM && toD == fromD)
-                    break;
+                    return r;
 
                 toD--;
             }
 
-            if (toY == fromY && toM == fromM && toD == fromD)
-                break;
-
             toM--;
         }
-
-        if (toY == fromY && toM == fromM && toD == fromD)
-            break;
 
         toY--;
     }

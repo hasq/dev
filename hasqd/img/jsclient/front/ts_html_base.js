@@ -439,10 +439,10 @@ function widGetHTMLSearchTab()
         {
             r += '<td>\n';
             {
-                r += '<label for="from_date">From:</label>\n';
-                r += '<input id="from_datepicker_input" name="from_date">\n';
-                r += '<label for="to_date">to:</label>\n';
-                r += '<input id="to_datepicker_input" name="to_date">\n';
+                r += '<label for="from_datepicker_input">From:</label>\n';
+                r += '<input id="from_datepicker_input" type="text" style="width:10em">\n';
+                r += '<label for="to_datepicker_input">to:</label>\n';
+                r += '<input id="to_datepicker_input" type="text" style="width:10em">\n';
                 r += '<button id="search_button" class="show-keys-button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
             }
         }
