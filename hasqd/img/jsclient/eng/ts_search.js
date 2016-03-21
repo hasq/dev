@@ -141,13 +141,69 @@ function processDates()
 
     current_name = current_name + o.number;
 
-    var current_file = current_name + ".smd.txt";
+    var current_file = "/smd.db"+ current_name + ".smd.txt";
 
-    console.log(current_name);
-    console.log(current_file);
+    //console.log(current_name);
+    //console.log(current_file);
 
-    // FIXME request ajax
+    ajxSendCommand(current_file, searchGetFile, hasqLogo);
 
-    // remove processed date
-    //g_search.folders.shift();
+}
+
+function searchGetFile(data)
+{
+    if (!glSearch.isOn)
+        return;
+
+    var o = glSearch.o;
+
+    if( data.length<12 || data.substr(0,12) == "REQ_PATH_BAD" )
+    {
+        console.log(o.folders[0]+" : done");
+        o.folders.shift(); // remove processed date
+        o.number = 0;
+    }
+    else
+        searchProcessFile(data);
+
+    setTimeout(processDates,1);
+}
+
+function searchProcessFile(data)
+{
+    var o = glSearch.o;
+    console.log("processing file "+o.folders[0]);
+
+    var recs = data.split('\n');
+
+    var list = {};
+
+    for( var i in recs )
+    {
+        var s = recs[i];
+        if( s.length < 10 ) continue;
+        ///searchProcessRec(s);
+        var a = s.split(' ');
+        if( a.lingth < 3 ) continue;
+
+        if( !(a[1] in list) )
+        {
+            list[a[1]] = { n:a[0], r:s };
+            continue; 
+        }
+
+        var w = list[a[1]];
+        if( parseInt(w.n) > parseInt(a[0]) ) continue;
+
+        w.n = a[0];
+        w.r = s;
+    }
+
+    for(var i in list)
+        searchProcessRec(list[i].r);
+}
+
+function searchProcessRec(srec)
+{
+    console.log("searchProcessRec ["+srec+"]");
 }
