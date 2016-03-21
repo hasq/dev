@@ -134,9 +134,13 @@ function docInit()
         }
     }
     );
+
+	$('#from_datepicker_input').attr('maxlength', '10');
+	$('#to_datepicker_input').attr('maxlength', '10');
 	
 	$('#from_datepicker_input').datepicker('setDate', new Date());
 	$('#to_datepicker_input').datepicker('setDate', new Date());
+
 	
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();

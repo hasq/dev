@@ -330,7 +330,7 @@ function widGetHTMLSetDataTab()
         r += '<tr>\n';
         {
             r += '<td id="set_data_textarea_td">\n';
-            r += '<textarea id="set_data_textarea" oninput="return widAssignDataTextareaOninput()" type="text" wrap="off"></textarea>\n';
+            r += '<textarea id="set_data_textarea" oninput="return widSetDataTextareaOninput()" type="text" wrap="off"></textarea>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
@@ -427,26 +427,40 @@ function widGetHTMLSearchTab()
 {
     var r = '';
 
-    r += '<table id="search_table" style="margin: auto;" border="0">\n';
+    r += '<table id="search_table" style="width=100%;" border="1">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-tab-subtitle" />\n';
+            r += '<td class="td-tab-subtitle" colspan="2"/>\n';
             r += 'Search for tokens';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td>\n';
+            r += '<td/>\n';
             {
                 r += '<label for="from_datepicker_input">From:</label>\n';
                 r += '<input id="from_datepicker_input" type="text" style="width:10em">\n';
                 r += '<label for="to_datepicker_input">to:</label>\n';
                 r += '<input id="to_datepicker_input" type="text" style="width:10em">\n';
-                r += '<button id="search_button" class="show-keys-button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
             }
+			r += '<td rowspan=2 style="padding-left: 6px;"/>';
+			{
+				r += '<button id="search_button" class="show-keys-button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
+			}
         }
         r += '</tr>\n';
+		r += '<tr>\n';
+		{
+			r += '<td class="td-info" style="text-align: left; vertical-align: middle;" />\n';
+				r += '<label for="current_slice_span">Processing file:&nbsp</label>';
+				r += '<span id="current_slice_span"></span>';
+		}
+		r += '</tr>\n';
+		r += '<tr>\n';
+			r += '<td colspan="2"/>\n';
+				r += '<span></span>';
+		r += '</tr>\n';
     }
     r += '</table>\n';
     return r;

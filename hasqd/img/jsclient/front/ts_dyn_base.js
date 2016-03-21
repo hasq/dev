@@ -82,7 +82,7 @@ function widShowDBError()
         location.reload(true);
     }
 
-    widModalWindow('Database is not accessible!', f);
+    widModalWindow('Database is not accessible!<br/>Please, reload the page.', f);
 }
 
 function widShowPwdGuessTime(d)
@@ -219,8 +219,8 @@ function widToggleUI(lr, pwd)
     var tokData = lr.d;
 
     widCreateTab().disable(true);
-    widAssignDataTab().disable(true);
-    widAssignDataTab().readonly(true);
+    widSetDataTab().disable(true);
+    widSetDataTab().readonly(true);
     widReceiveTab().disable(true);
     widReceiveTab().readonly(true);
     widShowKeysTab().disable(true);
@@ -248,11 +248,11 @@ function widToggleUI(lr, pwd)
         if (widReceiveTab().isTransKeys())
             widReceiveTab().disable(false);
 
-        var newData = engGetDataValToRecord(widAssignDataTab().val()) || '';
-        widAssignDataTab().readonly(false);
+        var newData = engGetDataValToRecord(widSetDataTab().val()) || '';
+        widSetDataTab().readonly(false);
 
         if (tokData !== newData)
-            widAssignDataTab().disable(false);
+            widSetDataTab().disable(false);
 
         widShowKeysTab().disable(false);
         widShowKeysTab().release(false);
@@ -329,8 +329,8 @@ function widTokenTextOninput(delay)
             var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
             glLastRec.st = engGetTokensStatus(glLastRec, nr);
-            widAssignDataTab().set(engGetDataValToDisplay(glLastRec.d));
-            widAssignDataTab().show();
+            widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
+            widSetDataTab().show();
         }
 
         widShowSearch().show(resp.msg);
@@ -497,7 +497,7 @@ function widCreateButtonClick()
     setTimeout(f);
 }
 
-function widAssignDataTab()
+function widSetDataTab()
 {
     var $Tabs = $('#tabs');
     var $Button = $('#set_data_table').find('button');
@@ -580,7 +580,7 @@ function widSetDataButtonClick()
     setTimeout(f);
 }
 
-function widAssignDataTextareaOninput()
+function widSetDataTextareaOninput()
 {
     widToggleUI(glLastRec, glPassword);
 }
@@ -633,7 +633,7 @@ function widShowKeysTabButtonClick($obj)
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widCreateTab().show();
 
-    return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widAssignDataTab().show();
+    return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widSetDataTab().show();
 }
 
 function widShowInstantButtonClick($obj)
@@ -899,7 +899,7 @@ function widReceiveTabButtonClick($obj)
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widCreateTab().show();
 
-    return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widAssignDataTab().show();
+    return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widSetDataTab().show();
 
 }
 
@@ -1110,7 +1110,7 @@ function widSearchTabButtonClick($obj)
     if (glLastRec.st == 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widCreateTab().show();
 
-    return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widAssignDataTab().show();
+    return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widSetDataTab().show();
 }
 
 function widSearchButtonClick()

@@ -143,8 +143,7 @@ function processDates()
 
     var current_file = "/smd.db"+ current_name + ".smd.txt";
 
-    //console.log(current_name);
-    //console.log(current_file);
+    $('#current_slice_span').html(current_name + ".smd.txt");
 
     ajxSendCommand(current_file, searchGetFile, hasqLogo);
 
@@ -164,7 +163,7 @@ function searchGetFile(data)
         o.number = 0;
     }
     else
-        searchProcessFile(data);
+		searchProcessFile(data);
 
     setTimeout(processDates,1);
 }
@@ -172,8 +171,8 @@ function searchGetFile(data)
 function searchProcessFile(data)
 {
     var o = glSearch.o;
-    console.log("processing file "+o.folders[0]);
-
+    console.log("processing file " + o.folders[0]);
+	
     var recs = data.split('\n');
 
     var list = {};
@@ -184,7 +183,7 @@ function searchProcessFile(data)
         if( s.length < 10 ) continue;
         ///searchProcessRec(s);
         var a = s.split(' ');
-        if( a.lingth < 3 ) continue;
+        if( a.length < 3 ) continue; // there was the error "lingth"
 
         if( !(a[1] in list) )
         {
