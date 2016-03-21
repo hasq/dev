@@ -106,7 +106,6 @@ function docInit()
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
-		defaultDate: new Date(),
         showMonthAfterYear : true,
         showOtherMonths : true,
         selectOtherMonths : true,
@@ -124,7 +123,6 @@ function docInit()
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
         maxDate : new Date(),
-		defaultDate: +0,
         showMonthAfterYear : true,
         showOtherMonths : true,
         selectOtherMonths : true,
@@ -136,7 +134,10 @@ function docInit()
         }
     }
     );
-
+	
+	$('#from_datepicker_input').datepicker('setDate', new Date());
+	$('#to_datepicker_input').datepicker('setDate', new Date());
+	
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 
