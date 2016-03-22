@@ -469,7 +469,7 @@ function widGetHTMLSearchTab()
 			r += '<td style="vertical-align: top;"/>\n';
 				r += widGetHTMLInSearchTabs();
 				
-			r += '<td style="width: 12em;"/>\n';
+			r += '<td style="width: 12em; vertical-align: top"/>\n';
 			{
 				r += '<table style="margin-right:0; margin-left:auto;">\n';
 				{
