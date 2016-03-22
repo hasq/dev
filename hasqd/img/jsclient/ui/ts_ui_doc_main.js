@@ -71,7 +71,8 @@ function docInit()
     $('input, select, textarea').attr('autocomplete', 'off');
 	$('input, textarea').attr('maxlength', '65536');
 	
-    $('#tabs').tabs();
+    $('#tabs').tabs();    
+	$('#search_inner_tabs').tabs();
 
     $('#info_span img').attr('src', imgClkInfo);
     $('#info_span img').attr('width', '28');

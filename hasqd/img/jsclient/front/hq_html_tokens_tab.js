@@ -170,7 +170,7 @@ function widGetHTMLTokensVerifyTab() {
 				r += widGetHTMLSpanImg('', 'led-span') + '\n';
 		r += '</tr>\n';
 	r += '</table>\n'; 
-	r += '<div id="tokens_verify_pre" class="div-hidden">\n';
+	r += '<div id="tokens_verify_div" class="div-hidden">\n';
 		r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
 			r += '<tr>\n';
 				r +='<th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th>\n';

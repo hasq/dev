@@ -46,7 +46,7 @@ input {
 }
 
 input[type='text'], input[type='password'] {
-	font: 110% monospace !important;
+	font: 14px monospace !important;
 	border: 1px solid #DDDDDD;
 	width: 100%;
 }
@@ -62,7 +62,7 @@ input[type='text'], input[type='password'] {
     white-space: pre;
     overflow-x: auto;
     overflow-y: auto;
-    font: 120% monospace;
+    font: 14px monospace;
 }
 
 .ui-progressbar {

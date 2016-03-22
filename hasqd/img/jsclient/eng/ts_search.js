@@ -146,6 +146,9 @@ function searchGetFile(data)
     if( data.length<12 || data.substr(0,12) == "REQ_PATH_BAD" )
     {
         console.log(o.folders[0]+" : done");
+		
+		$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
+		
         o.folders.shift(); // remove processed date
         o.number = 0;
     }
@@ -199,4 +202,7 @@ function searchProcessRec(srec)
     var st = engGetTokensStatus(lr, nr);
 
     console.log("searchProcessRec ["+srec+"] -> "+st);
+	
+	//var o = glSearch.o;
+	//o.progr(2,o.current_name,o.current_file);
 }

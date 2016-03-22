@@ -77,12 +77,7 @@ function widSetDefaultDb(dbHash)
 function widShowDBError()
 {
     // displays error message and blocks all UI;
-    var f = function ()
-    {
-        location.reload(true);
-    }
-
-    widModalWindow('Database is not accessible!<br/>Please, reload the page.', f);
+    widModalWindow('Database is not accessible!<br/>Please, reload the page.');
 }
 
 function widShowPwdGuessTime(d)

@@ -312,7 +312,7 @@ function doc_init() {
 	$('#logo_span').find('img').attr('src', imgLogoBlue);
 
 	$('#server_host').html('' + location.host);
-	$('#tokens_verify_pre').hide();
+	$('#tokens_verify_div').hide();
 	setTimeout(widRefreshButtonClick, 2000);
 }
 
