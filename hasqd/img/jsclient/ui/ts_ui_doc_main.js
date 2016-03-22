@@ -38,10 +38,10 @@ var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys.p
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
 var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
-var imgBtnStop  = '<img width="40px" height="40px" src="img/btn_stop.png"><br/>Stop';
-var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give away';
+var imgBtnStop  = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
+var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
-var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>View';
+var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
 
 var allImages = [
     imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,

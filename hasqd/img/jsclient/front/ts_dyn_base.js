@@ -1134,12 +1134,33 @@ function widSearchButtonClick()
 
         );
 
-    var progr = function ()  {};
-    var dates = engSearchClick(fromDate, toDate, progr);
+    var dates = engSearchClick(fromDate, toDate, widSearchProgress);
 
     // set new dates FIXME
 
 }
+
+function widSearchProgress(fn, data, dat2)
+//  1   Set button according to g_searchOn
+//  2   Show current file
+//  3   Update results
+{
+    if( fn==1 )
+    {
+        if( data ) {} // set Button to "Searching/Stop"
+        else {} // set Button to "Start"
+        return;
+    }
+
+    if( fn==2 )
+    {
+        var name = data.substr(12);
+        var x = "Block: <a href=\"/file "+dat2+"\">"+name+"</a>";
+        $('#current_slice_span').html(x);
+        return;
+    }
+}
+
 
 function widEmptyTab()
 {

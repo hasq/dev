@@ -453,7 +453,7 @@ function widGetHTMLSearchTab()
 		r += '<tr>\n';
 		{
 			r += '<td class="td-info" style="text-align: left; vertical-align: middle;" />\n';
-				r += '<label for="current_slice_span">Processing file:&nbsp</label>';
+				r += '<label for="current_slice_span">&gt;&nbsp;</label>';
 				r += '<span id="current_slice_span"></span>';
 		}
 		r += '</tr>\n';

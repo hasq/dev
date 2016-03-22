@@ -30,25 +30,13 @@ function engSearchStart(fromDate, toDate, progr)
     // start process
     setTimeout(processDates, 10);
 
-    var retObj =
-    {
-    from : fromDate,
-    to : toDate
-    };
-
-    return retObj;
+    return { from : fromDate, to : toDate };
 }
 
 function engSearchStop()
 {
     var o = glSearch.o;
-    var retObj =
-    {
-    from : o.fromDate,
-    to : o.toDate
-    };
-
-    return retObj;
+    return { from : o.fromDate, to : o.toDate };
 }
 
 function engGetDateRangeFolders(fromDate, toDate)
@@ -134,19 +122,18 @@ function processDates()
         return processDone();
 
     // pick the first date
-    var current_name = o.folders[0];
+    o.current_name = o.folders[0];
 
     // select the next number
     ++o.number;
 
-    current_name = current_name + o.number;
+    o.current_name = o.current_name + o.number;
 
-    var current_file = "/smd.db"+ current_name + ".smd.txt";
+    o.current_file = "/smd.db"+ o.current_name + ".smd.txt";
 
-    $('#current_slice_span').html(current_name + ".smd.txt");
+    ///$('#current_slice_span').html(current_name + ".smd.txt");
 
-    ajxSendCommand(current_file, searchGetFile, hasqLogo);
-
+    ajxSendCommand(o.current_file, searchGetFile, hasqLogo);
 }
 
 function searchGetFile(data)
@@ -172,6 +159,7 @@ function searchProcessFile(data)
 {
     var o = glSearch.o;
     console.log("processing file " + o.folders[0]);
+    o.progr(2,o.current_name,o.current_file);
 	
     var recs = data.split('\n');
 
@@ -181,9 +169,9 @@ function searchProcessFile(data)
     {
         var s = recs[i];
         if( s.length < 10 ) continue;
-        ///searchProcessRec(s);
+
         var a = s.split(' ');
-        if( a.length < 3 ) continue; // there was the error "lingth"
+        if( a.length < 3 ) continue;
 
         if( !(a[1] in list) )
         {
@@ -204,5 +192,11 @@ function searchProcessFile(data)
 
 function searchProcessRec(srec)
 {
-    console.log("searchProcessRec ["+srec+"]");
+    var lr = engGetRespLast(srec);
+
+    var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+
+    var st = engGetTokensStatus(lr, nr);
+
+    console.log("searchProcessRec ["+srec+"] -> "+st);
 }
