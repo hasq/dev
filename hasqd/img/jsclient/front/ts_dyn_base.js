@@ -909,15 +909,48 @@ function widReceiveButtonClick()
         );
 
     var transKeys = engGetTransKeys(rawTransKeys);
-	
 	var tokText = [glLastRec.r] || [''];
     var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
-	if (transKeys[0].s === tok || transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
+	if (transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
+	{
 		textArea($TokenArea).set(tok);
+		widReceiveKey(transKeys);
+	}
 	else
-		textArea($TokenArea).clear();
-	
+	{
+		var cb = function (data)
+		{
+			var r = engGetResp(data);
+
+			if (r.msg !== 'OK')
+				return widModalWindow(r.msg + ': ' + r.cnt);
+
+			var lr = engGetRespLast(data);
+
+			if (lr.msg === 'ERROR')
+				return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
+			
+			var d = lr.d;
+			var dLen = d.length;
+
+			if (d && d.charAt(0) === '[' && d.charAt(dLen-1) === ']' && engGetHash(d.substring(1, dLen-1), glCurrentDB.hash) === transKeys[0].s)
+				textArea($TokenArea).set(d.substring(1, dLen-1));				
+			else
+				textArea($TokenArea).set(transKeys[0].s);
+			
+			widReceiveKey(transKeys);
+		}
+		
+		var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + transKeys[0].s;
+
+		ajxSendCommand(cmd, cb, hasqLogo);		
+	}
+
+}
+
+function widReceiveKey(keys)
+{
     var cb = function (data)
     {
         var r = engGetResp(data);
@@ -932,17 +965,14 @@ function widReceiveButtonClick()
 
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
-        lr.st = engGetTokensStatus(lr, nr);
-        transKeys[0].n = lr.n;
+        keys[0].n = lr.n;
 		
-        widTokensTakeover(transKeys);
+        widTokensTakeover(keys);
     }
 
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + transKeys[0].s;
+    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + keys[0].s;
 
     ajxSendCommand(cmd, cb, hasqLogo);
-	
-	
 }
 
 function widTokensTakeover(keys)
@@ -985,7 +1015,6 @@ function widInstantReceive(keys)
 
     var cb2 = function (data)
     {
-		console.log('2');
         var resp = engGetResp(data);
         
 		if (resp.msg === 'ERROR') 
@@ -1146,7 +1175,7 @@ function widSearchProgress(fn, data, dat2)
 //  2   Show current file
 //  3   Update results
 {
-	var width = $('#mine_search_results_div').innerWidth();
+	var width = $('#search_inner_tabs_ul').innerWidth();
 	$('#mine_search_results_div').css('max-width', width);
 	
     if( fn==1 )

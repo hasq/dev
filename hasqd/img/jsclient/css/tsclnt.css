@@ -482,13 +482,13 @@ textarea#receive_keys_textarea
 {
     text-align: center;
 }
-
+/*
 .ui-tabs-active
 {
     box-shadow: 0 0 2px 0 #DDDDDD;
     background: #FCFCFC;
 }
-
+*/
 .welcome-p 
 {
     padding: 6px;
@@ -752,8 +752,10 @@ textarea#receive_keys_textarea
 	border-right-width: 0;
 	border-left-width: 1px;
 }
+
+/*
 .ui-tabs {
-	position: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	position: relative;
 }
 .ui-tabs .ui-tabs-nav {
 	margin: 0;
@@ -791,6 +793,8 @@ textarea#receive_keys_textarea
 	border-width: 0;
 	background: none;
 }
+
+*/
 
 /* Component containers
 ----------------------------------*/
@@ -970,13 +974,66 @@ textarea#receive_keys_textarea
 .ui-widget-overlay {
 	background: #aaaaaa;
 	opacity: .3;
-	filter: Alpha(Opacity=30); /* support: IE8 */
+	filter: Alpha(Opacity=30);
 }
 .ui-widget-shadow {
 	margin: 0px 0 0 0px;
 	padding: 5px;
 	background: #666666;
 	opacity: .3;
-	filter: Alpha(Opacity=30); /* support: IE8 */
+	filter: Alpha(Opacity=30); 
 	border-radius: 8px;
+}
+
+
+/* vertical*/
+.ui-tabs.ui-tabs-vertical {
+    padding: 0;
+    width: 42em;
+}
+.ui-tabs.ui-tabs-vertical .ui-widget-header {
+    border: none;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+    float: left;
+    width: 10em;
+    background: #CCC;
+    border-radius: 4px 0 0 4px;
+    border-right: 1px solid gray;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+    clear: left;
+    width: 100%;
+    margin: 0.2em 0;
+    border: 1px solid gray;
+    border-width: 1px 0 1px 1px;
+    border-radius: 4px 0 0 4px;
+    overflow: hidden;
+    position: relative;
+    right: -2px;
+    z-index: 2;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+    display: block;
+    width: 100%;
+    padding: 0.6em 1em;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+    cursor: pointer;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    margin-bottom: 0.2em;
+    padding-bottom: 0;
+    border-right: 1px solid white;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+    margin-bottom: 10px;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+    float: left;
+    width: 28em;
+    border-left: 1px solid gray;
+    border-radius: 0;
+    position: relative;
+    left: -1px;
 }
