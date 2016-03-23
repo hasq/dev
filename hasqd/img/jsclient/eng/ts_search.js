@@ -147,7 +147,7 @@ function searchGetFile(data)
     {
         console.log(o.folders[0]+" : done");
 		
-		$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
+		///$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
 		
         o.folders.shift(); // remove processed date
         o.number = 0;
@@ -202,7 +202,59 @@ function searchProcessRec(srec)
     var st = engGetTokensStatus(lr, nr);
 
     console.log("searchProcessRec ["+srec+"] -> "+st);
-	
-	//var o = glSearch.o;
-	//o.progr(2,o.current_name,o.current_file);
+
+    if( st == "PWD_WRONG" ) return;
+
+    var r = {};
+    r.s = nr.s;
+    r.n = lr.n;
+    r.raw = "";
+    r.check = st;
+    r.state = 0;
+
+	var v = glSearch.result;
+    var index = v.length;
+    v[index] = r;
+
+    setTimeout(function(){searchValidate1(index)},1);
+}
+
+function searchValidate1(index)
+{
+	var v = glSearch.result;
+    var res = v[index];
+
+    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
+
+    ajxSendCommand(cmd, function(data){searchValidate2(index,data)}, hasqLogo);
+}
+
+function searchValidate2(index,data)
+{
+    var resp = engGetResp(data);
+
+    if (resp.msg === 'ERROR') return;
+    if (resp.msg === 'IDX_NODN') return;
+
+    var lr = engGetRespLast(data);
+    var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var st = engGetTokensStatus(lr, nr);
+
+    var res = glSearch.result[index];
+
+    res.n = lr.n;
+    
+    switch (st) 
+    {
+        case 'OK':        res.state = 1; break;
+        case 'PWD_SNDNG': res.state = 2; break;
+        case 'PWD_RCVNG': res.state = 3; break;
+        case 'PWD_WRONG': res.state = 4; break;
+    }
+
+    glSearch.o.progr(3);
+
+    // FIXME find RawDN update result and request result update again
+    //var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
+    //ajxSendCommand(cmd, function(data){searchValidate3(index,data)}, hasqLogo);
 }

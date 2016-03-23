@@ -504,7 +504,9 @@ function widGetHTMLSearchTab()
 					{
 						r += '<td style="text-align: center;"/>\n';
 						{
-							r += '<button id="search_button" class="show-keys-button-off" onclick="return widSearchButtonClick($(this));">' + imgBtnSearch + '</button>\n';
+							r += '<button id="search_button" class="show-keys-button-off" '
+                                +'onclick="return widSearchButtonClick($(this));">' 
+                                + imgBtnSearch + '</button>\n';
 						}
 					}
 					r += '</tr>\n';					
@@ -534,12 +536,12 @@ function widGetHTMLInSearchTabs()
 	tabs[tabs.length] = item;
 	
 	item = {};
-	item.title = 'Receivable';
+	item.title = 'To come';
 	item.data = widGetHTMLReceivableTab();
 	tabs[tabs.length] = item;
 
 	item = {};
-	item.title = 'Old';
+	item.title = 'Past';
 	item.data = widGetHTMLOldTab();
 	tabs[tabs.length] = item;
 	

@@ -7,7 +7,7 @@ var glPassword = '';
 var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId;
-var glSearch = { isOn : false, o : {}, result : {} };
+var glSearch = { isOn : false, o : {}, result : [] };
 
 
 var imgMsgWait = 'img/msg_wait.gif';

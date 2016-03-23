@@ -1154,8 +1154,28 @@ function widSearchProgress(fn, data, dat2)
         $('#current_slice_span').html(x);
         return;
     }
+
+    if( fn==3 )
+    {
+		$('#mine_search_results_div').html(widSearchUpdate());
+        return;
+    }
 }
 
+function widSearchUpdate()
+{
+    var r = glSearch.result;
+
+    var t = "";
+
+    for( var i in r )
+    {
+        var x = r[i];
+        t += x.s + " Status:"+x.state+'\n';
+    }
+
+    return t;
+}
 
 function widEmptyTab()
 {
