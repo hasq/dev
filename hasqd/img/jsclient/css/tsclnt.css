@@ -876,7 +876,7 @@ textarea#receive_keys_textarea
 
 /* Interaction Cues
 ----------------------------------*/
-/* 
+ 
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
@@ -928,7 +928,7 @@ textarea#receive_keys_textarea
 .ui-state-disabled .ui-icon {
 	filter:Alpha(Opacity=35);
 }
- */
+ 
 /* Icons
 ----------------------------------*/
 

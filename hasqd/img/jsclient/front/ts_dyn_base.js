@@ -905,13 +905,6 @@ function widReceiveButtonClick()
     var $PwdInp = $('#password_input');
     var rawTransKeys = $('#receive_keys_textarea').val();
 
-    if (typeof glLastRec.st === 'undefined')
-        return widModalWindow('Enter token name...', function ()
-        {
-            $TokenArea.focus()
-        }
-        );
-
     if (glLastRec.st === 'IDX_NODN')
         return widModalWindow('Token is free</br>You can assign it...');
 
@@ -1140,6 +1133,9 @@ function widSearchProgress(fn, data, dat2)
 //  2   Show current file
 //  3   Update results
 {
+	var width = $('#mine_search_results_div').innerWidth();
+	$('#mine_search_results_div').css('max-width', width);
+	
     if( fn==1 )
     {
         if( data ) {} // set Button to "Searching/Stop"
@@ -1154,7 +1150,7 @@ function widSearchProgress(fn, data, dat2)
         $('#current_slice_span').html(x);
         return;
     }
-
+	
     if( fn==3 )
     {
 		$('#mine_search_results_div').html(widSearchUpdate());
