@@ -1153,7 +1153,7 @@ function widSearchProgress(fn, data, dat2)
 	
     if( fn==3 )
     {
-		$('#mine_search_results_div').html(widSearchUpdate());
+	$('#mine_search_results_div').html(widSearchUpdate());
         return;
     }
 }
@@ -1167,7 +1167,7 @@ function widSearchUpdate()
     for( var i in r )
     {
         var x = r[i];
-        t += x.s + " Status:"+x.state+'\n';
+        t += "xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx "+ x.s + " Status:"+x.state+'\n';
     }
 
     return t;
