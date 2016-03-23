@@ -11,10 +11,9 @@ function textArea($textarea)
         {
             return $textarea.val(data);
         },
-        clear : function (data)
+        clear : function ()
         {
-            data = data || '';
-            return $textarea.val(data);
+            return $textarea.val('');
         },
         clearExcept : function ($exceptTextarea)
         {
@@ -357,7 +356,11 @@ function widPasswordOninput()
 
     glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, nr) : glLastRec.st = 'PWD_WRONG';
 
-    widShowPwdInfo(glLastRec.st);
+    if (glPassword) 
+		widShowPwdInfo(glLastRec.st);
+	else
+		widShowPwdInfo();
+	
     widToggleUI(glLastRec, glPassword);
 }
 
@@ -378,29 +381,6 @@ function widPasswordEyeClick($obj)
         $PwdInp.attr('type', 'text');
         $Eye.attr('src', imgEyeClosed);
         $Eye.attr('title', 'Mask password');
-    }
-}
-
-function widTokensTakeover(keys)
-{
-    keys = engGetTitleKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
-
-    switch (keys[0].prcode)
-    {
-    case '23132':
-        widInstantReceive(keys);
-        break;
-    case '23141':
-        widBlockingReceiveOnHold(keys);
-        break;
-    case '231':
-        widBlockingReceiveFull(keys);
-        break;
-    case '232':
-        widBlockingReceiveRevert(keys);
-        break;
-    default:
-        return widModalWindow('Bad TransKeys!');
     }
 }
 
@@ -898,12 +878,18 @@ function widReceiveTabButtonClick($obj)
 
 }
 
+
+function widReceiveTextareaOninput()
+{
+    widToggleUI(glLastRec, glPassword);
+}
+
 function widReceiveButtonClick()
 {
     var $TransKeysArea = $('#receive_keys_textarea');
     var $TokenArea = $('#token_text_textarea');
     var $PwdInp = $('#password_input');
-    var rawTransKeys = $('#receive_keys_textarea').val();
+    var rawTransKeys = $TransKeysArea.val();
 
     if (glLastRec.st === 'IDX_NODN')
         return widModalWindow('Token is free</br>You can assign it...');
@@ -922,12 +908,16 @@ function widReceiveButtonClick()
         }
         );
 
-    var tokText = [glLastRec.r];
-
     var transKeys = engGetTransKeys(rawTransKeys);
-    var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash);
-    tok = tok[0].replace(/\[|\]/g, '');
+	
+	var tokText = [glLastRec.r] || [''];
+    var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
+	if (transKeys[0].s === tok || transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
+		textArea($TokenArea).set(tok);
+	else
+		textArea($TokenArea).clear();
+	
     var cb = function (data)
     {
         var r = engGetResp(data);
@@ -943,25 +933,39 @@ function widReceiveButtonClick()
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
         lr.st = engGetTokensStatus(lr, nr);
-        transKeys[0].n = (transKeys[0].prcode == '231') ? lr.n - 1 : lr.n;
-        textArea($TokenArea).clear(tok);
-
+        transKeys[0].n = lr.n;
+		
         widTokensTakeover(transKeys);
     }
 
     var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + transKeys[0].s;
 
-    var f = function ()
-    {
-        ajxSendCommand(cmd, cb, hasqLogo);
-    }
-
-    setTimeout(f);
+    ajxSendCommand(cmd, cb, hasqLogo);
+	
+	
 }
 
-function widReceiveTextareaOninput()
+function widTokensTakeover(keys)
 {
-    widToggleUI(glLastRec, glPassword);
+    keys = engGetTitleKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+
+    switch (keys[0].prcode)
+    {
+    case '23132':
+        widInstantReceive(keys);
+        break;
+    case '23141':
+        widBlockingReceiveOnHold(keys);
+        break;
+    case '231':
+        widBlockingReceiveFull(keys);
+        break;
+    case '232':
+        widBlockingReceiveRevert(keys);
+        break;
+    default:
+        return widModalWindow('Bad TransKeys!');
+    }
 }
 
 function widInstantReceive(keys)
@@ -981,14 +985,23 @@ function widInstantReceive(keys)
 
     var cb2 = function (data)
     {
+		console.log('2');
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+        
+		if (resp.msg === 'ERROR') 
+			return widModalWindow(resp.msg + ': ' + resp.cnt);
+		
+		return widTokenTextOninput();
     }
 
     var cb1 = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
+        
+		if (resp.msg === 'ERROR') 
+			return widModalWindow(resp.msg + ': ' + resp.cnt);
+		
+		ajxSendCommand(addCmd2, cb2, hasqLogo);
     }
 
     ajxSendCommand(addCmd1, cb1, hasqLogo);
@@ -1015,13 +1028,13 @@ function widBlockingReceiveOnHold(keys)
 
 function widBlockingReceiveFull(keys)
 {
-    var n2 = keys[0].n + 2;
+    var n1 = keys[0].n + 1;
     var s = keys[0].s;
-    var k2 = keys[0].k2;
-    var g2 = keys[0].g2;
-    var o2 = keys[0].o2;
+    var k1 = keys[0].k2;
+    var g1 = keys[0].g2;
+    var o1 = keys[0].o2;
 
-    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
     var cb = function (data)
     {
@@ -1153,7 +1166,7 @@ function widSearchProgress(fn, data, dat2)
 	
     if( fn==3 )
     {
-	$('#mine_search_results_div').html(widSearchUpdate());
+		$('#mine_search_results_div').html(widSearchUpdate());
         return;
     }
 }
