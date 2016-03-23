@@ -1195,7 +1195,14 @@ function widSearchProgress(fn, data, dat2)
 	
     if( fn==3 )
     {
-		$('#mine_search_results_div').html(widSearchUpdate());
+        // update widgit only if required
+        var newstr = widSearchUpdate();
+        var o = $('#mine_search_results_div');
+		var oldstr = o.html();
+
+        if( newstr.length != oldstr.length || newstr != oldstr )
+		  o.html(newstr);
+
         return;
     }
 }
