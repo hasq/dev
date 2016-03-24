@@ -186,11 +186,11 @@ function widGetHTMLInitialDataArea()
                 {
                     r += '<tr>\n';
                     {
-                        r += '<td style="width: 20px; text-align: center">\n';
+                        r += '<td style="width: 28px; text-align: right">\n';
                         r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
                         r += '<td style="width: 250px; text-align: center"/>\n';
                         r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
-                        r += '<td style="width: 20px; text-align: center">\n';
+                        r += '<td style="width: 28px; text-align: left;">\n';
                         r += widGetHTMLSpanImg('password_pic_span');
                     }
                     r += '</tr>\n';

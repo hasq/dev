@@ -262,7 +262,7 @@ function widToggleUI(lr, pwd)
 
     if (tokState === 'PWD_SNDNG')
     {
-        widShowKeysTab().onhold(true);
+        widShowKeysTab().release(true);
         widReceiveTab().readonly(false);
 
         if (widReceiveTab().isTransKeys())
@@ -722,45 +722,17 @@ function widShowOnHoldButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        var k2,
-        line,
-        mergedKeys;
-
         if (glLastRec.st === 'OK')
         { // Blocking Send
             var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
-            line = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
+            var line = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
 
             textArea($KeyArea).add(line);
 
-            mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+            var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
             line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
-
-            textArea($KeyArea).add(line);
-
-            if (0)
-            {
-                line = glLastRec.s + '\u0020' + k1 + '\u0020';
-                textArea($KeyArea).add(line);
-
-                mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-                line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
-
-                textArea($KeyArea).add(line);
-            }
-        }
-
-        if (glLastRec.st === 'PWD_SNDNG')
-        {
-            k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            line = glLastRec.s + '\u0020' + k1 + '\u0020';
-
-            textArea($KeyArea).add(line);
-
-            mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-            line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '231';
 
             textArea($KeyArea).add(line);
         }
@@ -791,8 +763,8 @@ function widShowReleaseButtonClick($obj)
         if (glLastRec.st === 'IDX_NODN')
             return widModalWindow('Create token first...');
 
-        if (!widIsPassword())
-            return widModalWindow('Enter master key...', function ()
+        if (!widIsPassword() || glLastRec.st === 'PWD_WRONG')
+            return widModalWindow('Enter valid master key...', function ()
             {
                 $PwdInp.focus()
             }
@@ -800,33 +772,35 @@ function widShowReleaseButtonClick($obj)
 
         if (glLastRec.st === 'OK')
             return widModalWindow('Token is fully accessible.');
-
-        if (glLastRec.st !== 'PWD_RCVNG')
-        {
-            $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
-            return widModalWindow('Token is unaccessible</br>or incorrect master key.', function ()
-            {
-                $PwdInp.focus()
-            }
-            );
-        }
     }
 
     $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        var n2 = glLastRec.n + 2;
-        var k2 = engGetKey(n2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        var line = glLastRec.s + '\u0020' + k2 + '\u0020';
+		var k;
+		var prCode;
+		
+		if (glLastRec.st === 'PWD_RCVNG')
+		{
+			k = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+			prCode = '232';
+		}
 
-        textArea($KeyArea).add(line);
+		if (glLastRec.st === 'PWD_SNDNG')
+		{
+			var k = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+			prCode = '231';
+		}	
 
-        var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '232';
+		var line = glLastRec.s + '\u0020' + k + '\u0020';
+		textArea($KeyArea).add(line);
 
-        textArea($KeyArea).add(line);
-    }
+		var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + prCode;
+
+		textArea($KeyArea).add(line);		
+	}
 }
 
 function widReceiveTab()
@@ -1059,9 +1033,9 @@ function widBlockingReceiveFull(keys)
 {
     var n1 = keys[0].n + 1;
     var s = keys[0].s;
-    var k1 = keys[0].k2;
-    var g1 = keys[0].g2;
-    var o1 = keys[0].o2;
+    var k1 = keys[0].k1;
+    var g1 = keys[0].g1;
+    var o1 = keys[0].o1;
 
     var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
