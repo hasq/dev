@@ -225,7 +225,7 @@ function widToggleUI(lr, pwd)
     {
         widReceiveTab().readonly(false);
 
-        if (widReceiveTab().isTransKeys() && pwd)
+        if (widReceiveTab().isKeys() && pwd)
             widReceiveTab().disable(false);
     }
 
@@ -239,7 +239,7 @@ function widToggleUI(lr, pwd)
     {
         widReceiveTab().readonly(false);
 
-        if (widReceiveTab().isTransKeys())
+        if (widReceiveTab().isKeys())
             widReceiveTab().disable(false);
 
         var newData = engGetDataValToRecord(widSetDataTab().val()) || '';
@@ -256,7 +256,7 @@ function widToggleUI(lr, pwd)
     {
         widReceiveTab().readonly(false);
 
-        if (widReceiveTab().isTransKeys())
+        if (widReceiveTab().isKeys())
             widReceiveTab().disable(false);
     }
 
@@ -265,7 +265,7 @@ function widToggleUI(lr, pwd)
         widShowKeysTab().release(true);
         widReceiveTab().readonly(false);
 
-        if (widReceiveTab().isTransKeys())
+        if (widReceiveTab().isKeys())
             widReceiveTab().disable(false);
     }
 
@@ -274,30 +274,33 @@ function widToggleUI(lr, pwd)
         widShowKeysTab().release(true);
         widReceiveTab().readonly(false);
 
-        if (widReceiveTab().isTransKeys())
+        if (widReceiveTab().isKeys())
             widReceiveTab().disable(false);
     }
 }
 
 function widTokenTextOninput(delay)
 { // Events when tokens value changed.
-	delay = +delay || 0;
-	
+    delay = +delay || 0;
     glLastRec = {};
     clearTimeout(glTimerId)
-    widButtonsTable().toggleOff(); 
     widShowPwdInfo();
     widShowSearch();
 
     var $TokText = $('#token_text_textarea');
-    textArea().clearExcept($TokText);
+
+    if (0)
+        textArea().clearExcept($TokText);
 
     var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
     widShowToken(tok);
 
+    if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
+        widEmptyTab().show();
+
     if (!tok)
-		return widWelcomeTab().show();
-	
+        return widPasswordOninput();
+
     var cb = function (data)
     {
         var resp = engGetResp(data);
@@ -308,33 +311,31 @@ function widTokenTextOninput(delay)
             return widModalWindow(resp.msg + ': ' + data);
         }
 
-        //widButtonsTable().toggleOff();
-
         if (resp.msg === 'IDX_NODN')
         {
             glLastRec.st = resp.msg;
             glLastRec.s = tok;
-            widCreateTab().show();
+
+            if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
+                widCreateTab().show();
         }
         else
         {
             glLastRec = engGetRespLast(data);
-
-            var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-
-            glLastRec.st = engGetTokensStatus(glLastRec, nr);
+            glLastRec.st = 'PWD_WRONG';
             widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
-            widSetDataTab().show();
-        }
 
+            if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
+                widSetDataTab().show();
+        }
+        console.log(glLastRec.n);
         widShowSearch().show(resp.msg);
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
     }
-	
-    widEmptyTab().show();
+
     widShowSearch().show();
-	
+
     var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
 
     return engSendDeferredRequest(cmd, cb, delay);
@@ -345,22 +346,22 @@ function widPasswordOninput()
 {
     // Events when passwords value changed.
     var $PwdInp = $('#password_input');
-
     glPassword = $PwdInp.val() || '';
+
     widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 
-    if (glLastRec.st == 'IDX_NODN' || typeof glLastRec.st == 'undefined')
+    if (glLastRec.st === 'IDX_NODN' || typeof glLastRec.st === 'undefined')
         return widToggleUI(glLastRec, glPassword);
 
-    var nr = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var rec = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
-    glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, nr) : glLastRec.st = 'PWD_WRONG';
+    glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, rec) : glLastRec.st = 'PWD_WRONG';
 
-    if (glPassword) 
-		widShowPwdInfo(glLastRec.st);
-	else
-		widShowPwdInfo();
-	
+    if (glPassword)
+        widShowPwdInfo(glLastRec.st);
+    else
+        widShowPwdInfo();
+
     widToggleUI(glLastRec, glPassword);
 }
 
@@ -431,6 +432,10 @@ function widCreateTab()
         {
             $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
             $Tabs.tabs('option', 'active', 1);
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 1) ? true : false;
         }
     }
 
@@ -459,7 +464,7 @@ function widCreateButtonClick()
     {
         var r = engGetResp(data);
         if (r.msg == 'OK')
-            widTokenTextOninput(); //update token info after create;
+            widTokenTextOninput(500); //update token info after create;
         else
             widModalWindow(r.msg + ': ' + r.cnt);
     }
@@ -501,6 +506,10 @@ function widSetDataTab()
         val : function ()
         {
             return textArea($Textarea).val();
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 2) ? true : false;
         }
     }
 
@@ -542,7 +551,7 @@ function widSetDataButtonClick()
     {
         var r = engGetResp(d);
         if (r.msg == 'OK')
-            widTokenTextOninput();
+            widTokenTextOninput(500);
         else
             widModalWindow(r.msg + ': ' + r.cnt);
     }
@@ -587,7 +596,12 @@ function widShowKeysTab()
         {
             $Tabs.tabs('option', 'active', 3);
             $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 3) ? true : false;
         }
+
     }
 
     return retObj;
@@ -598,12 +612,12 @@ function widShowKeysTabButtonClick($obj)
     widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
-    
-	var $KeyArea = $('#show_keys_textarea');
+
+    var $KeyArea = $('#show_keys_textarea');
     textArea($KeyArea).clear();
-	
+
     if (typeof glLastRec.st === 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widWelcomeTab().show();
+        return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widEmptyTab().show();
 
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widCreateTab().show();
@@ -778,29 +792,29 @@ function widShowReleaseButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-		var k;
-		var prCode;
-		
-		if (glLastRec.st === 'PWD_RCVNG')
-		{
-			k = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-			prCode = '232';
-		}
+        var k;
+        var prCode;
 
-		if (glLastRec.st === 'PWD_SNDNG')
-		{
-			var k = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-			prCode = '231';
-		}	
+        if (glLastRec.st === 'PWD_RCVNG')
+        {
+            k = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            prCode = '232';
+        }
 
-		var line = glLastRec.s + '\u0020' + k + '\u0020';
-		textArea($KeyArea).add(line);
+        if (glLastRec.st === 'PWD_SNDNG')
+        {
+            var k = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            prCode = '231';
+        }
 
-		var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-		line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + prCode;
+        var line = glLastRec.s + '\u0020' + k + '\u0020';
+        textArea($KeyArea).add(line);
 
-		textArea($KeyArea).add(line);		
-	}
+        var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + prCode;
+
+        textArea($KeyArea).add(line);
+    }
 }
 
 function widReceiveTab()
@@ -824,10 +838,15 @@ function widReceiveTab()
         {
             $Tabs.tabs('option', 'active', 4);
         },
-        isTransKeys : function ()
+        isKeys : function ()
         {
             return engIsTransKeys(textArea($Textarea).val());
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 4) ? true : false;
         }
+
     }
 
     return retObj;
@@ -839,11 +858,11 @@ function widReceiveTabButtonClick($obj)
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
-	var $KeyArea = $('#show_keys_textarea');
+    var $KeyArea = $('#show_keys_textarea');
     textArea($KeyArea).clear();
-	
+
     if (typeof glLastRec.st === 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widWelcomeTab().show();
+        return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widEmptyTab().show();
 
     if (glLastRec.st === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widCreateTab().show();
@@ -851,7 +870,6 @@ function widReceiveTabButtonClick($obj)
     return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widSetDataTab().show();
 
 }
-
 
 function widReceiveTextareaOninput()
 {
@@ -883,43 +901,43 @@ function widReceiveButtonClick()
         );
 
     var transKeys = engGetTransKeys(rawTransKeys);
-	var tokText = [glLastRec.r] || [''];
+    var tokText = [glLastRec.r] || [''];
     var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
-	if (transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
-	{
-		textArea($TokenArea).set(tok);
-		widReceiveKey(transKeys);
-	}
-	else
-	{
-		var cb = function (data)
-		{
-			var r = engGetResp(data);
+    if (transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
+    {
+        textArea($TokenArea).set(tok);
+        widReceiveKey(transKeys);
+    }
+    else
+    {
+        var cb = function (data)
+        {
+            var r = engGetResp(data);
 
-			if (r.msg !== 'OK')
-				return widModalWindow(r.msg + ': ' + r.cnt);
+            if (r.msg !== 'OK')
+                return widModalWindow(r.msg + ': ' + r.cnt);
 
-			var lr = engGetRespLast(data);
+            var lr = engGetRespLast(data);
 
-			if (lr.msg === 'ERROR')
-				return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
-			
-			var d = lr.d;
-			var dLen = d.length;
+            if (lr.msg === 'ERROR')
+                return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
 
-			if (d && d.charAt(0) === '[' && d.charAt(dLen-1) === ']' && engGetHash(d.substring(1, dLen-1), glCurrentDB.hash) === transKeys[0].s)
-				textArea($TokenArea).set(d.substring(1, dLen-1));				
-			else
-				textArea($TokenArea).set(transKeys[0].s);
-			
-			widReceiveKey(transKeys);
-		}
-		
-		var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + transKeys[0].s;
+            var d = lr.d;
+            var dLen = d.length;
 
-		ajxSendCommand(cmd, cb, hasqLogo);		
-	}
+            if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === transKeys[0].s)
+                textArea($TokenArea).set(d.substring(1, dLen - 1));
+            else
+                textArea($TokenArea).set(transKeys[0].s);
+
+            widReceiveKey(transKeys);
+        }
+
+        var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + transKeys[0].s;
+
+        ajxSendCommand(cmd, cb, hasqLogo);
+    }
 
 }
 
@@ -937,10 +955,8 @@ function widReceiveKey(keys)
         if (lr.msg === 'ERROR')
             return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
 
-        var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-
         keys[0].n = lr.n;
-		
+
         widTokensTakeover(keys);
     }
 
@@ -987,24 +1003,18 @@ function widInstantReceive(keys)
     var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
     var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-    var cb2 = function (data)
-    {
-        var resp = engGetResp(data);
-        
-		if (resp.msg === 'ERROR') 
-			return widModalWindow(resp.msg + ': ' + resp.cnt);
-		
-		return widTokenTextOninput();
-    }
-
     var cb1 = function (data)
     {
+        var cb2 = function (data)
+        {
+            var resp = engGetResp(data);
+            console.log(data);
+            (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
+        }
+
         var resp = engGetResp(data);
-        
-		if (resp.msg === 'ERROR') 
-			return widModalWindow(resp.msg + ': ' + resp.cnt);
-		
-		ajxSendCommand(addCmd2, cb2, hasqLogo);
+        console.log(data);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
     }
 
     ajxSendCommand(addCmd1, cb1, hasqLogo);
@@ -1023,7 +1033,8 @@ function widBlockingReceiveOnHold(keys)
     var cb = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
     }
 
     ajxSendCommand(addCmd, cb, hasqLogo);
@@ -1042,7 +1053,8 @@ function widBlockingReceiveFull(keys)
     var cb = function (data)
     {
         var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
     }
 
     ajxSendCommand(addCmd, cb, hasqLogo);
@@ -1063,15 +1075,17 @@ function widBlockingReceiveRevert(keys)
     var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
     var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-    var cb2 = function (data)
-    {
-        var resp = engGetResp(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
-    }
-
     var cb1 = function (data)
     {
+        var cb2 = function (data)
+        {
+            var resp = engGetResp(data);
+            console.log(data);
+            (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
+        }
+
         var resp = engGetResp(data);
+        console.log(data);
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
     }
 
@@ -1093,6 +1107,10 @@ function widSearchTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 5);
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 5) ? true : false;
         }
     }
 
@@ -1105,11 +1123,11 @@ function widSearchTabButtonClick($obj)
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
 
-	var $KeyArea = $('#show_keys_textarea');
+    var $KeyArea = $('#show_keys_textarea');
     textArea($KeyArea).clear();
 
     if (typeof glLastRec.st == 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widWelcomeTab().show();
+        return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widEmptyTab().show();
 
     if (glLastRec.st == 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widCreateTab().show();
@@ -1149,33 +1167,37 @@ function widSearchProgress(fn, data, dat2)
 //  2   Show current file
 //  3   Update results
 {
-	var width = $('#search_inner_tabs_ul').innerWidth();
-	$('#mine_search_results_div').css('max-width', width);
-	
-    if( fn==1 )
+    var width = $('#search_inner_tabs_ul').innerWidth();
+    $('#mine_search_results_div').css('max-width', width);
+
+    if (fn == 1)
     {
-        if( data ) {} // set Button to "Searching/Stop"
-        else {} // set Button to "Start"
+        if (data)
+        {}
+        // set Button to "Searching/Stop"
+        else
+        {}
+        // set Button to "Start"
         return;
     }
 
-    if( fn==2 )
+    if (fn == 2)
     {
         var name = data.substr(12);
-        var x = "Block: <a href=\"/file "+dat2+"\">"+name+"</a>";
+        var x = "Block: <a href=\"/file " + dat2 + "\">" + name + "</a>";
         $('#current_slice_span').html(x);
         return;
     }
-	
-    if( fn==3 )
+
+    if (fn == 3)
     {
         // update widgit only if required
         var newstr = widSearchUpdate();
         var o = $('#mine_search_results_div');
-		var oldstr = o.html();
+        var oldstr = o.html();
 
-        if( newstr.length != oldstr.length || newstr != oldstr )
-		  o.html(newstr);
+        if (newstr.length != oldstr.length || newstr != oldstr)
+            o.html(newstr);
 
         return;
     }
@@ -1187,10 +1209,10 @@ function widSearchUpdate()
 
     var t = "";
 
-    for( var i in r )
+    for (var i in r)
     {
         var x = r[i];
-        t += "xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx "+ x.s + " Status:"+x.state+'\n';
+        t += "xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx " + x.s + " Status:" + x.state + '\n';
     }
 
     return t;
@@ -1205,7 +1227,11 @@ function widEmptyTab()
     {
         show : function ()
         {
-            $Tabs.tabs('option', 'active', 6);
+            return $Tabs.tabs('option', 'active', 6);
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 6) ? true : false;
         }
     }
 

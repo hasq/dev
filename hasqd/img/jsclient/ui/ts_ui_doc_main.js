@@ -7,8 +7,12 @@ var glPassword = '';
 var glCurrentDB = {}; //'smd.db';
 var glLastRec = {};
 var glTimerId;
-var glSearch = { isOn : false, o : {}, result : [] };
-
+var glSearch =
+{
+    isOn : false,
+    o : {},
+    result : []
+};
 
 var imgMsgWait = 'img/msg_wait.gif';
 
@@ -38,7 +42,7 @@ var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys2.
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys3.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
 var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
-var imgBtnStop  = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
+var imgBtnStop = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
@@ -68,26 +72,19 @@ function docMainInit()
 function docInit()
 {
     $('#modal_window').css('display', 'none');
+	$('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
-	$('input, textarea').attr('maxlength', '65536');
-	
-    $('#tabs').tabs();    
-	$('#search_inner_tabs').tabs();
 
-    $('#info_span img').attr('src', imgClkInfo);
-    $('#info_span img').attr('width', '28');
-    $('#info_span img').attr('height', '28');
+    $('#tabs').tabs();
+    $('#search_inner_tabs').tabs();
 
-    $('#logo_span img').attr('width', '28');
-    $('#logo_span img').attr('height', '28');
-    $('#logo_span img').attr('src', imgLogoBlue);
-
+    $('#info_span img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
+    $('#logo_span img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
     $('#reload_span img').attr('src', imgClkReload);
     $('#password_pic_span img').attr('src', imgPwdDummy);
     $('#token_pic_span img').hide();
+    $('#password_eye_span img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
 
-    $('#password_eye_span img').attr('src', imgEyeOpen);
-    $('#password_eye_span img').attr('title', 'Unmask password');
 
     //$('button').button();
 
@@ -136,13 +133,9 @@ function docInit()
     }
     );
 
-	$('#from_datepicker_input').attr('maxlength', '10');
-	$('#to_datepicker_input').attr('maxlength', '10');
-	
-	$('#from_datepicker_input').datepicker('setDate', new Date());
-	$('#to_datepicker_input').datepicker('setDate', new Date());
+    $('#from_datepicker_input').attr('maxlength', '10').datepicker('setDate', new Date());
+    $('#to_datepicker_input').attr('maxlength', '10').datepicker('setDate', new Date());
 
-	
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 

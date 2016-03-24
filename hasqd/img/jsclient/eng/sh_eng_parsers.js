@@ -417,7 +417,7 @@ function engGetTransKeys(keys)
     keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var keysLen;
-	
+
     var prCode0Ch = prCode.charAt(0);
     var prCodeLen = prCode.length;
     var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the transkeys;
@@ -648,7 +648,7 @@ function engGetMergedTokensList(hashList, rawList, hash)
             }
         }
     }
-	
+
     return hashList;
 }
 

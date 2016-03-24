@@ -73,7 +73,7 @@ function widGetHTMLBody(tabs)
                     r += '<td class="tab-area" />\n';
                     r += widGetHTMLTabs(tabs, 'tabs', 'tabs-div') + '\n';
                     r += '<td class="tab-button-area" />'
-                         r += widGetHTMLButtonsArea() + '\n';
+                    r += widGetHTMLButtonsArea() + '\n';
                 }
                 r += '</tr>\n';
             }
@@ -189,12 +189,7 @@ function widGetHTMLInitialDataArea()
                         r += '<td style="width: 28px; text-align: right">\n';
                         r += widGetHTMLSpanImg('password_eye_span', 'widPasswordEyeClick($(this))');
                         r += '<td style="width: 250px; text-align: center"/>\n';
-
-                        r += '<input oninput="widPasswordOninput($(this));" '
-					+'id="password_input" type="password" '
-					+'class="password" placeholder="Enter '
-					+'token master key" required/>\n';
-
+                        r += '<input oninput="widPasswordOninput($(this));" id="password_input" type="password" class="password" placeholder="Enter token master key" required/>\n';
                         r += '<td style="width: 28px; text-align: left;">\n';
                         r += widGetHTMLSpanImg('password_pic_span');
                     }
@@ -247,39 +242,39 @@ function widGetHTMLButtonsArea()
 /*
 function widGetHTMLMainTabs(items)
 {
-    var r = '';
+var r = '';
 
-    r += '<div id="tabs" class="tabs-div">\n';
-    r += '\t<ul>\n';
+r += '<div id="tabs" class="tabs-div">\n';
+r += '\t<ul>\n';
 
-    for (var i = 0; i < items.length; i++)
-        r += '\t<li><a href="#tabs_' + i + '_div">' + items[i].title + '</a>\n';
+for (var i = 0; i < items.length; i++)
+r += '\t<li><a href="#tabs_' + i + '_div">' + items[i].title + '</a>\n';
 
-    r += '\t</ul>\n';
+r += '\t</ul>\n';
 
-    for (var i = 0; i < items.length; i++)
-        r += '\t<div id="tabs_' + i + '_div">' + items[i].data + '</div>\n';
+for (var i = 0; i < items.length; i++)
+r += '\t<div id="tabs_' + i + '_div">' + items[i].data + '</div>\n';
 
-    r += '</div>\n';
+r += '</div>\n';
 
-    return r;
+return r;
 }
-*/
+ */
 
 function widGetHTMLTabs(items, id, classId)
-{	
-	var r = '';
+{
+    var r = '';
     if (!id && !classId)
-		r += '<div>\n';
+        r += '<div>\n';
     else if (!id)
-		r += '<div class="' + classId + '">\n';
+        r += '<div class="' + classId + '">\n';
     else if (!classId)
-		r += '<div id="' + id + '">\n';
-	else
-		r += '<div id="' + id + '" class="' + classId + '">\n';	
-	
+        r += '<div id="' + id + '">\n';
+    else
+        r += '<div id="' + id + '" class="' + classId + '">\n';
+
     r += '\t<ul id="' + id + '_ul">\n';
-	
+
     for (var i = 0; i < items.length; i++)
         r += '\t<li><a href="#' + id + '_' + i + '_div">' + items[i].title + '</a>\n';
 
@@ -340,7 +335,7 @@ function widGetHTMLCreateTab()
         r += '<tr>\n';
         {
             r += '<td style="text-align:center;" />\n'
-                 r += '<button id="create_button" class="show-keys-button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
+            r += '<button id="create_button" class="show-keys-button-off" onclick="return widCreateButtonClick($(this));">' + imgBtnCreate + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -370,7 +365,7 @@ function widGetHTMLSetDataTab()
         r += '<tr>\n';
         {
             r += '<td class="td-button">\n'
-                 r += '<button id="set_data_button" class="button-disabled" onclick="return widSetDataButtonClick($(this));">' + imgBtnData + '</button>\n';
+            r += '<button id="set_data_button" class="button-disabled" onclick="return widSetDataButtonClick($(this));">' + imgBtnData + '</button>\n';
         }
         r += '</tr>\n';
     }
@@ -416,7 +411,7 @@ function widGetHTMLShowKeysTab()
         r += '<tr>\n';
         {
             r += '<td id="show_keys_textarea_td" />\n';
-                r += '<textarea id="show_keys_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="6" type="text" readonly></textarea>\n';
+            r += '<textarea id="show_keys_textarea" style="overflow-x:hidden;white-space:pre-wrap;" wrap="soft" rows="6" type="text" readonly></textarea>\n';
 
         }
         r += '</tr>\n';
@@ -442,7 +437,7 @@ function widGetHTMLReceiveTab()
         {
             r += '<td id="receive_keys_textarea_td"/>\n';
             r += '<textarea id="receive_keys_textarea" oninput="return widReceiveTextareaOninput()" style="overflow-x:hidden; white-space:pre-wrap;" type="text" rows="6" cols="64" maxlength="65536" wrap="on"></textarea>\n';
-			r += '</td>\n';
+            r += '</td>\n';
         }
         r += '</tr>\n';
         r += '<tr>\n';
@@ -461,7 +456,7 @@ function widGetHTMLSearchTab()
 {
     var r = '';
 
-    r += '<table id="search_table" style="width:100%; margin: 0;" border="0">\n';
+    r += '<table id="search_table" style="width:100%; margin: 0;" border="1">\n';
     {
         r += '<tr>\n';
         {
@@ -469,122 +464,122 @@ function widGetHTMLSearchTab()
             r += 'Search for tokens';
         }
         r += '</tr>\n';
-		r += '<tr>\n';
-		{
-			r += '<td style="vertical-align: top;"/>\n';
-				r += widGetHTMLInSearchTabs();
-				
-			r += '<td style="width: 12em; vertical-align: top"/>\n';
-			{
-				r += '<table style="margin-right:0; margin-left:auto;">\n';
-				{
-					r += '<tr>\n';
-					{
-						r += '<td style="text-align:right; width:12em;"/>\n';
-						{
-							r += '<label for="from_datepicker_input">From:</label>\n';
-							r += '<input id="from_datepicker_input" type="text" style="width:10em">\n';
-						}
-					}
-					r += '</tr>\n';
-					r += '<tr>\n';
-					{
-						r += '<td style="text-align: right;"/>\n';
-						{
-							r += '<label for="to_datepicker_input">to:</label>\n';
-							r += '<input id="to_datepicker_input" type="text" style="width:10em">\n';
-						}
-					}
-					r += '</tr>\n';
-					r += '<tr>\n';
-					{
-						r += '<td style="text-align: left;"/>\n';
-						{
-							r += '<label for="current_slice_span">&gt;&nbsp;</label>';
-							r += '<span id="current_slice_span"></span>';
-						}
-					}
-					r += '</tr>\n';
-					r += '<tr>\n';
-					{
-						r += '<td style="text-align: center;"/>\n';
-						{
-							r += '<button id="search_button" class="show-keys-button-off" '
-                                +'onclick="return widSearchButtonClick($(this));">' 
-                                + imgBtnSearch + '</button>\n';
-						}
-					}
-					r += '</tr>\n';					
-				}
-				r += '</table>\n';
-			}
-		}
-		r += '</tr>\n';
-	}
+        r += '<tr>\n';
+        {
+            r += '<td style="vertical-align: top;"/>\n';
+            r += widGetHTMLInSearchTabs();
+
+            r += '<td style="width: 12em; vertical-align: top"/>\n';
+            {
+                r += '<table style="margin-right:0; margin-left:auto;">\n';
+                {
+                    r += '<tr>\n';
+                    {
+                        r += '<td style="text-align:right; width:12em;"/>\n';
+                        {
+                            r += '<label for="from_datepicker_input">From:</label>\n';
+                            r += '<input id="from_datepicker_input" type="text" style="width:10em">\n';
+                        }
+                    }
+                    r += '</tr>\n';
+                    r += '<tr>\n';
+                    {
+                        r += '<td style="text-align: right;"/>\n';
+                        {
+                            r += '<label for="to_datepicker_input">to:</label>\n';
+                            r += '<input id="to_datepicker_input" type="text" style="width:10em">\n';
+                        }
+                    }
+                    r += '</tr>\n';
+                    r += '<tr>\n';
+                    {
+                        r += '<td style="text-align: left;"/>\n';
+                        {
+                            r += '<label for="current_slice_span">&gt;&nbsp;</label>';
+                            r += '<span id="current_slice_span"></span>';
+                        }
+                    }
+                    r += '</tr>\n';
+                    r += '<tr>\n';
+                    {
+                        r += '<td style="text-align: center;"/>\n';
+                        {
+                            r += '<button id="search_button" class="show-keys-button-off" '
+                             + 'onclick="return widSearchButtonClick($(this));">'
+                             + imgBtnSearch + '</button>\n';
+                        }
+                    }
+                    r += '</tr>\n';
+                }
+                r += '</table>\n';
+            }
+        }
+        r += '</tr>\n';
+    }
     r += '</table>\n';
     return r;
 }
 
-function widGetHTMLInSearchTabs() 
+function widGetHTMLInSearchTabs()
 {
-	var tabs = [];
-	var item;
+    var tabs = [];
+    var item;
 
-	item = {};
-	item.title = 'Mine';
-	item.data = widGetHTMLMineTab();
-	tabs[tabs.length] = item;
-	
-	item = {};
-	item.title = 'On hold';
-	item.data = widGetHTMLOnholdTab();
-	tabs[tabs.length] = item;
-	
-	item = {};
-	item.title = 'To come';
-	item.data = widGetHTMLReceivableTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Mine';
+    item.data = widGetHTMLMineTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Past';
-	item.data = widGetHTMLOldTab();
-	tabs[tabs.length] = item;
-	
-	return widGetHTMLTabs(tabs, 'search_inner_tabs');
+    item = {};
+    item.title = 'On hold';
+    item.data = widGetHTMLOnholdTab();
+    tabs[tabs.length] = item;
+
+    item = {};
+    item.title = 'To come';
+    item.data = widGetHTMLReceivableTab();
+    tabs[tabs.length] = item;
+
+    item = {};
+    item.title = 'Past';
+    item.data = widGetHTMLOldTab();
+    tabs[tabs.length] = item;
+
+    return widGetHTMLTabs(tabs, 'search_inner_tabs');
 }
 
-function widGetHTMLMineTab ()
+function widGetHTMLMineTab()
 {
-	var r = '';
-	
-	r += '<div id="mine_search_results_div" class="div-overflow">\n';
-	r += '</div>\n';
-	
-	return r;
+    var r = '';
+
+    r += '<div id="mine_search_results_div" class="div-overflow">\n';
+    r += '</div>\n';
+
+    return r;
 }
 
-function widGetHTMLOnholdTab ()
+function widGetHTMLOnholdTab()
 {
-	var r = '';
-	r += '<div id="onhold_search_results_div" class="div-overflow">\n';
-	r += '</div>\n';	
-	return r;	
+    var r = '';
+    r += '<div id="onhold_search_results_div" class="div-overflow">\n';
+    r += '</div>\n';
+    return r;
 }
 
-function widGetHTMLReceivableTab ()
+function widGetHTMLReceivableTab()
 {
-	var r = '';
-	r += '<div id="receivable_search_results_div" class="div-overflow">\n';
-	r += '</div>\n';	
-	return r;
+    var r = '';
+    r += '<div id="receivable_search_results_div" class="div-overflow">\n';
+    r += '</div>\n';
+    return r;
 }
 
-function widGetHTMLOldTab ()
+function widGetHTMLOldTab()
 {
-	var r = '';
-	r += '<div id="old_search_results_div" class="div-overflow">\n';
-	r += '</div>\n';	
-	return r;	
+    var r = '';
+    r += '<div id="old_search_results_div" class="div-overflow">\n';
+    r += '</div>\n';
+    return r;
 }
 
 function widGetHTMLEmptyTab()

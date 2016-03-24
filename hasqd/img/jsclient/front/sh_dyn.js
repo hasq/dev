@@ -29,7 +29,7 @@ function HasqLogo(id)
         {
             var $Logo = $('#' + id + ' img');
             counter = 0;
-			
+
             return $Logo.attr('src', imgLogoRed);
         }
     }
