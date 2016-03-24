@@ -33,9 +33,9 @@ var imgClkInfo = 'img/clk_info.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_assign_data.png"><br/>Set';
-var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Instant';
-var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>On Hold';
-var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys.png"><br/>Release';
+var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys1.png"><br/>Instant';
+var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys2.png"><br/>On Hold';
+var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys3.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_receive_keys.png"><br/>Accept';
 var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
 var imgBtnStop  = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
