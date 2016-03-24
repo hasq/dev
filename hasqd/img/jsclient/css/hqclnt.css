@@ -1,8 +1,9 @@
 body {
-	font: 75% sans-serif;
-	font-family: monospace, serif;
-	width: 50%;
-	min-width: 600px;
+    font: normal 14px Consolas, "Courier New", monospace !important;
+    color: black;
+	background: #FCFCFC;	
+	width: 60%;
+	min-width: 630px;
 	min-height: 480px;	
     margin: auto;  
 }
@@ -31,25 +32,130 @@ table {
 	width: 100%;
 }
 
-textarea, textarea:focus {
-	font: 120% monospace !important;
-	border: 1px solid;
-	border-color: #DDDDDD;
-	box-sizing: border-box;
-	width: 100%;
-	outline: none;
-}
-
 input {
+	font: normal 14px Consolas, "Courier New", monospace !important;
 	box-sizing: border-box;
 	margin: 0px;	
 }
 
-input[type='text'], input[type='password'] {
-	font: 14px monospace !important;
-	border: 1px solid #DDDDDD;
+input[placeholder]
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+input::-webkit-input-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+input:-ms-input-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+input:-moz-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+input::-moz-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+input[type='checkbox'] 
+{ 
+    margin: 5px;    
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
+}
+
+input[type='checkbox']:focus
+{
+    background: #fff; 
+    border: 1px solid #DDDDDD; 
+}  
+
+input[type='text'], 
+input[type='password'] 
+{ 
+    font: normal 14px Consolas, "Courier New", monospace !important;
+    width: 100%;
+    margin: 0px;    
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
 	width: 100%;
 }
+
+input[type='text']:focus, 
+input[type='password']:focus
+{
+    border: 1px solid #DDDDDD; 
+}
+
+input:required:valid
+{
+    border: 1px solid #DDDDDD;
+}
+
+input:invalid
+{
+    border: 1px solid #DDDDDD;
+	box-shadow: none;
+} 
+
+input:focus:invalid
+{
+    border-color: red;
+} 
+
+textarea
+{
+	font: normal 14px Consolas, "Courier New", monospace !important;
+	border:1px solid #DDDDDD;
+	box-sizing: border-box;
+	width: 100%;
+	display: block;
+	outline: none;
+}
+
+textarea::-webkit-input-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+textarea:-ms-input-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+textarea:-moz-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
+
+textarea::-moz-placeholder
+{
+    font: italic 14px Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+} 
 
 /* classes */
 
@@ -107,7 +213,7 @@ input[type='text'], input[type='password'] {
 
 
 .td-label {
-	font-family: Arial, Helvetica, sans-serif;
+    font: normal 14px Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
 	align: left;
 }
