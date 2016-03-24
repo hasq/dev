@@ -269,9 +269,9 @@ function widGetHTMLTabs(items, id, classId)
     else if (!id)
         r += '<div class="' + classId + '">\n';
     else if (!classId)
-        r += '<div id="' + id + '">\n';
+        r += '<div id="' + id + '_div">\n';
     else
-        r += '<div id="' + id + '" class="' + classId + '">\n';
+        r += '<div id="' + id + '_div" class="' + classId + '">\n';
 
     r += '\t<ul id="' + id + '_ul">\n';
 
@@ -456,17 +456,20 @@ function widGetHTMLSearchTab()
 {
     var r = '';
 
-    r += '<table id="search_table" style="width:100%; margin: 0;" border="1">\n';
+    r += '<table id="search_table" style="width:100%; margin: 0;" border="0">\n';
     {
         r += '<tr>\n';
         {
-            r += '<td class="td-tab-subtitle" colspan="2"/>\n';
+            r += '<td class="td-tab-subtitle" colspan="3"/>\n';
             r += 'Search for tokens';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
-            r += '<td style="vertical-align: top;"/>\n';
+            r += '<td id="search_tab_buttons_area_td"/>\n';
+            r += widGetHTMLInSearchTabsButtons();
+			
+            r += '<td id="search_tab_area_td" style="vertical-align: top;"/>\n';
             r += widGetHTMLInSearchTabs();
 
             r += '<td style="width: 12em; vertical-align: top"/>\n';
@@ -520,6 +523,40 @@ function widGetHTMLSearchTab()
     return r;
 }
 
+function widGetHTMLInSearchTabsButtons()
+{
+	var r = '';
+	
+	r += '<table>\n';
+	{
+		r += '<tr>\n';
+		{
+			r += '<td/>';
+			r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">Mine</button>';
+		}
+		r += '</tr>\n';
+		r += '<tr>\n';
+		{
+			r += '<td/>';
+			r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">On hold</button>';
+		}
+		r += '</tr>\n';
+		r += '<tr>\n';
+		{
+			r += '<td/>';
+			r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">To come</button>';
+		}
+		r += '</tr>\n';
+		r += '<tr>\n';
+		{
+			r += '<td/>';
+			r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">Past</button>';
+		}
+		r += '</tr>\n';		
+	}		
+	r += '</table>\n';
+	return r;
+}
 function widGetHTMLInSearchTabs()
 {
     var tabs = [];

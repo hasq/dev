@@ -37,6 +37,32 @@ button
 	padding: 0;
 }
 
+button.search-tab-button
+{
+    font: 12px Consolas;
+    text-align: center;
+    width: 70px;
+    height: 25px;
+	border: 0;	
+	margin: 0;
+	padding: 0;
+    background: #AFEEEE;
+	opacity: 1;	
+}
+
+button.search-tab-button-active
+{    
+	font: 12px Consolas;
+    text-align: center;
+    width: 70px;
+    height: 25px;
+	border: 0;	
+	margin: 0;
+	padding: 0;
+    background: #00CED1;
+	opacity: 1;	
+}
+
 button.tab-button-off,
 button.show-keys-button-off,
 button.button-enabled
@@ -95,7 +121,7 @@ button.button-disabled
     opacity: 0.5;
 }
 
-div#tabs
+div#tabs_div
 {
     white-space: nowrap;
     overflow: hidden;
@@ -103,7 +129,7 @@ div#tabs
     background: #FCFCFC;
 }
 
-div#tabs ul li
+div#tabs_div ul li
 {
     display: inline-block;
     float: none;
@@ -171,7 +197,13 @@ div#modal_window_content_footer
     /* background-color: #FF0000; */
     color: white;
 }
- 
+
+div#search_inner_tabs_div div
+{
+    border: 0 solid #DDDDDD;
+    background-color: white;
+}
+
 input[class='hasDatepicker'] 
 {
     margin: 0px;  
@@ -291,6 +323,13 @@ td
     vertical-align: bottom;
 }
 
+td#search_tab_buttons_area_td
+{
+    vertical-align: top;		
+	padding:0 6px 0 0;
+	width: 70px;
+}
+
 td#set_data_textarea_td
 {
 	padding: 0 0 6px 0;
@@ -379,7 +418,7 @@ textarea#receive_keys_textarea
     height: 122px;
 } 
 
-#tabs_ul.ui-tabs-nav
+.ui-tabs-nav
 { 
     display: none;
 }
@@ -484,13 +523,7 @@ textarea#receive_keys_textarea
 {
     text-align: center;
 }
-/*
-.ui-tabs-active
-{
-    box-shadow: 0 0 2px 0 #DDDDDD;
-    background: #FCFCFC;
-}
-*/
+
 .welcome-p 
 {
     padding: 6px;
@@ -755,62 +788,17 @@ textarea#receive_keys_textarea
 	border-left-width: 1px;
 }
 
-/*
-.ui-tabs {
-	position: relative;
-}
-.ui-tabs .ui-tabs-nav {
-	margin: 0;
-}
-
-.ui-tabs .ui-tabs-nav li {
-	list-style: none;
-	float: left;
-	position: relative;
-	top: 0;
-	margin: 1px .2em 0 0;
-	border-bottom-width: 0;
-	padding: 0;
-	white-space: nowrap;
-}
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
-	float: left;
-	padding: .3em 1em;
-	text-decoration: none;
-}
-.ui-tabs .ui-tabs-nav li.ui-tabs-active {
-	margin-bottom: -1px;
-	padding-bottom: 1px;
-}
-.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,
-.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,
-.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {
-	cursor: text;
-}
-.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
-	cursor: pointer;
-}
-.ui-tabs .ui-tabs-panel {
-	display: block;
-	border-width: 0;
-	background: none;
-}
-
-*/
-
 /* Component containers
 ----------------------------------*/
-.ui-datepicker,
-.ui-tabs-panel
+.ui-datepicker
 {
 	border: 1px solid #dddddd;
 	background: #ffffff;
 	color: #333333;
 }
 
-.ui-datepicker-header,
-.ui-tabs-nav
- {
+.ui-datepicker-header
+{
 	border: 1px solid #dddddd;
 	background: #e9e9e9;
 	color: #333333;
@@ -987,55 +975,3 @@ textarea#receive_keys_textarea
 	border-radius: 8px;
 }
 
-
-/* vertical*/
-.ui-tabs.ui-tabs-vertical {
-    padding: 0;
-    width: 42em;
-}
-.ui-tabs.ui-tabs-vertical .ui-widget-header {
-    border: none;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
-    float: left;
-    width: 10em;
-    background: #CCC;
-    border-radius: 4px 0 0 4px;
-    border-right: 1px solid gray;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
-    clear: left;
-    width: 100%;
-    margin: 0.2em 0;
-    border: 1px solid gray;
-    border-width: 1px 0 1px 1px;
-    border-radius: 4px 0 0 4px;
-    overflow: hidden;
-    position: relative;
-    right: -2px;
-    z-index: 2;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
-    display: block;
-    width: 100%;
-    padding: 0.6em 1em;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
-    cursor: pointer;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
-    margin-bottom: 0.2em;
-    padding-bottom: 0;
-    border-right: 1px solid white;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
-    margin-bottom: 10px;
-}
-.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
-    float: left;
-    width: 28em;
-    border-left: 1px solid gray;
-    border-radius: 0;
-    position: relative;
-    left: -1px;
-}

@@ -75,9 +75,10 @@ function docInit()
 	$('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
 
-    $('#tabs').tabs();
-    $('#search_inner_tabs').tabs();
-
+    $('#tabs_div').tabs();
+    $('#search_inner_tabs_div').tabs();
+	
+	
     $('#info_span img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
     $('#logo_span img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
     $('#reload_span img').attr('src', imgClkReload);

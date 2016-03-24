@@ -328,7 +328,7 @@ function widTokenTextOninput(delay)
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
                 widSetDataTab().show();
         }
-        console.log(glLastRec.n);
+
         widShowSearch().show(resp.msg);
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
@@ -402,7 +402,7 @@ function widButtonsTable()
 
 function widWelcomeTab()
 {
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
     widPasswordOninput();
 
     var retObj =
@@ -420,7 +420,7 @@ function widCreateTab()
 {
     var $Table = $('#create_table');
     var $Button = $Table.find('button');
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
 
     var retObj =
     {
@@ -479,7 +479,7 @@ function widCreateButtonClick()
 
 function widSetDataTab()
 {
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
     var $Button = $('#set_data_table').find('button');
     var $Textarea = $('#set_data_table').find('textarea');
 
@@ -572,7 +572,7 @@ function widSetDataTextareaOninput()
 function widShowKeysTab()
 {
     var $Table = $('#show_keys_table');
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
     var $AllButton = $Table.find('button');
     var $OnHoldButton = $('#show_on_hold_button');
     var $ReleaseButton = $('#show_release_button');
@@ -819,7 +819,7 @@ function widShowReleaseButtonClick($obj)
 
 function widReceiveTab()
 {
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
     var $Table = $('#receive_table');
     var $Textarea = $Table.find('textarea');
     var $Button = $Table.find('button');
@@ -1095,8 +1095,8 @@ function widBlockingReceiveRevert(keys)
 function widSearchTab()
 {
     var $Table = $('#search_table');
-    var $Button = $Table.find('button');
-    var $Tabs = $('#tabs');
+    var $Button = $Table.find('button').not('.search-tab-button').not('.search-tab-button-active');
+    var $Tabs = $('#tabs_div');
 
     var retObj =
     {
@@ -1162,14 +1162,57 @@ function widSearchButtonClick()
 
 }
 
+function widSearchMineButtonClick($obj)
+{
+	var $Tabs = $('#search_inner_tabs_div');
+	var $AllButtons = $('#search_tab_buttons_area_td button');
+	
+	$('#search_inner_tabs_div').tabs('option', 'active', 0);
+	$AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
+	$obj.addClass('search-tab-button-active').removeClass('search-tab-button');
+	
+}
+
+function widSearchOnHoldButtonClick($obj)
+{
+	var $Tabs = $('#search_inner_tabs_div');
+	var $AllButtons = $('#search_tab_buttons_area_td button');
+	
+	$('#search_inner_tabs_div').tabs('option', 'active', 1);
+	$AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
+	$obj.addClass('search-tab-button-active').removeClass('search-tab-button');
+}
+
+function widSearchToComeButtonClick($obj)
+{
+	var $Tabs = $('#search_inner_tabs_div');
+	var $AllButtons = $('#search_tab_buttons_area_td button');
+	
+	$('#search_inner_tabs_div').tabs('option', 'active', 2);
+	$AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
+	$obj.addClass('search-tab-button-active').removeClass('search-tab-button');
+}
+
+function widSearchPastButtonClick($obj)
+{
+	var $Tabs = $('#search_inner_tabs_div');
+	var $AllButtons = $('#search_tab_buttons_area_td button');
+	
+	$('#search_inner_tabs_div').tabs('option', 'active', 3);
+	$AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
+	$obj.addClass('search-tab-button-active').removeClass('search-tab-button');
+}
+
+
 function widSearchProgress(fn, data, dat2)
 //  1   Set button according to g_searchOn
 //  2   Show current file
 //  3   Update results
 {
-    var width = $('#search_inner_tabs_ul').innerWidth();
-    $('#mine_search_results_div').css('max-width', width);
-
+    var width = $('#search_tab_area_td').innerWidth() - 4;
+	var height = $('#search_tab_area_td').innerHeight() - 4;
+    $('#mine_search_results_div').css('width', width);
+	
     if (fn == 1)
     {
         if (data)
@@ -1220,7 +1263,7 @@ function widSearchUpdate()
 
 function widEmptyTab()
 {
-    var $Tabs = $('#tabs');
+    var $Tabs = $('#tabs_div');
     widPasswordOninput();
 
     var retObj =

@@ -539,7 +539,7 @@ function widCreateTokens($obj, tokens)
 function widAddVerifyTR(rec, statePic)
 {
     var jqTable = $('#tokens_verify_table');
-    var pic = '<img width="12" height="12" src="' + statePic.img + '" title="' + statePic.title + '"></img>';
+    var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>';
     var tr = widGetHTMLTr(widGetHTMLTd(pic + rec.st) + widGetHTMLTd(rec.r) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
     jqTable.append(tr);
 }
