@@ -23,7 +23,7 @@ var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
 
 var imgPwdDummy = 'img/pwd_dummy.png';
-var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdOk = 'img/pwd_good.png';
 var imgPwdWrong = 'img/pwd_wrong.png';
 var imgPwdRcvng = 'img/pwd_rcvng.png';
 var imgPwdSndng = 'img/pwd_sndng.png';

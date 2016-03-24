@@ -54,7 +54,7 @@ var imgMsgError = 'img/msg_error.png';
 var imgMsgWait = 'img/msg_wait.gif';
 var imgMsgBlink = 'img/msg_blink.gif';
 
-var imgPwdOk = 'img/pwd_ok.png';
+var imgPwdOk = 'img/pwd_good.png';
 var imgPwdWrong = 'img/pwd_wrong.png';
 var imgPwdRcvng = 'img/pwd_rcvng.png';
 var imgPwdSndng = 'img/pwd_sndng.png';
