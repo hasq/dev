@@ -531,25 +531,25 @@ function widGetHTMLInSearchTabsButtons()
 	{
 		r += '<tr>\n';
 		{
-			r += '<td/>';
+			r += '<td style="margin:0; padding-bottom: 6px;"/>';
 			r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">Mine</button>';
 		}
 		r += '</tr>\n';
 		r += '<tr>\n';
 		{
-			r += '<td/>';
+			r += '<td style="margin:0; padding-bottom: 6px;"/>';
 			r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">On hold</button>';
 		}
 		r += '</tr>\n';
 		r += '<tr>\n';
 		{
-			r += '<td/>';
+			r += '<td style="margin:0; padding-bottom: 6px;"/>';
 			r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">To come</button>';
 		}
 		r += '</tr>\n';
 		r += '<tr>\n';
 		{
-			r += '<td/>';
+			r += '<td style="margin:0; padding-bottom: 6px;"/>';
 			r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">Past</button>';
 		}
 		r += '</tr>\n';		

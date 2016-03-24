@@ -628,7 +628,7 @@ textarea#receive_keys_textarea
 }
 .ui-datepicker .ui-datepicker-header {
 	position: relative;
-	padding: .2em 0;
+	padding: .1em .1em;
 }
 .ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next {
@@ -683,7 +683,7 @@ textarea#receive_keys_textarea
 	margin: 0 0 0;/* margin: 0 0 .4em; */
 }
 .ui-datepicker th {
-	padding: .7em .3em;
+	padding: .1em .1em;
 	text-align: center;
 	font-weight: bold;
 	border: 0;
@@ -709,7 +709,7 @@ textarea#receive_keys_textarea
 }
 .ui-datepicker .ui-datepicker-buttonpane button {
 	float: right;
-	margin: .5em .2em .4em;
+	/* margin: .5em .2em .4em; */
 	cursor: pointer;
 	padding: .2em .6em .3em .6em;
 	width: auto;
@@ -821,9 +821,9 @@ textarea#receive_keys_textarea
 .ui-widget-header .ui-state-default {
 	border: 1px solid #c5c5c5;
 	background: #f6f6f6;
-	font-weight: normal;
 	color: #454545;
-	font: 12px Consolas, monospace;
+	font: normal 12px Consolas, monospace;
+	padding: 0.1em;
 }
 .ui-state-default a,
 .ui-state-default a:link,
