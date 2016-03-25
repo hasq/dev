@@ -13,7 +13,13 @@ sed 's/===/\`~~/g' $fl.2.tmp > $fl.3.tmp
 sed 's/\!==/\`\`~/g' $fl.3.tmp > $fl.4.tmp
 sed 's/\//\`\"/g' $fl.4.tmp > $fl.5.tmp
 
-cmd /c style $fl.5.tmp
+sed 's/`\"`\"/\/\//g' $fl.5.tmp > $fl.6.tmp
+
+cat $fl.6.tmp > $fl.x.tmp
+
+cmd /c style $fl.6.tmp
+
+cat $fl.6.tmp > $fl.5.tmp
 
 sed 's/`\"/\//g' $fl.5.tmp > $fl.4.tmp
 sed 's/``~/!==/g' $fl.4.tmp > $fl.3.tmp

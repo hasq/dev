@@ -125,7 +125,7 @@ function processDates()
 
     o.current_name = o.current_name + o.number;
 
-    o.current_file = "/smd.db" + o.current_name + ".smd.txt";
+    o.current_file = "/smd.db" + o.current_name + ".smd.txt"; // /;
 
     ///$('#current_slice_span').html(current_name + ".smd.txt");
 
