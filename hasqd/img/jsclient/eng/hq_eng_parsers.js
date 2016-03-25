@@ -226,15 +226,15 @@ function engGetTransKeys(rawKeys)
 
     for (var i = 0; i < keys.length; i++)
     {
-        /*      FIXME what is this code?
-                                        keys[i] = keys[i].replace(/^\s+|\s+$/, '');
-                if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0))
-        {
-                    keys.splice(i, 1);
-                    i--;
-                    break;
-                }
-        */
+        //      FIXME what is this code?
+        //      keys[i] = keys[i].replace(/^\s+|\s+$/, '');
+        //      if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0))
+        //      {
+        //          keys.splice(i, 1);
+        //          i--;
+        //          break;
+        //      }
+
         var el = keys[i].split(/\s/);
 
         transKeys[i] = {};
