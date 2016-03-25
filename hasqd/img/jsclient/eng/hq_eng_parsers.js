@@ -227,18 +227,18 @@ function engGetTransKeys(rawKeys)
     for (var i = 0; i < keys.length; i++)
     {
         /*
-             keys[i] = keys[i].replace(/^\s+|\s+$/, '');
+                     keys[i] = keys[i].replace(/^\s+|\s+$/, '');
                 if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0)) {
                     keys.splice(i, 1);
                     i--;
                     break;
                 }
         */
-     var el = keys[i].split(/\s/);
+        var el = keys[i].split(/\s/);
 
         transKeys[i] = {};
         transKeys[i].prcode = prCode;
-     transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
+        transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
         transKeys[i].s = el[1 - coef];
 
         switch (prCode)
@@ -268,14 +268,14 @@ function engGetTransKeys(rawKeys)
 
     transKeys.sort(engSortByProperties('s'));
 
- // if presents keys for same token;
+    // if presents keys for same token;
     for (var i = 0; i < transKeys.length - 1; i++)
     {
         if (transKeys[i].s == transKeys[i + 1].s)
         {
             transKeys.splice(i + 1, 1);
             i--;
-        };
+        }
     }
 
     return transKeys;
@@ -290,10 +290,10 @@ function engGetTitleKeys(transKeys, p, h, m)
     var prK2 = '232';
     var prO1 = '251';
 
- var prCode = transKeys[0].prcode; // get protocol key from first element;
+    var prCode = transKeys[0].prcode; // get protocol key from first element;
     var numFlag = prCode.charAt(0);
     var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
- var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+    var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
 
     prK1K2 = numFlag + prK1K2 + dbFlag;
     prG2O2 = numFlag + prG2O2 + dbFlag;
@@ -303,7 +303,7 @@ function engGetTitleKeys(transKeys, p, h, m)
 
     for (var i = 0; i < titleKeys.length; i++)
     {
-        var n = titleKeys[i].n
+        var n = titleKeys[i].n;
                 var s = titleKeys[i].s;
         var n1 = n + 1;
         var n2 = n + 2;
@@ -313,42 +313,42 @@ function engGetTitleKeys(transKeys, p, h, m)
         switch (titleKeys[0].prcode)
         {
             case prK1K2:
-            var k2 = titleKeys[i].k2; //
-            titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
+                var k2 = titleKeys[i].k2; //
+                titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
                 var k3 = engGetKey(n3, s, p, m, h);
             var g2 = titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
                 var k4 = engGetKey(n4, s, p, m, h);
                 var g3 = engGetKey(n4, s, k4, m, h);
-            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+                titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
                 break;
             case prG2O2:
-            titleKeys[i].n1 = n1; //
-            titleKeys[i].n2 = n2; //
-            var g2 = titleKeys[i].g2; //
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            var k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleKeys[i].n1 = n1; //
+                titleKeys[i].n2 = n2; //
+                var g2 = titleKeys[i].g2; //
+                titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+                var k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
+                titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
                 break;
             case prK1G1:
                 var k3 = engGetKey(n3, s, p, m, h);
                 var g2 = engGetKey(n3, s, k3, m, h);
-         titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
                 break;
             case prK2:
                 var k3 = engGetKey(n3, s, p, m, h);
                 var k4 = engGetKey(n4, s, p, m, h);
                 var g3 = engGetKey(n4, s, k4, m, h);
-         titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-         titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+                titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+                titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
                 break;
             case prO1:
                 titleKeys[i].n1 = n + 1;
-            titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
+                titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
                 var k2 = engGetKey(n2, s, p, m, h);
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1; //
+                titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+                titleKeys[i].o1; //
                 break;
             default:
                     break;
