@@ -6,7 +6,8 @@ function closestTextArea($obj)
     if ($obj)
         $textarea = $obj.closest('.wrap').find('textarea');
 
-    var retObj = {
+    var retObj =
+    {
         add : function (data)
         {
             $textarea.val($textarea.val() + data);
@@ -27,8 +28,8 @@ function closestTextArea($obj)
             return $textarea.val();
         }
     }
-	
-	return retObj;
+
+    return retObj;
 }
 
 function led($obj)
@@ -38,7 +39,8 @@ function led($obj)
     if ($obj)
         $led = $obj.closest('.wrap').find('img');
 
-    var retObj = {
+    var retObj =
+    {
         set : function (img, title)
         {
             if (typeof img == 'undefined')
@@ -68,8 +70,8 @@ function led($obj)
                 return $led.attr('src');
         }
     }
-	
-	return retObj;
+
+    return retObj;
 }
 
 function widWarningLed($obj, image, text)
@@ -79,7 +81,7 @@ function widWarningLed($obj, image, text)
     //if (!source && image == imgMsgBlink) return led($obj).set(image, text);
     if (source == imgMsgError || source == imgMsgWarning || source == image)
         return; // || typeof source == 'undefined') return;
-    led($obj).set(image, text);
+        led($obj).set(image, text);
 }
 
 function widShowProgressbar(val)
@@ -112,7 +114,8 @@ function widCleanUI($obj)
     widShowProgressbar();
     widShowTokensLog();
 
-    var retObj = {
+    var retObj =
+    {
         full : function ()
         {
             led().clear();
@@ -125,8 +128,8 @@ function widCleanUI($obj)
             closestTextArea($obj).clear();
         }
     }
-	
-	return retObj;
+
+    return retObj;
 }
 
 function widCleanVerifyTab()
@@ -196,8 +199,8 @@ function widSwitchShowHide($obj)
 {
     if ($obj.css('display') === 'none')
         $obj.fadeIn(); //show
-    else
-        $obj.hide();
+        else
+            $obj.hide();
 }
 
 function widGetWarningsMode($obj)
@@ -214,12 +217,12 @@ function widGetButtonsMode($obj)
 
     if ($obj == objC && cMode)
         return true;
-	
+
     if (label == title)
         return true; // Main button in action-mode is visible
-	
+
     return false; // Cancel is visible
-}
+    }
 
 function widGetFunctionById($obj, click)
 {
@@ -286,7 +289,7 @@ function widMainButtonClick($obj, text)
             widCancel($obj, text);
         }
     }
-	
+
     widSwitchButtonsMode($obj);
     setTimeout(f);
 }
@@ -303,12 +306,12 @@ function widCancel($obj, text)
     if (!text)
     { //if process was cancelled by "Cancel" button
         text = 'Operation cancelled!';
-        glTokList.clear();
-        widWarningLed($obj, imgMsgError, text);
-    }
+    glTokList.clear();
+    widWarningLed($obj, imgMsgError, text);
+}
 
-    widShowTokensLog(text);
-    widEnableAllTokensUI();
+widShowTokensLog(text);
+widEnableAllTokensUI();
 }
 
 function widContinueButtonClick($obj, click)
@@ -335,10 +338,10 @@ function widTokensPasswordOninput(data)
 function widGetRawTokens(data)
 {
     jqText = $('#tokens_names_textarea');
-	
+
     if (data)
         return jqText.val(data);
-	
+
     return jqText.val();
 }
 
@@ -418,10 +421,10 @@ function widTokensNamesOninput($obj)
 function widAddTokens($obj, data)
 {
     var jqBasename = $('#tokens_basename_input')
-        var jqFirstIdx = $('#tokens_first_idx_input')
-        var jqLastIdx = $('#tokens_last_idx_input')
+                     var jqFirstIdx = $('#tokens_first_idx_input')
+                                      var jqLastIdx = $('#tokens_last_idx_input')
         //var objNames = $('#tokens_names_textarea')
-        var chk = widGetRangeDataState();
+                                              var chk = widGetRangeDataState();
     if (chk.msg == 'ERROR')
         return widDone($obj, chk.cnt);
 
@@ -551,26 +554,26 @@ function widGetTokenStateImg(status)
 
     switch (status)
     {
-    case 'OK':
-        r.img = imgPwdOk;
-        r.title = 'OK';
-        break;
-    case 'PWD_SNDNG':
-        r.img = imgPwdSndng;
-        r.title = 'Token is locked by sending';
-        break;
-    case 'PWD_RCVNG':
-        r.img = imgPwdRcvng;
-        r.title = 'Token is locked by receiving';
-        break;
+        case 'OK':
+            r.img = imgPwdOk;
+            r.title = 'OK';
+            break;
+        case 'PWD_SNDNG':
+            r.img = imgPwdSndng;
+            r.title = 'Token is locked by sending';
+            break;
+        case 'PWD_RCVNG':
+            r.img = imgPwdRcvng;
+            r.title = 'Token is locked by receiving';
+            break;
     case 'PWD_WRONG': //'PWD_WRONG'
-        r.img = imgPwdWrong;
-        r.title = 'Wrong password';
-        break;
-    default:
-        r.img = imgTknNodn;
-        r.title = 'No such token';
-        break;
+            r.img = imgPwdWrong;
+            r.title = 'Wrong password';
+            break;
+        default:
+                r.img = imgTknNodn;
+            r.title = 'No such token';
+            break;
     }
     return r;
 }
@@ -614,7 +617,7 @@ function widVerifyTokens($obj, tokens)
         var item = engGetTokenInfo(ajxData, glCmdList.items[cmdIdx].r, glCmdList.items[cmdIdx].s)
             glTokList.add(item); //add info to VTL about last processed token from CL;
 
-        var idx = glTokList.items.length - 1;
+                   var idx = glTokList.items.length - 1;
         var lineLed = widGetTokenStateImg(glTokList.items[idx].st);
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
@@ -649,7 +652,7 @@ function widFillOutTokList($obj, tokens, extCb)
         if (glCmdList.items.length == 0)
             return led().clear(); // it is necessary to check need
 
-        var resp = engGetResp(cbData);
+            var resp = engGetResp(cbData);
         if (resp.msg == 'ERROR')
             return widDone($obj, resp.msg + ': ' + resp.cnt);
 
@@ -708,34 +711,34 @@ function widPreUpdate($obj, click)
 
     switch (glTokList.state())
     {
-    case true:
-        led($obj).set(imgMsgBlink, msg);
-        widUpdateTokens($obj, d, glTokList.items);
-        break;
-    case false:
-        msg = 'All tokens are unknown!';
-        led($obj).set(imgMsgError, msg);
-        widDone($obj, msg);
-        break;
-    case undefined:
-        (typeof click == 'undefined') ? widContinueButtonClick(widGetClosestContinueButton($obj)) : widUpdateTokens($obj, d, glTokList.items);
-        break;
-    default:
-        if (!widIsRawTokens())
-            return widDone($obj, 'Empty or bad tokens!');
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+        case true:
+            led($obj).set(imgMsgBlink, msg);
+            widUpdateTokens($obj, d, glTokList.items);
+            break;
+        case false:
+            msg = 'All tokens are unknown!';
+            led($obj).set(imgMsgError, msg);
+            widDone($obj, msg);
+            break;
+        case undefined:
+            (typeof click == 'undefined') ? widContinueButtonClick(widGetClosestContinueButton($obj)) : widUpdateTokens($obj, d, glTokList.items);
+            break;
+        default:
+                if (!widIsRawTokens())
+                    return widDone($obj, 'Empty or bad tokens!');
+            if (!widIsPassword())
+                return widDone($obj, 'Empty password!');
 
-        led($obj).set(imgMsgBlink, msg);
+            led($obj).set(imgMsgBlink, msg);
 
-        var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreUpdate($obj, click);
-        }
+            var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var extCb = function ()
+            {
+                widPreUpdate($obj, click);
+            }
 
-        widFillOutTokList($obj, tokens, extCb);
-        break;
+            widFillOutTokList($obj, tokens, extCb);
+            break;
     }
 }
 
@@ -816,44 +819,44 @@ function widPreSimpleSend($obj)
     { // checks the contents of the verified tokens list
     case true: // VTL contains only available tokens
         led($obj).set(imgMsgBlink, msg);
-        widSimpleSend($obj, glTokList.items);
-        break;
+    widSimpleSend($obj, glTokList.items);
+    break;
     case false: // VTL contains only unavailable tokens
-        msg = 'All tokens are unavailable!';
-        led($obj).set(imgMsgError, msg);
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-        widDone($obj, msg);
-        break;
+    msg = 'All tokens are unavailable!';
+    led($obj).set(imgMsgError, msg);
+    if (closestTextArea($obj).val().length > 0)
+        closestTextArea($obj).clear();
+    widDone($obj, msg);
+    break;
     case undefined: /// VTL contains both kinds of tokens - available and unavailable
-        msg = 'Some tokens are unavailable!';
-        led($obj).set(imgMsgError, msg);
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-        widDone($obj, msg);
-        break;
+    msg = 'Some tokens are unavailable!';
+    led($obj).set(imgMsgError, msg);
+    if (closestTextArea($obj).val().length > 0)
+        closestTextArea($obj).clear();
+    widDone($obj, msg);
+    break;
     default: // VTL no contains any tokens then make new VTL
-        if (!widIsRawTokens())
-            return widDone($obj, 'Empty or bad tokens!');
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+    if (!widIsRawTokens())
+        return widDone($obj, 'Empty or bad tokens!');
+    if (!widIsPassword())
+        return widDone($obj, 'Empty password!');
 
-        led($obj).set(imgMsgBlink, msg);
+    led($obj).set(imgMsgBlink, msg);
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreSimpleSend($obj);
-        }
-        widFillOutTokList($obj, tok, extCb);
-        break;
+    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var extCb = function ()
+    {
+        widPreSimpleSend($obj);
     }
+    widFillOutTokList($obj, tok, extCb);
+    break;
+}
 }
 
 function widSimpleSend($obj, items)
 {
-	var k1, k2, line;
-	
+    var k1, k2, line;
+
     for (var i = 0; i < items.length; i++)
     {
         if (items[i].st == 'OK')
@@ -861,11 +864,11 @@ function widSimpleSend($obj, items)
             k1 = engGetKey(items[i].n + 1, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + k1 + ' ' + k2 + '\n';
-            
-			if (0) 
-				line = items[i].s + ' ' + k1 + ' ' + k2 + '\n';
-            
-			closestTextArea($obj).add(line);
+
+            if (0)
+                line = items[i].s + ' ' + k1 + ' ' + k2 + '\n';
+
+            closestTextArea($obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -874,13 +877,13 @@ function widSimpleSend($obj, items)
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
     line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123132';
-    
-	if (0) 
-		line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23132';
+
+    if (0)
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23132';
 
     closestTextArea($obj).add(line);
     led($obj).set(imgMsgOk, 'OK');
-	
+
     widDone($obj, 'OK');
 }
 
@@ -888,10 +891,10 @@ function widPreSimpleReceive($obj, click)
 {
     led($obj).clear();
     var rawTransKeys = widGetClosestTextarea($obj).val();
-	
+
     if (!engIsTransKeys(rawTransKeys))
         return widDone($obj, 'Bad TransKeys!');
-	
+
     if (!widIsPassword)
         return widDone($obj, 'Empty password!');
 
@@ -940,12 +943,12 @@ function widSimpleReceive($obj, titleKeys)
         glCmdList.items[idx].s = s;
         glCmdList.items[idx].r = '';
     }
-	
+
     var cb = function (cbData, cmdIdx, progress)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
-	
+
     engRunCmdList(glCmdList, cb);
 }
 
@@ -959,39 +962,39 @@ function widPreSimpleRequest($obj)
     { // checks the contents of the verified tokens list
     case true: // VTL contains only available
         msg = 'All tokens in the list are already available!';
-        led($obj).set(imgMsgError, msg);
-        widDone($obj, msg);
-        break;
+    led($obj).set(imgMsgError, msg);
+    widDone($obj, msg);
+    break;
     case false: // VTL contains only unavailable tokens
-        led($obj).set(imgMsgBlink, msg);
-        widSimpleRequest($obj, glTokList.items);
-        break;
+    led($obj).set(imgMsgBlink, msg);
+    widSimpleRequest($obj, glTokList.items);
+    break;
     case undefined: // VTL contains both kinds of tokens - available and unavailable
-        msg = 'There are some available tokens in the list!';
-        led($obj).set(imgMsgError, msg);
-        widDone($obj, msg);
-        break;
-    default:
+    msg = 'There are some available tokens in the list!';
+    led($obj).set(imgMsgError, msg);
+    widDone($obj, msg);
+    break;
+default:
         if (!widIsRawTokens())
             return widDone($obj, 'Empty or bad tokens!');
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+    if (!widIsPassword())
+        return widDone($obj, 'Empty password!');
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreSimpleRequest($obj);
-        }
-        led($obj).set(imgMsgBlink, msg);
-        widFillOutTokList($obj, tok, extCb);
-        break;
+    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var extCb = function ()
+    {
+        widPreSimpleRequest($obj);
     }
+    led($obj).set(imgMsgBlink, msg);
+    widFillOutTokList($obj, tok, extCb);
+    break;
+}
 }
 
 function widSimpleRequest($obj, items)
 {
-	var k3, k4, g2, g3, o2, line;
-	
+    var k3, k4, g2, g3, o2, line;
+
     for (var i = 0; i < items.length; i++)
     {
         if (items[i].st === 'PWD_WRONG')
@@ -1002,11 +1005,11 @@ function widSimpleRequest($obj, items)
             g3 = engGetKey(items[i].n + 4, items[i].s, k4, glCurrentDB.magic, glCurrentDB.hash);
             o2 = engGetKey(items[i].n + 3, items[i].s, g3, glCurrentDB.magic, glCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + g2 + ' ' + o2 + '\n';
-            
-			if (0)
-				line = items[i].s + ' ' + g2 + ' ' + o2 + '\n';
-            
-			closestTextArea($obj).add(line);
+
+            if (0)
+                line = items[i].s + ' ' + g2 + ' ' + o2 + '\n';
+
+            closestTextArea($obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1015,17 +1018,17 @@ function widSimpleRequest($obj, items)
 
     var msg = 'Inappropriate tokens!';
     var img = imgMsgError;
-	
+
     if (closestTextArea($obj).val().length > 0)
-	{
+    {
         var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
-		
-        if (0) 
-			line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24252';
-		
+
+        if (0)
+            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24252';
+
         closestTextArea($obj).add(line);
-		
+
         msg = 'OK';
         img = imgMsgOk;
     }
@@ -1037,12 +1040,12 @@ function widSimpleRequest($obj, items)
 function widPreSimpleAccept($obj, click)
 {
     led($obj).clear();
-	
+
     var rawTransKeys = widGetClosestTextarea($obj).val();
-	
+
     if (!engIsTransKeys(rawTransKeys))
         return widDone($obj, 'Bad TransKeys!');
-	
+
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
 
@@ -1054,7 +1057,7 @@ function widPreSimpleAccept($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
     var transKeys = engGetTransKeys(rawTransKeys);
-	
+
     tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeTransKeys($obj, transKeys, widSimpleAccept);
@@ -1062,8 +1065,8 @@ function widPreSimpleAccept($obj, click)
 
 function widSimpleAccept($obj, titleKeys)
 {
-	var n0, n1, n2, s, k1, g1, o1, k2, g2, o2, addCmd1, addCmd2, idx;
-	
+    var n0, n1, n2, s, k1, g1, o1, k2, g2, o2, addCmd1, addCmd2, idx;
+
     for (var i = 0; i < titleKeys.length; i++)
     {
         n0 = titleKeys[i].n;
@@ -1078,7 +1081,7 @@ function widSimpleAccept($obj, titleKeys)
         o2 = titleKeys[i].o2;
         addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-		
+
         idx = (i == 0) ? 0 : i * 2;
 
         glCmdList.items[idx] = {};
@@ -1093,12 +1096,12 @@ function widSimpleAccept($obj, titleKeys)
         glCmdList.items[idx].s = s;
         glCmdList.items[idx].r = '';
     }
-	
+
     var cb = function (cbData, cmdIdx, progress)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
-	
+
     engRunCmdList(glCmdList, cb);
 }
 
@@ -1106,61 +1109,61 @@ function widPreBlockingSendStep1($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-	
+
     var msg = 'Please wait...';
 
     switch (glTokList.state())
     {
     case true: // VTL contains only available tokens
-        led($obj).set(imgMsgBlink, msg);
-        widBlockingSendStep1($obj, glTokList.items);
-		
-        break;
+            led($obj).set(imgMsgBlink, msg);
+            widBlockingSendStep1($obj, glTokList.items);
+
+            break;
     case false: // VTL contains only unavailable tokens
-        msg = 'All tokens are unavailable!';
-        led($obj).set(imgMsgError, msg);
-		
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-		
-        widDone($obj, msg);
-		
-        break;
+            msg = 'All tokens are unavailable!';
+            led($obj).set(imgMsgError, msg);
+
+            if (closestTextArea($obj).val().length > 0)
+                closestTextArea($obj).clear();
+
+            widDone($obj, msg);
+
+            break;
     case undefined: // VTL contains both kinds of tokens - available and unavailable
-        msg = 'Some tokens are unavailable!';
-        led($obj).set(imgMsgError, msg);
-		
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-		
-        widDone($obj, msg);
-		
-        break;
-    default:
-        if (!widIsRawTokens())
-            return widDone($obj, 'Empty or bad tokens!');
-		
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+            msg = 'Some tokens are unavailable!';
+            led($obj).set(imgMsgError, msg);
 
-        led($obj).set(imgMsgBlink, msg);
+            if (closestTextArea($obj).val().length > 0)
+                closestTextArea($obj).clear();
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreBlockingSendStep1($obj);
-        }
-		
-        widFillOutTokList($obj, tok, extCb);
-		
-        break;
+            widDone($obj, msg);
+
+            break;
+        default:
+                if (!widIsRawTokens())
+                    return widDone($obj, 'Empty or bad tokens!');
+
+            if (!widIsPassword())
+                return widDone($obj, 'Empty password!');
+
+            led($obj).set(imgMsgBlink, msg);
+
+            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var extCb = function ()
+            {
+                widPreBlockingSendStep1($obj);
+            }
+
+            widFillOutTokList($obj, tok, extCb);
+
+            break;
     }
 }
 
 function widBlockingSendStep1($obj, items)
 {
-	var n0, k1, k2, g1, line;
-	
+    var n0, k1, k2, g1, line;
+
     for (var i = 0; i < items.length; i++)
     {
         if (items[i].st === 'OK')
@@ -1169,11 +1172,11 @@ function widBlockingSendStep1($obj, items)
             k2 = engGetKey(items[i].n + 2, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             g1 = engGetKey(items[i].n + 2, items[i].s, k2, glCurrentDB.magic, glCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + k1 + ' ' + g1 + '\n';
-            
-			if (0) 
-				line = items[i].s + ' ' + k1 + ' ' + g1 + '\n';
-            
-			closestTextArea($obj).add(line);
+
+            if (0)
+                line = items[i].s + ' ' + k1 + ' ' + g1 + '\n';
+
+            closestTextArea($obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1182,13 +1185,13 @@ function widBlockingSendStep1($obj, items)
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
     line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123141';
-	
-    if (0) 
-		line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23141';
+
+    if (0)
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23141';
 
     closestTextArea($obj).add(line);
     led($obj).set(imgMsgOk, 'OK');
-	
+
     widDone($obj, 'OK');
 }
 
@@ -1202,48 +1205,48 @@ function widPreBlockingSendStep2($obj)
     { // checks the contents of the verified tokens list
     case true: // VTL contains only available tokens
         msg = 'All tokens in the list are still fully available!';
-        led($obj).set(imgMsgError, msg);
-		
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-		
-        widDone($obj, msg);
-		
-        break;
+    led($obj).set(imgMsgError, msg);
+
+    if (closestTextArea($obj).val().length > 0)
+        closestTextArea($obj).clear();
+
+    widDone($obj, msg);
+
+    break;
     case false: // VTL contains only unavailable tokens
-        led($obj).set(imgMsgBlink, msg);
-        widBlockingSendStep2($obj, glTokList.items);
-		
-        break;
+    led($obj).set(imgMsgBlink, msg);
+    widBlockingSendStep2($obj, glTokList.items);
+
+    break;
     case undefined: // VTL contains both kinds of tokens - available and unavailable
-        msg = 'Some tokens in the list are already available!';
-        led($obj).set(imgMsgError, msg);
-		
-        if (closestTextArea($obj).val().length > 0)
-            closestTextArea($obj).clear();
-		
-        widDone($obj, msg);
-		
-        break;
+    msg = 'Some tokens in the list are already available!';
+    led($obj).set(imgMsgError, msg);
+
+    if (closestTextArea($obj).val().length > 0)
+        closestTextArea($obj).clear();
+
+    widDone($obj, msg);
+
+    break;
     default: // VTL no contains any tokens then make new VTL
-        if (!widIsRawTokens())
-            return widDone($obj, 'Empty or bad tokens!');
-		
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+    if (!widIsRawTokens())
+        return widDone($obj, 'Empty or bad tokens!');
 
-        led($obj).set(imgMsgBlink, msg);
+    if (!widIsPassword())
+        return widDone($obj, 'Empty password!');
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreBlockingSendStep2($obj);
-        }
-		
-        widFillOutTokList($obj, tok, extCb);
-		
-        break;
+    led($obj).set(imgMsgBlink, msg);
+
+    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var extCb = function ()
+    {
+        widPreBlockingSendStep2($obj);
     }
+
+    widFillOutTokList($obj, tok, extCb);
+
+    break;
+}
 }
 
 function widBlockingSendStep2($obj, items)
@@ -1257,10 +1260,10 @@ function widBlockingSendStep2($obj, items)
             var n1 = items[i].n + 1;
             var k1 = engGetKey(n1, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var line = n0 + ' ' + items[i].s + ' ' + k1 + '\n';
-            
-			if (0) 
-				line = items[i].s + ' ' + k1 + '\n';
-			
+
+            if (0)
+                line = items[i].s + ' ' + k1 + '\n';
+
             closestTextArea($obj).add(line);
         }
 
@@ -1269,7 +1272,7 @@ function widBlockingSendStep2($obj, items)
     }
 
     var msg,
-    img;
+        img;
 
     if (closestTextArea($obj).val().length == 0)
     {
@@ -1319,8 +1322,8 @@ function widPreBlockingReceiveStep1($obj, click)
 
 function widBlockingReceiveStep1($obj, titleKeys)
 {
-	var n0, n1, s, k1, g1, o1, addCmd;
-	
+    var n0, n1, s, k1, g1, o1, addCmd;
+
     for (var i = 0; i < titleKeys.length; i++)
     {
         n0 = titleKeys[i].n;
@@ -1342,19 +1345,19 @@ function widBlockingReceiveStep1($obj, titleKeys)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
-	
+
     engRunCmdList(glCmdList, cb);
 }
 
 function widPreBlockingReceiveStep2($obj, click)
 {
     led($obj).clear();
-	
+
     var rawTransKeys = widGetClosestTextarea($obj).val();
-	
+
     if (!engIsTransKeys(rawTransKeys))
         return widDone($obj, 'Bad TransKeys!');
-	
+
     if (!widIsPassword)
         return widDone($obj, 'Empty password!');
 
@@ -1366,7 +1369,7 @@ function widPreBlockingReceiveStep2($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
     var transKeys = engGetTransKeys(rawTransKeys);
-	
+
     tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeTransKeys($obj, transKeys, widBlockingReceiveStep2);
@@ -1374,8 +1377,8 @@ function widPreBlockingReceiveStep2($obj, click)
 
 function widBlockingReceiveStep2($obj, titleKeys)
 {
-	var n1, s, k1, g1, o1, addCmd;
-	
+    var n1, s, k1, g1, o1, addCmd;
+
     for (var i = 0; i < titleKeys.length; i++)
     {
         n1 = titleKeys[i].n + 1;
@@ -1404,55 +1407,55 @@ function widPreBlockingRequestStep1($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-	
+
     var msg = 'Please wait...';
 
     switch (glTokList.state())
     { // checks the contents of the verified tokens list
     case true: // VTL contains only available tokens
         msg = 'All tokens in the list are already available!';
-        led($obj).set(imgMsgError, msg);
-		
-        widDone($obj, msg);
-		
-        break;
-    case false: // VTL contains only unavailable tokens
-        led($obj).set(imgMsgBlink, msg);
-        widBlockingRequestStep1($obj, glTokList.items);
-		
-        break;
-    case undefined: // VTL contains both kinds of tokens - available and unavailable
-        msg = 'There are some available tokens in the list!';
-        led($obj).set(imgMsgError, msg);
-		
-        widDone($obj, msg);
-		
-        break;
-    default: // VTL no contains any tokens then make new VTL
-        if (!widIsRawTokens())
-            return widDone($obj, 'Empty or bad tokens!');
-		
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
+    led($obj).set(imgMsgError, msg);
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreBlockingRequestStep1($obj);
-        }
-		
-        led($obj).set(imgMsgBlink, msg);
-		
-        widFillOutTokList($obj, tok, extCb);
-		
-        break;
+    widDone($obj, msg);
+
+    break;
+    case false: // VTL contains only unavailable tokens
+    led($obj).set(imgMsgBlink, msg);
+    widBlockingRequestStep1($obj, glTokList.items);
+
+    break;
+    case undefined: // VTL contains both kinds of tokens - available and unavailable
+    msg = 'There are some available tokens in the list!';
+    led($obj).set(imgMsgError, msg);
+
+    widDone($obj, msg);
+
+    break;
+    default: // VTL no contains any tokens then make new VTL
+    if (!widIsRawTokens())
+        return widDone($obj, 'Empty or bad tokens!');
+
+    if (!widIsPassword())
+        return widDone($obj, 'Empty password!');
+
+    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var extCb = function ()
+    {
+        widPreBlockingRequestStep1($obj);
     }
+
+    led($obj).set(imgMsgBlink, msg);
+
+    widFillOutTokList($obj, tok, extCb);
+
+    break;
+}
 }
 
 function widBlockingRequestStep1($obj, items)
 {
-	var n0, k3, g2, o1, line;
-	
+    var n0, k3, g2, o1, line;
+
     for (var i = 0; i < items.length; i++)
     {
         if (items[i].st === 'PWD_WRONG')
@@ -1462,10 +1465,10 @@ function widBlockingRequestStep1($obj, items)
             g2 = engGetKey(n0 + 3, items[i].s, k3, glCurrentDB.magic, glCurrentDB.hash);
             o1 = engGetKey(n0 + 2, items[i].s, g2, glCurrentDB.magic, glCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + o1 + '\n';
-            
-			if (0)
-				line = items[i].s + ' ' + o1 + '\n';
-			
+
+            if (0)
+                line = items[i].s + ' ' + o1 + '\n';
+
             closestTextArea($obj).add(line);
         }
 
@@ -1474,15 +1477,15 @@ function widBlockingRequestStep1($obj, items)
     }
 
     var msg = 'Inappropriate tokens!'
-    var img = imgMsgError;
-	
+              var img = imgMsgError;
+
     if (closestTextArea($obj).val().length > 0)
-	{
+    {
         var rawTransKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
         line = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
 
         if (0)
-			line = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
+            line = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
 
         closestTextArea($obj).add(line);
         msg = 'OK';
@@ -1497,73 +1500,73 @@ function widPreBlockingRequestStep2($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-	
+
     var msg = 'Please wait...';
 
     switch (glTokList.state())
     { // checks the contents of the verified tokens list
     case true: // VTL contains only available
         msg = 'All tokens in the list are already available!';
-		
-        led($obj).set(imgMsgError, msg);
-        widDone($obj, msg);
-		
-        break;
+
+    led($obj).set(imgMsgError, msg);
+    widDone($obj, msg);
+
+    break;
     case false: // VTL contains only unavailable tokens
-        led($obj).set(imgMsgBlink, msg);
-        widBlockingRequestStep2($obj, glTokList.items);
-		
-        break;
+    led($obj).set(imgMsgBlink, msg);
+    widBlockingRequestStep2($obj, glTokList.items);
+
+    break;
     case undefined: // VTL contains both kinds of tokens - available and unavailable
-        msg = 'There are some available tokens in the list!';
-		
-        led($obj).set(imgMsgError, msg);
-        widDone($obj, msg);
-		
-        break;
-    default:
+    msg = 'There are some available tokens in the list!';
+
+    led($obj).set(imgMsgError, msg);
+    widDone($obj, msg);
+
+    break;
+default:
         if (!widIsRawTokens())
             return widDone($obj, 'Empty or bad tokens!');
-		
-        if (!widIsPassword())
-            return widDone($obj, 'Empty password!');
 
-        var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-        var extCb = function ()
-        {
-            widPreBlockingRequestStep2($obj);
-        }
-		
-        led($obj).set(imgMsgBlink, msg);
-        widFillOutTokList($obj, tok, extCb);
-		
-        break;
+    if (!widIsPassword())
+        return widDone($obj, 'Empty password!');
+
+    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var extCb = function ()
+    {
+        widPreBlockingRequestStep2($obj);
     }
+
+    led($obj).set(imgMsgBlink, msg);
+    widFillOutTokList($obj, tok, extCb);
+
+    break;
+}
 }
 
 function widBlockingRequestStep2($obj, items)
 {
-	var n0, n1, k2, g1, k3, g2, o1, s, line;
-	
+    var n0, n1, k2, g1, k3, g2, o1, s, line;
+
     for (var i = 0; i < items.length; i++)
     {
         if (items[i].st === 'PWD_RCVNG')
         {
-			s = items[i].s
-			n0 = items[i].n;
+            s = items[i].s
+                n0 = items[i].n;
             k2 = engGetKey(n0 + 2, s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             g1 = engGetKey(n0 + 2, s, k2, glCurrentDB.magic, glCurrentDB.hash);
             k3 = engGetKey(n0 + 3, s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             g2 = engGetKey(n0 + 3, s, k3, glCurrentDB.magic, glCurrentDB.hash);
             o1 = engGetKey(n0 + 2, s, g2, glCurrentDB.magic, glCurrentDB.hash);
-			
+
             line = n0 + ' ' + s + ' ' + g1 + ' ' + o1 + '\n';
-			
-            if (0) 
-				line = s + ' ' + g1 + ' ' + o1 + '\n';
-			
+
+            if (0)
+                line = s + ' ' + g1 + ' ' + o1 + '\n';
+
             closestTextArea($obj).add(line);
-			
+
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1572,17 +1575,17 @@ function widBlockingRequestStep2($obj, items)
 
     var msg = 'Inappropriate tokens!';
     var img = imgMsgError;
-	
+
     if (closestTextArea($obj).val().length > 0)
     {
         var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124151';
-		
-        if (0) 
-			line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24151';
-		
+
+        if (0)
+            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24151';
+
         closestTextArea($obj).add(line);
-		
+
         msg = 'OK';
         img = imgMsgOk;
     }
@@ -1594,12 +1597,12 @@ function widBlockingRequestStep2($obj, items)
 function widPreBlockingAcceptStep1($obj, click)
 {
     led($obj).clear();
-	
+
     var rawTransKeys = widGetClosestTextarea($obj).val();
-	
+
     if (!engIsTransKeys(rawTransKeys))
         return widDone($obj, 'Bad TransKeys!');
-	
+
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
 
@@ -1612,15 +1615,15 @@ function widPreBlockingAcceptStep1($obj, click)
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
     var transKeys = engGetTransKeys(rawTransKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
-	
+
     widShowOrderedTokensNames(tok);
     widUpgradeTransKeys($obj, transKeys, widBlockingAcceptStep1);
 }
 
 function widBlockingAcceptStep1($obj, titleKeys)
 {
-	var n1, s, k1, g1, o1, addCmd;
-	
+    var n1, s, k1, g1, o1, addCmd;
+
     for (var i = 0; i < titleKeys.length; i++)
     {
         n1 = titleKeys[i].n1;
@@ -1637,24 +1640,24 @@ function widBlockingAcceptStep1($obj, titleKeys)
         glCmdList.items[i].r = '';
 
     }
-	
+
     var cb = function (cbData, cmdIdx, progress)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
-	
+
     engRunCmdList(glCmdList, cb);
 }
 
 function widPreBlockingAcceptStep2($obj, click)
 {
     led($obj).clear();
-	
+
     var rawTransKeys = widGetClosestTextarea($obj).val();
-	
+
     if (!engIsTransKeys(rawTransKeys))
         return widDone($obj, 'Bad TransKeys!');
-	
+
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
 
@@ -1667,15 +1670,15 @@ function widPreBlockingAcceptStep2($obj, click)
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
     var transKeys = engGetTransKeys(rawTransKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
-	
+
     widShowOrderedTokensNames(tok);
     widUpgradeTransKeys($obj, transKeys, widBlockingAcceptStep2);
 }
 
 function widBlockingAcceptStep2($obj, titleKeys)
 {
-	var n1, s, k1, g1, o1, addCmd;
-	
+    var n1, s, k1, g1, o1, addCmd;
+
     for (var i = 0; i < titleKeys.length; i++)
     {
         n1 = titleKeys[i].n1;
@@ -1691,11 +1694,11 @@ function widBlockingAcceptStep2($obj, titleKeys)
         glCmdList.items[i].s = s;
         glCmdList.items[i].r = '';
     }
-	
+
     var cb = function (cbData, cmdIdx, progress)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
-	
+
     engRunCmdList(glCmdList, cb);
 }
