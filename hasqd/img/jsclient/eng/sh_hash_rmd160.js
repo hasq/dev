@@ -152,8 +152,8 @@ function rstr2any(input, encoding)
     /* Append leading zero equivalents */
     var full_length = Math.ceil(input.length * 8 /
                                 (Math.log(encoding.length) / Math.log(2)))
-                      for (i = output.length; i < full_length; i++)
-                          output = encoding[0] + output;
+    for (i = output.length; i < full_length; i++)
+        output = encoding[0] + output;
 
     return output;
 }
@@ -230,7 +230,7 @@ function rstr2binl(input)
         output[i] = 0;
     for (var i = 0; i < input.length * 8; i += 8)
         output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (i % 32);
-    return output;
+        return output;
 }
 
 /*
