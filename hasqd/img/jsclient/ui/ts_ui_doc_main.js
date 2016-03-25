@@ -41,8 +41,8 @@ var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys1
 var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys2.png"><br/>On Hold';
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys3.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_accept.png"><br/>Accept';
-var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
-var imgBtnStop = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
+var imgBtnStop = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
+var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
