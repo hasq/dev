@@ -1,8 +1,4 @@
-
-// progr must have functions
-//  1   Set button according to g_searchOn
-//  2   Show current file
-//  3   Update results
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 function engSearchClick(fromDate, toDate, progr)
 {

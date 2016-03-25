@@ -1,3 +1,5 @@
+// Hasq Technology Pty Ltd (C) 2013-2016
+
 function engSendDeferredRequest(cmd, f, t)
 {
     // Sends ajax request with 500ms delay.
