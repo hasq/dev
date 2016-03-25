@@ -1246,7 +1246,7 @@ function widSearchUpdate()
     for (var i in r)
     {
         var x = r[i];
-        t += "xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx " + x.s + " Status:" + x.state + '\n';
+        t += x.s + " : " + x.state + '\n';
     }
 
     return t;
