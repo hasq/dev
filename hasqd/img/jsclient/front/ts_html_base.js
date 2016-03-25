@@ -27,10 +27,10 @@ function widGetHTMLSpanImg(id, func)
 
     if (func)
         r += '<span id="' + id + '" onclick="' + func + '" style="text-align:center;"><img src=""></img></span>\n';
-    else
+        else
         r += '<span id="' + id + '" style="text-align:center;"><img src=""></img></span>\n';
 
-    return r;
+            return r;
 }
 
 function widGetHTMLSpan(id, func)
@@ -39,10 +39,10 @@ function widGetHTMLSpan(id, func)
 
     if (func)
         r += '<span style="text-align:center;" id="' + id + '" onclick="' + func + '"></span>\n';
-    else
+        else
         r += '<span style="text-align:center;" id="' + id + '"></span>\n'; ;
 
-    return r;
+            return r;
 }
 
 function widGetHTMLBody(tabs)
@@ -280,12 +280,12 @@ function widGetHTMLTabs(items, id, classId)
 
     r += '\t</ul>\n';
 
-    for (var i = 0; i < items.length; i++)
+        for (var i = 0; i < items.length; i++)
         r += '\t<div id="' + id + '_' + i + '_div">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 
-    return r;
+            return r;
 }
 
 function widGetHTMLWelcomeTab()
@@ -468,7 +468,7 @@ function widGetHTMLSearchTab()
         {
             r += '<td id="search_tab_buttons_area_td"/>\n';
             r += widGetHTMLInSearchTabsButtons();
-			
+
             r += '<td id="search_tab_area_td" style="vertical-align: top;"/>\n';
             r += widGetHTMLInSearchTabs();
 
@@ -508,7 +508,7 @@ function widGetHTMLSearchTab()
                         r += '<td style="text-align: center;"/>\n';
                         {
                             r += '<button id="search_button" class="show-keys-button-off" '
-                             + 'onclick="return widSearchButtonClick($(this));">'
+                                 + 'onclick="return widSearchButtonClick($(this));">'
                              + imgBtnSearch + '</button>\n';
                         }
                     }
@@ -525,37 +525,37 @@ function widGetHTMLSearchTab()
 
 function widGetHTMLInSearchTabsButtons()
 {
-	var r = '';
-	
-	r += '<table>\n';
-	{
-		r += '<tr>\n';
-		{
-			r += '<td style="margin:0; padding-bottom: 6px;"/>';
-			r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">Mine</button>';
-		}
-		r += '</tr>\n';
-		r += '<tr>\n';
-		{
-			r += '<td style="margin:0; padding-bottom: 6px;"/>';
-			r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">On hold</button>';
-		}
-		r += '</tr>\n';
-		r += '<tr>\n';
-		{
-			r += '<td style="margin:0; padding-bottom: 6px;"/>';
-			r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">To come</button>';
-		}
-		r += '</tr>\n';
-		r += '<tr>\n';
-		{
-			r += '<td style="margin:0; padding-bottom: 6px;"/>';
-			r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">Past</button>';
-		}
-		r += '</tr>\n';		
-	}		
-	r += '</table>\n';
-	return r;
+    var r = '';
+
+    r += '<table>\n';
+    {
+        r += '<tr>\n';
+        {
+         r += '<td style="margin:0; padding-bottom: 6px;"/>';
+         r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">Mine</button>';
+        }
+        r += '</tr>\n';
+        r += '<tr>\n';
+        {
+         r += '<td style="margin:0; padding-bottom: 6px;"/>';
+         r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">On hold</button>';
+        }
+        r += '</tr>\n';
+        r += '<tr>\n';
+        {
+         r += '<td style="margin:0; padding-bottom: 6px;"/>';
+         r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">To come</button>';
+        }
+        r += '</tr>\n';
+        r += '<tr>\n';
+        {
+         r += '<td style="margin:0; padding-bottom: 6px;"/>';
+         r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">Past</button>';
+        }
+     r += '</tr>\n';
+    }
+    r += '</table>\n';
+    return r;
 }
 function widGetHTMLInSearchTabs()
 {
