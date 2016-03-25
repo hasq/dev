@@ -21,9 +21,9 @@ function HasqLogo(id)
 
             if (counter == 0)
                 return setTimeout(function ()
-                {
-                    $Logo.attr('src', imgLogoBlue)
-                }, 200);
+            {
+                $Logo.attr('src', imgLogoBlue)
+            }, 200);
         },
         fail : function ()
         {
