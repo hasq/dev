@@ -1,6 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function widHelpTab() {
+function widHelpTab()
+{
     var r = '';
 
     r += '<table width="70%"">\n';
