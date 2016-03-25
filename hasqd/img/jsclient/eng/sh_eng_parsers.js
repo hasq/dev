@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2016
+// Hasq Technology Pty Ltd (C) 2013 - 2016
 
 function engGetResp(data)
 {
@@ -80,37 +80,37 @@ function engGetRespInfoDb(data)
 
             switch (parts[0])
             {
-            case 'name':
-                db[i].name = parts[1];
-                break;
-            case 'hash':
-                db[i].hash = parts[1];
-                break;
-                /*
-                case 'rawS':
-                db[i].r = parts[1];
-                break;
-                 */
-            case 'nG':
-                db[i].ng = parts[1];
-                break;
-            case 'magic':
-                db[i].magic = parts[1].replace(/\[|\]/g, '');
-                break;
-            case 'size':
-                db[i].size = parts[1];
-                break;
-            case 'thin':
-                db[i].thin = parts[1];
-                break;
-            case 'datalimit':
-                db[i].datalim = parts[1];
-                break;
-            case 'altname':
-                db[i].altname = parts[1];
-                break;
-            default:
-                break;
+                case 'name':
+                    db[i].name = parts[1];
+                    break;
+                case 'hash':
+                    db[i].hash = parts[1];
+                    break;
+                    /*
+                    case 'rawS':
+                    db[i].r = parts[1];
+                    break;
+                    */
+                case 'nG':
+                    db[i].ng = parts[1];
+                    break;
+                case 'magic':
+                    db[i].magic = parts[1].replace(/\[|\]/g, '');
+                    break;
+                case 'size':
+                    db[i].size = parts[1];
+                    break;
+                case 'thin':
+                    db[i].thin = parts[1];
+                    break;
+                case 'datalimit':
+                    db[i].datalim = parts[1];
+                    break;
+                case 'altname':
+                    db[i].altname = parts[1];
+                    break;
+                default:
+                        break;
             }
         }
     }
@@ -207,26 +207,26 @@ function engIsHash(data, h)
 
     switch (h)
     {
-    case 'md5':
-        l = 32;
-        break;
-    case 'r16':
-        l = 40;
-        break;
-    case 's22':
-        l = 64;
-        break;
-    case 's25':
-        l = 128;
-        break;
-    case 'wrd':
-        l = 4;
-        break;
-    case 'smd':
-        l = 32;
-        break;
-    default:
-        return false;
+        case 'md5':
+            l = 32;
+            break;
+        case 'r16':
+            l = 40;
+            break;
+        case 's22':
+            l = 64;
+            break;
+        case 's25':
+            l = 128;
+            break;
+        case 'wrd':
+            l = 4;
+            break;
+        case 'smd':
+            l = 32;
+            break;
+        default:
+                return false;
     }
 
     if (data.length != l || /[^0-9a-f]/g.test(data)) //mismatched length or not not hex chars contents
@@ -240,20 +240,20 @@ function engGetHash(data, h)
     //returns specified hash of 'data'
     switch (h)
     {
-    case 'wrd':
-        return hex_md5(data).substring(0, 4);
-    case 'md5':
-        return hex_md5(data);
-    case 'r16':
-        return hex_rmd160(data);
-    case 's22':
-        return hex_sha256(data);
-    case 's25':
-        return hex_sha512(data);
-    case 'smd':
-        return hex_smd(data);
-    default:
-        break;
+        case 'wrd':
+            return hex_md5(data).substring(0, 4);
+        case 'md5':
+            return hex_md5(data);
+        case 'r16':
+            return hex_rmd160(data);
+        case 's22':
+            return hex_sha256(data);
+        case 's25':
+            return hex_sha512(data);
+        case 'smd':
+            return hex_smd(data);
+        default:
+                break;
     }
 
     return null;
@@ -281,13 +281,14 @@ function engGetDataValToDisplay(data)
     // returns parsed data for displaying
     var r = data || '';
 
-    var LF = '\u000a'; //unicode line-feed
-    var space = '\u0020';
-    var backslash = '\u005c';
-    var n = '\u006e';
+var LF = '\u000a'; //unicode line - feed
+var space = '\u0020';
+var backslash = '\u005c';
+var n = '\u006e';
 
-    for (var i = 0; i < r.length; i++)
-    { // replaces all not escaped '\n' by LF;
+for (var i = 0; i < r.length; i++)
+    {
+        // replaces all not escaped '\n' by LF;
         if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n)
             r = r.substring(0, i) + LF + r.substr(i + 2);
     }
@@ -300,37 +301,38 @@ function engGetDataValToDisplay(data)
 
 }
 
-function engGetDataValToRecord(data)
-{ // returns parsed data for add into record
+    function engGetDataValToRecord(data)
+    {
+    // returns parsed data for add into record
     var r = data || '';
 
-    var LF = '\u000a'; //unicode line-feed
+    var LF = '\u000a'; //unicode line - feed
     var space = '\u0020';
     var backslash = '\u005c';
     var n = '\u006e';
 
     r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
-    r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c'); //replace all double spaces by " \ ";
+    r = r.replace(/(\u0020( ? = \u0020))/g, '\u0020\u005c'); //replace all double spaces by " \ ";
     r = r.replace(/\u000a/g, '\u005c\u006e'); // 'LF' > '\n';
 
     return r;
 }
 
-function engIsTransKeys(keys)
-{
+    function engIsTransKeys(keys)
+    {
     if (!keys)
-        return false;
+    return false;
 
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
-        return false; // checks for non hex chars;
+    return false; // checks for non hex chars;
 
-    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
+    keys = keys.replace(/\s {2,}/g, '\u0020').replace(/^\s + | \s + $/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var prCode0Ch = prCode.charAt(0);
 
     // checks protocol code for record number exists into the transkeys;
     if (prCode0Ch !== '1' && prCode0Ch !== '2')
-        return false;
+    return false;
 
     var isRecNum = (prCode0Ch == '1') ? true : false;
 
@@ -339,13 +341,13 @@ function engIsTransKeys(keys)
     var prCodeLen = prCode.length;
 
     if (prCodeLen < 3 || prCodeLen > 6)
-        return false;
+    return false;
 
     if (prCodeLen == 3 || prCodeLen == 4)
-        keysLen = (isRecNum) ? 3 : 2;
+    keysLen = (isRecNum) ? 3 : 2;
 
     if (prCodeLen == 5 || prCodeLen == 6)
-        keysLen = (isRecNum) ? 4 : 3;
+    keysLen = (isRecNum) ? 4 : 3;
 
     //if exists CRC extract it and compare with calculated CRC
     //if exists db name it will be used like lengths template
@@ -355,57 +357,57 @@ function engIsTransKeys(keys)
 
     if (keys[keys.length - 1].length == 4)
     {
-        prCRC = keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
-        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
-    }
+    prCRC = keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
+    tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
+}
     else if (keys[keys.length - 2].length == 4)
     {
-        prCRC = keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
-        tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
-        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
-    }
+    prCRC = keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
+    tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+    tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
+}
 
     if (prCRC !== tkCRC)
-        return false; //checks CRC
+    return false; //checks CRC
 
     if (keys.length < keysLen)
-        return false;
+    return false;
 
     if (tmpl.length == 0)
     {
-        var mod = keys.length % keysLen;
+    var mod = keys.length % keysLen;
 
-        if (mod !== 0 && mod !== 1)
-            return false;
+    if (mod !== 0 && mod !== 1)
+    return false;
 
-        tmpl = (mod == 0) ? keys[keys.length - 1].length : keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
-    }
+    tmpl = (mod == 0) ? keys[keys.length - 1].length : keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+}
 
     if (isRecNum)
     { //removes all records number, leaves only keys;
-        for (var i = 0; i < keys.length; i = i + keysLen)
-        {
-            if (!engIsNumber(keys[i]))
-                return false;
+    for (var i = 0; i < keys.length; i = i + keysLen)
+    {
+    if (!engIsNumber(keys[i]))
+    return false;
 
-            keys.splice(i, 1);
-            i--;
-        }
-    }
+    keys.splice(i, 1);
+    i--;
+}
+}
 
     tmpl = (tmpl > 0) ? tmpl : keys[0].length;
 
     for (var i = 0; i < keys.length; i++)
     {
-        if (tmpl !== keys[i].length)
-            return false; //checks coincidence of the keys length and template length
-    }
+    if (tmpl !== keys[i].length)
+    return false; //checks coincidence of the keys length and template length
+}
 
     return true;
 }
 
-function engGetTransKeys(keys)
-{
+    function engGetTransKeys(keys)
+    {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
     var prG1O1 = '24151';
@@ -414,7 +416,7 @@ function engGetTransKeys(keys)
     var prO1 = '251';
     var prK2 = '232';
 
-    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
+    keys = keys.replace(/\s {2,}/g, '\u0020').replace(/^\s + | \s + $/, '').split(/\s/); // remove extra spaces and split
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var keysLen;
 
@@ -423,23 +425,23 @@ function engGetTransKeys(keys)
     var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the transkeys;
 
     if (prCodeLen == 3 || prCodeLen == 4) //checks match of a protocol code and quantity of transkeys elements;
-        keysLen = (isRecNum) ? 3 : 2;
+    keysLen = (isRecNum) ? 3 : 2;
 
     if (prCodeLen == 5 || prCodeLen == 6) //checks match of a protocol code and quantity of transkeys elements;
-        keysLen = (isRecNum) ? 4 : 3;
+    keysLen = (isRecNum) ? 4 : 3;
 
     if (keys[keys.length - 1].length == 4)
     {
-        keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
-    }
+    keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
+}
     else if (keys[keys.length - 2].length == 4)
     {
-        keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
-        keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
-    }
+    keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
+    keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+}
 
     if (keys.length % keysLen == 1)
-        keys.splice(keys.length - 1, 1)[0].length;
+    keys.splice(keys.length - 1, 1)[0].length;
 
     prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
@@ -459,44 +461,44 @@ function engGetTransKeys(keys)
         transKeys[i] = {};
         transKeys[i].prcode = prCode;
         transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[0] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
-        transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
+    transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
 
         switch (prCode)
         {
-        case (prK1K2):
-            transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-            transKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+            case (prK1K2):
+                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                transKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
-            break;
-        case (prG2O2):
-            transKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-            transKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                break;
+            case (prG2O2):
+                transKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                transKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
-            break;
-        case (prG1O1):
-            transKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-            transKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                break;
+            case (prG1O1):
+                transKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                transKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
-            break;
-        case (prK1G1):
-            transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-            transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                break;
+            case (prK1G1):
+                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
-            break;
-        case (prK1):
-            transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                break;
+            case (prK1):
+                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
-            break;
-        case (prO1):
-            transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                break;
+            case (prO1):
+                transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
-            break;
-        case (prK2):
-            transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                break;
+            case (prK2):
+                transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
-            break;
-        default:
-            return false;
+                break;
+            default:
+                    return false;
         }
 
     }
@@ -504,8 +506,8 @@ function engGetTransKeys(keys)
     transKeys.sort(engSortByProperties('s'));
 
     for (var i = 0; i < transKeys.length - 1; i++) // if presents keys for same token;
-    {
-        if (transKeys[i].s == transKeys[i + 1].s)
+{
+    if (transKeys[i].s == transKeys[i + 1].s)
         {
             transKeys.splice(i + 1, 1);
             i--;
@@ -530,7 +532,7 @@ function engGetTitleKeys(transKeys, p, h, m)
     var prCode0Ch = prCode.charAt(0);
     var isRecNum = (prCode0Ch == '1') ? true : false; // if protocol have record numbers;
 
-    prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
+prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
     prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
@@ -547,79 +549,79 @@ function engGetTitleKeys(transKeys, p, h, m)
         var n3 = n + 3;
         var n4 = n + 4;
         var k1,
-        k2,
-        k3,
-        k4,
-        g1,
-        g2,
-        g3,
-        o1;
+            k2,
+            k3,
+            k4,
+            g1,
+            g2,
+            g3,
+            o1;
 
         switch (titleKeys[0].prcode)
         {
-        case prK1K2:
-            k2 = titleKeys[i].k2; //
-            titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
-            k3 = engGetKey(n3, s, p, m, h);
-            g2 = titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
-            k4 = engGetKey(n4, s, p, m, h);
-            g3 = engGetKey(n4, s, k4, m, h);
-            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+            case prK1K2:
+                k2 = titleKeys[i].k2; //
+                titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
+                k3 = engGetKey(n3, s, p, m, h);
+                g2 = titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                k4 = engGetKey(n4, s, p, m, h);
+                g3 = engGetKey(n4, s, k4, m, h);
+                titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
 
-            break;
-        case prG2O2:
-            titleKeys[i].n1 = n1; //
-            titleKeys[i].n2 = n2; //
-            g2 = titleKeys[i].g2; //
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                break;
+            case prG2O2:
+                titleKeys[i].n1 = n1; //
+                titleKeys[i].n2 = n2; //
+                g2 = titleKeys[i].g2; //
+                titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+                k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
+                titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
 
-            break;
-        case prK1G1:
-            k3 = engGetKey(n3, s, p, m, h);
-            g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                break;
+            case prK1G1:
+                k3 = engGetKey(n3, s, p, m, h);
+                g2 = engGetKey(n3, s, k3, m, h);
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
 
-            break;
-        case prK1:
-            k2 = engGetKey(n2, s, p, m, h);
-            k3 = engGetKey(n3, s, p, m, h);
-            g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                break;
+            case prK1:
+                k2 = engGetKey(n2, s, p, m, h);
+                k3 = engGetKey(n3, s, p, m, h);
+                g2 = engGetKey(n3, s, k3, m, h);
+                titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+                titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
 
-            break;
-        case prO1:
-            titleKeys[i].n1 = n1;
-            titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
-            k2 = engGetKey(n2, s, p, m, h);
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1; //
+                break;
+            case prO1:
+                titleKeys[i].n1 = n1;
+                titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
+                k2 = engGetKey(n2, s, p, m, h);
+                titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
+                titleKeys[i].o1; //
 
-            break;
-        case prG1O1:
-            titleKeys[i].n1 = n1; //
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+                break;
+            case prG1O1:
+                titleKeys[i].n1 = n1; //
+                titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
 
-            break;
-        case prK2:
-            titleKeys[i].n1 = n1;
-            titleKeys[i].n2 = n2;
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            titleKeys[i].g1 = engGetKey(n2, s, titleKeys[i].k2, m, h);
-            var k3 = engGetKey(n3, s, p, m, h);
-            titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
-            var k4 = engGetKey(n4, s, p, m, h);
-            var g3 = engGetKey(n4, s, k4, m, h);
-            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
+                break;
+            case prK2:
+                titleKeys[i].n1 = n1;
+                titleKeys[i].n2 = n2;
+                titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+                titleKeys[i].g1 = engGetKey(n2, s, titleKeys[i].k2, m, h);
+                var k3 = engGetKey(n3, s, p, m, h);
+                titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
+                titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
+                var k4 = engGetKey(n4, s, p, m, h);
+                var g3 = engGetKey(n4, s, k4, m, h);
+                titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
 
-            break;
-        default:
-            break;
+                break;
+            default:
+                    break;
         }
     }
     return titleKeys;
