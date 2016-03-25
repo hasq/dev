@@ -211,12 +211,12 @@ function engGetTransKeys(rawKeys)
 
     var transKeys = [];
 
- var keys = rawKeys.replace(/^\s+|\s+$/g, '').split(/\n/); //split by linefeed;
- var prLine = keys.splice(keys.length - 1, 1)[0].split(/\s/); //get last (protocol) line and split by spaces;
- var prCode = prLine[prLine.length - 1]; // get protocol key;
+    var keys = rawKeys.replace(/^\s+|\s+$/g, '').split(/\n/); //split by linefeed;
+    var prLine = keys.splice(keys.length - 1, 1)[0].split(/\s/); //get last (protocol) line and split by spaces;
+    var prCode = prLine[prLine.length - 1]; // get protocol key;
     var numFlag = prCode.charAt(0);
     var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
- var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
+    var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;
 
     prK1K2 = numFlag + prK1K2 + dbFlag;
     prG2O2 = numFlag + prG2O2 + dbFlag;
@@ -226,9 +226,10 @@ function engGetTransKeys(rawKeys)
 
     for (var i = 0; i < keys.length; i++)
     {
-        /*
-                     keys[i] = keys[i].replace(/^\s+|\s+$/, '');
-                if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0)) {
+        /*      FIXME what is this code?
+                                        keys[i] = keys[i].replace(/^\s+|\s+$/, '');
+                if ((keys[i] === undefined) || (keys[i] === null) || (keys[i].length == 0))
+        {
                     keys.splice(i, 1);
                     i--;
                     break;
@@ -304,7 +305,7 @@ function engGetTitleKeys(transKeys, p, h, m)
     for (var i = 0; i < titleKeys.length; i++)
     {
         var n = titleKeys[i].n;
-                var s = titleKeys[i].s;
+        var s = titleKeys[i].s;
         var n1 = n + 1;
         var n2 = n + 2;
         var n3 = n + 3;
