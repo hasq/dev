@@ -44,7 +44,7 @@ function engSendPing(timeDelay)
         return;
 
     if (timeDelay < 60000) // Ping server every 0s, 5s,10s,15s,...,60s,...,60s,...
-        timeDelay += 5000;
+    timeDelay += 5000;
 
     var ping = function ()
     {
