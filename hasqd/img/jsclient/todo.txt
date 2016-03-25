@@ -1,11 +1,10 @@
 Critical things
 ---------------
-* Format text http://codebeautify.org/jsviewer
 
 Major things
 ------------
-* style v "front" lomaet code - ne rabotaet - ne razbiralsja
 * unbalanced tree - firefox warning - find out
+* validate via generate.bat (nodejs)
 
 Minor things
 ------------
