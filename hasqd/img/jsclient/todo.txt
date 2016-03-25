@@ -1,5 +1,6 @@
 Critical things
 ---------------
+* Format text http://codebeautify.org/jsviewer
 
 Major things
 ------------
