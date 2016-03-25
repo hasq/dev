@@ -61,31 +61,31 @@ function engGetDateRangeFolders(fromDate, toDate)
 
         return day;
     }
-	
-	var slicePath = function (y, m, d)
-	{
-		var mm = (m < 10) ? '0' + m.toString() : m.toString();
+
+    var slicePath = function (y, m, d)
+    {
+        var mm = (m < 10) ? '0' + m.toString() : m.toString();
         var dd = (d < 10) ? '0' + d.toString() : d.toString();
         var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
-		
-		return path;
-		
-	}
+
+        return path;
+
+    }
 
     while (toY >= 2016)
     {
         if (toM == 0)
             toM = 12;
-		
+
         while (toM > 0)
         {
             if (toD == 0)
                 toD = getD(toM, toY);
-			
+
             while (toD > 0)
             {
-				r[r.length] = slicePath(toY, toM, toD);
-				
+                r[r.length] = slicePath(toY, toM, toD);
+
                 if (toY == fromY && toM == fromM && toD == fromD)
                     return r;
 
@@ -125,7 +125,7 @@ function processDates()
 
     o.current_name = o.current_name + o.number;
 
-    o.current_file = "/smd.db"+ o.current_name + ".smd.txt";
+    o.current_file = "/smd.db" + o.current_name + ".smd.txt";
 
     ///$('#current_slice_span').html(current_name + ".smd.txt");
 
@@ -139,53 +139,53 @@ function searchGetFile(data)
 
     var o = glSearch.o;
 
-    if( data.length<12 || data.substr(0,12) == "REQ_PATH_BAD" )
+    if ( data.length < 12 || data.substr(0, 12) == "REQ_PATH_BAD" )
     {
-        console.log(o.folders[0]+" : done");
-		
-		///$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
-		
+        console.log(o.folders[0] + " : done");
+
+        ///$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
+
         o.folders.shift(); // remove processed date
         o.number = 0;
     }
     else
-		searchProcessFile(data);
+        searchProcessFile(data);
 
-    setTimeout(processDates,1);
+    setTimeout(processDates, 1);
 }
 
 function searchProcessFile(data)
 {
     var o = glSearch.o;
     console.log("processing file " + o.folders[0]);
-    o.progr(2,o.current_name,o.current_file);
-	
+    o.progr(2, o.current_name, o.current_file);
+
     var recs = data.split('\n');
 
     var list = {};
 
-    for( var i in recs )
+    for ( var i in recs )
     {
         var s = recs[i];
-        if( s.length < 10 ) continue;
+        if ( s.length < 10 ) continue;
 
         var a = s.split(' ');
-        if( a.length < 3 ) continue;
+        if ( a.length < 3 ) continue;
 
-        if( !(a[1] in list) )
+        if ( !(a[1] in list) )
         {
             list[a[1]] = { n:a[0], r:s };
-            continue; 
+            continue;
         }
 
         var w = list[a[1]];
-        if( parseInt(w.n) > parseInt(a[0]) ) continue;
+        if ( parseInt(w.n) > parseInt(a[0]) ) continue;
 
         w.n = a[0];
         w.r = s;
     }
 
-    for(var i in list)
+    for (var i in list)
         searchProcessRec(list[i].r);
 }
 
@@ -197,9 +197,9 @@ function searchProcessRec(srec)
 
     var st = engGetTokensStatus(lr, nr);
 
-    console.log("searchProcessRec ["+srec+"] -> "+st);
+    console.log("searchProcessRec [" + srec + "] -> " + st);
 
-    if( st == "PWD_WRONG" ) return;
+    if ( st == "PWD_WRONG" ) return;
 
     var r = {};
     r.s = nr.s;
@@ -208,24 +208,24 @@ function searchProcessRec(srec)
     r.check = st;
     r.state = 0;
 
-	var v = glSearch.result;
+    var v = glSearch.result;
     var index = v.length;
     v[index] = r;
 
-    setTimeout(function(){searchValidate1(index)},1);
+    setTimeout(function() {searchValidate1(index)}, 1);
 }
 
 function searchValidate1(index)
 {
-	var v = glSearch.result;
+    var v = glSearch.result;
     var res = v[index];
 
     var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
 
-    ajxSendCommand(cmd, function(data){searchValidate2(index,data)}, hasqLogo);
+    ajxSendCommand(cmd, function(data) {searchValidate2(index, data)}, hasqLogo);
 }
 
-function searchValidate2(index,data)
+function searchValidate2(index, data)
 {
     var resp = engGetResp(data);
 
@@ -239,8 +239,8 @@ function searchValidate2(index,data)
     var res = glSearch.result[index];
 
     res.n = lr.n;
-    
-    switch (st) 
+
+    switch (st)
     {
         case 'OK':        res.state = 1; break;
         case 'PWD_SNDNG': res.state = 2; break;
