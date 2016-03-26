@@ -334,9 +334,9 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     if (!tok)
         return widPasswordOninput();
 
-    var cb = function (data)
+    var cb = function (resp,record)
     {
-        var resp = engGetResp(data);
+        ///var resp = engGetResp(data);
 
         if (resp.msg === 'ERROR')
         {
@@ -354,7 +354,8 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         }
         else
         {
-            glLastRec = engGetRespLast(data);
+            ///glLastRec = engGetRespLast(data);
+            glLastRec = record;
             glLastRec.st = 'PWD_WRONG';
             widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
 
@@ -369,10 +370,11 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
     widShowSearch().show();
 
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
+    ///var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
 
-    return engSendDeferredRequest(cmd, cb, delay);
+    ///return engSendDeferredRequest(cmd, cb, delay);
 
+    return engNcDeferredLast(cb,tok,delay);
 }
 
 function widPasswordOninput()

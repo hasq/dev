@@ -1,4 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
+
 function engGetTokenInfo(data, r, s)
 {
     var response = engGetResp(data);
