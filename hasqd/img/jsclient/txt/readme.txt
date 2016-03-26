@@ -1,1 +1,0 @@
-This folder has current text for help tab

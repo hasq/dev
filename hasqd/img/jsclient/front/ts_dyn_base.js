@@ -45,7 +45,6 @@ function widModalWindow(msg, func)
 
     $('#modal_window').css('display', 'block');
     $('#modal_window_content').find('p').html(msg);
-
 }
 
 function widSetDefaultDb(dbHash)
@@ -919,7 +918,7 @@ function widReceiveButtonClick()
                          );
 
     if (!engIsTransKeys(rawTransKeys))
-        return widModalWindow('Transkeys is missing or corrupt.</br>Enter correct keys...', function ()
+        return widModalWindow(glMsg.badAcceptKeys, function ()
     {
         $TransKeysArea.focus()
     }

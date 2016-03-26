@@ -22,6 +22,7 @@ sh ../stylejs.sh hq_html_tokens_tab.js
 sh ../stylejs.sh sh_dyn.js
 sh ../stylejs.sh ts_dyn_base.js
 sh ../stylejs.sh ts_html_base.js
+sh ../stylejs.sh ts_message.js
 cd ..
 
 cd ui
