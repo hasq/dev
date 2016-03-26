@@ -22,3 +22,9 @@ sh ../stylejs.sh sh_dyn.js
 sh ../stylejs.sh ts_dyn_base.js
 sh ../stylejs.sh ts_html_base.js
 cd ..
+
+cd ui
+sh ../stylejs.sh hq_ui_doc_main.js
+sh ../stylejs.sh node_main.js
+sh ../stylejs.sh ts_ui_doc_main.js
+cd ..

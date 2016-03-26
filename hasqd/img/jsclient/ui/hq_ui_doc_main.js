@@ -9,43 +9,49 @@ var glPassword = ''; // The specified password
 var hasqLogo = HasqLogo('logo_span');
 var preloadImg = new Array();
 
-var glCmdList = {
-	items: [],
-	idx: 0,
-	counter: 100,
-	clear: function () {
-		this.items.length = 0;
-		this.idx = 0;
-		this.counter = 100;
-	}
+var glCmdList =
+{
+    items: [],
+    idx: 0,
+    counter: 100,
+    clear: function ()
+    {
+        this.items.length = 0;
+        this.idx = 0;
+        this.counter = 100;
+    }
 }
 
-var glTokList = {
-	fit: false,
-	unfit: false,
-	items: [],
-	add: function (item) {
-		this.items[this.items.length] = item;
-		if (item.fit) this.fit = true;
-		if (item.unfit) this.unfit = true;
-	},
-	clear: function () {
-		this.items = [];
-		this.fit = false;
-		this.unfit = false;
-	},
-	state: function () {
-		if (this.fit === true && this.unfit === false) { //contains only known tokens;
-			return true; 
-		} 
-		if (this.fit === false && this.unfit === true) { //contains only unknown tokens
-			return false;
-		}
-		if (this.fit === true && this.unfit === true) { //contains different tokens
-			return undefined; 
-		}	
-		return null; //not contains any tokens		
-	}
+var glTokList =
+{
+    fit: false,
+    unfit: false,
+    items: [],
+    add: function (item)
+    {
+        this.items[this.items.length] = item;
+        if (item.fit) this.fit = true;
+        if (item.unfit) this.unfit = true;
+    },
+    clear: function ()
+    {
+        this.items = [];
+        this.fit = false;
+        this.unfit = false;
+    },
+    state: function ()
+    {
+     if (this.fit === true && this.unfit === false) { //contains only known tokens;
+        return true;
+    }
+     if (this.fit === false && this.unfit === true) { //contains only unknown tokens
+    return false;
+}
+     if (this.fit === true && this.unfit === true) { //contains different tokens
+return undefined;
+}
+     return null; //not contains any tokens
+}
 }
 
 var imgMsgOk = 'img/msg_ok.png';
@@ -67,295 +73,330 @@ var imgLogoRed = 'img/logo_red.png';
 var imgLogoBlink = 'img/logo_blink.gif';
 
 var allImages = [
-imgMsgOk,imgMsgWarning,imgMsgError,imgMsgWait,imgMsgBlink,
-imgPwdDummy,imgPwdOk,imgPwdWrong,imgPwdRcvng,imgPwdSndng,imgTknNodn,
-imgLogoBlue,imgLogoRed,imgLogoBlink
-];
+                    imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,
+                    imgPwdDummy, imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgTknNodn,
+                    imgLogoBlue, imgLogoRed, imgLogoBlink
+                ];
 
-function docMainWrite() {
-	document.write(docMain());
+function docMainWrite()
+{
+    document.write(docMain());
 }
 
-function docMainInit() {
-	$(document).ready(function () {
-		doc_init();
-	});
+function docMainInit()
+{
+    $(document).ready(function ()
+    {
+        doc_init();
+    });
 }
 
-function doc_init() {
-	/*$('input, textarea').val('');
-	$('input, select, textarea').attr('autocomplete', 'off');
-	$('input, select, textarea').prop('disabled', true);
-	setTimeout(
-		function () 
-		{
-			$('input, select, textarea').prop('disabled', false)
-		}
-		, 50 
-	);
-	*/
-	
-	$('#main_tabs').tabs({
-		activate : function (event, ui) {
-			if (ui.newTab.index() == 3) {
-				if (glCurrentDB.hash != undefined && glCurrentDB.hash != '') {
-					glHashCalcHash = glCurrentDB.hash;
-				} else {
-					glHashCalcHash = 'md5';
-				}
+function doc_init()
+{
+    /*$('input, textarea').val('');
+    $('input, select, textarea').attr('autocomplete', 'off');
+    $('input, select, textarea').prop('disabled', true);
+    setTimeout(
+        function ()
+        {
+            $('input, select, textarea').prop('disabled', false)
+        }
+        , 50
+    );
+    */
 
-				switch (glHashCalcHash) {
-				case 'md5': //md5
-					widHashcalcOninput();
-					//$('#hashcalc_select').get(0).selectedIndex = 0;
-					$('#hashcalc_select').val(0);
-					break;
-				case 'r16': //r16
-					widHashcalcOninput();
-					$('#hashcalc_select').val(1);
-					break;
-				case 's22': //s22
-					widHashcalcOninput();
-					$('#hashcalc_select').val(2);
-					break;
-				case 's25': //s25
-					widHashcalcOninput();
-					$('#hashcalc_select').val(3);
-					break;
-				case 'smd': //s25
-					widHashcalcOninput();
-					$('#hashcalc_select').val(4);
-					break;					
-				case 'wrd': //wrd
-					widHashcalcOninput();
-					$('#hashcalc_select').val(5);
-					break;
-				default:
-					break;
-				}
-				$('#hashcalc_select').selectmenu('refresh');
-			}
-			return true;
-		}
-	});
+    $('#main_tabs').tabs(
+    {
+        activate : function (event, ui)
+        {
+            if (ui.newTab.index() == 3)
+            {
+                if (glCurrentDB.hash != undefined && glCurrentDB.hash != '')
+                {
+                    glHashCalcHash = glCurrentDB.hash;
+                }
+                else
+                {
+                    glHashCalcHash = 'md5';
+                }
 
-	$('#main_tabs').tabs().tabs('option', 'active', 2);
+                switch (glHashCalcHash)
+                {
+             case 'md5': //md5
+                        widHashcalcOninput();
+                 //$('#hashcalc_select').get(0).selectedIndex = 0;
+                        $('#hashcalc_select').val(0);
+                        break;
+             case 'r16': //r16
+                        widHashcalcOninput();
+                        $('#hashcalc_select').val(1);
+                        break;
+             case 's22': //s22
+                        widHashcalcOninput();
+                        $('#hashcalc_select').val(2);
+                        break;
+             case 's25': //s25
+                        widHashcalcOninput();
+                        $('#hashcalc_select').val(3);
+                        break;
+             case 'smd': //s25
+                        widHashcalcOninput();
+                        $('#hashcalc_select').val(4);
+                        break;
+             case 'wrd': //wrd
+                        widHashcalcOninput();
+                        $('#hashcalc_select').val(5);
+                        break;
+                    default:
+                            break;
+                }
+                $('#hashcalc_select').selectmenu('refresh');
+            }
+            return true;
+        }
+    });
 
-	$('#database_select').selectmenu({
-		select: function (event, ui) {
-			var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
-			var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-			var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
-				glCurrentDB = glDataBase[this.selectedIndex];
+    $('#main_tabs').tabs().tabs('option', 'active', 2);
 
-			$('#database_table').html(db_table);
-			$('#current_db').html(current_db);
-			widShowLastRecord();
-			widTokenNameOninput();
-			if (pwdCheckBoxIsOn) {
-				widShowNewRecOninput();
-			}
-			return true;
-		}
-	});
+    $('#database_select').selectmenu(
+    {
+        select: function (event, ui)
+        {
+            var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
+            var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
+            var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
+            glCurrentDB = glDataBase[this.selectedIndex];
 
-	$('#hashcalc_select').selectmenu({
-		select : function (event, ui) {
-			switch (this.selectedIndex) {
-			case 0: //md5
-				glHashCalcHash = 'md5';
-				widHashcalcOninput();
-				break;
-			case 1: //r16
-				glHashCalcHash = 'r16';
-				widHashcalcOninput();
-				break;
-			case 2: //s22
-				glHashCalcHash = 's22';
-				widHashcalcOninput();
-				break;
-			case 3: //s25
-				glHashCalcHash = 's25';
-				widHashcalcOninput();
-				break;
-			case 4: //smd
-				glHashCalcHash = 'smd';
-				widHashcalcOninput();
-				break;
-			case 5: //wrd
-				glHashCalcHash = 'wrd';
-				widHashcalcOninput();
-				break;
-			default:
-				break;
-			}
-		}
-	});
+            $('#database_table').html(db_table);
+            $('#current_db').html(current_db);
+            widShowLastRecord();
+            widTokenNameOninput();
+            if (pwdCheckBoxIsOn)
+            {
+                widShowNewRecOninput();
+            }
+            return true;
+        }
+    });
 
-	$('#tokens_history_select').selectmenu({
-		disabled: true,
-		width: '60px',
-		select: function(event, data) {
-			var d = +this.options[this.selectedIndex].text;
-			widTokensHistorySelect(d);
-		}
-	});	
-	
-	$('button').button();
+    $('#hashcalc_select').selectmenu(
+    {
+        select : function (event, ui)
+        {
+            switch (this.selectedIndex)
+            {
+         case 0: //md5
+                    glHashCalcHash = 'md5';
+                    widHashcalcOninput();
+                    break;
+         case 1: //r16
+                    glHashCalcHash = 'r16';
+                    widHashcalcOninput();
+                    break;
+         case 2: //s22
+                    glHashCalcHash = 's22';
+                    widHashcalcOninput();
+                    break;
+         case 3: //s25
+                    glHashCalcHash = 's25';
+                    widHashcalcOninput();
+                    break;
+         case 4: //smd
+                    glHashCalcHash = 'smd';
+                    widHashcalcOninput();
+                    break;
+         case 5: //wrd
+                    glHashCalcHash = 'wrd';
+                    widHashcalcOninput();
+                    break;
+                default:
+                        break;
+            }
+        }
+    });
 
-	var cmdinputHints = [
-		'ping',
-		'info db',
-		'info sys',
-		'info id'
-	];
+    $('#tokens_history_select').selectmenu(
+    {
+        disabled: true,
+        width: '60px',
+        select: function(event, data)
+        {
+            var d = +this.options[this.selectedIndex].text;
+            widTokensHistorySelect(d);
+        }
+    });
 
-	$('#cmd_input').autocomplete({
-		source : cmdinputHints
-	});
-	
-	var progressbar = $('#tokens_progressbar');
-	var progressbarLabel = $('.tokens-progressbar-label');
-	
-	progressbar.progressbar({
-		value : 0,
-		change: function (event, ui){
-					var val = progressbar.progressbar('value');
-					if (val > 0) {
-						progressbarLabel.text(val + '%');
-					} else {
-						progressbarLabel.text('');
-						progressbar.progressbar('value', 0);
-					}
-				},
-		complete: function (event, ui) {
-					progressbarLabel.text('Complete!');
-				}
-	});
-	
-	$('#tokens_tabs').tabs({
-		activate : function (event, ui) {
-			widShowProgressbar(0);
-			switch (ui.newTab.index()) {
-			case 0: 
-				widShowTokensLog('Create');
-				break;
-			case 1: 
-				widShowTokensLog('Verify');
-				break;
-			case 2: 
-				widShowTokensLog('Update');
-				break;
-			case 3:
-				widShowTokensLog('Keys generation for Sender');
-				break;
-			case 4: 
-				widShowTokensLog('Keys generation for Receiver');
-				break;
-			default:
-				widShowTokensLog('&nbsp');
-				break;
-			}
-		}
-	})
+    $('button').button();
 
-	$('#tokens_tabs').tabs().tabs('option', 'active', 0);
+    var cmdinputHints = [
+                            'ping',
+                            'info db',
+                            'info sys',
+                            'info id'
+                        ];
 
-	$('#tokens_add_range_accordion').accordion({
-		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-		active : 'false',
-		heightStyle : 'content',
-		collapsible : 'true',
-		header : 'h3',
-	});
+    $('#cmd_input').autocomplete(
+    {
+        source : cmdinputHints
+    });
 
-	$('#tokens_send_accordion').accordion({
-		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-		active : 0,
-		heightStyle : 'content',
-		collapsible : 'true',
-		header : 'h3',
-	});
+    var progressbar = $('#tokens_progressbar');
+    var progressbarLabel = $('.tokens-progressbar-label');
 
-	$('#tokens_receive_accordion').accordion({
-		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-		active : 0,
-		heightStyle : 'content',
-		collapsible : 'true',
-		header : 'h3',
-	});
+    progressbar.progressbar(
+    {
+        value : 0,
+        change: function (event, ui)
+        {
+            var val = progressbar.progressbar('value');
+            if (val > 0)
+            {
+                progressbarLabel.text(val + '%');
+            }
+            else
+            {
+                progressbarLabel.text('');
+                progressbar.progressbar('value', 0);
+            }
+        },
+        complete: function (event, ui)
+        {
+            progressbarLabel.text('Complete!');
+        }
+    });
 
-	$('#main_help_accordion').accordion({
-		icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-		active : 'false',
-		heightStyle : 'content',
-		collapsible : 'true',
-		header : 'h3',
-	});
-	
-	$('#tokens_tab_help_accordion').accordion({
-		icons: { 'header': 'ui-icon-plus', 'activeHeader': 'ui-icon-minus' },
-		active : 'false',
-		heightStyle : 'content',
-		collapsible : 'false',
-		header : 'h2',
-	});
-	
-	//$('#progressbar').progressbar({value: false});
+    $('#tokens_tabs').tabs(
+    {
+        activate : function (event, ui)
+        {
+            widShowProgressbar(0);
+            switch (ui.newTab.index())
+            {
+                case 0:
+                    widShowTokensLog('Create');
+                    break;
+                case 1:
+                    widShowTokensLog('Verify');
+                    break;
+                case 2:
+                    widShowTokensLog('Update');
+                    break;
+                case 3:
+                    widShowTokensLog('Keys generation for Sender');
+                    break;
+                case 4:
+                    widShowTokensLog('Keys generation for Receiver');
+                    break;
+                default:
+                        widShowTokensLog('&nbsp');
+                    break;
+            }
+        }
+    })
 
-	$('.td-warning').hide();
-	$('.continue-button').hide();
-	$('.verify-table').hide();
-	
-	$('#logo_span').find('img').attr('width', '28');
-	$('#logo_span').find('img').attr('height', '28');
-	$('#logo_span').find('img').attr('src', imgLogoBlue);
+    $('#tokens_tabs').tabs().tabs('option', 'active', 0);
 
-	$('#server_host').html('' + location.host);
-	$('#tokens_verify_div').hide();
-	setTimeout(widRefreshButtonClick, 2000);
+    $('#tokens_add_range_accordion').accordion(
+    {
+        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+        active : 'false',
+        heightStyle : 'content',
+        collapsible : 'true',
+        header : 'h3',
+    });
+
+    $('#tokens_send_accordion').accordion(
+    {
+        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+        active : 0,
+        heightStyle : 'content',
+        collapsible : 'true',
+        header : 'h3',
+    });
+
+    $('#tokens_receive_accordion').accordion(
+    {
+        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+        active : 0,
+        heightStyle : 'content',
+        collapsible : 'true',
+        header : 'h3',
+    });
+
+    $('#main_help_accordion').accordion(
+    {
+        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+        active : 'false',
+        heightStyle : 'content',
+        collapsible : 'true',
+        header : 'h3',
+    });
+
+    $('#tokens_tab_help_accordion').accordion(
+    {
+        icons: { 'header': 'ui-icon-plus', 'activeHeader': 'ui-icon-minus' },
+        active : 'false',
+        heightStyle : 'content',
+        collapsible : 'false',
+        header : 'h2',
+    });
+
+ //$('#progressbar').progressbar({value: false});
+
+    $('.td-warning').hide();
+    $('.continue-button').hide();
+    $('.verify-table').hide();
+
+    $('#logo_span').find('img').attr('width', '28');
+    $('#logo_span').find('img').attr('height', '28');
+    $('#logo_span').find('img').attr('src', imgLogoBlue);
+
+    $('#server_host').html('' + location.host);
+    $('#tokens_verify_div').hide();
+    setTimeout(widRefreshButtonClick, 2000);
 }
 
-function docMain() {
-	var tabs = [];
-	var item;
+function docMain()
+{
+    var tabs = [];
+    var item;
 
-	item = {};
-	item.title = 'Server';
-	item.data = widGetHTMLServerTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Server';
+    item.data = widGetHTMLServerTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Database';
-	item.data = widGetHTMLDatabaseTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Database';
+    item.data = widGetHTMLDatabaseTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Records';
-	item.data = widGetHTMLRecordsTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Records';
+    item.data = widGetHTMLRecordsTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Hash calc';
-	item.data = widGetHTMLHashcalcTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Hash calc';
+    item.data = widGetHTMLHashcalcTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Command';
-	item.data = widGetHTMLCommandTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Command';
+    item.data = widGetHTMLCommandTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Tokens';
-	item.data = widGetHTMLTokensTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Tokens';
+    item.data = widGetHTMLTokensTab();
+    tabs[tabs.length] = item;
 
-	item = {};
-	item.title = 'Help';
-	item.data = widHelpTab();
-	tabs[tabs.length] = item;
+    item = {};
+    item.title = 'Help';
+    item.data = widHelpTab();
+    tabs[tabs.length] = item;
 
-	var body = widGetHTMLBody(tabs);
+    var body = widGetHTMLBody(tabs);
 
-	return body;
+    return body;
 }

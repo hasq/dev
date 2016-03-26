@@ -48,10 +48,10 @@ var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.pn
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
 
 var allImages = [
-    imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
-    imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed,
-    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink
-];
+                    imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
+                    imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed,
+                    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink
+                ];
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('logo_span');
 
@@ -66,19 +66,19 @@ function docMainInit()
     {
         docInit();
     }
-    );
+                     );
 }
 
 function docInit()
 {
     $('#modal_window').css('display', 'none');
-	$('input, textarea').val('').attr('maxlength', '65536');;
+    $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
 
     $('#tabs_div').tabs();
     $('#search_inner_tabs_div').tabs();
-	
-	
+
+
     $('#info_span img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
     $('#logo_span img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
     $('#reload_span img').attr('src', imgClkReload);
@@ -98,7 +98,7 @@ function docInit()
         else
             $('.password').attr('type', 'password');
     }
-    );
+                                  );
 
     $('#from_datepicker_input').datepicker(
     {
