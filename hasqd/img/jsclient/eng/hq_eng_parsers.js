@@ -5,7 +5,7 @@ function engGetRespInfoId(data)
     // returns response header
     var err = {};
     var infoId = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
- var lines = infoId.split(/\n/);
+    var lines = infoId.split(/\n/);
 
     if (lines.length < 5)
     {
@@ -21,7 +21,7 @@ function engGetRespInfoSys(data)
 {
     var err = {};
     var infoSys = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
- var lines = infoSys.split(/\n/);
+    var lines = infoSys.split(/\n/);
 
     if (lines.length < 5)
     {
@@ -57,7 +57,7 @@ function engGetRespInfoFam(data)
     var infoFam = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
     if (infoFam.length == 0) return list;
 
- var lines = rawFamData.split(/\n/);
+    var lines = rawFamData.split(/\n/);
 
     for (var i = 0; i < lines.length; i++)
     {
@@ -99,28 +99,30 @@ function engIsRawTokens(data, hash)
         }
         else if (n[i].charAt(0) == '[' && n[i].charAt(n[i].length - 1) == ']' && n[i].length > 2)
         {
-            if (/\[|\]/.test(n[i].substring(1, n[i].length - 1))) {
-            return false;
+            if (/\[|\]/.test(n[i].substring(1, n[i].length - 1)))
+            {
+                return false;
+            }
+            else
+            {
+                true;
+            }
         }
-        else
+        else if (engIsHash(n[i], hash))
         {
             true;
         }
-    } else if (engIsHash(n[i], hash))
-    {
-        true;
+        else
+        {
+            return false;
+        }
     }
-    else
-    {
-        return false;
-    }
-}
-return true;
+    return true;
 }
 
 function engGetOrderedTokens(tok)
 {
- // sorts tokens list by names and hashes;
+    // sorts tokens list by names and hashes;
 
     tok.sort(engSortByProperties('s'));
 
@@ -148,7 +150,7 @@ function engGetOrderedTokens(tok)
 
 function engGetTokens(rawTok, hash)
 {
- // returns parsed tokens list with names and hashes;
+    // returns parsed tokens list with names and hashes;
     var tok = [];
     rawTok = rawTok.replace(/^\s+|\s+$/g, '').split(/\s/);; // remove all space-like symbols from the start and end of the string
 
@@ -181,7 +183,7 @@ function engGetTokens(rawTok, hash)
 
 function engGetRawTokensList(data)
 {
- // if exists raw token names returns its otherwise hash;
+    // if exists raw token names returns its otherwise hash;
     var r = [];
 
     for (var i = 0; i < data.length; i++)
