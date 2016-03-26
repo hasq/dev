@@ -41,25 +41,25 @@ button.search-tab-button
 {
     font: 12px Consolas;
     text-align: center;
-    width: 70px;
-    height: 25px;
-	border: 0;	
+    width: 30px;
+    height: 30px;
+	border: 0;
+	background: #FCFCFC;	
 	margin: 0;
 	padding: 0;
-    background: #AFEEEE;
 	opacity: 1;	
 }
 
 button.search-tab-button-active
-{    
-	font: 12px Consolas;
+{
+    font: 12px Consolas;
     text-align: center;
-    width: 70px;
-    height: 25px;
-	border: 0;	
+    width: 30px;
+    height: 30px;
+	border: 1px solid #DDDDDD;
+	background: #FCFCFC;
 	margin: 0;
 	padding: 0;
-    background: #00CED1;
 	opacity: 1;	
 }
 
@@ -327,7 +327,7 @@ td#search_tab_buttons_area_td
 {
     vertical-align: top;		
 	padding:0 6px 0 0;
-	width: 70px;
+	width: 30px;
 }
 
 td#set_data_textarea_td

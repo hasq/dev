@@ -74,6 +74,38 @@ function widSetDefaultDb(dbHash)
     ajxSendCommand('info db', cb, hasqLogo);
 }
 
+function widSetDefaultDbTEMP (hash)
+{
+	var cb = function (data, errorlevel)
+	{
+        var db = engGetRespInfoDb(data);
+
+        if (db.length > 0)
+        {
+            for (var i = 0; i < db.length; i++)
+            {
+                if (db[i].hash === dbHash)
+                    return glCurrentDB = db[i];
+            }
+        		
+			return widModalWindow('Database is not accessible!<br/>Please, reload the page.');
+		}
+	}
+	
+	engSendInstantRequest('info db', cb)
+}
+
+function engSendInstantRequestTEMP (cmd, func)
+{
+	var cb = function (data )
+	{
+		
+		return func(data);
+	}
+	
+	ajxSendCommand('info db', cb, hasqLogo);
+}
+
 function widShowDBError()
 {
     // displays error message and blocks all UI;

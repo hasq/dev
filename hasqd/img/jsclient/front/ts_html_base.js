@@ -532,25 +532,25 @@ function widGetHTMLInSearchTabsButtons()
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">Mine</button>';
+         r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">' + imgBtnSearchMine +'</button>';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">On hold</button>';
+         r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">' + imgBtnSearchOnHold + '</button>';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">To come</button>';
+         r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">' + imgBtnSearchToCome + '</button>';
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">Past</button>';
+         r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">' + imgBtnSearchPast + '</button>';
         }
      r += '</tr>\n';
     }

@@ -47,6 +47,12 @@ var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
 
+var imgBtnSearchMine = '<img width="24px" height="16px" src="img/pwd_good.png">';
+var imgBtnSearchOnHold = '<img width="24px" height="16px" src="img/pwd_sndng.png">';
+var imgBtnSearchToCome = '<img width="24px" height="16px" src="img/pwd_rcvng.png">';
+var imgBtnSearchPast = '<img width="24px" height="16px" src="img/pwd_wrong.png">';
+
+
 var allImages = [
                     imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
                     imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed,
