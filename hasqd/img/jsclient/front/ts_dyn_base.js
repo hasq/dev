@@ -1225,13 +1225,21 @@ function widSearchProgress(fn, data, dat2)
 
     if (fn == 3)
     {
-        // update widgit only if required
-        var newstr = widSearchUpdate();
-        var o = $('#mine_search_results_div');
-        var oldstr = o.html();
+        var str = widSearchUpdate();
 
-        if (newstr.length != oldstr.length || newstr != oldstr)
-            o.html(newstr);
+        // update widgit only if required
+        function update(o, newstr)
+        {
+            var oldstr = o.html();
+
+            if (newstr.length != oldstr.length || newstr != oldstr)
+                o.html(newstr);
+        }
+
+        update( $('#mine_search_results_div'), str[1] );
+        update( $('#onhold_search_results_div'), str[2] );
+        update( $('#receivable_search_results_div'), str[3] );
+        update( $('#old_search_results_div'), str[4] );
 
         return;
     }
@@ -1241,12 +1249,13 @@ function widSearchUpdate()
 {
     var r = glSearch.result;
 
-    var t = "";
+    var t = ["", "", "", "", ""];
 
     for (var i in r)
     {
         var x = r[i];
-        t += x.s + " : " + x.state + '\n';
+
+        t[x.state] += x.s + " : " + x.state + '\n';
     }
 
     return t;
