@@ -73,10 +73,10 @@ function widSetDefaultDb(dbHash)
     ajxSendCommand('info db', cb, hasqLogo);
 }
 
-function widSetDefaultDbTEMP (hash)
+function widSetDefaultDbTEMP (hash) // FIXME chto takoe TEMP ??
 {
-	var cb = function (data, errorlevel)
-	{
+    var cb = function (data, errorlevel)
+    {
         var db = engGetRespInfoDb(data);
 
         if (db.length > 0)
@@ -86,23 +86,23 @@ function widSetDefaultDbTEMP (hash)
                 if (db[i].hash === dbHash)
                     return glCurrentDB = db[i];
             }
-        		
-			return widModalWindow('Database is not accessible!<br/>Please, reload the page.');
-		}
-	}
-	
-	engSendInstantRequest('info db', cb)
+
+         return widModalWindow('Database is not accessible!<br/>Please, reload the page.');
+        }
+    }
+
+    engSendInstantRequest('info db', cb)
 }
 
 function engSendInstantRequestTEMP (cmd, func)
 {
-	var cb = function (data )
-	{
-		
-		return func(data);
-	}
-	
-	ajxSendCommand('info db', cb, hasqLogo);
+    var cb = function (data )
+    {
+
+        return func(data);
+    }
+
+    ajxSendCommand('info db', cb, hasqLogo);
 }
 
 function widShowDBError()
@@ -333,7 +333,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     if (!tok)
         return widPasswordOninput();
 
-    var cb = function (resp,record)
+    var cb = function (resp, record)
     {
         ///var resp = engGetResp(data);
 
@@ -373,7 +373,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
     ///return engSendDeferredRequest(cmd, cb, delay);
 
-    return engNcDeferredLast(cb,tok,delay);
+    return engNcDeferredLast(cb, tok, delay);
 }
 
 function widPasswordOninput()
@@ -914,15 +914,13 @@ function widReceiveButtonClick()
             return widModalWindow('Enter master key...', function ()
         {
             $PwdInp.focus()
-        }
-                         );
+        });
 
     if (!engIsTransKeys(rawTransKeys))
         return widModalWindow(glMsg.badAcceptKeys, function ()
     {
         $TransKeysArea.focus()
-    }
-    );
+    });
 
     var transKeys = engGetTransKeys(rawTransKeys);
     var tokText = [glLastRec.r] || [''];

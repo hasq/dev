@@ -148,11 +148,11 @@ function searchGetFile(data)
         o.folders.shift(); // remove processed date
         o.number = 0;
 
-	// FIXME
-	// the problem that the slice can be started in the previous days
-	// algorithm must: 
-	// 1. go one day past and process last slice 
-	// 2. if no slices then back to 1 
+        // FIXME
+        // the problem that the slice can be started in the previous days
+        // algorithm must:
+        // 1. go one day past and process last slice
+        // 2. if no slices then back to 1
     }
     else
         searchProcessFile(data);
