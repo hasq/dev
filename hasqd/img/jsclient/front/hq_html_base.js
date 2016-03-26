@@ -5,10 +5,10 @@ function widGetHTMLSpanImg(id, htmlClass)
 
     if (arguments.length > 1)
         r += '<span id="' + id + '" class="' + htmlClass + '" align="center" valign="middle"><img></img></span>\n';
-    else
+        else
         r += '<span id="' + id + '" align="center" valign="middle"><img></img></span>\n';
 
-    return r;
+            return r;
 }
 
 function widGetHTMLTd(x)
@@ -97,18 +97,18 @@ function widGetHTMLTabs(items)
     r += '<div id="main_tabs">\n';
 
     r += '\t<ul>\n';
-	
+
     for (var i = 0; i < items.length; i++)
         r += '\t<li><a href="#tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
 
     r += '\t</ul>\n';
 
-    for (var i = 0; i < items.length; i++)
+        for (var i = 0; i < items.length; i++)
         r += '\t<div id="tabs-' + (i + 1) + '_div">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 
-    return r;
+            return r;
 }
 
 function widGetHTMLServerTab()
@@ -217,7 +217,7 @@ function widGetHTMLDatabaseTraitTable(data)
 
     r += '</table>\n';
 
-    return r;
+        return r;
 }
 
 function widGetHTMLRecTabTokArea()

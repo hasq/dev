@@ -142,7 +142,7 @@ function widRefreshButtonClick()
                     widShowNewRecOninput();
                     break;
                 default:
-                    $Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
+                        $Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
                     break;
             }
         }
