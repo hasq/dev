@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetRespInfoId(data)
+function engGetResponseHeaderInfoId(data)
 {
     // returns response header
     var err = {};
@@ -17,7 +17,7 @@ function engGetRespInfoId(data)
     return infoId;
 }
 
-function engGetRespInfoSys(data)
+function engGetResponseHeaderInfoSys(data)
 {
     var err = {};
     var infoSys = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
@@ -33,7 +33,7 @@ function engGetRespInfoSys(data)
     return infoSys;
 }
 
-function engGetRespRange(data)
+function engGetResponseHeaderRange(data)
 {
     var err = {};
     var range = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
@@ -48,7 +48,7 @@ function engGetRespRange(data)
     return range;
 }
 
-function engGetRespInfoFam(data)
+function engGetResponseHeaderInfoFam(data)
 {
     var err = {};
     list = [];

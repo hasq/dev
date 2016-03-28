@@ -50,65 +50,17 @@ function widModalWindow(msg, func)
 function widSetDefaultDb(dbHash)
 {
     // Searching for database and save it in variable.
-    var cb = function (d)
+    var cb = function (resp, db)
     {
-        var db = engGetRespInfoDb(d);
-
-        if (db.length > 0)
-        {
+        if (resp.msg === 'OK' && typeof db !== 'null')
             for (var i = 0; i < db.length; i++)
-            {
-                if (db[i].hash === dbHash)
-                {
-                    glCurrentDB = db[i];
-                    break;
-                }
-            }
-        }
-
-        if (glCurrentDB.name === undefined)
-            widShowDBError();
-    }
-
-    ajxSendCommand('info db', cb, hasqLogo);
-}
-
-function widSetDefaultDbTEMP (hash) // FIXME chto takoe TEMP ??
-{
-    var cb = function (data, errorlevel)
-    {
-        var db = engGetRespInfoDb(data);
-
-        if (db.length > 0)
-        {
-            for (var i = 0; i < db.length; i++)
-            {
                 if (db[i].hash === dbHash)
                     return glCurrentDB = db[i];
-            }
 
          return widModalWindow('Database is not accessible!<br/>Please, reload the page.');
-        }
     }
 
-    engSendInstantRequest('info db', cb)
-}
-
-function engSendInstantRequestTEMP (cmd, func)
-{
-    var cb = function (data )
-    {
-
-        return func(data);
-    }
-
-    ajxSendCommand('info db', cb, hasqLogo);
-}
-
-function widShowDBError()
-{
-    // displays error message and blocks all UI;
-    widModalWindow('Database is not accessible!<br/>Please, reload the page.');
+    engNcInfoDb(cb);
 }
 
 function widShowPwdGuessTime(d)
@@ -335,7 +287,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
     var cb = function (resp, record)
     {
-        ///var resp = engGetResp(data);
+        ///var resp = engGetResponseHeader(data);
 
         if (resp.msg === 'ERROR')
         {
@@ -353,7 +305,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         }
         else
         {
-            ///glLastRec = engGetRespLast(data);
+            ///glLastRec = engGetParsedLastRecord(data);
             glLastRec = record;
             glLastRec.st = 'PWD_WRONG';
             widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
@@ -482,33 +434,19 @@ function widCreateButtonClick()
     var $PwdInp = $('#password_input');
 
     if (!widIsPassword())
-        return widModalWindow('Enter master key.',
-                              function ()
-    {
-        $PwdInp.focus()
-    });
+        return widModalWindow('Enter master key.', function () { $PwdInp.focus() });
 
     widEmptyTab().show();
 
-    var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
-    var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
-
-    var cb = function (data)
+    var cb = function (resp)
     {
-        var r = engGetResp(data);
-        if (r.msg == 'OK')
-            widTokenTextOninput(500); //update token info after create;
+        if (resp.msg === 'OK')
+            widTokenTextOninput(); //update token info after create;
             else
-                widModalWindow(r.msg + ': ' + r.cnt);
+                widModalWindow(resp.msg + ': ' + r.cnt);
     }
 
-    var f = function ()
-    {
-        ajxSendCommand(cmd, cb, hasqLogo);
-    }
-
-    setTimeout(f);
+    engNcZ(cb);
 }
 
 function widSetDataTab()
@@ -574,25 +512,16 @@ function widSetDataButtonClick()
         $Data.focus()
     });
 
-    var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = engGetDataValToRecord($Data.val());
-    var cmd = 'add * ' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
-
-    var cb = function (d)
+    var cb = function (resp, jobId)
     {
-        var r = engGetResp(d);
-        if (r.msg == 'OK')
-            widTokenTextOninput(500);
+        if (resp.msg === 'OK')
+            widTokenTextOninput();
         else
-            widModalWindow(r.msg + ': ' + r.cnt);
+            widModalWindow(resp.msg + ': ' + resp.cnt);
     }
 
-    var f = function ()
-    {
-        ajxSendCommand(cmd, cb, hasqLogo);
-    }
+    engNcAdd(cb, $Data.val());
 
-    setTimeout(f);
 }
 
 function widSetDataTextareaOninput()
@@ -903,7 +832,6 @@ function widReceiveTextareaOninput()
 function widReceiveButtonClick()
 {
     var $TransKeysArea = $('#receive_keys_textarea');
-    var $TokenArea = $('#token_text_textarea');
     var $PwdInp = $('#password_input');
     var rawTransKeys = $TransKeysArea.val();
 
@@ -911,19 +839,20 @@ function widReceiveButtonClick()
         return widModalWindow('Token is free</br>You can assign it...');
 
         if (!widIsPassword())
-            return widModalWindow('Enter master key...', function ()
-        {
-            $PwdInp.focus()
-        });
+            return widModalWindow('Enter master key...', function () { $PwdInp.focus() });
 
     if (!engIsTransKeys(rawTransKeys))
-        return widModalWindow(glMsg.badAcceptKeys, function ()
-    {
-        $TransKeysArea.focus()
-    });
+        return widModalWindow(glMsg.badAcceptKeys, function () { $TransKeysArea.focus() });
 
-    var transKeys = engGetTransKeys(rawTransKeys);
-    var tokText = [glLastRec.r] || [''];
+    widShowTokenName();
+}
+
+function widShowTokenName()
+{
+    var $TokenArea = $('#token_text_textarea');
+    var $TransKeysArea = $('#receive_keys_textarea');
+    var transKeys = engGetTransKeys($TransKeysArea.val());
+    var tokText = [$TokenArea.val()] || [''];
     var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
     if (transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
@@ -933,19 +862,15 @@ function widReceiveButtonClick()
     }
     else
     {
-        var cb = function (data)
+        var cb = function (resp, record)
         {
-            var r = engGetResp(data);
+            if (resp.msg !== 'OK')
+                return widModalWindow(resp.msg + ': ' + resp.cnt);
 
-            if (r.msg !== 'OK')
-                return widModalWindow(r.msg + ': ' + r.cnt);
+            if (record.msg === 'ERROR')
+             return widModalWindow(record.msg + ': ' + record.cnt); //just in case
 
-            var lr = engGetRespLast(data);
-
-            if (lr.msg === 'ERROR')
-                return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
-
-                var d = lr.d;
+                var d = record.d;
             var dLen = d.length;
 
             if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === transKeys[0].s)
@@ -956,23 +881,20 @@ function widReceiveButtonClick()
             widReceiveKey(transKeys);
         }
 
-        var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + transKeys[0].s;
-
-        ajxSendCommand(cmd, cb, hasqLogo);
+        engNcRecord(cb, tok);
     }
-
 }
 
 function widReceiveKey(keys)
 {
     var cb = function (data)
     {
-        var r = engGetResp(data);
+        var r = engGetResponseHeader(data);
 
         if (r.msg !== 'OK')
             return widModalWindow(r.msg + ': ' + r.cnt);
 
-        var lr = engGetRespLast(data);
+        var lr = engGetParsedLastRecord(data);
 
         if (lr.msg === 'ERROR')
             return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
@@ -1029,12 +951,12 @@ function widInstantReceive(keys)
     {
         var cb2 = function (data)
         {
-            var resp = engGetResp(data);
+            var resp = engGetResponseHeader(data);
             console.log(data);
             (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
         }
 
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         console.log(data);
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
     }
@@ -1054,7 +976,7 @@ function widBlockingReceiveOnHold(keys)
 
     var cb = function (data)
     {
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
 
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
     }
@@ -1074,7 +996,7 @@ function widBlockingReceiveFull(keys)
 
     var cb = function (data)
     {
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
 
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
     }
@@ -1101,12 +1023,12 @@ function widBlockingReceiveRevert(keys)
     {
         var cb2 = function (data)
         {
-            var resp = engGetResp(data);
+            var resp = engGetResponseHeader(data);
             console.log(data);
             (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
         }
 
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         console.log(data);
         (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
     }

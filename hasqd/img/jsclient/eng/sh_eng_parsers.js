@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetResp(data)
+function engGetResponseHeader(data)
 {
     // returns response header
     var resp = {};
@@ -51,7 +51,17 @@ function engGetResp(data)
     return resp;
 }
 
-function engGetRespInfoDb(data)
+function engGetJobId (data)
+{
+    if (!data)
+        return null;
+
+    var blocks = data.replace(/\r|\s+$/g, '').split(/\s/);
+
+    return (blocks.length === 2 && blocks[0] === 'OK' && Number(blocks[1])) ? Number(blocks[1]) : null;
+}
+
+function engGetParsedInfoDb(data)
 {
     // returns parsed 'info db' response
     var db = [];
@@ -86,11 +96,6 @@ function engGetRespInfoDb(data)
                 case 'hash':
                     db[i].hash = parts[1];
                     break;
-                    /*
-                    case 'rawS':
-                    db[i].r = parts[1];
-                    break;
-                     */
                 case 'nG':
                     db[i].ng = parts[1];
                     break;
@@ -117,7 +122,17 @@ function engGetRespInfoDb(data)
     return db;
 }
 
-function engGetRespLast(data)
+function engGetParsedLastRecord(data)
+{
+    return engGetParsedRecord(data);
+}
+
+function engGetParsedNRecord(data)
+{
+    return engGetParsedRecord(data);
+}
+
+function engGetParsedRecord(data)
 {
     // returns parsed 'last' response
     var rec = {};

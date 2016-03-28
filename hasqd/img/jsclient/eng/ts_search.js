@@ -197,7 +197,7 @@ function searchProcessFile(data)
 
 function searchProcessRec(srec)
 {
-    var lr = engGetRespLast(srec);
+    var lr = engGetParsedLastRecord(srec);
 
     var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
@@ -233,12 +233,12 @@ function searchValidate1(index)
 
 function searchValidate2(index, data)
 {
-    var resp = engGetResp(data);
+    var resp = engGetResponseHeader(data);
 
     if (resp.msg === 'ERROR') return;
     if (resp.msg === 'IDX_NODN') return;
 
-    var lr = engGetRespLast(data);
+    var lr = engGetParsedLastRecord(data);
     var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 

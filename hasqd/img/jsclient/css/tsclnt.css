@@ -41,7 +41,7 @@ button.search-tab-button
 {
     font: 12px Consolas;
     text-align: center;
-    width: 30px;
+    width: 70px;
     height: 30px;
 	border: 0;
 	background: #FCFCFC;	
@@ -54,7 +54,7 @@ button.search-tab-button-active
 {
     font: 12px Consolas;
     text-align: center;
-    width: 30px;
+    width: 70px;
     height: 30px;
 	border: 1px solid #DDDDDD;
 	background: #FCFCFC;
@@ -327,7 +327,7 @@ td#search_tab_buttons_area_td
 {
     vertical-align: top;		
 	padding:0 6px 0 0;
-	width: 30px;
+	width: 70px;
 }
 
 td#set_data_textarea_td

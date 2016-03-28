@@ -32,7 +32,7 @@ function engSendPing(timeDelay)
 
         //console.log(ct);
 
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
 
         //if (resp.msg !== 'OK')
         //return widShowLog(resp.msg + ': ' + resp.cnt);

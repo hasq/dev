@@ -507,7 +507,7 @@ function widCreateTokens($obj, tokens)
         widShowProgressbar(progress);
         widShowTokensLog('Creating... ');
 
-        var resp = engGetResp(cbData);
+        var resp = engGetResponseHeader(cbData);
         if (resp.msg == 'ERROR')
             widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp.cnt);
 
@@ -608,8 +608,8 @@ function widVerifyTokens($obj, tokens)
     {
         if (glCmdList.items.length == 0)
             return;
-        if (engGetResp(ajxData).msg == 'ERROR')
-            return widDone($obj, engGetResp(ajxData).cnt);
+        if (engGetResponseHeader(ajxData).msg == 'ERROR')
+            return widDone($obj, engGetResponseHeader(ajxData).cnt);
 
         widShowProgressbar(progress);
         widShowTokensLog('Verifying...');
@@ -652,7 +652,7 @@ function widFillOutTokList($obj, tokens, extCb)
         if (glCmdList.items.length == 0)
             return led().clear(); // it is necessary to check need
 
-            var resp = engGetResp(cbData);
+            var resp = engGetResponseHeader(cbData);
         if (resp.msg == 'ERROR')
             return widDone($obj, resp.msg + ': ' + resp.cnt);
 
@@ -691,7 +691,7 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     widShowProgressbar(progress);
     widShowTokensLog(msg);
 
-    var resp = engGetResp(cbData);
+    var resp = engGetResponseHeader(cbData);
     (resp.msg !== 'ERROR') ? widWarningLed($obj, imgMsgBlink, msg) : widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp.cnt);
 
     if (!(cmdIdx + 1 < glCmdList.items.length))

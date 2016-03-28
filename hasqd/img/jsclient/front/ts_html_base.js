@@ -523,6 +523,11 @@ function widGetHTMLSearchTab()
     return r;
 }
 
+function widGetHTMLInSearchButtons(func, htmlClass, img, spanId)
+{
+ return '<button onclick="return ' + func + '($(this))" class="' + htmlClass + '">' + img + '<span id="' + spanId + '">0</span>' + '</button>';
+}
+
 function widGetHTMLInSearchTabsButtons()
 {
     var r = '';
@@ -532,25 +537,25 @@ function widGetHTMLInSearchTabsButtons()
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchMineButtonClick($(this))" class="search-tab-button-active">' + imgBtnSearchMine +'</button>';
+            r += widGetHTMLInSearchButtons('widSearchMineButtonClick', 'search-tab-button-active', imgBtnSearchMine, 'search_mine_span');
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchOnHoldButtonClick($(this))" class="search-tab-button">' + imgBtnSearchOnHold + '</button>';
+            r += widGetHTMLInSearchButtons('widSearchOnHoldButtonClick', 'search-tab-button', imgBtnSearchOnHold, 'search_onhold_span');
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchToComeButtonClick($(this))" class="search-tab-button">' + imgBtnSearchToCome + '</button>';
+            r += widGetHTMLInSearchButtons('widSearchToComeButtonClick', 'search-tab-button', imgBtnSearchToCome, 'search_tocome_span');
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
          r += '<td style="margin:0; padding-bottom: 6px;"/>';
-         r += '<button onclick="widSearchPastButtonClick($(this))" class="search-tab-button">' + imgBtnSearchPast + '</button>';
+            r += widGetHTMLInSearchButtons('widSearchPastButtonClick', 'search-tab-button', imgBtnSearchPast, 'search_past_span');
         }
      r += '</tr>\n';
     }

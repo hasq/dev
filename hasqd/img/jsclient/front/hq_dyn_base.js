@@ -80,9 +80,9 @@ function widRefreshButtonClick()
     var cb1 = function (data)
     {
         var $Id = $('#server_id');
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return;
-        var infoId = engGetRespInfoId(data);
+        var infoId = engGetResponseHeaderInfoId(data);
         if (infoId.msg === 'ERROR') return;
 
         $Id.html('<pre>' + infoId + '</pre>');
@@ -93,9 +93,9 @@ function widRefreshButtonClick()
     var cb2 = function (data)
     {
         var $Sys = $('#server_sys');
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return;
-        var infoSys = engGetRespInfoSys(data);
+        var infoSys = engGetResponseHeaderInfoSys(data);
         if (infoSys.msg === 'ERROR') return;
 
         $Sys.html('<pre>' + infoSys + '</pre>');
@@ -106,9 +106,9 @@ function widRefreshButtonClick()
     var cb3 = function (data)
     {
         var $Fam = $('#server_fam');
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return;
-        var infoFam = engGetRespInfoFam(data);
+        var infoFam = engGetResponseHeaderInfoFam(data);
         if (resp.msg === 'ERROR' || infoFam.length == 0) return;
 
         var table = widGetHTMLFamilyTable(resp);
@@ -119,9 +119,9 @@ function widRefreshButtonClick()
 
     var cb4 = function (data)
     {
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return;
-        glDataBase = engGetRespInfoDb(data);
+        glDataBase = engGetParsedInfoDb(data);
         if (glDataBase.msg == 'ERROR') return;
 
         var $Db = $('#database_select'); //document.getElementById('database_select');
@@ -272,9 +272,9 @@ function widGetLastRecordButtonClick()
     var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
     var cb = function (data)
     {
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return widShowRecordsTabLog(resp.cnt);
-        var lastRec = engGetRespLast(data);
+        var lastRec = engGetParsedLastRecord(data);
 
         if (lastRec.msg == 'ERROR') return widShowRecordsTabLog(lastRec.cnt);
         widShowLastRecord(lastRec);
@@ -448,9 +448,9 @@ function widTokensHistorySelect(range)
     $HistorySelect.val('');
     var cb = function (data)
     {
-        var resp = engGetResp(data);
+        var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return widShowRecordsTabLog(resp.cnt);
-        var range = engGetRespRange(data);
+        var range = engGetResponseHeaderRange(data);
         if (range.msg === 'ERROR') return widShowRecordsTabLog(range.msg + ': ' + range.cnt);
 
         $HistorySelect.val(range.substr(range.indexOf('\n') + 1));
@@ -489,7 +489,7 @@ function widSubmitButtonClick()
     var cb = function (data)
     {
         var $HistorySelect = $('#tokens_history_select');
-        widShowRecordsTabLog(engGetResp(data).msg);
+        widShowRecordsTabLog(engGetResponseHeader(data).msg);
         var i = $HistorySelect.get(0).selectedIndex;
         var d = +$HistorySelect.get(0).options[i].text;
         widTokensHistorySelect(d);

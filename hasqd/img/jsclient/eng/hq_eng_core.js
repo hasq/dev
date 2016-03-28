@@ -2,7 +2,7 @@
 
 function engGetTokenInfo(data, r, s)
 {
-    var response = engGetResp(data);
+    var response = engGetResponseHeader(data);
 
     var item = {};
     item.r = r;
@@ -12,7 +12,7 @@ function engGetTokenInfo(data, r, s)
 
     if (response.msg === 'OK')
     {
-        var lr = engGetRespLast(data);
+        var lr = engGetParsedLastRecord(data);
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
@@ -53,7 +53,7 @@ function engRunCmdList(cmdList, cbFunc)
         if (cmdList.items.length == 0 && cmdList.idx >= cmdList.items.length) return;
 
         var progress = ((cmdList.idx + 1) / cmdList.items.length) * 100;
-        var r = engGetResp(ajxData).msg;
+        var r = engGetResponseHeader(ajxData).msg;
 
         if (r == 'OK' || r == 'IDX_NODN')
         {
