@@ -57,7 +57,7 @@ function widSetDefaultDb(dbHash)
                 if (db[i].hash === dbHash)
                     return glCurrentDB = db[i];
 
-         return widModalWindow('Database is not accessible!<br/>Please, reload the page.');
+        return widModalWindow(glMsg.badDataBase);
     }
 
     engNcInfoDb(cb);
@@ -305,7 +305,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         }
         else
         {
-            ///glLastRec = engGetParsedLastRecord(data);
+            ///glLastRec = engGetParsedRecord(data);
             glLastRec = record;
             glLastRec.st = 'PWD_WRONG';
             widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
@@ -434,7 +434,7 @@ function widCreateButtonClick()
     var $PwdInp = $('#password_input');
 
     if (!widIsPassword())
-        return widModalWindow('Enter master key.', function () { $PwdInp.focus() });
+        return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     widEmptyTab().show();
 
@@ -495,22 +495,16 @@ function widSetDataButtonClick()
     var $Data = $('#set_data_textarea');
 
     if (!widIsPassword())
-        return widModalWindow('Enter master key...', function ()
-    {
-        $PwdInp.focus()
-    });
+        return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     if (glLastRec.st !== 'OK')
-        return widModalWindow('Token is unaccessible.<br/>Incorrect master key.', function ()
-    {
-        $PwdInp.focus()
-    });
+        return widModalWindow('Token is unaccessible.<br/>Incorrect master key.', function () { $PwdInp.focus() });
 
-    if (engGetDataValToRecord($Data.val()) === glLastRec.d)
-        return widModalWindow('Token data is not changed...', function ()
-    {
-        $Data.focus()
-    });
+        if (engGetDataValToRecord($Data.val()) === glLastRec.d)
+            return widModalWindow('Token data is not changed...', function ()
+        {
+            $Data.focus()
+        });
 
     var cb = function (resp, jobId)
     {
@@ -609,10 +603,7 @@ function widShowInstantButtonClick($obj)
             return widModalWindow('Create token first...');
 
         if (!widIsPassword())
-            return widModalWindow('Enter master key...', function ()
-        {
-            $PwdInp.focus()
-        });
+            return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
         if (glLastRec.st === 'PWD_SNDNG')
         {
@@ -674,10 +665,7 @@ function widShowOnHoldButtonClick($obj)
             return widModalWindow('Create token first...');
 
         if (!widIsPassword())
-            return widModalWindow('Enter master key...', function ()
-        {
-            $PwdInp.focus()
-        });
+            return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
         if (glLastRec.st !== 'OK' && glLastRec.st !== 'PWD_SNDNG')
             return widModalWindow('Token is unaccessible</br>or incorrect master key.', function ()
@@ -839,7 +827,7 @@ function widReceiveButtonClick()
         return widModalWindow('Token is free</br>You can assign it...');
 
         if (!widIsPassword())
-            return widModalWindow('Enter master key...', function () { $PwdInp.focus() });
+            return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     if (!engIsTransKeys(rawTransKeys))
         return widModalWindow(glMsg.badAcceptKeys, function () { $TransKeysArea.focus() });
@@ -856,57 +844,45 @@ function widShowTokenName()
     var tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
     if (transKeys[0].s === engGetHash(tok, glCurrentDB.hash))
-    {
-        textArea($TokenArea).set(tok);
         widReceiveKey(transKeys);
-    }
     else
     {
         var cb = function (resp, record)
         {
-            if (resp.msg !== 'OK')
-                return widModalWindow(resp.msg + ': ' + resp.cnt);
+            if (resp.msg !== 'OK' && resp.cnt !== glResponse.noRecs)
+                widModalWindow(resp.msg + ': ' + resp.cnt);
+            else if (resp.msg === 'OK' && record === null)
+                widModalWindow(glMsg.recordParseError);
 
-            if (record.msg === 'ERROR')
-             return widModalWindow(record.msg + ': ' + record.cnt); //just in case
-
-                var d = record.d;
-            var dLen = d.length;
-
-            if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === transKeys[0].s)
-                textArea($TokenArea).set(d.substring(1, dLen - 1));
-            else
-                textArea($TokenArea).set(transKeys[0].s);
+            textArea($TokenArea).set(engGetTokenName(record, transKeys));
 
             widReceiveKey(transKeys);
         }
 
-        engNcRecord(cb, tok);
+        engNcRecordZero(cb, tok);
     }
 }
 
 function widReceiveKey(keys)
 {
-    var cb = function (data)
+    var $TokText = $('#token_text_textarea');
+    var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
+
+    var cb = function (resp, record)
     {
-        var r = engGetResponseHeader(data);
+        ///var r = engGetResponseHeader(data);
 
-        if (r.msg !== 'OK')
-            return widModalWindow(r.msg + ': ' + r.cnt);
+        if (resp.msg !== 'OK')
+            return widModalWindow(resp.msg + ': ' + resp.cnt);
 
-        var lr = engGetParsedLastRecord(data);
+        if (record === null)
+            return widModalWindow(glMsg.recordParseError);
 
-        if (lr.msg === 'ERROR')
-            return widModalWindow(lr.msg + ': ' + lr.cnt); //just in case
-
-            keys[0].n = lr.n;
-
-        widTokensTakeover(keys);
+        widTokensTakeover(engGetNumberedTransKeys(keys, [record]));
+        //widTokensTakeover(engGetUpdatedKeysN(keys, record));
     }
 
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + keys[0].s;
-
-    ajxSendCommand(cmd, cb, hasqLogo);
+    engNcLast(cb, tok)
 }
 
 function widTokensTakeover(keys)
@@ -1106,47 +1082,15 @@ function widSearchButtonClick()
 
 }
 
-function widSearchMineButtonClick($obj)
+function widSearchButtonsClick($obj, tabId)
 {
     var $Tabs = $('#search_inner_tabs_div');
     var $AllButtons = $('#search_tab_buttons_area_td button');
 
-    $('#search_inner_tabs_div').tabs('option', 'active', 0);
-    $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
-    $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
-
-}
-
-function widSearchOnHoldButtonClick($obj)
-{
-    var $Tabs = $('#search_inner_tabs_div');
-    var $AllButtons = $('#search_tab_buttons_area_td button');
-
-    $('#search_inner_tabs_div').tabs('option', 'active', 1);
+    $('#search_inner_tabs_div').tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
     $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
 }
-
-function widSearchToComeButtonClick($obj)
-{
-    var $Tabs = $('#search_inner_tabs_div');
-    var $AllButtons = $('#search_tab_buttons_area_td button');
-
-    $('#search_inner_tabs_div').tabs('option', 'active', 2);
-    $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
-    $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
-}
-
-function widSearchPastButtonClick($obj)
-{
-    var $Tabs = $('#search_inner_tabs_div');
-    var $AllButtons = $('#search_tab_buttons_area_td button');
-
-    $('#search_inner_tabs_div').tabs('option', 'active', 3);
-    $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
-    $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
-}
-
 
 function widSearchProgress(fn, data, dat2)
 //  1   Set button according to g_searchOn

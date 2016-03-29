@@ -10,12 +10,30 @@ function engNcDeferredLast(extCb, tok, delay)
         var record = null;
 
         if (resp.msg === 'OK' )
-            record = engGetParsedLastRecord(data);
+            record = engGetParsedRecord(data);
 
         extCb(resp, record);
     }
 
     return engSendDeferredRequest(cmd, intCb, delay);
+}
+
+function engNcLast(extCb, tok)
+{
+    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
+
+    var intCb = function (data)
+    {
+        var resp = engGetResponseHeader(data);
+        var record = null;
+
+        if (resp.msg === 'OK' )
+            record = engGetParsedRecord(data);
+
+        extCb(resp, record);
+    }
+
+    return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
 function engNcInfoDb(extCb)
@@ -69,7 +87,7 @@ function engNcAdd(extCb, tokData)
     return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
-function engNcRecord(extCb, tok)
+function engNcRecordZero(extCb, tok)
 {
     var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + tok;
 
@@ -79,7 +97,7 @@ function engNcRecord(extCb, tok)
         var record = null;
 
         if (resp.msg === 'OK' )
-            record = engGetParsedLastRecord(data);
+            record = engGetParsedRecord(data);
 
         extCb(resp, record);
     }
@@ -94,9 +112,6 @@ function engNcJob(extCb, jobId)
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
-
-        //if (resp.msg === 'OK')
-
 
         extCb(resp);
     }

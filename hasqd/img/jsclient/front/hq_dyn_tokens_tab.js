@@ -798,7 +798,7 @@ function widUpgradeTransKeys($obj, transKeys, func)
         if (transKeys.length !== glTokList.items.length)
             return widDone($obj, 'TransKeys update error!');
 
-        transKeys = engGetUpgradedTransKeys(transKeys, glTokList.items);
+        transKeys = engGetNumberedTransKeys(transKeys, glTokList.items);
     }
 
     var titleKeys = engGetTitleKeys(transKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);

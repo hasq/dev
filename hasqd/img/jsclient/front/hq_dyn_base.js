@@ -274,7 +274,7 @@ function widGetLastRecordButtonClick()
     {
         var resp = engGetResponseHeader(data);
         if (resp.msg !== 'OK') return widShowRecordsTabLog(resp.cnt);
-        var lastRec = engGetParsedLastRecord(data);
+        var lastRec = engGetParsedRecord(data);
 
         if (lastRec.msg == 'ERROR') return widShowRecordsTabLog(lastRec.cnt);
         widShowLastRecord(lastRec);

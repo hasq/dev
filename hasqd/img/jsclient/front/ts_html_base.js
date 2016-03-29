@@ -523,43 +523,45 @@ function widGetHTMLSearchTab()
     return r;
 }
 
-function widGetHTMLInSearchButtons(func, htmlClass, img, spanId)
-{
- return '<button onclick="return ' + func + '($(this))" class="' + htmlClass + '">' + img + '<span id="' + spanId + '" style="padding-left:10px; vertical-align: top;">0</span>' + '</button>';
-}
-
 function widGetHTMLInSearchTabsButtons()
 {
+    function bracketSpan(data)
+    {
+        var r = '';
+
+     r = '<span style="padding-left: 2px; vertical-align: top;">(' + data + ')</span>';
+
+        return r;
+    }
+
+    function trTdButton(tabId, btnClass, img, spanId)
+    {
+        var r = '';
+        var onclick = 'onclick="return widSearchButtonsClick($(this),' + tabId + ')" ';
+        var btnClass = 'class="' + btnClass + '" ';
+        var buttonStyle = 'style="padding-left: 2px; padding-right: 2px;"';
+     var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">0</span>';
+
+        r += '<tr>\n';
+     r += '<td style="margin:0; padding: 1px 2px 1px 2px;"/>';
+     r += '<button ' + onclick + btnClass + buttonStyle + '>' + img + bracketSpan(span) + '</button>';
+     r += '</tr>\n';
+
+        return r;
+    }
+
     var r = '';
 
     r += '<table>\n';
     {
-        r += '<tr>\n';
-        {
-         r += '<td style="margin:0; padding-bottom: 6px;"/>';
-            r += widGetHTMLInSearchButtons('widSearchMineButtonClick', 'search-tab-button-active', imgBtnSearchMine, 'search_mine_span');
-        }
-        r += '</tr>\n';
-        r += '<tr>\n';
-        {
-         r += '<td style="margin:0; padding-bottom: 6px;"/>';
-            r += widGetHTMLInSearchButtons('widSearchOnHoldButtonClick', 'search-tab-button', imgBtnSearchOnHold, 'search_onhold_span');
-        }
-        r += '</tr>\n';
-        r += '<tr>\n';
-        {
-         r += '<td style="margin:0; padding-bottom: 6px;"/>';
-            r += widGetHTMLInSearchButtons('widSearchToComeButtonClick', 'search-tab-button', imgBtnSearchToCome, 'search_tocome_span');
-        }
-        r += '</tr>\n';
-        r += '<tr>\n';
-        {
-         r += '<td style="margin:0; padding-bottom: 6px;"/>';
-            r += widGetHTMLInSearchButtons('widSearchPastButtonClick', 'search-tab-button', imgBtnSearchPast, 'search_past_span');
-        }
-     r += '</tr>\n';
+        r += trTdButton(0, 'search-tab-button-active', imgBtnSearchMine, 'search_mine_span');
+        r += trTdButton(1, 'search-tab-button', imgBtnSearchOnHold, 'search_onhold_span');
+        r += trTdButton(2, 'search-tab-button', imgBtnSearchToCome, 'search_tocome_span');
+        r += trTdButton(3, 'search-tab-button', imgBtnSearchPast, 'search_past_span');
+
     }
     r += '</table>\n';
+
     return r;
 }
 function widGetHTMLInSearchTabs()

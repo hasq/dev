@@ -194,15 +194,6 @@ function engGetRawTokensList(data)
     return r;
 }
 
-function engGetUpgradedTransKeys(transKeys, list)
-{
-    for (var i = 0; i < transKeys.length; i++)
-    {
-        transKeys[i].n = list[i].n;
-    }
-    return transKeys;
-}
-
 function engGetTransKeys(rawKeys)
 {
     var prK1K2 = '23132';

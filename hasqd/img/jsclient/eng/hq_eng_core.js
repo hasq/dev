@@ -12,7 +12,7 @@ function engGetTokenInfo(data, r, s)
 
     if (response.msg === 'OK')
     {
-        var lr = engGetParsedLastRecord(data);
+        var lr = engGetParsedRecord(data);
         var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
@@ -82,5 +82,4 @@ function engRunCmdList(cmdList, cbFunc)
 
     else if (cmdList.items.length === 0)
         cbFunc('OK', 0, 0);
-
 }

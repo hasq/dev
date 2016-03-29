@@ -64,11 +64,13 @@ function engGetDateRangeFolders(fromDate, toDate)
 
     var slicePath = function (y, m, d)
     {
-        var mm = (m < 10) ? '0' + m.toString() : m.toString();
-        var dd = (d < 10) ? '0' + d.toString() : d.toString();
-        var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
+        var r = {};
+        r.yyyy = y.toString();
+        r.mm = (m < 10) ? '0' + m.toString() : m.toString();
+        r.dd = (d < 10) ? '0' + d.toString() : d.toString();
+        //var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
 
-        return path;
+        return r;
 
     }
 
@@ -197,7 +199,7 @@ function searchProcessFile(data)
 
 function searchProcessRec(srec)
 {
-    var lr = engGetParsedLastRecord(srec);
+    var lr = engGetParsedRecord(srec);
 
     var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
@@ -238,7 +240,7 @@ function searchValidate2(index, data)
     if (resp.msg === 'ERROR') return;
     if (resp.msg === 'IDX_NODN') return;
 
-    var lr = engGetParsedLastRecord(data);
+    var lr = engGetParsedRecord(data);
     var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 

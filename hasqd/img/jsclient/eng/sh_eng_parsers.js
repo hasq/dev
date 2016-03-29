@@ -122,30 +122,18 @@ function engGetParsedInfoDb(data)
     return db;
 }
 
-function engGetParsedLastRecord(data)
-{
-    return engGetParsedRecord(data);
-}
-
-function engGetParsedNRecord(data)
-{
-    return engGetParsedRecord(data);
-}
-
 function engGetParsedRecord(data)
 {
     // returns parsed 'last' response
+    if (!data)
+        return null;
+
     var rec = {};
     var err = {};
     var parts = data.replace(/^OK/g, '').replace(/^\s|\r|\s+$/g, '').split(/\s/);
 
     if (parts.length < 5)
-    {
-        err.msg = 'ERROR';
-        err.cnt = parts;
-
-        return err;
-    }
+        return null;
 
     if (parts.length == 5)
     {
@@ -665,6 +653,14 @@ function engGetMergedTokensList(hashList, rawList, hash)
     }
 
     return hashList;
+}
+
+function engGetNumberedTransKeys(keys, list)
+{
+    for (var i = 0; i < keys.length; i++)
+        keys[i].n = list[i].n;
+
+    return keys;
 }
 
 function engGetOnlyHex(data)
