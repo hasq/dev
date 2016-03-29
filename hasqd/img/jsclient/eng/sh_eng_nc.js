@@ -95,8 +95,8 @@ function engNcJob(extCb, jobId)
     {
         var resp = engGetResponseHeader(data);
 
-        if (resp.msg === 'OK')
-            continue;
+        //if (resp.msg === 'OK')
+
 
         extCb(resp);
     }

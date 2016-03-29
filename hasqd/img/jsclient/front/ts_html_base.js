@@ -525,7 +525,7 @@ function widGetHTMLSearchTab()
 
 function widGetHTMLInSearchButtons(func, htmlClass, img, spanId)
 {
- return '<button onclick="return ' + func + '($(this))" class="' + htmlClass + '">' + img + '<span id="' + spanId + '">0</span>' + '</button>';
+ return '<button onclick="return ' + func + '($(this))" class="' + htmlClass + '">' + img + '<span id="' + spanId + '" style="padding-left:10px; vertical-align: top;">0</span>' + '</button>';
 }
 
 function widGetHTMLInSearchTabsButtons()
