@@ -20,7 +20,7 @@ function engSearchStart(fromDate, toDate, progr)
     o.toDate = toDate;
 
     o.slices = engGetDateRangeSlices(fromDate, toDate);
-    console.log(o.slices[0].name()+" : "+o.slices.length);
+    console.log(o.slices[0].name() + " : " + o.slices.length);
     o.number = 0;
 
     // start process
@@ -64,13 +64,13 @@ function engGetDateRangeSlices(fromDate, toDate)
 
     var slicePath = function (y, m, d)
     {
-        var name = function(){ return this.yyyy+this.mm+this.dd; };
+        var name = function() { return this.yyyy + this.mm + this.dd; };
         var path = function(n)
         {
             var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
             v = "/smd.db" + v;
             v += this.name() + '-' + n + ".smd.txt";
-            return v; 
+            return v;
         };
 
         var r = { name : name, path : path };

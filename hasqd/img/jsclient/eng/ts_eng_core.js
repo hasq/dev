@@ -1,4 +1,17 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
+function engGetDbByHash (db, hash)
+{
+    var currentDb = null;
+
+    for (var i = 0; i < db.length; i++)
+        if (db[i].hash === hash)
+        {
+            currentDb = db[i];
+            break;
+        }
+
+    return currentDb;
+}
 
 function engSendDeferredRequest(cmd, f, t)
 {

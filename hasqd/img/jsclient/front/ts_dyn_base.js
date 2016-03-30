@@ -47,17 +47,16 @@ function widModalWindow(msg, func)
     $('#modal_window_content').find('p').html(msg);
 }
 
-function widSetDefaultDb(dbHash)
+function widSetDefaultDb(hash)
 {
     // Searching for database and save it in variable.
     var cb = function (resp, db)
     {
         if (resp.msg === 'OK' && typeof db !== 'null')
-            for (var i = 0; i < db.length; i++)
-                if (db[i].hash === dbHash)
-                    return glCurrentDB = db[i];
+            glCurrentDB = engGetDbByHash (db, hash);
 
-        return widModalWindow(glMsg.badDataBase);
+        if (glCurrentDB === null)
+            return widModalWindow(glMsg.badDataBase);
     }
 
     engNcInfoDb(cb);

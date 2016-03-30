@@ -4,7 +4,7 @@ var glClientTitle = 'TokenSwap';
 var glRequiredDbHash = 'smd';
 var glPassword = '';
 
-var glCurrentDB = {}; //'smd.db';
+var glCurrentDB = null; //'smd.db';
 var glLastRec = {};
 var glTimerId;
 var glSearch =
