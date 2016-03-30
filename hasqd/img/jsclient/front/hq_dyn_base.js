@@ -315,7 +315,7 @@ function widShowNewRecordAuto()
     if (lr_n != '')
     {
         var nr_n = +lr_n + 1;
-        widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
     }
 
     widShowNewRecCompability();
@@ -357,7 +357,7 @@ function widShowNewRecOninput()
 
     if ((s != '') && pwdCheckboxIsOn == 1)
     {
-        widShowNewRecord(engGetNewRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
         widShowRecordsTabLog();
     }
     widShowNewRecCompability();

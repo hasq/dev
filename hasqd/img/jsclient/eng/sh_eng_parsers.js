@@ -21,32 +21,26 @@ function engGetResponseHeader(data)
         resp.msg = 'OK';
         resp.cnt = 'OK';
     }
-    else if (blocks[0] === 'OK')
-    {
-        resp.msg = 'OK';
-        resp.cnt = 'OK';
-    }
-    else if (blocks[0] === 'IDX_NODN')
+    else if (blocks[0] === 'OK' || blocks[0] === 'IDX_NODN' || blocks[0] === 'JOB_QUEUED')
     {
         resp.msg = blocks[0];
         resp.cnt = blocks[0];
-    }
-    else if (
-        blocks[0] === 'URF_BAD_FORMAT' ||
-        blocks[0] === 'REQ_HASHTYPE_BAD' ||
-        blocks[0] === 'REQ_MSG_HEAD' ||
-        blocks[0] === 'REQ_DN_BAD' ||
-        blocks[0] === 'REC_INIT_BAD_N' ||
-        blocks[0] === 'REC_INIT_BAD_S' ||
-        blocks[0] === 'REC_INIT_BAD_KGO')
-    {
-        resp.msg = 'ERROR';
-        resp.cnt = tmp;
     }
     else
     {
         resp.msg = 'ERROR';
         resp.cnt = tmp;
+        /*
+                URF_BAD_FORMAT
+                REQ_HASHTYPE_BAD
+                REQ_MSG_HEAD
+                REQ_DN_BAD
+                REC_INIT_BAD_N
+                REC_INIT_BAD_S
+                REC_INIT_BAD_KGO
+                RECORD_MISMATCH
+                WRONG_SEQ_NUMBER
+        */
     }
     return resp;
 }
@@ -162,7 +156,7 @@ function engGetParsedRecord(data)
     return rec;
 }
 
-function engGetNewRecord(n, s, p0, p1, p2, m, h)
+function engGetRecord(n, s, p0, p1, p2, m, h)
 {
     // generates new record
     var rec = {};
@@ -306,7 +300,6 @@ function engGetDataValToDisplay(data)
 function engGetDataValToRecord(data) // returns parsed data for add into record
 {
     var r = data || '';
-
     var LF = '\u000a'; //unicode line-feed
     var space = '\u0020';
     var backslash = '\u005c';
@@ -407,7 +400,7 @@ function engIsAcceptKeys(keys)
     return true;
 }
 
-function engGetAcceptKeys(keys)
+function engGetParsedAcceptKeys(keys)
 {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
@@ -518,9 +511,9 @@ function engGetAcceptKeys(keys)
     return acceptKeys;
 }
 
-function engGetTitleKeys(acceptKeys, p, h, m)
+function engGetTitleRecord(acceptKeys, p, h, m)
 {
-    var titleKeys = acceptKeys;
+    var titleRecord = acceptKeys;
     var prK1K2 = '23132'; //simple send;
     var prG2O2 = '24252'; // simple request;
     var prK1G1 = '23141'; // blocking send, st1;
@@ -529,7 +522,7 @@ function engGetTitleKeys(acceptKeys, p, h, m)
     var prG1O1 = '24151'; //blocking request, st2;
     var prK2 = '232'; // blocking receive revert;
 
-    var prCode = titleKeys[0].prcode; // get protocol key from first element;
+    var prCode = titleRecord[0].prcode; // get protocol key from first element;
     var prCode0Ch = prCode.charAt(0);
     var isRecNum = (prCode0Ch == '1') ? true : false; // if protocol have record numbers;
 
@@ -541,91 +534,90 @@ function engGetTitleKeys(acceptKeys, p, h, m)
     prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
     prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        var n = titleKeys[i].n;
-        var s = titleKeys[i].s;
+        var n = titleRecord[i].n;
+        delete titleRecord[i].n;
+        var s = titleRecord[i].s;
         var n1 = n + 1;
         var n2 = n + 2;
         var n3 = n + 3;
         var n4 = n + 4;
-        var k1,
-            k2,
-            k3,
-            k4,
-            g1,
-            g2,
-            g3,
-            o1;
+        var k1, k2, k3, k4, g1, g2, g3, o1;
 
-        switch (titleKeys[0].prcode)
+        switch (titleRecord[0].prcode)
         {
             case prK1K2:
-            k2 = titleKeys[i].k2; //
-            titleKeys[i].g1 = engGetKey(n2, titleKeys[i].s, k2, m, h); //
+                titleRecord[i].n1 = n1;
+                titleRecord[i].n2 = n2;
+                k2 = titleRecord[i].k2;
+                titleRecord[i].g1 = engGetKey(n2, titleRecord[i].s, k2, m, h);
                 k3 = engGetKey(n3, s, p, m, h);
-            g2 = titleKeys[i].g2 = engGetKey(n3, s, k3, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                g2 = titleRecord[i].g2 = engGetKey(n3, s, k3, m, h);
+                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h);
                 k4 = engGetKey(n4, s, p, m, h);
                 g3 = engGetKey(n4, s, k4, m, h);
-            titleKeys[i].o2 = engGetKey(n3, s, g3, m, h); //
+                titleRecord[i].o2 = engGetKey(n3, s, g3, m, h);
 
                 break;
             case prG2O2:
-            titleKeys[i].n1 = n1; //
-            titleKeys[i].n2 = n2; //
-            g2 = titleKeys[i].g2; //
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-            k2 = titleKeys[i].k2 = engGetKey(n2, s, p, m, h); //
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleRecord[i].n1 = n1;
+                titleRecord[i].n2 = n2;
+                g2 = titleRecord[i].g2;
+                titleRecord[i].k1 = engGetKey(n1, s, p, m, h);
+                k2 = titleRecord[i].k2 = engGetKey(n2, s, p, m, h);
+                titleRecord[i].g1 = engGetKey(n2, s, k2, m, h);
+                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h);
 
                 break;
             case prK1G1:
+                titleRecord[i].n1 = n1;
                 k3 = engGetKey(n3, s, p, m, h);
                 g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h);
 
                 break;
             case prK1:
+                titleRecord[i].n1 = n1;
                 k2 = engGetKey(n2, s, p, m, h);
                 k3 = engGetKey(n3, s, p, m, h);
                 g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1 = engGetKey(n2, s, g2, m, h); //
+                titleRecord[i].g1 = engGetKey(n2, s, k2, m, h);
+                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h);
 
                 break;
             case prO1:
-                titleKeys[i].n1 = n1;
-            titleKeys[i].k1 = engGetKey(titleKeys[i].n1, s, p, m, h); //
+                titleRecord[i].n1 = n1;
+                titleRecord[i].k1 = engGetKey(titleRecord[i].n1, s, p, m, h);
                 k2 = engGetKey(n2, s, p, m, h);
-            titleKeys[i].g1 = engGetKey(n2, s, k2, m, h); //
-            titleKeys[i].o1; //
+                titleRecord[i].g1 = engGetKey(n2, s, k2, m, h);
+                titleRecord[i].o1;
 
                 break;
             case prG1O1:
-            titleKeys[i].n1 = n1; //
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
+                titleRecord[i].n1 = n1;
+                titleRecord[i].k1 = engGetKey(n1, s, p, m, h);
 
                 break;
             case prK2:
-                titleKeys[i].n1 = n1;
-                titleKeys[i].n2 = n2;
-            titleKeys[i].k1 = engGetKey(n1, s, p, m, h); //
-                titleKeys[i].g1 = engGetKey(n2, s, titleKeys[i].k2, m, h);
-                var k3 = engGetKey(n3, s, p, m, h);
-                titleKeys[i].g2 = engGetKey(n3, s, k3, m, h);
-            titleKeys[i].o1 = engGetKey(n2, s, titleKeys[i].g2, m, h); //
-                var k4 = engGetKey(n4, s, p, m, h);
-                var g3 = engGetKey(n4, s, k4, m, h);
-                titleKeys[i].o2 = engGetKey(n3, s, g3, m, h);
+                titleRecord[i].n1 = n1;
+                titleRecord[i].n2 = n2;
+                titleRecord[i].k1 = engGetKey(n1, s, p, m, h);
+                titleRecord[i].g1 = engGetKey(n2, s, titleRecord[i].k2, m, h);
+                k3 = engGetKey(n3, s, p, m, h);
+                titleRecord[i].g2 = engGetKey(n3, s, k3, m, h);
+                titleRecord[i].o1 = engGetKey(n2, s, titleRecord[i].g2, m, h);
+                k4 = engGetKey(n4, s, p, m, h);
+                g3 = engGetKey(n4, s, k4, m, h);
+                titleRecord[i].o2 = engGetKey(n3, s, g3, m, h);
 
                 break;
             default:
                     break;
         }
     }
-    return titleKeys;
+
+    return titleRecord;
 }
 
 function engGetMergedTokensList(hashList, rawList, hash)

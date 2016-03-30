@@ -5,23 +5,19 @@ function textArea($textarea)
     {
         add : function (data)
         {
-            return $textarea.val(this.val($textarea) + data);
-        },
-        set : function (data)
-        {
-            return $textarea.val(data);
+            return this.val(this.val() + data);
         },
         clear : function ()
         {
-            return $textarea.val('');
+            return this.val('');
         },
         clearExcept : function ($exceptTextarea)
         {
             return $('textarea').not($exceptTextarea).val('');
         },
-        val : function ()
+        val : function (data)
         {
-            return $textarea.val();
+            return (typeof(data) !== 'undefined' && typeof(data) !== 'null') ? $textarea.val(data) : $textarea.val();
         }
     }
 
@@ -286,8 +282,6 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
     var cb = function (resp, record)
     {
-        ///var resp = engGetResponseHeader(data);
-
         if (resp.msg === 'ERROR')
         {
             widShowSearch();
@@ -307,7 +301,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
             ///glLastRec = engGetParsedRecord(data);
             glLastRec = record;
             glLastRec.st = 'PWD_WRONG';
-            widSetDataTab().set(engGetDataValToDisplay(glLastRec.d));
+            widSetDataTab().val(engGetDataValToDisplay(glLastRec.d));
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
                 widSetDataTab().show();
@@ -319,10 +313,6 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     }
 
     widShowSearch().show();
-
-    ///var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
-
-    ///return engSendDeferredRequest(cmd, cb, delay);
 
     return engNcDeferredLast(cb, tok, delay);
 }
@@ -338,7 +328,7 @@ function widPasswordOninput()
     if (glLastRec.st === 'IDX_NODN' || typeof glLastRec.st === 'undefined')
         return widToggleUI(glLastRec, glPassword);
 
-    var rec = engGetNewRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var rec = engGetRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
     glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, rec) : glLastRec.st = 'PWD_WRONG';
 
@@ -445,7 +435,8 @@ function widCreateButtonClick()
                 widModalWindow(resp.msg + ': ' + r.cnt);
     }
 
-    engNcZ(cb);
+    var rec = engGetRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    engNcZ(cb, glCurrentDB.name, rec);
 }
 
 function widSetDataTab()
@@ -456,11 +447,6 @@ function widSetDataTab()
 
     var retObj =
     {
-        set : function (data)
-        {
-            data = data || '';
-            textArea($Textarea).set(data);
-        },
         readonly : function (comm)
         {
             $Textarea.prop('readonly', comm);
@@ -474,9 +460,9 @@ function widSetDataTab()
             $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
             $Tabs.tabs('option', 'active', 2);
         },
-        val : function ()
+        val : function (data)
         {
-            return textArea($Textarea).val();
+            return textArea($Textarea).val(data);
         },
         isOn : function ()
         {
@@ -504,14 +490,11 @@ function widSetDataButtonClick()
 
     var cb = function (resp, jobId)
     {
-        if (resp.msg === 'OK')
-            widTokenTextOninput();
-        else
-            widModalWindow(resp.msg + ': ' + resp.cnt);
+        return (resp.msg === 'OK') ? widTokenTextOninput() : widModalWindow(resp.msg + ': ' + resp.cnt);
     }
 
-    engNcAdd(cb, $Data.val());
-
+    var rec = engGetRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    engNcAdd(cb, glCurrentDB.name, rec, $Data.val());
 }
 
 function widSetDataTextareaOninput()
@@ -557,22 +540,29 @@ function widShowKeysTab()
     return retObj;
 }
 
-function widShowKeysTabButtonClick($obj)
+function widTabButtonClick($obj, tabId)
 {
     widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
+    textArea($('#show_keys_textarea')).clear();
 
-    var $KeyArea = $('#show_keys_textarea');
-    textArea($KeyArea).clear();
+    var f;
+    switch (+tabId)
+    {
+        case 0 : f = function() { return widShowKeysTab().show() }; break;
+        case 1 : f = function() { return widReceiveTab().show() }; break;
+        case 2 : f = function() { return widSearchTab().show() }; break;
+        default : return;
+    }
 
     if (typeof glLastRec.st === 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widEmptyTab().show();
+        return ($obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
 
     if (glLastRec.st === 'IDX_NODN')
-        return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widCreateTab().show();
+        return ($obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
 
-    return ($obj.hasClass('tab-button-on')) ? widShowKeysTab().show() : widSetDataTab().show();
+    return ($obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
 }
 
 function widShowInstantButtonClick($obj)
@@ -590,10 +580,7 @@ function widShowInstantButtonClick($obj)
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof glLastRec.st === 'undefined')
-            return widModalWindow(glMsg.enterTokenName, function ()
-        {
-            $TokenArea.focus()
-        });
+            return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
         if (glLastRec.st === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
@@ -770,25 +757,6 @@ function widReceiveTab()
     return retObj;
 }
 
-function widReceiveTabButtonClick($obj)
-{
-    widPasswordOninput();
-    $obj.toggleClass('tab-button-on tab-button-off');
-    $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
-
-    var $KeyArea = $('#show_keys_textarea');
-    textArea($KeyArea).clear();
-
-    if (typeof glLastRec.st === 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widEmptyTab().show();
-
-    if (glLastRec.st === 'IDX_NODN')
-        return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widCreateTab().show();
-
-    return ($obj.hasClass('tab-button-on')) ? widReceiveTab().show() : widSetDataTab().show();
-
-}
-
 function widReceiveTextareaOninput()
 {
     widToggleUI(glLastRec, glPassword);
@@ -816,7 +784,7 @@ function widShowTokenName()
 {
     var $TokenArea = $('#token_text_textarea');
     var $AcceptKeysArea = $('#receive_keys_textarea');
-    var acceptKeys = engGetAcceptKeys($AcceptKeysArea.val());
+    var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
     var tokText = [$TokenArea.val()] || [''];
     var tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
@@ -831,7 +799,7 @@ function widShowTokenName()
             else if (resp.msg === 'OK' && record === null)
                 widModalWindow(glMsg.recordParseError);
 
-            textArea($TokenArea).set(engGetTokenName(record, acceptKeys));
+            textArea($TokenArea).val(engGetTokenName(record, acceptKeys));
 
             widReceiveKey(acceptKeys);
         }
@@ -847,8 +815,6 @@ function widReceiveKey(keys)
 
     var cb = function (resp, record)
     {
-        ///var r = engGetResponseHeader(data);
-
         if (resp.msg !== 'OK')
             return widModalWindow(resp.msg + ': ' + resp.cnt);
 
@@ -856,7 +822,6 @@ function widReceiveKey(keys)
             return widModalWindow(glMsg.recordParseError);
 
         widTokensTakeover(engGetNumberedAcceptKeys(keys, [record]));
-        //widTokensTakeover(engGetUpdatedKeysN(keys, record));
     }
 
     engNcLast(cb, tok)
@@ -864,7 +829,7 @@ function widReceiveKey(keys)
 
 function widTokensTakeover(keys)
 {
-    keys = engGetTitleKeys(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+    keys = engGetTitleRecord(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
 
     switch (keys[0].prcode)
     {
@@ -872,13 +837,13 @@ function widTokensTakeover(keys)
             widInstantReceive(keys);
             break;
         case '23141':
-            widBlockingReceiveOnHold(keys);
+            widBlockingReceive(keys);
             break;
         case '231':
-            widBlockingReceiveFull(keys);
+            widBlockingReceive(keys);
             break;
         case '232':
-            widBlockingReceiveRevert(keys);
+            widInstantReceive(keys);
             break;
         default:
                 return widModalWindow(glMsg.badAcceptKeys);
@@ -887,106 +852,35 @@ function widTokensTakeover(keys)
 
 function widInstantReceive(keys)
 {
-    var n1 = keys[0].n + 1;
-    var n2 = keys[0].n + 2;
-    var s = keys[0].s;
-    var k1 = keys[0].k1;
-    var g1 = keys[0].g1;
-    var o1 = keys[0].o1;
-    var k2 = keys[0].k2;
-    var g2 = keys[0].g2;
-    var o2 = keys[0].o2;
-
-    var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-    var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-
-    var cb1 = function (data)
+    var addCb1 = function (resp)
     {
-        var cb2 = function (data)
-        {
-            var resp = engGetResponseHeader(data);
-            console.log(data);
-            (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
-        }
+        console.log(resp);
 
-        var resp = engGetResponseHeader(data);
-        console.log(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
 
-    ajxSendCommand(addCmd1, cb1, hasqLogo);
+    var addCb0 = function (resp, keys)
+    {
+        console.log(resp);
+
+        if (resp.msg === 'ERROR')
+            widModalWindow(resp.msg + ': ' + resp.cnt)
+            else
+                engNcAdd(addCb1, glCurrentDB.name, keys, null);
+    }
+
+    engNcAdd(addCb0, glCurrentDB.name, keys[0], null);
+
 }
 
-function widBlockingReceiveOnHold(keys)
+function widBlockingReceive(keys)
 {
-    var n1 = keys[0].n + 1;
-    var s = keys[0].s;
-    var k1 = keys[0].k1;
-    var g1 = keys[0].g1;
-    var o1 = keys[0].o1;
-
-    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-
-    var cb = function (data)
+    var cb = function (resp)
     {
-        var resp = engGetResponseHeader(data);
-
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
+        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
     }
 
-    ajxSendCommand(addCmd, cb, hasqLogo);
-}
-
-function widBlockingReceiveFull(keys)
-{
-    var n1 = keys[0].n + 1;
-    var s = keys[0].s;
-    var k1 = keys[0].k1;
-    var g1 = keys[0].g1;
-    var o1 = keys[0].o1;
-
-    var addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-
-    var cb = function (data)
-    {
-        var resp = engGetResponseHeader(data);
-
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
-    }
-
-    ajxSendCommand(addCmd, cb, hasqLogo);
-}
-
-function widBlockingReceiveRevert(keys)
-{
-    var n1 = keys[0].n1;
-    var n2 = keys[0].n2;
-    var s = keys[0].s;
-    var k1 = keys[0].k1;
-    var g1 = keys[0].g1;
-    var o1 = keys[0].o1;
-    var k2 = keys[0].k2;
-    var g2 = keys[0].g2;
-    var o2 = keys[0].o2;
-
-    var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-    var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
-
-    var cb1 = function (data)
-    {
-        var cb2 = function (data)
-        {
-            var resp = engGetResponseHeader(data);
-            console.log(data);
-            (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput(500);
-        }
-
-        var resp = engGetResponseHeader(data);
-        console.log(data);
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : ajxSendCommand(addCmd2, cb2, hasqLogo);
-    }
-
-    ajxSendCommand(addCmd1, cb1, hasqLogo);
+    engNcAdd(cb, glCurrentDB.name, keys[0], null);
 }
 
 function widSearchTab()
@@ -1014,24 +908,6 @@ function widSearchTab()
     return retObj;
 }
 
-function widSearchTabButtonClick($obj)
-{
-    widPasswordOninput();
-    $obj.toggleClass('tab-button-on tab-button-off');
-    $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
-
-    var $KeyArea = $('#show_keys_textarea');
-    textArea($KeyArea).clear();
-
-    if (typeof glLastRec.st == 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widEmptyTab().show();
-
-    if (glLastRec.st == 'IDX_NODN')
-        return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widCreateTab().show();
-
-    return ($obj.hasClass('tab-button-on')) ? widSearchTab().show() : widSetDataTab().show();
-}
-
 function widSearchButtonClick()
 {
     var $PwdInp = $('#password_input');
@@ -1042,11 +918,7 @@ function widSearchButtonClick()
     var toDate = new Date($To.datepicker('getDate'));
 
     if (!widIsPassword())
-        return widModalWindow(glMsg.enterMasterKey, function ()
-    {
-        $PwdInp.focus()
-    }
-                         );
+        return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     if (fromDate > toDate)
         return widModalWindow(glMsg.enterDate);

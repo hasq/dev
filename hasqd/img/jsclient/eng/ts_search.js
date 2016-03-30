@@ -214,7 +214,7 @@ function searchProcessRec(srec)
 {
     var lr = engGetParsedRecord(srec);
 
-    var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
     var st = engGetTokensStatus(lr, nr);
 
@@ -254,7 +254,7 @@ function searchValidate2(index, data)
     if (resp.msg === 'IDX_NODN') return;
 
     var lr = engGetParsedRecord(data);
-    var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
     var res = glSearch.result[index];

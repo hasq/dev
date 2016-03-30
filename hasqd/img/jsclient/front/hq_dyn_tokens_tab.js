@@ -520,7 +520,7 @@ function widCreateTokens($obj, tokens)
 
     for (var i = 0; i < tokens.length; i++)
     {
-        var r = engGetNewRecord(0, tokens[i].s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+        var r = engGetRecord(0, tokens[i].s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         var zCmd = 'z * ' + glCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
         var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
         var zCmdIdx = (i == 0) ? 0 : i * 2;
@@ -753,7 +753,7 @@ function widUpdateTokens($obj, data, items)
 
             var n = +items[i].n + 1; //new records number;
             var s = engGetHash(items[i].r, glCurrentDB.hash);
-            var r = engGetNewRecord(n, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+            var r = engGetRecord(n, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
             var addCmd = 'add *' + ' ' + glCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
             var idx = (glCmdList.items.length == 0) ? 0 : glCmdList.items.length;
@@ -801,10 +801,10 @@ function widUpgradeAcceptKeys($obj, acceptKeys, func)
         acceptKeys = engGetNumberedAcceptKeys(acceptKeys, glTokList.items);
     }
 
-    var titleKeys = engGetTitleKeys(acceptKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+    var titleRecord = engGetTitleRecord(acceptKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
     var f = function ()
     {
-        func($obj, titleKeys);
+        func($obj, titleRecord);
     }
     setTimeout(f);
 }
@@ -817,27 +817,39 @@ function widPreSimpleSend($obj)
 
     switch (glTokList.state())
     { // checks the contents of the verified tokens list
-    case true: // VTL contains only available tokens
-        led($obj).set(imgMsgBlink, msg);
+    case true:
+     // VTL contains only available tokens
+    led($obj).set(imgMsgBlink, msg);
     widSimpleSend($obj, glTokList.items);
+
     break;
-    case false: // VTL contains only unavailable tokens
+case false:
+     // VTL contains only unavailable tokens
     msg = 'All tokens are unavailable!';
     led($obj).set(imgMsgError, msg);
+
     if (closestTextArea($obj).val().length > 0)
         closestTextArea($obj).clear();
+
     widDone($obj, msg);
+
     break;
-    case undefined: /// VTL contains both kinds of tokens - available and unavailable
+case undefined:
+     // VTL contains both kinds of tokens - available and unavailable
     msg = 'Some tokens are unavailable!';
     led($obj).set(imgMsgError, msg);
+
     if (closestTextArea($obj).val().length > 0)
         closestTextArea($obj).clear();
+
     widDone($obj, msg);
+
     break;
-    default: // VTL no contains any tokens then make new VTL
-    if (!widIsRawTokens())
-        return widDone($obj, 'Empty or bad tokens!');
+default:
+ // VTL no contains any tokens then make new VTL
+        if (!widIsRawTokens())
+            return widDone($obj, 'Empty or bad tokens!');
+
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
 
@@ -848,7 +860,9 @@ function widPreSimpleSend($obj)
     {
         widPreSimpleSend($obj);
     }
+
     widFillOutTokList($obj, tok, extCb);
+
     break;
 }
 }
@@ -905,26 +919,25 @@ function widPreSimpleReceive($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleReceive);
 }
 
-function widSimpleReceive($obj, titleKeys)
+function widSimpleReceive($obj, titleRecord)
 {
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        var n0 = titleKeys[i].n;
-        var n1 = n0 + 1;
-        var n2 = n0 + 2;
-        var s = titleKeys[i].s;
-        var k1 = titleKeys[i].k1;
-        var g1 = titleKeys[i].g1;
-        var o1 = titleKeys[i].o1;
-        var k2 = titleKeys[i].k2;
-        var g2 = titleKeys[i].g2;
-        var o2 = titleKeys[i].o2;
+        var n1 = titleRecord[i].n1;
+        var n2 = titleRecord[i].n2;
+        var s = titleRecord[i].s;
+        var k1 = titleRecord[i].k1;
+        var g1 = titleRecord[i].g1;
+        var o1 = titleRecord[i].o1;
+        var k2 = titleRecord[i].k2;
+        var g2 = titleRecord[i].g2;
+        var o2 = titleRecord[i].o2;
 
         var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
@@ -1056,29 +1069,28 @@ function widPreSimpleAccept($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleAccept);
 }
 
-function widSimpleAccept($obj, titleKeys)
+function widSimpleAccept($obj, titleRecord)
 {
-    var n0, n1, n2, s, k1, g1, o1, k2, g2, o2, addCmd1, addCmd2, idx;
+    var n1, n2, s, k1, g1, o1, k2, g2, o2, addCmd1, addCmd2, idx;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        n0 = titleKeys[i].n;
-        n1 = n0 + 1;
-        n2 = n0 + 2;
-        s = titleKeys[i].s;
-        k1 = titleKeys[i].k1;
-        g1 = titleKeys[i].g1;
-        o1 = titleKeys[i].o1;
-        k2 = titleKeys[i].k2;
-        g2 = titleKeys[i].g2;
-        o2 = titleKeys[i].o2;
+        n1 = titleRecord[i].n1;
+        n2 = titleRecord[i].n2;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
+        k2 = titleRecord[i].k2;
+        g2 = titleRecord[i].g2;
+        o2 = titleRecord[i].o2;
         addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
@@ -1314,24 +1326,23 @@ function widPreBlockingReceiveStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep1);
 }
 
-function widBlockingReceiveStep1($obj, titleKeys)
+function widBlockingReceiveStep1($obj, titleRecord)
 {
-    var n0, n1, s, k1, g1, o1, addCmd;
+    var n1, s, k1, g1, o1, addCmd;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        n0 = titleKeys[i].n;
-        n1 = n0 + 1;
-        s = titleKeys[i].s;
-        k1 = titleKeys[i].k1;
-        g1 = titleKeys[i].g1;
-        o1 = titleKeys[i].o1;
+        n1 = titleRecord[i].n1;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
@@ -1368,24 +1379,24 @@ function widPreBlockingReceiveStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep2);
 }
 
-function widBlockingReceiveStep2($obj, titleKeys)
+function widBlockingReceiveStep2($obj, titleRecord)
 {
     var n1, s, k1, g1, o1, addCmd;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        n1 = titleKeys[i].n + 1;
-        s = titleKeys[i].s;
-        k1 = titleKeys[i].k1;
-        g1 = titleKeys[i].g1;
-        o1 = titleKeys[i].o1;
+        n1 = titleRecord[i].n1;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
@@ -1613,24 +1624,24 @@ function widPreBlockingAcceptStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep1);
 }
 
-function widBlockingAcceptStep1($obj, titleKeys)
+function widBlockingAcceptStep1($obj, titleRecord)
 {
     var n1, s, k1, g1, o1, addCmd;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        n1 = titleKeys[i].n1;
-        s = titleKeys[i].s;
-        k1 = titleKeys[i].k1;
-        g1 = titleKeys[i].g1;
-        o1 = titleKeys[i].o1;
+        n1 = titleRecord[i].n1;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
@@ -1668,24 +1679,24 @@ function widPreBlockingAcceptStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
     tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep2);
 }
 
-function widBlockingAcceptStep2($obj, titleKeys)
+function widBlockingAcceptStep2($obj, titleRecord)
 {
     var n1, s, k1, g1, o1, addCmd;
 
-    for (var i = 0; i < titleKeys.length; i++)
+    for (var i = 0; i < titleRecord.length; i++)
     {
-        n1 = titleKeys[i].n1;
-        s = titleKeys[i].s;
-        k1 = titleKeys[i].k1;
-        g1 = titleKeys[i].g1;
-        o1 = titleKeys[i].o1;
+        n1 = titleRecord[i].n1;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 

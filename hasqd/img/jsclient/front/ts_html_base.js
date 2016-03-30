@@ -18,6 +18,7 @@ function widGetModalWindow()
         r += '</div>\n';
     }
     r += '</div>\n';
+
     return r;
 }
 
@@ -213,53 +214,27 @@ function widGetHTMLInitialDataArea()
 
 function widGetHTMLButtonsArea()
 {
+    var f = function (id, tabId, img)
+    {
+        var r = '';
+        r += '<tr>\n';
+        r += '<td style="padding: 0 0 6px 0"/>\n';
+            r += '<button id="' + id + '" class="tab-button-off" onclick="return widTabButtonClick($(this),' + tabId + ')">' + img + '</button>\n';
+        r += '</tr>\n';
+        return r;
+    }
+
     var r = '';
+
     r += '<table class="tab-buttons-table">\n';
     {
-        r += '<tr>\n';
-        {
-            r += '<td style="padding: 0 0"/>\n';
-            r += '<button id="show_send_tab_button" class="tab-button-off" onclick="return widShowKeysTabButtonClick($(this));">' + imgTabShowKeys + '</button>\n';
-        }
-        r += '</tr>\n';
-        r += '<tr>\n';
-        {
-            r += '<td style="padding: 6px 0"/>\n';
-            r += '<button id="show_receive_tab_button" class="tab-button-off" onclick="return widReceiveTabButtonClick($(this));">' + imgTabReceiveKeys + '</button>\n';
-        }
-        r += '</tr>\n';
-        r += '<tr>\n';
-        {
-            r += '<td style="padding: 0 0"/>\n';
-            r += '<button id="show_search_tab_button" class="tab-button-off" onclick="return widSearchTabButtonClick($(this));">' + imgTabSearchTokens + '</button>\n';
-        }
-        r += '</tr>\n';
+        r += f ('show_send_tab_button', 0, imgTabShowKeys);
+        r += f ('show_receive_tab_button', 1, imgTabReceiveKeys);
+        r += f ('show_search_tab_button', 2, imgTabSearchTokens);
     }
     r += '</table>\n';
     return r;
 }
-
-/*
-function widGetHTMLMainTabs(items)
-{
-var r = '';
-
-r += '<div id="tabs" class="tabs-div">\n';
-r += '\t<ul>\n';
-
-for (var i = 0; i < items.length; i++)
-r += '\t<li><a href="#tabs_' + i + '_div">' + items[i].title + '</a>\n';
-
-r += '\t</ul>\n';
-
-for (var i = 0; i < items.length; i++)
-r += '\t<div id="tabs_' + i + '_div">' + items[i].data + '</div>\n';
-
-r += '</div>\n';
-
-return r;
-}
- */
 
 function widGetHTMLTabs(items, id, classId)
 {
@@ -525,7 +500,7 @@ function widGetHTMLSearchTab()
 
 function widGetHTMLInSearchTabsButtons()
 {
-    function bracketSpan(data)
+    var f0 = function (data)
     {
         var r = '';
 
@@ -534,7 +509,7 @@ function widGetHTMLInSearchTabsButtons()
         return r;
     }
 
-    function trTdButton(tabId, btnClass, img, spanId)
+    var f1 = function (tabId, btnClass, img, spanId)
     {
         var r = '';
         var onclick = 'onclick="return widSearchButtonsClick($(this),' + tabId + ')" ';
@@ -544,7 +519,7 @@ function widGetHTMLInSearchTabsButtons()
 
         r += '<tr>\n';
         r += '<td style="margin:0; padding: 1px 2px 1px 2px;"/>';
-        r += '<button ' + onclick + btnClass + buttonStyle + '>' + img + bracketSpan(span) + '</button>';
+        r += '<button ' + onclick + btnClass + buttonStyle + '>' + img + f0(span) + '</button>';
         r += '</tr>\n';
 
         return r;
@@ -554,10 +529,10 @@ function widGetHTMLInSearchTabsButtons()
 
     r += '<table>\n';
     {
-        r += trTdButton(0, 'search-tab-button-active', imgBtnSearchMine, 'search_mine_span');
-        r += trTdButton(1, 'search-tab-button', imgBtnSearchOnHold, 'search_onhold_span');
-        r += trTdButton(2, 'search-tab-button', imgBtnSearchToCome, 'search_tocome_span');
-        r += trTdButton(3, 'search-tab-button', imgBtnSearchPast, 'search_past_span');
+        r += f1(0, 'search-tab-button-active', imgBtnSearchMine, 'search_mine_span');
+        r += f1(1, 'search-tab-button', imgBtnSearchOnHold, 'search_onhold_span');
+        r += f1(2, 'search-tab-button', imgBtnSearchToCome, 'search_tocome_span');
+        r += f1(3, 'search-tab-button', imgBtnSearchPast, 'search_past_span');
 
     }
     r += '</table>\n';

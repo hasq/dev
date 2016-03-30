@@ -13,7 +13,7 @@ function engGetTokenInfo(data, r, s)
     if (response.msg === 'OK')
     {
         var lr = engGetParsedRecord(data);
-        var nr = engGetNewRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+        var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
         item.n = lr.n;
         item.d = lr.d;
         item.fit = false;

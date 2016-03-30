@@ -54,37 +54,66 @@ function engNcInfoDb(extCb)
     return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
-function engNcZ(extCb)
+function engNcZ(extCb, db, rec)
 {
-    var nr = engGetNewRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
-    var cmd = 'z *' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
+    var data = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
+    var cmd = 'z *' + '\u0020' + db + '\u0020' + '0' + '\u0020' + rec.s + '\u0020' + rec.k + '\u0020' + rec.g + '\u0020' + rec.o + '\u0020' + data;
 
-    var intCb = function (data)
+    var jobCb = function (resp, jobId)
     {
-        var resp = engGetResponseHeader(data);
-
-        extCb(resp);
+        console.log(resp);
+        if (resp.msg === 'JOB_QUEUED')
+            engNcJob(jobCb, jobId)
+            else
+                extCb(resp);
     }
-
-    return ajxSendCommand(cmd, intCb, hasqLogo);
-}
-
-function engNcAdd(extCb, tokData)
-{
-    var nr = engGetNewRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    var nr_d = (tokData) ? engGetDataValToRecord(tokData) : '';
-    var cmd = 'add *' + '\u0020' + glCurrentDB.name + '\u0020' + nr.n + '\u0020' + glLastRec.s + '\u0020' + nr.k + '\u0020' + nr.g + '\u0020' + nr.o + '\u0020' + nr_d;
 
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
         var jobId = engGetJobId(data);
 
-        extCb(resp, jobId);
+        (resp.msg === 'ERROR') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, intCb, hasqLogo);
+}
+
+function engNcAdd(extCb, db, rec, data)
+{
+    var data = (data) ? engGetDataValToRecord(data) : '';
+    var n1 = rec.n || rec.n1 || rec.n2;
+    var k1 = rec.k || rec.k1 || rec.k2;
+    var g1 = rec.g || rec.g1 || rec.g2;
+    var o1 = rec.o || rec.o1 || rec.o2;
+
+    var cmd = 'add *' + '\u0020' + glCurrentDB.name + '\u0020' + n1 + '\u0020' + rec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020' + o1 + '\u0020' + data;
+
+    var jobCb = function (resp, jobId)
+    {
+     //console.log(resp);
+        if (resp.msg === 'JOB_QUEUED')
+            engNcJob(jobCb, jobId)
+            else
+            {
+                delete rec.n1;
+                delete rec.k1;
+                delete rec.g1;
+                delete rec.o1;
+                extCb(resp, rec);
+            }
+    }
+
+    var addCb = function (data)
+    {
+     //console.log('addCb data: ' + data);
+        var resp = engGetResponseHeader(data);
+        var jobId = engGetJobId(data);
+
+        (resp.msg === 'ERROR') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
+    }
+
+    return ajxSendCommand(cmd, addCb, hasqLogo);
 }
 
 function engNcRecordZero(extCb, tok)
@@ -111,9 +140,8 @@ function engNcJob(extCb, jobId)
 
     var intCb = function (data)
     {
-        var resp = engGetResponseHeader(data);
-
-        extCb(resp);
+        var resp = engGetResponseHeader(data)
+                   extCb(resp, jobId);
     }
 
     return ajxSendCommand(cmd, intCb, hasqLogo);
