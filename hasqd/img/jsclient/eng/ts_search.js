@@ -19,8 +19,8 @@ function engSearchStart(fromDate, toDate, progr)
     o.fromDate = fromDate;
     o.toDate = toDate;
 
-    o.folders = engGetDateRangeFolders(fromDate, toDate);
-    console.log(o.folders);
+    o.slices = engGetDateRangeSlices(fromDate, toDate);
+    console.log(o.slices[0].name()+" : "+o.slices.length);
     o.number = 0;
 
     // start process
@@ -35,7 +35,7 @@ function engSearchStop()
     return { from : o.fromDate, to : o.toDate };
 }
 
-function engGetDateRangeFolders(fromDate, toDate)
+function engGetDateRangeSlices(fromDate, toDate)
 {
     var r = [];
     var fromY = fromDate.getFullYear();
@@ -64,10 +64,21 @@ function engGetDateRangeFolders(fromDate, toDate)
 
     var slicePath = function (y, m, d)
     {
-        var r = {};
+        var name = function(){ return this.yyyy+this.mm+this.dd; };
+        var path = function(n)
+        {
+            var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
+            v = "/smd.db" + v;
+            v += this.name() + '-' + n + ".smd.txt";
+            return v; 
+        };
+
+        var r = { name : name, path : path };
+
         r.yyyy = y.toString();
         r.mm = (m < 10) ? '0' + m.toString() : m.toString();
         r.dd = (d < 10) ? '0' + d.toString() : d.toString();
+
         //var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
 
         return r;
@@ -116,22 +127,24 @@ function processDates()
 
     var o = glSearch.o;
 
-    if (o.folders.length == 0)
+    if (o.slices.length == 0)
         return processDone();
 
     // pick the first date
-    o.current_name = o.folders[0];
+    var name = o.slices[0].path(++o.number);
 
     // select the next number
-    ++o.number;
+    ///++o.number;
 
-    o.current_name = o.current_name + o.number;
+    ///name = name + o.number;
 
-    o.current_file = "/smd.db" + o.current_name + ".smd.txt";
+    ///o.current_file = "/smd.db" + o.current_name + ".smd.txt";
 
     ///$('#current_slice_span').html(current_name + ".smd.txt");
 
-    ajxSendCommand(o.current_file, searchGetFile, hasqLogo);
+    console.log(name);
+
+    ajxSendCommand(name, searchGetFile, hasqLogo);
 }
 
 function searchGetFile(data)
@@ -143,11 +156,11 @@ function searchGetFile(data)
 
     if ( data.length < 12 || data.substr(0, 12) == "REQ_PATH_BAD" )
     {
-        console.log(o.folders[0] + " : done");
+        console.log(o.slices[0].name() + " : done");
 
         ///$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
 
-        o.folders.shift(); // remove processed date
+        o.slices.shift(); // remove processed date
         o.number = 0;
 
         // FIXME
@@ -165,8 +178,8 @@ function searchGetFile(data)
 function searchProcessFile(data)
 {
     var o = glSearch.o;
-    console.log("processing file " + o.folders[0]);
-    o.progr(2, o.current_name, o.current_file);
+    console.log("processing file " + o.slices[0].name());
+    o.progr(2, o.slices[0].name(), o.slices[0].path(o.number));
 
     var recs = data.split('\n');
 

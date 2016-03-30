@@ -529,7 +529,7 @@ function widGetHTMLInSearchTabsButtons()
     {
         var r = '';
 
-     r = '<span style="padding-left: 2px; vertical-align: top;">(' + data + ')</span>';
+        r = '<span style="padding-left: 2px; vertical-align: top;">(' + data + ')</span>';
 
         return r;
     }
@@ -540,12 +540,12 @@ function widGetHTMLInSearchTabsButtons()
         var onclick = 'onclick="return widSearchButtonsClick($(this),' + tabId + ')" ';
         var btnClass = 'class="' + btnClass + '" ';
         var buttonStyle = 'style="padding-left: 2px; padding-right: 2px;"';
-     var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">0</span>';
+        var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">0</span>';
 
         r += '<tr>\n';
-     r += '<td style="margin:0; padding: 1px 2px 1px 2px;"/>';
-     r += '<button ' + onclick + btnClass + buttonStyle + '>' + img + bracketSpan(span) + '</button>';
-     r += '</tr>\n';
+        r += '<td style="margin:0; padding: 1px 2px 1px 2px;"/>';
+        r += '<button ' + onclick + btnClass + buttonStyle + '>' + img + bracketSpan(span) + '</button>';
+        r += '</tr>\n';
 
         return r;
     }

@@ -1092,7 +1092,7 @@ function widSearchButtonsClick($obj, tabId)
     $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
 }
 
-function widSearchProgress(fn, data, dat2)
+function widSearchProgress(fn, data, lnk)
 //  1   Set button according to g_searchOn
 //  2   Show current file
 //  3   Update results
@@ -1114,8 +1114,7 @@ function widSearchProgress(fn, data, dat2)
 
     if (fn == 2)
     {
-        var name = data.substr(12);
-        var x = "Block: <a href=\"/file " + dat2 + "\">" + name + "</a>";
+        var x = "Block: <a href=\"/file " + lnk + "\">" + data + "</a>";
         $('#current_slice_span').html(x);
         return;
     }
