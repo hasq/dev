@@ -319,7 +319,7 @@ function engGetDataValToRecord(data) // returns parsed data for add into record
     return r;
 }
 
-function engIsTransKeys(keys)
+function engIsAcceptKeys(keys)
 {
     if (!keys)
         return false;
@@ -331,13 +331,13 @@ function engIsTransKeys(keys)
     var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
     var prCode0Ch = prCode.charAt(0);
 
-    // checks protocol code for record number exists into the transkeys;
+    // checks protocol code for record number exists into the acceptKeys;
     if (prCode0Ch !== '1' && prCode0Ch !== '2')
         return false;
 
     var isRecNum = (prCode0Ch == '1') ? true : false;
 
-    //checks match of a protocol code and quantity of transkeys elements;
+    //checks match of a protocol code and quantity of acceptKeys elements;
     var keysLen;
     var prCodeLen = prCode.length;
 
@@ -407,7 +407,7 @@ function engIsTransKeys(keys)
     return true;
 }
 
-function engGetTransKeys(keys)
+function engGetAcceptKeys(keys)
 {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
@@ -423,12 +423,12 @@ function engGetTransKeys(keys)
 
     var prCode0Ch = prCode.charAt(0);
     var prCodeLen = prCode.length;
-    var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the transkeys;
+    var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the acceptKeys;
 
-    if (prCodeLen == 3 || prCodeLen == 4) //checks match of a protocol code and quantity of transkeys elements;
+    if (prCodeLen == 3 || prCodeLen == 4) //checks match of a protocol code and quantity of acceptKeys elements;
     keysLen = (isRecNum) ? 3 : 2;
 
-    if (prCodeLen == 5 || prCodeLen == 6) //checks match of a protocol code and quantity of transkeys elements;
+    if (prCodeLen == 5 || prCodeLen == 6) //checks match of a protocol code and quantity of acceptKeys elements;
     keysLen = (isRecNum) ? 4 : 3;
 
     if (keys[keys.length - 1].length == 4)
@@ -453,49 +453,49 @@ function engGetTransKeys(keys)
     prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     var keysQty = keys.length / keysLen;
-    var transKeys = [];
+    var acceptKeys = [];
 
     for (var i = 0; i < keysQty; i++)
     {
 
         var tmpKeys = keys.splice(0, keysLen);
-        transKeys[i] = {};
-        transKeys[i].prcode = prCode;
-        transKeys[i].n = (isRecNum) ? transKeys[i].n = +tmpKeys[0] : transKeys[i].n = -1; // if protocol not includes numbers n = -1;
-        transKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
+        acceptKeys[i] = {};
+        acceptKeys[i].prcode = prCode;
+        acceptKeys[i].n = (isRecNum) ? acceptKeys[i].n = +tmpKeys[0] : acceptKeys[i].n = -1; // if protocol not includes numbers n = -1;
+        acceptKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
 
         switch (prCode)
         {
             case (prK1K2):
-                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                transKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prG2O2):
-                transKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                transKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                acceptKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prG1O1):
-                transKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                transKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                acceptKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prK1G1):
-                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                transKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prK1):
-                transKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             case (prO1):
-                transKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             case (prK2):
-                transKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                acceptKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             default:
@@ -504,23 +504,23 @@ function engGetTransKeys(keys)
 
     }
 
-    transKeys.sort(engSortByProperties('s'));
+    acceptKeys.sort(engSortByProperties('s'));
 
-    for (var i = 0; i < transKeys.length - 1; i++) // if presents keys for same token;
+    for (var i = 0; i < acceptKeys.length - 1; i++) // if presents keys for same token;
     {
-        if (transKeys[i].s == transKeys[i + 1].s)
+        if (acceptKeys[i].s == acceptKeys[i + 1].s)
         {
-            transKeys.splice(i + 1, 1);
+            acceptKeys.splice(i + 1, 1);
             i--;
         }
     }
 
-    return transKeys;
+    return acceptKeys;
 }
 
-function engGetTitleKeys(transKeys, p, h, m)
+function engGetTitleKeys(acceptKeys, p, h, m)
 {
-    var titleKeys = transKeys;
+    var titleKeys = acceptKeys;
     var prK1K2 = '23132'; //simple send;
     var prG2O2 = '24252'; // simple request;
     var prK1G1 = '23141'; // blocking send, st1;
@@ -630,7 +630,7 @@ function engGetTitleKeys(transKeys, p, h, m)
 
 function engGetMergedTokensList(hashList, rawList, hash)
 {
-    // returns merged names from both lists transkeys and tokens;
+    // returns merged names from both lists acceptKeys and tokens;
     for (var k = 0; k < hashList.length; k++)
     {
         for (var t = 0; t < rawList.length; t++)
@@ -655,7 +655,7 @@ function engGetMergedTokensList(hashList, rawList, hash)
     return hashList;
 }
 
-function engGetNumberedTransKeys(keys, list)
+function engGetNumberedAcceptKeys(keys, list)
 {
     for (var i = 0; i < keys.length; i++)
         keys[i].n = list[i].n;

@@ -194,7 +194,7 @@ function engGetRawTokensList(data)
     return r;
 }
 
-function engGetTransKeys(rawKeys)
+function engGetAcceptKeys(rawKeys)
 {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
@@ -202,7 +202,7 @@ function engGetTransKeys(rawKeys)
     var prK2 = '232';
     var prO1 = '251';
 
-    var transKeys = [];
+    var acceptKeys = [];
 
     var keys = rawKeys.replace(/^\s+|\s+$/g, '').split(/\n/); //split by linefeed;
     var prLine = keys.splice(keys.length - 1, 1)[0].split(/\s/); //get last (protocol) line and split by spaces;
@@ -230,61 +230,61 @@ function engGetTransKeys(rawKeys)
 
         var el = keys[i].split(/\s/);
 
-        transKeys[i] = {};
-        transKeys[i].prcode = prCode;
-        transKeys[i].n = (coef == 1) ? transKeys[i].n = -1 : transKeys[i].n = +el[0];// if protocol have record numbers n = -1;
-        transKeys[i].s = el[1 - coef];
+        acceptKeys[i] = {};
+        acceptKeys[i].prcode = prCode;
+        acceptKeys[i].n = (coef == 1) ? acceptKeys[i].n = -1 : acceptKeys[i].n = +el[0];// if protocol have record numbers n = -1;
+        acceptKeys[i].s = el[1 - coef];
 
         switch (prCode)
         {
             case (prK1K2):
-                transKeys[i].k1 = el[2 - coef];
-                transKeys[i].k2 = el[3 - coef];
+                acceptKeys[i].k1 = el[2 - coef];
+                acceptKeys[i].k2 = el[3 - coef];
                 break;
             case (prG2O2):
-                transKeys[i].g2 = el[2 - coef];
-                transKeys[i].o2 = el[3 - coef];
+                acceptKeys[i].g2 = el[2 - coef];
+                acceptKeys[i].o2 = el[3 - coef];
                 break;
             case (prK1G1):
-                transKeys[i].k1 = el[2 - coef];
-                transKeys[i].g1 = el[3 - coef];
+                acceptKeys[i].k1 = el[2 - coef];
+                acceptKeys[i].g1 = el[3 - coef];
                 break;
             case (prK2):
-                transKeys[i].k2 = el[2 - coef];
+                acceptKeys[i].k2 = el[2 - coef];
                 break;
             case (prO1):
-                transKeys[i].o1 = el[2 - coef];
+                acceptKeys[i].o1 = el[2 - coef];
                 break;
             default:
                     break;
         }
     }
 
-    transKeys.sort(engSortByProperties('s'));
+    acceptKeys.sort(engSortByProperties('s'));
 
     // if presents keys for same token;
-    for (var i = 0; i < transKeys.length - 1; i++)
+    for (var i = 0; i < acceptKeys.length - 1; i++)
     {
-        if (transKeys[i].s == transKeys[i + 1].s)
+        if (acceptKeys[i].s == acceptKeys[i + 1].s)
         {
-            transKeys.splice(i + 1, 1);
+            acceptKeys.splice(i + 1, 1);
             i--;
         }
     }
 
-    return transKeys;
+    return acceptKeys;
 }
 
-function engGetTitleKeys(transKeys, p, h, m)
+function engGetTitleKeys(acceptKeys, p, h, m)
 {
-    var titleKeys = transKeys;
+    var titleKeys = acceptKeys;
     var prK1K2 = '23132';
     var prG2O2 = '24252';
     var prK1G1 = '23141';
     var prK2 = '232';
     var prO1 = '251';
 
-    var prCode = transKeys[0].prcode; // get protocol key from first element;
+    var prCode = acceptKeys[0].prcode; // get protocol key from first element;
     var numFlag = prCode.charAt(0);
     var dbFlag = (prCode.charAt(prCode.length - 1) == '0') ? '0' : '';
     var coef = (numFlag == '0') ? 1 : 0; // if protocol have record numbers;

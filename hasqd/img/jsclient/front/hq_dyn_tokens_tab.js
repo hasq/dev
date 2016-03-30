@@ -778,30 +778,30 @@ function widUpdateTokens($obj, data, items)
     engRunCmdList(glCmdList, cb);
 }
 
-function widUpgradeTransKeys($obj, transKeys, func)
+function widUpgradeAcceptKeys($obj, acceptKeys, func)
 {
-    //if transkeys not contains numbers of records , makes 'last' and update transkeys records numbers;
+    //if acceptKeys not contains numbers of records , makes 'last' and update acceptKeys records numbers;
     glCmdList.clear();
-    var prCode = transKeys[0].prcode;
+    var prCode = acceptKeys[0].prcode;
 
     if (prCode.charAt(0) === '2' && glTokList.items.length === 0)
     {
         var extCb = function ()
         {
-            widUpgradeTransKeys($obj, transKeys, func);
+            widUpgradeAcceptKeys($obj, acceptKeys, func);
         }
 
-        return widFillOutTokList($obj, transKeys, extCb);
+        return widFillOutTokList($obj, acceptKeys, extCb);
     }
     else if (prCode.charAt(0) === '2' && glTokList.items.length > 0)
     {
-        if (transKeys.length !== glTokList.items.length)
-            return widDone($obj, 'TransKeys update error!');
+        if (acceptKeys.length !== glTokList.items.length)
+            return widDone($obj, 'acceptKeys update error!');
 
-        transKeys = engGetNumberedTransKeys(transKeys, glTokList.items);
+        acceptKeys = engGetNumberedAcceptKeys(acceptKeys, glTokList.items);
     }
 
-    var titleKeys = engGetTitleKeys(transKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+    var titleKeys = engGetTitleKeys(acceptKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
     var f = function ()
     {
         func($obj, titleKeys);
@@ -890,10 +890,10 @@ function widSimpleSend($obj, items)
 function widPreSimpleReceive($obj, click)
 {
     led($obj).clear();
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
         return widDone($obj, 'Empty password!');
@@ -905,10 +905,10 @@ function widPreSimpleReceive($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widSimpleReceive);
+    widUpgradeAcceptKeys($obj, acceptKeys, widSimpleReceive);
 }
 
 function widSimpleReceive($obj, titleKeys)
@@ -1041,10 +1041,10 @@ function widPreSimpleAccept($obj, click)
 {
     led($obj).clear();
 
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
@@ -1056,11 +1056,11 @@ function widPreSimpleAccept($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widSimpleAccept);
+    widUpgradeAcceptKeys($obj, acceptKeys, widSimpleAccept);
 }
 
 function widSimpleAccept($obj, titleKeys)
@@ -1299,10 +1299,10 @@ function widBlockingSendStep2($obj, items)
 function widPreBlockingReceiveStep1($obj, click)
 {
     led($obj).clear();
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
         return widDone($obj, 'Empty password!');
@@ -1314,10 +1314,10 @@ function widPreBlockingReceiveStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widBlockingReceiveStep1);
+    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep1);
 }
 
 function widBlockingReceiveStep1($obj, titleKeys)
@@ -1353,10 +1353,10 @@ function widPreBlockingReceiveStep2($obj, click)
 {
     led($obj).clear();
 
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
         return widDone($obj, 'Empty password!');
@@ -1368,11 +1368,11 @@ function widPreBlockingReceiveStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widBlockingReceiveStep2);
+    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep2);
 }
 
 function widBlockingReceiveStep2($obj, titleKeys)
@@ -1481,11 +1481,11 @@ function widBlockingRequestStep1($obj, items)
 
     if (closestTextArea($obj).val().length > 0)
     {
-        var rawTransKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
-        line = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
+        var rawAcceptKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
+        line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
 
         if (0)
-            line = engGetHash(rawTransKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
+            line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
 
         closestTextArea($obj).add(line);
         msg = 'OK';
@@ -1598,10 +1598,10 @@ function widPreBlockingAcceptStep1($obj, click)
 {
     led($obj).clear();
 
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
@@ -1613,11 +1613,11 @@ function widPreBlockingAcceptStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widBlockingAcceptStep1);
+    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep1);
 }
 
 function widBlockingAcceptStep1($obj, titleKeys)
@@ -1653,10 +1653,10 @@ function widPreBlockingAcceptStep2($obj, click)
 {
     led($obj).clear();
 
-    var rawTransKeys = widGetClosestTextarea($obj).val();
+    var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsTransKeys(rawTransKeys))
-        return widDone($obj, 'Bad TransKeys!');
+    if (!engIsAcceptKeys(rawAcceptKeys))
+        return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
@@ -1668,11 +1668,11 @@ function widPreBlockingAcceptStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
-    var transKeys = engGetTransKeys(rawTransKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(transKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    var acceptKeys = engGetAcceptKeys(rawAcceptKeys);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeTransKeys($obj, transKeys, widBlockingAcceptStep2);
+    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep2);
 }
 
 function widBlockingAcceptStep2($obj, titleKeys)
