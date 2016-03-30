@@ -92,6 +92,8 @@ function engNcAdd(extCb, db, rec, data)
     var jobCb = function (resp, jobId)
     {
      //console.log(resp);
+     //note!!!
+     //mozhet byt', chto nuzhno uchest' tot sluchaj, kogda job budet rejected
         if (resp.msg === 'JOB_QUEUED')
             engNcJob(jobCb, jobId)
             else
