@@ -32,7 +32,6 @@ function engGetResponseHeader(data)
         resp.cnt = tmp;
         /*
                 URF_BAD_FORMAT
-                REQ_HASHTYPE_BAD
                 REQ_MSG_HEAD
                 REQ_DN_BAD
                 REC_INIT_BAD_N
@@ -40,6 +39,13 @@ function engGetResponseHeader(data)
                 REC_INIT_BAD_KGO
                 RECORD_MISMATCH
                 WRONG_SEQ_NUMBER
+                REQ_HASHTYPE_BAD
+                REQ_BAD_SIGN
+                CE_QUE_OVERFLOW
+                BUSY
+
+                REQ_JOBID_BAD
+                JOB_NOINFO
         */
     }
     return resp;

@@ -430,9 +430,9 @@ function widCreateButtonClick()
     var cb = function (resp)
     {
         if (resp.msg === 'OK')
-            widTokenTextOninput(); //update token info after create;
-            else
-                widModalWindow(resp.msg + ': ' + r.cnt);
+            widTokenTextOninput();
+        else
+            widModalWindow(resp.msg + ': ' + r.cnt);
     }
 
     var rec = engGetRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);

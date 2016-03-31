@@ -68,8 +68,8 @@ function engGetDateRangeSlices(fromDate, toDate)
         var path = function(n)
         {
             var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
-            v = "/smd.db" + v;
-            v += this.name() + '-' + n + ".smd.txt";
+            v = "/" + glCurrentDB.name + v;
+            v += this.name() + '-' + n + "." + glCurrentDB.hash + ".txt";
             return v;
         };
 
@@ -79,10 +79,7 @@ function engGetDateRangeSlices(fromDate, toDate)
         r.mm = (m < 10) ? '0' + m.toString() : m.toString();
         r.dd = (d < 10) ? '0' + d.toString() : d.toString();
 
-        //var path = '/' + y.toString() + '/' + mm + '/' + dd + '/' + y.toString() + mm + dd + '-';
-
         return r;
-
     }
 
     while (toY >= 2016)
@@ -226,7 +223,6 @@ function searchProcessRec(srec)
     r.s = nr.s;
     r.n = lr.n;
     r.raw = "";
-    r.check = st;
     r.state = 0;
 
     var v = glSearch.result;
@@ -272,6 +268,4 @@ function searchValidate2(index, data)
     glSearch.o.progr(3);
 
     // FIXME find RawDN update result and request result update again
-    //var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
-    //ajxSendCommand(cmd, function(data){searchValidate3(index,data)}, hasqLogo);
 }

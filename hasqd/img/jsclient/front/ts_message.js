@@ -16,5 +16,6 @@ var glMsg =
 
 var glResponse =
 {
-    noRecs : 'NO_RECS'
+    NO_RECS : 'NO_RECS'
+
 }
