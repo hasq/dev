@@ -105,7 +105,7 @@ void Secretary::submitJob(os::net::Socket * s)
             "Error submitJob: [" + s->getReceivedMessage() + "] " + k.str()
         );
 
-        s->send_msg("busy");
+        s->send_msg("BUSY");
         delete s;
         return;
     }
