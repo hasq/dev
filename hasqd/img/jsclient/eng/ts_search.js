@@ -20,7 +20,7 @@ function engSearchStart(fromDate, toDate, progr)
     o.toDate = toDate;
 
     o.slices = engGetDateRangeSlices(fromDate, toDate);
-    console.log(o.slices[0].name() + " : " + o.slices.length);
+    //console.log(o.slices[0].name()+" : "+o.slices.length);
     o.number = 0;
 
     // start process
@@ -37,7 +37,6 @@ function engSearchStop()
 
 function engGetDateRangeSlices(fromDate, toDate)
 {
-    var r = [];
     var fromY = fromDate.getFullYear();
     var fromM = fromDate.getMonth() + 1;
     var fromD = fromDate.getDate();
@@ -47,7 +46,7 @@ function engGetDateRangeSlices(fromDate, toDate)
 
     var getD = function (month, year)
     {
-        // returns the number of the days in a month
+     // returns the number of the days in a month
         var day;
 
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
@@ -60,55 +59,92 @@ function engGetDateRangeSlices(fromDate, toDate)
             day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
 
         return day;
-    }
+    };
 
-    var slicePath = function (y, m, d)
+    var name = function() { return this.yyyy + this.mm + this.dd; };
+    var path = function(n)
     {
-        var name = function() { return this.yyyy + this.mm + this.dd; };
-        var path = function(n)
-        {
-            var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
-            v = "/" + glCurrentDB.name + v;
-            v += this.name() + '-' + n + "." + glCurrentDB.hash + ".txt";
-            return v;
-        };
+        var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
+        v = "/" + glCurrentDB.name + v;
+        v += this.name() + '-' + n + "." + glCurrentDB.hash + ".txt";
+        return v;
+    };
 
-        var r = { name : name, path : path };
-
-        r.yyyy = y.toString();
-        r.mm = (m < 10) ? '0' + m.toString() : m.toString();
-        r.dd = (d < 10) ? '0' + d.toString() : d.toString();
-
-        return r;
-    }
-
-    while (toY >= 2016)
+    var earlierDay = function ()
     {
-        if (toM == 0)
-            toM = 12;
+        var earlierDate = {}
+                          earlierDate.yyyy = this.yyyy;
+        earlierDate.mm = this.mm;
+        earlierDate.dd = this.dd;
 
-        while (toM > 0)
+        if (+this.dd - 1 === 0)
         {
-            if (toD == 0)
-                toD = getD(toM, toY);
-
-            while (toD > 0)
+            if (+this.mm - 1 === 0)
             {
-                r[r.length] = slicePath(toY, toM, toD);
-
-                if (toY == fromY && toM == fromM && toD == fromD)
-                    return r;
-
-                toD--;
+                if (+this.yyyy - 1 < 2016)
+                    return null;
+                else
+                {
+                    earlierDate.yyyy = +this.yyyy - 1;
+                    earlierDate.mm = 12;
+                    earlierDate.dd = getD(earlierDate.yyyy, earlierDate.mm);
+                }
             }
-
-            toM--;
+            else
+            {
+                earlierDate.yyyy = +this.yyyy;
+                earlierDate.mm = +this.mm - 1;
+                earlierDate.dd = getD(earlierDate.yyyy, earlierDate.mm);
+            }
+        }
+        else
+        {
+            earlierDate.yyyy = +this.yyyy;
+            earlierDate.mm = +this.mm;
+            earlierDate.dd = +this.dd - 1;
         }
 
-        toY--;
-    }
+        return earlierDate;
+    };
 
-    return r;
+
+    var sliceObj = { name : name, path : path, day : earlierDay };
+    sliceObj.yyyy = toY.toString();
+    sliceObj.mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
+    sliceObj.dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
+
+
+    console.log(sliceObj);
+    return sliceObj;
+    /*
+        while (toY >= 2016)
+        {
+            if (toM == 0)
+                toM = 12;
+
+            while (toM > 0)
+            {
+                if (toD == 0)
+                    toD = getD(toM, toY);
+
+                while (toD > 0)
+                {
+                    r[r.length] = slicePath(toY, toM, toD);
+
+                    if (toY == fromY && toM == fromM && toD == fromD)
+                        return r;
+
+                    toD--;
+                }
+
+                toM--;
+            }
+
+            toY--;
+        }
+
+        return r;
+    */
 }
 
 function processDone()
@@ -246,8 +282,7 @@ function searchValidate2(index, data)
 {
     var resp = engGetResponseHeader(data);
 
-    if (resp === 'ERROR') return;
-    if (resp === 'IDX_NODN') return;
+    if (resp !== 'OK' && resp !== 'IDX_NODN') return;
 
     var lr = engGetParsedRecord(data);
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);

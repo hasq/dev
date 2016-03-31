@@ -5,8 +5,8 @@ function engGetResponseHeader(data)
     // returns response header
     var resp = null;
     var msg = data.replace(/^\s+|\r|\s+$/g, '');
-    var blocks = msg.split(/\s/); // split by by \s (\s, \n, \t, \v);
-    var lines = msg.split(/\n/); // split by \n only;
+    var blocks = msg.split(/\s/);
+    var lines = msg.split(/\n/);
 
     if (lines[0] === 'OK')
         resp = 'OK';

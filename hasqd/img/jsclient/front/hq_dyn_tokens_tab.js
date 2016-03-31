@@ -721,7 +721,7 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     widShowTokensLog(msg);
 
     var resp = engGetResponseHeader(cbData);
-    console.log(resp);
+
     (resp !== 'OK' && resp !== 'IDX_NODN')
     ? widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp)
     : widWarningLed($obj, imgMsgBlink, msg)
