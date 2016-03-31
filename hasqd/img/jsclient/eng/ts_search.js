@@ -246,8 +246,8 @@ function searchValidate2(index, data)
 {
     var resp = engGetResponseHeader(data);
 
-    if (resp.msg === 'ERROR') return;
-    if (resp.msg === 'IDX_NODN') return;
+    if (resp === 'ERROR') return;
+    if (resp === 'IDX_NODN') return;
 
     var lr = engGetParsedRecord(data);
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);

@@ -64,7 +64,7 @@ function widShowNewRecord(newRec)
         $K.val(newRec.k);
         $G.val(newRec.g);
         $O.val(newRec.o);
-     $D.val(''); //
+        $D.val(''); //
     }
 }
 
@@ -80,10 +80,14 @@ function widRefreshButtonClick()
     var cb1 = function (data)
     {
         var $Id = $('#server_id');
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return;
-        var infoId = engGetResponseHeaderInfoId(data);
-        if (infoId.msg === 'ERROR') return;
+
+        if (engGetResponseHeader(data) !== 'OK')
+            return;
+
+        var infoId = engGetParsedInfoId(data);
+
+        if (typeof(infoId) === 'null')
+            return;
 
         $Id.html('<pre>' + infoId + '</pre>');
     }
@@ -93,10 +97,14 @@ function widRefreshButtonClick()
     var cb2 = function (data)
     {
         var $Sys = $('#server_sys');
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return;
-        var infoSys = engGetResponseHeaderInfoSys(data);
-        if (infoSys.msg === 'ERROR') return;
+
+        if (engGetResponseHeader(data) !== 'OK')
+            return;
+
+        var infoSys = engGetParsedInfoSys(data);
+
+        if (typeof(infoSys) === 'null')
+            return;
 
         $Sys.html('<pre>' + infoSys + '</pre>');
     }
@@ -106,12 +114,16 @@ function widRefreshButtonClick()
     var cb3 = function (data)
     {
         var $Fam = $('#server_fam');
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return;
-        var infoFam = engGetResponseHeaderInfoFam(data);
-        if (resp.msg === 'ERROR' || infoFam.length == 0) return;
 
-        var table = widGetHTMLFamilyTable(resp);
+        if (engGetResponseHeader(data) !== 'OK')
+            return;
+
+        var infoFam = engGetParsedInfoFam(data);
+
+        if (typeof(infoFam) === 'null' || infoFam.length === 0)
+            return;
+
+        var table = widGetHTMLFamilyTable(infoFam);
         $Fam.html('<pre>' + table + '</pre>');
     }
 
@@ -119,10 +131,13 @@ function widRefreshButtonClick()
 
     var cb4 = function (data)
     {
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return;
+        if (engGetResponseHeader(data) !== 'OK')
+            return;
+
         glDataBase = engGetParsedInfoDb(data);
-        if (glDataBase.msg == 'ERROR') return;
+
+        if (glDataBase.length === 0)
+            return;
 
         var $Db = $('#database_select'); //document.getElementById('database_select');
         for (var i = 0; i < glDataBase.length; i++)
@@ -272,11 +287,14 @@ function widGetLastRecordButtonClick()
     var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
     var cb = function (data)
     {
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return widShowRecordsTabLog(resp.cnt);
+        if (engGetResponseHeader(data) !== 'OK')
+            return widShowRecordsTabLog(data);
+
         var lastRec = engGetParsedRecord(data);
 
-        if (lastRec.msg == 'ERROR') return widShowRecordsTabLog(lastRec.cnt);
+        if (typeof(lastRec) === 'null')
+            return widShowRecordsTabLog(data);
+
         widShowLastRecord(lastRec);
         widShowNewRecordAuto();
     }
@@ -424,7 +442,8 @@ function widShowNewRecCompability()
     {
         widShowBordersColor($SubmitButton);
         widShowRecordsTabLog();
-    } else if (lr_n == '')
+    }
+    else if (lr_n == '')
     {
         widShowBordersColor($SubmitButton);
         widShowRecordsTabLog('New records compatible is unknown.');
@@ -448,15 +467,18 @@ function widTokensHistorySelect(range)
     $HistorySelect.val('');
     var cb = function (data)
     {
-        var resp = engGetResponseHeader(data);
-        if (resp.msg !== 'OK') return widShowRecordsTabLog(resp.cnt);
-        var range = engGetResponseHeaderRange(data);
-        if (range.msg === 'ERROR') return widShowRecordsTabLog(range.msg + ': ' + range.cnt);
+        if (engGetResponseHeader(data) !== 'OK')
+            return widShowRecordsTabLog(data);
+
+        var range = engGetParsedRange(data);
+        if (typeof(range) === 'null')
+            return widShowRecordsTabLog(data);
 
         $HistorySelect.val(range.substr(range.indexOf('\n') + 1));
     }
 
-    if (range === 0) return;
+    if (range === 0)
+        return;
 
     var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
 
@@ -489,7 +511,9 @@ function widSubmitButtonClick()
     var cb = function (data)
     {
         var $HistorySelect = $('#tokens_history_select');
-        widShowRecordsTabLog(engGetResponseHeader(data).msg);
+
+        widShowRecordsTabLog(engGetResponseHeader(data));
+
         var i = $HistorySelect.get(0).selectedIndex;
         var d = +$HistorySelect.get(0).options[i].text;
         widTokensHistorySelect(d);

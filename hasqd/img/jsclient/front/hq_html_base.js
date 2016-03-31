@@ -21,7 +21,7 @@ function widGetHTMLTdSpan(x, y, z)
     if (!y)
         y = '';
 
-    return '<td>\n<span id="' + x + '"></span>&nbsp;' + '' + y + '';
+    return '<td>\n<span id="' + x + '"></span>' + '' + y + '';
 }
 
 function widGetHTMLTr(x)
@@ -148,22 +148,21 @@ function widGetHTMLRefreshButton()
 function widGetHTMLFamilyTable(data)
 {
     var r = '';
+    if (data.length === 0 )
+        return r;
 
     r += '<table border="1" style="width:auto; font-family:monospace;">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
-    if (data != 'NO_FAMILY')
+    for (var i = 0; i < data.list.length; i++)
     {
-        for (var i = 0; i < data.list.length; i++)
-        {
-            r += '<tr>\n';
-            r += widGetHTMLTd(data.list[i].name);
-            r += widGetHTMLTd(widGetHTMLHref(data.list[i].link));
-            r += widGetHTMLTd(data.list[i].neighbor ? 'Yes' : 'No');
-            r += widGetHTMLTd(data.list[i].alive ? 'Yes' : 'No');
-            r += widGetHTMLTd(data.list[i].unlock ? 'No' : 'Yes');
-            r += '</tr>\n';
-        }
+        r += '<tr>\n';
+        r += widGetHTMLTd(data.list[i].name);
+        r += widGetHTMLTd(widGetHTMLHref(data.list[i].link));
+        r += widGetHTMLTd(data.list[i].neighbor ? 'Yes' : 'No');
+        r += widGetHTMLTd(data.list[i].alive ? 'Yes' : 'No');
+        r += widGetHTMLTd(data.list[i].unlock ? 'No' : 'Yes');
+        r += '</tr>\n';
     }
 
     r += '</table>\n';

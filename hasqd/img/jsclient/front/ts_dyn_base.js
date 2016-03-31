@@ -48,10 +48,9 @@ function widSetDefaultDb(hash)
     // Searching for database and save it in variable.
     var cb = function (resp, db)
     {
-        if (resp.msg === 'OK' && typeof db !== 'null')
+        if (resp === 'OK' && db.length !== 0)
             glCurrentDB = engGetDbByHash (db, hash);
-
-        if (glCurrentDB === null)
+        else
             return widModalWindow(glMsg.badDataBase);
     }
 
@@ -282,15 +281,15 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
     var cb = function (resp, record)
     {
-        if (resp.msg === 'ERROR')
+        if (resp !== 'OK' && resp !== 'IDX_NODN')
         {
             widShowSearch();
-            return widModalWindow(resp.msg + ': ' + data);
+            return widModalWindow(data);
         }
 
-        if (resp.msg === 'IDX_NODN')
+        if (resp === 'IDX_NODN')
         {
-            glLastRec.st = resp.msg;
+            glLastRec.st = resp;
             glLastRec.s = tok;
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
@@ -307,7 +306,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
                 widSetDataTab().show();
         }
 
-        widShowSearch().show(resp.msg);
+        widShowSearch().show(resp);
         glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
         widPasswordOninput(); //updates info about last records and password matching
     }
@@ -429,10 +428,10 @@ function widCreateButtonClick()
 
     var cb = function (resp)
     {
-        if (resp.msg === 'OK')
-            widTokenTextOninput();
-        else
-            widModalWindow(resp.msg + ': ' + r.cnt);
+        if (resp !== 'OK')
+            widModalWindow(resp);
+
+        widTokenTextOninput();
     }
 
     var rec = engGetRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -488,9 +487,14 @@ function widSetDataButtonClick()
     if (engGetDataValToRecord($Data.val()) === glLastRec.d)
         return widModalWindow(glMsg.dataNotChanged, function () { $Data.focus() });
 
+    widSetDataTab().disable(true);
+
     var cb = function (resp, jobId)
     {
-        return (resp.msg === 'OK') ? widTokenTextOninput() : widModalWindow(resp.msg + ': ' + resp.cnt);
+        if (resp !== 'OK')
+            widModalWindow(glResponse[resp]);
+
+        widTokenTextOninput();
     }
 
     var rec = engGetRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -777,6 +781,8 @@ function widReceiveButtonClick()
     if (!engIsAcceptKeys(rawAcceptKeys))
         return widModalWindow(glMsg.badAcceptKeys, function () { $AcceptKeysArea.focus() });
 
+    widReceiveTab().disable(true);
+
     widShowTokenName();
 }
 
@@ -794,9 +800,9 @@ function widShowTokenName()
     {
         var cb = function (resp, record)
         {
-            if (resp.msg !== 'OK' && resp.cnt !== glResponse.noRecs)
-                widModalWindow(resp.msg + ': ' + resp.cnt);
-            else if (resp.msg === 'OK' && record === null)
+            if (resp !== 'OK' && resp !== glResponse.noRecs)
+                widModalWindow(glResponse[resp]);
+            else if (resp === 'OK' && record === null)
                 widModalWindow(glMsg.recordParseError);
 
             textArea($TokenArea).val(engGetTokenName(record, acceptKeys));
@@ -815,8 +821,8 @@ function widReceiveKey(keys)
 
     var cb = function (resp, record)
     {
-        if (resp.msg !== 'OK')
-            return widModalWindow(resp.msg + ': ' + resp.cnt);
+        if (resp !== 'OK')
+            return widModalWindow(glResponse[resp]);
 
         if (record === null)
             return widModalWindow(glMsg.recordParseError);
@@ -854,19 +860,21 @@ function widInstantReceive(keys)
 {
     var addCb1 = function (resp)
     {
-        console.log(resp);
+        if (resp !== 'OK')
+            widModalWindow(glResponse[resp])
 
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+            widTokenTextOninput();
     }
 
     var addCb0 = function (resp, keys)
     {
-        console.log(resp);
-
-        if (resp.msg === 'ERROR')
-            widModalWindow(resp.msg + ': ' + resp.cnt)
-            else
-                engNcAdd(addCb1, glCurrentDB.name, keys, null);
+        if (resp !== 'OK')
+        {
+            widModalWindow(glResponse[resp])
+            widTokenTextOninput();
+        }
+        else
+            engNcAdd(addCb1, glCurrentDB.name, keys, null);
     }
 
     engNcAdd(addCb0, glCurrentDB.name, keys[0], null);
@@ -877,7 +885,10 @@ function widBlockingReceive(keys)
 {
     var cb = function (resp)
     {
-        (resp.msg === 'ERROR') ? widModalWindow(resp.msg + ': ' + resp.cnt) : widTokenTextOninput();
+        if (resp !== 'OK')
+            widModalWindow(glResponse[resp])
+
+            widTokenTextOninput();
     }
 
     engNcAdd(cb, glCurrentDB.name, keys[0], null);

@@ -9,7 +9,7 @@ function engNcDeferredLast(extCb, tok, delay)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp.msg === 'OK' )
+        if (resp === 'OK')
             record = engGetParsedRecord(data);
 
         extCb(resp, record);
@@ -27,7 +27,7 @@ function engNcLast(extCb, tok)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp.msg === 'OK' )
+        if (resp === 'OK')
             record = engGetParsedRecord(data);
 
         extCb(resp, record);
@@ -43,9 +43,9 @@ function engNcInfoDb(extCb)
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
-        var db = null;
+        var db = [];
 
-        if (resp.msg === 'OK' )
+        if (resp === 'OK')
             db = engGetParsedInfoDb(data);
 
         extCb(resp, db);
@@ -62,18 +62,19 @@ function engNcZ(extCb, db, rec)
     var jobCb = function (resp, jobId)
     {
         console.log(resp);
-        if (resp.msg === 'JOB_QUEUED')
-            engNcJob(jobCb, jobId)
-            else
-                extCb(resp);
+        (resp === 'JOB_QUEUED')
+        ? engNcJob(jobCb, jobId)
+        : extCb(resp);
     }
 
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
-        var jobId = engGetJobId(data);
+        var jobId = engGetParsedJobId(data);
 
-        (resp.msg === 'ERROR') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
+        (resp !== 'OK')
+        ? extCb(resp, jobId)
+        : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, intCb, hasqLogo);
@@ -91,26 +92,24 @@ function engNcAdd(extCb, db, rec, data)
 
     var jobCb = function (resp, jobId)
     {
-     //console.log(resp);
-        if (resp.msg === 'JOB_QUEUED')
-            engNcJob(jobCb, jobId)
-            else
-            {
-                delete rec.n1;
-                delete rec.k1;
-                delete rec.g1;
-                delete rec.o1;
-                extCb(resp, rec);
-            }
+        if (resp === 'JOB_QUEUED')
+            engNcJob(jobCb, jobId);
+        else
+        {
+            delete rec.n1;
+            delete rec.k1;
+            delete rec.g1;
+            delete rec.o1;
+            extCb(resp, rec);
+        }
     }
 
     var addCb = function (data)
     {
-     //console.log('addCb data: ' + data);
         var resp = engGetResponseHeader(data);
-        var jobId = engGetJobId(data);
+        var jobId = engGetParsedJobId(data);
 
-        (resp.msg === 'ERROR') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
+        (resp !== 'OK') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, addCb, hasqLogo);
@@ -125,7 +124,7 @@ function engNcRecordZero(extCb, tok)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp.msg === 'OK' )
+        if (resp === 'OK')
             record = engGetParsedRecord(data);
 
         extCb(resp, record);

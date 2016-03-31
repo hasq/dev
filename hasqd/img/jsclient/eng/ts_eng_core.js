@@ -47,8 +47,8 @@ function engSendPing(timeDelay)
 
         var resp = engGetResponseHeader(data);
 
-        //if (resp.msg !== 'OK')
-        //return widShowLog(resp.msg + ': ' + resp.cnt);
+        //if (resp !== 'OK')
+        //return widShowLog(resp);
     }
 
     ajxSendCommand('ping', cb, hasqLogo);

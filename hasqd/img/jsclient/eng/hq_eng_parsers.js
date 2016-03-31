@@ -1,68 +1,55 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetResponseHeaderInfoId(data)
+function engGetParsedInfoId(data)
 {
     // returns response header
-    var err = {};
-    var infoId = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+    var infoId = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '');
     var lines = infoId.split(/\n/);
 
     if (lines.length < 5)
-    {
-        err.msg = 'ERROR';
-        err.cnt = 'NO_OUTPUT';
-        return err;
-    }
+        return null;
 
     return infoId;
 }
 
-function engGetResponseHeaderInfoSys(data)
+function engGetParsedInfoSys(data)
 {
-    var err = {};
-    var infoSys = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+    var infoSys = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '');
     var lines = infoSys.split(/\n/);
 
     if (lines.length < 5)
-    {
-        err.msg = 'ERROR';
-        err.cnt = 'NO_OUTPUT';
-        return err;
-    }
+        return null;
 
     return infoSys;
 }
 
-function engGetResponseHeaderRange(data)
+function engGetParsedRange(data)
 {
-    var err = {};
-    var range = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
+    var range = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '');
 
-    if (range.length == 0)
-    {
-        err.msg = 'ERROR';
-        err.cnt = range;
-        return err;
-    }
+    if (!range)
+        return null;
 
     return range;
 }
 
-function engGetResponseHeaderInfoFam(data)
+function engGetParsedInfoFam(data)
 {
-    var err = {};
-    list = [];
+    var list = [];
 
+    var infoFam = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '');
 
-    var infoFam = data.replace(/^OK/g,'').replace(/^\s+|\r|\s+$/g, '');
-    if (infoFam.length == 0) return list;
+    if (infoFam.length === 0)
+        return list;
 
     var lines = rawFamData.split(/\n/);
 
     for (var i = 0; i < lines.length; i++)
     {
         var parts = lines[i].split(/\s/);
-        if (parts.length != 5) break;
+
+        if (parts.length != 5)
+            return null;
 
         list[i] = {};
         list[i].name = parts[0];
@@ -82,7 +69,7 @@ function engGetOnlyNumber(data)
 
 function engIsNull(data)
 {
-    return (data === null) ? true : false;
+    return (typeof(data) === 'null') ? true : false;
 }
 
 function engIsRawTokens(data, hash)
@@ -152,7 +139,7 @@ function engGetTokens(rawTok, hash)
 {
     // returns parsed tokens list with names and hashes;
     var tok = [];
-    rawTok = rawTok.replace(/^\s+|\s+$/g, '').split(/\s/);; // remove all space-like symbols from the start and end of the string
+    rawTok = rawTok.replace(/^\s+|\s+$/g, '').split(/\s/); ; // remove all space-like symbols from the start and end of the string
 
     for (var i = 0; i < rawTok.length; i++)
     {
@@ -232,7 +219,7 @@ function engGetParsedAcceptKeys(rawKeys)
 
         acceptKeys[i] = {};
         acceptKeys[i].prcode = prCode;
-        acceptKeys[i].n = (coef == 1) ? acceptKeys[i].n = -1 : acceptKeys[i].n = +el[0];// if protocol have record numbers n = -1;
+        acceptKeys[i].n = (coef == 1) ? acceptKeys[i].n = -1 : acceptKeys[i].n = +el[0]; // if protocol have record numbers n = -1;
         acceptKeys[i].s = el[1 - coef];
 
         switch (prCode)
@@ -307,42 +294,42 @@ function engGetTitleRecord(acceptKeys, p, h, m)
         switch (titleRecord[0].prcode)
         {
             case prK1K2:
-                var k2 = titleRecord[i].k2; //
-                titleRecord[i].g1 = engGetKey(n2, titleRecord[i].s, k2, m, h); //
+            var k2 = titleRecord[i].k2; //
+            titleRecord[i].g1 = engGetKey(n2, titleRecord[i].s, k2, m, h); //
                 var k3 = engGetKey(n3, s, p, m, h);
             var g2 = titleRecord[i].g2 = engGetKey(n3, s, k3, m, h); //
-                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
+            titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
                 var k4 = engGetKey(n4, s, p, m, h);
                 var g3 = engGetKey(n4, s, k4, m, h);
-                titleRecord[i].o2 = engGetKey(n3, s, g3, m, h); //
+            titleRecord[i].o2 = engGetKey(n3, s, g3, m, h); //
                 break;
             case prG2O2:
-                titleRecord[i].n1 = n1; //
-                titleRecord[i].n2 = n2; //
-                var g2 = titleRecord[i].g2; //
-                titleRecord[i].k1 = engGetKey(n1, s, p, m, h); //
-                var k2 = titleRecord[i].k2 = engGetKey(n2, s, p, m, h); //
-                titleRecord[i].g1 = engGetKey(n2, s, k2, m, h); //
-                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
+            titleRecord[i].n1 = n1; //
+            titleRecord[i].n2 = n2; //
+            var g2 = titleRecord[i].g2; //
+            titleRecord[i].k1 = engGetKey(n1, s, p, m, h); //
+            var k2 = titleRecord[i].k2 = engGetKey(n2, s, p, m, h); //
+            titleRecord[i].g1 = engGetKey(n2, s, k2, m, h); //
+            titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
                 break;
             case prK1G1:
                 var k3 = engGetKey(n3, s, p, m, h);
                 var g2 = engGetKey(n3, s, k3, m, h);
-                titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
+            titleRecord[i].o1 = engGetKey(n2, s, g2, m, h); //
                 break;
             case prK2:
                 var k3 = engGetKey(n3, s, p, m, h);
                 var k4 = engGetKey(n4, s, p, m, h);
                 var g3 = engGetKey(n4, s, k4, m, h);
-                titleRecord[i].g2 = engGetKey(n3, s, k3, m, h); //
-                titleRecord[i].o2 = engGetKey(n3, s, g3, m, h); //
+            titleRecord[i].g2 = engGetKey(n3, s, k3, m, h); //
+            titleRecord[i].o2 = engGetKey(n3, s, g3, m, h); //
                 break;
             case prO1:
                 titleRecord[i].n1 = n + 1;
-                titleRecord[i].k1 = engGetKey(titleRecord[i].n1, s, p, m, h); //
+            titleRecord[i].k1 = engGetKey(titleRecord[i].n1, s, p, m, h); //
                 var k2 = engGetKey(n2, s, p, m, h);
-                titleRecord[i].g1 = engGetKey(n2, s, k2, m, h); //
-                titleRecord[i].o1; //
+            titleRecord[i].g1 = engGetKey(n2, s, k2, m, h); //
+            titleRecord[i].o1; //
                 break;
             default:
                     break;

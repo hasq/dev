@@ -3,77 +3,41 @@
 function engGetResponseHeader(data)
 {
     // returns response header
-    var resp = {};
-    var tmp = data.replace(/\r|\s+$/g, '');
-    var blocks = tmp.split(/\s/); // split by by \s (\s, \n, \t, \v);
-    var lines = tmp.split(/\n/); // split by \n only;
-
-    if (!tmp)
-    {
-        resp.msg = 'ERROR';
-        resp.cnt = 'NO_OUTPUT';
-
-        return resp;
-    }
+    var resp = null;
+    var msg = data.replace(/^\s+|\r|\s+$/g, '');
+    var blocks = msg.split(/\s/); // split by by \s (\s, \n, \t, \v);
+    var lines = msg.split(/\n/); // split by \n only;
 
     if (lines[0] === 'OK')
-    {
-        resp.msg = 'OK';
-        resp.cnt = 'OK';
-    }
+        resp = 'OK';
     else if (blocks[0] === 'OK' || blocks[0] === 'IDX_NODN' || blocks[0] === 'JOB_QUEUED')
-    {
-        resp.msg = blocks[0];
-        resp.cnt = blocks[0];
-    }
+        resp = blocks[0];
     else
-    {
-        resp.msg = 'ERROR';
-        resp.cnt = tmp;
-        /*
-                URF_BAD_FORMAT
-                REQ_MSG_HEAD
-                REQ_DN_BAD
-                REC_INIT_BAD_N
-                REC_INIT_BAD_S
-                REC_INIT_BAD_KGO
-                RECORD_MISMATCH
-                WRONG_SEQ_NUMBER
-                REQ_HASHTYPE_BAD
-                REQ_BAD_SIGN
-                CE_QUE_OVERFLOW
-                BUSY
+        resp = msg;
 
-                REQ_JOBID_BAD
-                JOB_NOINFO
-        */
-    }
     return resp;
 }
 
-function engGetJobId (data)
+function engGetParsedJobId(data)
 {
     if (!data)
         return null;
 
     var blocks = data.replace(/\r|\s+$/g, '').split(/\s/);
 
-    return (blocks.length === 2 && blocks[0] === 'OK' && Number(blocks[1])) ? Number(blocks[1]) : null;
+    return (blocks.length === 2 && blocks[0] === 'OK' && Number(blocks[1]))
+           ? Number(blocks[1])
+           : null;
 }
 
 function engGetParsedInfoDb(data)
 {
     // returns parsed 'info db' response
     var db = [];
-    var err = {};
     var rawDb = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '').replace(/{\n|}+$/g, '').split(/}\n/);
 
     if (!rawDb)
-    {
-        err.msg = 'ERROR';
-        err.cnt = data;
-        return err;
-    }
+        return [];
 
     for (var i = 0; i < rawDb.length; i++)
     {
@@ -114,8 +78,11 @@ function engGetParsedInfoDb(data)
                 case 'altname':
                     db[i].altname = parts[1];
                     break;
+                case 'description':
+                    db[i].description = parts[1];
+                    break;
                 default:
-                        break;
+                        return [];
             }
         }
     }
@@ -123,76 +90,75 @@ function engGetParsedInfoDb(data)
 }
 
 function engGetParsedRecord(data)
-{
-    // returns parsed 'last' response
-    if (!data)
-        return null;
+{ // returns parsed 'last' response
+if (!data)
+    return null;
 
-    var rec = {};
-    var err = {};
+var rec = {};
+var err = {};
     var parts = data.replace(/^OK/g, '').replace(/^\s|\r|\s+$/g, '').split(/\s/);
 
-    if (parts.length < 5)
-        return null;
+if (parts.length < 5)
+    return null;
 
-    if (parts.length == 5)
-    {
-        rec.n = +parts[0];
-        rec.s = parts[1];
-        rec.k = parts[2];
-        rec.g = parts[3];
-        rec.o = parts[4];
-        rec.d = '';
-    }
-    else if (parts.length > 5)
-    {
-        rec.n = +parts[0];
-        rec.s = parts[1];
-        rec.k = parts[2];
-        rec.g = parts[3];
-        rec.o = parts[4];
-        var d = [];
+if (parts.length == 5)
+{
+    rec.n = +parts[0];
+    rec.s = parts[1];
+    rec.k = parts[2];
+    rec.g = parts[3];
+    rec.o = parts[4];
+    rec.d = '';
+}
+else if (parts.length > 5)
+{
+    rec.n = +parts[0];
+    rec.s = parts[1];
+    rec.k = parts[2];
+    rec.g = parts[3];
+    rec.o = parts[4];
+    var d = [];
 
-        for (var i = 5; i < parts.length; i++)
-            d[d.length] = parts[i];
+    for (var i = 5; i < parts.length; i++)
+        d[d.length] = parts[i];
 
-        rec.d = d.join(' ');
-    }
+    rec.d = d.join(' ');
+}
 
-    return rec;
+return rec;
 }
 
 function engGetRecord(n, s, p0, p1, p2, m, h)
+{ // generates new record
+
+var rec = {};
+var n0 = +n;
+var n1 = +n + 1;
+var n2 = +n + 2;
+var k0 = engGetKey(n0, s, p0, m, h);
+
+if (p1 == null || p2 == null)
 {
-    // generates new record
-    var rec = {};
-    var n0 = +n;
-    var n1 = +n + 1;
-    var n2 = +n + 2;
-    var k0 = engGetKey(n0, s, p0, m, h);
+    var k1 = engGetKey(n1, s, p0, m, h);
+    var k2 = engGetKey(n2, s, p0, m, h);
+}
+else
+{
+    var k1 = engGetKey(n1, s, p1, m, h);
+    var k2 = engGetKey(n2, s, p2, m, h);
+}
 
-    if (p1 == null || p2 == null)
-    {
-        var k1 = engGetKey(n1, s, p0, m, h);
-        var k2 = engGetKey(n2, s, p0, m, h);
-    }
-    else
-    {
-        var k1 = engGetKey(n1, s, p1, m, h);
-        var k2 = engGetKey(n2, s, p2, m, h);
-    }
+var g0 = engGetKey(n1, s, k1, m, h);
+var g1 = engGetKey(n2, s, k2, m, h);
+var o0 = engGetKey(n1, s, g1, m, h);
 
-    var g0 = engGetKey(n1, s, k1, m, h);
-    var g1 = engGetKey(n2, s, k2, m, h);
-    var o0 = engGetKey(n1, s, g1, m, h);
+rec.n = n0;
+rec.s = s;
+rec.k = k0;
+rec.g = g0;
+rec.o = o0;
 
-    rec.n = n0;
-    rec.s = s;
-    rec.k = k0;
-    rec.g = g0;
-    rec.o = o0;
-
-    return rec;
+return rec;
 }
 
 function engGetKey(n, s, p, m, h)
@@ -232,7 +198,7 @@ function engIsHash(data, h)
                 return false;
     }
 
-    if (data.length != l || /[^0-9a-f]/g.test(data)) //mismatched length or not not hex chars contents
+    if (data.length != l || /[^0-9a-f]/g.test(data))
     return false;
     else
         return true;
@@ -256,64 +222,58 @@ function engGetHash(data, h)
         case 'smd':
             return hex_smd(data);
         default:
-                break;
+                return null;
     }
-
-    return null;
 }
 
 function engGetTokensStatus(lr, nr)
 {
-    if (!lr) // returns current matching of password
-    return false;
+    if (!lr)
+        return false;
 
-    if (lr.g === nr.g && lr.o === nr.o) // Tokens keys is fully matched with a password
-    return 'OK';
+    if (lr.g === nr.g && lr.o === nr.o)
+        return 'OK';
 
-    if (lr.g === nr.g) // Token is in a sending process
-    return 'PWD_SNDNG';
+    if (lr.g === nr.g)
+        return 'PWD_SNDNG';
 
-    if (lr.o === nr.o) // Token is in a receiving process
-    return 'PWD_RCVNG';
+    if (lr.o === nr.o)
+        return 'PWD_RCVNG';
 
-    return 'PWD_WRONG'; // Tokens keys is not matched with a password
+    return 'PWD_WRONG';
 }
 
 function engGetDataValToDisplay(data)
 {
     // returns parsed data for displaying
     var r = data || '';
-
-    var LF = '\u000a'; //unicode line-feed
+    var LF = '\u000a';
     var space = '\u0020';
     var backslash = '\u005c';
     var n = '\u006e';
 
-    for (var i = 0; i < r.length; i++) // replaces all not escaped '\n' by LF;
-    {
+    for (var i = 0; i < r.length; i++)
         if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n)
             r = r.substring(0, i) + LF + r.substr(i + 2);
-    }
 
-    r = r.replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020'); //replaces all double spaces by " \ ";
-    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g, '\u005c'); //replaces all double backslash by single;
-
+    r = r.replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020');
+    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g, '\u005c');
 
     return r;
 
 }
 
-function engGetDataValToRecord(data) // returns parsed data for add into record
+function engGetDataValToRecord(data)
 {
     var r = data || '';
-    var LF = '\u000a'; //unicode line-feed
+    var LF = '\u000a';
     var space = '\u0020';
     var backslash = '\u005c';
     var n = '\u006e';
 
-    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c'); //replace all "\" by "\\" if is not located in front of "n" or "\n";
-    r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c'); //replace all double spaces by " \ ";
-    r = r.replace(/\u000a/g, '\u005c\u006e'); // 'LF' > '\n';
+    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c');
+    r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c');
+    r = r.replace(/\u000a/g, '\u005c\u006e');
 
     return r;
 }
@@ -324,54 +284,46 @@ function engIsAcceptKeys(keys)
         return false;
 
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
-        return false; // checks for non hex chars;
+    return false;
 
-    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
-    var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
+    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/);
+    var prCode = keys.splice(keys.length - 1, 1)[0];
     var prCode0Ch = prCode.charAt(0);
 
-    // checks protocol code for record number exists into the acceptKeys;
     if (prCode0Ch !== '1' && prCode0Ch !== '2')
         return false;
 
     var isRecNum = (prCode0Ch == '1') ? true : false;
-
-    //checks match of a protocol code and quantity of acceptKeys elements;
     var keysLen;
     var prCodeLen = prCode.length;
 
     if (prCodeLen < 3 || prCodeLen > 6)
         return false;
-
     if (prCodeLen == 3 || prCodeLen == 4)
         keysLen = (isRecNum) ? 3 : 2;
-
     if (prCodeLen == 5 || prCodeLen == 6)
         keysLen = (isRecNum) ? 4 : 3;
 
-    //if exists CRC extract it and compare with calculated CRC
-    //if exists db name it will be used like lengths template
     var prCRC = '';
     var tkCRC = '';
     var tmpl = '';
 
     if (keys[keys.length - 1].length == 4)
     {
-        prCRC = keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
-        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
+        prCRC = keys.splice(keys.length - 1, 1)[0];
+        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);
     }
     else if (keys[keys.length - 2].length == 4)
     {
-        prCRC = keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
-        tmpl = keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
-        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4); //calculates CRC
+        prCRC = keys.splice(keys.length - 2, 1)[0];
+        tmpl = keys.splice(keys.length - 1, 1)[0].length;
+        tkCRC = engGetHash(keys.join('').replace(/\s/g, ''), 's22').substring(0, 4);
     }
 
     if (prCRC !== tkCRC)
-        return false; //checks CRC
-
-        if (keys.length < keysLen)
-            return false;
+        return false;
+    if (keys.length < keysLen)
+        return false;
 
     if (tmpl.length == 0)
     {
@@ -380,11 +332,10 @@ function engIsAcceptKeys(keys)
         if (mod !== 0 && mod !== 1)
             return false;
 
-        tmpl = (mod == 0) ? keys[keys.length - 1].length : keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+        tmpl = (mod == 0) ? keys[keys.length - 1].length : keys.splice(keys.length - 1, 1)[0].length;
     }
 
-    if (isRecNum)  //removes all records number, leaves only keys;
-    {
+    if (isRecNum)
         for (var i = 0; i < keys.length; i = i + keysLen)
         {
             if (!engIsNumber(keys[i]))
@@ -393,15 +344,12 @@ function engIsAcceptKeys(keys)
             keys.splice(i, 1);
             i--;
         }
-    }
 
     tmpl = (tmpl > 0) ? tmpl : keys[0].length;
 
     for (var i = 0; i < keys.length; i++)
-    {
         if (tmpl !== keys[i].length)
-            return false; //checks coincidence of the keys length and template length
-        }
+            return false;
 
     return true;
 }
@@ -416,28 +364,25 @@ function engGetParsedAcceptKeys(keys)
     var prO1 = '251';
     var prK2 = '232';
 
-    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/); // remove extra spaces and split
-    var prCode = keys.splice(keys.length - 1, 1)[0]; //get protocol line;
+    keys = keys.replace(/\s{2,}/g, '\u0020').replace(/^\s+|\s+$/, '').split(/\s/);
+    var prCode = keys.splice(keys.length - 1, 1)[0];
     var keysLen;
 
     var prCode0Ch = prCode.charAt(0);
     var prCodeLen = prCode.length;
-    var isRecNum = (prCode0Ch == '1') ? true : false; // checks protocol code for record number exists into the acceptKeys;
+    var isRecNum = (prCode0Ch == '1') ? true : false;
 
-    if (prCodeLen == 3 || prCodeLen == 4) //checks match of a protocol code and quantity of acceptKeys elements;
-    keysLen = (isRecNum) ? 3 : 2;
-
-    if (prCodeLen == 5 || prCodeLen == 6) //checks match of a protocol code and quantity of acceptKeys elements;
-    keysLen = (isRecNum) ? 4 : 3;
+    if (prCodeLen == 3 || prCodeLen == 4)
+        keysLen = (isRecNum) ? 3 : 2;
+    if (prCodeLen == 5 || prCodeLen == 6)
+        keysLen = (isRecNum) ? 4 : 3;
 
     if (keys[keys.length - 1].length == 4)
-    {
-        keys.splice(keys.length - 1, 1)[0]; //extracts CRC;
-    }
+        keys.splice(keys.length - 1, 1)[0];
     else if (keys[keys.length - 2].length == 4)
     {
-        keys.splice(keys.length - 2, 1)[0]; //extracts CRC;
-        keys.splice(keys.length - 1, 1)[0].length; //extracts DB name;
+        keys.splice(keys.length - 2, 1)[0];
+        keys.splice(keys.length - 1, 1)[0].length;
     }
 
     if (keys.length % keysLen == 1)
@@ -460,7 +405,7 @@ function engGetParsedAcceptKeys(keys)
         var tmpKeys = keys.splice(0, keysLen);
         acceptKeys[i] = {};
         acceptKeys[i].prcode = prCode;
-        acceptKeys[i].n = (isRecNum) ? acceptKeys[i].n = +tmpKeys[0] : acceptKeys[i].n = -1; // if protocol not includes numbers n = -1;
+        acceptKeys[i].n = (isRecNum) ? acceptKeys[i].n = +tmpKeys[0] : acceptKeys[i].n = -1;
         acceptKeys[i].s = (isRecNum) ? tmpKeys[1] : tmpKeys[0];
 
         switch (prCode)
@@ -498,7 +443,7 @@ function engGetParsedAcceptKeys(keys)
 
                 break;
             default:
-                    return false;
+                    return null;
         }
 
     }
@@ -549,7 +494,14 @@ function engGetTitleRecord(acceptKeys, p, h, m)
         var n2 = n + 2;
         var n3 = n + 3;
         var n4 = n + 4;
-        var k1, k2, k3, k4, g1, g2, g3, o1;
+        var k1,
+            k2,
+            k3,
+            k4,
+            g1,
+            g2,
+            g3,
+            o1;
 
         switch (titleRecord[0].prcode)
         {
@@ -619,7 +571,7 @@ function engGetTitleRecord(acceptKeys, p, h, m)
 
                 break;
             default:
-                    break;
+                    return null;
         }
     }
 
@@ -680,9 +632,7 @@ function engGetHashedTokensList(list)
     var r = [];
 
     for (var i = 0; i < list.length; i++)
-    {
         r[i] = list[i].s;
-    }
 
     return r;
 }
