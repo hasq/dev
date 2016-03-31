@@ -1,11 +1,11 @@
 body {
     font: normal 14px Consolas, "Courier New", monospace !important;
     color: black;
-	background: #FCFCFC;	
+	background: #FCFCFC;
 	width: 60%;
 	min-width: 630px;
-	min-height: 480px;	
-    margin: auto;  
+	min-height: 480px;
+    margin: auto;
 }
 
 html {
@@ -35,7 +35,7 @@ table {
 input {
 	font: normal 14px Consolas, "Courier New", monospace !important;
 	box-sizing: border-box;
-	margin: 0px;	
+	margin: 0px;
 }
 
 input[placeholder]
@@ -43,14 +43,14 @@ input[placeholder]
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input::-webkit-input-placeholder
 {
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input:-ms-input-placeholder
 {
@@ -64,43 +64,43 @@ input:-moz-placeholder
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input::-moz-placeholder
 {
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
-input[type='checkbox'] 
-{ 
-    margin: 5px;    
+input[type='checkbox']
+{
+    margin: 5px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 }
 
 input[type='checkbox']:focus
 {
-    background: #fff; 
-    border: 1px solid #DDDDDD; 
-}  
+    background: #fff;
+    border: 1px solid #DDDDDD;
+}
 
-input[type='text'], 
-input[type='password'] 
-{ 
+input[type='text'],
+input[type='password']
+{
     font: normal 14px Consolas, "Courier New", monospace !important;
     width: 100%;
-    margin: 0px;    
+    margin: 0px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 	width: 100%;
 }
 
-input[type='text']:focus, 
+input[type='text']:focus,
 input[type='password']:focus
 {
-    border: 1px solid #DDDDDD; 
+    border: 1px solid #DDDDDD;
 }
 
 input:required:valid
@@ -112,12 +112,12 @@ input:invalid
 {
     border: 1px solid #DDDDDD;
 	box-shadow: none;
-} 
+}
 
 input:focus:invalid
 {
     border-color: red;
-} 
+}
 
 textarea
 {
@@ -134,7 +134,7 @@ textarea::-webkit-input-placeholder
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 textarea:-ms-input-placeholder
 {
@@ -148,14 +148,14 @@ textarea:-moz-placeholder
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 textarea::-moz-placeholder
 {
     font: italic 14px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 /* classes */
 
@@ -195,7 +195,7 @@ textarea::-moz-placeholder
 }
 
 .ui-widget-header ul {
-    height: 26px;   
+    height: 26px;
 }
 
 .ui-tabs .ui-tabs-nav li {

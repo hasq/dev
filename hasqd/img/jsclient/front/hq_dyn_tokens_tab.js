@@ -721,10 +721,10 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     widShowTokensLog(msg);
 
     var resp = engGetResponseHeader(cbData);
-
+    console.log(resp);
     (resp !== 'OK' && resp !== 'IDX_NODN')
-    ? widWarningLed($obj, imgMsgBlink, msg)
-    : widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp);
+    ? widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp)
+    : widWarningLed($obj, imgMsgBlink, msg)
 
     if (!(cmdIdx + 1 < glCmdList.items.length))
     {

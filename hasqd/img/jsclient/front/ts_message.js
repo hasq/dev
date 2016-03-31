@@ -16,7 +16,7 @@ var glMsg =
 
 var glResponse =
 {
-    //NO_RECS : 'NO_RECS',
+    NO_RECS : 'NO_RECS',
     URF_BAD_FORMAT : 'URF_BAD_FORMAT',
     REQ_MSG_HEAD : 'REQ_MSG_HEAD',
     REQ_DN_BAD : 'REQ_DN_BAD',

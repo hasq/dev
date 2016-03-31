@@ -3,7 +3,7 @@ html
   /* overflow-y: scroll; */
 }
 
-body 
+body
 {
     font-family: Consolas, "Courier New", monospace;
     background: #FCFCFC;
@@ -16,7 +16,7 @@ body
     margin: auto;
 }
 
-*:focus 
+*:focus
 {
     outline: none;
 }
@@ -32,7 +32,7 @@ button
     text-align: center;
     width: 70px;
     height: 70px;
-	border: 0;	
+	border: 0;
 	margin: 0;
 	padding: 0;
 }
@@ -44,10 +44,10 @@ button.search-tab-button
     width: 70px;
     height: 30px;
 	border: 0;
-	background: #FCFCFC;	
+	background: #FCFCFC;
 	margin: 0;
 	padding: 0;
-	opacity: 1;	
+	opacity: 1;
 }
 
 button.search-tab-button-active
@@ -60,7 +60,7 @@ button.search-tab-button-active
 	background: #FCFCFC;
 	margin: 0;
 	padding: 0;
-	opacity: 1;	
+	opacity: 1;
 }
 
 button.tab-button-off,
@@ -71,7 +71,7 @@ button.button-enabled
     opacity: 0.8;
     -webkit-transition: background 0.20s;
     -moz-transition: background 0.20s;
-    -o-transition: background 0.20s;    
+    -o-transition: background 0.20s;
 }
 
 button.tab-button-on,
@@ -88,14 +88,14 @@ button.show-keys-button-off:hover,
 button.show-keys-button-on:hover,
 button.button-enabled:hover
 {
-    background: #87CEEB;    
+    background: #87CEEB;
     cursor: pointer;
 }
 
 button.tab-button-off:active:hover,
 button.tab-button-on:active:hover,
 button.show-keys-button-off:active:hover,
-button.show-keys-button-on:active:hover 
+button.show-keys-button-on:active:hover
 {
     background: #20B2AA;
 }
@@ -104,7 +104,7 @@ button.button-disabled:active:hover
 {
     background: #2F4F4F;
     color: #F5F5F5;
-    opacity: 0.4;   
+    opacity: 0.4;
 }
 
 button.button-disabled:hover
@@ -176,7 +176,7 @@ div#modal_window_content:focus
     color: black;
     text-decoration: none;
     cursor: pointer;
-} 
+}
 
 div#modal_window_content_header
 {
@@ -204,29 +204,29 @@ div#search_inner_tabs_div div
     background-color: white;
 }
 
-input[class='hasDatepicker'] 
+input[class='hasDatepicker']
 {
-    margin: 0px;  
+    margin: 0px;
     border: 1px solid #DDDDDD; /*#aaa;*/
     border-radius: 0;
 	font: 14px !important;
 	font-family: Consolas, "Courier New", monospace;
-	
-}  
+
+}
 
 input[placeholder]
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input::-webkit-input-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input:-ms-input-placeholder
 {
@@ -240,42 +240,42 @@ input:-moz-placeholder
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 input::-moz-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
-input[type='checkbox'] 
-{ 
-    margin: 5px;    
+input[type='checkbox']
+{
+    margin: 5px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 }
 
 input[type='checkbox']:focus
 {
-    background: #fff; 
-    border: 1px solid #DDDDDD; 
-}  
+    background: #fff;
+    border: 1px solid #DDDDDD;
+}
 
-input[type='text'], 
-input[type='password'] 
-{ 
+input[type='text'],
+input[type='password']
+{
     font: 14px Consolas;
     width: 100%;
-    margin: 0px;    
+    margin: 0px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 }
 
-input[type='text']:focus, 
+input[type='text']:focus,
 input[type='password']:focus
 {
-    border: 1px solid #DDDDDD; 
+    border: 1px solid #DDDDDD;
 }
 
 input:required:valid
@@ -287,20 +287,20 @@ input:invalid
 {
     border: 1px solid #DDDDDD;
 	box-shadow: none;
-} 
+}
 
 input:focus:invalid
 {
     border-color: red;
-} 
+}
 
 
-led 
+led
 {
     text-align: center;
     vertical-align: middle;
 }
-  
+
 p
 {
     word-wrap: break-word;
@@ -325,7 +325,7 @@ td
 
 td#search_tab_buttons_area_td
 {
-    vertical-align: top;		
+    vertical-align: top;
 	padding:0 6px 0 0;
 	width: 70px;
 }
@@ -334,33 +334,33 @@ td#set_data_textarea_td
 {
 	padding: 0 0 6px 0;
 	text-align: center;
-	
+
 }
 
 td#show_keys_textarea_td
 {
 	padding: 6px 0 0 0;
-	
+
 }
 
 td#receive_keys_textarea_td
 {
 	padding: 0 0 6px 0;
-	
+
 }
 
 textarea[type='text']
 {
-	width: 100%;    
+	width: 100%;
 	font: 14px Consolas !important;
 	border:1px solid #DDDDDD;
 	border-radius: 0;
 	display: block;
 	margin-top: 0;
-	margin-bottom: 0;	
-} 
+	margin-bottom: 0;
+}
 
-textarea:focus 
+textarea:focus
 {
     border: 1px solid #DDDDDD;
 }
@@ -369,15 +369,15 @@ textarea:focus:invalid
 {
     border: 1px solid red;
 	box-shadow: none;
-} 
+}
 
 textarea:invalid
 {
     border: 1px solid #DDDDDD;
 	box-shadow: none;
-} 
+}
 
-textarea:required:valid 
+textarea:required:valid
 {
     border: 1px solid #DDDDDD;
 }
@@ -388,7 +388,7 @@ textarea::-webkit-input-placeholder
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 textarea:-ms-input-placeholder
 {
@@ -402,28 +402,28 @@ textarea:-moz-placeholder
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 textarea::-moz-placeholder
 {
     font: italic 14px Consolas;
     text-align: left;
     text-overflow: ellipsis;
-} 
+}
 
 textarea#set_data_textarea,
 textarea#show_keys_textarea,
 textarea#receive_keys_textarea
 {
     height: 122px;
-} 
+}
 
 .ui-tabs-nav
-{ 
+{
     display: none;
 }
 
-.div-overflow 
+.div-overflow
 {
     white-space: pre;
     overflow-x: auto;
@@ -431,7 +431,7 @@ textarea#receive_keys_textarea
     border: 1px solid #DDDDDD;
     border-radius: 0px;
     font: 12px Consolas;
-	height: 160px; 
+	height: 160px;
 	text-align: left;
 }
 
@@ -478,14 +478,14 @@ textarea#receive_keys_textarea
 	visibility: hidden;
 }
 
-.td-subtitle 
+.td-subtitle
 {
     text-align: center;
     font: bold 18px Consolas;
     color: #1376BC;
 }
 
-.td-tab-subtitle 
+.td-tab-subtitle
 {
     text-align: center;
 	vertical-align: top;
@@ -493,7 +493,7 @@ textarea#receive_keys_textarea
     color: #009070;
 }
 
-.td-subscribe 
+.td-subscribe
 {
     font: italic 8px Consolas;
     border-radius: 0px;
@@ -524,14 +524,14 @@ textarea#receive_keys_textarea
     text-align: center;
 }
 
-.welcome-p 
+.welcome-p
 {
     padding: 6px;
     text-align: justify;
     font: 100% Consolas;
 }
 
-#ui-datepicker-div 
+#ui-datepicker-div
 {
 	display: none;
 }
@@ -673,7 +673,7 @@ textarea#receive_keys_textarea
 }
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
-	font: 12px Consolas, monospace;		
+	font: 12px Consolas, monospace;
 	width: 50%;
 }
 .ui-datepicker table {
@@ -870,7 +870,7 @@ textarea#receive_keys_textarea
 
 /* Interaction Cues
 ----------------------------------*/
- 
+
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
@@ -916,13 +916,13 @@ textarea#receive_keys_textarea
 .ui-widget-content .ui-state-disabled,
 .ui-widget-header .ui-state-disabled {
 	opacity: .35;
-	filter:Alpha(Opacity=35); 
+	filter:Alpha(Opacity=35);
 	background-image: none;
 }
 .ui-state-disabled .ui-icon {
 	filter:Alpha(Opacity=35);
 }
- 
+
 /* Icons
 ----------------------------------*/
 
@@ -971,7 +971,7 @@ textarea#receive_keys_textarea
 	padding: 5px;
 	background: #666666;
 	opacity: .3;
-	filter: Alpha(Opacity=30); 
+	filter: Alpha(Opacity=30);
 	border-radius: 8px;
 }
 
