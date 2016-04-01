@@ -12,15 +12,18 @@ function engSearchClick(fromDate, toDate, progr)
 
 function engSearchStart(fromDate, toDate, progr)
 {
-
     var o = glSearch.o;
 
     o.progr = progr;
     o.fromDate = fromDate;
     o.toDate = toDate;
 
-    o.slices = engGetDateRangeSlices(fromDate, toDate);
-    //console.log(o.slices[0].name()+" : "+o.slices.length);
+    o.outsideRangeDone = false;
+
+    o.sliceFrom = engGetSliceDate(fromDate);
+    o.sliceDate = engGetSliceDate(toDate);
+
+    console.log(o.sliceDate.name());
     o.number = 0;
 
     // start process
@@ -35,36 +38,33 @@ function engSearchStop()
     return { from : o.fromDate, to : o.toDate };
 }
 
-function engGetDateRangeSlices(fromDate, toDate)
+function calendarDays(year, month)
 {
-    var fromY = fromDate.getFullYear();
-    var fromM = fromDate.getMonth() + 1;
-    var fromD = fromDate.getDate();
+    // returns the number of the days in a month
+    var day = 0;
+
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+        day = 31;
+
+    if (month == 4 || month == 6 || month == 9 || month == 11 || month == 10 || month == 12)
+        day = 30;
+
+    if (month == 2)
+        day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
+
+    return day;
+}
+
+function engGetSliceDate(toDate)
+{
     var toY = toDate.getFullYear();
     var toM = toDate.getMonth() + 1;
     var toD = toDate.getDate();
 
-    var getD = function (month, year)
-    {
-     // returns the number of the days in a month
-        var day;
-
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-            day = 31;
-
-        if (month == 4 || month == 6 || month == 9 || month == 11 || month == 10 || month == 12)
-            day = 30;
-
-        if (month == 2)
-            day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
-
-        return day;
-    };
-
-    var name = function() { return this.yyyy + this.mm + this.dd; };
+    var name = function() { return this.y4 + this.mm + this.dd; };
     var path = function(n)
     {
-        var v = '/' + this.yyyy + '/' + this.mm + '/' + this.dd + '/';
+        var v = '/' + this.y4 + '/' + this.mm + '/' + this.dd + '/';
         v = "/" + glCurrentDB.name + v;
         v += this.name() + '-' + n + "." + glCurrentDB.hash + ".txt";
         return v;
@@ -72,85 +72,45 @@ function engGetDateRangeSlices(fromDate, toDate)
 
     var earlierDay = function ()
     {
-        var earlierDate = {}
-                          earlierDate.yyyy = this.yyyy;
-        earlierDate.mm = this.mm;
-        earlierDate.dd = this.dd;
+        var dd = +this.dd;
+        var mm = +this.mm;
+        var yy = +this.y4;
 
-        if (+this.dd - 1 === 0)
+        if ( --dd == 0)
         {
-            if (+this.mm - 1 === 0)
+            if ( --mm == 0)
             {
-                if (+this.yyyy - 1 < 2016)
-                    return null;
-                else
-                {
-                    earlierDate.yyyy = +this.yyyy - 1;
-                    earlierDate.mm = 12;
-                    earlierDate.dd = getD(earlierDate.yyyy, earlierDate.mm);
-                }
+                yy = yy - 1;
+                mm = 12;
+                dd = calendarDays(yy, mm);
             }
             else
             {
-                earlierDate.yyyy = +this.yyyy;
-                earlierDate.mm = +this.mm - 1;
-                earlierDate.dd = getD(earlierDate.yyyy, earlierDate.mm);
+                dd = calendarDays(yy, mm);
             }
         }
-        else
-        {
-            earlierDate.yyyy = +this.yyyy;
-            earlierDate.mm = +this.mm;
-            earlierDate.dd = +this.dd - 1;
-        }
 
-        return earlierDate;
+        this.y4 = yy.toString();
+
+        var s2 = function(x) { return (x < 10) ? '0' + x.toString() : x.toString(); };
+        this.mm = s2(mm);
+        this.dd = s2(dd);
     };
 
 
-    var sliceObj = { name : name, path : path, day : earlierDay };
-    sliceObj.yyyy = toY.toString();
-    sliceObj.mm = (toM < 10) ? '0' + toM.toString() : toM.toString();
-    sliceObj.dd = (toD < 10) ? '0' + toD.toString() : toD.toString();
+    var sliceObj = { name : name, path : path, previous : earlierDay };
+    sliceObj.y4 = +toY;
+    sliceObj.mm = +toM;
+    sliceObj.dd = +toD + 1;
+    sliceObj.previous();
 
-
-    console.log(sliceObj);
+    console.log("sliceObj generated : " + sliceObj);
     return sliceObj;
-    /*
-        while (toY >= 2016)
-        {
-            if (toM == 0)
-                toM = 12;
-
-            while (toM > 0)
-            {
-                if (toD == 0)
-                    toD = getD(toM, toY);
-
-                while (toD > 0)
-                {
-                    r[r.length] = slicePath(toY, toM, toD);
-
-                    if (toY == fromY && toM == fromM && toD == fromD)
-                        return r;
-
-                    toD--;
-                }
-
-                toM--;
-            }
-
-            toY--;
-        }
-
-        return r;
-    */
 }
 
 function processDone()
 {
     glSearch.isOn = false;
-    g_search = {};
 }
 
 function processDates()
@@ -160,20 +120,7 @@ function processDates()
 
     var o = glSearch.o;
 
-    if (o.slices.length == 0)
-        return processDone();
-
-    // pick the first date
-    var name = o.slices[0].path(++o.number);
-
-    // select the next number
-    ///++o.number;
-
-    ///name = name + o.number;
-
-    ///o.current_file = "/smd.db" + o.current_name + ".smd.txt";
-
-    ///$('#current_slice_span').html(current_name + ".smd.txt");
+    var name = o.sliceDate.path(++o.number);
 
     console.log(name);
 
@@ -189,18 +136,20 @@ function searchGetFile(data)
 
     if ( data.length < 12 || data.substr(0, 12) == "REQ_PATH_BAD" )
     {
-        console.log(o.slices[0].name() + " : done");
+        console.log(o.sliceDate.name() + " : done");
 
-        ///$('#mine_search_results_div').html($('#mine_search_results_div').html() + '\n' + o.folders[0]);
+        // outside
+        if ( o.sliceDate.name() < o.sliceFrom.name() )
+        {
+            if ( o.outsideRangeDone ) processDone();
+            else if ( o.number > 1 ) o.outsideRangeDone = true;
+        }
 
-        o.slices.shift(); // remove processed date
+        o.sliceDate.previous();
         o.number = 0;
+        console.log(o.sliceDate.name() + " : new");
 
-        // FIXME
-        // the problem that the slice can be started in the previous days
-        // algorithm must:
-        // 1. go one day past and process last slice
-        // 2. if no slices then back to 1
+        if ( +o.sliceDate.y4 < 2016 ) processDone();
     }
     else
         searchProcessFile(data);
@@ -211,8 +160,8 @@ function searchGetFile(data)
 function searchProcessFile(data)
 {
     var o = glSearch.o;
-    console.log("processing file " + o.slices[0].name());
-    o.progr(2, o.slices[0].name(), o.slices[0].path(o.number));
+    console.log("processing file " + o.sliceDate.name());
+    o.progr(2, o.sliceDate.name(), o.sliceDate.path(o.number));
 
     var recs = data.split('\n');
 
