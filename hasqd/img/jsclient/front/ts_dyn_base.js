@@ -1008,11 +1008,20 @@ function widSearchUpdate()
     for (var i in r)
     {
         var x = r[i];
+        var xs = x.s;
+        if( x.raw != "" ) xs = x.raw;
 
-        t[x.state] += x.s + " : " + x.state + '\n';
+        xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>\n';
+        t[x.state] += x.n + " " + xs + '\n';
     }
 
     return t;
+}
+
+function widDnSelect(dnOrRaw)
+{
+    $('#token_text_textarea').val(dnOrRaw);
+    widTokenTextOninput();
 }
 
 function widEmptyTab()

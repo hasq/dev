@@ -11,7 +11,7 @@ var glSearch =
 {
     isOn : false,
     o : {},
-    result : []
+    result : {}
 };
 
 var imgMsgWait = 'img/msg_wait.gif';

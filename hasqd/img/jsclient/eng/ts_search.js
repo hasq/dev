@@ -147,7 +147,7 @@ function searchGetFile(data)
 
         o.sliceDate.previous();
         o.number = 0;
-        console.log(o.sliceDate.name() + " : new");
+        ///console.log(o.sliceDate.name() + " : new");
 
         if ( +o.sliceDate.y4 < 2016 ) processDone();
     }
@@ -211,6 +211,7 @@ function searchProcessRec(srec)
     r.state = 0;
 
     var v = glSearch.result;
+
     ///var index = v.length;
     ///v[index] = r;
 	
