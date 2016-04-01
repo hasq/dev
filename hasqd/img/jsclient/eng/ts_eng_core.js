@@ -67,15 +67,18 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engGetTokenName (record, keys)
+function engGetTokenName (data, s)
 {
+    if (!data)
+        return s;
 
-    var d = (record) ? record.d : '';
+    var d = data || '';
+
     var dLen = d.length;
 
-    if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === keys[0].s)
+    if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === s)
         return d.substring(1, dLen - 1);
     else
-        return keys[0].s;
+        return s;
 }
 

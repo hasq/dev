@@ -805,7 +805,7 @@ function widShowTokenName()
             else if (resp === 'OK' && record === null)
                 widModalWindow(glMsg.recordParseError);
 
-            textArea($TokenArea).val(engGetTokenName(record, acceptKeys));
+            textArea($TokenArea).val(engGetTokenName(record.d, acceptKeys[0].s));
 
             widReceiveKey(acceptKeys);
         }
@@ -943,7 +943,7 @@ function widSearchButtonClick()
 function widSearchButtonsClick($obj, tabId)
 {
     var $Tabs = $('#search_inner_tabs_div');
-    var $AllButtons = $('#search_tab_buttons_area_td button');
+    var $AllButtons = $('#search_tab_buttons_td button');
 
     $('#search_inner_tabs_div').tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
@@ -955,9 +955,10 @@ function widSearchProgress(fn, data, lnk)
 //  2   Show current file
 //  3   Update results
 {
-    var width = $('#search_tab_area_td').innerWidth() - 4;
-    var height = $('#search_tab_area_td').innerHeight() - 4;
-    $('#mine_search_results_div').css('width', width);
+    var width = $('#search_tab_result_td').innerWidth() - 4;
+    //var height = $('#search_tab_result_td').innerHeight() - 6;
+    $('#search_inner_tab_div').css('width', '100%');
+ //$('#search_inner_tab_div').css('height', '200px');
 
     if (fn == 1)
     {
@@ -993,7 +994,7 @@ function widSearchProgress(fn, data, lnk)
         update( $('#mine_search_results_div'), str[1] );
         update( $('#onhold_search_results_div'), str[2] );
         update( $('#receivable_search_results_div'), str[3] );
-        update( $('#old_search_results_div'), str[4] );
+        ///update( $('#old_search_results_div'), str[4] );
 
         return;
     }
@@ -1011,7 +1012,7 @@ function widSearchUpdate()
         var xs = x.s;
         if ( x.raw != "" ) xs = x.raw;
 
-        xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>\n';
+        xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
         t[x.state] += x.n + " " + xs + '\n';
     }
 

@@ -256,5 +256,17 @@ function searchValidate2(index, data)
 
     glSearch.o.progr(3);
 
+    var cb = function (resp, record)
+    {
+        if (resp !== 'OK' && resp !== glResponse.noRecs)
+            widModalWindow(glResponse[resp]);
+        else if (resp === 'OK' && record !== null)
+        {
+            res.raw = engGetTokenName(record.d, res.s);
+            glSearch.o.progr(3);
+        }
+    }
+
+    engNcRecordZero(cb, res.s);
     // FIXME find RawDN update result and request result update again
 }
