@@ -1013,7 +1013,9 @@ function widSearchUpdate()
         if ( x.raw != "" ) xs = x.raw;
 
         xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
-        t[x.state] += x.n + " " + xs + '\n';
+
+	if( x.state >0 && x.state < 4 )
+	    t[x.state] += x.n + " " + xs + '\n';
     }
 
     return t;

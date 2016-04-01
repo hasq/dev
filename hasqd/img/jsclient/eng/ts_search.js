@@ -167,6 +167,7 @@ function searchProcessFile(data)
 
     var list = {};
 
+    /* ///
     for ( var i in recs )
     {
         var s = recs[i];
@@ -190,10 +191,20 @@ function searchProcessFile(data)
 
     for (var i in list)
         searchProcessRec(list[i].r);
+    */
+
+    for ( var i in recs )
+    {
+        var s = recs[i];
+        if ( s.length < 10 ) continue;
+        searchProcessRec(s);
+    }
 }
 
 function searchProcessRec(srec)
 {
+    console.log("searchProcessRec [" + srec + "]");
+
     var lr = engGetParsedRecord(srec);
 
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
