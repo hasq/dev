@@ -211,10 +211,14 @@ function searchProcessRec(srec)
     r.state = 0;
 
     var v = glSearch.result;
-    var index = v.length;
-    v[index] = r;
+    ///var index = v.length;
+    ///v[index] = r;
+	
+    if( r.s in v ) return;
 
-    setTimeout(function() {searchValidate1(index)}, 1);
+    v[r.s] = r;
+
+    setTimeout(function() {searchValidate1(r.s)}, 1);
 }
 
 function searchValidate1(index)
