@@ -37,6 +37,19 @@ button
 	padding: 0;
 }
 
+button.search-dn
+{
+    font: 12px Consolas;
+    text-align: center;
+    width: unset;
+    height: unset;
+	border: 0;
+	background: #EEEEFE;
+	margin: 0;
+	padding: 0;
+	opacity: 1;
+}
+
 button.search-tab-button
 {
     font: 12px Consolas;
