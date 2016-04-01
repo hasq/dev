@@ -214,8 +214,8 @@ function searchProcessRec(srec)
 
     ///var index = v.length;
     ///v[index] = r;
-	
-    if( r.s in v ) return;
+
+    if ( r.s in v ) return;
 
     v[r.s] = r;
 

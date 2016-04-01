@@ -1009,7 +1009,7 @@ function widSearchUpdate()
     {
         var x = r[i];
         var xs = x.s;
-        if( x.raw != "" ) xs = x.raw;
+        if ( x.raw != "" ) xs = x.raw;
 
         xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>\n';
         t[x.state] += x.n + " " + xs + '\n';
