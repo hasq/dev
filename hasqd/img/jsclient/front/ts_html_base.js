@@ -573,6 +573,7 @@ function widGetHTMLInSearchTabs()
     return widGetHTMLTabs(tabs, 'search_inner_tabs');
 }
 
+// FIXME make one function with arg
 function widGetHTMLMineTab()
 {
     var r = '';

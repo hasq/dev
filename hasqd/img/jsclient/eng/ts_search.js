@@ -167,32 +167,6 @@ function searchProcessFile(data)
 
     var list = {};
 
-    /* ///
-    for ( var i in recs )
-    {
-        var s = recs[i];
-        if ( s.length < 10 ) continue;
-
-        var a = s.split(' ');
-        if ( a.length < 3 ) continue;
-
-        if ( !(a[1] in list) )
-        {
-            list[a[1]] = { n:a[0], r:s };
-            continue;
-        }
-
-        var w = list[a[1]];
-        if ( parseInt(w.n) > parseInt(a[0]) ) continue;
-
-        w.n = a[0];
-        w.r = s;
-    }
-
-    for (var i in list)
-        searchProcessRec(list[i].r);
-    */
-
     for ( var i in recs )
     {
         var s = recs[i];
@@ -203,8 +177,6 @@ function searchProcessFile(data)
 
 function searchProcessRec(srec)
 {
-    console.log("searchProcessRec [" + srec + "]");
-
     var lr = engGetParsedRecord(srec);
 
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
@@ -222,9 +194,6 @@ function searchProcessRec(srec)
     r.state = 0;
 
     var v = glSearch.result;
-
-    ///var index = v.length;
-    ///v[index] = r;
 
     if ( r.s in v ) return;
 
@@ -269,15 +238,18 @@ function searchValidate2(index, data)
 
     var cb = function (resp, record)
     {
-        if (resp !== 'OK' && resp !== glResponse.noRecs)
+        if (resp !== 'OK' && resp !== glResponse.NO_RECS)
             widModalWindow(glResponse[resp]);
         else if (resp === 'OK' && record !== null)
         {
-            res.raw = engGetTokenName(record.d, res.s);
-            glSearch.o.progr(3);
+            var x = engGetTokenName(record.d, res.s);
+            if ( res.s != x )
+            {
+                res.raw = x;
+                glSearch.o.progr(3);
+            }
         }
     }
 
     engNcRecordZero(cb, res.s);
-    // FIXME find RawDN update result and request result update again
 }

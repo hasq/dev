@@ -56,7 +56,7 @@ button.search-tab-button
     text-align: center;
     width: 70px;
     height: 70px;
-	border: 0;
+	border: 1px solid #F0F0FF;
 	background: #FCFCFC;
 	margin: 0;
 	padding: 0;

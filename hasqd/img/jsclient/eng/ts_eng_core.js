@@ -1,4 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
+
 function engGetDbByHash (db, hash)
 {
     var currentDb = null;
@@ -76,9 +77,12 @@ function engGetTokenName (data, s)
 
     var dLen = d.length;
 
-    if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' && engGetHash(d.substring(1, dLen - 1), glCurrentDB.hash) === s)
-        return d.substring(1, dLen - 1);
-    else
-        return s;
+    if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' )
+    {
+        var g = d.substring(1, dLen - 1);
+        if ( engGetHash(g, glCurrentDB.hash) === s) return g;
+    }
+
+    return s;
 }
 
