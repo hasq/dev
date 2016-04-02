@@ -23,7 +23,7 @@ function engSearchStart(fromDate, toDate, progr)
     o.sliceFrom = engGetSliceDate(fromDate);
     o.sliceDate = engGetSliceDate(toDate);
 
-    console.log(o.sliceDate.name());
+    ///console.log(o.sliceDate.name());
     o.number = 0;
 
     // start process
@@ -104,13 +104,14 @@ function engGetSliceDate(toDate)
     sliceObj.dd = +toD + 1;
     sliceObj.previous();
 
-    console.log("sliceObj generated : " + sliceObj);
+    ///console.log("sliceObj generated : " + sliceObj);
     return sliceObj;
 }
 
 function processDone()
 {
     glSearch.isOn = false;
+    // FIXME start reassess wallet
 }
 
 function processDates()
@@ -122,9 +123,67 @@ function processDates()
 
     var name = o.sliceDate.path(++o.number);
 
-    console.log(name);
+    console.log("processDates : " + name);
 
-    ajxSendCommand(name, searchGetFile, hasqLogo);
+    var useCache = true;
+    if (useCache)
+        searchCacheCall(name);
+    else
+        ajxSendCommand(name, searchGetFile, hasqLogo);
+}
+
+function searchSliceBad(data)
+{
+    return data.length < 12 || data.substr(0, 12) == glResponse.REQ_PATH_BAD;
+}
+
+function searchCacheCall(name)
+{
+    var c = glSearch.cache;
+
+    if ( name != c.lastBlank && name != c.lastSlice )
+    {
+        if ( name in c.blanks ) 
+		return searchGetFile(c.blanks[name]);
+
+        var s = c.slices;
+        for ( var i = 0; i < s.length; i++ )
+            if ( s[i].key == name ) 
+		return searchGetFile(s[i].val);
+    }
+
+    var cb = function(data)
+    {
+        searchGetFile(data);
+
+        // add to the cache
+        if (searchSliceBad(data)) searchCacheAddBlank(name, data);
+        else searchCacheAddSlice(name, data);
+    };
+
+    ajxSendCommand(name, cb, hasqLogo);
+}
+
+function searchCacheAddBlank(name, data)
+{
+    var c = glSearch.cache;
+    if ( name == c.lastBlank ) return;
+
+    if ( name > c.lastBlank ) c.lastBlank = name;
+
+    c.blanks[name] = data;
+}
+
+function searchCacheAddSlice(name, data)
+{
+    var c = glSearch.cache;
+    if ( name == c.lastSlice ) return;
+
+    if ( name > c.lastSlice ) c.lastSlice = name;
+
+    c.slices[c.slices.length] = { key: name, val: data };
+
+    while ( c.slices.length > c.maxSlices ) c.slices.shift();
 }
 
 function searchGetFile(data)
@@ -134,9 +193,9 @@ function searchGetFile(data)
 
     var o = glSearch.o;
 
-    if ( data.length < 12 || data.substr(0, 12) == glResponse.REQ_PATH_BAD )
+    if ( searchSliceBad(data) )
     {
-        console.log(o.sliceDate.name() + " : done");
+        ///console.log("searchGetFile: " + o.sliceDate.name() + " out:" + o.outsideRangeDone);
 
         // outside
         if ( o.sliceDate.name() < o.sliceFrom.name() )
@@ -147,7 +206,6 @@ function searchGetFile(data)
 
         o.sliceDate.previous();
         o.number = 0;
-        ///console.log(o.sliceDate.name() + " : new");
 
         if ( +o.sliceDate.y4 < 2016 ) processDone();
     }
@@ -160,7 +218,7 @@ function searchGetFile(data)
 function searchProcessFile(data)
 {
     var o = glSearch.o;
-    console.log("processing file " + o.sliceDate.name());
+    ///console.log("processing file " + o.sliceDate.name());
     o.progr(2, o.sliceDate.name(), o.sliceDate.path(o.number));
 
     var recs = data.split('\n');
@@ -183,7 +241,7 @@ function searchProcessRec(srec)
 
     var st = engGetTokensStatus(lr, nr);
 
-    console.log("searchProcessRec [" + srec + "] -> " + st);
+    ///console.log("searchProcessRec [" + srec + "] -> " + st);
 
     if ( st == "PWD_WRONG" ) return;
 

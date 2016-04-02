@@ -973,7 +973,8 @@ function widSearchProgress(fn, data, lnk)
 
     if (fn == 2)
     {
-        var x = "Block: <a href=\"/file " + lnk + "\">" + data + "</a>";
+	var n = lnk.substr(20,4);
+        var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
         $('#current_slice_span').html(x);
         return;
     }

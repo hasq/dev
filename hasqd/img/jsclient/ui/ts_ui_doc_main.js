@@ -12,7 +12,14 @@ var glSearch =
     isOn : false,
     o : {},
     wallet : {},
-    cache : { maxSize: 1000 }
+    cache :
+    {
+        maxSlices: 1000,
+	slices : [],
+	blanks : {},
+	lastSlice : "",
+	lastBlank : "",
+    }
 };
 
 var imgMsgWait = 'img/msg_wait.gif';
