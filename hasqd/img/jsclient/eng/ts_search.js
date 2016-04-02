@@ -26,8 +26,21 @@ function engSearchStart(fromDate, toDate, progr)
     ///console.log(o.sliceDate.name());
     o.number = 0;
 
+    var chk = function()
+    {
+        var w = glSearch.wallet;
+
+        for (var i in w)
+        {
+            var x = w[i];
+            if ( x.state == 0 )
+                searchValidate1(x.s);
+        }
+    };
+    setTimeout(chk, 1);
+
     // start process
-    setTimeout(processDates, 10);
+    setTimeout(processDates, 50);
 
     return { from : fromDate, to : toDate };
 }
@@ -111,7 +124,6 @@ function engGetSliceDate(toDate)
 function processDone()
 {
     glSearch.isOn = false;
-    // FIXME start reassess wallet
 }
 
 function processDates()
@@ -143,13 +155,13 @@ function searchCacheCall(name)
 
     if ( name != c.lastBlank && name != c.lastSlice )
     {
-        if ( name in c.blanks ) 
-		return searchGetFile(c.blanks[name]);
+        if ( name in c.blanks )
+            return searchGetFile(c.blanks[name]);
 
         var s = c.slices;
         for ( var i = 0; i < s.length; i++ )
-            if ( s[i].key == name ) 
-		return searchGetFile(s[i].val);
+            if ( s[i].key == name )
+                return searchGetFile(s[i].val);
     }
 
     var cb = function(data)
@@ -298,6 +310,7 @@ function searchValidate2(dn, data)
     {
         if (resp !== 'OK' && resp !== glResponse.NO_RECS)
             widModalWindow(glResponse[resp]);
+
         else if (resp === 'OK' && record !== null)
         {
             var x = engGetTokenName(record.d, res.s);
