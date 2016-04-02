@@ -47,6 +47,7 @@ button.search-dn
 	border: 0;
 	background: #EEEEFE;
 	margin: 0;
+	margin-bottom: 1px;
 	padding: 0;
 	opacity: 1;
 }
