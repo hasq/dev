@@ -134,7 +134,7 @@ function searchGetFile(data)
 
     var o = glSearch.o;
 
-    if ( data.length < 12 || data.substr(0, 12) == "REQ_PATH_BAD" )
+    if ( data.length < 12 || data.substr(0, 12) == glResponse.REQ_PATH_BAD )
     {
         console.log(o.sliceDate.name() + " : done");
 
@@ -193,7 +193,7 @@ function searchProcessRec(srec)
     r.raw = "";
     r.state = 0;
 
-    var v = glSearch.result;
+    var v = glSearch.wallet;
 
     if ( r.s in v ) return;
 
@@ -202,17 +202,17 @@ function searchProcessRec(srec)
     setTimeout(function() {searchValidate1(r.s)}, 1);
 }
 
-function searchValidate1(index)
+function searchValidate1(dn)
 {
-    var v = glSearch.result;
-    var res = v[index];
+    var v = glSearch.wallet;
+    var res = v[dn];
 
     var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
 
-    ajxSendCommand(cmd, function(data) {searchValidate2(index, data)}, hasqLogo);
+    ajxSendCommand(cmd, function(data) {searchValidate2(dn, data)}, hasqLogo);
 }
 
-function searchValidate2(index, data)
+function searchValidate2(dn, data)
 {
     var resp = engGetResponseHeader(data);
 
@@ -222,7 +222,7 @@ function searchValidate2(index, data)
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
-    var res = glSearch.result[index];
+    var res = glSearch.wallet[dn];
 
     res.n = lr.n;
 

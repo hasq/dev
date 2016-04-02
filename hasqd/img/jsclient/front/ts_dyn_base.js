@@ -1002,20 +1002,23 @@ function widSearchProgress(fn, data, lnk)
 
 function widSearchUpdate()
 {
-    var r = glSearch.result;
+    var w = glSearch.wallet;
 
     var t = ["", "", "", "", ""];
 
-    for (var i in r)
+    for (var i in w)
     {
-        var x = r[i];
+        var x = w[i];
         var xs = x.s;
         if ( x.raw != "" ) xs = x.raw;
 
         xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
 
-	if( x.state >0 && x.state < 4 )
-	    t[x.state] += x.n + " " + xs + '\n';
+	var xn = ' '+x.n;
+	for( var i=0; i<5-xn.length; i++ ) xn+=' ';
+
+        if ( x.state > 0 && x.state < 4 )
+            t[x.state] += xn + " " + xs + '\n';
     }
 
     return t;

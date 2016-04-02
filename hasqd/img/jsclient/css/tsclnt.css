@@ -42,6 +42,7 @@ button.search-dn
     font: 12px Consolas;
     text-align: center;
     width: unset;
+    min-width: 230px;
     height: unset;
 	border: 0;
 	background: #EEEEFE;

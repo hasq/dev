@@ -11,7 +11,8 @@ var glSearch =
 {
     isOn : false,
     o : {},
-    result : {}
+    wallet : {},
+    cache : { maxSize: 1000 }
 };
 
 var imgMsgWait = 'img/msg_wait.gif';
