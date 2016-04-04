@@ -72,7 +72,7 @@ function widShowHidePassword()
             $('.password').attr('type', 'text');
         else
             $('.password').attr('type', 'password');
-    });	
+    });
 }
 
 function widModalWindow(msg, func)
@@ -96,13 +96,13 @@ function widModalWindow(msg, func)
 
 function widHelpMessageBox ($obj)
 {
-	var str = $obj.html();
-	
-	if (str[0] !== '<')
-	{
-		str = str.replace(/\s/g, '_').replace(s/[A-Z]/\l&/g);
-	}
-	return widModalWindow(str);
+    var str = $obj.html();
+
+    if (str[0] !== '<')
+     str = str.replace(/\s/g, '_').toLowerCase();
+        else
+        {}
+    return widModalWindow(str);
 }
 
 function widSetDefaultDb(hash)
@@ -971,12 +971,12 @@ function widSearchTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 5);
-			
-			var width = $('#td_search_tabs_content').innerWidth() - 6;
 
-			$('.div-overflow')
-				.css('width', width + 'px')
-				.css('max-width', width + 'px');
+            var width = $('#td_search_tabs_content').innerWidth() - 6;
+
+            $('.div-overflow')
+            .css('width', width + 'px')
+            .css('max-width', width + 'px');
 
         },
         isOn : function ()
@@ -1037,7 +1037,7 @@ function widSearchProgress(fn, data, lnk)
 
     if (fn == 2)
     {
-	var n = lnk.substr(20,4);
+        var n = lnk.substr(20, 4);
         var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
         $('#span_current_slice').html(x);
         return;
@@ -1079,8 +1079,8 @@ function widSearchUpdate()
 
         xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
 
-	var xn = ' '+x.n;
-	for( var i=0; i<5-xn.length; i++ ) xn+=' ';
+        var xn = ' ' + x.n;
+        for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += xn + " " + xs + '\n';

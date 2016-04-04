@@ -15,10 +15,10 @@ var glSearch =
     cache :
     {
         maxSlices: 1000,
-	slices : [],
-	blanks : {},
-	lastSlice : "",
-	lastBlank : "",
+        slices : [],
+        blanks : {},
+        lastSlice : "",
+        lastBlank : "",
     }
 };
 
@@ -76,7 +76,8 @@ function docMainWrite()
 
 function docMainInit()
 {
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         docInit();
     });
 }
@@ -89,7 +90,7 @@ function docInit()
 
     $('#div_tabs').tabs();
     $('#div_search_result_tabs').tabs();
-	
+
     $('#span_info img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
     $('#span_logo img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
     $('#span_reload img').attr('src', imgClkReload);
@@ -98,8 +99,8 @@ function docInit()
     $('#span_password_eye img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
     $('#td_token_data').hide();
 
-	widShowHidePassword();
-	widDatePickerInit();
+    widShowHidePassword();
+    widDatePickerInit();
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 
