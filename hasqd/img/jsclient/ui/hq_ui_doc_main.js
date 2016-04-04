@@ -6,7 +6,7 @@ var glCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
 var glPassword = ''; // The specified password
 
-var hasqLogo = HasqLogo('logo_span');
+var hasqLogo = HasqLogo('span_logo');
 var preloadImg = new Array();
 
 var glCmdList =
@@ -347,9 +347,9 @@ function doc_init()
     $('.continue-button').hide();
     $('.verify-table').hide();
 
-    $('#logo_span').find('img').attr('width', '28');
-    $('#logo_span').find('img').attr('height', '28');
-    $('#logo_span').find('img').attr('src', imgLogoBlue);
+    $('#span_logo').find('img').attr('width', '28');
+    $('#span_logo').find('img').attr('height', '28');
+    $('#span_logo').find('img').attr('src', imgLogoBlue);
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();

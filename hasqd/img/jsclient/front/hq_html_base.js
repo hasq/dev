@@ -44,11 +44,11 @@ function widGetHTMLBody(tabs)
 {
     var r = '';
 
-    r += '<table id="#body_table" border="0" nowrap>\n';
+    r += '<table id="table_body" border="0" nowrap>\n';
     r += '<tr>\n';
     r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
     r += '<td style="text-align:right;">&nbsp;';
-    r += widGetHTMLSpanImg('logo_span') + '\n';
+    r += widGetHTMLSpanImg('span_logo') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);

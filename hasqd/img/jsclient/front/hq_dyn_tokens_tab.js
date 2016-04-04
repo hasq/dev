@@ -368,7 +368,7 @@ function widGetRawTokens(data)
 
 function widIsPassword()
 {
-    return ($('#tokens_password_input').val().length > 0);
+    return ($('#tokens_input_password').val().length > 0);
 }
 
 function widIsRawTokens()

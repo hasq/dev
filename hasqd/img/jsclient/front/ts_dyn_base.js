@@ -26,12 +26,12 @@ function textArea($textarea)
 
 function widModalWindow(msg, func)
 {
-    $('#modal_window_content')
+    $('#div_modal_window_content')
     .click
     (function ()
     {
         $(this).find('p').empty();
-        $('#modal_window').css('display', 'none');
+        $('#div_modal_window').css('display', 'none');
 
         if (func)
             func();
@@ -39,8 +39,8 @@ function widModalWindow(msg, func)
         $(this).off('click');
     });
 
-    $('#modal_window').css('display', 'block');
-    $('#modal_window_content').find('p').html(msg);
+    $('#div_modal_window').css('display', 'block');
+    $('#div_modal_window_content').find('p').html(msg);
 }
 
 function widSetDefaultDb(hash)
@@ -60,14 +60,14 @@ function widSetDefaultDb(hash)
 function widShowPwdGuessTime(d)
 {
     // Shows password guess time
-    var $Zxcvbn = $('#password_zxcvbn_td');
+    var $Zxcvbn = $('#td_password_zxcvbn');
     return (d) ? $Zxcvbn.html(d) : $Zxcvbn.empty();
 }
 
 function widShowToken(tok)
 {
     // Shows hashed value of token (if the value is not a default hash)
-    var $TokenText = $('#token_hash_td');
+    var $TokenText = $('#td_token_hash');
 
     if (!tok)
         return $TokenText.empty();
@@ -78,7 +78,7 @@ function widShowToken(tok)
 function widShowLog(text)
 {
     // Shows messages in log
-    var $Log = $('#' + 'log_area_div');
+    var $Log = $('#' + 'div_log_area');
 
     text = text || '';
     $Log.html(text);
@@ -86,7 +86,7 @@ function widShowLog(text)
 
 function widShowSearch() // Shows message or image about tokens existense.
 {
-    var $Pic = $('#token_pic_span img');
+    var $Pic = $('#span_token_pic img');
     $Pic.removeAttr('src').removeProp('title').hide();
 
     var obj =
@@ -125,12 +125,12 @@ function widShowSearch() // Shows message or image about tokens existense.
 
 function widIsPassword()
 {
-    return ($('#password_input').val().length > 0);
+    return ($('#input_password').val().length > 0);
 }
 
 function widIsTokenText()
 {
-    return ($('#token_text_textarea').val().length > 0);
+    return ($('#textarea_token_text').val().length > 0);
 }
 
 function widGetToken(data, hash)
@@ -173,7 +173,7 @@ function widGetTokenStateImg(status)
 function widShowPwdInfo(status)
 {
     // Shows an image displaying the password match
-    var $Span = $('#password_pic_span');
+    var $Span = $('#span_password_pic');
     var r = widGetTokenStateImg(status);
 
     $Span.find('img').attr('src', r.img).prop('title', r.title);
@@ -265,7 +265,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     widShowPwdInfo();
     widShowSearch();
 
-    var $TokText = $('#token_text_textarea');
+    var $TokText = $('#textarea_token_text');
 
     if (0)
         textArea().clearExcept($TokText);
@@ -319,7 +319,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 function widPasswordOninput()
 {
     // Events when passwords value changed.
-    var $PwdInp = $('#password_input');
+    var $PwdInp = $('#input_password');
     glPassword = $PwdInp.val() || '';
 
     widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
@@ -342,7 +342,7 @@ function widPasswordOninput()
 function widPasswordEyeClick($obj)
 {
     //shows/hides passwords by click;
-    var $PwdInp = $('#password_input');
+    var $PwdInp = $('#input_password');
     var $Eye = $obj.find('img');
 
     if ($PwdInp.attr('type') == 'text')
@@ -376,7 +376,7 @@ function widButtonsTable()
 
 function widWelcomeTab()
 {
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#div_tabs');
     widPasswordOninput();
 
     var retObj =
@@ -392,9 +392,9 @@ function widWelcomeTab()
 
 function widCreateTab()
 {
-    var $Table = $('#create_table');
+    var $Table = $('#table_create_tab');
     var $Button = $Table.find('button');
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#div_tabs');
 
     var retObj =
     {
@@ -419,7 +419,7 @@ function widCreateTab()
 function widCreateButtonClick()
 {
     // Creates a new token record
-    var $PwdInp = $('#password_input');
+    var $PwdInp = $('#input_password');
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
@@ -440,9 +440,9 @@ function widCreateButtonClick()
 
 function widSetDataTab()
 {
-    var $Tabs = $('#tabs_div');
-    var $Button = $('#set_data_table').find('button');
-    var $Textarea = $('#set_data_table').find('textarea');
+    var $Tabs = $('#div_tabs');
+    var $Button = $('#table_set_data_tab').find('button');
+    var $Textarea = $('#table_set_data_tab').find('textarea');
 
     var retObj =
     {
@@ -475,8 +475,8 @@ function widSetDataTab()
 function widSetDataButtonClick()
 {
     // Adds a new record with a specified data
-    var $PwdInp = $('#password_input');
-    var $Data = $('#set_data_textarea');
+    var $PwdInp = $('#input_password');
+    var $Data = $('#textarea_set_data');
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
@@ -508,11 +508,11 @@ function widSetDataTextareaOninput()
 
 function widShowKeysTab()
 {
-    var $Table = $('#show_keys_table');
-    var $Tabs = $('#tabs_div');
+    var $Table = $('#table_show_keys_tab');
+    var $Tabs = $('#div_tabs');
     var $AllButton = $Table.find('button');
-    var $OnHoldButton = $('#show_on_hold_button');
-    var $ReleaseButton = $('#show_release_button');
+    var $OnHoldButton = $('#button_show_on_hold');
+    var $ReleaseButton = $('#button_show_release');
 
     var retObj =
     {
@@ -549,7 +549,7 @@ function widTabButtonClick($obj, tabId)
     widPasswordOninput();
     $obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
-    textArea($('#show_keys_textarea')).clear();
+    textArea($('#textarea_show_keys')).clear();
 
     var f;
     switch (+tabId)
@@ -571,9 +571,9 @@ function widTabButtonClick($obj, tabId)
 
 function widShowInstantButtonClick($obj)
 {
-    var $PwdInp = $('#password_input');
-    var $TokenArea = $('#token_text_textarea');
-    var $KeyArea = $('#show_keys_textarea');
+    var $PwdInp = $('#input_password');
+    var $TokenArea = $('#textarea_token_text');
+    var $KeyArea = $('#textarea_show_keys');
 
     textArea($KeyArea).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
@@ -621,9 +621,9 @@ function widShowInstantButtonClick($obj)
 
 function widShowOnHoldButtonClick($obj)
 {
-    var $PwdInp = $('#password_input');
-    var $TokenArea = $('#token_text_textarea');
-    var $KeyArea = $('#show_keys_textarea');
+    var $PwdInp = $('#input_password');
+    var $TokenArea = $('#textarea_token_text');
+    var $KeyArea = $('#textarea_show_keys');
 
     textArea($KeyArea).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
@@ -669,9 +669,9 @@ function widShowOnHoldButtonClick($obj)
 
 function widShowReleaseButtonClick($obj)
 {
-    var $PwdInp = $('#password_input');
-    var $TokenArea = $('#token_text_textarea');
-    var $KeyArea = $('#show_keys_textarea');
+    var $PwdInp = $('#input_password');
+    var $TokenArea = $('#textarea_token_text');
+    var $KeyArea = $('#textarea_show_keys');
 
     textArea($KeyArea).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
@@ -728,8 +728,8 @@ function widShowReleaseButtonClick($obj)
 
 function widReceiveTab()
 {
-    var $Tabs = $('#tabs_div');
-    var $Table = $('#receive_table');
+    var $Tabs = $('#div_tabs');
+    var $Table = $('#table_receive_tab');
     var $Textarea = $Table.find('textarea');
     var $Button = $Table.find('button');
 
@@ -768,8 +768,8 @@ function widReceiveTextareaOninput()
 
 function widReceiveButtonClick()
 {
-    var $AcceptKeysArea = $('#receive_keys_textarea');
-    var $PwdInp = $('#password_input');
+    var $AcceptKeysArea = $('#textarea_receive_keys');
+    var $PwdInp = $('#input_password');
     var rawAcceptKeys = $AcceptKeysArea.val();
 
     if (glLastRec.st === 'IDX_NODN')
@@ -788,8 +788,8 @@ function widReceiveButtonClick()
 
 function widShowTokenName()
 {
-    var $TokenArea = $('#token_text_textarea');
-    var $AcceptKeysArea = $('#receive_keys_textarea');
+    var $TokenArea = $('#textarea_token_text');
+    var $AcceptKeysArea = $('#textarea_receive_keys');
     var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
     var tokText = [$TokenArea.val()] || [''];
     var tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
@@ -816,7 +816,7 @@ function widShowTokenName()
 
 function widReceiveKey(keys)
 {
-    var $TokText = $('#token_text_textarea');
+    var $TokText = $('#textarea_token_text');
     var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
 
     var cb = function (resp, record)
@@ -896,9 +896,9 @@ function widBlockingReceive(keys)
 
 function widSearchTab()
 {
-    var $Table = $('#search_table');
+    var $Table = $('#table_search_tab');
     var $Button = $Table.find('button').not('.search-tab-button').not('.search-tab-button-active');
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#div_tabs');
 
     var retObj =
     {
@@ -909,6 +909,13 @@ function widSearchTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 5);
+
+            var width = $('#td_search_tabs_content').innerWidth() - 6;
+
+            $('.div-overflow')
+            .css('width', width + 'px')
+            .css('max-width', width + 'px');
+
         },
         isOn : function ()
         {
@@ -921,9 +928,9 @@ function widSearchTab()
 
 function widSearchButtonClick()
 {
-    var $PwdInp = $('#password_input');
-    var $From = $('#from_datepicker_input');
-    var $To = $('#to_datepicker_input');
+    var $PwdInp = $('#input_password');
+    var $From = $('#input_from_datepicker');
+    var $To = $('#input_to_datepicker');
 
     var fromDate = new Date($From.datepicker('getDate'));
     var toDate = new Date($To.datepicker('getDate'));
@@ -942,10 +949,10 @@ function widSearchButtonClick()
 
 function widSearchButtonsClick($obj, tabId)
 {
-    var $Tabs = $('#search_inner_tabs_div');
-    var $AllButtons = $('#search_tab_buttons_td button');
+    var $Tabs = $('#div_search_result_tabs');
+    var $AllButtons = $('#td_search_tabs_buttons button');
 
-    $('#search_inner_tabs_div').tabs('option', 'active', tabId);
+    $('#div_search_result_tabs').tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
     $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
 }
@@ -955,11 +962,6 @@ function widSearchProgress(fn, data, lnk)
 //  2   Show current file
 //  3   Update results
 {
-    var width = $('#search_tab_result_td').innerWidth() - 4;
-    //var height = $('#search_tab_result_td').innerHeight() - 6;
-    $('#search_inner_tab_div').css('width', '100%');
- //$('#search_inner_tab_div').css('height', '200px');
-
     if (fn == 1)
     {
         if (data)
@@ -973,9 +975,9 @@ function widSearchProgress(fn, data, lnk)
 
     if (fn == 2)
     {
-	var n = lnk.substr(20,4);
+        var n = lnk.substr(20, 4);
         var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
-        $('#current_slice_span').html(x);
+        $('#span_current_slice').html(x);
         return;
     }
 
@@ -992,10 +994,10 @@ function widSearchProgress(fn, data, lnk)
                 o.html(newstr);
         }
 
-        update( $('#mine_search_results_div'), str[1] );
-        update( $('#onhold_search_results_div'), str[2] );
-        update( $('#receivable_search_results_div'), str[3] );
-        ///update( $('#old_search_results_div'), str[4] );
+        update( $('#div_mine_search_results'), str[1] );
+        update( $('#div_onhold_search_results'), str[2] );
+        update( $('#div_tocome_search_results'), str[3] );
+        ///update( $('#div_past_search_results'), str[4] );
 
         return;
     }
@@ -1013,10 +1015,10 @@ function widSearchUpdate()
         var xs = x.s;
         if ( x.raw != "" ) xs = x.raw;
 
-        xs = '<button class="search-dn" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
+        xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
 
-	var xn = ' '+x.n;
-	for( var i=0; i<5-xn.length; i++ ) xn+=' ';
+        var xn = ' ' + x.n;
+        for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += xn + " " + xs + '\n';
@@ -1027,13 +1029,13 @@ function widSearchUpdate()
 
 function widDnSelect(dnOrRaw)
 {
-    $('#token_text_textarea').val(dnOrRaw);
+    $('#textarea_token_text').val(dnOrRaw);
     widTokenTextOninput();
 }
 
 function widEmptyTab()
 {
-    var $Tabs = $('#tabs_div');
+    var $Tabs = $('#div_tabs');
     widPasswordOninput();
 
     var retObj =

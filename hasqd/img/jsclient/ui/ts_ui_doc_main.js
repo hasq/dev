@@ -15,10 +15,10 @@ var glSearch =
     cache :
     {
         maxSlices: 1000,
-	slices : [],
-	blanks : {},
-	lastSlice : "",
-	lastBlank : "",
+        slices : [],
+        blanks : {},
+        lastSlice : "",
+        lastBlank : "",
     }
 };
 
@@ -67,7 +67,7 @@ var allImages = [
                     imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink
                 ];
 var preloadImg = new Array();
-var hasqLogo = HasqLogo('logo_span');
+var hasqLogo = HasqLogo('span_logo');
 
 function docMainWrite()
 {
@@ -79,42 +79,40 @@ function docMainInit()
     $(document).ready(function ()
     {
         docInit();
-    }
-                     );
+    });
 }
 
 function docInit()
 {
-    $('#modal_window').css('display', 'none');
+    $('#div_modal_window').css('display', 'none');
     $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
 
-    $('#tabs_div').tabs();
-    $('#search_inner_tabs_div').tabs();
+    $('#div_tabs').tabs();
+    $('#div_search_result_tabs').tabs();
 
-
-    $('#info_span img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
-    $('#logo_span img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
-    $('#reload_span img').attr('src', imgClkReload);
-    $('#password_pic_span img').attr('src', imgPwdDummy);
-    $('#token_pic_span img').hide();
-    $('#password_eye_span img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
+    $('#span_info img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
+    $('#span_logo img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
+    $('#span_reload img').attr('src', imgClkReload);
+    $('#span_password_pic img').attr('src', imgPwdDummy);
+    $('#span_token_pic img').hide();
+    $('#span_password_eye img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
 
 
     //$('button').button();
 
-    $('#token_data_td').hide();
+    $('#td_token_data').hide();
 
-    $('#show_hide_checkbox').click(function ()
+    $('#input_show_hide_checkbox').click(function ()
     {
         if (this.checked)
             $('.password').attr('type', 'text');
         else
             $('.password').attr('type', 'password');
     }
-                                  );
+                                        );
 
-    $('#from_datepicker_input').datepicker(
+    $('#input_from_datepicker').datepicker(
     {
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
@@ -126,12 +124,12 @@ function docInit()
         changeYear : true,
         onClose : function (selectedDate)
         {
-            $('#to_datepicker_input').datepicker('option', 'minDate', selectedDate);
+            $('#input_to_datepicker').datepicker('option', 'minDate', selectedDate);
         }
     }
     );
 
-    $('#to_datepicker_input').datepicker(
+    $('#input_to_datepicker').datepicker(
     {
         dateFormat : 'yy/mm/dd',
         minDate : new Date(2016, 0, 1),
@@ -143,13 +141,13 @@ function docInit()
         changeYear : true,
         onClose : function (selectedDate)
         {
-            $('#from_datepicker_input').datepicker('option', 'maxDate', selectedDate);
+            $('#input_from_datepicker').datepicker('option', 'maxDate', selectedDate);
         }
     }
     );
 
-    $('#from_datepicker_input').attr('maxlength', '10').datepicker('setDate', new Date());
-    $('#to_datepicker_input').attr('maxlength', '10').datepicker('setDate', new Date());
+    $('#input_from_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
+    $('#input_to_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
 
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();

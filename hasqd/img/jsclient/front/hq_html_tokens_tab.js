@@ -126,7 +126,7 @@ function widGetHTMLTokensInitialData()
     r += '<td class="td-label" align="left" />\n';
     r += 'Password&nbsp\n';
     r += '<td align="left" />\n';
-    r += '<input type="text" id="tokens_password_input" placeholder="Enter a password" oninput="widTokensPasswordOninput(this.value);" />\n';
+    r += '<input type="text" id="tokens_input_password" placeholder="Enter a password" oninput="widTokensPasswordOninput(this.value);" />\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
