@@ -15,10 +15,10 @@ var glSearch =
     cache :
     {
         maxSlices: 1000,
-        slices : [],
-        blanks : {},
-        lastSlice : "",
-        lastBlank : "",
+	slices : [],
+	blanks : {},
+	lastSlice : "",
+	lastBlank : "",
     }
 };
 
@@ -76,8 +76,7 @@ function docMainWrite()
 
 function docMainInit()
 {
-    $(document).ready(function ()
-    {
+    $(document).ready(function () {
         docInit();
     });
 }
@@ -90,65 +89,17 @@ function docInit()
 
     $('#div_tabs').tabs();
     $('#div_search_result_tabs').tabs();
-
+	
     $('#span_info img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
     $('#span_logo img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
     $('#span_reload img').attr('src', imgClkReload);
     $('#span_password_pic img').attr('src', imgPwdDummy);
     $('#span_token_pic img').hide();
     $('#span_password_eye img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
-
-
-    //$('button').button();
-
     $('#td_token_data').hide();
 
-    $('#input_show_hide_checkbox').click(function ()
-    {
-        if (this.checked)
-            $('.password').attr('type', 'text');
-        else
-            $('.password').attr('type', 'password');
-    }
-                                        );
-
-    $('#input_from_datepicker').datepicker(
-    {
-        dateFormat : 'yy/mm/dd',
-        minDate : new Date(2016, 0, 1),
-        maxDate : new Date(),
-        showMonthAfterYear : true,
-        showOtherMonths : true,
-        selectOtherMonths : true,
-        changeMonth : true,
-        changeYear : true,
-        onClose : function (selectedDate)
-        {
-            $('#input_to_datepicker').datepicker('option', 'minDate', selectedDate);
-        }
-    }
-    );
-
-    $('#input_to_datepicker').datepicker(
-    {
-        dateFormat : 'yy/mm/dd',
-        minDate : new Date(2016, 0, 1),
-        maxDate : new Date(),
-        showMonthAfterYear : true,
-        showOtherMonths : true,
-        selectOtherMonths : true,
-        changeMonth : true,
-        changeYear : true,
-        onClose : function (selectedDate)
-        {
-            $('#input_from_datepicker').datepicker('option', 'maxDate', selectedDate);
-        }
-    }
-    );
-
-    $('#input_from_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
-    $('#input_to_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
-
+	widShowHidePassword();
+	widDatePickerInit();
     widSetDefaultDb(glRequiredDbHash);
     widEmptyTab();
 

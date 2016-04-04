@@ -24,6 +24,57 @@ function textArea($textarea)
     return obj;
 }
 
+function widDatePickerInit()
+{
+    $('#input_from_datepicker').datepicker(
+    {
+        dateFormat : 'yy/mm/dd',
+        minDate : new Date(2016, 0, 1),
+        maxDate : new Date(),
+        showMonthAfterYear : true,
+        showOtherMonths : true,
+        selectOtherMonths : true,
+        changeMonth : true,
+        changeYear : true,
+        onClose : function (selectedDate)
+        {
+            $('#input_to_datepicker').datepicker('option', 'minDate', selectedDate);
+        }
+    }
+    );
+
+    $('#input_to_datepicker').datepicker(
+    {
+        dateFormat : 'yy/mm/dd',
+        minDate : new Date(2016, 0, 1),
+        maxDate : new Date(),
+        showMonthAfterYear : true,
+        showOtherMonths : true,
+        selectOtherMonths : true,
+        changeMonth : true,
+        changeYear : true,
+        onClose : function (selectedDate)
+        {
+            $('#input_from_datepicker').datepicker('option', 'maxDate', selectedDate);
+        }
+    }
+    );
+
+    $('#input_from_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
+    $('#input_to_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
+}
+
+function widShowHidePassword()
+{
+    $('#input_show_hide_checkbox').click(function ()
+    {
+        if (this.checked)
+            $('.password').attr('type', 'text');
+        else
+            $('.password').attr('type', 'password');
+    });	
+}
+
 function widModalWindow(msg, func)
 {
     $('#div_modal_window_content')
@@ -41,6 +92,17 @@ function widModalWindow(msg, func)
 
     $('#div_modal_window').css('display', 'block');
     $('#div_modal_window_content').find('p').html(msg);
+}
+
+function widHelpMessageBox ($obj)
+{
+	var str = $obj.html();
+	
+	if (str[0] !== '<')
+	{
+		str = str.replace(/\s/g, '_').replace(s/[A-Z]/\l&/g);
+	}
+	return widModalWindow(str);
 }
 
 function widSetDefaultDb(hash)
@@ -909,12 +971,12 @@ function widSearchTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 5);
+			
+			var width = $('#td_search_tabs_content').innerWidth() - 6;
 
-            var width = $('#td_search_tabs_content').innerWidth() - 6;
-
-            $('.div-overflow')
-            .css('width', width + 'px')
-            .css('max-width', width + 'px');
+			$('.div-overflow')
+				.css('width', width + 'px')
+				.css('max-width', width + 'px');
 
         },
         isOn : function ()
@@ -975,7 +1037,7 @@ function widSearchProgress(fn, data, lnk)
 
     if (fn == 2)
     {
-        var n = lnk.substr(20, 4);
+	var n = lnk.substr(20,4);
         var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
         $('#span_current_slice').html(x);
         return;
@@ -1017,8 +1079,8 @@ function widSearchUpdate()
 
         xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
 
-        var xn = ' ' + x.n;
-        for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
+	var xn = ' '+x.n;
+	for( var i=0; i<5-xn.length; i++ ) xn+=' ';
 
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += xn + " " + xs + '\n';

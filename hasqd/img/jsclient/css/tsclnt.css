@@ -577,6 +577,12 @@ textarea::-moz-placeholder
 	max-height: 194px;
 }
 
+.span-message-box:hover
+{
+	cursor: pointer;
+	text-shadow: 1px 1px #C9C9C9;
+}
+
 .td-button
 {
     border: 0px solid;

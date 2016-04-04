@@ -33,3 +33,8 @@ var glResponse =
     JOB_NOINFO : 'JOB_NOINFO',
     REQ_PATH_BAD : 'REQ_PATH_BAD',
 };
+
+var glHelpMsg =
+{
+
+};
