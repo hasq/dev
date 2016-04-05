@@ -49,16 +49,16 @@ var imgBtnInstantKeys = '<img width="40px" height="40px" src="img/btn_show_keys1
 var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys2.png"><br/>On Hold';
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys3.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_accept.png"><br/>Accept';
-var imgBtnStop = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
-var imgBtnSearch = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
+var imgBtnStop = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
+var imgBtnStart = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
 
-var imgBtnSearchMine = '<img width="24px" height="16px" src="img/pwd_good.png" title="Mine tokens">';
-var imgBtnSearchOnHold = '<img width="24px" height="16px" src="img/pwd_sndng.png" title="Tokens on hold">';
-var imgBtnSearchToCome = '<img width="24px" height="16px" src="img/pwd_rcvng.png" title="Tokens to come">';
-var imgBtnSearchPast = '<img width="24px" height="16px" src="img/pwd_wrong.png" title="Past tokens">';
+var imgBtnStartMine = '<img width="24px" height="16px" src="img/pwd_good.png" title="Mine tokens">';
+var imgBtnStartOnHold = '<img width="24px" height="16px" src="img/pwd_sndng.png" title="Tokens on hold">';
+var imgBtnStartToCome = '<img width="24px" height="16px" src="img/pwd_rcvng.png" title="Tokens to come">';
+var imgBtnStartPast = '<img width="24px" height="16px" src="img/pwd_wrong.png" title="Past tokens">';
 
 
 var allImages = [
@@ -84,6 +84,7 @@ function docMainInit()
 
 function docInit()
 {
+    console.log($('#button_search').html());
     $('#div_modal_window').css('display', 'none');
     $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');

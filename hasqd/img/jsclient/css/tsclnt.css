@@ -26,6 +26,12 @@ body
     box-sizing: border-box;
 }
 
+a:link,
+a:visited
+{
+	color: #1376BC;
+}
+
 button
 {
     font: 12px Consolas;
@@ -256,27 +262,16 @@ input::-moz-placeholder
     text-overflow: ellipsis;
 }
 
-input[type='checkbox']
-{
-    margin: 5px;
-    border: 1px solid #DDDDDD;
-    border-radius: 0;
-}
-
-input[type='checkbox']:focus
-{
-    background: #fff;
-    border: 1px solid #DDDDDD;
-}
-
 input[type='text'],
 input[type='password']
 {
     font: 14px Consolas;
-    width: 100%;
-    margin: 0px;
+    width: 99%;
+    margin: 1px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
+	box-sizing: border-box;
+	
 }
 
 input[type='text']:focus,
@@ -474,12 +469,27 @@ table
 {
 	vertical-align: top;
 	padding: 3px 0 3px 3px;	
-	width: 150px;
+	width: 180px;
+}
+
+#td_search_tabs_dates table
+{
+	table-layout: fixed;
+	width: 100%;
+	border: 0;
+}
+
+#td_search_tabs_dates table tr:last-child td
+{
+	text-align: center;
+	vertical-align: bottom;
+	padding: 0;
+	height: 86px;
 }
 
 #span_current_slice
 {
-	font: 10px Consolas, "Courier New", monospace !important;
+	font: 16px Consolas, "Courier New", monospace !important;
 }
 
 td
@@ -580,7 +590,7 @@ textarea::-moz-placeholder
 .span-message-box:hover
 {
 	cursor: pointer;
-	text-shadow: 1px 1px #C9C9C9;
+	text-shadow: 1px 1px #DDDDDD;
 }
 
 .td-button

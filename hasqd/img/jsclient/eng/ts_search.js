@@ -2,7 +2,9 @@
 
 function engSearchClick(fromDate, toDate, progr)
 {
+
     glSearch.isOn = !glSearch.isOn;
+    progr(1, glSearch.isOn);
 
     if (glSearch.isOn)
         return engSearchStart(fromDate, toDate, progr);

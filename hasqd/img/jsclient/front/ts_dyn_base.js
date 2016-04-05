@@ -96,13 +96,16 @@ function widModalWindow(msg, func)
 
 function widHelpMessageBox ($obj)
 {
+    console.log($obj);
     var str = $obj.html();
 
     if (str[0] !== '<')
-     str = str.replace(/\s/g, '_').toLowerCase();
+     str = str.replace(/\s/g, '_').replace(/[^A-Za-z09_]/g, '').toLowerCase();
         else
-        {}
-    return widModalWindow(str);
+        {
+            str = $obj.find('span').attr('id')
+        }
+    return widModalWindow(glHelpMsg[str]);
 }
 
 function widSetDefaultDb(hash)
@@ -1009,12 +1012,12 @@ function widSearchButtonClick()
 
 }
 
-function widSearchButtonsClick($obj, tabId)
+function widSearchResultsTabsClick($obj, tabId)
 {
     var $Tabs = $('#div_search_result_tabs');
     var $AllButtons = $('#td_search_tabs_buttons button');
 
-    $('#div_search_result_tabs').tabs('option', 'active', tabId);
+    $Tabs.tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
     $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
 }
@@ -1027,17 +1030,21 @@ function widSearchProgress(fn, data, lnk)
     if (fn == 1)
     {
         if (data)
-        {}
-        // set Button to "Searching/Stop"
+        {
+            console.log('1');
+            $('#button_search').html(imgBtnStop);
+        }
         else
-        {}
-        // set Button to "Start"
+        {
+            console.log('2');
+            $('#button_search').html(imgBtnStart);
+        }
         return;
     }
 
     if (fn == 2)
     {
-        var n = lnk.substr(20, 4);
+     var n = lnk.match(/\d+(?=\.)/g);
         var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
         $('#span_current_slice').html(x);
         return;
