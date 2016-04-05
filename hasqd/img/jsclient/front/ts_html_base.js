@@ -185,19 +185,19 @@ function widGetHTMLTokenHash()
     {
         r += '<td style="text-align:left;" class="td-info">\n';
         {
-            r += '<table>\n';
+            r += '<table style="width: 100%" border="0">\n';
             {
                 r += '<tr>\n';
                 {
-                 r += '<td style="width: 20px;" title="Update token info"/>\n';
+                 r += '<td style="width: 20px; vertical-align: bottom;" title="Update token info"/>\n';
                     r += widGetHTMLSpanImg('span_reload', 'widTokenTextOninput()');
-                 r += '<td class="td-info" nowrap/>\n';
-                    r += widGetHTMLMessageBox('Token hash:') + '&nbsp;';
-                 r += '<td id="td_token_hash" class="td-info" nowrap/>\n';
-                 r += '<td />\n';
-                    r += '&nbsp';
-                 r += '<td style="width: 20px;" class="td-info" height="20" />\n';
+                 r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
+                    r += widGetHTMLMessageBox('Token hash:');
+                 r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
+                 r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
+                 r += '<td style="text-align: right;" />\n';
+                 r += '<button id="file_upload">' + 'File' + '</button>';
                 }
              r += '</tr>\n';
             }
