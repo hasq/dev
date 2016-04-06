@@ -1063,10 +1063,13 @@ function widSearchProgress(fn, data, lnk)
                 o.html(newstr);
         }
 
-        update( $('#div_mine_search_results'), str[1] );
-        update( $('#div_onhold_search_results'), str[2] );
-        update( $('#div_tocome_search_results'), str[3] );
-        ///update( $('#div_past_search_results'), str[4] );
+        update( $('#div_mine_search_results'), str.text[1] );
+        update( $('#div_onhold_search_results'), str.text[2] );
+        update( $('#div_tocome_search_results'), str.text[3] );
+
+        update( $('#span_search_mine'), '('+str.number[1]+')' );
+        if(str.number[2]>0) update( $('#span_search_onhold'), '('+str.number[2]+')' );
+        if(str.number[2]>0) update( $('#span_search_tocome'), '('+str.number[3]+')' );
 
         return;
     }
@@ -1077,6 +1080,7 @@ function widSearchUpdate()
     var w = glSearch.wallet;
 
     var t = ["", "", "", "", ""];
+    var n = [0, 0, 0, 0, 0];
 
     for (var i in w)
     {
@@ -1091,9 +1095,11 @@ function widSearchUpdate()
 
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += xn + " " + xs + '\n';
+
+	n[x.state]++;
     }
 
-    return t;
+    return {text:t,number:n};
 }
 
 function widDnSelect(dnOrRaw)

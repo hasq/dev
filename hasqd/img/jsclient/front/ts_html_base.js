@@ -512,7 +512,7 @@ function widGetHTMLSearchResultsTabsButtons()
     {
         var r = '';
 
-        r = '<span>(' + data + ')</span>';
+        r = '<span>' + data + '</span>';
 
         return r;
     }
@@ -522,7 +522,7 @@ function widGetHTMLSearchResultsTabsButtons()
         var r = '';
         var onclick = 'onclick="return widSearchResultsTabsClick($(this),' + tabId + ')" ';
         var htmlClass = 'class="' + htmlClass + '" ';
-        var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">0</span>';
+        var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>';
 
         r += '<tr>\n';
         r += '<td/>';
