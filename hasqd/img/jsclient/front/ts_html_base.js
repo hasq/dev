@@ -461,7 +461,7 @@ function widGetHTMLSearchTab()
                 {
                     r += '<tr>\n';
                     {
-                        r += '<td style="text-align:left; vertical-align: middle; width: 50px"/>\n';
+                        r += '<td style="text-align:left; width: 50px"/>\n';
                         r += '<label for="input_from_datepicker">From</label>\n';
                         r += '<td style="text-align:right; width: 126px"/>\n';
                         r += '<input id="input_from_datepicker" type="text">\n';
@@ -469,7 +469,7 @@ function widGetHTMLSearchTab()
                     r += '</tr>\n';
                     r += '<tr>\n';
                     {
-                        r += '<td style="text-align: left; vertical-align: middle; width: 50px"/>\n';
+                        r += '<td style="text-align: left; width: 50px"/>\n';
                         r += '<label for="input_to_datepicker">To</label>\n';
                         r += '<td style="text-align: right; width: 126px"/>\n';
                         r += '<input id="input_to_datepicker" type="text">\n';
@@ -481,7 +481,7 @@ function widGetHTMLSearchTab()
                     }
                     r += '<tr>\n';
                     {
-                        r += '<td style="text-align: left; vertical-align: middle; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
+                        r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
                      r += '<label for="span_current_slice">\u200c</label>';
                         r += '<span id="span_current_slice"></span>';
                     }

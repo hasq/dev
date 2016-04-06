@@ -493,12 +493,18 @@ table
 	border: 0;
 }
 
+#td_search_tabs_dates table tr td
+{
+	height: 30px;
+	vertical-align: top;
+	padding: 0
+}
+
 #td_search_tabs_dates table tr:last-child td
 {
 	text-align: center;
 	vertical-align: bottom;
-	padding: 0;
-	height: 86px;
+	height: 74px;
 }
 
 #span_current_slice
