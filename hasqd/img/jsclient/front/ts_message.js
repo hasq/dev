@@ -11,7 +11,8 @@ var glMsg =
     enterTokenName : 'Enter token name',
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
-    tokenIsLocked : 'Token is locked'
+    tokenIsLocked : 'Token is locked',
+    fileLoadError : 'File loading error'
 };
 
 var glResponse =

@@ -1067,9 +1067,9 @@ function widSearchProgress(fn, data, lnk)
         update( $('#div_onhold_search_results'), str.text[2] );
         update( $('#div_tocome_search_results'), str.text[3] );
 
-        update( $('#span_search_mine'), '('+str.number[1]+')' );
-        if(str.number[2]>0) update( $('#span_search_onhold'), '('+str.number[2]+')' );
-        if(str.number[2]>0) update( $('#span_search_tocome'), '('+str.number[3]+')' );
+        update( $('#span_search_mine'), '(' + str.number[1] + ')' );
+        if (str.number[2] > 0) update( $('#span_search_onhold'), '(' + str.number[2] + ')' );
+        if (str.number[2] > 0) update( $('#span_search_tocome'), '(' + str.number[3] + ')' );
 
         return;
     }
@@ -1096,10 +1096,10 @@ function widSearchUpdate()
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += xn + " " + xs + '\n';
 
-	n[x.state]++;
+        n[x.state]++;
     }
 
-    return {text:t,number:n};
+    return {text:t, number:n};
 }
 
 function widDnSelect(dnOrRaw)
@@ -1126,4 +1126,17 @@ function widEmptyTab()
     }
 
     return retObj;
+}
+
+function widLoadFiles(files)
+{
+    var cb = function (data)
+    {
+        if (data.name)
+            $('#textarea_token_text').val(data.name);
+        else
+            widModalWindow(fileLoadError);
+    }
+
+    engLoadFiles(files, glCurrentDB.hash, cb);
 }

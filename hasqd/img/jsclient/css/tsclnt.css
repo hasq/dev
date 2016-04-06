@@ -43,9 +43,10 @@ button
 	padding: 0;
 }
 
-button#file_upload
+label#label_file_upload
 {
-    font: 10px Consolas, "Lucida Console", monospace !important;
+	vertical-align: top;
+    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
     text-align: center;
     width: unset;
     height: unset;
@@ -56,6 +57,16 @@ button#file_upload
 	opacity: 1;
 }
 
+label#label_file_upload:hover
+{
+    background: #87CEEB;
+    cursor: pointer;
+}
+
+#input_file_upload
+{
+	display: none;
+}
 
 button.search-dn
 {
@@ -116,7 +127,6 @@ button.show-keys-button-on
 }
 
 button:hover,
-button#file_upload:hover,
 button.tab-button-off:hover,
 button.tab-button-on:hover,
 button.show-keys-button-off:hover,

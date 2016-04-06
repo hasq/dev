@@ -150,3 +150,35 @@ function engNcJob(extCb, jobId)
 
     setTimeout(f, 500);
 }
+
+function engLoadFiles(files, hash, callback)
+{
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    var file = files[0];
+    output.push(file.name, file.type, file.size);
+    var reader = new FileReader();
+
+    reader.onload = function(event)
+    {
+        var obj =
+        {
+            content : event.target.result,
+            hash : function()
+            {
+                return engGetHash(this.content, hash);
+            },
+            name : file.name
+        };
+
+        callback(obj);
+    };
+
+    reader.onerror = function()
+    {
+        callback("Could not read the file");
+    };
+
+    reader.readAsBinaryString(file);
+}
+

@@ -196,8 +196,9 @@ function widGetHTMLTokenHash()
                  r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
                  r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
-                 r += '<td style="text-align: right; valign=top" />\n';
-                 r += '<button id="file_upload"><i><b>' + 'File' + '</b></i></button>';
+                 r += '<td style="text-align: right; vertical-align:top" />\n';
+              r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
+                 r += '<input id="input_file_upload" type="file" onchange="widLoadFiles(this.files)"></input>';
                 }
              r += '</tr>\n';
             }
