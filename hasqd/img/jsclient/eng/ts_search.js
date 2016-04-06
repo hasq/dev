@@ -126,6 +126,8 @@ function engGetSliceDate(toDate)
 function processDone()
 {
     glSearch.isOn = false;
+    glSearch.o.progr(1, glSearch.isOn);
+    console.log("processDone : "+glSearch.isOn);
 }
 
 function processDates()
