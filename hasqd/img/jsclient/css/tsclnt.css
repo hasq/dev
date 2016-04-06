@@ -45,11 +45,11 @@ button
 
 button#file_upload
 {
-    font: 12px Consolas, "Courier New", monospace !important;
+    font: 10px Consolas, "Lucida Console", monospace !important;
     text-align: center;
-    width: 70px;
-    height: 20px;
-	border: 1px solid #F0F0FF;
+    width: unset;
+    height: unset;
+	border: 0px solid #F0F0FF;
 	background: #FCFCFC;
 	margin: 0;
 	padding: 0;

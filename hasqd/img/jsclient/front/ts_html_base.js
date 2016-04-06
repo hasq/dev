@@ -196,8 +196,8 @@ function widGetHTMLTokenHash()
                  r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
                  r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
-                 r += '<td style="text-align: right;" />\n';
-                 r += '<button id="file_upload">' + 'File' + '</button>';
+                 r += '<td style="text-align: right; valign=top" />\n';
+                 r += '<button id="file_upload"><i><b>' + 'File' + '</b></i></button>';
                 }
              r += '</tr>\n';
             }
