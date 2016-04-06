@@ -1,0 +1,2 @@
+echo -n  "a" | sha256sum.exe | gawk '{print $1}' | tr -d \n | md5sum
+cat file.txt | sha256sum.exe | gawk '{print $1}' | tr -d \n | md5sum
