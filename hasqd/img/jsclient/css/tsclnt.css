@@ -36,8 +36,8 @@ button
 {
     font: normal 12px Consolas, "Courier New", monospace !important;
     text-align: center;
-    width: 70px;
-    height: 70px;
+    xxwidth: 70px;
+    xxheight: 70px;
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -112,6 +112,8 @@ button.tab-button-off,
 button.show-keys-button-off,
 button.button-enabled
 {
+    width: 70px;
+    height: 70px;
     background: #AFEEEE;
     opacity: 0.8;
     -webkit-transition: background 0.20s;
@@ -122,6 +124,8 @@ button.button-enabled
 button.tab-button-on,
 button.show-keys-button-on
 {
+    width: 70px;
+    height: 70px;
     background: #00CED1;
 	opacity: 1;
 }
