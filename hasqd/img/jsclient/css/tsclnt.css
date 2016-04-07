@@ -390,17 +390,6 @@ table
     padding: 3px;
 }
 
-#table_welcome_tab
-{
-	width: 100%;
-	border: 0;
-}
-
-#table_welcome_tab td
-{
-	padding: 3px 0 3px 3px;
-}
-
 #table_create_tab
 {
 	width: 100%;

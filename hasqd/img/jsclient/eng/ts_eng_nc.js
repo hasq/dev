@@ -54,17 +54,14 @@ function engNcInfoDb(extCb)
     return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
-function engNcZ(extCb, db, rec)
+function engNcZ(extCb, db, rec, rawDn)
 {
-    var data = (glLastRec.r.length > 0 && glLastRec.r.length <= 160 && glLastRec.r !== glLastRec.s) ? '[' + glLastRec.r + ']' : '';
-    var cmd = 'z *' + '\u0020' + db + '\u0020' + '0' + '\u0020' + rec.s + '\u0020' + rec.k + '\u0020' + rec.g + '\u0020' + rec.o + '\u0020' + data;
+    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s) ? '[' + rawDn + ']' : '';
+    var cmd = 'z *' + '\u0020' + db + '\u0020' + '0' + '\u0020' + rec.s + '\u0020' + rec.k + '\u0020' + rec.g + '\u0020' + rec.o + '\u0020' + rawDn;
 
     var jobCb = function (resp, jobId)
     {
-        console.log(resp);
-        (resp === 'JOB_QUEUED')
-        ? engNcJob(jobCb, jobId)
-        : extCb(resp);
+        (resp === 'JOB_QUEUED') ? engNcJob(jobCb, jobId) : extCb(resp);
     }
 
     var intCb = function (data)
@@ -72,9 +69,7 @@ function engNcZ(extCb, db, rec)
         var resp = engGetResponseHeader(data);
         var jobId = engGetParsedJobId(data);
 
-        (resp !== 'OK')
-        ? extCb(resp, jobId)
-        : engNcJob(jobCb, jobId);
+        (resp !== 'OK') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, intCb, hasqLogo);
@@ -139,8 +134,8 @@ function engNcJob(extCb, jobId)
 
     var intCb = function (data)
     {
-        var resp = engGetResponseHeader(data)
-                   extCb(resp, jobId);
+        var resp = engGetResponseHeader(data);
+        extCb(resp, jobId);
     }
 
     var f = function ()
@@ -151,33 +146,57 @@ function engNcJob(extCb, jobId)
     setTimeout(f, 500);
 }
 
-function engLoadFiles(files, hash, callback)
+function engLoadFiles(files, hash, cb0)
 {
     // files is a FileList of File objects. List some properties.
     var output = [];
     var file = files[0];
-    output.push(file.name, file.type, file.size);
+    var obj = {};
+
+    if (file)
+    {
+        obj.name = file.name;
+        obj.size = file.size;
+        obj.type = file.type;
+    }
+    else
+    {
+        obj.error = null;
+        return cb0(obj);
+    }
+
     var reader = new FileReader();
 
     reader.onload = function(event)
     {
-        var obj =
+        if (+file.size > 20971520)
+            obj.error = glMsg.fileTooBig;
+        else if (+file.size === 0)
+            obj.error = glMsg.fileZero;
+        else
         {
-            content : event.target.result,
-            hash : function()
-            {
-                return engGetHash(this.content, hash);
-            },
-            name : file.name
-        };
+            obj.raw = event.target.result;
+            obj.loading = false;
+            obj.hash = engGetHash(obj.raw, hash);
+        }
 
-        callback(obj);
+        cb0(obj);
     };
 
     reader.onerror = function()
     {
-        callback("Could not read the file");
+        obj.error = glMsg.fileLoadError;
+        obj.loading = false;
+        cb0(obj);
     };
+
+    reader.onloadstart = function()
+    {
+        obj.loading = true;
+    }
+
+    reader.onloadend = function()
+    {}
 
     reader.readAsBinaryString(file);
 }

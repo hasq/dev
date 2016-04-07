@@ -190,7 +190,7 @@ function widGetHTMLTokenHash()
                 r += '<tr>\n';
                 {
                  r += '<td style="width: 20px; vertical-align: bottom;" title="Update token info"/>\n';
-                    r += widGetHTMLSpanImg('span_reload', 'widTokenTextOninput()');
+                    r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo()');
                  r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
                     r += widGetHTMLMessageBox('Token hash:');
                  r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
@@ -198,7 +198,7 @@ function widGetHTMLTokenHash()
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
                  r += '<td style="text-align: right; vertical-align:top" />\n';
               r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
-                 r += '<input id="input_file_upload" type="file" onchange="widLoadFiles(this.files)"></input>';
+                 r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';
                 }
              r += '</tr>\n';
             }
@@ -322,34 +322,6 @@ function widGetHTMLTabs(items, id, classId)
     r += '</div>\n';
 
             return r;
-}
-
-function widGetHTMLWelcomeTab()
-{
-    var r = '';
-
-    r += '<table id="table_welcome_tab">\n';
-    {
-        r += widGetHTMLTrTdSubtitle(1, 'Welcome to TokenSwap', 'td-tab-subtitle');
-
-        r += '<tr>\n';
-        {
-            r += '<td class="welcome-p" />\n';
-            {
-                r += '<p>\n';
-                r += 'This is a place where you can create your own tokens, ';
-                r += 'associate data with them, pass the ownership to another person, or to receive ';
-                r += 'the ownership from somebody else. A token is a hash taken from any text or file. ';
-                r += 'The master key is a secure password to control your tokens. It is not shared if ';
-                r += 'you pass your token to another person.';
-                r += '</p>\n';
-            }
-        }
-        r += '</tr>\n';
-    }
-    r += '</table>\n';
-
-    return r;
 }
 
 function widGetHTMLCreateTab()

@@ -17,7 +17,10 @@ function textArea($textarea)
         },
         val : function (data)
         {
-            return (typeof(data) !== 'undefined' && typeof(data) !== 'null') ? $textarea.val(data) : $textarea.val();
+            if (typeof(data) !== 'undefined' && typeof(data) !== 'null')
+                $textarea.val(data);
+            else
+                return $textarea.val();
         }
     }
 
@@ -96,7 +99,6 @@ function widModalWindow(msg, func)
 
 function widHelpMessageBox ($obj)
 {
-    console.log($obj);
     var str = $obj.html();
 
     if (str[0] !== '<')
@@ -252,7 +254,7 @@ function widGetPwdGuessTime(pwd)
 
 function widToggleUI(lr, pwd)
 {
-    var tokState = lr.st;
+    var tokState = lr.state;
     var tokData = lr.d;
 
     widCreateTab().disable(true);
@@ -270,12 +272,16 @@ function widToggleUI(lr, pwd)
 
         if (widReceiveTab().isKeys() && pwd)
             widReceiveTab().disable(false);
+
+        widSetDataTab().val('');
     }
 
     if (tokState === 'IDX_NODN')
     {
         if (pwd)
             widCreateTab().disable(false);
+
+        widSetDataTab().val('');
     }
 
     if (tokState === 'OK')
@@ -322,49 +328,145 @@ function widToggleUI(lr, pwd)
     }
 }
 
-function widTokenTextOninput(delay) // Events when tokens value changed.
+function widFileButtonReset(data)
 {
-    delay = +delay || 0;
+    var $Input = $('#input_file_upload');
+    var $InputLabel = $('#label_file_upload');
+
+    if (data)
+    {
+        $Input.attr('type', 'file');
+        $Input.val('');
+        $Input.off('click');
+        $InputLabel.css('background', '#FCFCFC');
+    }
+    else
+    {
+        $Input.attr('type', 'text');
+        $InputLabel.css('background', '#FFD700');
+    }
+}
+
+function widClearInitialData(isFile)
+{
+    var $TokenText = $('#textarea_token_text');
+
+    clearTimeout(glTimerId);
     glLastRec = {};
-    clearTimeout(glTimerId)
     widShowPwdInfo();
     widShowSearch();
-
-    var $TokText = $('#textarea_token_text');
-
-    if (0)
-        textArea().clearExcept($TokText);
-
-    var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
-    widShowToken(tok);
 
     if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
         widEmptyTab().show();
 
-    if (!tok)
+    if (isFile) $TokenText.val('');
+    $TokenText.prop('disabled', false);
+    widShowToken();
+    widToggleUI(glLastRec, glPassword);
+}
+
+function widTokenTextOninput(delay) // Events when tokens value changed.
+{
+    var $TokText = $('#textarea_token_text');
+    var tokText = textArea($TokText).val();
+    delay = +delay || 0;
+
+    widClearInitialData(false);
+
+    if (0)
+        textArea().clearExcept($TokText);
+
+    var tok = {};
+    tok.hash = widGetToken(tokText, glCurrentDB.hash);
+    tok.raw = (tokText !== tok.hash) ? tokText : '';
+
+    widShowToken(tok.hash);
+
+    if (!tok.hash)
         return widPasswordOninput();
 
+    widReloadTokenInfo(tok, delay);
+}
+
+function widLoadFiles(files)
+{
+    var $TokenText = $('#textarea_token_text');
+    var $Input = $('#input_file_upload');
+
+    widClearInitialData(true);
+    widShowSearch().show();
+
+    if (!files[0]) return widShowSearch();
+
+    var cb = function (data)
+    {
+        if (data.error === null) return widShowSearch();
+
+        if (typeof(data.error) === 'string' || !data.size)
+        {
+            widShowSearch();
+            return widModalWindow(data.error);
+        }
+
+        textArea($TokenText).val('File: ' + data.name + '\nSize: ' + data.size);
+        widShowToken(data.hash);
+
+        $TokenText.prop('disabled', true);
+        widFileButtonReset(true);
+
+        $Input.click (function ()
+        {
+            widClearInitialData(true);
+            widFileButtonReset(true);
+            return false;
+        });
+
+        widReloadTokenInfo(data, 0);
+    }
+
+    engLoadFiles(files, glCurrentDB.hash, cb);
+}
+
+function widReloadTokenInfo(tok, delay)
+{
+    delay = +delay || 0;
+    if (!tok)
+    {
+        var tok = {};
+        tok.hash = glLastRec.s;
+        tok.raw = glLastRec.r;
+    }
+
+    if (tok.hash)
+    {
+        widShowSearch().show();
+        widGetLastRecord(tok, delay);
+    }
+}
+
+function widGetLastRecord(tok, delay)
+{
     var cb = function (resp, record)
     {
+
         if (resp !== 'OK' && resp !== 'IDX_NODN')
         {
             widShowSearch();
-            return widModalWindow(data);
+            return widModalWindow(resp);
         }
 
         if (resp === 'IDX_NODN')
         {
-            glLastRec.st = resp;
-            glLastRec.s = tok;
+            glLastRec.state = resp;
+            glLastRec.s = tok.hash;
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
                 widCreateTab().show();
         }
         else
         {
-            ///glLastRec = engGetParsedRecord(data);
             glLastRec = record;
-            glLastRec.st = 'PWD_WRONG';
+            glLastRec.state = 'PWD_WRONG';
             widSetDataTab().val(engGetDataValToDisplay(glLastRec.d));
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
@@ -372,13 +474,13 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         }
 
         widShowSearch().show(resp);
-        glLastRec.r = (textArea($TokText).val() !== tok) ? textArea($TokText).val() : '';
-        widPasswordOninput(); //updates info about last records and password matching
+        widShowToken(glLastRec.s);
+        glLastRec.raw = (tok.raw && tok.raw.length <= 160) ? tok.raw : '';
+
+        widPasswordOninput();
     }
 
-    widShowSearch().show();
-
-    return engNcDeferredLast(cb, tok, delay);
+    return engNcDeferredLast(cb, tok.hash, delay);
 }
 
 function widPasswordOninput()
@@ -389,15 +491,15 @@ function widPasswordOninput()
 
     widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 
-    if (glLastRec.st === 'IDX_NODN' || typeof glLastRec.st === 'undefined')
+    if (glLastRec.state === 'IDX_NODN' || typeof glLastRec.state === 'undefined')
         return widToggleUI(glLastRec, glPassword);
 
     var rec = engGetRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 
-    glLastRec.st = (glPassword) ? engGetTokensStatus(glLastRec, rec) : glLastRec.st = 'PWD_WRONG';
+    glLastRec.state = (glPassword) ? engGetTokensStatus(glLastRec, rec) : glLastRec.state = 'PWD_WRONG';
 
     if (glPassword)
-        widShowPwdInfo(glLastRec.st);
+        widShowPwdInfo(glLastRec.state);
     else
         widShowPwdInfo();
 
@@ -439,7 +541,7 @@ function widButtonsTable()
     return retObj;
 }
 
-function widWelcomeTab()
+function widEmptyTab()
 {
     var $Tabs = $('#div_tabs');
     widPasswordOninput();
@@ -449,6 +551,10 @@ function widWelcomeTab()
         show : function ()
         {
             return $Tabs.tabs('option', 'active', 0);
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 0) ? true : false;
         }
     }
 
@@ -485,6 +591,11 @@ function widCreateButtonClick()
 {
     // Creates a new token record
     var $PwdInp = $('#input_password');
+    var $TokenText = $('#textarea_token_text');
+
+    var tok = {};
+    tok.hash = glLastRec.s;
+    tok.raw = glLastRec.raw;
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
@@ -496,11 +607,18 @@ function widCreateButtonClick()
         if (resp !== 'OK')
             widModalWindow(resp);
 
-        widTokenTextOninput();
-    }
+        widReloadTokenInfo(tok, 0);
+    };
 
-    var rec = engGetRecord(0, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    engNcZ(cb, glCurrentDB.name, rec);
+    (tok.raw) ? $TokenText.val(tok.raw) : $TokenText.val(tok.hash);
+
+    widClearInitialData(false);
+    widFileButtonReset(true);
+    widShowToken(tok.hash);
+
+    var rec = engGetRecord(0, tok.hash, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+
+    engNcZ(cb, glCurrentDB.name, rec, tok.raw);
 }
 
 function widSetDataTab()
@@ -526,7 +644,9 @@ function widSetDataTab()
         },
         val : function (data)
         {
-            return textArea($Textarea).val(data);
+            return (typeof(data) !== 'undefined' && typeof(data) !== 'null')
+            ? textArea($Textarea).val(data)
+            : textArea($Textarea).val();
         },
         isOn : function ()
         {
@@ -542,11 +662,14 @@ function widSetDataButtonClick()
     // Adds a new record with a specified data
     var $PwdInp = $('#input_password');
     var $Data = $('#textarea_set_data');
+    var tok = {};
+    tok.hash = glLastRec.s;
+    tok.raw = glLastRec.raw;
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-    if (glLastRec.st !== 'OK')
+    if (glLastRec.state !== 'OK')
         return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
 
     if (engGetDataValToRecord($Data.val()) === glLastRec.d)
@@ -559,9 +682,8 @@ function widSetDataButtonClick()
         if (resp !== 'OK')
             widModalWindow(glResponse[resp]);
 
-        widTokenTextOninput();
+        widReloadTokenInfo(tok, 0);
     }
-
     var rec = engGetRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     engNcAdd(cb, glCurrentDB.name, rec, $Data.val());
 }
@@ -625,10 +747,10 @@ function widTabButtonClick($obj, tabId)
         default : return;
     }
 
-    if (typeof glLastRec.st === 'undefined')
+    if (typeof glLastRec.state === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
 
-    if (glLastRec.st === 'IDX_NODN')
+    if (glLastRec.state === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
 
     return ($obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
@@ -648,22 +770,22 @@ function widShowInstantButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.st === 'undefined')
+        if (typeof glLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.st === 'IDX_NODN')
+        if (glLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.st === 'PWD_SNDNG' || glLastRec.st === 'PWD_RCVNG')
+        if (glLastRec.state === 'PWD_SNDNG' || glLastRec.state === 'PWD_RCVNG')
         {
             $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
             return widModalWindow(glMsg.tokenLocked);
         }
 
-        if (glLastRec.st !== 'OK')
+        if (glLastRec.state !== 'OK')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
@@ -698,16 +820,16 @@ function widShowOnHoldButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.st === 'undefined')
+        if (typeof glLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.st === 'IDX_NODN')
+        if (glLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.st !== 'OK' && glLastRec.st !== 'PWD_SNDNG')
+        if (glLastRec.state !== 'OK' && glLastRec.state !== 'PWD_SNDNG')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
@@ -715,7 +837,7 @@ function widShowOnHoldButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        if (glLastRec.st === 'OK')  // Blocking Send
+        if (glLastRec.state === 'OK')  // Blocking Send
         {
             var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
@@ -746,19 +868,19 @@ function widShowReleaseButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.st === 'undefined')
+        if (typeof glLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.st === 'IDX_NODN')
+        if (glLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.st === 'PWD_WRONG')
+        if (glLastRec.state === 'PWD_WRONG')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.st === 'OK')
+        if (glLastRec.state === 'OK')
             return widModalWindow(glMsg.changeTokenName);
     }
 
@@ -769,13 +891,13 @@ function widShowReleaseButtonClick($obj)
         var k;
         var prCode;
 
-        if (glLastRec.st === 'PWD_RCVNG')
+        if (glLastRec.state === 'PWD_RCVNG')
         {
             k = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             prCode = '232';
         }
 
-        if (glLastRec.st === 'PWD_SNDNG')
+        if (glLastRec.state === 'PWD_SNDNG')
         {
             var k = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
             prCode = '231';
@@ -837,7 +959,7 @@ function widReceiveButtonClick()
     var $PwdInp = $('#input_password');
     var rawAcceptKeys = $AcceptKeysArea.val();
 
-    if (glLastRec.st === 'IDX_NODN')
+    if (glLastRec.state === 'IDX_NODN')
         return widModalWindow(glMsg.createToken);
 
     if (!widIsPassword())
@@ -923,20 +1045,24 @@ function widTokensTakeover(keys)
 
 function widInstantReceive(keys)
 {
+    var tok = {};
+    tok.hash = glLastRec.s;
+    tok.raw = glLastRec.raw;
+
     var addCb1 = function (resp)
     {
         if (resp !== 'OK')
-            widModalWindow(glResponse[resp])
+            widModalWindow(glResponse[resp]);
 
-            widTokenTextOninput();
+        widReloadTokenInfo(tok, 0);
     }
 
     var addCb0 = function (resp, keys)
     {
         if (resp !== 'OK')
         {
-            widModalWindow(glResponse[resp])
-            widTokenTextOninput();
+            widModalWindow(glResponse[resp]);
+            widReloadTokenInfo(tok, 0);
         }
         else
             engNcAdd(addCb1, glCurrentDB.name, keys, null);
@@ -948,12 +1074,16 @@ function widInstantReceive(keys)
 
 function widBlockingReceive(keys)
 {
+    var tok = {};
+    tok.hash = glLastRec.s;
+    tok.raw = glLastRec.raw;
+
     var cb = function (resp)
     {
         if (resp !== 'OK')
             widModalWindow(glResponse[resp])
 
-            widTokenTextOninput();
+            widReloadTokenInfo(tok, 0);
     }
 
     engNcAdd(cb, glCurrentDB.name, keys[0], null);
@@ -962,7 +1092,8 @@ function widBlockingReceive(keys)
 function widSearchTab()
 {
     var $Table = $('#table_search_tab');
-    var $Button = $Table.find('button').not('.search-tab-button').not('.search-tab-button-active');
+    //var $Button = $Table.find('button').not('.search-tab-button').not('.search-tab-button-active');
+    var $Button = $('#button_search');
     var $Tabs = $('#div_tabs');
 
     var retObj =
@@ -1108,35 +1239,3 @@ function widDnSelect(dnOrRaw)
     widTokenTextOninput();
 }
 
-function widEmptyTab()
-{
-    var $Tabs = $('#div_tabs');
-    widPasswordOninput();
-
-    var retObj =
-    {
-        show : function ()
-        {
-            return $Tabs.tabs('option', 'active', 6);
-        },
-        isOn : function ()
-        {
-            return ($Tabs.tabs('option', 'active') === 6) ? true : false;
-        }
-    }
-
-    return retObj;
-}
-
-function widLoadFiles(files)
-{
-    var cb = function (data)
-    {
-        if (data.name)
-            $('#textarea_token_text').val(data.name);
-        else
-            widModalWindow(fileLoadError);
-    }
-
-    engLoadFiles(files, glCurrentDB.hash, cb);
-}

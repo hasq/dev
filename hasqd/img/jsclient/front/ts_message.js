@@ -12,7 +12,9 @@ var glMsg =
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'Token is locked',
-    fileLoadError : 'File loading error'
+    fileLoadError : 'File loading error',
+    fileTooBig : 'File size must be less than 20Mb',
+    fileZero : 'File is empty'
 };
 
 var glResponse =
@@ -35,11 +37,18 @@ var glResponse =
     REQ_PATH_BAD : 'REQ_PATH_BAD',
 };
 
+var p = '';
+p += '<p> This is a place where you can create your own tokens, ';
+p += 'associate data with them, pass the ownership to another person, or to receive ';
+p += 'the ownership from somebody else. A token is a hash taken from any text or file. ' ;
+p += 'The master key is a secure password to control your tokens. It is not shared if ';
+p += 'you pass your token to another person.<p>';
+
 var glHelpMsg =
 {
     span_password_pic: 'FIXME (ts_message.js)<br\>span_password_pic',
     span_token_pic: 'FIXME (ts_message.js)<br\>span_token_pic',
-    span_info: 'FIXME (ts_message.js)<br\>span_info',
+    span_info: p,
     token_name: 'FIXME (ts_message.js)<br\>token_name',
     token_hash: 'FIXME (ts_message.js)<br\>token_hash',
     master_key: 'FIXME (ts_message.js)<br\>master_key',

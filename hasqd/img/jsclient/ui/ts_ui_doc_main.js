@@ -113,8 +113,8 @@ function docMain()
     var item;
 
     item = {};
-    item.title = 'Welcome';
-    item.data = widGetHTMLWelcomeTab();
+    item.title = 'Empty';
+    item.data = widGetHTMLEmptyTab();
     tabs[tabs.length] = item;
 
     item = {};
@@ -140,11 +140,6 @@ function docMain()
     item = {};
     item.title = 'View my tokens';
     item.data = widGetHTMLSearchTab();
-    tabs[tabs.length] = item;
-
-    item = {};
-    item.title = 'Empty';
-    item.data = widGetHTMLEmptyTab();
     tabs[tabs.length] = item;
 
     var body = widGetHTMLBody(tabs);

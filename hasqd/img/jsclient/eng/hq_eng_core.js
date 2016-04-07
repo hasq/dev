@@ -3,7 +3,7 @@
 function engGetTokenInfo(data, r, s)
 {
     var item = {};
-    item.r = r;
+    item.raw = r;
     item.s = s;
     item.fit = false;
     item.unfit = false;
@@ -16,8 +16,8 @@ function engGetTokenInfo(data, r, s)
         item.d = lr.d;
         item.fit = false;
         item.unfit = false;
-        item.st = engGetTokensStatus(lr, nr);
-        switch (item.st)
+        item.state = engGetTokensStatus(lr, nr);
+        switch (item.state)
         {
             case 'OK':
                 item.fit = true;
@@ -35,7 +35,7 @@ function engGetTokenInfo(data, r, s)
     }
     else
     {
-        item.st = 'IDX_NODN';
+        item.state = 'IDX_NODN';
         item.unfit = true;
         item.n = -1;
         item.d = '';

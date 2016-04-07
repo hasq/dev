@@ -559,7 +559,7 @@ function widAddVerifyTR(rec, statePic)
 {
     var $Table = $('#tokens_verify_table');
     var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>';
-    var tr = widGetHTMLTr(widGetHTMLTd(pic + rec.st) + widGetHTMLTd(rec.r) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
+    var tr = widGetHTMLTr(widGetHTMLTd(pic + rec.state) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
     $Table.append(tr);
 }
 
