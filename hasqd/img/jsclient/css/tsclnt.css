@@ -149,6 +149,15 @@ button.show-keys-button-on:active:hover
     background: #20B2AA;
 }
 
+button.button-disabled
+{
+    background: #808080;
+    color: #F5F5F5;
+    opacity: 0.5;
+    width: 70px;
+    height: 70px;	
+}
+
 button.button-disabled:active:hover
 {
     background: #2F4F4F;
@@ -163,12 +172,6 @@ button.button-disabled:hover
     opacity: 0.4;
 }
 
-button.button-disabled
-{
-    background: #808080;
-    color: #F5F5F5;
-    opacity: 0.5;
-}
 
 #div_tabs
 {

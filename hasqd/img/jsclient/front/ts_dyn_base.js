@@ -41,7 +41,8 @@ function widDatePickerInit()
         changeYear : true,
         onClose : function (selectedDate)
         {
-            $('#input_to_datepicker').datepicker('option', 'minDate', selectedDate);
+            $('#input_to_datepicker')
+            .datepicker('option', 'minDate', selectedDate);
         }
     }
     );
@@ -58,23 +59,28 @@ function widDatePickerInit()
         changeYear : true,
         onClose : function (selectedDate)
         {
-            $('#input_from_datepicker').datepicker('option', 'maxDate', selectedDate);
+            $('#input_from_datepicker')
+            .datepicker('option', 'maxDate', selectedDate);
         }
     }
     );
 
-    $('#input_from_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
-    $('#input_to_datepicker').attr('maxlength', '10').datepicker('setDate', new Date());
+    $('#input_from_datepicker')
+    .attr('maxlength', '10')
+    .datepicker('setDate', new Date());
+
+    $('#input_to_datepicker')
+    .attr('maxlength', '10')
+    .datepicker('setDate', new Date());
 }
 
 function widShowHidePassword()
 {
     $('#input_show_hide_checkbox').click(function ()
     {
-        if (this.checked)
-            $('.password').attr('type', 'text');
-        else
-            $('.password').attr('type', 'password');
+        (this.checked)
+        ? $('.password').attr('type', 'text')
+        : $('.password').attr('type', 'password');
     });
 }
 
@@ -87,14 +93,15 @@ function widModalWindow(msg, func)
         $(this).find('p').empty();
         $('#div_modal_window').css('display', 'none');
 
-        if (func)
-            func();
+        if (func) func();
 
         $(this).off('click');
     });
 
     $('#div_modal_window').css('display', 'block');
-    $('#div_modal_window_content').find('p').html(msg);
+    $('#div_modal_window_content')
+    .find('p')
+    .html(msg);
 }
 
 function widHelpMessageBox ($obj)
@@ -104,9 +111,8 @@ function widHelpMessageBox ($obj)
     if (str[0] !== '<')
      str = str.replace(/\s/g, '_').replace(/[^A-Za-z09_]/g, '').toLowerCase();
         else
-        {
-            str = $obj.find('span').attr('id')
-        }
+            str = $obj.find('span').attr('id');
+
     return widModalWindow(gHelp(str));
 }
 
@@ -118,7 +124,7 @@ function widSetDefaultDb(hash)
         if (resp === 'OK' && db.length !== 0)
             glCurrentDB = engGetDbByHash (db, hash);
         else
-            return widModalWindow(glMsg.badDataBase);
+            widModalWindow(glMsg.badDataBase);
     }
 
     engNcInfoDb(cb);
@@ -268,12 +274,11 @@ function widToggleUI(lr, pwd)
 
     if (typeof tokState === 'undefined')
     {
+        widSetDataTab().val('');
         widReceiveTab().readonly(false);
 
         if (widReceiveTab().isKeys() && pwd)
             widReceiveTab().disable(false);
-
-        widSetDataTab().val('');
     }
 
     if (tokState === 'IDX_NODN')

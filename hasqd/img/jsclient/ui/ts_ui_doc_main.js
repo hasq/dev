@@ -92,12 +92,24 @@ function docInit()
     $('#div_tabs').tabs();
     $('#div_search_result_tabs').tabs();
 
-    $('#span_info img').attr('src', imgClkInfo).attr('width', '28').attr('height', '28');
-    $('#span_logo img').attr('width', '28').attr('height', '28').attr('src', imgLogoBlue);
+    $('#span_info img')
+    .attr('src', imgClkInfo)
+    .attr('width', '28')
+    .attr('height', '28');
+
+    $('#span_logo img')
+    .attr('width', '28')
+    .attr('height', '28')
+    .attr('src', imgLogoBlue);
+
     $('#span_reload img').attr('src', imgClkReload);
     $('#span_password_pic img').attr('src', imgPwdDummy);
     $('#span_token_pic img').hide();
-    $('#span_password_eye img').attr('src', imgEyeOpen).attr('title', 'Unmask password');
+
+    $('#span_password_eye img')
+    .attr('src', imgEyeOpen)
+    .attr('title', 'Unmask password');
+
     $('#td_token_data').hide();
 
     widShowHidePassword();
