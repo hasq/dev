@@ -343,7 +343,7 @@ function widFileButtonReset(data)
     else
     {
         $Input.attr('type', 'text');
-        $InputLabel.css('background', '#FFD700');
+        $InputLabel.css('background', '#FF0000');
     }
 }
 
@@ -412,7 +412,7 @@ function widLoadFiles(files)
         widShowToken(data.hash);
 
         $TokenText.prop('disabled', true);
-        widFileButtonReset(true);
+        widFileButtonReset(false);
 
         $Input.click (function ()
         {
@@ -490,7 +490,7 @@ function widPasswordOninput()
     glPassword = $PwdInp.val() || '';
 
     // set current wallet
-    if( !gAllWallets[glPassword] ) gAllWallets[glPassword] = {};
+    if ( !gAllWallets[glPassword] ) gAllWallets[glPassword] = {};
     gWallet = gAllWallets[glPassword];
     widSearchProgress.refresh();
 
@@ -614,12 +614,6 @@ function widCreateButtonClick()
 
         widReloadTokenInfo(tok, 0);
     };
-
-    (tok.raw) ? $TokenText.val(tok.raw) : $TokenText.val(tok.hash);
-
-    widClearInitialData(false);
-    widFileButtonReset(true);
-    widShowToken(tok.hash);
 
     var rec = engGetRecord(0, tok.hash, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
 

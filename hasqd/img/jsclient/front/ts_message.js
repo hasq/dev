@@ -71,11 +71,11 @@ function gHelp(x)
      // INCLUDEFILE
      // file
     }
-    else if (x=='token_hash')
+    else if (x == 'token_hash')
     {
      // INCLUDEFILE
      // file
-	r += 'sha256sum &lt;file&gt; | gawk \'{print $1}\' | tr -d \\n | md5sum'
+        r += 'sha256sum &lt;file&gt; | gawk \'{print $1}\' | tr -d \\n | md5sum'
     }
 
     return r;
