@@ -489,6 +489,11 @@ function widPasswordOninput()
     var $PwdInp = $('#input_password');
     glPassword = $PwdInp.val() || '';
 
+    // set current wallet
+    if( !gAllWallets[glPassword] ) gAllWallets[glPassword] = {};
+    gWallet = gAllWallets[glPassword];
+    widSearchProgress.refresh();
+
     widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
 
     if (glLastRec.state === 'IDX_NODN' || typeof glLastRec.state === 'undefined')

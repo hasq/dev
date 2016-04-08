@@ -21,6 +21,7 @@ var glSearch =
     }
 };
 var gWallet = {};
+var gAllWallets = {};
 
 var imgMsgWait = 'img/msg_wait.gif';
 
