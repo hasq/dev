@@ -11,7 +11,6 @@ var glSearch =
 {
     isOn : false,
     o : {},
-    wallet : {},
     cache :
     {
         maxSlices: 1000,
@@ -21,6 +20,7 @@ var glSearch =
         lastBlank : "",
     }
 };
+var gWallet = {};
 
 var imgMsgWait = 'img/msg_wait.gif';
 

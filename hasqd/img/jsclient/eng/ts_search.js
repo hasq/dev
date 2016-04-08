@@ -30,7 +30,7 @@ function engSearchStart(fromDate, toDate, progr)
 
     var chk = function()
     {
-        var w = glSearch.wallet;
+        var w = gWallet;
 
         for (var i in w)
         {
@@ -267,7 +267,7 @@ function searchProcessRec(srec)
     r.raw = "";
     r.state = 0;
 
-    var v = glSearch.wallet;
+    var v = gWallet;
 
     if ( r.s in v ) return;
 
@@ -278,8 +278,8 @@ function searchProcessRec(srec)
 
 function searchValidate1(dn)
 {
-    var v = glSearch.wallet;
-    var res = v[dn];
+    var w = gWallet;
+    var res = w[dn];
 
     var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
 
@@ -296,7 +296,7 @@ function searchValidate2(dn, data)
     var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
-    var res = glSearch.wallet[dn];
+    var res = gWallet[dn];
 
     res.n = lr.n;
 

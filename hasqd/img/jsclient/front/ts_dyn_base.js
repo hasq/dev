@@ -1207,7 +1207,7 @@ widSearchProgress.refresh = function()
 
 function widSearchUpdate()
 {
-    var w = glSearch.wallet;
+    var w = gWallet;
 
     var t = ["", "", "", "", ""];
     var n = [0, 0, 0, 0, 0];
