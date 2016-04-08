@@ -107,7 +107,7 @@ function widHelpMessageBox ($obj)
         {
             str = $obj.find('span').attr('id')
         }
-    return widModalWindow(gHelp[str]);
+    return widModalWindow(gHelp(str));
 }
 
 function widSetDefaultDb(hash)
