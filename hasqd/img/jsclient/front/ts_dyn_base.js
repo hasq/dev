@@ -1153,57 +1153,56 @@ function widSearchResultsTabsClick($obj, tabId)
     $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
 }
 
-function widSearchProgress(fn, data, lnk)
 //  1   Set button according to g_searchOn
 //  2   Show current file
 //  3   Update results
+var widSearchProgress = {};
+
+widSearchProgress.button = function(on)
 {
-    if (fn == 1)
+    if (on)
     {
-        if (data)
-        {
-            console.log('1');
-            $('#button_search').html(imgBtnStop);
-        }
-        else
-        {
-            console.log('2');
-            $('#button_search').html(imgBtnStart);
-        }
-        return;
+        console.log('1');
+        $('#button_search').html(imgBtnStop);
+    }
+    else
+    {
+        console.log('2');
+        $('#button_search').html(imgBtnStart);
+    }
+    return;
+}
+
+widSearchProgress.block = function(txt, lnk)
+{
+    var n = lnk.match(/\d+(?=\.)/g);
+    var x = "Block <a href=\"/file " + lnk + "\">" + txt + ' (' +n+ ")</a>";
+    $('#span_current_slice').html(x);
+    return;
+}
+
+widSearchProgress.refresh = function()
+{
+    var str = widSearchUpdate();
+
+    // update widgit only if required
+    function update(o, newstr)
+    {
+        var oldstr = o.html();
+
+        if (newstr.length != oldstr.length || newstr != oldstr)
+            o.html(newstr);
     }
 
-    if (fn == 2)
-    {
-     var n = lnk.match(/\d+(?=\.)/g);
-        var x = "Block <a href=\"/file " + lnk + "\">" + data + ' (' +n+ ")</a>";
-        $('#span_current_slice').html(x);
-        return;
-    }
+    update( $('#div_mine_search_results'), str.text[1] );
+    update( $('#div_onhold_search_results'), str.text[2] );
+    update( $('#div_tocome_search_results'), str.text[3] );
 
-    if (fn == 3)
-    {
-        var str = widSearchUpdate();
+    update( $('#span_search_mine'), '(' + str.number[1] + ')' );
+    if (str.number[2] > 0) update( $('#span_search_onhold'), '(' + str.number[2] + ')' );
+    if (str.number[2] > 0) update( $('#span_search_tocome'), '(' + str.number[3] + ')' );
 
-        // update widgit only if required
-        function update(o, newstr)
-        {
-            var oldstr = o.html();
-
-            if (newstr.length != oldstr.length || newstr != oldstr)
-                o.html(newstr);
-        }
-
-        update( $('#div_mine_search_results'), str.text[1] );
-        update( $('#div_onhold_search_results'), str.text[2] );
-        update( $('#div_tocome_search_results'), str.text[3] );
-
-        update( $('#span_search_mine'), '(' + str.number[1] + ')' );
-        if (str.number[2] > 0) update( $('#span_search_onhold'), '(' + str.number[2] + ')' );
-        if (str.number[2] > 0) update( $('#span_search_tocome'), '(' + str.number[3] + ')' );
-
-        return;
-    }
+    return;
 }
 
 function widSearchUpdate()

@@ -4,7 +4,7 @@ function engSearchClick(fromDate, toDate, progr)
 {
 
     glSearch.isOn = !glSearch.isOn;
-    progr(1, glSearch.isOn);
+    progr.button(glSearch.isOn);
 
     if (glSearch.isOn)
         return engSearchStart(fromDate, toDate, progr);
@@ -126,7 +126,7 @@ function engGetSliceDate(toDate)
 function processDone()
 {
     glSearch.isOn = false;
-    glSearch.o.progr(1, glSearch.isOn);
+    glSearch.o.progr.button(glSearch.isOn);
     console.log("processDone : " + glSearch.isOn);
 }
 
@@ -235,7 +235,7 @@ function searchProcessFile(data)
 {
     var o = glSearch.o;
     ///console.log("processing file " + o.sliceDate.name());
-    o.progr(2, o.sliceDate.name(), o.sliceDate.path(o.number));
+    o.progr.block(o.sliceDate.name(), o.sliceDate.path(o.number));
 
     var recs = data.split('\n');
 
@@ -308,7 +308,7 @@ function searchValidate2(dn, data)
         case 'PWD_WRONG': res.state = 4; break;
     }
 
-    glSearch.o.progr(3);
+    glSearch.o.progr.refresh();
 
     var cb = function (resp, record)
     {
@@ -321,7 +321,7 @@ function searchValidate2(dn, data)
             if ( res.s != x )
             {
                 res.raw = x;
-                glSearch.o.progr(3);
+                glSearch.o.progr.refresh();
             }
         }
     }
