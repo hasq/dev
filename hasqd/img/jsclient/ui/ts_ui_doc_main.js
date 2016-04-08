@@ -20,8 +20,8 @@ var glSearch =
         lastBlank : "",
     }
 };
-var gWallet = {};
-var gAllWallets = {};
+var gAllWallets = { '': {} };
+var gWallet = gAllWallets[''];
 
 var imgMsgWait = 'img/msg_wait.gif';
 
@@ -51,7 +51,7 @@ var imgBtnOnHoldKeys = '<img width="40px" height="40px" src="img/btn_show_keys2.
 var imgBtnReleaseKeys = '<img width="40px" height="40px" src="img/btn_show_keys3.png"><br/>Release';
 var imgBtnReceiveKeys = '<img width="40px" height="40px" src="img/btn_accept.png"><br/>Accept';
 var imgBtnStop = '<img width="40px" height="40px" src="img/btn_stop.gif"><br/>Stop';
-var imgBtnStart = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Start';
+var imgBtnStart = '<img width="40px" height="40px" src="img/btn_search.png"><br/>Search';
 var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br/>Give';
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
