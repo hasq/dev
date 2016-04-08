@@ -1,10 +1,10 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-var glClientTitle = '&nbspHasq Client';
+var gClientTitle = '&nbspHasq Client';
 var glDataBase = {};
-var glCurrentDB = {}; //The object which contains selected database properties
+var gCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
-var glPassword = ''; // The specified password
+var gPassword = ''; // The specified password
 
 var hasqLogo = HasqLogo('span_logo');
 var preloadImg = new Array();
@@ -111,9 +111,9 @@ function doc_init()
         {
             if (ui.newTab.index() == 3)
             {
-                if (glCurrentDB.hash != undefined && glCurrentDB.hash != '')
+                if (gCurrentDB.hash != undefined && gCurrentDB.hash != '')
                 {
-                    glHashCalcHash = glCurrentDB.hash;
+                    glHashCalcHash = gCurrentDB.hash;
                 }
                 else
                 {
@@ -165,7 +165,7 @@ function doc_init()
             var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
             var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
             var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
-            glCurrentDB = glDataBase[this.selectedIndex];
+            gCurrentDB = glDataBase[this.selectedIndex];
 
             $('#database_table').html(db_table);
             $('#current_db').html(current_db);

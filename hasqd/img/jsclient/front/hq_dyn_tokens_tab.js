@@ -350,7 +350,7 @@ function widTokensIdxOninput($obj)
 
 function widTokensPasswordOninput(data)
 {
-    glPassword = data;
+    gPassword = data;
     glTokList.clear();
     led().clear();
     widCleanVerifyTab();
@@ -373,7 +373,7 @@ function widIsPassword()
 
 function widIsRawTokens()
 {
-    return (widGetRawTokens().length > 0 && engIsRawTokens(widGetRawTokens(), glCurrentDB.hash));
+    return (widGetRawTokens().length > 0 && engIsRawTokens(widGetRawTokens(), gCurrentDB.hash));
 }
 
 function widGetRangeDataState()
@@ -403,7 +403,7 @@ function widTokensNamesOninput($obj)
 
     var tokens = $obj.val();
 
-    if (!engIsRawTokens(tokens, glCurrentDB.hash))
+    if (!engIsRawTokens(tokens, gCurrentDB.hash))
     {
         widDisableTokensInput();
         widShowBordersColor($obj, '#FF0000'); //RED BORDER
@@ -508,7 +508,7 @@ function widPreCreate($obj)
 
     led($obj).set(imgMsgBlink, 'Please wait...');
 
-    var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     widCreateTokens($obj, tokens);
 }
 
@@ -536,9 +536,9 @@ function widCreateTokens($obj, tokens)
 
     for (var i = 0; i < tokens.length; i++)
     {
-        var r = engGetRecord(0, tokens[i].s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-        var zCmd = 'z * ' + glCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
-        var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
+        var r = engGetRecord(0, tokens[i].s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+        var zCmd = 'z * ' + gCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
+        var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         var zCmdIdx = (i == 0) ? 0 : i * 2;
         var lastCmdIdx = zCmdIdx + 1;
 
@@ -617,7 +617,7 @@ function widPreVerify($obj)
     $TableArea.css('max-height', maxHeight + 'px');
     $TableArea.show();
 
-    var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     led($obj).set(imgMsgBlink, 'Please wait...');
     widVerifyTokens($obj, tokens);
 }
@@ -655,7 +655,7 @@ function widVerifyTokens($obj, tokens)
 
     for (var i = 0; i < tokens.length; i++)
     {
-        var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
+        var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
         glCmdList.items[i].r = tokens[i].r;
@@ -695,7 +695,7 @@ function widFillOutTokList($obj, tokens, extCb)
 
     for (var i = 0; i < tokens.length; i++)
     {
-        var lastCmd = 'last ' + glCurrentDB.name + ' ' + tokens[i].s;
+        var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
         glCmdList.items[i].r = (tokens[i].r !== undefined) ? tokens[i].r : '';
@@ -765,7 +765,7 @@ function widPreUpdate($obj, click)
 
             led($obj).set(imgMsgBlink, msg);
 
-            var tokens = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreUpdate($obj, click);
@@ -786,10 +786,10 @@ function widUpdateTokens($obj, data, items)
         {
 
             var n = +items[i].n + 1;
-            var s = engGetHash(items[i].r, glCurrentDB.hash);
-            var r = engGetRecord(n, s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-            var addCmd = 'add *' + ' ' + glCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
-            var lastCmd = 'last' + ' ' + glCurrentDB.name + ' ' + s;
+            var s = engGetHash(items[i].r, gCurrentDB.hash);
+            var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+            var addCmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
+            var lastCmd = 'last' + ' ' + gCurrentDB.name + ' ' + s;
             var idx = (glCmdList.items.length == 0) ? 0 : glCmdList.items.length;
 
             glCmdList.items[idx] = {};
@@ -835,7 +835,7 @@ function widUpgradeAcceptKeys($obj, acceptKeys, func)
         acceptKeys = engGetNumberedAcceptKeys(acceptKeys, glTokList.items);
     }
 
-    var titleRecord = engGetTitleRecord(acceptKeys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+    var titleRecord = engGetTitleRecord(acceptKeys, gPassword, gCurrentDB.hash, gCurrentDB.magic);
     var f = function ()
     {
         func($obj, titleRecord);
@@ -886,7 +886,7 @@ function widPreSimpleSend($obj)
 
             led($obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreSimpleSend($obj);
@@ -908,8 +908,8 @@ function widSimpleSend($obj, items)
     {
         if (items[i].st == 'OK')
         {
-            k1 = engGetKey(items[i].n + 1, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            k2 = engGetKey(items[i].n + 2, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + k1 + ' ' + k2 + '\n';
 
             if (0)
@@ -923,10 +923,10 @@ function widSimpleSend($obj, items)
     }
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
-    line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123132';
+    line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '123132';
 
     if (0)
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23132';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23132';
 
     closestTextArea($obj).add(line);
     led($obj).set(imgMsgOk, 'OK');
@@ -951,9 +951,9 @@ function widPreSimpleReceive($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleReceive);
 }
@@ -972,8 +972,8 @@ function widSimpleReceive($obj, titleRecord)
         var g2 = titleRecord[i].g2;
         var o2 = titleRecord[i].o2;
 
-        var addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-        var addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+        var addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        var addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
         var idx = (i == 0) ? 0 : i * 2;
 
@@ -1026,7 +1026,7 @@ function widPreSimpleRequest($obj)
             if (!widIsPassword())
                 return widDone($obj, 'Empty password!');
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreSimpleRequest($obj);
@@ -1050,11 +1050,11 @@ function widSimpleRequest($obj, items)
     {
         if (items[i].st === 'PWD_WRONG')
         {
-            k3 = engGetKey(items[i].n + 3, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            k4 = engGetKey(items[i].n + 4, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            g2 = engGetKey(items[i].n + 3, items[i].s, k3, glCurrentDB.magic, glCurrentDB.hash);
-            g3 = engGetKey(items[i].n + 4, items[i].s, k4, glCurrentDB.magic, glCurrentDB.hash);
-            o2 = engGetKey(items[i].n + 3, items[i].s, g3, glCurrentDB.magic, glCurrentDB.hash);
+            k3 = engGetKey(items[i].n + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            k4 = engGetKey(items[i].n + 4, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            g2 = engGetKey(items[i].n + 3, items[i].s, k3, gCurrentDB.magic, gCurrentDB.hash);
+            g3 = engGetKey(items[i].n + 4, items[i].s, k4, gCurrentDB.magic, gCurrentDB.hash);
+            o2 = engGetKey(items[i].n + 3, items[i].s, g3, gCurrentDB.magic, gCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + g2 + ' ' + o2 + '\n';
 
             if (0)
@@ -1073,10 +1073,10 @@ function widSimpleRequest($obj, items)
     if (closestTextArea($obj).val().length > 0)
     {
         var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124252';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '124252';
 
         if (0)
-            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24252';
+            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '24252';
 
         closestTextArea($obj).add(line);
 
@@ -1106,10 +1106,10 @@ function widPreSimpleAccept($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleAccept);
 }
@@ -1140,8 +1140,8 @@ function widSimpleAccept($obj, titleRecord)
         k2 = titleRecord[i].k2;
         g2 = titleRecord[i].g2;
         o2 = titleRecord[i].o2;
-        addCmd1 = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-        addCmd2 = 'add * ' + glCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+        addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
         idx = (i == 0) ? 0 : i * 2;
 
@@ -1209,7 +1209,7 @@ function widPreBlockingSendStep1($obj)
 
             led($obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreBlockingSendStep1($obj);
@@ -1233,9 +1233,9 @@ function widBlockingSendStep1($obj, items)
     {
         if (items[i].st === 'OK')
         {
-            k1 = engGetKey(items[i].n + 1, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            k2 = engGetKey(items[i].n + 2, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            g1 = engGetKey(items[i].n + 2, items[i].s, k2, glCurrentDB.magic, glCurrentDB.hash);
+            k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            g1 = engGetKey(items[i].n + 2, items[i].s, k2, gCurrentDB.magic, gCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + k1 + ' ' + g1 + '\n';
 
             if (0)
@@ -1249,10 +1249,10 @@ function widBlockingSendStep1($obj, items)
     }
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
-    line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '123141';
+    line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '123141';
 
     if (0)
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '23141';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23141';
 
     closestTextArea($obj).add(line);
     led($obj).set(imgMsgOk, 'OK');
@@ -1302,7 +1302,7 @@ function widPreBlockingSendStep2($obj)
 
             led($obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreBlockingSendStep2($obj);
@@ -1323,7 +1323,7 @@ function widBlockingSendStep2($obj, items)
             //include only tokens in sending state;
             var n0 = items[i].n;
             var n1 = items[i].n + 1;
-            var k1 = engGetKey(n1, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            var k1 = engGetKey(n1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             var line = n0 + ' ' + items[i].s + ' ' + k1 + '\n';
 
             if (0)
@@ -1347,10 +1347,10 @@ function widBlockingSendStep2($obj, items)
     else
     {
         var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1231';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1231';
 
         if (0)
-            var line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '231';
+            var line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '231';
 
         closestTextArea($obj).add(line);
         msg = 'OK';
@@ -1378,9 +1378,9 @@ function widPreBlockingReceiveStep1($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep1);
 }
@@ -1402,7 +1402,7 @@ function widBlockingReceiveStep1($obj, titleRecord)
         g1 = titleRecord[i].g1;
         o1 = titleRecord[i].o1;
 
-        addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1436,10 +1436,10 @@ function widPreBlockingReceiveStep2($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep2);
 }
@@ -1461,7 +1461,7 @@ function widBlockingReceiveStep2($obj, titleRecord)
         g1 = titleRecord[i].g1;
         o1 = titleRecord[i].o1;
 
-        addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1512,7 +1512,7 @@ function widPreBlockingRequestStep1($obj)
             if (!widIsPassword())
                 return widDone($obj, 'Empty password!');
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreBlockingRequestStep1($obj);
@@ -1539,9 +1539,9 @@ function widBlockingRequestStep1($obj, items)
         if (items[i].st === 'PWD_WRONG')
         {
             n0 = items[i].n;
-            k3 = engGetKey(n0 + 3, items[i].s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            g2 = engGetKey(n0 + 3, items[i].s, k3, glCurrentDB.magic, glCurrentDB.hash);
-            o1 = engGetKey(n0 + 2, items[i].s, g2, glCurrentDB.magic, glCurrentDB.hash);
+            k3 = engGetKey(n0 + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            g2 = engGetKey(n0 + 3, items[i].s, k3, gCurrentDB.magic, gCurrentDB.hash);
+            o1 = engGetKey(n0 + 2, items[i].s, g2, gCurrentDB.magic, gCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + o1 + '\n';
 
             if (0)
@@ -1560,10 +1560,10 @@ function widBlockingRequestStep1($obj, items)
     if (closestTextArea($obj).val().length > 0)
     {
         var rawAcceptKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
-        line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '1251';
+        line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1251';
 
         if (0)
-            line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '251';
+            line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '251';
 
         closestTextArea($obj).add(line);
         msg = 'OK';
@@ -1609,7 +1609,7 @@ function widPreBlockingRequestStep2($obj)
             if (!widIsPassword())
                 return widDone($obj, 'Empty password!');
 
-            var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
             {
                 widPreBlockingRequestStep2($obj);
@@ -1640,11 +1640,11 @@ function widBlockingRequestStep2($obj, items)
         {
             s = items[i].s
                 n0 = items[i].n;
-            k2 = engGetKey(n0 + 2, s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            g1 = engGetKey(n0 + 2, s, k2, glCurrentDB.magic, glCurrentDB.hash);
-            k3 = engGetKey(n0 + 3, s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            g2 = engGetKey(n0 + 3, s, k3, glCurrentDB.magic, glCurrentDB.hash);
-            o1 = engGetKey(n0 + 2, s, g2, glCurrentDB.magic, glCurrentDB.hash);
+            k2 = engGetKey(n0 + 2, s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            g1 = engGetKey(n0 + 2, s, k2, gCurrentDB.magic, gCurrentDB.hash);
+            k3 = engGetKey(n0 + 3, s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            g2 = engGetKey(n0 + 3, s, k3, gCurrentDB.magic, gCurrentDB.hash);
+            o1 = engGetKey(n0 + 2, s, g2, gCurrentDB.magic, gCurrentDB.hash);
 
             line = n0 + ' ' + s + ' ' + g1 + ' ' + o1 + '\n';
 
@@ -1665,10 +1665,10 @@ function widBlockingRequestStep2($obj, items)
     if (closestTextArea($obj).val().length > 0)
     {
         var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '124151';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '124151';
 
         if (0)
-            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + glCurrentDB.altname + ' ' + '24151';
+            line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '24151';
 
         closestTextArea($obj).add(line);
 
@@ -1698,9 +1698,9 @@ function widPreBlockingAcceptStep1($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep1);
@@ -1723,7 +1723,7 @@ function widBlockingAcceptStep1($obj, titleRecord)
         g1 = titleRecord[i].g1;
         o1 = titleRecord[i].o1;
 
-        addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1758,9 +1758,9 @@ function widPreBlockingAcceptStep2($obj, click)
     glCmdList.clear();
     glTokList.clear();
 
-    var tok = engGetTokens(widGetRawTokens(), glCurrentDB.hash);
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), glCurrentDB.hash);
+    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep2);
@@ -1783,7 +1783,7 @@ function widBlockingAcceptStep2($obj, titleRecord)
         g1 = titleRecord[i].g1;
         o1 = titleRecord[i].o1;
 
-        addCmd = 'add * ' + glCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;

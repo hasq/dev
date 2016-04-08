@@ -1,13 +1,13 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-var glClientTitle = 'TokenSwap';
-var glRequiredDbHash = 'smd';
-var glPassword = '';
+var gClientTitle = 'TokenSwap';
+var gRequiredDbHash = 'smd';
+var gPassword = '';
 
-var glCurrentDB = null; //'smd.db';
-var glLastRec = {};
-var glTimerId;
-var glSearch =
+var gCurrentDB = null; //'smd.db';
+var gLastRec = {};
+var gTimerId;
+var gSearch =
 {
     isOn : false,
     o : {},
@@ -114,7 +114,7 @@ function docInit()
 
     widShowHidePassword();
     widDatePickerInit();
-    widSetDefaultDb(glRequiredDbHash);
+    widSetDefaultDb(gRequiredDbHash);
     widEmptyTab();
 
     engSendPing(0);

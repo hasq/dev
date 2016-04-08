@@ -2,7 +2,7 @@
 
 function engNcDeferredLast(extCb, tok, delay)
 {
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
+    var cmd = 'last' + '\u0020' + gCurrentDB.name + '\u0020' + tok;
 
     var intCb = function (data)
     {
@@ -20,7 +20,7 @@ function engNcDeferredLast(extCb, tok, delay)
 
 function engNcLast(extCb, tok)
 {
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + tok;
+    var cmd = 'last' + '\u0020' + gCurrentDB.name + '\u0020' + tok;
 
     var intCb = function (data)
     {
@@ -83,7 +83,7 @@ function engNcAdd(extCb, db, rec, data)
     var g1 = rec.g || rec.g1 || rec.g2;
     var o1 = rec.o || rec.o1 || rec.o2;
 
-    var cmd = 'add *' + '\u0020' + glCurrentDB.name + '\u0020' + n1 + '\u0020' + rec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020' + o1 + '\u0020' + data;
+    var cmd = 'add *' + '\u0020' + gCurrentDB.name + '\u0020' + n1 + '\u0020' + rec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020' + o1 + '\u0020' + data;
 
     var jobCb = function (resp, jobId)
     {
@@ -112,7 +112,7 @@ function engNcAdd(extCb, db, rec, data)
 
 function engNcRecordZero(extCb, tok)
 {
-    var cmd = 'record' + '\u0020' + glCurrentDB.name + '\u0020' + '0' + '\u0020' + tok;
+    var cmd = 'record' + '\u0020' + gCurrentDB.name + '\u0020' + '0' + '\u0020' + tok;
 
     var intCb = function (data)
     {
@@ -167,7 +167,7 @@ function engLoadFiles(files, hash, cb0)
 
     var reader = new FileReader();
 
-    reader.onload = function(event)
+    reader.onload = function()
     {
         if (+file.size > 20971520)
             obj.error = glMsg.fileTooBig;
@@ -175,9 +175,10 @@ function engLoadFiles(files, hash, cb0)
             obj.error = glMsg.fileZero;
         else
         {
-            obj.raw = event.target.result;
+         //obj.raw = event.target.result;
+            obj.raw = this.result; //event.target.result; vozmojno stroka portit soderjimoe pri konvertacii
             obj.loading = false;
-            obj.hash = engGetHash(obj.raw, hash);
+            obj.hash = engGetHash(this.result, hash);
         }
 
         cb0(obj);
@@ -201,3 +202,27 @@ function engLoadFiles(files, hash, cb0)
     reader.readAsBinaryString(file);
 }
 
+/*
+a=str.charCodeAt(0);
+if (a>0xFF) a-=0x350;
+
+function native2ascii(str)
+{
+    console.log('in: ' + str);
+    console.log('Before: ' + engGetHash(str, 'smd'));
+
+    var out = '';
+    for (var i = 0, l = str.length; i < l; i++) {
+        if (str.charCodeAt(i) < 0x80) {
+            out += str.charAt(i);
+        } else {
+            console.log(str.charCodeAt(i));
+            var u = '' + str.charCodeAt(i).toString(16);
+            out += '\\u' + (u.length === 2 ? '00' + u : u.length === 3 ? '0' + u : u);
+        }
+    }
+    console.log('out: ' + out);
+    console.log('After: ' + engGetHash(out, 'smd'));
+    return out;
+}
+*/

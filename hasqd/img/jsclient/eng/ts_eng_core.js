@@ -22,11 +22,11 @@ function engSendDeferredRequest(cmd, f, t)
 
     var req = function ()
     {
-        var timerId = glTimerId;
+        var timerId = gTimerId;
 
         var cb = function (data)
         {
-            if (timerId === glTimerId)
+            if (timerId === gTimerId)
                 f(data);
 
             clearTimeout(timerId);
@@ -34,7 +34,7 @@ function engSendDeferredRequest(cmd, f, t)
         ajxSendCommand(cmd, cb, hasqLogo);
     }
 
-    glTimerId = setTimeout(req, t);
+    gTimerId = setTimeout(req, t);
 }
 
 function engSendPing(timeDelay)
@@ -80,7 +80,7 @@ function engGetTokenName (data, s)
     if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' )
     {
         var g = d.substring(1, dLen - 1);
-        if ( engGetHash(g, glCurrentDB.hash) === s) return g;
+        if ( engGetHash(g, gCurrentDB.hash) === s) return g;
     }
 
     return s;

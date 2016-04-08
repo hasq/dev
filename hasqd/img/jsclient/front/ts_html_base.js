@@ -75,9 +75,9 @@ function widGetHTMLTitleArea()
         {
             r += '<tr>\n';
             {
-             //r += widGetHTMLTrTdSubtitle(0, glClientTitle, 'td-title');
+             //r += widGetHTMLTrTdSubtitle(0, gClientTitle, 'td-title');
              r += '<td class="td-title"/>';
-             r += '<a style="text-decoration: none" href="http://tokenswap.com">' + glClientTitle + '</a>';
+             r += '<a style="text-decoration: none" href="http://tokenswap.com">' + gClientTitle + '</a>';
              r += '<td style="width: 30px; height: 30px; text-align: center;"/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
              r += '<td style="width: 30px; height: 30px; text-align: center;" />\n';

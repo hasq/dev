@@ -3,10 +3,10 @@
 function engSearchClick(fromDate, toDate, progr)
 {
 
-    glSearch.isOn = !glSearch.isOn;
-    progr.button(glSearch.isOn);
+    gSearch.isOn = !gSearch.isOn;
+    progr.button(gSearch.isOn);
 
-    if (glSearch.isOn)
+    if (gSearch.isOn)
         return engSearchStart(fromDate, toDate, progr);
 
     return engSearchStop();
@@ -14,7 +14,7 @@ function engSearchClick(fromDate, toDate, progr)
 
 function engSearchStart(fromDate, toDate, progr)
 {
-    var o = glSearch.o;
+    var o = gSearch.o;
 
     o.progr = progr;
     o.fromDate = fromDate;
@@ -49,7 +49,7 @@ function engSearchStart(fromDate, toDate, progr)
 
 function engSearchStop()
 {
-    var o = glSearch.o;
+    var o = gSearch.o;
     return { from : o.fromDate, to : o.toDate };
 }
 
@@ -80,8 +80,8 @@ function engGetSliceDate(toDate)
     var path = function(n)
     {
         var v = '/' + this.y4 + '/' + this.mm + '/' + this.dd + '/';
-        v = "/" + glCurrentDB.name + v;
-        v += this.name() + '-' + n + "." + glCurrentDB.hash + ".txt";
+        v = "/" + gCurrentDB.name + v;
+        v += this.name() + '-' + n + "." + gCurrentDB.hash + ".txt";
         return v;
     };
 
@@ -125,17 +125,17 @@ function engGetSliceDate(toDate)
 
 function processDone()
 {
-    glSearch.isOn = false;
-    glSearch.o.progr.button(glSearch.isOn);
-    console.log("processDone : " + glSearch.isOn);
+    gSearch.isOn = false;
+    gSearch.o.progr.button(gSearch.isOn);
+    console.log("processDone : " + gSearch.isOn);
 }
 
 function processDates()
 {
-    if (!glSearch.isOn)
+    if (!gSearch.isOn)
         return;
 
-    var o = glSearch.o;
+    var o = gSearch.o;
 
     var name = o.sliceDate.path(++o.number);
 
@@ -155,7 +155,7 @@ function searchSliceBad(data)
 
 function searchCacheCall(name)
 {
-    var c = glSearch.cache;
+    var c = gSearch.cache;
 
     if ( name != c.lastBlank && name != c.lastSlice )
     {
@@ -182,7 +182,7 @@ function searchCacheCall(name)
 
 function searchCacheAddBlank(name, data)
 {
-    var c = glSearch.cache;
+    var c = gSearch.cache;
     if ( name == c.lastBlank ) return;
 
     if ( name > c.lastBlank ) c.lastBlank = name;
@@ -192,7 +192,7 @@ function searchCacheAddBlank(name, data)
 
 function searchCacheAddSlice(name, data)
 {
-    var c = glSearch.cache;
+    var c = gSearch.cache;
     if ( name == c.lastSlice ) return;
 
     if ( name > c.lastSlice ) c.lastSlice = name;
@@ -204,10 +204,10 @@ function searchCacheAddSlice(name, data)
 
 function searchGetFile(data)
 {
-    if (!glSearch.isOn)
+    if (!gSearch.isOn)
         return;
 
-    var o = glSearch.o;
+    var o = gSearch.o;
 
     if ( searchSliceBad(data) )
     {
@@ -233,7 +233,7 @@ function searchGetFile(data)
 
 function searchProcessFile(data)
 {
-    var o = glSearch.o;
+    var o = gSearch.o;
     ///console.log("processing file " + o.sliceDate.name());
     o.progr.block(o.sliceDate.name(), o.sliceDate.path(o.number));
 
@@ -253,7 +253,7 @@ function searchProcessRec(srec)
 {
     var lr = engGetParsedRecord(srec);
 
-    var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
 
     var st = engGetTokensStatus(lr, nr);
 
@@ -281,7 +281,7 @@ function searchValidate1(dn)
     var w = gWallet;
     var res = w[dn];
 
-    var cmd = 'last' + '\u0020' + glCurrentDB.name + '\u0020' + res.s;
+    var cmd = 'last' + '\u0020' + gCurrentDB.name + '\u0020' + res.s;
 
     ajxSendCommand(cmd, function(data) {searchValidate2(dn, data)}, hasqLogo);
 }
@@ -293,7 +293,7 @@ function searchValidate2(dn, data)
     if (resp !== 'OK' && resp !== 'IDX_NODN') return;
 
     var lr = engGetParsedRecord(data);
-    var nr = engGetRecord(lr.n, lr.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
     var res = gWallet[dn];
@@ -308,7 +308,7 @@ function searchValidate2(dn, data)
         case 'PWD_WRONG': res.state = 4; break;
     }
 
-    glSearch.o.progr.refresh();
+    gSearch.o.progr.refresh();
 
     var cb = function (resp, record)
     {
@@ -321,7 +321,7 @@ function searchValidate2(dn, data)
             if ( res.s != x )
             {
                 res.raw = x;
-                glSearch.o.progr.refresh();
+                gSearch.o.progr.refresh();
             }
         }
     }

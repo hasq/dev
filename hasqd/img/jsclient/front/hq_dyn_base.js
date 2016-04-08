@@ -152,8 +152,8 @@ function widRefreshButtonClick()
                     var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
                     $('#current_db').html(current_db);
 
-                    glCurrentDB = glDataBase[0];
-                    glHashCalcHash = glCurrentDB.hash;
+                    gCurrentDB = glDataBase[0];
+                    glHashCalcHash = gCurrentDB.hash;
                     widShowNewRecOninput();
                     break;
                 default:
@@ -203,7 +203,7 @@ function widTokenNameOninput()
         $HistorySelect.selectmenu('enable');
         widShowBordersColor($Dn);
         widShowBordersColor($SubmitButton);
-        $Dn.val(engGetHash($RawDn.val(), glCurrentDB.hash));
+        $Dn.val(engGetHash($RawDn.val(), gCurrentDB.hash));
         widShowNewRecOninput();
         widShowRecordsTabLog('OK');
     }
@@ -233,7 +233,7 @@ function widTokenHashOninput()
         return;
     }
 
-    if (engIsHash($Dn.val(), glCurrentDB.hash))
+    if (engIsHash($Dn.val(), gCurrentDB.hash))
     {
         $HistorySelect.selectmenu('enable');
         widShowBordersColor($Dn);
@@ -264,7 +264,7 @@ function widShowKeysPropriety(id)
 
     $Id.val(engGetOnlyHex($Id.val()));
 
-    if (engIsHash($Id.val(), glCurrentDB.hash) || $Id.val() == '')
+    if (engIsHash($Id.val(), gCurrentDB.hash) || $Id.val() == '')
     {
         widShowBordersColor($Id);
         widShowBordersColor($SubmitButton);
@@ -284,7 +284,7 @@ function widGetLastRecordButtonClick()
 {
     var $Dn = $('#dn_input');
     var s = $Dn.val();
-    var getlast = 'last' + ' ' + glCurrentDB.name + ' ' + s;
+    var getlast = 'last' + ' ' + gCurrentDB.name + ' ' + s;
     var cb = function (data)
     {
         if (engGetResponseHeader(data) !== 'OK')
@@ -333,7 +333,7 @@ function widShowNewRecordAuto()
     if (lr_n != '')
     {
         var nr_n = +lr_n + 1;
-        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, gCurrentDB.magic, gCurrentDB.hash));
     }
 
     widShowNewRecCompability();
@@ -375,7 +375,7 @@ function widShowNewRecOninput()
 
     if ((s != '') && pwdCheckboxIsOn == 1)
     {
-        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, glCurrentDB.magic, glCurrentDB.hash));
+        widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, gCurrentDB.magic, gCurrentDB.hash));
         widShowRecordsTabLog();
     }
     widShowNewRecCompability();
@@ -433,8 +433,8 @@ function widShowNewRecCompability()
     var nr_g = $('#nr_g_input').val();
     var nr_o = $('#nr_o_input').val();
 
-    var g0 = engGetKey(nr_n, s, nr_k, glCurrentDB.magic, glCurrentDB.hash);
-    var o0 = engGetKey(nr_n, s, nr_g, glCurrentDB.magic, glCurrentDB.hash);
+    var g0 = engGetKey(nr_n, s, nr_k, gCurrentDB.magic, gCurrentDB.hash);
+    var o0 = engGetKey(nr_n, s, nr_g, gCurrentDB.magic, gCurrentDB.hash);
 
     var $SubmitButton = $('#submit_button');
 
@@ -480,7 +480,7 @@ function widTokensHistorySelect(range)
     if (range === 0)
         return;
 
-    var cmd = 'range' + ' ' + glCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
+    var cmd = 'range' + ' ' + gCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
 
     ajxSendCommand(cmd, cb, hasqLogo);
 }
@@ -519,7 +519,7 @@ function widSubmitButtonClick()
         widTokensHistorySelect(d);
     }
 
-    var nr = 'add * ' + glCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataValToRecord(nr_d);
+    var nr = 'add * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataValToRecord(nr_d);
 
     ajxSendCommand(nr, cb, hasqLogo);
 }

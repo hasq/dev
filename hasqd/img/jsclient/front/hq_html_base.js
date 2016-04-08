@@ -46,7 +46,7 @@ function widGetHTMLBody(tabs)
 
     r += '<table id="table_body" border="0" nowrap>\n';
     r += '<tr>\n';
-    r += '<td nowrap>\n' + widGetHTMLTitle(glClientTitle);
+    r += '<td nowrap>\n' + widGetHTMLTitle(gClientTitle);
     r += '<td style="text-align:right;">&nbsp;';
     r += widGetHTMLSpanImg('span_logo') + '\n';
     r += '</tr>\n';

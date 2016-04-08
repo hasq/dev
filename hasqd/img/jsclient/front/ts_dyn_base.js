@@ -122,7 +122,7 @@ function widSetDefaultDb(hash)
     var cb = function (resp, db)
     {
         if (resp === 'OK' && db.length !== 0)
-            glCurrentDB = engGetDbByHash (db, hash);
+            gCurrentDB = engGetDbByHash (db, hash);
         else
             widModalWindow(glMsg.badDataBase);
     }
@@ -145,7 +145,7 @@ function widShowToken(tok)
     if (!tok)
         return $TokenText.empty();
 
-    $TokenText.html(widGetToken(tok, glCurrentDB.hash));
+    $TokenText.html(widGetToken(tok, gCurrentDB.hash));
 }
 
 function widShowLog(text)
@@ -356,8 +356,8 @@ function widClearInitialData(isFile)
 {
     var $TokenText = $('#textarea_token_text');
 
-    clearTimeout(glTimerId);
-    glLastRec = {};
+    clearTimeout(gTimerId);
+    gLastRec = {};
     widShowPwdInfo();
     widShowSearch();
 
@@ -367,7 +367,7 @@ function widClearInitialData(isFile)
     if (isFile) $TokenText.val('');
     $TokenText.prop('disabled', false);
     widShowToken();
-    widToggleUI(glLastRec, glPassword);
+    widToggleUI(gLastRec, gPassword);
 }
 
 function widTokenTextOninput(delay) // Events when tokens value changed.
@@ -382,7 +382,7 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         textArea().clearExcept($TokText);
 
     var tok = {};
-    tok.hash = widGetToken(tokText, glCurrentDB.hash);
+    tok.hash = widGetToken(tokText, gCurrentDB.hash);
     tok.raw = (tokText !== tok.hash) ? tokText : '';
 
     widShowToken(tok.hash);
@@ -429,7 +429,7 @@ function widLoadFiles(files)
         widReloadTokenInfo(data, 0);
     }
 
-    engLoadFiles(files, glCurrentDB.hash, cb);
+    engLoadFiles(files, gCurrentDB.hash, cb);
 }
 
 function widReloadTokenInfo(tok, delay)
@@ -438,8 +438,8 @@ function widReloadTokenInfo(tok, delay)
     if (!tok)
     {
         var tok = {};
-        tok.hash = glLastRec.s;
-        tok.raw = glLastRec.r;
+        tok.hash = gLastRec.s;
+        tok.raw = gLastRec.r;
     }
 
     if (tok.hash)
@@ -462,25 +462,25 @@ function widGetLastRecord(tok, delay)
 
         if (resp === 'IDX_NODN')
         {
-            glLastRec.state = resp;
-            glLastRec.s = tok.hash;
+            gLastRec.state = resp;
+            gLastRec.s = tok.hash;
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
                 widCreateTab().show();
         }
         else
         {
-            glLastRec = record;
-            glLastRec.state = 'PWD_WRONG';
-            widSetDataTab().val(engGetDataValToDisplay(glLastRec.d));
+            gLastRec = record;
+            gLastRec.state = 'PWD_WRONG';
+            widSetDataTab().val(engGetDataValToDisplay(gLastRec.d));
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
                 widSetDataTab().show();
         }
 
         widShowSearch().show(resp);
-        widShowToken(glLastRec.s);
-        glLastRec.raw = (tok.raw && tok.raw.length <= 160) ? tok.raw : '';
+        widShowToken(gLastRec.s);
+        gLastRec.raw = (tok.raw && tok.raw.length <= 160) ? tok.raw : '';
 
         widPasswordOninput();
     }
@@ -492,28 +492,28 @@ function widPasswordOninput()
 {
     // Events when passwords value changed.
     var $PwdInp = $('#input_password');
-    glPassword = $PwdInp.val() || '';
+    gPassword = $PwdInp.val() || '';
 
     // set current wallet
-    if ( !gAllWallets[glPassword] ) gAllWallets[glPassword] = {};
-    gWallet = gAllWallets[glPassword];
+    if ( !gAllWallets[gPassword] ) gAllWallets[gPassword] = {};
+    gWallet = gAllWallets[gPassword];
     widSearchProgress.refresh();
 
-    widShowPwdGuessTime(widGetPwdGuessTime(glPassword));
+    widShowPwdGuessTime(widGetPwdGuessTime(gPassword));
 
-    if (glLastRec.state === 'IDX_NODN' || typeof glLastRec.state === 'undefined')
-        return widToggleUI(glLastRec, glPassword);
+    if (gLastRec.state === 'IDX_NODN' || typeof gLastRec.state === 'undefined')
+        return widToggleUI(gLastRec, gPassword);
 
-    var rec = engGetRecord(glLastRec.n, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var rec = engGetRecord(gLastRec.n, gLastRec.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
 
-    glLastRec.state = (glPassword) ? engGetTokensStatus(glLastRec, rec) : glLastRec.state = 'PWD_WRONG';
+    gLastRec.state = (gPassword) ? engGetTokensStatus(gLastRec, rec) : gLastRec.state = 'PWD_WRONG';
 
-    if (glPassword)
-        widShowPwdInfo(glLastRec.state);
+    if (gPassword)
+        widShowPwdInfo(gLastRec.state);
     else
         widShowPwdInfo();
 
-    widToggleUI(glLastRec, glPassword);
+    widToggleUI(gLastRec, gPassword);
 }
 
 function widPasswordEyeClick($obj)
@@ -604,8 +604,8 @@ function widCreateButtonClick()
     var $TokenText = $('#textarea_token_text');
 
     var tok = {};
-    tok.hash = glLastRec.s;
-    tok.raw = glLastRec.raw;
+    tok.hash = gLastRec.s;
+    tok.raw = gLastRec.raw;
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
@@ -620,9 +620,9 @@ function widCreateButtonClick()
         widReloadTokenInfo(tok, 0);
     };
 
-    var rec = engGetRecord(0, tok.hash, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
+    var rec = engGetRecord(0, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
 
-    engNcZ(cb, glCurrentDB.name, rec, tok.raw);
+    engNcZ(cb, gCurrentDB.name, rec, tok.raw);
 }
 
 function widSetDataTab()
@@ -667,16 +667,16 @@ function widSetDataButtonClick()
     var $PwdInp = $('#input_password');
     var $Data = $('#textarea_set_data');
     var tok = {};
-    tok.hash = glLastRec.s;
-    tok.raw = glLastRec.raw;
+    tok.hash = gLastRec.s;
+    tok.raw = gLastRec.raw;
 
     if (!widIsPassword())
         return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-    if (glLastRec.state !== 'OK')
+    if (gLastRec.state !== 'OK')
         return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
 
-    if (engGetDataValToRecord($Data.val()) === glLastRec.d)
+    if (engGetDataValToRecord($Data.val()) === gLastRec.d)
         return widModalWindow(glMsg.dataNotChanged, function () { $Data.focus() });
 
     widSetDataTab().disable(true);
@@ -688,13 +688,13 @@ function widSetDataButtonClick()
 
         widReloadTokenInfo(tok, 0);
     }
-    var rec = engGetRecord(glLastRec.n + 1, glLastRec.s, glPassword, null, null, glCurrentDB.magic, glCurrentDB.hash);
-    engNcAdd(cb, glCurrentDB.name, rec, $Data.val());
+    var rec = engGetRecord(gLastRec.n + 1, gLastRec.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+    engNcAdd(cb, gCurrentDB.name, rec, $Data.val());
 }
 
 function widSetDataTextareaOninput()
 {
-    widToggleUI(glLastRec, glPassword);
+    widToggleUI(gLastRec, gPassword);
 }
 
 function widShowKeysTab()
@@ -751,10 +751,10 @@ function widTabButtonClick($obj, tabId)
         default : return;
     }
 
-    if (typeof glLastRec.state === 'undefined')
+    if (typeof gLastRec.state === 'undefined')
         return ($obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
 
-    if (glLastRec.state === 'IDX_NODN')
+    if (gLastRec.state === 'IDX_NODN')
         return ($obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
 
     return ($obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
@@ -774,22 +774,22 @@ function widShowInstantButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.state === 'undefined')
+        if (typeof gLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.state === 'IDX_NODN')
+        if (gLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.state === 'PWD_SNDNG' || glLastRec.state === 'PWD_RCVNG')
+        if (gLastRec.state === 'PWD_SNDNG' || gLastRec.state === 'PWD_RCVNG')
         {
             $('.show-keys-button-on').toggleClass('show-keys-button-on show-keys-button-off');
             return widModalWindow(glMsg.tokenLocked);
         }
 
-        if (glLastRec.state !== 'OK')
+        if (gLastRec.state !== 'OK')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
@@ -797,14 +797,14 @@ function widShowInstantButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-        var line = glLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
+        var k1 = engGetKey(gLastRec.n + 1, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+        var k2 = engGetKey(gLastRec.n + 2, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+        var line = gLastRec.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
 
         textArea($KeyArea).add(line);
 
         var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23132';
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + '23132';
 
         textArea($KeyArea).add(line);
     }
@@ -824,16 +824,16 @@ function widShowOnHoldButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.state === 'undefined')
+        if (typeof gLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.state === 'IDX_NODN')
+        if (gLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.state !== 'OK' && glLastRec.state !== 'PWD_SNDNG')
+        if (gLastRec.state !== 'OK' && gLastRec.state !== 'PWD_SNDNG')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
@@ -841,17 +841,17 @@ function widShowOnHoldButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        if (glLastRec.state === 'OK')  // Blocking Send
+        if (gLastRec.state === 'OK')  // Blocking Send
         {
-            var k1 = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            var k2 = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
-            var g1 = engGetKey(glLastRec.n + 2, glLastRec.s, k2, glCurrentDB.magic, glCurrentDB.hash);
-            var line = glLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
+            var k1 = engGetKey(gLastRec.n + 1, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            var k2 = engGetKey(gLastRec.n + 2, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
+            var g1 = engGetKey(gLastRec.n + 2, gLastRec.s, k2, gCurrentDB.magic, gCurrentDB.hash);
+            var line = gLastRec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
 
             textArea($KeyArea).add(line);
 
             var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-            line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + '23141';
+            line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + '23141';
 
             textArea($KeyArea).add(line);
         }
@@ -872,19 +872,19 @@ function widShowReleaseButtonClick($obj)
         if ($obj.hasClass('show-keys-button-on'))
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-        if (typeof glLastRec.state === 'undefined')
+        if (typeof gLastRec.state === 'undefined')
             return widModalWindow(glMsg.enterTokenName, function () { $TokenArea.focus() });
 
-        if (glLastRec.state === 'IDX_NODN')
+        if (gLastRec.state === 'IDX_NODN')
             return widModalWindow(glMsg.createToken);
 
         if (!widIsPassword())
             return widModalWindow(glMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.state === 'PWD_WRONG')
+        if (gLastRec.state === 'PWD_WRONG')
             return widModalWindow(glMsg.changeMasterKey, function () { $PwdInp.focus() });
 
-        if (glLastRec.state === 'OK')
+        if (gLastRec.state === 'OK')
             return widModalWindow(glMsg.changeTokenName);
     }
 
@@ -895,23 +895,23 @@ function widShowReleaseButtonClick($obj)
         var k;
         var prCode;
 
-        if (glLastRec.state === 'PWD_RCVNG')
+        if (gLastRec.state === 'PWD_RCVNG')
         {
-            k = engGetKey(glLastRec.n + 2, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            k = engGetKey(gLastRec.n + 2, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             prCode = '232';
         }
 
-        if (glLastRec.state === 'PWD_SNDNG')
+        if (gLastRec.state === 'PWD_SNDNG')
         {
-            var k = engGetKey(glLastRec.n + 1, glLastRec.s, glPassword, glCurrentDB.magic, glCurrentDB.hash);
+            var k = engGetKey(gLastRec.n + 1, gLastRec.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             prCode = '231';
         }
 
-        var line = glLastRec.s + '\u0020' + k + '\u0020';
+        var line = gLastRec.s + '\u0020' + k + '\u0020';
         textArea($KeyArea).add(line);
 
         var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + glCurrentDB.altname + '\u0020' + prCode;
+        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + prCode;
 
         textArea($KeyArea).add(line);
     }
@@ -954,7 +954,7 @@ function widReceiveTab()
 
 function widReceiveTextareaOninput()
 {
-    widToggleUI(glLastRec, glPassword);
+    widToggleUI(gLastRec, gPassword);
 }
 
 function widReceiveButtonClick()
@@ -963,7 +963,7 @@ function widReceiveButtonClick()
     var $PwdInp = $('#input_password');
     var rawAcceptKeys = $AcceptKeysArea.val();
 
-    if (glLastRec.state === 'IDX_NODN')
+    if (gLastRec.state === 'IDX_NODN')
         return widModalWindow(glMsg.createToken);
 
     if (!widIsPassword())
@@ -983,9 +983,9 @@ function widShowTokenName()
     var $AcceptKeysArea = $('#textarea_receive_keys');
     var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
     var tokText = [$TokenArea.val()] || [''];
-    var tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, glCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
+    var tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, gCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
-    if (acceptKeys[0].s === engGetHash(tok, glCurrentDB.hash))
+    if (acceptKeys[0].s === engGetHash(tok, gCurrentDB.hash))
         widReceiveKey(acceptKeys);
     else
     {
@@ -1008,7 +1008,7 @@ function widShowTokenName()
 function widReceiveKey(keys)
 {
     var $TokText = $('#textarea_token_text');
-    var tok = widGetToken(textArea($TokText).val(), glCurrentDB.hash);
+    var tok = widGetToken(textArea($TokText).val(), gCurrentDB.hash);
 
     var cb = function (resp, record)
     {
@@ -1026,7 +1026,7 @@ function widReceiveKey(keys)
 
 function widTokensTakeover(keys)
 {
-    keys = engGetTitleRecord(keys, glPassword, glCurrentDB.hash, glCurrentDB.magic);
+    keys = engGetTitleRecord(keys, gPassword, gCurrentDB.hash, gCurrentDB.magic);
 
     switch (keys[0].prcode)
     {
@@ -1050,8 +1050,8 @@ function widTokensTakeover(keys)
 function widInstantReceive(keys)
 {
     var tok = {};
-    tok.hash = glLastRec.s;
-    tok.raw = glLastRec.raw;
+    tok.hash = gLastRec.s;
+    tok.raw = gLastRec.raw;
 
     var addCb1 = function (resp)
     {
@@ -1069,18 +1069,18 @@ function widInstantReceive(keys)
             widReloadTokenInfo(tok, 0);
         }
         else
-            engNcAdd(addCb1, glCurrentDB.name, keys, null);
+            engNcAdd(addCb1, gCurrentDB.name, keys, null);
     }
 
-    engNcAdd(addCb0, glCurrentDB.name, keys[0], null);
+    engNcAdd(addCb0, gCurrentDB.name, keys[0], null);
 
 }
 
 function widBlockingReceive(keys)
 {
     var tok = {};
-    tok.hash = glLastRec.s;
-    tok.raw = glLastRec.raw;
+    tok.hash = gLastRec.s;
+    tok.raw = gLastRec.raw;
 
     var cb = function (resp)
     {
@@ -1090,7 +1090,7 @@ function widBlockingReceive(keys)
             widReloadTokenInfo(tok, 0);
     }
 
-    engNcAdd(cb, glCurrentDB.name, keys[0], null);
+    engNcAdd(cb, gCurrentDB.name, keys[0], null);
 }
 
 function widSearchTab()
