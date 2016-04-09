@@ -141,13 +141,22 @@ string crline(const string & s, bool e)
         // add prefix
         v = s2v(string() + (char)(32 + sum) + pwd + v2s(v));
 
-		// in-chain
-		for ( size_t i = 1; i < v.size(); i++ ) v[i] = (v[i] + v[i-1]) % 95;
+        // in-chain
+        for ( size_t i = 1; i < v.size(); i++ ) v[i] = (v[i] + v[i - 1]) % 95;
+
+        // drop pwd part
+        for ( size_t i = 0; i < p.size(); i++ ) v.erase( v.begin() + 1 );
     }
     else
     {
-		// un-chain
-		for ( size_t i = v.size()-1; i >0; i-- ) v[i] = (v[i] + 95 - v[i-1]) % 95;
+        // insert pwd
+        v.insert(v.begin() + 1, p.begin(), p.end() );
+
+        // in-chain pwd
+        for ( size_t i = 0; i < p.size(); i++ ) v[i + 1] = (v[i] + v[i + 1]) % 95;
+
+        // un-chain
+        for ( size_t i = v.size() - 1; i > 0; i-- ) v[i] = (v[i] + 95 - v[i - 1]) % 95;
 
         // drop prefix
         v = s2v( v2s(v).substr(pwd.size() + 1) );
