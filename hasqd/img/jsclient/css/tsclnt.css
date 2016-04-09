@@ -39,6 +39,9 @@ button
 	border: 0;
 	margin: 0;
 	padding: 0;
+border-radius: 4px; 
+-moz-border-radius: 4px; 
+-webkit-border-radius: 4px; 
 }
 
 label#label_file_upload
@@ -112,8 +115,9 @@ button.button-enabled
 {
     width: 70px;
     height: 70px;
-    background: #AFEEEE;
-    opacity: 0.8;
+    background: #FFFFFF;
+	border: 1px solid #1376BC;
+    opacity: 1;
     -webkit-transition: background 0.20s;
     -moz-transition: background 0.20s;
     -o-transition: background 0.20s;
@@ -126,6 +130,7 @@ button.show-keys-button-on
     height: 70px;
     background: #00CED1;
 	opacity: 1;
+	border: 1px solid #1376BC;
 }
 
 button:hover,
@@ -135,7 +140,7 @@ button.show-keys-button-off:hover,
 button.show-keys-button-on:hover,
 button.button-enabled:hover
 {
-    background: #87CEEB;
+    background: #EEEEFE;
     cursor: pointer;
 }
 
