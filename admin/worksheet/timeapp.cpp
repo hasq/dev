@@ -141,7 +141,7 @@ try
 ask1:
     cout << "---------------------------------------------------\n";
     for ( vis::iterator i = tasks.begin(); i != tasks.end(); ++i )
-        cout << i->first << '\t' << "[" << i->second << "]\n";
+        cout << i->first << "    " << "[" << i->second << "]\n";
 
     int n = 0;
     cout << "Select the task you have worked on (0 to exit): ";
@@ -172,7 +172,7 @@ ask2:
     string date = getGmd();
 
     std::ostringstream os;
-    os << date << '\t' << name << '\t' << task << '\t' << h << '\t' << comm;
+    os << date << "    " << name << "    " << task << "    " << h << "    " << comm;
 
     cout << "---------------------------------------------------\n";
     cout << os.str() << '\n' << "Is this correct (y/n) : ";
@@ -306,7 +306,7 @@ void report()
         for ( Names::iterator j = names.begin(); j != names.end(); ++j )
         {
             Item & it = j->second;
-            cout << " " << (j->first) << '\t' << it.hours << "\t(";
+            cout << " " << (j->first) << "    " << it.hours << "    (";
 
             for ( std::set<int>::iterator k = it.tasks.begin(); k != it.tasks.end(); ++k)
                 cout << ' ' << (*k);
@@ -318,7 +318,7 @@ void report()
     cout << "\n---------------------------------------------------\n";
     cout << "Total, by people\n";
     for ( HrsPeople::iterator i = hrsP.begin(); i != hrsP.end(); ++i )
-        cout << " " << i->first << '\t' << i->second << "\n";
+        cout << " " << i->first << "    " << i->second << "\n";
 
     vis tasks_act = loadtasks(true);
     vis tasks_don = loadtasks(false);
@@ -338,8 +338,8 @@ void report()
         int sz = 20 - int(s.size());
         if ( sz > 0 ) s += string(sz, ' ');
 
-        cout << " " << i->first << '\t' << s << "-"
-             << '\t' << i->second << "\n";
+        cout << " " << i->first << "    " << s << "-"
+             << "    " << i->second << "\n";
     }
 }
 
