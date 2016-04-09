@@ -26,3 +26,5 @@ TS design discussion
 * Mobile version does not look good - 2 css for PC and mob
 * Icons with arrows (on hold) make wider and arrows head wider
 * Mobile version all must be darker
+* receive and send arrows heads wider
+* all icon pictures lines darker
