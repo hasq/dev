@@ -88,7 +88,7 @@ void crypt(string fin, string fout, bool enc)
 {
     cout << fin << " -> " << fout << '\n';
 
-    std::ifstream in(fin.c_str());
+    std::ifstream in(fin.c_str(), std::ios::binary);
     if ( !in ) throw "cannot open " + fin;
 
     string r;
@@ -97,7 +97,7 @@ void crypt(string fin, string fout, bool enc)
     for (string line; (std::getline(in, line), !!in);)
         r += crline(line, enc) + '\n';
 
-    std::ofstream of(fout.c_str());
+    std::ofstream of(fout.c_str(), std::ios::binary);
     of << r;
 }
 
@@ -110,8 +110,8 @@ std::vector<int> s2v(const string & s)
 
         if ( x < 0 || x > 94 )
             throw string()
-            + "file is not textual or has tabs\n"
-            + "offensive input (" + s[i] + ") [" + s + "]";
+            + "file is not textual, has tabs or dos style\n"
+            + "offensive input (" + (s[i]) + ") [" + s + "]";
 
         v.push_back( x );
     }
@@ -134,6 +134,27 @@ string crline(const string & s, bool e)
     {
         // apply pwd
         for ( size_t i = 0; i < v.size(); i++ ) v[i] = (v[i] + p[i % p.size()]) % 95;
+
+        int sum = 0; // get sum
+        for ( size_t i = 0; i < v.size(); i++ ) { sum += v[i]; sum = sum % 95; }
+
+        // add prefix
+        v = s2v(string() + (char)(32 + sum) + pwd + v2s(v));
+
+		// in-chain
+		for ( size_t i = 1; i < v.size(); i++ ) v[i] = (v[i] + v[i-1]) % 95;
+    }
+    else
+    {
+		// un-chain
+		for ( size_t i = v.size()-1; i >0; i-- ) v[i] = (v[i] + 95 - v[i-1]) % 95;
+
+        // drop prefix
+        v = s2v( v2s(v).substr(pwd.size() + 1) );
+
+        // de-apply pwd
+        for ( size_t i = 0; i < v.size(); i++ )
+            v[i] = (v[i] + 95 -  p[i % p.size()]) % 95;
     }
 
     return v2s(v);
