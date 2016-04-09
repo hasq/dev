@@ -9,3 +9,20 @@ Major things
 Minor things
 ------------
 * fix makefile to remove action if not necessary
+
+
+TS design discussion
+--------------------
+* font for titles make wider - not monospace
+* font for input make wider like todo at the bottom
+* Title: change font color shadow - thicker darker
+* (i) add Q&A + clickable titles and images
+* Token data disabled area shown without cursor
+* Fix error message on SET on different conditions
+* Refresh button and eye button change finger
+* Create new token button to lower
+* Bug: on hold numbers in left incorrect
+* Bug: on hold wallet does not update with another master key
+* Mobile version does not look good - 2 css for PC and mob
+* Icons with arrows (on hold) make wider and arrows head wider
+* Mobile version all must be darker
