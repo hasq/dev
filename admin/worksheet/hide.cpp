@@ -63,7 +63,6 @@ try
     }
 
     string file = av[1];
-    cout << "FILE " << file << '\n';
 
     void crypt(string fin, string fout, bool enc);
 
