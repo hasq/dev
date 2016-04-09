@@ -16,4 +16,5 @@ hide tech_tasks.txt.e
 timeapp.exe
 hide timesheet
 svn ci timesheet.e -m "time"
-del tech_tasks.txt timesheet
+del tech_tasks.txt
+move timesheet ts_backup.tmp
