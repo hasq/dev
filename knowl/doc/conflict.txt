@@ -1,0 +1,47 @@
+
+NODE 1		NODE 2         NODE 3
+0 aaa ab0	0 aaa ab0      0 aaa ac0
+1 aaa ab1	1 aaa ab1
+2 aaa ab2	2 aaa ac2
+3 aaa ab3	3 aaa ac3
+4 aaa ab4
+
+Ignoring notification:
+1. Someone sends "note 3/4 aaa" to N1
+2. N1 ignores because it has 4 >= 3/4
+
+Accepting notification
+1. [NSND] Someone sends "note 4 aaa" to N2
+2. [NCHK] N2 checks N1 and gets record which does not match
+3. [CSET] N2 sets DN "aaa" to conflict state
+4. [CSND] N2 sends "conflict" message to N1
+5. [ISVT] N2 instructs its Servant to process conflict
+
+   below are steps executed by any node, e.g. N1
+6. [CCHK] N1 checks its neighbours if there is mismatch
+7. [NOCO] N1: if not, N1 done
+8. [CSET] N1: if yes, sets DN "aaa" to conflict state
+9. [CSND] N1 sends "conflict" message to its all close neighbours
+10.[ISVT] N1 instructs its Servant to process conflict
+
+Servant on conflict process:
+1. [VERI] Verifies its own integrity of chain (?) maybe not necessary
+2. [TREE] Ask every alive family node building a deviation tree (branches).
+	Each distinct branch has a list of associated nodes.
+	Two or more nodes may be on the same branch even if their last N
+	are different.
+3. [VOTE] Makes voting among branches by number of nodes associated.
+	If two or more groups have the same highest number of nodes, then
+	in each of those groups find the highest number "Dn Xor Hash(node_name)",
+	and the group having the smallest (or highest) this value wins
+4. [VDNE] If the winner brunch of the same node, then Release conflict state - DONE
+5. [VCUT] If not, then cut index upto the point where Record N is the same as in the winning 
+	branch. It can be all records.
+6. [CRLS] Release conflict state for DN - safe since index is already cut
+7. [VADD] Add all records from the winning branch
+8. [CSND] Send "conflict" message to neighbours
+
+Conflict state on DN:
+1. [CBLK] Any updates and notifications on Dn are ignored
+2. [RDNR] Any read requests are processed as normal
+

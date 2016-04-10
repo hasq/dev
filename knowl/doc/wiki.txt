@@ -1,0 +1,2 @@
+Email notifications on wiki update:
+	http://hasq.org/wiki/pmwiki.php?n=SiteAdmin.NotifyList

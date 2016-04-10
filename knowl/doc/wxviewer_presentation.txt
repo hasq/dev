@@ -1,0 +1,47 @@
+1. Sodaem canvas 5x6 (File -> New)
+2. Sozdaem bazi na nodah 1 i 2 (Right click on cell -> Create cell database, select checkbox "all hashes" -> OK)
+3. Startuem nodi 1 i 2 (Right click on cell -> Start node at ...)
+4. Dadim commandu "Last" nodam 1 i 2, chtobi ubeditsa, chto bazi pustie (Right click on cell -> Send command ... -> "last" -> "OK").
+	V status-stroke programmi dolzhna poyavitsa stroka "Received: [IDX_NODN]"
+5. Inicializiruem bazu u noda 1 (Right click -> Send command -> "zero" -> "OK"
+6. Povtorim punkt 4. Dlya noda 2 budet tot zhe "Received: [IDX_NODN]", nod 1 vidast "Received: [OK 0 ...]"
+7. Sozdadim 1-ju zapis v node 1 (Right click -> Send command -> Stavim v pole "N"=1 (pervaja zapis) -> "add" -> "OK"
+8. Posle kazhdoj kommandi mi vidim v status-stroke stroku tipa "Received: [OK 1001]"
+	Mozhno proverit status zadanija commandoj "job" (Right click -> Send command -> "job" -> ispravit job id v pole vishe -> "OK"
+9. Sozdadim svjazi dlya nodov. (Left click on 2nd node, on budet videlen, then right click on 1st node -> Connect to selected)
+	Teper delaem to zhe samoe, no naoborot (Left click on 1st node, then right click on 2nd node -> Connect to selected)
+9a.	Select menu Canvas -> Refresh all connections. Eto obnovit otrisovku svjazej v wxviewer.
+10. Dobavim esche odnu zapis k nodu 1 (Right click on cell -> Send command -> Stavim v pole "N"=2 (vtoraja zapis) -> "add" -> "OK"
+11. Povtorim punkt 4. Mi vidim, chto vtoroy nod sinhronizirovalsa s pervim.
+12. Sozdadim bazi v ostalnih jachejkah (nodah). (Canvas -> Nake databases ..., select checkbox "all hashes" -> OK)
+13. Zapustim vse ostavshiesya nodi (Canvas -> Start nodes everywhere)
+14. Ostanovim nodi 3,4,5 i 8,9,10 (Right click -> Shutdown node)
+15. Soedinim sve nodi svjazami (Canvas -> Cross interconnect all)
+16. Dobavim nodu 1 ili 2 zapis nomer 3 (Right click on cell -> Send command -> Stavim v pole "N"=3 -> "add" -> "OK"
+	Mi vidim, kak proishodit obshaja sinhronizacia baz dannih mezhdu nodami.
+17. Zapustim nodi 3,4,5 (Right click -> Start node -> "OK"
+18. Videlim nodi 3,4,5 (Left click on node) and then:
+	Right click on node 3, select "Connect to selected"
+	Right click on node 4, select "Connect to selected"
+	Right click on node 5, select "Connect to selected".
+	Snimem videlenie s nodov 3,4,5 (Left click on node).
+19. Zapustim nodi 8,9,10 (Right click -> Start node -> "OK"
+20. Videlim nodi 8,9,10 (Left click on node) and then:
+	Right click on node 8, select "Connect to selected"
+	Right click on node 9, select "Connect to selected"
+	Right click on node 10, select "Connect to selected".
+	Snimem videlenie s nodov 3,4,5 (Left click on node).
+20. Zapustim nodi 8,9,10 (Right click -> Start node -> "OK"
+21. Inicializiruem 1-u cepochku (nodi 8,9,10):
+	Right click on any (8-9-10) node, select "Send command" -> Change "RDN" field from "rdn" to "user1", for example -> "zero" -> "OK"
+	Right click on any (8-9-10) node, select "Send command" -> Change "RDN" field from "rdn" to "user1", change "N" field to "1" -> "add" -> "OK"
+	Right click on any (8-9-10) node, select "Send command" -> Change "RDN" field from "rdn" to "user1", change "N" field to "2" -> "add" -> "OK"
+	Right click on any (8-9-10) node, select "Send command" -> Change "RDN" field from "rdn" to "user1", change "N" field to "3" -> "add" -> "OK"
+22. Povtorim punkt 15, zatem "Canvas" -> "Refresh all connections"
+23. Dobavim k gruppe (8-9-10) esche odnu zapis (Right click -> Send command -> Change "RDN" to "user1", change "N" to "4" -> "add" -> "OK"
+24. Dobavim k osnovnoy gruppe zapis (Right click -> Send command -> Change "N" to "4" -> "add" -> "OK"
+25. Mi vidim, chto vse zapisi sinhronizirujutsa, vse nodi teper imejut zapisi 2-h nodov (rdn & user1)
+26. Commanda "range" (Right click -> Send command -> "range" -> "OK") vidaet diapazon zapicej noda (-1 oznachaet poslednuju zapis)
+27. Commanda "info" (Right click -> Send command -> "info") ciklicheski perebiraet varianti vizova.
+	S ee pomoshju mozhno uznatj tip bazi (info db), info o sosednih/connected nodah (info nbs), proveritj dostupnostj noda (ping) i t.d.
+

@@ -1,0 +1,48 @@
+Names
+-----
+
+- TokenSwap client = tsclnt
+- Hasq client = hqclnt
+
+HASH: text -> sha2-256 -> md5 -> result
+(sm5) SHA256+MD5
+
+TokenSwap client
+----------------
+
+General fields
+	[Raw DN|Input] [File-maybe drag and drop or link popup with browse] Token - hash
+	[Password] + [show tick] + strength
+    (exists) (token data) (verify)
+
+Tabs
+1. Create token
+	[Button]
+	?Response field
+
+2. Set data
+	[Data] textarea; UTF-8 sdelat research kakuju kodirovku izpolzovat dlja
+			binarnoj daty
+	[button]
+
+3. Search
+	from [now] to [01-01-2016]
+	[Button]
+
+4. Send
+	[Button]
+	textarea
+
+5. Receive
+	textarea
+	[button]
+
+
+Notes:
+
+ abc\n \ abc ->
+ abc
+   abc
+
+ abc abc -> abc abc
+ abc   abc - > abc \ \ abc

@@ -1,0 +1,33 @@
+
+ Regenerating index algorythm                                                  No of file ops
+ ----------------------------                                                  -------------- 
+
+ - read content of input slice directory (unique names) into memory                  (1)
+
+ - for each unique name (uN) :
+   {
+     - create corresponding uN directory in the output index directory               (1)
+
+     - for each meta file from slice/uN/meta directory :
+       {
+         - read its content into memory                                              (1)
+
+         - for each line (slice file name) in meta file :
+           {
+             - read content of slice file into memory                                (1)
+
+             - for each line (record) in slice file :
+               {
+                 - try to find corresponding DN file in the output index directory  (3+)
+
+                 - if not found create one                                          (3+)
+
+                 - use IndexReader object to collect DN file info                    (1)
+
+                 - truncate DN file if necessary (very rare event)                  (2+)
+
+                 - write record to DN file                                           (1)
+               }
+           }
+       }
+   }

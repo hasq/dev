@@ -1,0 +1,133 @@
+Configuration:
+0.1 Net config: interface, subnetmask, broadcast, gateway, nameserver.
+0.2 OS config: OS host name, etchosts
+0.3 Hasq databases
+0.4 Hasq CLOs
+
+User start up scenario 1
+1.1 Download hasq-v.iso
+1.2 Start Comp/VM wih hasq-v.iso
+1.3 Answer a list of config questions in console
+1.4 Program saves answers on HD /hasq/hasqd.conf
+1.5 Restart
+
+User start up scenario 2
+2.1 Download hasq-v.iso and hasqcfg.app
+2.2 Patches hasq-v-my.iso
+2.3 Start Comp/VM wih hasq-v-my.iso
+
+
+Hasq ISO has a switch ASK which can be
+	* Yes (DEFAULT)
+	* No
+
+  Block diagram
+  =============
+
+                       [start]
+                          |
+                 <3.1 Timeout message>
+                          |
+                 <3.2 find cfg on HD>
+                          |
+                    [3.3 Timeout] - Yes -+ (Key pressed)
+                          |              |
+                          No             |
+                          |              |
+                   <HD cfg found ?>      |
+                    |            |       |
+                   Yes           No      |
+                    |            |       |
+          [3.4 Use HD cfg]   <ASK=Yes> --+
+                               |         |
+                               No    [3.5 If no HD cfg, Load CD cfg]
+                               |         |
+                 [3.10 Use CD cfg]   [3.6 Ask questions] < - - +
+                               |         |                     |
+                               |     [3.7 Console] - - - - - - +
+                               |         |
+                               +---- [3.8 Write cfg]
+                                         |
+                                     [3.9 Restart]
+
+
+  ===============================================================
+
+Detailed descriptions
+
+2.2 Program can extract text cfg file from iso and can patch iso with a given text cfg file
+
+3.2 Try to mount writable HDs and find /hasq/hasqd.conf
+	If more than 1 is found use first
+	If none found exit with error
+
+3.3 Timeout 1-2 s asking to enter interactive mode
+
+3.4 Read config
+	* Set network
+	* Edit OS files
+	* Create DBs if not exist
+	* Start hasqd
+
+3.6 Interactive questions
+	3.5.1 HD hardware
+		* list all HD with info Format/Writable/Size/MountPoint/Hasqd_conf
+		* ask if Format is needed
+		* do Format
+		* goto begin (list)
+	3.5.2 Net config
+		* interface, subnetmask, broadcast, gateway, nameserver
+		* set system config and restart network
+	3.5.3 Os config
+		* OS host name, etchosts
+		* set system files
+	3.5.4 Hasq DB
+		* list DBs (if empty, "please add new DB")
+		* ask add new DB? If No goto 3.5.5
+		* ask DB Traits
+		* goto begin (list)
+	3.5.5 Hasq CLOs
+		* enter command line options
+
+3.7 Console. Entering shell to give any other system commands or to check settings
+
+
+  Config file
+  ===========
+
+interface 127.0.0.1
+...
+nameserver 220.1.2.3
+hostname hasqserver
+hosts
+{
+127.0.0.1 localhost
+}
+DB
+{
+	Dir = Directory
+	HashShort = md5
+	HashFull = MD5 well known hash function
+	nG = 1
+	magic = (whitespaceses ignored at begin and end)
+	sliceKb = 100
+	thin = 0
+}
+DB
+{
+	...
+}
+CLO p=0
+
+
+
+//*********************************************************************************************
+
+
+
+Perhaps you forgot to set the interface to up?
+
+ioctl(sockfd, SIOCGIFFLAGS, &ifr);
+ifr.ifr_flags |= IFF_UP | IFF_RUNNING;
+ioctl(sockfd, SIOCSIFFLAGS, &ifr);
+

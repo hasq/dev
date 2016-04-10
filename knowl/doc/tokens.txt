@@ -1,0 +1,34 @@
+Ideas for Token client
+
+TABS
+        1 Wallet
+
+        Section : Settings
+                DB: Wallet      Password        Export
+                DB: Tokens      Password        Import
+
+        Section : List of tokens with password checks [V] or [X]
+        Operations: add to list, exclude from list
+
+        2 Create
+        Creating DNs rawDN 0001-0100
+
+        3 Verify
+        3.1     Prove ownership [x] save last data
+        3.2     Change Data
+   
+        4 Transfer
+
+        DN is Mine                      DN is not Mine
+
+        4.1     Pass DN                 Accept DN
+                Give K1 K2              Get K1 K2
+
+        4.2     Release DN              Request DN
+                Get G2 O2               Give G2 O2
+
+        4.3     Blocking                Blocking
+        4.3.1   Pass-Pass               Accept-Accept
+        4.3.2   Pass-Release            Accept-Request
+        4.3.3   Release-Pass            Request-Accept
+        4.3.4   Release-Release         Request-Request

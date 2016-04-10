@@ -1,0 +1,89 @@
+Simplified version
+
+IV - random block of sender
+ZB - Zero block or any other constant value block, e.g. 12345...
+P[n] - Plain text n-th block
+C[n] - Cipher text n-th block
+H() - hash digest function
+(X) - Xor function
+N - total number of plain text blocks
+K - Shared key
+
+Encoder:
+
+    H(K,IV)      H(K,C[1])       H(K,C[N-1])     H(K,C[N])
+         |             |                 |             |
+         V             V                 V             V
+  P[1]->(X)     P[2]->(X)  ...    P[N]->(X)       ZB->(X)
+         |             |                 |             |
+         V             V                 V             V
+       C[1]          C[2]              C[N]        C[N+1]
+
+
+Encoder sends:
+
+	IV,C[1],...,C[N],C[N+1]
+
+Decoder:
+
+    H(K,IV)      H(K,C[1])       H(K,C[N-1])     H(K,C[N])
+         |             |                 |             |
+         V             V                 V             V
+  C[1]->(X)     C[2]->(X)  ...    C[N]->(X)   C[N+1]->(X)
+         |             |                 |             |
+         V             V                 V             V
+       P[1]          P[2]              P[N]           ZB
+
+Decoder verifies that the last operation actually gives ZB,
+otherwise ignores the whole message.
+
+
+NOTE:
+Only CBC mode of AES is actually AES algorithm. All other
+are using AES encoder only as a digest function (withour revert decoder).
+In similar case any other hash/digest function can be used instead.
+
+
+=====================
+
+Older version
+
+
+IV - 1st random block of sender
+ST - 2nd random block of sender
+ZB - Zero block or any other constant value block, e.g. 12345...
+P[n] - Plain text n-th block
+C[n] - Cipher text n-th block
+H() - hash digest function
+(X) - Xor function
+N - total number of plain text blocks
+K - Shared key
+
+Encoder:
+
+ H(K,IV,ZB)  H(K,IV,C[0])  H(K,IV,C[1])    H(K,IV,C[N-1])  H(K,IV,C[N])
+         |            |             |                 |             |
+         V            V             V                 V             V
+    ST->(X)    P[1]->(X)     P[2]->(X)  ...    P[N]->(X)       ZB->(X)
+         |            |             |                 |             |
+         V            V             V                 V             V
+       C[0]         C[1]          C[2]              C[N]        C[N+1]
+
+
+Encoder sends:
+
+	IV,C[0],C[1],...,C[N],C[N+1]
+
+Decoder:
+
+ H(K,IV,ZB)  H(K,IV,C[0])  H(K,IV,C[1])    H(K,IV,C[N-1])  H(K,IV,C[N])
+         |            |             |                 |             |
+         V            V             V                 V             V
+  C[0]->(X)    C[1]->(X)     C[2]->(X)  ...    C[N]->(X)   C[N+1]->(X)
+         |            |             |                 |             |
+         V            V             V                 V             V
+        ST          P[1]          P[2]              P[N]           ZB
+
+Decoder ignores decoded ST and verifies that the last operation
+actually gives ZB, otherwise ignores the whole message.
+

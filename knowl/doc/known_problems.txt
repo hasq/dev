@@ -1,0 +1,5 @@
+
+1. File to send to user is limited by 1Mb, as it is loaded into memory
+	before sending.	See SVN/dev/hasqd/src/gl/gl_utils.cpp
+
+

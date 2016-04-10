@@ -1,0 +1,7 @@
+- nginx: nuzhno pogovorit po povodu portov 443 i 80
+	nebolshoj vopros: mozhno li na odnom portu imet i proxy i starticheskie 
+	stranicy v zavisimosti ot puti? Naprimer
+	https://hasqd/client           -> .../htmlpub/client/index.html
+	https://hasqd/client/file.txt  -> .../htmlpub/client/file.txt
+	https://hasqd/client/*         -> .../htmlpub/client/*
+	https://hasqd/* (vse ostalnoe) -> proxy

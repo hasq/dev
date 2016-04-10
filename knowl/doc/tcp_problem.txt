@@ -1,0 +1,12 @@
+
+
+                   Browser    tcp_send   tcpclient   hasqd
+
+hasqd  (13001)       o          X          o           o
+websrv(13002)        o          X          X           X
+tunnel(13003)        o          X          X           X
+tcp_lis(13004)       o          o          X           o
+
+o - OK
+X - does not work
+

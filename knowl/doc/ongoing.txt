@@ -1,0 +1,160 @@
+
+How to set up a machine to run on going tests
+
+On windows we assume that we have our toolset (ap13) located at c:\ap13e
+
+0. Howto run ongoing tests
+	First setup system as described below.
+	Goto "SVN://hasqd/tests/ongoing" folder.
+	Change System HASQHOSTID variable to yours (file run_forever.sh), if not exist - create new
+	If you want to run tests one, launch the "sh run_once.sh" script.
+	If you want to run periodical tests, launch the "sh run_forever.sh".
+	"run_forever.sh" will send letters to HASQ team depending on tests results.
+
+1. Windows MS32
+	2.1 Set up blat, See 6
+	2.2 We need to get https://svn.hasq.org/svn/avo/ht/hasqd/
+	2.3 Go to SVN/hasqd/tests/ongong folder
+	2.4 Run che "sh check_crt_results.sh" command
+
+2. Windows MS64
+	2.1 Set up blat, See 6
+	2.2 Set up 64bit compiler
+		Unpack SVN/bin/cpp/amd64.fcl.bz2 and place it under ap13
+		Set up 'cl' environment on x64 directories
+
+
+3. Windows GCC32
+	...
+
+4. Full linux (Debian,Centos,Ubunty...) 32,64
+	4.1 Check that "mail" app present in system, otherwise install the "mailutils" packet.
+	4.2 Check that "ssmtp" app present in system, otherwise install the "ssmtp" packet.
+	4.2.1 If not, goto 8 for CentOS, ...
+	4.2.2 Add to "/etc/ssmtp/revaliases" file:
+			root:hasqsvn@gmail.com:smtp.gmail.com:465
+			YOURLINUXLOGIN:hasqsvn@gmail.com:smtp.gmail.com:465
+		where "YOURLINUXLOGIN" is your login in system.
+	4.2.3 Copy "SVN://hasqd/src/img/ssmtp/ssmtp.conf" into "/etc/ssmtp/ssmtp.conf"
+	4.2.4 Give command "echo test | ssmtp -v -C /etc/ssmtp/ssmtp.conf MAIL_ADDRESS"
+		then add text + Ctrl-D
+		if ssmtp still does not work add a line in /etc/ssmtp/ssmtp.conf
+		TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
+	4.3 Check that "fcl" or "fcl3" tool present in system, otherwise install the fcl tool:
+		4.3.1 Go to SVN://hasqd/tools/fcl folder
+		4.3.2 Run "g++ -o fcl3 fcl.cpp"
+		4.3.3 Copy the "fcl3" tool to "/usr/bin" folder
+	4.4 Check that GCC compiler is at least 4.7.1, if not:
+	4.4.1 CentOS see 7
+
+5. Tinycore
+	5.0.1 If new machine goto 5.1, 
+	5.0.2 If machine has already been created and run goto 5.3.3
+	5.1.1 Adding HDD to TinyCore virtual machine
+		In main "VMware Player" right click on virtual machine name.
+		Select "Settings..."
+		Click "Add..." button
+		Select "Hard Disk", click "Next >"
+		Select "SATA", click "Next >" (If no SATA slect IDE)
+		Select "Create a new virtual disk", click "Next >"
+		Set the "Maximum disk size (GB)" at 8.0, click "Next >"
+		Select location for Disk file, click "Finish"
+	5.2 Boot into TC with connected tcz ISO
+		Its described at http://hasq.org/wiki/index.php?n=Main.TCremaster#mkopt
+	5.3 Prepare HDD to use
+		5.3.1 Run "sudo fdisk /dev/sda"
+			In fdisk:
+				Command (m for help): _
+					Print "n", press "Enter"
+				Command action
+				e extended
+				p primary partition (1-4)
+					Print "p", press "Enter"
+				Partition number (1-4): _
+					Print "1", press "Enter"
+				First cylinder (1-1044, default 1): _
+					Just press "Enter"
+				Last cylinder or +size.........: _
+					Just press "Enter"
+				Command (m for help): _
+					Print "w", press "Enter"
+		5.3.2 Create file system on HDD
+			"sudo mkfs.ext4 /dev/sda1"
+		5.3.3 Mount HDD
+			Create a folder for mount HDD:
+				"sudo mkdir /data"
+			Mount the HDD:
+				"sudo mount /dev/sda1 /data"
+			Now we can check result with:
+				"df -h"
+		5.3.4 Repair the permissiond on HDD:
+			"sudo chown $USER /data"
+	5.4 Create temporary folder (ex. "/data/temp")
+	5.5 Mount additional iso to temp folder:
+		"sudo mount /dev/sr0 /data/temp"
+		temp filder must have a couple of *.tcz files. If not:
+		"sudo umount /data/temp"
+		"sudo mount /dev/sr1 /data/temp"
+	5.6 Goto temp folder ("cd /data/temp") and install needed 
+			packets ("tce-load -i *.tcz")
+	5.7 We need to get SVN://hasqd
+		Go to data folder "cd /data"
+	"svn --username YOUR_SVN_USER_NAME ls https://svn.hasq.org/svn/avo/ht/hasqd/"
+	"svn --username YOUR_SVN_USER_NAME co https://svn.hasq.org/svn/avo/ht/hasqd/ hasqd"
+	5.8 Check that "fcl" or "fcl3" tool present in system, otherwise see the 4.3
+
+6. Setting blat on Windows
+	We need to get SVN://bin/blat
+	Go to "blat" folder
+	Run stunnel-5.01-installer.exe
+	Answer fo all questions on console - just press <Enter>
+	Push <Close> button
+	Run the "stunnel" link on the Desktop
+	Add "stunnel" to Startup group, so next time it starts
+#	Click with the mouse right button on the stunnel button in the system tray, select "Edit Configuration"
+	We need to enter into hasqsvn gmail account through any browser
+	After login just close browser
+	Unpack the blat:
+	Run: bunzip2 blat312.fcl.bz2
+	Run: fcl3 extr blat312.fcl
+	Go to "blat312/full" folder
+	Copy "blat.exe" and "blat.dll" to "c:/ap13e/run" folder
+
+	Oleg's version:
+	In SVN/bin/blat
+	unpack stunnel.fcl.bz2 and run stunnel.exe
+	unpack blat312.fcl.bz2 and copy "blat.exe" and "blat.dll" to "c:/ap13e/run2"
+	Change email addres in send_exmpl.bat and run it
+	Find the received email!
+	Revert changes in send_exmpl.bat
+
+7. CentOS Updating GCC compiler
+	In root:
+
+	 $ export http_proxy="http://username:password@proxy.server:8080"
+	 $ wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
+	 $ sh -c 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
+	 $ yum install devtoolset-1.1 
+
+	Note devtoolset in the last command.
+
+	Then in normal shell
+
+	 $ scl enable devtoolset-1.1 bash
+	 $ gcc --version 
+	 gcc (GCC) 4.7.2
+
+8. CentOS ssmtp
+	8.1 Centos 64
+		# yum check-update
+		# yum -y update (may take very long time and massive download)
+		# wget -c http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+		# rpm -ivh epel-release-5-4.noarch.rpm
+		# yum -y install ssmtp
+	8.2 Centos32 ???
+
+
+
+
+
+		

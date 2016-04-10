@@ -1,0 +1,32 @@
+
+This describes the problem of public opening of records
+
+
+The problem
+-----------
+
+Suppose User1 sends RecordX to ServerA which becomes public immediately.
+User2 reads RecordX, modifies field O, and sends falsified RecordY to ServerB.
+ServerB publishes RecordY.
+Only now (!) ServerB receives notification from ServerA about RecordX.
+Servers get into conflict.
+
+
+Proposed solution
+-----------------
+
+User1 sends RecordX to ServerA. ServerA adds DN to the list of hidden DNs (LHT).
+User2 reads RecordX, but fields KG are replaced with 'xxx' (in both last and slices).
+User2 cannot tamper the record.
+
+ServerA sends notifications to its neighbours
+ServerA receives requests from neighbours to send RecordX and replies by sending
+SKC-encrypted RecordX
+
+Upon Event0 DN is removed from LHT on ServerA.
+Event0 can be defined as a sequence or a combination of other events.
+For example,
+Event1 - receiving SKC notification from another server;
+Event2 - time lapsed since record publishing or another event;
+Event3 - active confirmation of RecordX from neighbours.
+

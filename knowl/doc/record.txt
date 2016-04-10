@@ -1,0 +1,113 @@
+
+************************************************************
+*
+*	// C++ example of paring record textual representation
+*
+*	istringstream is([string])
+*	for(string s;is >> s;)
+*	{
+*		[replace non printable symbols with .]
+*		...
+*	}
+*
+************************************************************
+
+Record Syntax
+
+This document describes the syntax of textual representation of record.
+
+1. Basic fields of record are:
+	N S K G O D
+
+2. Number of G fields can be any including 0
+so that the following records are valid records
+	N S K O
+	N S K G G G O
+
+3. Fields are separated by space ' ' and records are separated by new line \n or \r\n
+	- User input accepted: fields are separated by any white space
+	That corresponds to reading std::string from istream
+
+4. N is decimal nummber in text not greater than MAX of type int64
+
+5. Fields S K F O are text representations in hex format with lower case of letter a-f
+	- User input accepted: both lower and upper cases a-f and A-F
+
+6. Data is a list of words separated by space. Words consist of printable characters
+	from ! to ~. 
+	- User input accepted: whitespaces between words
+	
+	
+7. Examples
+
+	Valid records         		Data
+		N S K G O aaa  bbb	(aaa bbb)
+		N S K G O : :aaa	(: :aaa)
+		N S K G O :aaa		(:aaa)
+		N S K G O : aaa		(: aaa)
+		N S K G O aaa		(aaa)
+		N S K G O :   ::  :	(: :: :)
+		N S K G O :::		(:::)
+		N S K G O aaa<x>bbb	(aaa.bbb - <x> is non-printable symbols - replaced with dot)
+		N S K G O :aaa.bbb	(:aaa.bbb)
+
+
+8. Universal Record Format (URF)
+
+	(traits)|<dbname> N DN F1 F2 ... <data>
+
+	(traits)|<dbname> - one of two Traits or DB name
+	(traits) is (hash,nG[,magic])
+
+	DN - is a hash or [raw DN]
+
+	F - is one of
+		1. Hash
+		2. [passphrase] 
+		3. [passphrase]:N 
+		4. [passphrase]L:N
+		5. [passphrase]L
+		6. 0
+
+	2. [abc] means to generate all remaining hash fields using passphrase 'abc'
+	3. [abc]:N means to generate exactly N hash fields with 'abc'
+	4. [abc]L:N means to generate exactly N hash fields adding L random decimal digits to 'abc'
+	5. [abc]L means to generate all remaining hash fields adding L random decimal digits to 'abc'
+	6. 0 means that hash field must be filled with zeros
+	
+Examples:
+	_md5 3 5c9f6b13 d03a9612 0df95498 132d03a9 some data
+	(md5,1) 3 5c9f6b13 d03a9612 0df95498 132d03a9 some data
+	(md5,1,abc) 3 5c9f6b13 d03a9612 0df95498 132d03a9 some data
+	(md5,1) 3 5c9f6b13 [abc] some data
+	(md5,1) 3 [dn] [abc] some data
+	(md5,1) 3 [dn] [abc]:1 [abd]:2 some data
+	(md5,1) 3 [dn] [abc]:1 0df95498 132d03a9 some data
+	(md5,1) 3 [dn] 0df95498 [abc]:1 132d03a9 some data
+	(md5,1) 3 [dn] [abc]2:3 some data
+	(md5,1,magic) 0 [dn] 0 0df95498 [abc]2:3 some data
+
+
+========================= older text
+
+	Record core can be generated from N S and password
+	(and S can be generated from raw DN)
+	In this case a reference to database type is required
+
+	(traits)|<dbname> N DN [password] <data>
+	(traits)|<dbname> N [rawDn] [password] <data>
+example:
+	_md5 123 [mydn] [mypassowrd] D
+
+9. Transitional records
+
+	(traits)|<dbname> N DN(or)[rawDn] [password1]:<n1> [password2]:<n2> <data>
+example:
+	_md5 123 [mydn] [pass1]:1 [pass2]:2 D
+
+(traits):
+	(hash,nG[,magic])
+	(md5,1)
+	(wrd,2,aaa)
+
+

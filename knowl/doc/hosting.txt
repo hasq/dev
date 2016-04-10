@@ -1,0 +1,75 @@
+
+	DeamHost configuration
+
+0. All backups -> /opt/backup
+
+1. What are system users and who are admins?
+System users written in /etc/sudoers
+Currently - mazonka, avadm, kostya
+
+2. Where are SVN passwords? 
+Web-SVN and TRAC apache passwords -> /opt/svn.htpasswd
+
+3. What are SVN users?
+svn ls https://hasq.org/svn/
+om:1234
+
+4. Where is SVN repository?
+/var/svn
+
+5. Where is Apache config?
+/etc/apache2/
+
+6. Where is pmwiki?
+/var/www/hasq.org/wiki/
+
+7. What are Mail users and their passwords?
+om, ss, sr, av, kg, vp, info, root
+email passwd - /var/mail/vhosts/hasq.org/passwd
+email shadow - /var/mail/vhosts/hasq.org/shadow
+
+8. Where is Mail config?
+/etc/postfix/
+/etc/dovecot/
+
+9. Where is Mail data (emails)?
+/var/mail/vhosts/hasq.org/"$username"
+
+10. Where are cron scripts?
+/opt/cronscripts/
+
+11. Email client configuration
+	IMAP settings
+		Server hasq.org
+		login: XX@hasq.org
+		Port: 993 (maybe 143)
+		Connection: SSL/TLS (maybe STARTTLS)
+		AUTH: Normal password (plain text)
+	SMTP:	
+		Server: hasq.org 
+		Port: 2525 (maybe 465,25,26)
+		login: XX@hasq.org
+		Connection: SSL/TLS (maybe STARTTLS)
+		AUTH: {Password, transmitted insecurely|Normal password}
+
+12. Email password change
+	on dreamhost console - command 'doveadm pw'
+	this hash needs to be placed in /var/mail/vhosts/hasq.org/shadow
+	then $ sudo /etc/init.d/dovecot restart
+
+13. Adding a new user or alias
+	cd to '/etc/postfix'
+	Edit the 'virtual_alias'
+	then execute 'postmap virtual_alias'
+	then execute	'/etc/init.d/postfix restart'
+			'/etc/init.d/saslauthd restart'
+			'/etc/init.d/dovecot restart'
+
+14. How to start web, mail and hasqd servers after downs.
+	Run VMWare player and start all 3 virtual machines.
+	Type in console of tc_web virtual machine:
+	$ cd /disk/tcz
+	$ tce-load -i ssmtp
+	$ tce-load -iw bash
+	This need for hooks working
+	

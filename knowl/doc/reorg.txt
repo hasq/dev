@@ -1,0 +1,26 @@
+Reorganisation algorithm
+
+----> neighbours
+- - > other
+
+	( )----->( )------>( )
+     |
+     + - - ->( )- - - >( )
+     |
+     +------>( )
+
+1. Get list of all
+	ip:port name <list of nbs>
+
+2. Build graph
+
+3. Sort by reachability level
+
+4. Try sacrifice every NB for every least reachable
+
+5. Evaluate benefit
+
+6. Make desicion on sacrifice
+
+7. Commit sacrifice
+

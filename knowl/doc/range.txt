@@ -1,0 +1,82 @@
+
+
+ Replies for 'record' and 'range' commands
+ -----------------------------------------
+
+
+ Replies can be best understood using the following example:
+
+                                  ____________
+   ------------ 0 ------------ 10 ------------ 20 ---------------
+        A               B               C                D
+
+   In this example:
+     1) horizontal line represents database
+     2) 0, 10, 20 represent record numbers in the database
+     3) database contains records from 10 to 20 only
+     4) A, B, C, D represent record numbers which user can pass to
+        'record' and 'range' commands
+
+   --------------------------------------
+     command    index/range     reply
+   --------------------------------------
+     'record'       A          IDX_NEG
+                    B          NO_RECS
+                    C          OK
+                    D          IDX_HIGH
+
+     Note:  'OK' reply has the following format:
+
+               OK record_N
+
+   --------------------------------------
+     'range'        AA         IDX_NEG
+                    AB         NO_RECS
+                    AC         OK
+                    AD         OK
+                    BB         NO_RECS
+                    BC         OK
+                    BD         OK
+                    CC         OK
+                    CD         OK
+                    DD         IDX_HIGH
+                    DA         BAD_RANGE
+
+     Note:  'OK' reply has the following format:
+
+               OK N <CRLF> records
+
+                 N       - number of records which would be returned if no restriction on number
+                           of records is applied
+                 records - records which fall into specified range minus restricted
+
+   --------------------------------------
+
+ Example for 'range' command:
+
+	Let database has records 10, 11, 12 ... 19, 20
+	Restriction: 10
+
+	     request                 reply
+        ----------------------------------------
+	0:20                =>  OK 11 recs 11:20
+	0:5                 =>  NO_RECS
+	0:10                =>  OK 1 recs 10:10
+	0:15                =>  OK 6 recs 10:15
+	0:40                =>  OK 11 recs 11:20
+	30:40               =>  IDX_HIGH
+	18:40               =>  OK 3 recs 18:20
+	12:15               =>  OK 4 recs 12:15
+	-26:-24	[(-5):(-3)] =>	IDX_NEG
+	-26:-15	[(-5):5]    =>	NO_RECS			
+
+        Index can be specified as a negative value, which means counting backwards.
+        In this example
+                   -1 -> 20
+                   -2 -> 19
+                   -3 -> 18
+                       ...
+                   -21 -> 0
+                   -22 -> (-1) - not a valid index
+
+                   The range 0:20 can be specified as -21:-1

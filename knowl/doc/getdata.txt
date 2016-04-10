@@ -1,0 +1,5 @@
+
+data user network command
+
+idea:
+get data from the last record which has actually data
