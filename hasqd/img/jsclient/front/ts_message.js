@@ -1,4 +1,4 @@
-var glMsg =
+var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
@@ -17,8 +17,10 @@ var glMsg =
     fileZero : 'File is empty'
 };
 
-var glResponse =
+var gResponse =
 {
+	OK : 'OK',
+	IDX_NODN : 'IDX_NODN',
     NO_RECS : 'NO_RECS',
     URF_BAD_FORMAT : 'URF_BAD_FORMAT',
     REQ_MSG_HEAD : 'REQ_MSG_HEAD',

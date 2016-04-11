@@ -68,21 +68,99 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engGetTokenName (data, s)
+function engGetTokenName (s, z, hash)
 {
-    if (!data)
+    if (!z)
         return s;
 
-    var d = data || '';
+    var l = z.length;
 
-    var dLen = d.length;
-
-    if (d && d.charAt(0) === '[' && d.charAt(dLen - 1) === ']' )
+    if (z.charAt(0) === '[' && z.charAt(l - 1) === ']' )
     {
-        var g = d.substring(1, dLen - 1);
-        if ( engGetHash(g, gCurrentDB.hash) === s) return g;
+        var raw = z.substring(1, l - 1);
+        if ( engGetHash(raw, hash) === s) return raw;
     }
 
     return s;
 }
 
+function engLoadFiles(files, hash, cb0)
+{
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    var file = files[0];
+    var obj = {};
+
+    if (file)
+    {
+        obj.name = file.name;
+        obj.size = file.size;
+        obj.type = file.type;
+    }
+    else
+    {
+        obj.error = null;
+        return cb0(obj);
+    }
+
+    var reader = new FileReader();
+
+    reader.onload = function()
+    {
+        if (+file.size > 20971520)
+            obj.error = gMsg.fileTooBig;
+        else if (+file.size === 0)
+            obj.error = gMsg.fileZero;
+        else
+        {
+			console.log('sha256: '+ engGetHash(this.result, 's22'));
+            obj.raw = this.result; //event.target.result; 
+            obj.loading = false;
+            obj.hash = engGetHash(obj.raw, hash);
+        }
+
+        cb0(obj);
+    };
+
+    reader.onerror = function()
+    {
+        obj.error = gMsg.fileLoadError;
+        obj.loading = false;
+        cb0(obj);
+    };
+
+    reader.onloadstart = function()
+    {
+        obj.loading = true;
+    }
+
+    reader.onloadend = function()
+    {}
+
+    reader.readAsBinaryString(file);
+}
+
+/*
+a=str.charCodeAt(0);
+if (a>0xFF) a-=0x350;
+
+function native2ascii(str)
+{
+    console.log('in: ' + str);
+    console.log('Before: ' + engGetHash(str, 'smd'));
+
+    var out = '';
+    for (var i = 0, l = str.length; i < l; i++) {
+        if (str.charCodeAt(i) < 0x80) {
+            out += str.charAt(i);
+        } else {
+            console.log(str.charCodeAt(i));
+            var u = '' + str.charCodeAt(i).toString(16);
+            out += '\\u' + (u.length === 2 ? '00' + u : u.length === 3 ? '0' + u : u);
+        }
+    }
+    console.log('out: ' + out);
+    console.log('After: ' + engGetHash(out, 'smd'));
+    return out;
+}
+*/

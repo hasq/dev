@@ -150,7 +150,7 @@ function processDates()
 
 function searchSliceBad(data)
 {
-    return data.length < 12 || data.substr(0, 12) == glResponse.REQ_PATH_BAD;
+    return data.length < 12 || data.substr(0, 12) == gResponse.REQ_PATH_BAD;
 }
 
 function searchCacheCall(name)
@@ -312,8 +312,8 @@ function searchValidate2(dn, data)
 
     var cb = function (resp, record)
     {
-        if (resp !== 'OK' && resp !== glResponse.NO_RECS)
-            widModalWindow(glResponse[resp]);
+        if (resp !== 'OK' && resp !== gResponse.NO_RECS)
+            widModalWindow(gResponse[resp]);
 
         else if (resp === 'OK' && record !== null)
         {

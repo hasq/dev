@@ -110,9 +110,9 @@ function engNcAdd(extCb, db, rec, data)
     return ajxSendCommand(cmd, addCb, hasqLogo);
 }
 
-function engNcRecordZero(extCb, tok)
+function engNcRecordZero(extCb, s)
 {
-    var cmd = 'record' + '\u0020' + gCurrentDB.name + '\u0020' + '0' + '\u0020' + tok;
+    var cmd = 'record' + '\u0020' + gCurrentDB.name + '\u0020' + '0' + '\u0020' + s;
 
     var intCb = function (data)
     {
@@ -146,83 +146,3 @@ function engNcJob(extCb, jobId)
     setTimeout(f, 500);
 }
 
-function engLoadFiles(files, hash, cb0)
-{
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    var file = files[0];
-    var obj = {};
-
-    if (file)
-    {
-        obj.name = file.name;
-        obj.size = file.size;
-        obj.type = file.type;
-    }
-    else
-    {
-        obj.error = null;
-        return cb0(obj);
-    }
-
-    var reader = new FileReader();
-
-    reader.onload = function()
-    {
-        if (+file.size > 20971520)
-            obj.error = glMsg.fileTooBig;
-        else if (+file.size === 0)
-            obj.error = glMsg.fileZero;
-        else
-        {
-         //obj.raw = event.target.result;
-            obj.raw = this.result; //event.target.result; vozmojno stroka portit soderjimoe pri konvertacii
-            obj.loading = false;
-            obj.hash = engGetHash(this.result, hash);
-        }
-
-        cb0(obj);
-    };
-
-    reader.onerror = function()
-    {
-        obj.error = glMsg.fileLoadError;
-        obj.loading = false;
-        cb0(obj);
-    };
-
-    reader.onloadstart = function()
-    {
-        obj.loading = true;
-    }
-
-    reader.onloadend = function()
-    {}
-
-    reader.readAsBinaryString(file);
-}
-
-/*
-a=str.charCodeAt(0);
-if (a>0xFF) a-=0x350;
-
-function native2ascii(str)
-{
-    console.log('in: ' + str);
-    console.log('Before: ' + engGetHash(str, 'smd'));
-
-    var out = '';
-    for (var i = 0, l = str.length; i < l; i++) {
-        if (str.charCodeAt(i) < 0x80) {
-            out += str.charAt(i);
-        } else {
-            console.log(str.charCodeAt(i));
-            var u = '' + str.charCodeAt(i).toString(16);
-            out += '\\u' + (u.length === 2 ? '00' + u : u.length === 3 ? '0' + u : u);
-        }
-    }
-    console.log('out: ' + out);
-    console.log('After: ' + engGetHash(out, 'smd'));
-    return out;
-}
-*/

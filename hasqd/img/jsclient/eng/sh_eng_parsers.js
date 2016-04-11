@@ -282,7 +282,7 @@ function engIsAcceptKeys(keys)
 {
     if (!keys)
         return false;
-
+	console.log(keys);
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
     return false;
 
