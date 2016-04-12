@@ -373,10 +373,10 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     var $TokText = $('#textarea_token_text');
     var tokText = textArea($TokText).val();
     delay = +delay || 0;
-
+	
     clearTimeout(gTimerId);
     gLastRec = {};
-
+	
     widClearInitialData(false);
 
     if (0)
@@ -401,7 +401,7 @@ function widLoadFiles(files)
 
     clearTimeout(gTimerId);
     gLastRec = {};
-
+	
     widClearInitialData(true);
     widShowTokenSearch().show();
 
@@ -456,20 +456,20 @@ function widReloadTokenInfo(tok, delay)
 /*
 function gLastRecFill(rec)
 {
-    gLastRec = {};
-    gLastRec.n = '';
-    gLastRec.s = '';
-    gLastRec.raw = '';
-    gLastRec.k = '';
-    gLastRec.g = '';
-    gLastRec.o = '';
-    gLastRec.d = '';
-    gLastRec.state = undefined;
-
-    if (!rec) return;
-
-    for (i in rec)
-        gLastRec[i] = rec[i];
+	gLastRec = {};
+	gLastRec.n = '';
+	gLastRec.s = '';
+	gLastRec.raw = '';
+	gLastRec.k = '';
+	gLastRec.g = '';
+	gLastRec.o = '';
+	gLastRec.d = '';
+	gLastRec.state = undefined;
+	
+	if (!rec) return;
+	
+	for (i in rec)
+		gLastRec[i] = rec[i];
 }
 */
 
@@ -635,9 +635,9 @@ function widCreateButtonClick()
 
     widEmptyTab().show();
 
-    var rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-    var rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-
+	var rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+	var rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+	
     var addCb1 = function (resp)
     {
         if (resp !== gResponse.OK)
@@ -649,9 +649,9 @@ function widCreateButtonClick()
     var addCb0 = function (resp)
     {
         if (resp === gResponse.OK)
-            return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
-
-        widModalWindow(gResponse[resp]);
+			return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
+        
+		widModalWindow(gResponse[resp]);
         widReloadTokenInfo(tok, 0);
     }
 
@@ -992,67 +992,67 @@ function widReceiveTextareaOninput()
 
 function widReceiveButtonClick()
 {
-    var $TokenArea = $('#textarea_token_text');
+	var $TokenArea = $('#textarea_token_text');
     var $AcceptKeysArea = $('#textarea_receive_keys');
     var $PwdInp = $('#input_password');
 
     var rawAcceptKeys = $AcceptKeysArea.val();
     var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
-
+	
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     if (!engIsAcceptKeys(rawAcceptKeys))
         return widModalWindow(gMsg.badAcceptKeys, function () { $AcceptKeysArea.focus() });
-
-    var tok = {};
-    tok.s = acceptKeys[0].s;
-    tok.raw = (gLastRec && gLastRec.raw && tok.s === engGetHash(gLastRec.raw, gCurrentDB.hash))
-              ? gLastRec.raw
-              : '';
-
+	
+	var tok = {};
+	tok.s = acceptKeys[0].s;
+	tok.raw = (gLastRec && gLastRec.raw && tok.s === engGetHash(gLastRec.raw, gCurrentDB.hash))
+	 ? gLastRec.raw
+	 : '';
+	
     clearTimeout(gTimerId);
     gLastRec = {};
-
+	
     widReceiveTab().disable(true);
-
-    var f = function ()
-    {
-        widReceiveKey(acceptKeys);
-    }
+	
+	var f = function () 
+	{
+		widReceiveKey(acceptKeys);	
+	}
 
     widSearchTokenName(tok, f);
 }
 
 function widSearchTokenName(tok, func)
 {
-    console.log(gLastRec);
+	console.log(gLastRec);
     var $TokenArea = $('#textarea_token_text');
-
+	
     if (tok.s === engGetHash(tok.raw, gCurrentDB.hash))
         return func();
 
     var cb = function (resp, record)
     {
-        if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
-            widModalWindow(gResponse[resp]);
+		if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
+			widModalWindow(gResponse[resp]);
 
-        var r = (record === null) ? tok.s : record.d;
-
-        widFileButtonToggle(1);
-        widClearInitialData(true);
-        textArea($TokenArea).val(engGetRawFromZRec(tok.s, r, gCurrentDB.hash));
-
-        if (resp === gResponse.IDX_NODN)
-        {
-            gLastRec.s = tok.s;
-            gLastRec.state = resp;
-            widShowTokenSearch().show(resp);
-            widShowTokenHash(tok.s);
-            return;
-        }
-        else
-            func();
+		var r = (record === null) ? tok.s : record.d;
+		
+		widFileButtonToggle(1);
+		widClearInitialData(true);
+		textArea($TokenArea).val(engGetRawFromZRec(tok.s, r, gCurrentDB.hash));
+		
+		if (resp === gResponse.IDX_NODN)
+		{
+			gLastRec.s = tok.s;
+			gLastRec.state = resp;
+			widShowTokenSearch().show(resp);
+			widShowTokenHash(tok.s);
+			return;
+		}
+		else
+			func();
     }
 
     engNcRecordZero(cb, tok.s);
@@ -1107,9 +1107,9 @@ function widInstantReceive(keys)
     var addCb0 = function (resp, keys)
     {
         if (resp === gResponse.OK)
-            return engNcAdd(addCb1, gCurrentDB.name, keys, null);
-
-        widModalWindow(gResponse[resp]);
+			return engNcAdd(addCb1, gCurrentDB.name, keys, null);
+        
+		widModalWindow(gResponse[resp]);
         widReloadTokenInfo(tok, 0);
     }
 
@@ -1228,7 +1228,7 @@ widSearchProgress.block = function(txt, lnk)
 widSearchProgress.refresh = function()
 {
     var str = widSearchUpdate();
-
+	
     // update widgit only if required
     function update(o, newstr)
     {
@@ -1244,19 +1244,19 @@ widSearchProgress.refresh = function()
 
     update( $('#span_search_mine'), '(' + str.number[1] + ')' );
 
-    var $Onhold = $('#span_search_onhold');
-
-    if (str.number[2] > 0)
-        update( $Onhold, '(' + str.number[2] + ')' );
-    else
-        update( $Onhold, '');
-
-    var $Tocome = $('#span_search_tocome');
-
+	var $Onhold = $('#span_search_onhold');
+	
+    if (str.number[2] > 0) 
+		update( $Onhold, '(' + str.number[2] + ')' );
+	else
+		update( $Onhold, '');
+	
+	var $Tocome = $('#span_search_tocome');
+	
     if (str.number[3] > 0)
-        update( $Tocome, '(' + str.number[3] + ')' );
-    else
-        update( $Tocome, '' );
+		update( $Tocome, '(' + str.number[3] + ')' );
+	else
+		update( $Tocome, '' );
 
     return;
 }
@@ -1293,4 +1293,3 @@ function widDnSelect(dnOrRaw)
     $('#textarea_token_text').val(dnOrRaw);
     widTokenTextOninput();
 }
-

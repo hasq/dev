@@ -221,8 +221,8 @@ function engGetHash(data, h)
             return hex_sha512(data);
         case 'smd':
             return hex_smd(data);
-        case 's21':
-            return hex_sha256(data);
+		case 's21':	
+			return hex_sha256(data);
         default:
                 return null;
     }
@@ -279,10 +279,10 @@ function engGetDataValToRecord(data)
     r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c');
     r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c');
     r = r.replace(/\u000a/g, '\u005c\u006e');
-
+	
 // post check for length;
 // post check for revert conversation
-// return null
+// return null 
 
 
     return r;
@@ -292,7 +292,7 @@ function engIsAcceptKeys(keys)
 {
     if (!keys)
         return false;
-    console.log(keys);
+	console.log(keys);
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
     return false;
 

@@ -19,9 +19,9 @@ var gMsg =
 
 var gResponse =
 {
-    OK : 'OK',
-    IDX_NODN : 'IDX_NODN',
-    JOB_QUEUED : 'JOB_QUEUED',
+	OK : 'OK',
+	IDX_NODN : 'IDX_NODN',
+	JOB_QUEUED : 'JOB_QUEUED',
     NO_RECS : 'NO_RECS',
     URF_BAD_FORMAT : 'URF_BAD_FORMAT',
     REQ_MSG_HEAD : 'REQ_MSG_HEAD',
@@ -43,11 +43,11 @@ var gResponse =
 function gHelp(x)
 {
     var p_ = '';
-    p_ += '<p> This is a place where you can create your own tokens, ';
+    p_ += '<p style="text-align: justify;"> This is a place where you can create your own tokens, ';
     p_ += 'associate data with them, pass the ownership to another person, or to receive ';
     p_ += 'the ownership from somebody else. A token is a hash taken from any text or file. ';
     p_ += 'The master key is a secure password to control your tokens. It is not shared if ';
-    p_ += 'you pass your token to another person.<p>';
+    p_ += 'you pass your token to another person.</p>';
 
     var o =
     {

@@ -56,12 +56,12 @@ function engNcInfoDb(extCb)
 
 function engNcZ(extCb, db, rec, rawDn)
 {
-    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s)
-            ? '[' + rawDn + ']'
-            : '';
-
-    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
-              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + rawDn;
+    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s) 
+	 ? '[' + rawDn + ']' 
+	 : '';
+	 
+    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' ' 
+		+ rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + rawDn;
 
     var jobCb = function (resp, jobId)
     {
@@ -87,8 +87,8 @@ function engNcAdd(extCb, db, rec, data)
     var g1 = rec.g || rec.g1 || rec.g2;
     var o1 = rec.o || rec.o1 || rec.o2;
 
-    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' '
-              + rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
+    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' ' 
+		+ rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
 
     var jobCb = function (resp, jobId)
     {
