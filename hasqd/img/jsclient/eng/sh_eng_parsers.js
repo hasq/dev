@@ -221,6 +221,8 @@ function engGetHash(data, h)
             return hex_sha512(data);
         case 'smd':
             return hex_smd(data);
+        case 's21':
+            return hex_sha256(data);
         default:
                 return null;
     }
@@ -282,7 +284,7 @@ function engIsAcceptKeys(keys)
 {
     if (!keys)
         return false;
-	console.log(keys);
+    console.log(keys);
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
     return false;
 

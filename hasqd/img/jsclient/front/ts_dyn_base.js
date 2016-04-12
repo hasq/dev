@@ -373,10 +373,10 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
     var $TokText = $('#textarea_token_text');
     var tokText = textArea($TokText).val();
     delay = +delay || 0;
-	
+
     clearTimeout(gTimerId);
     gLastRec = {};
-	
+
     widClearInitialData(false);
 
     if (0)
@@ -401,7 +401,7 @@ function widLoadFiles(files)
 
     clearTimeout(gTimerId);
     gLastRec = {};
-	
+
     widClearInitialData(true);
     widShowTokenSearch().show();
 
@@ -615,9 +615,9 @@ function widCreateButtonClick()
 
     widEmptyTab().show();
 
-	var rec0 = engGetRecord(0, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-	var rec1 = engGetRecord(1, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-	
+    var rec0 = engGetRecord(0, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+    var rec1 = engGetRecord(1, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+
     var addCb1 = function (resp)
     {
         if (resp !== gResponse.OK)
@@ -629,9 +629,9 @@ function widCreateButtonClick()
     var addCb0 = function (resp)
     {
         if (resp === gResponse.OK)
-			return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
-        
-		widModalWindow(gResponse[resp]);
+            return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
+
+        widModalWindow(gResponse[resp]);
         widReloadTokenInfo(tok, 0);
     }
 
@@ -972,7 +972,7 @@ function widReceiveTextareaOninput()
 
 function widReceiveButtonClick()
 {
-	var $TokenArea = $('#textarea_token_text');
+    var $TokenArea = $('#textarea_token_text');
     var $AcceptKeysArea = $('#textarea_receive_keys');
     var $PwdInp = $('#input_password');
 
@@ -981,27 +981,27 @@ function widReceiveButtonClick()
 
     if (!engIsAcceptKeys(rawAcceptKeys))
         return widModalWindow(gMsg.badAcceptKeys, function () { $AcceptKeysArea.focus() });
-	
+
     var rawAcceptKeys = $AcceptKeysArea.val();
     var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
-	var tokText = [$TokenArea.val()] || [''];
+    var tokText = [$TokenArea.val()] || [''];
     var r = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, gCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
-	
-	var tok = {};
-	tok.hash = acceptKeys[0].s;
-	tok.raw = (r === tok.hash || tok.hash !== engGetHash(r, gCurrentDB.hash))
-	 ? ''
-	 : r;
-	
+
+    var tok = {};
+    tok.hash = acceptKeys[0].s;
+    tok.raw = (r === tok.hash || tok.hash !== engGetHash(r, gCurrentDB.hash))
+              ? ''
+              : r;
+
     clearTimeout(gTimerId);
     gLastRec = {};
-	
+
     widReceiveTab().disable(true);
-	
-	var f = function () 
-	{
-		widReceiveKey(acceptKeys);	
-	}
+
+    var f = function ()
+    {
+        widReceiveKey(acceptKeys);
+    }
 
     widSearchTokenName(tok, f);
 }
@@ -1009,32 +1009,32 @@ function widReceiveButtonClick()
 function widSearchTokenName(tok, func)
 {
     var $TokenArea = $('#textarea_token_text');
-	
+
     if (tok.hash === engGetHash(tok.raw, gCurrentDB.hash))
         func();
     else
     {
         var cb = function (resp, record)
         {
-			if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
-				widModalWindow(gResponse[resp]);
+            if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
+                widModalWindow(gResponse[resp]);
 
-			var r = (record === null) ? tok.hash : record.d;
-			
-			widFileButtonToggle(1);
-			widClearInitialData(true);
-			textArea($TokenArea).val(engGetTokenName(tok.hash, r, gCurrentDB.hash));
-			
-			if (resp === gResponse.IDX_NODN)
-			{
-				gLastRec.s = tok.hash;
-				gLastRec.state = resp;
-				widShowTokenSearch().show(resp);
-				widShowTokenHash(tok.hash);
-				return;
-			}
-			else
-				func();
+            var r = (record === null) ? tok.hash : record.d;
+
+            widFileButtonToggle(1);
+            widClearInitialData(true);
+            textArea($TokenArea).val(engGetTokenName(tok.hash, r, gCurrentDB.hash));
+
+            if (resp === gResponse.IDX_NODN)
+            {
+                gLastRec.s = tok.hash;
+                gLastRec.state = resp;
+                widShowTokenSearch().show(resp);
+                widShowTokenHash(tok.hash);
+                return;
+            }
+            else
+                func();
         }
 
         engNcRecordZero(cb, s);
@@ -1090,9 +1090,9 @@ function widInstantReceive(keys)
     var addCb0 = function (resp, keys)
     {
         if (resp === gResponse.OK)
-			return engNcAdd(addCb1, gCurrentDB.name, keys, null);
-        
-		widModalWindow(gResponse[resp]);
+            return engNcAdd(addCb1, gCurrentDB.name, keys, null);
+
+        widModalWindow(gResponse[resp]);
         widReloadTokenInfo(tok, 0);
     }
 

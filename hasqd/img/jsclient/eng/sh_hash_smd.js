@@ -6,7 +6,7 @@ function hex_smd(data)
     {
         if (data.length !== 0)
         {
-            return hex_md5(hex_sha256(data));
+            return hex_md5(hex_sha256_raw(data));
         }
     }
     return '';

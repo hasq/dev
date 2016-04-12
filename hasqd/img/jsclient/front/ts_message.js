@@ -19,8 +19,8 @@ var gMsg =
 
 var gResponse =
 {
-	OK : 'OK',
-	IDX_NODN : 'IDX_NODN',
+    OK : 'OK',
+    IDX_NODN : 'IDX_NODN',
     NO_RECS : 'NO_RECS',
     URF_BAD_FORMAT : 'URF_BAD_FORMAT',
     REQ_MSG_HEAD : 'REQ_MSG_HEAD',

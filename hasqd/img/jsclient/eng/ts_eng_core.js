@@ -113,9 +113,7 @@ function engLoadFiles(files, hash, cb0)
             obj.error = gMsg.fileZero;
         else
         {
-			console.log('sha256: '+ engGetHash(this.result, 's22'));
-		///console.log(this.result+" "+str2rstr_utf8(this.result));
-            obj.raw = this.result; //event.target.result; 
+            obj.raw = this.result; //event.target.result;
             obj.loading = false;
             obj.hash = engGetHash(obj.raw, hash);
         }
