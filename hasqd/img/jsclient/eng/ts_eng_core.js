@@ -115,7 +115,7 @@ function engLoadFiles(files, hash, cb0)
         {
             obj.raw = this.result; //event.target.result;
             obj.loading = false;
-            obj.hash = engGetHash(obj.raw, hash);
+            obj.s = engGetHash(obj.raw, hash);
         }
 
         cb0(obj);

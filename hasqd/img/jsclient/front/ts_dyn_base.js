@@ -383,12 +383,12 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
         textArea().clearExcept($TokText);
 
     var tok = {};
-    tok.hash = widGetToken(tokText, gCurrentDB.hash);
-    tok.raw = (tokText !== tok.hash) ? tokText : '';
+    tok.s = widGetToken(tokText, gCurrentDB.hash);
+    tok.raw = (tokText !== tok.s) ? tokText : '';
 
-    widShowTokenHash(tok.hash);
+    widShowTokenHash(tok.s);
 
-    if (!tok.hash)
+    if (!tok.s)
         return widPasswordOninput();
 
     widReloadTokenInfo(tok, delay);
@@ -418,7 +418,7 @@ function widLoadFiles(files)
         }
 
         textArea($TokenText).val('File: ' + data.name + '\nSize: ' + data.size);
-        widShowTokenHash(data.hash);
+        widShowTokenHash(data.s);
 
         $TokenText.prop('disabled', true);
         widFileButtonToggle(0);
@@ -442,11 +442,11 @@ function widReloadTokenInfo(tok, delay)
     if (!tok)
     {
         var tok = {};
-        tok.hash = gLastRec.s;
+        tok.s = gLastRec.s;
         tok.raw = gLastRec.r;
     }
 
-    if (tok.hash)
+    if (tok.s)
     {
         widShowTokenSearch().show();
         widGetLastRecord(tok, delay);
@@ -485,7 +485,7 @@ function widGetLastRecord(tok, delay)
 
         if (resp === gResponse.IDX_NODN)
         {
-            gLastRec.s = tok.hash;
+            gLastRec.s = tok.s;
             gLastRec.state = resp;
 
             if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
@@ -508,7 +508,7 @@ function widGetLastRecord(tok, delay)
         widPasswordOninput();
     }
 
-    return engNcDeferredLast(cb, tok.hash, delay);
+    return engNcDeferredLast(cb, tok.s, delay);
 }
 
 function widPasswordOninput()
@@ -627,7 +627,7 @@ function widCreateButtonClick()
     var $TokenText = $('#textarea_token_text');
 
     var tok = {};
-    tok.hash = gLastRec.s;
+    tok.s = gLastRec.s;
     tok.raw = gLastRec.raw;
 
     if (!widIsPassword())
@@ -635,8 +635,8 @@ function widCreateButtonClick()
 
     widEmptyTab().show();
 
-    var rec0 = engGetRecord(0, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-    var rec1 = engGetRecord(1, tok.hash, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+    var rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+    var rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
 
     var addCb1 = function (resp)
     {
@@ -700,7 +700,7 @@ function widSetDataButtonClick()
     var $PwdInp = $('#input_password');
     var $Data = $('#textarea_set_data');
     var tok = {};
-    tok.hash = gLastRec.s;
+    tok.s = gLastRec.s;
     tok.raw = gLastRec.raw;
 
     if (!widIsPassword())
@@ -996,22 +996,20 @@ function widReceiveButtonClick()
     var $AcceptKeysArea = $('#textarea_receive_keys');
     var $PwdInp = $('#input_password');
 
+    var rawAcceptKeys = $AcceptKeysArea.val();
+    var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
+
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     if (!engIsAcceptKeys(rawAcceptKeys))
         return widModalWindow(gMsg.badAcceptKeys, function () { $AcceptKeysArea.focus() });
 
-    var rawAcceptKeys = $AcceptKeysArea.val();
-    var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
-    var tokText = [$TokenArea.val()] || [''];
-    var r = engGetDnOrRawList(engGetDnList(acceptKeys), tokText, gCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
-
     var tok = {};
-    tok.hash = acceptKeys[0].s;
-    tok.raw = (r === tok.hash || tok.hash !== engGetHash(r, gCurrentDB.hash))
-              ? ''
-              : r;
+    tok.s = acceptKeys[0].s;
+    tok.raw = (gLastRec && gLastRec.raw && tok.s === engGetHash(gLastRec.raw, gCurrentDB.hash))
+              ? gLastRec.raw
+              : '';
 
     clearTimeout(gTimerId);
     gLastRec = {};
@@ -1028,37 +1026,36 @@ function widReceiveButtonClick()
 
 function widSearchTokenName(tok, func)
 {
+    console.log(gLastRec);
     var $TokenArea = $('#textarea_token_text');
 
-    if (tok.hash === engGetHash(tok.raw, gCurrentDB.hash))
-        func();
-    else
+    if (tok.s === engGetHash(tok.raw, gCurrentDB.hash))
+        return func();
+
+    var cb = function (resp, record)
     {
-        var cb = function (resp, record)
+        if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
+            widModalWindow(gResponse[resp]);
+
+        var r = (record === null) ? tok.s : record.d;
+
+        widFileButtonToggle(1);
+        widClearInitialData(true);
+        textArea($TokenArea).val(engGetRawFromZRec(tok.s, r, gCurrentDB.hash));
+
+        if (resp === gResponse.IDX_NODN)
         {
-            if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
-                widModalWindow(gResponse[resp]);
-
-            var r = (record === null) ? tok.hash : record.d;
-
-            widFileButtonToggle(1);
-            widClearInitialData(true);
-            textArea($TokenArea).val(engGetRawFromZRec(tok.hash, r, gCurrentDB.hash));
-
-            if (resp === gResponse.IDX_NODN)
-            {
-                gLastRec.s = tok.hash;
-                gLastRec.state = resp;
-                widShowTokenSearch().show(resp);
-                widShowTokenHash(tok.hash);
-                return;
-            }
-            else
-                func();
+            gLastRec.s = tok.s;
+            gLastRec.state = resp;
+            widShowTokenSearch().show(resp);
+            widShowTokenHash(tok.s);
+            return;
         }
-
-        engNcRecordZero(cb, s);
+        else
+            func();
     }
+
+    engNcRecordZero(cb, tok.s);
 }
 
 function widReceiveKey(keys)
@@ -1097,7 +1094,7 @@ function widTokensTakeover(keys)
 function widInstantReceive(keys)
 {
     var tok = {};
-    tok.hash = keys[0].s;
+    tok.s = keys[0].s;
 
     var addCb1 = function (resp)
     {
@@ -1123,7 +1120,7 @@ function widInstantReceive(keys)
 function widBlockingReceive(keys)
 {
     var tok = {};
-    tok.hash = keys[0].s;
+    tok.s = keys[0].s;
 
     var cb = function (resp)
     {
@@ -1246,8 +1243,20 @@ widSearchProgress.refresh = function()
     update( $('#div_tocome_search_results'), str.text[3] );
 
     update( $('#span_search_mine'), '(' + str.number[1] + ')' );
-    if (str.number[2] > 0) update( $('#span_search_onhold'), '(' + str.number[2] + ')' );
-    if (str.number[2] > 0) update( $('#span_search_tocome'), '(' + str.number[3] + ')' );
+
+    var $Onhold = $('#span_search_onhold');
+
+    if (str.number[2] > 0)
+        update( $Onhold, '(' + str.number[2] + ')' );
+    else
+        update( $Onhold, '');
+
+    var $Tocome = $('#span_search_tocome');
+
+    if (str.number[3] > 0)
+        update( $Tocome, '(' + str.number[3] + ')' );
+    else
+        update( $Tocome, '' );
 
     return;
 }

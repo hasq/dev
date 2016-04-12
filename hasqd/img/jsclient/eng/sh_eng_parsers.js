@@ -273,9 +273,17 @@ function engGetDataValToRecord(data)
     var backslash = '\u005c';
     var n = '\u006e';
 
+// pre check length < 160
+// charCodeAt(i) ASCII  32 - 127 + \n
+
     r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c');
     r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c');
     r = r.replace(/\u000a/g, '\u005c\u006e');
+
+// post check for length;
+// post check for revert conversation
+// return null
+
 
     return r;
 }
@@ -587,7 +595,7 @@ function engGetDnOrRawList(dnList, rawList, hash)
     {
         for (var t = 0; t < rawList.length; t++)
         {
-            if (dnList[k] == engGetHash(rawList[t], hash))
+            if (dnList[k] === engGetHash(rawList[t], hash))
             {
                 var rawName = '[' + rawList[t] + ']';
                 dnList[k] = rawName;
@@ -596,7 +604,7 @@ function engGetDnOrRawList(dnList, rawList, hash)
 
                 break;
             }
-            else if (dnList[k] == rawList[t])
+            else if (dnList[k] === rawList[t])
             {
                 rawList.splice(t, 1);
                 t--;
