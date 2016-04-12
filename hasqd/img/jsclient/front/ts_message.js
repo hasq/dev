@@ -17,11 +17,19 @@ var gMsg =
     fileZero : 'File is empty'
 };
 
+var gDataErrorMsg =
+{
+    1 : 'Undefined token data',
+    2 : 'Length before > 160',
+    2 : 'Length after > 160',
+    4 : 'Not ASCII or LF',
+    5 : 'Convertation error'
+}
 var gResponse =
 {
-	OK : 'OK',
-	IDX_NODN : 'IDX_NODN',
-	JOB_QUEUED : 'JOB_QUEUED',
+    OK : 'OK',
+    IDX_NODN : 'IDX_NODN',
+    JOB_QUEUED : 'JOB_QUEUED',
     NO_RECS : 'NO_RECS',
     URF_BAD_FORMAT : 'URF_BAD_FORMAT',
     REQ_MSG_HEAD : 'REQ_MSG_HEAD',

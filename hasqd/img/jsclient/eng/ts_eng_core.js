@@ -113,7 +113,7 @@ function engLoadFiles(files, hash, cb0)
             obj.error = gMsg.fileZero;
         else
         {
-            obj.raw = this.result; //event.target.result; 
+            obj.raw = this.result; //event.target.result;
             obj.loading = false;
             obj.s = engGetHash(obj.raw, hash);
         }

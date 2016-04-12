@@ -221,8 +221,8 @@ function engGetHash(data, h)
             return hex_sha512(data);
         case 'smd':
             return hex_smd(data);
-		case 's21':	
-			return hex_sha256(data);
+        case 's21':
+            return hex_sha256(data);
         default:
                 return null;
     }
@@ -245,54 +245,101 @@ function engGetTokensStatus(lr, nr)
     return 'PWD_WRONG';
 }
 
-function engGetDataValToDisplay(data)
+function engGetDataFromRec(data)
 {
     // returns parsed data for displaying
-    var r = data || '';
-    var LF = '\u000a';
-    var space = '\u0020';
-    var backslash = '\u005c';
-    var n = '\u006e';
+    // \u000a is LF;
+    // \u0020 is space;
+    // \u005c is backslash;
+    // \u006e is n
+    data = data || '';
+    var bs = 0;
 
-    for (var i = 0; i < r.length; i++)
-        if (r[i - 1] !== backslash && r[i] === backslash && r[i + 1] === n)
-            r = r.substring(0, i) + LF + r.substr(i + 2);
+    for (var i = 0; i < data.length; i++)
+    {
+        bs = (data[i] === '\u005c') ? ++bs : 0;
 
-    r = r.replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020');
-    r = r.replace(/(\u005c\u005c)(?!(\u006e))/g, '\u005c');
+        if (data[i] === '\u005c' && data[i + 1] === '\u006e')
+        {
+            if (bs > 0 && bs % 2 === 1 )
+            {
+                bs = 0;
+                data = data.substring(0, i) + '\u000a' + data.substr(i + 2);
+            }
+        }
+    }
 
-    return r;
+    data = data
+ .replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020')
+    .replace(/(\u005c\u005c)/g, '\u005c');
+
+           return data;
 
 }
 
-function engGetDataValToRecord(data)
+function engIsAsciiOrLF(data)
 {
-    var r = data || '';
-    var LF = '\u000a';
-    var space = '\u0020';
-    var backslash = '\u005c';
-    var n = '\u006e';
+    for (var i = 0, ch, l = data.length; i < l; i++)
+    {
+        ch = data.charCodeAt(i);
 
-// pre check length < 160
-// charCodeAt(i) ASCII  32 - 127 + \n
+        if ((ch >= 32 && ch <= 127) || ch === 10)
+            continue;
 
-    r = r.replace(/\u005c(?!\u006e|(\u005c\u006e))/mg, '\u005c\u005c');
-    r = r.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c');
-    r = r.replace(/\u000a/g, '\u005c\u006e');
-	
-// post check for length;
-// post check for revert conversation
-// return null 
+        return false;
+    }
 
+    return true;
+}
+
+function engDataToRecErrorLevel(data)
+{
+    var r = 0;
+    if (data === '') return r;
+    if (!data) return r = 1;
+    if ((data.length) > 160 ) return r = 2;
+
+    var rawData = data
+     .replace(/^\u000a+|\u000a+$/g, '')
+     .replace(/\t/g, '\u0020')
+     .replace(/\u0020+$/mg, '');
+
+                  if ((rawData.length) > 160 ) return r = 3;
+    if (!engIsAsciiOrLF(data)) return r = 4;
+
+    data = engGetDataToRec(data);
+
+    if (rawData !== engGetDataFromRec(data)) return 5;
 
     return r;
+}
+
+function engGetDataToRec(data)
+{
+    // \u000a is LF;
+    // \u0020 is space;
+    // \u005c is backslash;
+    // \u006e is n
+
+    if (!data)
+        return '';
+
+    data = data
+     .replace(/^\u000a+|\u000a+$/g, '')
+     .replace(/\t/g, '\u0020')
+     .replace(/\u0020+$/mg, '')
+     .replace(/\u005c/mg, '\u005c\u005c')
+     .replace(/(\u0020(?=\u0020))/g, '\u0020\u005c')
+     .replace(/\u000a/g, '\u005c\u006e');
+
+           return data;
 }
 
 function engIsAcceptKeys(keys)
 {
     if (!keys)
         return false;
-	console.log(keys);
+
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
     return false;
 

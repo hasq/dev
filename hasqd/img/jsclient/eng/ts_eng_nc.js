@@ -54,14 +54,12 @@ function engNcInfoDb(extCb)
     return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
-function engNcZ(extCb, db, rec, rawDn)
+function engNcZ(extCb, db, rec, raw)
 {
-    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s) 
-	 ? '[' + rawDn + ']' 
-	 : '';
-	 
-    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' ' 
-		+ rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + rawDn;
+    raw = (raw) ? '[' + raw + ']' : '';
+
+    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
+              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + raw;
 
     var jobCb = function (resp, jobId)
     {
@@ -81,14 +79,14 @@ function engNcZ(extCb, db, rec, rawDn)
 
 function engNcAdd(extCb, db, rec, data)
 {
-    var data = (data) ? engGetDataValToRecord(data) : '';
+    data = data || '';
     var n1 = rec.n || rec.n1 || rec.n2;
     var k1 = rec.k || rec.k1 || rec.k2;
     var g1 = rec.g || rec.g1 || rec.g2;
     var o1 = rec.o || rec.o1 || rec.o2;
 
-    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' ' 
-		+ rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
+    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' '
+              + rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
 
     var jobCb = function (resp, jobId)
     {

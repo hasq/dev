@@ -519,7 +519,7 @@ function widSubmitButtonClick()
         widTokensHistorySelect(d);
     }
 
-    var nr = 'add * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataValToRecord(nr_d);
+    var nr = 'add * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
 
     ajxSendCommand(nr, cb, hasqLogo);
 }
