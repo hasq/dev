@@ -953,7 +953,7 @@ function widPreSimpleReceive($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleReceive);
 }
@@ -1109,7 +1109,7 @@ function widPreSimpleAccept($obj, click)
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widSimpleAccept);
 }
@@ -1380,7 +1380,7 @@ function widPreBlockingReceiveStep1($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep1);
 }
@@ -1439,7 +1439,7 @@ function widPreBlockingReceiveStep2($obj, click)
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
 
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep2);
 }
@@ -1700,7 +1700,7 @@ function widPreBlockingAcceptStep1($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep1);
@@ -1760,7 +1760,7 @@ function widPreBlockingAcceptStep2($obj, click)
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), engGetRawTokensList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
     widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep2);

@@ -9,7 +9,7 @@ function engNcDeferredLast(extCb, tok, delay)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp === 'OK')
+        if (resp === gResponse.OK)
             record = engGetParsedRecord(data);
 
         extCb(resp, record);
@@ -27,7 +27,7 @@ function engNcLast(extCb, tok)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp === 'OK')
+        if (resp === gResponse.OK)
             record = engGetParsedRecord(data);
 
         extCb(resp, record);
@@ -45,7 +45,7 @@ function engNcInfoDb(extCb)
         var resp = engGetResponseHeader(data);
         var db = [];
 
-        if (resp === 'OK')
+        if (resp === gResponse.OK)
             db = engGetParsedInfoDb(data);
 
         extCb(resp, db);
@@ -56,12 +56,16 @@ function engNcInfoDb(extCb)
 
 function engNcZ(extCb, db, rec, rawDn)
 {
-    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s) ? '[' + rawDn + ']' : '';
-    var cmd = 'z *' + '\u0020' + db + '\u0020' + '0' + '\u0020' + rec.s + '\u0020' + rec.k + '\u0020' + rec.g + '\u0020' + rec.o + '\u0020' + rawDn;
+    rawDn = (rawDn.length > 0 && rawDn.length <= 160 && rawDn !== rec.s)
+            ? '[' + rawDn + ']'
+            : '';
+
+    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
+              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + rawDn;
 
     var jobCb = function (resp, jobId)
     {
-        (resp === 'JOB_QUEUED') ? engNcJob(jobCb, jobId) : extCb(resp);
+        (resp === gResponse.JOB_QUEUED) ? engNcJob(jobCb, jobId) : extCb(resp);
     }
 
     var intCb = function (data)
@@ -69,7 +73,7 @@ function engNcZ(extCb, db, rec, rawDn)
         var resp = engGetResponseHeader(data);
         var jobId = engGetParsedJobId(data);
 
-        (resp !== 'OK') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
+        (resp !== gResponse.OK) ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, intCb, hasqLogo);
@@ -83,11 +87,12 @@ function engNcAdd(extCb, db, rec, data)
     var g1 = rec.g || rec.g1 || rec.g2;
     var o1 = rec.o || rec.o1 || rec.o2;
 
-    var cmd = 'add *' + '\u0020' + gCurrentDB.name + '\u0020' + n1 + '\u0020' + rec.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020' + o1 + '\u0020' + data;
+    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' '
+              + rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
 
     var jobCb = function (resp, jobId)
     {
-        if (resp === 'JOB_QUEUED')
+        if (resp === gResponse.JOB_QUEUED)
             engNcJob(jobCb, jobId);
         else
         {
@@ -104,7 +109,7 @@ function engNcAdd(extCb, db, rec, data)
         var resp = engGetResponseHeader(data);
         var jobId = engGetParsedJobId(data);
 
-        (resp !== 'OK') ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
+        (resp !== gResponse.OK) ? extCb(resp, jobId) : engNcJob(jobCb, jobId);
     }
 
     return ajxSendCommand(cmd, addCb, hasqLogo);
@@ -119,7 +124,7 @@ function engNcRecordZero(extCb, s)
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp === 'OK')
+        if (resp === gResponse.OK)
             record = engGetParsedRecord(data);
 
         extCb(resp, record);

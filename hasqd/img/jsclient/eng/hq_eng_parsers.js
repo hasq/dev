@@ -159,15 +159,13 @@ function engGetTokens(rawTok, hash)
     return engGetOrderedTokens(tok);
 }
 
-function engGetRawTokensList(data)
+function engGetRawList(data)
 {
     // if exists raw token names returns its otherwise hash;
     var r = [];
 
     for (var i = 0; i < data.length; i++)
-    {
         r[i] = (data[i].r != '') ? data[i].r : data[i].s;
-    }
 
     return r;
 }

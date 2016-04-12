@@ -453,6 +453,26 @@ function widReloadTokenInfo(tok, delay)
     }
 }
 
+/*
+function gLastRecFill(rec)
+{
+    gLastRec = {};
+    gLastRec.n = '';
+    gLastRec.s = '';
+    gLastRec.raw = '';
+    gLastRec.k = '';
+    gLastRec.g = '';
+    gLastRec.o = '';
+    gLastRec.d = '';
+    gLastRec.state = undefined;
+
+    if (!rec) return;
+
+    for (i in rec)
+        gLastRec[i] = rec[i];
+}
+*/
+
 function widGetLastRecord(tok, delay)
 {
     var cb = function (resp, record)
@@ -985,7 +1005,7 @@ function widReceiveButtonClick()
     var rawAcceptKeys = $AcceptKeysArea.val();
     var acceptKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
     var tokText = [$TokenArea.val()] || [''];
-    var r = engGetMergedTokensList(engGetHashedTokensList(acceptKeys), tokText, gCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
+    var r = engGetDnOrRawList(engGetDnList(acceptKeys), tokText, gCurrentDB.hash)[0].replace(/^\[|\]$/g, '');
 
     var tok = {};
     tok.hash = acceptKeys[0].s;
@@ -1023,7 +1043,7 @@ function widSearchTokenName(tok, func)
 
             widFileButtonToggle(1);
             widClearInitialData(true);
-            textArea($TokenArea).val(engGetTokenName(tok.hash, r, gCurrentDB.hash));
+            textArea($TokenArea).val(engGetRawFromZRec(tok.hash, r, gCurrentDB.hash));
 
             if (resp === gResponse.IDX_NODN)
             {

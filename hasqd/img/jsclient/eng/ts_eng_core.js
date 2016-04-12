@@ -68,7 +68,7 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engGetTokenName (s, z, hash)
+function engGetRawFromZRec (s, z, hash)
 {
     if (!z)
         return s;

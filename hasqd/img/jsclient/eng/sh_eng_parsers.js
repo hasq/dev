@@ -580,23 +580,23 @@ function engGetTitleRecord(acceptKeys, p, h, m)
     return titleRecord;
 }
 
-function engGetMergedTokensList(hashList, rawList, hash)
+function engGetDnOrRawList(dnList, rawList, hash)
 {
     // returns merged names from both lists acceptKeys and tokens;
-    for (var k = 0; k < hashList.length; k++)
+    for (var k = 0; k < dnList.length; k++)
     {
         for (var t = 0; t < rawList.length; t++)
         {
-            if (hashList[k] == engGetHash(rawList[t], hash))
+            if (dnList[k] == engGetHash(rawList[t], hash))
             {
                 var rawName = '[' + rawList[t] + ']';
-                hashList[k] = rawName;
+                dnList[k] = rawName;
                 rawList.splice(t, 1);
                 t--;
 
                 break;
             }
-            else if (hashList[k] == rawList[t])
+            else if (dnList[k] == rawList[t])
             {
                 rawList.splice(t, 1);
                 t--;
@@ -604,7 +604,7 @@ function engGetMergedTokensList(hashList, rawList, hash)
         }
     }
 
-    return hashList;
+    return dnList;
 }
 
 function engGetNumberedAcceptKeys(keys, list)
@@ -628,9 +628,9 @@ function engSortByProperties(prop)
     }
 }
 
-function engGetHashedTokensList(list)
+function engGetDnList(list)
 {
-    // returns hashed token names;
+    // returns tokens hash list;
     var r = [];
 
     for (var i = 0; i < list.length; i++)
