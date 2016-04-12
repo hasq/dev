@@ -19,6 +19,7 @@ var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
+function hex_sha256_raw(s)    { return rstr2hex(rstr_sha256(s)); }
 function hex_sha256(s)    { return rstr2hex(rstr_sha256(str2rstr_utf8(s))); }
 function b64_sha256(s)    { return rstr2b64(rstr_sha256(str2rstr_utf8(s))); }
 function any_sha256(s, e) { return rstr2any(rstr_sha256(str2rstr_utf8(s)), e); }

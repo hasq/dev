@@ -216,7 +216,7 @@ function engGetHash(data, h)
         case 'r16':
             return hex_rmd160(data);
         case 's22':
-            return hex_sha256(data);
+            return hex_sha256_raw(data);
         case 's25':
             return hex_sha512(data);
         case 'smd':
