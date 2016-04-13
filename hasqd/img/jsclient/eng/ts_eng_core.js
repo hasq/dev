@@ -130,7 +130,7 @@ function engLoadFiles(files, hash, cb0)
     reader.readAsBinaryString(file);
 }
 
-function updateGWalletOnLast(lr,raw)
+function updateGWalletOnLast(lr, raw)
 {
     if (!lr) return;
 
@@ -160,7 +160,7 @@ function updateGWalletOnLast(lr,raw)
         case 'PWD_WRONG': w.state = 4; break;
     }
 
-    if( w.s == engGetHash(raw,gCurrentDB.hash) )
-	w.raw = raw;
+    if ( w.s == engGetHash(raw, gCurrentDB.hash) )
+        w.raw = raw;
 }
 

@@ -56,9 +56,9 @@ var imgTabShowKeys = '<img width="40px" height="40px" src="img/tab_send.png"><br
 var imgTabReceiveKeys = '<img width="40px" height="40px" src="img/tab_receive.png"><br/>Receive';
 var imgTabSearchTokens = '<img width="40px" height="40px" src="img/tab_view.png"><br/>Lookup';
 
-var imgBtnStartMine = '<img width="24px" height="16px" src="img/pwd_good.png" title="Mine tokens">';
-var imgBtnStartOnHold = '<img width="24px" height="16px" src="img/pwd_sndng.png" title="Tokens on hold">';
-var imgBtnStartToCome = '<img width="24px" height="16px" src="img/pwd_rcvng.png" title="Tokens to come">';
+var imgBtnSearchMine = '<img width="24px" height="16px" src="img/pwd_good.png" title="Mine tokens">';
+var imgBtnSearchOnHold = '<img width="24px" height="16px" src="img/pwd_sndng.png" title="Tokens on hold">';
+var imgBtnSearchExpected = '<img width="24px" height="16px" src="img/pwd_rcvng.png" title="Tokens to come">';
 var imgBtnStartPast = '<img width="24px" height="16px" src="img/pwd_wrong.png" title="Past tokens">';
 
 

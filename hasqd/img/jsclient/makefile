@@ -49,17 +49,18 @@ slice/home/lib:
 	
 createclient: index.html 
 #	hqclnt
-	cp css/*.css slice/home/css/
+	cp css/hqclnt.css slice/home/css/
 	cp eng/hq_*.js slice/home/eng/
 	cp front/hq_*.js slice/home/front/
 	mv -f front/help_tab.gen slice/home/front/hq_html_help_tab.js
-	mv -f front/ts_help.gen slice/home/front/ts_help.js
 	cp ui/hq_*.js slice/home/ui/	
 	cp hqclnt.html slice/home/
 #	tsclnt
+	cp css/tsclnt.css slice/home/css/
+	cp eng/ts_*.js slice/home/eng/
 	cp front/ts_*.js slice/home/front/
 	rm -f slice/home/front/ts_help.inc.js
-	cp eng/ts_*.js slice/home/eng/
+	mv -f front/ts_help.gen slice/home/front/ts_help.js
 	cp ui/ts_*.js slice/home/ui/
 	cp tsclnt.html slice/home/tsclnt.html
 #	shared

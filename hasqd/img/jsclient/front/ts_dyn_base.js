@@ -28,6 +28,24 @@ function textArea($textarea)
     return obj;
 }
 
+
+function widSelectAndCopy($Obj)
+{
+    $Obj.select();
+    var selectedText = window.getSelection().toString();
+
+    try
+    {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Copying text command was ' + msg);
+    }
+    catch (err)
+    {
+        console.log('Unable to copy');
+    }
+}
+
 function widDatePickerInit()
 {
     $('#input_from_datepicker').datepicker(
@@ -141,14 +159,14 @@ function widShowPwdGuessTime(d)
 function widShowTokenName(dn, raw)
 {
     // Shows hashed value of token (if the value is not a default hash)
-    var $TokArea = $('#textarea_token_text');
+    var $TokName = $('#textarea_token_name');
 
     if (arguments.length !== 2)
-        return $TokArea.empty();
+        return $TokName.empty();
 
     return (dn === engGetHash(raw, gCurrentDB.hash))
-           ? $TokArea.val(raw)
-           : $TokArea.val(dn);
+           ? $TokName.val(raw)
+           : $TokName.val(dn);
 }
 
 function widShowTokenHash(dn)
@@ -214,7 +232,7 @@ function widIsPassword()
 
 function widIsTokenText()
 {
-    return ($('#textarea_token_text').val().length > 0);
+    return ($('#textarea_token_name').val().length > 0);
 }
 
 function widGetToken(data, hash)
@@ -369,7 +387,7 @@ function widFileButtonOff(data)
 
 function widClearInitialData(cl)
 {
-    var $TokenText = $('#textarea_token_text');
+    var $TokenText = $('#textarea_token_name');
 
     clearTimeout(gTimerId);
     gTokInfo = {};
@@ -389,19 +407,19 @@ function widClearInitialData(cl)
 
 function widTokenTextRO(state)
 {
-    $('#textarea_token_text').prop('readonly', state)
+    $('#textarea_token_name').prop('readonly', state)
 }
 
 function widTokenTextOninput(delay) // Events when tokens value changed.
 {
-    var $TokArea = $('#textarea_token_text');
-    var dnOrRaw = $TokArea.val();
+    var $TokName = $('#textarea_token_name');
+    var dnOrRaw = $TokName.val();
     delay = +delay || 0;
 
     widClearInitialData(false);
 
     if (1)
-        textArea().clearExcept($TokArea);
+        textArea().clearExcept($TokName);
 
     var tok = {};
     tok.s = widGetToken(dnOrRaw, gCurrentDB.hash);
@@ -417,11 +435,11 @@ function widTokenTextOninput(delay) // Events when tokens value changed.
 
 function widLoadFiles(files)
 {
-    var $TokArea = $('#textarea_token_text');
+    var $TokName = $('#textarea_token_name');
     var $FileInp = $('#input_file_upload');
 
     if (1)
-        textArea().clearExcept($TokArea);
+        textArea().clearExcept($TokName);
 
     widClearInitialData(true);
     widTokenTextRO(true);
@@ -436,7 +454,7 @@ function widLoadFiles(files)
         if (typeof(data.error) === 'string' || !data.size)
             return widModalWindow(data.error);
 
-        $TokArea.val('File: ' + data.name + '\nSize: ' + data.size);
+        $TokName.val('File: ' + data.name + '\nSize: ' + data.size);
         widShowTokenHash(data.s);
         widFileButtonOff(false);
 
@@ -457,7 +475,7 @@ function widLoadFiles(files)
 function widReloadTokenInfo(tok, delay)
 {
     delay = +delay || 0;
-    var $TokArea = $('#textarea_token_text');
+    var $TokName = $('#textarea_token_name');
 
     if (!tok)
     {
@@ -465,11 +483,12 @@ function widReloadTokenInfo(tok, delay)
         tok.s = gTokInfo.s;
     }
 
-    tok.raw = (gTokInfo.raw && tok.s === engGetHash(gTokInfo.raw, gCurrentDB.hash))
-              ? gTokInfo.raw
-              : (tok.s === engGetHash($TokArea.val(), gCurrentDB.hash))
-              ? $TokArea.val()
-              : '';
+    if (!tok.raw)
+        tok.raw = (gTokInfo.raw && tok.s === engGetHash(gTokInfo.raw, gCurrentDB.hash))
+                  ? gTokInfo.raw
+                  : (tok.s === engGetHash($TokName.val(), gCurrentDB.hash))
+                  ? $TokName.val()
+                  : '';
 
     if (tok.s)
     {
@@ -846,10 +865,10 @@ function widTabButtonClick($obj, tabId)
 function widShowInstantButtonClick($obj)
 {
     var $PwdInp = $('#input_password');
-    var $TokArea = $('#textarea_token_text');
-    var $KeyArea = $('#textarea_show_keys');
+    var $TokName = $('#textarea_token_name');
+    var $Keys = $('#textarea_show_keys');
 
-    textArea($KeyArea).clear();
+    textArea($Keys).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
@@ -858,7 +877,7 @@ function widShowInstantButtonClick($obj)
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName, function () { $TokArea.focus() });
+            return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
 
         if (gTokInfo.state === gResponse.IDX_NODN)
             return widModalWindow(gMsg.createToken);
@@ -884,22 +903,24 @@ function widShowInstantButtonClick($obj)
         var k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
         var line = gTokInfo.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
 
-        textArea($KeyArea).add(line);
+        textArea($Keys).add(line);
 
-        var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+        var mergedKeys = $Keys.val().replace(/\s+/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + '23132';
 
-        textArea($KeyArea).add(line);
+        textArea($Keys).add(line);
+
+        widSelectAndCopy($Keys);
     }
 }
 
 function widShowOnHoldButtonClick($obj)
 {
     var $PwdInp = $('#input_password');
-    var $TokArea = $('#textarea_token_text');
-    var $KeyArea = $('#textarea_show_keys');
+    var $TokName = $('#textarea_token_name');
+    var $Keys = $('#textarea_show_keys');
 
-    textArea($KeyArea).clear();
+    textArea($Keys).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
@@ -908,7 +929,7 @@ function widShowOnHoldButtonClick($obj)
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName, function () { $TokArea.focus() });
+            return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
 
         if (gTokInfo.state === gResponse.IDX_NODN)
             return widModalWindow(gMsg.createToken);
@@ -931,12 +952,14 @@ function widShowOnHoldButtonClick($obj)
             var g1 = engGetKey(gTokInfo.n + 2, gTokInfo.s, k2, gCurrentDB.magic, gCurrentDB.hash);
             var line = gTokInfo.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
 
-            textArea($KeyArea).add(line);
+            textArea($Keys).add(line);
 
-            var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+            var mergedKeys = $Keys.val().replace(/\s+/g, '');
             line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + '23141';
 
-            textArea($KeyArea).add(line);
+            textArea($Keys).add(line);
+
+            $Keys.select();
         }
     }
 }
@@ -944,10 +967,10 @@ function widShowOnHoldButtonClick($obj)
 function widShowReleaseButtonClick($obj)
 {
     var $PwdInp = $('#input_password');
-    var $TokArea = $('#textarea_token_text');
-    var $KeyArea = $('#textarea_show_keys');
+    var $TokName = $('#textarea_token_name');
+    var $Keys = $('#textarea_show_keys');
 
-    textArea($KeyArea).clear();
+    textArea($Keys).clear();
     $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
 
     if ($obj.hasClass('button-disabled'))
@@ -956,7 +979,7 @@ function widShowReleaseButtonClick($obj)
             return $obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName, function () { $TokArea.focus() });
+            return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
 
         if (gTokInfo.state === gResponse.IDX_NODN)
             return widModalWindow(gMsg.createToken);
@@ -991,12 +1014,14 @@ function widShowReleaseButtonClick($obj)
         }
 
         var line = gTokInfo.s + '\u0020' + k + '\u0020';
-        textArea($KeyArea).add(line);
+        textArea($Keys).add(line);
 
-        var mergedKeys = $KeyArea.val().replace(/\s+/g, '');
+        var mergedKeys = $Keys.val().replace(/\s+/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' + gCurrentDB.altname + '\u0020' + prCode;
 
-        textArea($KeyArea).add(line);
+        textArea($Keys).add(line);
+
+        $Keys.select();
     }
 }
 
@@ -1043,16 +1068,10 @@ function widReceiveTextareaOninput($Obj)
 
     if (engIsAcceptKeys(rawAccKeys))
     {
-     ///console.log(engGetParsedAcceptKeys(rawAccKeys)[0].s);
         var tok = engGetParsedAcceptKeys(rawAccKeys)[0].s;
 
         if (!gTokInfo.raw || tok !== engGetHash(gTokInfo.raw, gCurrentDB.hash))
-        {
-            ///console.log('!gTokInfo.raw' + gTokInfo.raw);
-            ///console.log('tok: ' + tok);
-            ///console.log('raw: ' + engGetHash(gTokInfo.raw, gCurrentDB.hash));
             return widSearchTokenRaw(tok);
-        }
     }
 
     widToggleUI(gTokInfo, gPassword);
@@ -1061,13 +1080,14 @@ function widReceiveTextareaOninput($Obj)
 
 function widSearchTokenRaw(tok)
 {
-    var $TokArea = $('#textarea_token_text');
+    var $TokName = $('#textarea_token_name');
 
     widClearInitialData(true);
     widFileButtonOff(true);
     widShowTokenName(tok.s, tok.raw);
     widShowTokenHash(tok.s);
     widShowTokenState().show();
+
     widTokenTextRO(true);
 
     var cb = function (resp, rec)
@@ -1081,7 +1101,7 @@ function widSearchTokenRaw(tok)
         accKeysTok.s = (rec === null) ? tok: rec.s;
         var sOrD = (rec === null) ? tok : rec.d;
         accKeysTok.raw = engGetRawFromZRec(accKeysTok.s, sOrD, gCurrentDB.hash);
-        $TokArea.val(accKeysTok.raw);
+        $TokName.val(accKeysTok.raw);
 
         return widReloadTokenInfo(accKeysTok, 0);
     }
@@ -1091,28 +1111,28 @@ function widSearchTokenRaw(tok)
 
 function widReceiveButtonClick()
 {
-    var $TokArea = $('#textarea_token_text');
-    var $AcceptKeysArea = $('#textarea_receive_keys');
+    var $TokName = $('#textarea_token_name');
+    var $Keys = $('#textarea_receive_keys');
     var $PwdInp = $('#input_password');
 
     if (!gTokInfo.state || gTokInfo.state === 'IDX_NODN')
-        return widModalWindow(gMsg.noDn, function () { $TokArea.focus() });
+        return widModalWindow(gMsg.noDn, function () { $TokName.focus() });
 
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey, function () { $PwdInp.focus() });
 
-    var rawAccKeys = $AcceptKeysArea.val();
-    var accKeys = engGetParsedAcceptKeys($AcceptKeysArea.val());
+    var rawAccKeys = $Keys.val();
+    var accKeys = engGetParsedAcceptKeys($Keys.val());
 
     if (!engIsAcceptKeys(rawAccKeys))
-        return widModalWindow(gMsg.badAcceptKeys, function () { $AcceptKeysArea.focus() });
+        return widModalWindow(gMsg.badAcceptKeys, function () { $Keys.focus() });
 
     var tok = {};
     tok.s = accKeys[0].s;
     tok.raw = (gTokInfo.raw && tok.s === engGetHash(gTokInfo.raw, gCurrentDB.hash))
               ? gTokInfo.raw
-              : (tok.s === engGetHash($TokArea.val(), gCurrentDB.hash))
-              ? $TokArea.val()
+              : (tok.s === engGetHash($TokName.val(), gCurrentDB.hash))
+              ? $TokName.val()
               : '';
 
     widClearInitialData(true);
@@ -1128,8 +1148,8 @@ function widReceiveButtonClick()
 
 function widReceiveKey(keys)
 {
-    var $TokArea = $('#textarea_token_text');
-    var tok = widGetToken(textArea($TokArea).val(), gCurrentDB.hash);
+    var $TokName = $('#textarea_token_name');
+    var tok = widGetToken(textArea($TokName).val(), gCurrentDB.hash);
 
     var cb = function (resp, record)
     {
@@ -1142,8 +1162,6 @@ function widReceiveKey(keys)
         widTokensTakeover(engGetNumberedAcceptKeys(keys, [record]));
     }
 
-    ///engNcLast(cb, tok)
-    ///engNcDeferredLast(cb, tok, 0);
     widRequestLast(cb, tok, 0);
 }
 
@@ -1171,6 +1189,7 @@ function widInstantReceive(keys)
         if (resp !== gResponse.OK)
             widModalWindow(gResponse[resp]);
 
+        $('#textarea_receive_keys').val('');
         widTokenTextRO(false);
         widReloadTokenInfo(tok, 0);
     }
@@ -1200,10 +1219,12 @@ function widBlockingReceive(keys)
         if (resp !== gResponse.OK)
             widModalWindow(gResponse[resp]);
 
+        $('#textarea_receive_keys').val('');
         widTokenTextRO(false);
         widReloadTokenInfo(tok, 0);
     }
 
+    widTokenTextRO(true);
     engNcAdd(cb, gCurrentDB.name, keys[0], null);
 }
 
@@ -1314,7 +1335,7 @@ function widWalletRefresh()
 
     update( $('#div_mine_search_results'), str.text[1] );
     update( $('#div_onhold_search_results'), str.text[2] );
-    update( $('#div_tocome_search_results'), str.text[3] );
+    update( $('#div_expected_search_results'), str.text[3] );
 
     update( $('#span_search_mine'), '(' + str.number[1] + ')' );
 
@@ -1325,12 +1346,12 @@ function widWalletRefresh()
     else
         update( $Onhold, '');
 
-    var $Tocome = $('#span_search_tocome');
+    var $Expected = $('#span_search_expected');
 
     if (str.number[3] > 0)
-        update( $Tocome, '(' + str.number[3] + ')' );
+        update( $Expected, '(' + str.number[3] + ')' );
     else
-        update( $Tocome, '' );
+        update( $Expected, '' );
 
     return;
 }
@@ -1364,13 +1385,13 @@ function widSearchUpdate()
 
 function widDnSelect(dnOrRaw)
 {
-    $('#textarea_token_text').val(dnOrRaw);
+    $('#textarea_token_name').val(dnOrRaw);
     widTokenTextOninput();
 }
 
 function widRequestLast(extCb, tok, delay)
 {
-    var possible_raw = $('#textarea_token_text').val();
+    var possible_raw = $('#textarea_token_name').val();
 
     var cb = function (resp, record)
     {
@@ -1378,10 +1399,10 @@ function widRequestLast(extCb, tok, delay)
         ///var record = null;
 
         if (resp === gResponse.OK)
-	{
-	        updateGWalletOnLast(record,possible_raw);
-        	widWalletRefresh();
-	}
+        {
+            updateGWalletOnLast(record, possible_raw);
+            widWalletRefresh();
+        }
 
         extCb(resp, record);
     }

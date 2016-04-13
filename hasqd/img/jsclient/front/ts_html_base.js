@@ -158,7 +158,7 @@ function widGetHTMLTrTdButton(isTr, id, htmlClass, onclick, img)
 function widGetHTMLInitialDataArea()
 {
     var r = '';
-    var id = 'textarea_token_text';
+    var id = 'textarea_token_name';
     var oninput = 'widTokenTextOninput(500)';
     var style = 'overflow-x:hidden;'
                 var attr = 'type="text" rows="2" maxlength="65536" placeholder="Enter token text" required';
@@ -417,65 +417,71 @@ function widGetHTMLSearchTab()
         r += '<tr>\n';
         {
          r += '<td id="td_search_tabs_buttons" rowspan="2"/>\n';
-            {
-                r += widGetHTMLSearchResultsTabsButtons();
-                r += widGetHTMLTrTdSubtitle(0, 'Search for tokens', 'td-tab-subtitle', 'colspan="2"');
-            }
+            r += widGetHTMLSearchResultsTabsButtons();
+            r += widGetHTMLTrTdSubtitle(0, 'Search for tokens', 'td-tab-subtitle', 'colspan="2"');
+            r += widGetHTMLSearchInitialData();
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
             r += '<td id="td_search_tabs_content"/>\n';
             r += widGetHTMLSearchResultsTabs();
-
-            r += '<td id="td_search_tabs_dates"/>\n';
-            {
-                r += '<table border="0">\n';
-                {
-                    r += '<tr>\n';
-                    {
-                        r += '<td style="text-align:left; width: 50px"/>\n';
-                        r += '<label for="input_from_datepicker">From</label>\n';
-                        r += '<td style="text-align:right; width: 126px"/>\n';
-                        r += '<input id="input_from_datepicker" type="text">\n';
-                    }
-                    r += '</tr>\n';
-                    r += '<tr>\n';
-                    {
-                        r += '<td style="text-align: left; width: 50px"/>\n';
-                        r += '<label for="input_to_datepicker">To</label>\n';
-                        r += '<td style="text-align: right; width: 126px"/>\n';
-                        r += '<input id="input_to_datepicker" type="text">\n';
-                    }
-                    r += '</tr>\n';
-                    r += '</tr>\n';
-                    {
-                        r += '<td colspan="2" style="width: 177px;"/>\u200c\n';
-                    }
-                    r += '<tr>\n';
-                    {
-                        r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
-                     r += '<label for="span_current_slice">\u200c</label>';
-                        r += '<span id="span_current_slice"></span>';
-                    }
-                    r += '</tr>\n';
-                    r += '<tr>\n';
-                    {
-                        r += '<td colspan="2"/>\n';
-                        {
-                            r += '<button id="button_search" class="show-keys-button-off" '
-                                 + 'onclick="return widSearchButtonClick($(this));">'
-                             + imgBtnStart + '</button>\n';
-                        }
-                    }
-                    r += '</tr>\n';
-                }
-                r += '</table>\n';
-            }
         }
         r += '</tr>\n';
     }
     r += '</table>\n';
+    return r;
+}
+
+function widGetHTMLSearchInitialData()
+{
+    var r = '';
+
+ r += '<td id="td_search_tabs_dates" rowspan="2"/>\n';
+    {
+        r += '<table border="0">\n';
+        {
+            r += '<tr>\n';
+            {
+               r += '<td style="text-align:left; width: 50px; height: 30px;"/>\n';
+               r += '<label for="input_from_datepicker">From</label>\n';
+               r += '<td style="text-align:right; width: 126px"/>\n';
+                r += '<input id="input_from_datepicker" type="text">\n';
+            }
+           r += '</tr>\n';
+            r += '<tr>\n';
+            {
+               r += '<td style="text-align: left; width: 50px; height: 30px;"/>\n';
+               r += '<label for="input_to_datepicker">To</label>\n';
+               r += '<td style="text-align: right; width: 126px"/>\n';
+                r += '<input id="input_to_datepicker" type="text">\n';
+            }
+           r += '</tr>\n';
+            r += '<tr>\n';
+            {
+               r += '<td style="height: 89px; vertical-align: bottom;" colspan="2"/>\n';
+                {
+                    r += '<button id="button_search" class="show-keys-button-off" '
+                         + 'onclick="return widSearchButtonClick($(this));">'
+                     + imgBtnStart + '</button>\n';
+                }
+            }
+           r += '</tr>\n';
+           r += '</tr>\n';
+            {
+               r += '<td colspan="2" style="width: 177px;"/>\u200c\n';
+            }
+            r += '<tr>\n';
+            {
+             r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
+             r += '<label for="span_current_slice">\u200c</label>';
+             r += '<span id="span_current_slice"></span>';
+            }
+           r += '</tr>\n';
+        }
+       r += '</table>\n';
+    }
+
     return r;
 }
 
@@ -509,9 +515,9 @@ function widGetHTMLSearchResultsTabsButtons()
 
     r += '<table>\n';
     {
-        r += toButton(0, 'search-tab-button-active', imgBtnStartMine, 'Mine', 'span_search_mine');
-        r += toButton(1, 'search-tab-button', imgBtnStartOnHold, 'On hold', 'span_search_onhold');
-        r += toButton(2, 'search-tab-button', imgBtnStartToCome, 'Expected', 'span_search_tocome');
+        r += toButton(0, 'search-tab-button-active', imgBtnSearchMine, 'Mine', 'span_search_mine');
+        r += toButton(1, 'search-tab-button', imgBtnSearchOnHold, 'On hold', 'span_search_onhold');
+        r += toButton(2, 'search-tab-button', imgBtnSearchExpected, 'Expected', 'span_search_expected');
     }
     r += '</table>\n';
 
@@ -534,7 +540,7 @@ function widGetHTMLSearchResultsTabs()
 
     item = {};
     item.title = 'To come';
-    item.data = widGetHTMLSearchResultTab('div_tocome_search_results');
+    item.data = widGetHTMLSearchResultTab('div_expected_search_results');
     tabs[tabs.length] = item;
 
     return widGetHTMLTabs(tabs, 'search_result_tabs');
