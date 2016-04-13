@@ -17,7 +17,7 @@ var gSearch =
         slices : [],
         blanks : {},
         lastSlice : "",
-        lastBlank : "",
+        lastBlank : ""
     }
 };
 var gAllWallets = { '': {} };
