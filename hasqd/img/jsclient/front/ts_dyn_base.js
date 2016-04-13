@@ -945,7 +945,7 @@ function widShowOnHoldButtonClick($obj)
 
     if ($obj.hasClass('show-keys-button-on'))
     {
-        if (gTokInfo.state === 'OK')  // Blocking Send
+        if (gTokInfo.state === 'OK')
         {
             var k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             var k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -959,7 +959,7 @@ function widShowOnHoldButtonClick($obj)
 
             textArea($Keys).add(line);
 
-            $Keys.select();
+            widSelectAndCopy($Keys);
         }
     }
 }
@@ -1021,7 +1021,7 @@ function widShowReleaseButtonClick($obj)
 
         textArea($Keys).add(line);
 
-        $Keys.select();
+        widSelectAndCopy($Keys);
     }
 }
 
