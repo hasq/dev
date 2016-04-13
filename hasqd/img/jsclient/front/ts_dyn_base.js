@@ -195,7 +195,7 @@ function widShowTokenSearch() // Shows message or image about tokens existense.
             $Pic.attr('src', src).prop('title', title).show();
 
             return true;
-        },
+        }
     }
 
     return obj;
