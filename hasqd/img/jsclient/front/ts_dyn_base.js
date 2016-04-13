@@ -1,4 +1,5 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
+
 function textArea($textarea)
 {
     var obj =
@@ -509,12 +510,10 @@ function widGetLastRecord(tok, delay)
         ///widShowTokenHash(tok.s);
         gTokInfo.raw = (engDataToRecErrorLevel(tok.raw) === 0) ? engGetDataToRec(tok.raw) : '';
 
-        updateGWalletOnLast(record);
-        widWalletRefresh();
         widPasswordOninput();
     }
 
-    return engNcDeferredLast(cb, tok.s, delay);
+    return widRequestLast(cb, tok.s, delay);
 }
 
 function widPasswordOninput()
@@ -1140,13 +1139,12 @@ function widReceiveKey(keys)
         if (record === null)
             return widModalWindow(gMsg.recordParseError);
 
-        updateGWalletOnLast(record);
-        widWalletRefresh();
         widTokensTakeover(engGetNumberedAcceptKeys(keys, [record]));
     }
 
-    //engNcLast(cb, tok)
-    engNcDeferredLast(cb, tok, 0);
+    ///engNcLast(cb, tok)
+    ///engNcDeferredLast(cb, tok, 0);
+    widRequestLast(cb, tok, 0);
 }
 
 function widTokensTakeover(keys)
@@ -1368,4 +1366,25 @@ function widDnSelect(dnOrRaw)
 {
     $('#textarea_token_text').val(dnOrRaw);
     widTokenTextOninput();
+}
+
+function widRequestLast(extCb, tok, delay)
+{
+    var possible_raw = $('#textarea_token_text').val();
+
+    var cb = function (resp, record)
+    {
+        ///var resp = engGetResponseHeader(data);
+        ///var record = null;
+
+        if (resp === gResponse.OK)
+	{
+	        updateGWalletOnLast(record,possible_raw);
+        	widWalletRefresh();
+	}
+
+        extCb(resp, record);
+    }
+
+    return engNcDeferredLast(cb, tok, delay);
 }

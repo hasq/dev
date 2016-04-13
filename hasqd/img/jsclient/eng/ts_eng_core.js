@@ -130,7 +130,7 @@ function engLoadFiles(files, hash, cb0)
     reader.readAsBinaryString(file);
 }
 
-function updateGWalletOnLast(lr)
+function updateGWalletOnLast(lr,raw)
 {
     if (!lr) return;
 
@@ -147,20 +147,20 @@ function updateGWalletOnLast(lr)
         r.raw = "";
         r.state = 0;
         gWallet[lr.s] = r;
-
- // FIXME test token name and fill raw
     }
 
-    var rs = gWallet[lr.s];
-
-    rs.n = lr.n;
+    var w = gWallet[lr.s];
+    w.n = lr.n;
 
     switch (st)
     {
-        case 'OK':        rs.state = 1; break;
-        case 'PWD_SNDNG': rs.state = 2; break;
-        case 'PWD_RCVNG': rs.state = 3; break;
-        case 'PWD_WRONG': rs.state = 4; break;
+        case 'OK':        w.state = 1; break;
+        case 'PWD_SNDNG': w.state = 2; break;
+        case 'PWD_RCVNG': w.state = 3; break;
+        case 'PWD_WRONG': w.state = 4; break;
     }
+
+    if( w.s == engGetHash(raw,gCurrentDB.hash) )
+	w.raw = raw;
 }
 
