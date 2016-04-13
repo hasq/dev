@@ -5,7 +5,7 @@ var gRequiredDbHash = 'smd';
 var gPassword = '';
 
 var gCurrentDB = null; //'smd.db';
-var gLastRec = {};
+var gTokInfo = {};
 var gTimerId;
 var gSearch =
 {

@@ -159,7 +159,7 @@ function widGetHTMLInitialDataArea()
 {
     var r = '';
     var id = 'textarea_token_text';
-    var onclick = 'widTokenTextOninput(500)';
+    var oninput = 'widTokenTextOninput(500)';
     var style = 'overflow-x:hidden;'
                 var attr = 'type="text" rows="2" maxlength="65536" placeholder="Enter token text" required';
 
@@ -167,7 +167,7 @@ function widGetHTMLInitialDataArea()
     r += '<td nowrap>\n';
     r += '<table id="table_initial_data_area">\n';
     r += widGetHTMLTrTdSubtitle(1, 'Token name', 'td-subtitle');
-    r += widGetHTMLTrTextarea('', id, onclick, style, attr);
+    r += widGetHTMLTrTextarea('', id, oninput, style, attr);
     r += widGetHTMLTokenHash();
     r += widGetHTMLTrTdSubtitle(1, 'Master key', 'td-subtitle');
     r += widGetHTMLMasterKey();
@@ -395,13 +395,13 @@ function widGetHTMLReceiveTab()
 
     var id0 = 'td_receive_keys_textarea';
     var id1 = 'textarea_receive_keys';
-    var onclick = 'widReceiveTextareaOninput()';
+    var oninput = 'widReceiveTextareaOninput($(this))';
     var style = 'overflow-x:hidden;white-space:pre-wrap;';
     var attr = 'type="text" rows="6" cols="64" maxlength="65536" wrap="on"';
 
     r += '<table id="table_receive_tab" style="width: 100%" border="0">\n';
     r += widGetHTMLTrTdSubtitle(1, 'Paste keys', 'td-tab-subtitle');
-    r += widGetHTMLTrTextarea(id0, id1, onclick, style, attr);
+    r += widGetHTMLTrTextarea(id0, id1, oninput, style, attr);
     r += widGetHTMLTrTdButton(1, 'button_receive', 'show-keys-button-off', 'widReceiveButtonClick($(this))', imgBtnReceiveKeys);
     r += '</table>\n';
 

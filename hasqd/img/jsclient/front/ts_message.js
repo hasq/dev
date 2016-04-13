@@ -1,8 +1,7 @@
-// Hasq Technology Pty Ltd (C) 2013-2016
-
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
+    noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
     changeMasterKey : 'Change master key',
     changeTokenName : 'Change token name',
@@ -47,6 +46,5 @@ var gResponse =
     BUSY : 'BUSY',
     REQ_JOBID_BAD : 'REQ_JOBID_BAD',
     JOB_NOINFO : 'JOB_NOINFO',
-    REQ_PATH_BAD : 'REQ_PATH_BAD'
+    REQ_PATH_BAD : 'REQ_PATH_BAD',
 };
-

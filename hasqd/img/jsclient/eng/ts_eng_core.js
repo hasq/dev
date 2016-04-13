@@ -43,13 +43,7 @@ function engSendPing(timeDelay)
     {
         var now = new Date();
         var ct = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.' + now.getMilliseconds();
-
-        //console.log(ct);
-
         var resp = engGetResponseHeader(data);
-
-        //if (resp !== 'OK')
-        //return widShowLog(resp);
     }
 
     ajxSendCommand('ping', cb, hasqLogo);
@@ -68,17 +62,18 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engGetRawFromZRec (s, z, hash)
+function engGetRawFromZRec (s, zd, hash)
 {
-    if (!z)
+    if (!zd)
         return s;
 
-    var l = z.length;
+    var l = zd.length;
 
-    if (z.charAt(0) === '[' && z.charAt(l - 1) === ']' )
+    if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']' )
     {
-        var raw = z.substring(1, l - 1);
-        if ( engGetHash(raw, hash) === s) return raw;
+        var raw = zd.substring(1, l - 1);
+        if ( engGetHash(raw, hash) === s)
+            return raw;
     }
 
     return s;
@@ -114,7 +109,6 @@ function engLoadFiles(files, hash, cb0)
         else
         {
             obj.raw = this.result; //event.target.result;
-            obj.loading = false;
             obj.s = engGetHash(obj.raw, hash);
         }
 
@@ -124,14 +118,11 @@ function engLoadFiles(files, hash, cb0)
     reader.onerror = function()
     {
         obj.error = gMsg.fileLoadError;
-        obj.loading = false;
         cb0(obj);
     };
 
     reader.onloadstart = function()
-    {
-        obj.loading = true;
-    }
+    {}
 
     reader.onloadend = function()
     {}
@@ -139,39 +130,14 @@ function engLoadFiles(files, hash, cb0)
     reader.readAsBinaryString(file);
 }
 
-/* FIXME what is this?
-a=str.charCodeAt(0);
-if (a>0xFF) a-=0x350;
-
-function native2ascii(str)
-{
-    console.log('in: ' + str);
-    console.log('Before: ' + engGetHash(str, 'smd'));
-
-    var out = '';
-    for (var i = 0, l = str.length; i < l; i++) {
-        if (str.charCodeAt(i) < 0x80) {
-            out += str.charAt(i);
-        } else {
-            console.log(str.charCodeAt(i));
-            var u = '' + str.charCodeAt(i).toString(16);
-            out += '\\u' + (u.length === 2 ? '00' + u : u.length === 3 ? '0' + u : u);
-        }
-    }
-    console.log('out: ' + out);
-    console.log('After: ' + engGetHash(out, 'smd'));
-    return out;
-}
-*/
-
 function updateGWalletOnLast(lr)
 {
-    if(!lr) return;
+    if (!lr) return;
 
     var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
-    if( st=='PWD_WRONG' && !gWallet[lr.s] ) return;
+    if ( st == 'PWD_WRONG' && !gWallet[lr.s] ) return;
 
     if ( !gWallet[lr.s] )
     {
@@ -182,7 +148,7 @@ function updateGWalletOnLast(lr)
         r.state = 0;
         gWallet[lr.s] = r;
 
-	// FIXME test token name and fill raw
+ // FIXME test token name and fill raw
     }
 
     var rs = gWallet[lr.s];
