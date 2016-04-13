@@ -18,24 +18,6 @@ function engNcDeferredLast(extCb, tok, delay)
     return engSendDeferredRequest(cmd, intCb, delay);
 }
 
-function engNcLast(extCb, tok)
-{
-    var cmd = 'last' + '\u0020' + gCurrentDB.name + '\u0020' + tok;
-
-    var intCb = function (data)
-    {
-        var resp = engGetResponseHeader(data);
-        var record = null;
-
-        if (resp === gResponse.OK)
-            record = engGetParsedRecord(data);
-
-        extCb(resp, record);
-    }
-
-    return ajxSendCommand(cmd, intCb, hasqLogo);
-}
-
 function engNcInfoDb(extCb)
 {
     var cmd = 'info db';
