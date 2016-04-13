@@ -139,7 +139,7 @@ function engLoadFiles(files, hash, cb0)
     reader.readAsBinaryString(file);
 }
 
-/*
+/* FIXME what is this?
 a=str.charCodeAt(0);
 if (a>0xFF) a-=0x350;
 
@@ -163,3 +163,38 @@ function native2ascii(str)
     return out;
 }
 */
+
+function updateGWalletOnLast(lr)
+{
+    if(!lr) return;
+
+    var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+    var st = engGetTokensStatus(lr, nr);
+
+    if( st=='PWD_WRONG' && !gWallet[lr.s] ) return;
+
+    if ( !gWallet[lr.s] )
+    {
+        var r = {};
+        r.s = lr.s;
+        r.n = lr.n;
+        r.raw = "";
+        r.state = 0;
+        gWallet[lr.s] = r;
+
+	// FIXME test token name and fill raw
+    }
+
+    var rs = gWallet[lr.s];
+
+    rs.n = lr.n;
+
+    switch (st)
+    {
+        case 'OK':        rs.state = 1; break;
+        case 'PWD_SNDNG': rs.state = 2; break;
+        case 'PWD_RCVNG': rs.state = 3; break;
+        case 'PWD_WRONG': rs.state = 4; break;
+    }
+}
+

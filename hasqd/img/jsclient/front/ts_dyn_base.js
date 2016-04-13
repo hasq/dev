@@ -524,6 +524,9 @@ function widGetLastRecord(tok, delay)
      //widShowTokenName(tok.s, tok.raw);
         gLastRec.raw = (engDataToRecErrorLevel(tok.raw) === 0) ? engGetDataToRec(tok.raw) : '';
 
+        updateGWalletOnLast(record);
+	widWalletRefresh();
+
         widPasswordOninput();
     }
 
@@ -1120,6 +1123,8 @@ function widReceiveKey(keys)
         if (record === null)
             return widModalWindow(gMsg.recordParseError);
 
+        updateGWalletOnLast(record);
+	widWalletRefresh();
         widTokensTakeover(engGetNumberedAcceptKeys(keys, [record]));
     }
 
@@ -1275,6 +1280,11 @@ widSearchProgress.block = function(txt, lnk)
 }
 
 widSearchProgress.refresh = function()
+{
+    widWalletRefresh();
+}
+
+function widWalletRefresh()
 {
     var str = widSearchUpdate();
 

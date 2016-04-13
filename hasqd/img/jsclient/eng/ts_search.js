@@ -297,7 +297,6 @@ function searchValidate2(dn, data)
     var st = engGetTokensStatus(lr, nr);
 
     var res = gWallet[dn];
-
     res.n = lr.n;
 
     switch (st)
