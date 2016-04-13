@@ -511,7 +511,7 @@ function widGetHTMLSearchResultsTabsButtons()
     {
         r += toButton(0, 'search-tab-button-active', imgBtnStartMine, 'Mine', 'span_search_mine');
         r += toButton(1, 'search-tab-button', imgBtnStartOnHold, 'On hold', 'span_search_onhold');
-        r += toButton(2, 'search-tab-button', imgBtnStartToCome, 'To come', 'span_search_tocome');
+        r += toButton(2, 'search-tab-button', imgBtnStartToCome, 'Expected', 'span_search_tocome');
     }
     r += '</table>\n';
 

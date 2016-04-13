@@ -11,8 +11,8 @@ function gHelp(x)
 
     var o =
     {
-        span_password_pic: 'FIXME (ts_message.js)<br\>span_password_pic',
-        span_token_pic: 'FIXME (ts_message.js)<br\>span_token_pic',
+///        span_password_pic: 'FIXME (ts_message.js)<br\>span_password_pic',
+///        span_token_pic: 'FIXME (ts_message.js)<br\>span_token_pic',
 ///        span_info: p_,
         token_name: 'FIXME (ts_message.js)<br\>token_name',
 //        token_hash: 'FIXME (ts_message.js)<br\>token_hash',
@@ -38,6 +38,16 @@ function gHelp(x)
     {
       INCLUDEFILE
       txt/ts_info.htm
+    }
+    else if (x == 'span_token_pic')
+    {
+      INCLUDEFILE
+      txt/ts_yellow_lock.htm
+    }
+    else if (x == 'span_password_pic')
+    {
+      INCLUDEFILE
+      txt/ts_tok_state.htm
     }
     else if (x == 'token_hash')
     {
