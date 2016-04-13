@@ -138,6 +138,8 @@ class Config
         // "ip:port" list of locked connections to this publisher
         std::vector<string> ipp_locks;
 
+	unsigned workerDelay;
+
     public:
         Config(int ac, const char * av[], const char * cfgfile = 0);
 

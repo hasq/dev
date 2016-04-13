@@ -10,7 +10,8 @@
 
 void Worker::runOnceUnconditionally()
 {
-//    os::Thread::sleep(1000);
+    if ( gs->config->workerDelay )
+	    os::Thread::sleep(gs->config->workerDelay);
 
     os::net::Socket * s = grabJob();
     if ( !s ) return;

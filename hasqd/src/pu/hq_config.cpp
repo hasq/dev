@@ -62,6 +62,7 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
     , amIpLink("224.0.0.1", 13131)
 
     , nodename("@host@port")
+    , workerDelay(0)
 
 {
     loadFile(cfgfile, false);
@@ -310,6 +311,9 @@ void Config::processOptionKeyVal(const string & k, const string & v)
 
     else if ( k == "workers" )
         nWorkers = gl::toi(v);
+
+    else if ( k == "workDelay" )
+        workerDelay = gl::toi(v);
 
     else if ( k == "webdir" )
     {
