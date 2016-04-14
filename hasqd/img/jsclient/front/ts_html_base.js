@@ -159,7 +159,7 @@ function widGetHTMLInitialDataArea()
 {
     var r = '';
     var id = 'textarea_token_name';
-    var oninput = 'widTokenTextOninput(500)';
+    var oninput = 'widTokenTextOninput($(this), 500)';
     var style = 'overflow-x:hidden;'
                 var attr = 'type="text" rows="2" maxlength="65536" placeholder="Enter token text" required';
 
@@ -190,7 +190,7 @@ function widGetHTMLTokenHash()
                 r += '<tr>\n';
                 {
                  r += '<td style="width: 20px; vertical-align: bottom;" title="Update token info"/>\n';
-                    r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo()');
+                    r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
                  r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
                     r += widGetHTMLMessageBox('Token hash:');
                  r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
@@ -328,7 +328,7 @@ function widGetHTMLCreateTab()
 {
     var r = '';
 
-    r += '<table id="table_create_tab" style="width: 100%">\n';
+    r += '<table id="table_create_tab" style="width: 100%" border="0">\n';
     r += widGetHTMLTrTdSubtitle(1, 'Create new token', 'td-tab-subtitle');
     r += widGetHTMLTrTdButton(1, 'button_create', 'show-keys-button-off', 'widCreateButtonClick($(this))', imgBtnCreate);
     r += '</table>\n';
@@ -501,7 +501,8 @@ function widGetHTMLSearchResultsTabsButtons()
         var r = '';
         var onclick = 'onclick="return widSearchResultsTabsClick($(this),' + tabId + ')" ';
         var htmlClass = 'class="' + htmlClass + '" ';
-        var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>';
+        //var span = '<span id="' + spanId + '" style="vertical-align:top; display:inline-block; max-width:25px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>';
+        var span = '<span id="' + spanId + '" style="vertical-align:top;"></span>';
 
         r += '<tr>\n';
         r += '<td/>';

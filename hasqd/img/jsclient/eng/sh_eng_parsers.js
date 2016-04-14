@@ -279,6 +279,9 @@ function engGetDataFromRec(data)
 
 function engIsAsciiOrLF(data)
 {
+    if (data === '')
+        return true;
+
     for (var i = 0, ch, l = data.length; i < l; i++)
     {
         ch = data.charCodeAt(i);
@@ -304,12 +307,16 @@ function engDataToRecErrorLevel(data)
      .replace(/\t/g, '\u0020')
      .replace(/\u0020+$/mg, '');
 
-                  if ((rawData.length) > 160 ) return r = 3;
-    if (!engIsAsciiOrLF(data)) return r = 4;
+                  if ((rawData.length) > 160 )
+                      return r = 3;
+
+    if (!engIsAsciiOrLF(data))
+        return r = 4;
 
     data = engGetDataToRec(data);
 
-    if (rawData !== engGetDataFromRec(data)) return 5;
+    if (rawData !== engGetDataFromRec(data))
+        return 5;
 
     return r;
 }

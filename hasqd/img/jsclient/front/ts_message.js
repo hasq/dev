@@ -1,6 +1,7 @@
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
+    nonASCII : 'Use file',
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
     changeMasterKey : 'Change master key',

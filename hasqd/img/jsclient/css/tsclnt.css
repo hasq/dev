@@ -5,7 +5,7 @@ html
 
 body
 {
-    font-family: Consolas, "Courier New", monospace;
+    font-family: Arial, Verdana, Consolas, "Courier New", monospace;
     background: #FCFCFC;
     color: black;
     width: 60%;
@@ -44,7 +44,7 @@ button
 	-webkit-border-radius: 4px; 
 }
 
-label#label_file_upload
+#label_file_upload
 {
 	vertical-align: top;
     font: bold italic 10px Consolas, "Lucida Console", monospace !important;
@@ -58,7 +58,7 @@ label#label_file_upload
 	opacity: 1;
 }
 
-label#label_file_upload:hover
+#label_file_upload:hover
 {
     background: #87CEEB;
     cursor: pointer;
@@ -175,6 +175,10 @@ button.button-disabled:hover
     opacity: 0.4;
 }
 
+#button_create
+{
+	margin-top : 48px;
+}
 
 #div_tabs
 {
@@ -221,7 +225,7 @@ button.button-disabled:hover
     animation-duration: 0.4s;
     cursor: pointer;
     text-align: center;
-    font: 14px Consolas;
+    font: 16px Consolas;
 }
 
 
@@ -258,40 +262,40 @@ input[class='hasDatepicker']
     margin: 0px;
     border: 1px solid #DDDDDD; /*#aaa;*/
     border-radius: 0;
-	font: 14px Consolas, "Courier New", monospace !important;
+	font: 16px Consolas, "Courier New", monospace !important;
 }
 
 input[placeholder]
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 input::-webkit-input-placeholder
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 input:-ms-input-placeholder
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 input:-moz-placeholder
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 input::-moz-placeholder
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
@@ -299,7 +303,7 @@ input::-moz-placeholder
 input[type='text'],
 input[type='password']
 {
-    font: 14px Consolas, "Courier New", monospace !important;
+    font: 16px Consolas, "Courier New", monospace !important;
     width: 100%;
     margin: 0;
     border: 1px solid #DDDDDD;
@@ -602,6 +606,16 @@ textarea::-moz-placeholder
     height: 118px;
 }
 
+#span_reload:hover
+{
+	cursor: pointer;	
+}
+
+#span_reload:active
+{
+	opacity: 0.7;	
+}
+
 .ui-tabs-nav
 {
     display: none;
@@ -623,7 +637,8 @@ textarea::-moz-placeholder
 .span-message-box:hover
 {
 	cursor: pointer;
-	text-shadow: 1px 1px #DDDDDD;
+	/*text-shadow: 1px 1px #DDDDDD;*/
+	text-shadow: 1px 1px 2px #DDDDDD, 0 0 2px #1376BC;
 }
 
 .td-button
@@ -643,7 +658,7 @@ textarea::-moz-placeholder
 
 .td-log
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 16px Consolas, "Courier New", monospace !important;
     text-align: left;
     border-radius: 0px;
 	visibility: hidden;
@@ -652,7 +667,7 @@ textarea::-moz-placeholder
 .td-subtitle
 {
     text-align: center;
-    font: bold 18px Consolas, "Courier New", monospace !important;
+    font: bold 17px Verdana !important;
     color: #1376BC;
 }
 
@@ -660,7 +675,7 @@ textarea::-moz-placeholder
 {
     text-align: center;
 	vertical-align: top;
-    font: bold 18px Consolas, "Courier New", monospace !important;
+    font: bold 17px Verdana !important;
     color: #009070;
 }
 
@@ -675,8 +690,9 @@ textarea::-moz-placeholder
 .td-title
  {
     text-align: left;
-	font: bold 32px Consolas, "Courier New", monospace !important;
-    color: #1376BC;
+	font: bold 32px Verdana !important;
+	color: #1376BC;
+	text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
 .text-align-right

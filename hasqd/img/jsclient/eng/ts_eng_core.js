@@ -14,6 +14,26 @@ function engGetDbByHash (db, hash)
     return currentDb;
 }
 
+function engGetTokenHash(data, hash)
+{
+    //Returns hash of raw tokens value;
+    return (engIsHash(data, hash)) ? data : engGetHash(data, hash);
+}
+
+function engGetTokenObj(data)
+{
+    var tok = {};
+
+    tok.s = (data) ? engGetTokenHash(data, gCurrentDB.hash) : '';
+    tok.raw = (data === tok.s)
+              ? ''
+              : (engIsAsciiOrLF(data))
+              ? data
+              : '';
+
+    return tok;
+}
+
 function engSendDeferredRequest(cmd, f, t)
 {
     // Sends ajax request with 500ms delay.
@@ -164,3 +184,18 @@ function updateGWalletOnLast(lr, raw)
         w.raw = raw;
 }
 
+function engGetNumberLevel(num)
+{
+    if ( num < 100 )
+        return (num);
+    else if ( num < 1000 )
+     return(~~ (num / 100) * 100 + '+');
+        else if ( num < 10000 )
+     return(~~ (num / 1000) + 'K+');
+            else if ( num < 100000 )
+     return(~~ (num / 1000) + 'K+');
+                else if ( num < 1000000 )
+     return(~~ (num / 1000) + 'K+')
+                    else if ( num > 1000000 )
+                        return ('1M+');
+}
