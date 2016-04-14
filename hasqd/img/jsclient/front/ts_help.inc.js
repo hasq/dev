@@ -7,8 +7,8 @@ function gHelp(x)
 ///        span_password_pic: 'FIXME (ts_message.js)<br\>span_password_pic',
 ///        span_token_pic: 'FIXME (ts_message.js)<br\>span_token_pic',
 ///        span_info: p_,
-        token_name: 'FIXME (ts_message.js)<br\>token_name',
-//        token_hash: 'FIXME (ts_message.js)<br\>token_hash',
+///        token_name: 'FIXME (ts_message.js)<br\>token_name',
+///        token_hash: 'FIXME (ts_message.js)<br\>token_hash',
         master_key: 'FIXME (ts_message.js)<br\>master_key',
         welcome_to_tokenswap: 'FIXME (ts_message.js)<br\>welcome_to_tokenswap',
         token_data: 'FIXME (ts_message.js)<br\>token_data',
@@ -39,9 +39,13 @@ function gHelp(x)
     }
     else if (x == 'token_hash')
     {
-     // INCLUDEFILE
-     // file
-        r += 'sha256sum &lt;file&gt; | gawk \'{print $1}\' | tr -d \\n | md5sum'
+        INCLUDEFILE
+        txt/ts_token_hash.htm
+    }
+    else if (x == 'token_name')
+    {
+        INCLUDEFILE
+        txt/ts_token_name.htm
     }
 
     return r;
