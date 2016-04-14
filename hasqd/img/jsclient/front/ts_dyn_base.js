@@ -1276,10 +1276,7 @@ function widSearchButtonClick()
     if (fromDate > toDate)
         return widModalWindow(gMsg.enterDate);
 
-    var dates = engSearchClick(fromDate, toDate, widSearchProgress);
-
-    // set new dates FIXME
-
+    engSearchClick(fromDate, toDate, widSearchProgress);
 }
 
 function widSearchResultsTabsClick($obj, tabId)
