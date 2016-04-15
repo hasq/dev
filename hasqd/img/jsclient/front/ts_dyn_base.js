@@ -210,7 +210,7 @@ function widShowTokenState() // Shows message or image about tokens existense.
             .attr('src', imgMsgWait)
             .prop('title', 'Searching for token...')
             .show();
-        },
+        }
     }
 
     return obj;
