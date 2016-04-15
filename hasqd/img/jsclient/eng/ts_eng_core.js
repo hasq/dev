@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function engGetDbByHash (db, hash)
+function engGetDbByHash(db, hash)
 {
     var currentDb = null;
 
@@ -82,24 +82,24 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engGetRawFromZRec (s, zd, hash)
+function engGetRawFromZRec(s, zd, hash)
 {
     if (!zd)
         return s;
 
     var l = zd.length;
 
-    if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']' )
+    if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']')
     {
         var raw = zd.substring(1, l - 1);
-        if ( engGetHash(raw, hash) === s)
+        if (engGetHash(raw, hash) === s)
             return raw;
     }
 
     return s;
 }
 
-function engLoadFiles(files, hash, cb0)
+function engLoadFiles(files, hash, cb)
 {
     // files is a FileList of File objects. List some properties.
     var output = [];
@@ -115,12 +115,14 @@ function engLoadFiles(files, hash, cb0)
     else
     {
         obj.error = null;
-        return cb0(obj);
+        return cb(obj);
     }
 
     var reader = new FileReader();
 
-    reader.onload = function()
+ //reader.readAsBinaryString(file);
+
+    var binStringCallback = function (e)
     {
         if (+file.size > 20971520)
             obj.error = gMsg.fileTooBig;
@@ -128,38 +130,65 @@ function engLoadFiles(files, hash, cb0)
             obj.error = gMsg.fileZero;
         else
         {
-            obj.raw = this.result; //event.target.result;
+            obj.raw = e.target.result;
             obj.s = engGetHash(obj.raw, hash);
         }
 
-        cb0(obj);
+        cb(obj);
     };
 
-    reader.onerror = function()
+    var arrBufferCallback = function (e)
+    {
+        obj.raw = '';
+        var bytes = new Uint8Array(e.target.result);
+        var length = bytes.byteLength;
+
+        for (var i = 0; i < length; i++)
+            obj.raw += String.fromCharCode(bytes[i]);
+
+        obj.s = engGetHash(obj.raw, hash)
+
+                cb(obj);
+    };
+
+    if (typeof reader.readAsBinaryString != 'undefined')
+    {
+        reader.onload = binStringCallback;
+        reader.readAsBinaryString(file);
+    }
+    else
+    {
+        reader.onload = arrBufferCallback;
+        reader.readAsArrayBuffer(file);
+    }
+
+    reader.onerror = reader.onabort = function ()
     {
         obj.error = gMsg.fileLoadError;
-        cb0(obj);
+        cb(obj);
     };
 
-    reader.onloadstart = function()
+    reader.onloadstart = function ()
     {}
 
-    reader.onloadend = function()
+    reader.onloadend = function ()
     {}
 
-    reader.readAsBinaryString(file);
 }
+
 
 function updateGWalletOnLast(lr, raw)
 {
-    if (!lr) return;
+    if (!lr)
+        return;
 
     var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
     var st = engGetTokensStatus(lr, nr);
 
-    if ( st == 'PWD_WRONG' && !gWallet[lr.s] ) return;
+    if (st == 'PWD_WRONG' && !gWallet[lr.s])
+        return;
 
-    if ( !gWallet[lr.s] )
+    if (!gWallet[lr.s])
     {
         var r = {};
         r.s = lr.s;
@@ -174,28 +203,36 @@ function updateGWalletOnLast(lr, raw)
 
     switch (st)
     {
-        case 'OK':        w.state = 1; break;
-        case 'PWD_SNDNG': w.state = 2; break;
-        case 'PWD_RCVNG': w.state = 3; break;
-        case 'PWD_WRONG': w.state = 4; break;
+        case 'OK':
+            w.state = 1;
+            break;
+        case 'PWD_SNDNG':
+            w.state = 2;
+            break;
+        case 'PWD_RCVNG':
+            w.state = 3;
+            break;
+        case 'PWD_WRONG':
+            w.state = 4;
+            break;
     }
 
-    if ( w.s == engGetHash(raw, gCurrentDB.hash) )
+    if (w.s == engGetHash(raw, gCurrentDB.hash))
         w.raw = raw;
 }
 
 function engGetNumberLevel(num)
 {
-    if ( num < 100 )
+    if (num < 100)
         return (num);
-    else if ( num < 1000 )
-     return(~~ (num / 100) * 100 + '+');
-        else if ( num < 10000 )
-     return(~~ (num / 1000) + 'K+');
-            else if ( num < 100000 )
-     return(~~ (num / 1000) + 'K+');
-                else if ( num < 1000000 )
-     return(~~ (num / 1000) + 'K+')
-                    else if ( num > 1000000 )
+    else if (num < 1000)
+        return (~~(num / 100) * 100 + '+');
+        else if (num < 10000)
+        return (~~(num / 1000) + 'K+');
+            else if (num < 100000)
+        return (~~(num / 1000) + 'K+');
+                else if (num < 1000000)
+        return (~~(num / 1000) + 'K+');
+                    else if (num > 1000000)
                         return ('1M+');
 }

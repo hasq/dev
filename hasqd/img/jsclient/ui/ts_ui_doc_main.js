@@ -90,13 +90,13 @@ function docInit()
     $('input, select, textarea').attr('autocomplete', 'off');
 
     /*
-             ///Mozilla firefox
+                 ///Mozilla firefox
         $('textarea[readonly]').focus(function()
         {
             this.blur();
         });
 
-             ///IE
+                 ///IE
         $('textarea[readonly]').attr('unselectable', 'on');
     */
 
