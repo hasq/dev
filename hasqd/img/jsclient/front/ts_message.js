@@ -47,5 +47,5 @@ var gResponse =
     BUSY : 'BUSY',
     REQ_JOBID_BAD : 'REQ_JOBID_BAD',
     JOB_NOINFO : 'JOB_NOINFO',
-    REQ_PATH_BAD : 'REQ_PATH_BAD',
+    REQ_PATH_BAD : 'REQ_PATH_BAD'
 };
