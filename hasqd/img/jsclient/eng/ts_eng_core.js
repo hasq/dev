@@ -124,7 +124,7 @@ function engLoadFiles(files, hash, cb)
 
     var binStringCallback = function (e)
     {
-        if (+file.size > 20971520)
+        if (+file.size > gMaxFileSize )
             obj.error = gMsg.fileTooBig;
         else if (+file.size === 0)
             obj.error = gMsg.fileZero;

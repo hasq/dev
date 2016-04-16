@@ -6,16 +6,16 @@ var gMsg =
     nonASCII : 'Warning: this data seems binary; please use file instead',
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
-    changeMasterKey : 'Change master key',
-    changeTokenName : 'Change token name',
-    createToken : 'Create token first',
+    changeMasterKey : 'Master key does not match token',
+    changeTokenName : 'FIXME Change token name',
+    createToken : 'FIXME Create token first',
     dataNotChanged : 'Token data has not been changed',
     enterDate : 'Date "From" must be earlier than "To"',
-    enterMasterKey : 'Enter master key',
-    enterTokenName : 'Enter token name',
+    enterMasterKey : 'Master key is absent',
+    enterTokenName : 'Token is not specified',
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
-    tokenIsLocked : 'Token is locked',
+    tokenIsLocked : 'FIXME Token is locked',
 
     fileLoadError : 'File reading error: maybe too big or not accesible.'+
 	'Use linux commnd<br/><br/><b>'+

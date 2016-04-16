@@ -1,5 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+var gMaxFileSize = 10000000;
+
 var gClientTitle = 'TokenSwap';
 var gRequiredDbHash = 'smd';
 var gPassword = '';
