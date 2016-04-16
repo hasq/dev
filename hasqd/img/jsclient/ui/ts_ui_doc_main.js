@@ -121,7 +121,7 @@ function docInit()
 
     $('#span_password_eye img')
     .attr('src', imgEyeOpen)
-    .attr('title', 'Unmask password');
+    .attr('title', gTooltip.password_eye);
 
     $('#td_token_data').hide();
 

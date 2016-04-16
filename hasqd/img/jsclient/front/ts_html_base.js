@@ -179,6 +179,23 @@ function widGetHTMLInitialDataArea()
 
 function widGetHTMLTokenHash()
 {
+    var body = function()
+    {
+        var r = '';
+        r += '<td style="width: 20px; vertical-align: bottom;" title="'+gTooltip.refresh_token+'"/>\n';
+        r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
+        r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
+        r += widGetHTMLMessageBox('Token hash:');
+        r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
+        r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
+        r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
+        r += '<td style="text-align: right; vertical-align:top" />\n';
+        r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
+        r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';
+        return r;
+    };
+
+
     var r = '';
 
     r += '<tr>\n';
@@ -188,24 +205,13 @@ function widGetHTMLTokenHash()
             r += '<table style="width: 100%" border="0">\n';
             {
                 r += '<tr>\n';
-                {
-                 r += '<td style="width: 20px; vertical-align: bottom;" title="Update token info"/>\n';
-                    r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
-                 r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
-                    r += widGetHTMLMessageBox('Token hash:');
-                 r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
-                 r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
-                    r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
-                 r += '<td style="text-align: right; vertical-align:top" />\n';
-              r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
-                 r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';
-                }
-             r += '</tr>\n';
+                r += body();
+                r += '</tr>\n';
             }
          r += '</table>\n';
         }
     }
- r += '</tr>\n';
+    r += '</tr>\n';
 
     return r;
 }

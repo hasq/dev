@@ -595,13 +595,13 @@ function widPasswordEyeClick($obj)
     {
         $PwdInp.attr('type', 'password');
         $Eye.attr('src', imgEyeOpen);
-        $Eye.attr('title', 'Unmask password');
+        $Eye.attr('title', gTooltip.password_eye);
     }
     else
     {
         $PwdInp.attr('type', 'text');
         $Eye.attr('src', imgEyeClosed);
-        $Eye.attr('title', 'Mask password');
+        $Eye.attr('title', gTooltip.password_eye);
     }
 }
 

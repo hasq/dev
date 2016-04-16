@@ -17,25 +17,30 @@ var gMsg =
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'FIXME Token is locked',
 
-    fileLoadError : 'File reading error: maybe too big or not accesible.'+
-	'Use linux commnd<br/><br/><b>'+
-	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+    fileLoadError : 'File reading error: maybe too big or not accesible.' +
+ 'Use linux commnd<br/><br/><b>'+
+ 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
     fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
-	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+ 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
     fileZero : 'File is empty'
 };
 
-var gDataErrorMsg =
-[
-    'OK',
-    'Bad token data',
-    'Data is too big',
-    'Data expands over the limit',
-    'Data is binary, use ASCII text only',
-    'Data cannot be convered to acceptable text'
-];
+var gTooltip =
+{
+    refresh_token : 'Reload token',
+    password_eye : 'Show password'
+};
+
+var gDataErrorMsg = [
+                        'OK',
+                        'Bad token data',
+                        'Data is too big',
+                        'Data expands over the limit',
+                        'Data is binary, use ASCII text only',
+                        'Data cannot be convered to acceptable text'
+                    ];
 
 var gResponse =
 {
