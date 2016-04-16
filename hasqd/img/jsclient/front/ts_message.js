@@ -1,3 +1,5 @@
+// Hasq Technology Pty Ltd (C) 2013-2016
+
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
@@ -7,14 +9,18 @@ var gMsg =
     changeMasterKey : 'Change master key',
     changeTokenName : 'Change token name',
     createToken : 'Create token first',
-    dataNotChanged : 'Token data is not changed',
+    dataNotChanged : 'Token data has not been changed',
     enterDate : 'Date "From" must be earlier than "To"',
     enterMasterKey : 'Enter master key',
     enterTokenName : 'Enter token name',
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'Token is locked',
-    fileLoadError : 'File reading error: maybe too big or not accesible',
+
+    fileLoadError : 'File reading error: maybe too big or not accesible.'+
+	'Use linux commnd<br/><br/><b>'+
+	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+
     fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
 	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
@@ -22,13 +28,15 @@ var gMsg =
 };
 
 var gDataErrorMsg =
-{
-    1 : 'Undefined token data',
-    2 : 'Length before > 160', // FIXME kogda eto soobshenie pojavljaetsja
-    2 : 'Data is too big',
-    4 : 'Data is binary, use ASCII text only',
-    5 : 'Convertation error'
-}
+[
+    'OK',
+    'Bad token data',
+    'Data is too big',
+    'Data expands over the limit',
+    'Data is binary, use ASCII text only',
+    'Data cannot be convered to acceptable text'
+];
+
 var gResponse =
 {
     OK : 'OK',
