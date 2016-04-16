@@ -9,7 +9,7 @@ function gHelp(x)
 ///        span_info: p_,
 ///        token_name: 'FIXME (ts_message.js)<br\>token_name',
 ///        token_hash: 'FIXME (ts_message.js)<br\>token_hash',
-        master_key: 'FIXME (ts_message.js)<br\>master_key',
+///        master_key: 'FIXME (ts_message.js)<br\>master_key',
         welcome_to_tokenswap: 'FIXME (ts_message.js)<br\>welcome_to_tokenswap',
         token_data: 'FIXME (ts_message.js)<br\>token_data',
         create_new_token: 'FIXME (ts_message.js)<br\>create_new_token',
@@ -46,6 +46,11 @@ function gHelp(x)
     {
         INCLUDEFILE
         txt/ts_token_name.htm
+    }
+    else if (x == 'master_key')
+    {
+        INCLUDEFILE
+        txt/ts_master_key.htm
     }
 
     return r;
