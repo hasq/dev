@@ -133,9 +133,14 @@ button.show-keys-button-on
     border: 1px solid #1376BC;
 }
 
+button.tab-button-on:hover
+{
+    background: #90FEF1;
+    cursor: pointer;
+}
+
 button:hover,
 button.tab-button-off:hover,
-button.tab-button-on:hover,
 button.show-keys-button-off:hover,
 button.show-keys-button-on:hover,
 button.button-enabled:hover
