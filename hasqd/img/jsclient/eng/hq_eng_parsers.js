@@ -75,7 +75,10 @@ function engIsNull(data)
 function engIsRawTokens(data, hash)
 {
     var n = data;
-    n = n.replace(/^\s+|\s+$/g, ''); // remove all space-like symbols from the start and end of the string
+
+    // remove all space-like symbols from the start and end of the string
+    n = n.replace(/^\s+|\s+$/g, '');
+
     n = n.split(/\s/);
     for (var i = 0; i < n.length; i++)
     {
