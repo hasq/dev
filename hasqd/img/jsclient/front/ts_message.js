@@ -1,7 +1,7 @@
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
-    nonASCII : 'Use file', // Warning, this data seems binary, please use file instead
+    nonASCII : 'Warning: this data seems binary; please use file instead',
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
     changeMasterKey : 'Change master key',
@@ -15,16 +15,18 @@ var gMsg =
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'Token is locked',
     fileLoadError : 'File loading error',
-    fileTooBig : 'File size must be less than 20Mb',
+    fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
+	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+
     fileZero : 'File is empty'
 };
 
 var gDataErrorMsg =
 {
     1 : 'Undefined token data',
-    2 : 'Length before > 160',
-    2 : 'Length after > 160',
-    4 : 'Not ASCII or LF',
+    2 : 'Length before > 160', // FIXME kogda eto soobshenie pojavljaetsja
+    2 : 'Data is too big',
+    4 : 'Data is binary, use ASCII text only',
     5 : 'Convertation error'
 }
 var gResponse =

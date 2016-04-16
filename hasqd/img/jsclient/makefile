@@ -60,7 +60,7 @@ createclient: index.html
 	cp eng/ts_*.js slice/home/eng/
 	cp front/ts_*.js slice/home/front/
 	rm -f slice/home/front/ts_help.inc.js
-	mv -f front/ts_help.gen slice/home/front/ts_help.js
+	mv -f front/ts_help.gen slice/home/front/ts_help.gen.js
 	cp ui/ts_*.js slice/home/ui/
 	cp tsclnt.html slice/home/tsclnt.html
 #	shared
