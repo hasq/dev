@@ -14,7 +14,7 @@ var gMsg =
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'Token is locked',
-    fileLoadError : 'File loading error',
+    fileLoadError : 'File reading error: maybe too big or not accesible',
     fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
 	'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
