@@ -17,12 +17,14 @@ var gMsg =
     recordParseError : 'An error occurred while processing record',
     tokenIsLocked : 'FIXME Token is locked',
 
-    fileLoadError : 'File reading error: maybe too big or not accesible.' +
+    fileLoadError : '<p style="text-align: left;">File reading error: '+
+ 'maybe too big or not accesible. ' +
  'Use linux commnd<br/><br/><b>'+
- 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+ 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b></p>',
 
-    fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
- 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
+    fileTooBig : '<p style="text-align: left;">File is too big. '+
+ 'For big files use linux commnd<br/><br/><b>'+
+ 'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b></p>',
 
     fileZero : 'File is empty'
 };

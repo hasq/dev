@@ -164,7 +164,8 @@ function widShowTokenName(tok)
     if (arguments.length === 0)
         return $TokName.empty();
 
-    return (tok.s === engGetHash(tok.raw, gCurrentDB.hash))
+    var oraw = engGetDataFromRec(tok.raw);
+    return (tok.s === engGetHash(oraw, gCurrentDB.hash))
            ? $TokName.val(tok.raw)
            : $TokName.val(tok.s);
 }
