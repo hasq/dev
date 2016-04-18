@@ -1,9 +1,0 @@
-ssh 150.107.73.133 -l vps (t6)
-apt-get update
-apt install subversion
-root@dom015591:/home/vps# apt install subversion
-root@dom015591:/home/vps# apt install g++
-root@dom015591:/home/vps# apt install make
-root@dom015591:/home/vps# apt install nginx
-useradd -m hasq
-passwd hasq (sya)
