@@ -38,10 +38,10 @@ function engNcInfoDb(extCb)
 
 function engNcZ(extCb, db, rec, raw)
 {
-    raw = (raw) ? '[' + raw + ']' : '';
+    var data = (raw) ? '[' + raw + ']' : '';
 
     var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
-              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + raw;
+              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + data;
 
     var jobCb = function (resp, jobId)
     {

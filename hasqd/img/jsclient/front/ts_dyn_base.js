@@ -160,12 +160,15 @@ function widShowTokenName(tok)
 {
     // Shows hashed value of token (if the value is not a default hash)
     var $TokName = $('#textarea_token_name');
+    var possibleRaw = engGetClearData($TokName.val());
 
     if (arguments.length === 0)
         return $TokName.empty();
 
-    var oraw = engGetDataFromRec(tok.raw);
-    return (tok.s === engGetHash(oraw, gCurrentDB.hash))
+    if (tok.s === engGetHash(possibleRaw, gCurrentDB.hash))
+        return;
+
+    return (tok.s === engGetHash(tok.raw, gCurrentDB.hash))
            ? $TokName.val(tok.raw)
            : $TokName.val(tok.s);
 }
@@ -421,11 +424,12 @@ function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
 {
     var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
 
+
     if (!engIsAsciiOrLF(dnOrRaw))
         return widModalWindow(gMsg.nonASCII, function() { $Obj.focus()});
 
     delay = +delay || 0;
-    var tok = engGetTokenObj(dnOrRaw);
+    var tok = engGetTokenObj(engGetClearData(dnOrRaw));
 
     if (1)
         textArea().clearExcept($Obj);
@@ -467,7 +471,7 @@ function widLoadFiles(files)
 
         $TokName.val('File: ' + data.name + '\nSize: ' + data.size);
 
-        var tok = engGetTokenObj(data.raw);
+        var tok = engGetTokenObj(engGetClearData(data.raw));
 
         widTokenTextRO(true);
         widReloadTokenInfo(tok, 0, true);
@@ -485,40 +489,41 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     widShowTokenState();
     widShowPwdInfo();
     widShowTokenHash();
+    widShowTokenDataLength();
 
     if ( tok === null && !gTokInfo.s )
         return;
-	
-	if (gCurrentDB === null)
-		return;
-	
+
+    if (gCurrentDB === null)
+        return;
+
     if ( tok && !tok.s )
-	{ 
+    {
         gTokInfo = {};
-		widShowTokenName(tok);
-		widTokenTextRO(false);
-		return ;
-	}
+        widShowTokenName(tok);
+        widTokenTextRO(false);
+        return ;
+    }
 
-	if ( tok === null && gTokInfo.s )
-	{
-		var tok = {};
-		tok.s = gTokInfo.s;
-		tok.raw = gTokInfo.raw;
-		gTokInfo = {};
-	}
+    if ( tok === null && gTokInfo.s )
+    {
+        var tok = {};
+        tok.s = gTokInfo.s;
+        tok.raw = gTokInfo.raw;
+        gTokInfo = {};
+    }
 
-	gTokInfo = {};
-	widShowTokenState().show();
+    gTokInfo = {};
+    widShowTokenState().show();
 
-	if (!noRefresh)
-	{
-		widShowTokenName(tok);
-		widTokenTextRO(false);
-	}
+    if (!noRefresh)
+    {
+        widShowTokenName(tok);
+        widTokenTextRO(false);
+    }
 
-	widShowTokenHash(tok.s);
-	widGetLastRecord(tok, delay);
+    widShowTokenHash(tok.s);
+    widGetLastRecord(tok, delay);
 }
 
 function widGetLastRecord(tok, delay)
@@ -550,9 +555,7 @@ function widGetLastRecord(tok, delay)
         }
 
         widShowTokenState().show(resp);
-        ///widShowTokenHash(tok.s);
-        gTokInfo.raw = (engDataToRecErrorLevel(tok.raw) === 0) ? engGetDataToRec(tok.raw) : '';
-
+        gTokInfo.raw = (engDataToRecErrorLevel(tok.raw) === 0) ? tok.raw : '';
         widPasswordOninput();
     }
 
@@ -706,14 +709,14 @@ function widCreateButtonClick()
         widReloadTokenInfo(tok);
     }
 
-    engNcZ(addCb0, gCurrentDB.name, rec0, tok.raw);
+    engNcZ(addCb0, gCurrentDB.name, rec0, engGetDataToRec(tok.raw));
 }
 
 function widSetDataTab()
 {
     var $Tabs = $('#div_tabs');
-    var $Button = $('#table_set_data_tab').find('button');
-    var $Textarea = $('#table_set_data_tab').find('textarea');
+    var $Button = $('#button_set_data');
+    var $Textarea = $('#textarea_set_data');
 
     var retObj =
     {
@@ -732,10 +735,13 @@ function widSetDataTab()
         },
         val : function (data)
         {
-            ///return (typeof(data) !== 'undefined' && typeof(data) !== 'null')
-			return (!data)
-            ? textArea($Textarea).val(data)
-            : textArea($Textarea).val();
+            if (typeof(data) !== 'undefined' && typeof(data) !== 'null')
+            {
+                widShowTokenDataLength(data);
+                return $Textarea.val(data);
+            }
+            else
+                return $Textarea.val();
         },
         isOn : function ()
         {
@@ -793,19 +799,25 @@ function widSetDataButtonClick()
 
 function widSetDataTextareaOninput($Obj)
 {
-	var $Obj = $('#textarea_set_data');
-	var $DataLength = $('#td_set_data_length');
-	var data = $Obj.val().replace(/\t/g, '\u0020');
-	
+ var data = $Obj.val().replace(/\t/g, '\u0020');
+
     $Obj.val(data);
-	var l = engGetDataToRec(data).length;
-	
-	if (l > 0) 
-		$DataLength.html(l);
-	else
-		$DataLength.html();
-	
+
+    widShowTokenDataLength(data);
     widToggleUI(gTokInfo, gPassword);
+}
+
+function widShowTokenDataLength(data)
+{
+    var $DataLength = $('#td_set_data_length');
+    $DataLength.empty();
+
+    if (!data)
+        return;
+
+    var l = engGetDataToRec(data).length;
+
+    (l) ? $DataLength.html(l) : $DataLength.empty();
 }
 
 function widShowKeysTab()
@@ -1114,7 +1126,7 @@ function widSearchTokenRaw(dn)
         var accKeysTok = {};
         accKeysTok.s = (rec === null) ? tok.s: rec.s;
         var sOrD = (rec === null) ? tok.s : rec.d;
-        accKeysTok.raw = engGetRawFromZRec(accKeysTok.s, sOrD, gCurrentDB.hash);
+        accKeysTok.raw = engGetTokNameFromZ(accKeysTok.s, sOrD, gCurrentDB.hash);
 
         $TokName.val(accKeysTok.raw);
 
@@ -1361,7 +1373,7 @@ function widSearchUpdate()
     {
         var x = w[i];
         var xs = x.s;
-        if ( x.raw != "" ) xs = x.raw;
+        if ( x.raw != "" ) xs = engGetDataToRec(x.raw);
 
         xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
 
@@ -1379,8 +1391,8 @@ function widSearchUpdate()
 
 function widDnSelect(dnOrRaw)
 {
+    console.log('dnOrRaw:' + dnOrRaw);
     $('#textarea_token_name').val(dnOrRaw);
-
     widTurnOffFileButton();
     widReloadTokenInfo(engGetTokenObj(dnOrRaw));
 }

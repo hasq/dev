@@ -245,6 +245,81 @@ function engGetTokensStatus(lr, nr)
     return 'PWD_WRONG';
 }
 
+function engGetClearData(data)
+{
+    data = data || '';
+
+    return data
+     .replace(/\t/g, '\u0020')
+     .replace(/\u0020+$/mg, '')
+  .replace(/^\u000a+|\u000a+$/g, '');
+}
+
+function engIsAsciiOrLF(data)
+{
+    if (data === '')
+        return true;
+
+    for (var i = 0, ch, l = data.length; i < l; i++)
+    {
+        ch = data.charCodeAt(i);
+
+        if ((ch >= 32 && ch <= 127) || ch === 10)
+            continue;
+
+        return false;
+    }
+
+    return true;
+}
+
+function engDataToRecErrorLevel(data)
+{
+    var r = 0;
+
+    if (data === '')
+        return r;
+
+    if (!data)
+        return r = 1;
+
+    data = engGetClearData(data);
+
+    if ((data.length) > 160 )
+        return r = 2;
+
+    if (!engIsAsciiOrLF(data))
+        return r = 3;
+
+    var fmd = engGetDataToRec(data);
+
+    if ((fmd.length) > 160 )
+        return r = 4;
+
+    if (data !== engGetDataFromRec(fmd))
+        return 5;
+
+    return r;
+}
+
+function engGetDataToRec(data)
+{
+    // \u000a is LF;
+    // \u0020 is space;
+    // \u005c is backslash;
+    // \u006e is n
+
+    if (!data)
+        return '';
+
+    data = engGetClearData(data)
+     .replace(/\u005c/mg, '\u005c\u005c')
+     .replace(/(\u0020(?=\u0020))/g, '\u0020\u005c')
+     .replace(/\u000a/g, '\u005c\u006e');
+
+           return data;
+}
+
 function engGetDataFromRec(data)
 {
     // returns parsed data for displaying
@@ -275,71 +350,6 @@ function engGetDataFromRec(data)
 
            return data;
 
-}
-
-function engIsAsciiOrLF(data)
-{
-    if (data === '')
-        return true;
-
-    for (var i = 0, ch, l = data.length; i < l; i++)
-    {
-        ch = data.charCodeAt(i);
-
-        if ((ch >= 32 && ch <= 127) || ch === 10)
-            continue;
-
-        return false;
-    }
-
-    return true;
-}
-
-function engDataToRecErrorLevel(data)
-{
-    var r = 0;
-    if (data === '') return r;
-    if (!data) return r = 1;
-    if ((data.length) > 160 ) return r = 2;
-
-    var rawData = data
-     .replace(/^\u000a+|\u000a+$/g, '')
-     .replace(/\t/g, '\u0020')
-     .replace(/\u0020+$/mg, '');
-
-                  if ((rawData.length) > 160 )
-                      return r = 3;
-
-    if (!engIsAsciiOrLF(data))
-        return r = 4;
-
-    data = engGetDataToRec(data);
-
-    if (rawData !== engGetDataFromRec(data))
-        return 5;
-
-    return r;
-}
-
-function engGetDataToRec(data)
-{
-    // \u000a is LF;
-    // \u0020 is space;
-    // \u005c is backslash;
-    // \u006e is n
-
-    if (!data)
-        return '';
-
-    data = data
-     .replace(/^\u000a+|\u000a+$/g, '')
-     .replace(/\t/g, '\u0020')
-     .replace(/\u0020+$/mg, '')
-     .replace(/\u005c/mg, '\u005c\u005c')
-     .replace(/(\u0020(?=\u0020))/g, '\u0020\u005c')
-     .replace(/\u000a/g, '\u005c\u006e');
-
-           return data;
 }
 
 function engIsAcceptKeys(keys)

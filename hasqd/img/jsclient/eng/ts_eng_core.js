@@ -30,8 +30,26 @@ function engGetTokenObj(data)
               : (engIsAsciiOrLF(data))
               ? data
               : '';
-
     return tok;
+}
+
+function engGetTokNameFromZ(s, zd, hash)
+{
+    if (!zd)
+        return s;
+
+    var l = zd.length;
+
+    if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']')
+    {
+        var fmd = zd.substring(1, l - 1);
+        var raw = engGetDataFromRec(fmd);
+
+        if (engGetHash(raw, hash) === s)
+            return raw;
+    }
+
+    return s;
 }
 
 function engSendDeferredRequest(cmd, f, t)
@@ -80,24 +98,6 @@ function engSendPing(timeDelay)
     }
 
     setTimeout(ping, timeDelay);
-}
-
-function engGetRawFromZRec(s, zd, hash)
-{
-    if (!zd)
-        return s;
-
-    var l = zd.length;
-
-    if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']')
-    {
-        var raw = zd.substring(1, l - 1);
-       /// if (engGetHash(raw, hash) === s)
-        if (engGetHash(engGetDataFromRec(raw), hash) === s)
-            return raw;
-    }
-
-    return s;
 }
 
 function engLoadFiles(files, hash, cb)

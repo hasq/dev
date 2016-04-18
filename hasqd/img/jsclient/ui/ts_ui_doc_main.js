@@ -91,17 +91,6 @@ function docInit()
     $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
 
-    /*
-                 ///Mozilla firefox
-        $('textarea[readonly]').focus(function()
-        {
-            this.blur();
-        });
-
-                 ///IE
-        $('textarea[readonly]').attr('unselectable', 'on');
-    */
-
     $('#div_tabs').tabs();
     $('#div_search_result_tabs').tabs();
 

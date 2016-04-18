@@ -316,7 +316,7 @@ function searchValidate2(dn, data)
 
         else if (resp === 'OK' && record !== null)
         {
-            var x = engGetRawFromZRec(res.s, record.d, gCurrentDB.hash);
+            var x = engGetTokNameFromZ(res.s, record.d, gCurrentDB.hash);
             if ( res.s != x )
             {
                 res.raw = x;
