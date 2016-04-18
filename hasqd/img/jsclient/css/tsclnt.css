@@ -6,7 +6,7 @@ html
 body
 {
     font-family: Arial, Verdana, Consolas, "Courier New", monospace;
-    background: #FCFCFC;
+    background: #FCFCFC url("../img/test.png");
     color: black;
     width: 60%;
     height: 100%;
@@ -14,7 +14,7 @@ body
     min-height: 480px;
     text-align: justify;
     margin: auto;
-background-image: url("img/test.png");
+/*    background-image: url("/img/test.png"); */
 }
 
 *:focus
