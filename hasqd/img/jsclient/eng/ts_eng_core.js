@@ -92,7 +92,8 @@ function engGetRawFromZRec(s, zd, hash)
     if (zd.charAt(0) === '[' && zd.charAt(l - 1) === ']')
     {
         var raw = zd.substring(1, l - 1);
-        if (engGetHash(raw, hash) === s)
+       /// if (engGetHash(raw, hash) === s)
+        if (engGetHash(engGetDataFromRec(raw), hash) === s)
             return raw;
     }
 

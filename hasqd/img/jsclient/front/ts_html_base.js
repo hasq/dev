@@ -69,20 +69,19 @@ function widGetHTMLTitleArea()
     var r = '';
     r += '<tr>\n';
     {
-        r += '<td style="text-align:left;" nowrap>\n';
+        r += '<td />\n';
 
-        r += '<table style="width: 100%" border="0">\n';
+        r += '<table id="table_title_area">\n';
         {
             r += '<tr>\n';
             {
-             //r += widGetHTMLTrTdSubtitle(0, gClientTitle, 'td-title');
-             r += '<td class="td-title"/>';
-             r += '<a style="text-decoration: none" href="http://tokenswap.com">' + gClientTitle + '</a>';
-             r += '<td style="width: 30px; height: 30px; text-align: center;"/>\n';
-                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
-             r += '<td style="width: 30px; height: 30px; text-align: center;" />\n';
-             r += '<td style="width: 30px; height: 30px; text-align: center;" />\n';
-                r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
+				r += '<td/>';
+				r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
+				r += '<td/>\n';
+					r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
+				r += '<td/>\n';
+				r += '<td/>\n';
+					r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
             }
          r += '</tr>\n';
         }
@@ -98,9 +97,9 @@ function widGetHTMLMessageBox (obj)
     var r = '';
 
     if (obj)
-     r += '<span class="span-message-box" onclick="widHelpMessageBox($(this))">' + obj + '</span>\n';
+		r += '<span class="span-message-box" onclick="widHelpMessageBox($(this))">' + obj + '</span>\n';
 
-        return r;
+    return r;
 }
 
 function widGetHTMLTrTdSubtitle(isTr, text, htmlClass, other)
@@ -111,14 +110,14 @@ function widGetHTMLTrTdSubtitle(isTr, text, htmlClass, other)
     if (isTr)
         r += '<tr>\n';
 
- r += '<td class="' + htmlClass + '" ' + other + '/>\n';
+	r += '<td class="' + htmlClass + '" ' + other + '/>\n';
 
     r += widGetHTMLMessageBox(text) + '\n';
 
     if (isTr)
-     r += '</tr>\n';
+		r += '</tr>\n';
 
-        return r;
+    return r;
 }
 
 function widGetHTMLTrTextarea(id0, id1, oninput, style, attr)
@@ -132,8 +131,8 @@ function widGetHTMLTrTextarea(id0, id1, oninput, style, attr)
     else
         r += '<td style="text-align:center;" nowrap>\n';
 
- r += '<textarea id="' + id1 + '" oninput="return ' + oninput + '" style="' + style + '" ' + attr + '></textarea>\n';
- r += '</tr>\n';
+	r += '<textarea id="' + id1 + '" oninput="return ' + oninput + '" style="' + style + '" ' + attr + '></textarea>\n';
+	r += '</tr>\n';
 
     return r;
 }
@@ -146,13 +145,13 @@ function widGetHTMLTrTdButton(isTr, id, htmlClass, onclick, img)
     if (isTr)
         r += '<tr>\n';
 
- r += '<td class="td-button" />\n'
+	r += '<td class="td-button" />\n'
     r += '<button id="' + id + '" class="' + htmlClass + '" onclick="return ' + onclick + '">' + img + '</button>\n';
 
     if (isTr)
-     r += '</tr>\n';
+		r += '</tr>\n';
 
-        return r;
+    return r;
 }
 
 function widGetHTMLInitialDataArea()
@@ -161,7 +160,7 @@ function widGetHTMLInitialDataArea()
     var id = 'textarea_token_name';
     var oninput = 'widTokenTextOninput($(this), 500)';
     var style = 'overflow-x:hidden;'
-                var attr = 'type="text" rows="2" maxlength="65536" placeholder="Enter token text" required';
+    var attr = 'type="text" rows="2" maxlength="65536" placeholder="Enter token text" required';
 
     r += '<tr>\n';
     r += '<td nowrap>\n';
@@ -171,7 +170,7 @@ function widGetHTMLInitialDataArea()
     r += widGetHTMLTokenHash();
     r += widGetHTMLTrTdSubtitle(1, 'Master key', 'td-subtitle');
     r += widGetHTMLMasterKey();
- r += '</table>\n';
+	r += '</table>\n';
     r += '</tr>\n';
 
     return r;
@@ -228,20 +227,20 @@ function widGetHTMLMasterKey()
             {
                 r += '<tr>\n';
                 {
-                    r += '<td style="width: 28px; text-align: center">\n';
+                    r += '<td style="width: 32px; text-align: center">\n';
                     r += widGetHTMLSpanImg('span_password_eye', 'widPasswordEyeClick($(this))');
-                 r += '<td style="width: 250px; text-align: center"/>\n';
-                 r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
-                    r += '<td style="width: 28px; text-align: left;">\n';
+					r += '<td style="width: 250px; text-align: center"/>\n';
+					r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
+                    r += '<td style="width: 32px; text-align: center;">\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_password_pic'));
                 }
              r += '</tr>\n';
-                r += '<tr>\n';
-                {
+             r += '<tr>\n';
+             {
                  r += '<td style="width: 20px;"/>&nbsp';
                  r += '<td id="td_password_zxcvbn" class="td-info"/>\n';
                  r += '<td/>\n';
-                }
+             }
              r += '</tr>\n';
             }
          r += '</table>\n';
@@ -350,7 +349,17 @@ function widGetHTMLSetDataTab()
     {
         r += widGetHTMLTrTdSubtitle(1, 'Token data', 'td-tab-subtitle');
         r += widGetHTMLTrTextarea('', 'textarea_set_data', 'widSetDataTextareaOninput($(this))', '', 'type="text" wrap="off"');
-        r += widGetHTMLTrTdButton(1, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+        ///r += widGetHTMLTrTdButton(1, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+		r += '<tr>';
+		r += '<td/>';
+		r += '<table id="table_set_data_button">';
+		r += '<tr>';
+		r += '<td id="td_set_data_length"/>';
+		r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+		r += '<td style="width: 200px;"/>';
+		r += '</tr>';
+		r += '</table>';
+		r += '<tr>';
 
     }
     r += '</table>\n';
@@ -449,18 +458,18 @@ function widGetHTMLSearchInitialData()
         {
             r += '<tr>\n';
             {
-               r += '<td style="text-align:left; width: 50px; height: 30px;"/>\n';
-               r += '<label for="input_from_datepicker">From</label>\n';
-               r += '<td style="text-align:right; width: 126px"/>\n';
-                r += '<input id="input_from_datepicker" type="text">\n';
+				r += '<td id="td_label_from_datepicker"/>\n';
+				r += '<label for="input_from_datepicker">From</label>\n';
+				r += '<td id="td_input_from_datepicker"/>\n';
+				r += '<input id="input_from_datepicker" type="text">\n';
             }
-           r += '</tr>\n';
+			r += '</tr>\n';
             r += '<tr>\n';
             {
-               r += '<td style="text-align: left; width: 50px; height: 30px;"/>\n';
-               r += '<label for="input_to_datepicker">To</label>\n';
-               r += '<td style="text-align: right; width: 126px"/>\n';
-                r += '<input id="input_to_datepicker" type="text">\n';
+				r += '<td id="td_label_to_datepicker"/>\n';
+				r += '<label for="input_to_datepicker">To</label>\n';
+				r += '<td id="td_input_to_datepicker"/>\n';
+				r += '<input id="input_to_datepicker" type="text">\n';
             }
            r += '</tr>\n';
             r += '<tr>\n';
@@ -474,15 +483,13 @@ function widGetHTMLSearchInitialData()
             }
            r += '</tr>\n';
            r += '</tr>\n';
-            {
                r += '<td colspan="2" style="width: 177px;"/>\u200c\n';
-            }
-            r += '<tr>\n';
-            {
-             r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
-             r += '<label for="span_current_slice">\u200c</label>';
-             r += '<span id="span_current_slice"></span>';
-            }
+           r += '<tr>\n';
+           {
+				r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
+				r += '<label for="span_current_slice">\u200c</label>';
+				r += '<span id="span_current_slice"></span>';
+           }
            r += '</tr>\n';
         }
        r += '</table>\n';

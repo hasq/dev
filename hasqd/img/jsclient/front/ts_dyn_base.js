@@ -413,17 +413,15 @@ function wrapWaitForToken(tok)
 
 function widTokenTextRO(state)
 {
-    $('#textarea_token_name').prop('readonly', state);
+    $('#textarea_token_name').prop('disabled', state);
 }
 
 function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
 {
     var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
+
     if (!engIsAsciiOrLF(dnOrRaw))
-    {
-     //$Obj.val('');
         return widModalWindow(gMsg.nonASCII, function() { $Obj.focus()});
-    }
 
     delay = +delay || 0;
     var tok = engGetTokenObj(dnOrRaw);
@@ -489,34 +487,37 @@ function widReloadTokenInfo(tok, delay, noRefresh)
 
     if ( tok === null && !gTokInfo.s )
         return;
-
+	
+	if (gCurrentDB === null)
+		return;
+	
     if ( tok && !tok.s )
- { // if token name was deleted manualy.
+	{ 
         gTokInfo = {};
-    widShowTokenName(tok);
-    widTokenTextRO(false);
-    return ;
-}
+		widShowTokenName(tok);
+		widTokenTextRO(false);
+		return ;
+	}
 
-if ( tok === null && gTokInfo.s )
-{
-    var tok = {};
-    tok.s = gTokInfo.s;
-    tok.raw = gTokInfo.raw;
-    gTokInfo = {};
-}
+	if ( tok === null && gTokInfo.s )
+	{
+		var tok = {};
+		tok.s = gTokInfo.s;
+		tok.raw = gTokInfo.raw;
+		gTokInfo = {};
+	}
 
-gTokInfo = {};
-widShowTokenState().show();
+	gTokInfo = {};
+	widShowTokenState().show();
 
-if (!noRefresh)
-{
-    widShowTokenName(tok);
-    widTokenTextRO(false);
-}
+	if (!noRefresh)
+	{
+		widShowTokenName(tok);
+		widTokenTextRO(false);
+	}
 
-widShowTokenHash(tok.s);
-widGetLastRecord(tok, delay);
+	widShowTokenHash(tok.s);
+	widGetLastRecord(tok, delay);
 }
 
 function widGetLastRecord(tok, delay)
@@ -730,7 +731,8 @@ function widSetDataTab()
         },
         val : function (data)
         {
-            return (typeof(data) !== 'undefined' && typeof(data) !== 'null')
+            ///return (typeof(data) !== 'undefined' && typeof(data) !== 'null')
+			return (!data)
             ? textArea($Textarea).val(data)
             : textArea($Textarea).val();
         },
@@ -790,8 +792,18 @@ function widSetDataButtonClick()
 
 function widSetDataTextareaOninput($Obj)
 {
- var data = $Obj.val().replace(/\t/g, '\u0020');
+	var $Obj = $('#textarea_set_data');
+	var $DataLength = $('#td_set_data_length');
+	var data = $Obj.val().replace(/\t/g, '\u0020');
+	
     $Obj.val(data);
+	var l = engGetDataToRec(data).length;
+	
+	if (l > 0) 
+		$DataLength.html(l);
+	else
+		$DataLength.html();
+	
     widToggleUI(gTokInfo, gPassword);
 }
 

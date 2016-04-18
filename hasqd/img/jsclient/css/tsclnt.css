@@ -357,10 +357,36 @@ p
 {
     cursor: pointer;
 }
+
 table
 {
     border-collapse:collapse;
     box-sizing: border-box;
+}
+
+#table_title_area
+{
+    width: 100%;
+}
+
+#table_title_area td:first-child
+{
+    text-align: left; !important;
+    font: bold 32px Verdana !important;
+    color: #1376BC;
+    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
+}
+
+#table_title_area td:first-child a
+{
+	text-decoration: none;
+}
+
+#table_title_area td:not(:first-child)
+{
+    width: 30px; 
+	height: 30px; 
+	text-align: center;
 }
 
 #table_initial_data_area
@@ -429,6 +455,24 @@ table
 #table_set_data_tab td
 {
     padding: 3px 0 3px 3px;
+}
+
+#table_set_data_button
+{
+	width: 100%;
+}
+
+#table_set_data_button td
+{
+	padding: 0;
+}
+
+#td_set_data_length
+{
+	font: italic 10px Consolas, "Courier New", monospace !important;
+	width: 200px; 
+	text-align:left;
+	vertical-align:top;	
 }
 
 #table_show_keys_tab
@@ -532,6 +576,22 @@ table
 #span_current_slice
 {
     font: 16px Consolas, "Courier New", monospace !important;
+}
+
+#td_label_from_datepicker,
+#td_label_to_datepicker
+{
+    font: 16px Consolas, "Courier New", monospace !important;
+	text-align: left;
+	width: 50px; 
+	height: 30px;
+}
+
+#td_input_from_datepicker,
+#td_input_to_datepicker
+{
+	text-align:right; 
+	width: 126px;
 }
 
 td
@@ -690,14 +750,6 @@ textarea::-moz-placeholder
     border-radius: 0px;
     text-align: right;
     vertical-align: top;
-}
-
-.td-title
- {
-    text-align: left;
-    font: bold 32px Verdana !important;
-    color: #1376BC;
-    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
 .text-align-right
