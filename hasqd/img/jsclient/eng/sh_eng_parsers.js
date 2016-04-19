@@ -354,6 +354,14 @@ function engGetDataFromRec(data)
 
 function engIsAcceptKeys(keys)
 {
+    var prK1K2 = '23132';
+    var prG2O2 = '24252';
+    var prG1O1 = '24151';
+    var prK1G1 = '23141';
+    var prK1 = '231';
+    var prO1 = '251';
+    var prK2 = '232';
+
     if (!keys)
         return false;
 
@@ -377,6 +385,22 @@ function engIsAcceptKeys(keys)
         keysLen = (isRecNum) ? 3 : 2;
     if (prCodeLen == 5 || prCodeLen == 6)
         keysLen = (isRecNum) ? 4 : 3;
+
+    prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
+    prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
+    prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
+    prK1G1 = (isRecNum) ? prCode0Ch + prK1G1 : prK1G1;
+    prK1 = (isRecNum) ? prCode0Ch + prK1 : prK1;
+    prO1 = (isRecNum) ? prCode0Ch + prO1 : prO1;
+    prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
+
+    if (prCode !== prK1K2 &&
+            prCode !== prG2O2 &&
+            prCode !== prG1O1 &&
+            prCode !== prK1G1 &&
+            prCode !== prK1 &&
+            prCode !== prO1 &&
+            prCode !== prK2) return false;
 
     var prCRC = '';
     var tkCRC = '';

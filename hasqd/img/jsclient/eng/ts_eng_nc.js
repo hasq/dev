@@ -36,9 +36,9 @@ function engNcInfoDb(extCb)
     return ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
-function engNcZ(extCb, db, rec, raw)
+function engNcZ(extCb, db, rec, data)
 {
-    var data = (raw) ? '[' + raw + ']' : '';
+    data = (data) ? '[' + data + ']' : '';
 
     var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
               + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + data;

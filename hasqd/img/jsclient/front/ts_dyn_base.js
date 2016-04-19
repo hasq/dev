@@ -685,9 +685,9 @@ function widCreateButtonClick()
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey, function () { $PwdInp.focus() });
 
+    wrapWaitForToken(tok);
     widTokenTextRO(true);
     widTurnOffFileButton();
-    wrapWaitForToken(tok);
 
     var rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
     var rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
@@ -709,7 +709,9 @@ function widCreateButtonClick()
         widReloadTokenInfo(tok);
     }
 
-    engNcZ(addCb0, gCurrentDB.name, rec0, engGetDataToRec(tok.raw));
+    var fmd = engGetDataToRec(tok.raw);
+
+    engNcZ(addCb0, gCurrentDB.name, rec0, fmd);
 }
 
 function widSetDataTab()
@@ -1103,6 +1105,13 @@ function widReceiveTextareaOninput($Obj)
 
         if (!gTokInfo.raw || dn !== engGetHash(gTokInfo.raw, gCurrentDB.hash))
             return widSearchTokenRaw(dn);
+        else
+        {
+            var tok = {};
+            tok.s = dn;
+            tok.raw = gTokInfo.raw || '';
+            widReloadTokenInfo(tok, 0);
+        }
     }
 
     widToggleUI(gTokInfo, gPassword);
@@ -1110,6 +1119,7 @@ function widReceiveTextareaOninput($Obj)
 
 function widSearchTokenRaw(dn)
 {
+    console.log('widSearchTokenRaw');
     var $TokName = $('#textarea_token_name');
     var tok = engGetTokenObj(dn);
 
@@ -1128,9 +1138,7 @@ function widSearchTokenRaw(dn)
         var sOrD = (rec === null) ? tok.s : rec.d;
         accKeysTok.raw = engGetTokNameFromZ(accKeysTok.s, sOrD, gCurrentDB.hash);
 
-        $TokName.val(accKeysTok.raw);
-
-        return widReloadTokenInfo(accKeysTok, 0, true);
+        return widReloadTokenInfo(accKeysTok, 0, false);
     }
 
     engNcRecordZero(cb, tok.s);
@@ -1375,7 +1383,7 @@ function widSearchUpdate()
         var xs = x.s;
         if ( x.raw != "" ) xs = engGetDataToRec(x.raw);
 
-        xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+xs+'\')">'+xs+'</button>';
+        xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+window.btoa(xs)+'\')">'+xs+'</button>';
 
         var xn = ' ' + x.n;
         for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
@@ -1389,12 +1397,14 @@ function widSearchUpdate()
     return {text:t, number:n};
 }
 
-function widDnSelect(dnOrRaw)
+function widDnSelect(b64)
 {
-    console.log('dnOrRaw:' + dnOrRaw);
-    $('#textarea_token_name').val(dnOrRaw);
+    var fmd = window.atob(b64);     console.log('fmd:' + fmd);
+    var raw = engGetDataFromRec(fmd);
+    $('#textarea_token_name').val(raw);
     widTurnOffFileButton();
-    widReloadTokenInfo(engGetTokenObj(dnOrRaw));
+    widReloadTokenInfo(engGetTokenObj(raw));
+
 }
 
 function widRequestLast(extCb, tok, delay)
