@@ -9,10 +9,7 @@ function ajxSendCommand(cmd, callback, logo)
     (function (data)
     {
         callback(data);
-        if (1)
-            logo.done();
-        else
-            setTimeout(function() {logo.done()}, 3000);
+        logo.done();
     })
 
     .fail

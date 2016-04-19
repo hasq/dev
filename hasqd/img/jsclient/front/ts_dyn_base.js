@@ -374,7 +374,6 @@ function widTurnOnFileButton(data)
 {
     var $Input = $('#input_file_upload');
     var $Label = $('#label_file_upload');
-
     $Input.attr('type', 'text');
     $Label.css('background', '#FF0000');
     $Label.hover(function()
@@ -480,7 +479,12 @@ function widLoadFiles(files)
         widReloadTokenInfo(tok, 0, true);
     }
 
-    engLoadFiles(files, gCurrentDB.hash, cb);
+    var progress = function (data)
+    {
+        console.log(data + '%');
+    };
+
+    engLoadFiles(files, gCurrentDB.hash, cb, progress);
 }
 
 function widReloadTokenInfo(tok, delay, noRefresh)

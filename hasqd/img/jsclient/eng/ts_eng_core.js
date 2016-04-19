@@ -100,7 +100,7 @@ function engSendPing(timeDelay)
     setTimeout(ping, timeDelay);
 }
 
-function engLoadFiles(files, hash, cb)
+function engLoadFiles(files, hash, cb, progressCb)
 {
     // files is a FileList of File objects. List some properties.
     var output = [];
@@ -119,61 +119,86 @@ function engLoadFiles(files, hash, cb)
         return cb(obj);
     }
 
-    var reader = new FileReader();
-
- //reader.readAsBinaryString(file);
-
-    var binStringCallback = function (e)
+    function progressHandler(evt)
     {
-        if (+file.size > gMaxFileSize )
-            obj.error = gMsg.fileTooBig;
-        else if (+file.size === 0)
+     // evt is an ProgressEvent;
+        if (evt.lengthComputable)
+        {
+         var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+            if (percentLoaded < 100)
+            {
+                progressCb( +percentLoaded );
+            }
+        }
+
+    };
+
+    function onloadHandler(evt)
+    {
+        obj.raw = '';
+        var bytes = new Uint8Array(evt.target.result);
+        var length = bytes.byteLength;
+
+        if (length === 0)
             obj.error = gMsg.fileZero;
+        else if (length > gMaxFileSize)
+            obj.error = gMsg.fileTooBig;
         else
         {
-            obj.raw = e.target.result;
+            for (var i = 0; i < length; i++)
+                obj.raw += String.fromCharCode(bytes[i]);
+
             obj.s = engGetHash(obj.raw, hash);
         }
 
         cb(obj);
     };
 
-    var arrBufferCallback = function (e)
+    var reader = new FileReader();
+
+    reader.readAsArrayBuffer(file);
+    reader.onprogress = progressHandler;
+    reader.onload = onloadHandler;
+    reader.onerror = reader.onabort = function (evt)
     {
-        obj.raw = '';
-        var bytes = new Uint8Array(e.target.result);
-        var length = bytes.byteLength;
+     evt = evt || window.event; // get window.event if evt argument missing (in IE)
 
-        for (var i = 0; i < length; i++)
-            obj.raw += String.fromCharCode(bytes[i]);
+        switch (evt.target.error.code)
+        {
+            case evt.target.error.NOT_FOUND_ERR:
+                obj.error = 'File not found!';
+                break;
+            case evt.target.error.NOT_READABLE_ERR:
+                obj.error = 'File not readable!';
+                break;
+            case evt.target.error.ABORT_ERR:
+                obj.error = 'Read operation was aborted!';
+                break;
+            case evt.target.error.SECURITY_ERR:
+                obj.error = 'File is in a locked state!';
+                break;
+            case evt.target.error.ENCODING_ERR:
+                obj.error = 'The file is too long to encode.';
+                break;
+            default:
+                    obj.error = 'Read error.';
+        }
 
-        obj.s = engGetHash(obj.raw, hash)
-
-                cb(obj);
-    };
-
-    if (typeof reader.readAsBinaryString != 'undefined')
-    {
-        reader.onload = binStringCallback;
-        reader.readAsBinaryString(file);
-    }
-    else
-    {
-        reader.onload = arrBufferCallback;
-        reader.readAsArrayBuffer(file);
-    }
-
-    reader.onerror = reader.onabort = function ()
-    {
-        obj.error = gMsg.fileLoadError;
+        //obj.error = gMsg.fileLoadError;
         cb(obj);
     };
 
     reader.onloadstart = function ()
-    {}
+    {
+        console.log('start');
+    };
 
     reader.onloadend = function ()
-    {}
+    {
+        console.log('done');
+    };
+
+
 
 }
 

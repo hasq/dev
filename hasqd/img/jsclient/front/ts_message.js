@@ -21,7 +21,7 @@ var gMsg =
  'Use linux commnd<br/><br/><b>'+
  'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
-    fileTooBig : 'File is too big. For big files use linux commnd<br/><br/><b>'+
+    fileTooBig : 'File is too big. For big files use linux command<br/><br/><b>'+
  'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
     fileZero : 'File is empty'
