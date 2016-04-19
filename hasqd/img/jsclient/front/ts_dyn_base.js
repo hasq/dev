@@ -38,11 +38,11 @@ function widSelectAndCopy($Obj)
     {
         var successful = document.execCommand('copy');
         var msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Copying text command was ' + msg);
+        //console.log('Copying text command was ' + msg);
     }
     catch (err)
     {
-        console.log('Unable to copy');
+        //console.log('Unable to copy');
     }
 }
 
@@ -409,6 +409,9 @@ function widTurnOffFileButton()
 
 function wrapWaitForToken(tok)
 {
+    if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
+        widEmptyTab().show();
+
     widShowTokenName(tok);
     widShowTokenHash(tok.s);
     widShowTokenState().show();
@@ -494,10 +497,10 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     if ( tok === null && !gTokInfo.s )
         return;
 
-    if (gCurrentDB === null)
+    if ( gCurrentDB === null )
         return;
 
-    if ( tok && !tok.s )
+    if ( tok && !tok.s ) // textarea erased;
     {
         gTokInfo = {};
         widShowTokenName(tok);
@@ -520,6 +523,7 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     {
         widShowTokenName(tok);
         widTokenTextRO(false);
+     widTurnOffFileButton(); ///***
     }
 
     widShowTokenHash(tok.s);
@@ -634,7 +638,8 @@ function widEmptyTab()
     {
         show : function ()
         {
-            return $Tabs.tabs('option', 'active', 0);
+            $Tabs.tabs('option', 'active', 0);
+         ///$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
         },
         isOn : function ()
         {
@@ -686,8 +691,7 @@ function widCreateButtonClick()
         return widModalWindow(gMsg.enterMasterKey, function () { $PwdInp.focus() });
 
     wrapWaitForToken(tok);
-    widTokenTextRO(true);
-    widTurnOffFileButton();
+    //widTokenTextRO(true);
 
     var rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
     var rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
@@ -754,6 +758,16 @@ function widSetDataTab()
     return retObj;
 }
 
+function widSetDataTextareaOninput($Obj)
+{
+ var data = $Obj.val().replace(/\t/g, '\u0020');
+
+    $Obj.val(data);
+
+    widShowTokenDataLength(data);
+    widToggleUI(gTokInfo, gPassword);
+}
+
 function widSetDataButtonClick()
 {
     // Adds a new record with a specified data
@@ -785,8 +799,7 @@ function widSetDataButtonClick()
     tok.raw = gTokInfo.raw;
 
     wrapWaitForToken(tok);
-    widTokenTextRO(true);
-    widTurnOffFileButton();
+    //widTokenTextRO(true);
 
     var cb = function (resp, jobId)
     {
@@ -797,16 +810,6 @@ function widSetDataButtonClick()
     }
 
     engNcAdd(cb, gCurrentDB.name, rec, data);
-}
-
-function widSetDataTextareaOninput($Obj)
-{
- var data = $Obj.val().replace(/\t/g, '\u0020');
-
-    $Obj.val(data);
-
-    widShowTokenDataLength(data);
-    widToggleUI(gTokInfo, gPassword);
 }
 
 function widShowTokenDataLength(data)
@@ -1124,8 +1127,7 @@ function widSearchTokenRaw(dn)
     var tok = engGetTokenObj(dn);
 
     wrapWaitForToken(tok);
-    widTokenTextRO(true);
-    widTurnOffFileButton();
+    //widTokenTextRO(true);
 
     var cb = function (resp, rec)
     {
@@ -1169,8 +1171,7 @@ function widReceiveButtonClick()
                      : '';
 
     wrapWaitForToken(accKeys[0]);
-    widTokenTextRO(true);
-    widTurnOffFileButton();
+    //widTokenTextRO(true);
 
     widReceiveTab().disable(true);
     widReceiveKey(accKeys);
@@ -1399,12 +1400,9 @@ function widSearchUpdate()
 
 function widDnSelect(b64)
 {
-    var fmd = window.atob(b64);     console.log('fmd:' + fmd);
+    var fmd = window.atob(b64);
     var raw = engGetDataFromRec(fmd);
-    $('#textarea_token_name').val(raw);
-    widTurnOffFileButton();
     widReloadTokenInfo(engGetTokenObj(raw));
-
 }
 
 function widRequestLast(extCb, tok, delay)
