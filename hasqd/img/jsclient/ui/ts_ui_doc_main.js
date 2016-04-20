@@ -87,7 +87,10 @@ function docMainInit()
 
 function docInit()
 {
-    console.log(navigator.appVersion);
+    console.log(getBrowser());
+ ///alert(getBrowser().platform);
+ ///alert(getBrowser().browser);
+ ///alert(getBrowser().versionShort);
     $('#div_modal_window').css('display', 'none');
     $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');

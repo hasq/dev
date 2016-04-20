@@ -472,9 +472,14 @@ table
 #td_set_data_length
 {
 	font: italic 10px Consolas, "Courier New", monospace !important;
-	width: 200px; 
+	width: 50px; 
 	text-align:left;
 	vertical-align:top;	
+}
+
+#td_set_data_length:hover
+{
+	cursor: pointer;
 }
 
 #table_show_keys_tab

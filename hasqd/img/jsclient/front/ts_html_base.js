@@ -349,16 +349,18 @@ function widGetHTMLSetDataTab()
     {
         r += widGetHTMLTrTdSubtitle(1, 'Token data', 'td-tab-subtitle');
         r += widGetHTMLTrTextarea('', 'textarea_set_data', 'widSetDataTextareaOninput($(this))', '', 'type="text" wrap="off"');
-        ///r += widGetHTMLTrTdButton(1, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
         r += '<tr>';
      r += '<td/>';
-        r += '<table id="table_set_data_button">';
-        r += '<tr>';
-     r += '<td id="td_set_data_length"/>';
-        r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
-     r += '<td style="width: 200px;"/>';
-     r += '</tr>';
-     r += '</table>';
+        {
+            r += '<table id="table_set_data_button">';
+            r += '<tr>';
+         r += '<td id="td_set_data_length"/>';
+
+            r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+         r += '<td style="width: 50px;"/>';
+         r += '</tr>';
+         r += '</table>';
+        }
         r += '<tr>';
 
     }
