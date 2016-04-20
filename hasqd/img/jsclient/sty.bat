@@ -23,6 +23,7 @@ sh ../stylejs.sh sh_dyn.js
 sh ../stylejs.sh ts_dyn_base.js
 sh ../stylejs.sh ts_html_base.js
 sh ../stylejs.sh ts_message.js
+sh ../stylejs.sh ts_help.inc.js
 cd ..
 
 cd ui

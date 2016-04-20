@@ -2,10 +2,6 @@
 
 function gHelp(x)
 {
-    var o = {};
-
-    if (o[x]) return o[x];
-
     var r = "";
 
     if ( x == 'span_password_pic' )
