@@ -87,10 +87,16 @@ function docMainInit()
 
 function docInit()
 {
-    console.log(getBrowser());
- ///alert(getBrowser().platform);
- ///alert(getBrowser().browser);
- ///alert(getBrowser().versionShort);
+	var browser = getBrowser();
+    console.log(browser);
+	if (1)
+	{
+		alert('Platform: ' + browser.platform + '\n' +
+		'Browser: ' + browser.browser + '\n' +
+		'Full version: ' + browser.versionFull + '\n' +
+		'Short version: ' + browser.versionShort + '\n');
+	}
+	
     $('#div_modal_window').css('display', 'none');
     $('input, textarea').val('').attr('maxlength', '65536');;
     $('input, select, textarea').attr('autocomplete', 'off');
