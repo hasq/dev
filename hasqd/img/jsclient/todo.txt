@@ -4,9 +4,9 @@ Critical things
 Major things
 ------------
 Command SKC
-Test with slow worker
-Mobile version must load another css
-test versions of browsers and report warning
+[it seems working fine] Test with slow worker
+[@media] Mobile version must load another css
+[to check] test versions of browsers and report warning 
 engSearchClick remove return dates; remove storing dates in gSearch
 
 Minor things

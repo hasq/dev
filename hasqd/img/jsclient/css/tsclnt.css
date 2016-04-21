@@ -5,16 +5,23 @@ html
 
 body
 {
-    font-family: Arial, Verdana, Consolas, "Courier New", monospace;
-    background: #FCFCFC url("../img/test.png");
-    color: black;
-    width: 60%;
-    height: 100%;
-    min-width: 630px;
-    min-height: 480px;
-    text-align: justify;
-    margin: auto;
-/*    background-image: url("/img/test.png"); */
+	font-family: Arial, Verdana, Consolas, "Courier New", monospace;
+	background: #FCFCFC url("../img/test.png");
+	color: black;
+	width: 60%;
+	height: 100%;
+	min-width: 630px;
+	min-height: 480px;
+	text-align: justify;
+	margin: auto;
+}
+	
+@media screen and (max-width: 1280px)
+{
+	body
+	{
+		width: 100%;
+	}
 }
 
 *:focus
@@ -53,8 +60,7 @@ button
     width: unset;
     height: unset;
     border: 0px solid #F0F0FF;
-    background-color: #FCFCFC
-	
+    background-color: #FCFCFC;
     margin: 0;
     padding: 0 2px 0 2px;
     opacity: 1;
@@ -373,7 +379,7 @@ table
 
 #table_title_area td:first-child
 {
-    text-align: left; !important;
+    text-align: left;
     font: bold 32px Verdana !important;
     color: #1376BC;
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;

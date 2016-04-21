@@ -6,8 +6,8 @@ function gHelp(x)
 
     if ( x == 'span_password_pic' )
     {
-		INCLUDEFILE
-		txt/ts_tok_state.htm
+        INCLUDEFILE
+     txt/ts_tok_state.htm
     }
     else if (x == 'span_info')
     {
@@ -43,26 +43,26 @@ function gHelp(x)
     {
         INCLUDEFILE
         txt/ts_token_data.htm
-    }    
-	else if (x == 'create_new_token')
+    }
+    else if (x == 'create_new_token')
     {
         INCLUDEFILE
         txt/ts_create_new_token.htm
-    }	
-	else if (x == 'show_keys')
+    }
+    else if (x == 'show_keys')
     {
         INCLUDEFILE
         txt/ts_show_keys.htm
     }
-	else if (x == 'paste_keys')
+    else if (x == 'paste_keys')
     {
         INCLUDEFILE
         txt/ts_paste_keys.htm
-    }		
-	else if (x == 'search_for_tokens')
+    }
+    else if (x == 'search_for_tokens')
     {
         INCLUDEFILE
         txt/ts_search_for_tokens.htm
-    }		
+    }
     return r;
 }
