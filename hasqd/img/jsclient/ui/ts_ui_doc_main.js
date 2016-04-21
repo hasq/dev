@@ -72,9 +72,9 @@ var allImages = [
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('span_logo');
 
-function docMainWrite()
+function docMainWrite(state)
 {
-    document.write(docMain());
+    document.write(docMain(state));
 }
 
 function docMainInit()
@@ -122,8 +122,13 @@ function docInit()
     engSendPing(0);
 }
 
-function docMain()
+function docMain(state)
 {
+    if (!state)
+    {
+     return '<h1 style="margin: auto; text-align: center;">UNKNOWN BROWSER</h1>';
+    }
+
     var tabs = [];
     var item;
 

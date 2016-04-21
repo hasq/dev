@@ -41,17 +41,20 @@ var glTokList =
     },
     state: function ()
     {
-     if (this.fit === true && this.unfit === false) { //contains only known tokens;
-        return true;
+      //contains only known tokens;
+        if (this.fit === true && this.unfit === false)
+            return true;
+
+     //contains only unknown tokens
+        if (this.fit === false && this.unfit === true)
+            return false;
+
+     //contains different tokens
+        if (this.fit === true && this.unfit === true)
+            return undefined;
+     //not contains any tokens
+        return null;
     }
-     if (this.fit === false && this.unfit === true) { //contains only unknown tokens
-    return false;
-}
-     if (this.fit === true && this.unfit === true) { //contains different tokens
-return undefined;
-}
-     return null; //not contains any tokens
-}
 }
 
 var imgMsgOk = 'img/msg_ok.png';

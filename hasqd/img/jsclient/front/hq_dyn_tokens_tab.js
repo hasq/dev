@@ -92,7 +92,7 @@ function widShowProgressbar(val)
 
 function widShowTokensLog(text)
 {
-    var $Log = $('#tokens_log_pre');
+    var $Log = $('#div_tokens_log');
     text = text || '&nbsp';
     $Log.html(text);
 }
@@ -582,7 +582,7 @@ function widGetTokenStateImg(status)
             r.img = imgPwdRcvng;
             r.title = 'Token is locked by receiving';
             break;
-    case 'PWD_WRONG': //'PWD_WRONG'
+        case 'PWD_WRONG':
             r.img = imgPwdWrong;
             r.title = 'Wrong password';
             break;
@@ -640,7 +640,7 @@ function widVerifyTokens($obj, tokens)
         glTokList.add(item);
 
         var idx = glTokList.items.length - 1;
-        var lineLed = widGetTokenStateImg(glTokList.items[idx].st);
+        var lineLed = widGetTokenStateImg(glTokList.items[idx].state);
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
         if (glTokList.unfit)
@@ -782,7 +782,7 @@ function widUpdateTokens($obj, data, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st == 'OK' && items[i].d != data)
+        if (items[i].state == 'OK' && items[i].d != data)
         {
 
             var n = +items[i].n + 1;
@@ -906,7 +906,7 @@ function widSimpleSend($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st == 'OK')
+        if (items[i].state == 'OK')
         {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1048,7 +1048,7 @@ function widSimpleRequest($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st === 'PWD_WRONG')
+        if (items[i].state === 'PWD_WRONG')
         {
             k3 = engGetKey(items[i].n + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k4 = engGetKey(items[i].n + 4, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1231,7 +1231,7 @@ function widBlockingSendStep1($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st === 'OK')
+        if (items[i].state === 'OK')
         {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1318,7 +1318,7 @@ function widBlockingSendStep2($obj, items)
 {
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st === 'PWD_SNDNG')
+        if (items[i].state === 'PWD_SNDNG')
         {
             //include only tokens in sending state;
             var n0 = items[i].n;
@@ -1536,7 +1536,7 @@ function widBlockingRequestStep1($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st === 'PWD_WRONG')
+        if (items[i].state === 'PWD_WRONG')
         {
             n0 = items[i].n;
             k3 = engGetKey(n0 + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1636,7 +1636,7 @@ function widBlockingRequestStep2($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].st === 'PWD_RCVNG')
+        if (items[i].state === 'PWD_RCVNG')
         {
             s = items[i].s
                 n0 = items[i].n;

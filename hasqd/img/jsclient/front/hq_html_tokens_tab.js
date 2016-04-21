@@ -148,7 +148,7 @@ function widGetHTMLTokensProgressbar()
 function widGetHTMLTokensLog()
 {
     var r = '';
-    r += '<pre id="tokens_log_pre">&nbsp</pre>\n';
+    r += '<div id="div_tokens_log">&nbsp</div>\n';
     return r;
 }
 
