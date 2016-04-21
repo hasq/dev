@@ -1,16 +1,16 @@
 Critical things
 ---------------
+Debian zapusk nginx+hasqd na virtualke
 
 Major things
 ------------
 Command SKC
-[it seems working fine] Test with slow worker
-[@media] Mobile version must load another css
-[to check] test versions of browsers and report warning 
 engSearchClick remove return dates; remove storing dates in gSearch
 
 Minor things
 ------------
+Lookup windows does not resize
+
 Mobile version all must be darker
 unbalanced tree - firefox warning - find out
 validate via generate.bat (nodejs)
