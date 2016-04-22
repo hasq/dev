@@ -30,9 +30,9 @@ createhelp_tmp: front/hq_help.inc.js front/ts_help.inc.js txt/*.htm
 	cat front/ts_help.inc.js >> front/ts_help.tmp
 	
 createhelp: createhelp_tmp
-	sh subster.sh < front/hq_help.tmp > front/hq_help.gen
+	sh subster.sh < front/hq_help.tmp | sed 's/@n/\\n/' > front/hq_help.gen
 	rm front/hq_help.tmp
-	sh subster.sh < front/ts_help.tmp > front/ts_help.gen
+	sh subster.sh < front/ts_help.tmp | sed 's/@n/\\n/' > front/ts_help.gen
 	rm front/ts_help.tmp
 	
 jquery: $(JQUI).tar.bz2
