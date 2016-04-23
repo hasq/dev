@@ -1329,7 +1329,7 @@ widSearchProgress.button = function(on)
 widSearchProgress.block = function(txt, lnk)
 {
     var n = lnk.match(/\d+(?=\.)/g);
-    var x = "Block <a href=\"/file " + lnk + "\">" + txt + ' (' +n+ ")</a>";
+    var x = "Block <a href=\"/file " + lnk + "\">" + txt.substr(2) + '-' +n+ "</a>";
     $('#span_current_slice').html(x);
     return;
 }
