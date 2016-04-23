@@ -76,7 +76,7 @@ createclient: index.html
 	cp lib/jquery-ui/external/jquery/jquery.js slice/home/lib/
 	cp index.html slice/home/
 #	chmod
-	chmod 0777 -R slice/home	
+	chmod 0777 -R slice/home || echo "Cannot make chmod on home"
 
 clean:
 	rm -rf lib/jquery* slice/home index slice lib/*.tar lib/*.tar.bz2
