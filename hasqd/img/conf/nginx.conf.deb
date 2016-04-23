@@ -28,6 +28,7 @@ http {
              index index.html;
           }
           location /smd.db/ {
+             autoindex on;
              root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice;
              index index.html;
           }
