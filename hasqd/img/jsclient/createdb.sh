@@ -63,6 +63,6 @@ echo "> $src/$zdb"
 #[ ! -f "slice/r16.db/db.traits" ] && "$src/$zdb" "create r16.db r16 R16 1 [magic] 1 0" || echo "r16.db already exists"
 #[ ! -f "slice/s22.db/db.traits" ] && "$src/$zdb" "create s22.db s22 S22 1 [magic] 1 0" || echo "s22.db already exists"
 #[ ! -f "slice/s25.db/db.traits" ] && "$src/$zdb" "create s25.db s25 S25 1 [magic] 1 0" || echo "s25.db already exists"
-[ ! -f "slice/smd.db/db.traits" ] && "$src/$zdb" "create smd.db smd SMD 1 [magic] 1 0 10H" || echo "smd.db already exists"
+[ ! -f "slice/smd.db/db.traits" ] && "$src/$zdb" "create smd.db smd SMD 1 [] 1 0 5H" || echo "smd.db already exists"
 
 exit 0
