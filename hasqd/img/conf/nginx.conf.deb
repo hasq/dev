@@ -21,10 +21,14 @@ http {
              proxy_set_header        X-Real-IP       $remote_addr;
              proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
 
-             proxy_pass http://127.0.0.1:13151;
+             proxy_pass http://127.0.0.1:13131;
           }
-          location /client/ {
-             root  /home/dev/dev.git/trunk/hasqd/img/jsclient;
+          location /home/ {
+             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice/home;
+             index index.html;
+          }
+          location /smd.db/ {
+             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice/smd.db;
              index index.html;
           }
     }
@@ -51,7 +55,7 @@ http {
             proxy_set_header        X-Real-IP       $remote_addr;
             proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
     	    
-    	    proxy_pass http://127.0.0.1:13151;
+    	    proxy_pass http://127.0.0.1:13131;
         }
     }
  }
