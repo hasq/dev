@@ -24,11 +24,11 @@ http {
              proxy_pass http://127.0.0.1:13131;
           }
           location /home/ {
-             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice/home;
+             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice;
              index index.html;
           }
           location /smd.db/ {
-             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice/smd.db;
+             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice;
              index index.html;
           }
     }
