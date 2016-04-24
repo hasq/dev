@@ -14,6 +14,11 @@ function gHelp(x)
         INCLUDEFILE
         txt/ts_info.htm
     }
+    else if (x == 'span_shield')
+    {
+        INCLUDEFILE
+        txt/ts_shield.htm
+    }
     else if (x == 'span_token_pic')
     {
         INCLUDEFILE

@@ -45,6 +45,7 @@ var imgPwdSndng = 'img/pwd_sndng.png';
 
 var imgClkReload = 'img/clk_reload.png';
 var imgClkInfo = 'img/clk_info.png';
+var imgClkShield = 'img/clk_shield.png';
 
 var imgBtnCreate = '<img width="40px" height="40px" src="img/btn_create.png"><br/>Create';
 var imgBtnData = '<img width="40px" height="40px" src="img/btn_setdata.png"><br/>Set';
@@ -96,6 +97,11 @@ function docInit()
 
     $('#span_info img')
     .attr('src', imgClkInfo)
+    .attr('width', '28')
+    .attr('height', '28');
+
+    $('#span_shield img')
+    .attr('src', imgClkShield)
     .attr('width', '28')
     .attr('height', '28');
 

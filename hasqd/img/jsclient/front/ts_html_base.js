@@ -80,6 +80,7 @@ function widGetHTMLTitleArea()
              r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
              r += '<td/>\n';
+                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
              r += '<td/>\n';
                 r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
             }
