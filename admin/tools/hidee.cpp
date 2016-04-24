@@ -44,6 +44,7 @@ string getname()
 int main(int ac, char * av[])
 try
 {
+    if (0)
     {
         std::ofstream of("timesheet", std::ios::app);
         if ( !of )

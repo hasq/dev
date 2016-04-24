@@ -40,7 +40,7 @@ typedef std::vector< pair<int, string> > vis;
 
 vis loadtasks(bool active)
 {
-    std::ifstream in("tech_tasks.txt",std::ios::binary);
+    std::ifstream in("tech_tasks.txt", std::ios::binary);
 
     vis r;
 
@@ -182,7 +182,7 @@ ask2:
     if ( yn != "y" ) goto ask1;
 
     {
-        std::ofstream of("timesheet", std::ios::app|std::ios::binary);
+        std::ofstream of("timesheet", std::ios::app | std::ios::binary);
         if ( !of ) throw string() + "Cannot write to timesheet";
         of << os.str() << '\n';
         cout << "\nTimesheet updated.\n\n";
