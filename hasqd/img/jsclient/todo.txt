@@ -1,6 +1,6 @@
 Critical things
 ---------------
-(ab) shield icon - functionality only
+DONE shield icon - functionality only
 
 Major things
 ------------
