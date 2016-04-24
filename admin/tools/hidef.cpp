@@ -111,7 +111,7 @@ void crypt(string fin, string fout, bool enc)
 
         if ( line.empty() ) { r += '\n'; continue; }
 
-        if (!enc) line = string(SZ - 1, ' ') + line;
+        if (!enc) line = string(SZ - 1, line[0]) + line;
         string crl = crline(line, enc);
         if (enc) crl = crl.substr(SZ - 1);
 
@@ -262,6 +262,7 @@ void Digit::chk()
     int j = SZ - 1;
     for ( int i = 0; i < j; i++ ) { x[j] += x[i]; x[i] = 0; }
     x[j] = x[j] % 95;
+    for ( int i = 0; i < j; i++ ) x[i] = x[j];
 }
 
 void Digit::digest()
