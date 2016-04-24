@@ -1,15 +1,20 @@
 Critical things
 ---------------
-Debian zapusk nginx+hasqd na virtualke
+(ab) shield icon - functionality only
 
 Major things
 ------------
-Command SKC
-engSearchClick remove return dates; remove storing dates in gSearch
+(ab) Command SKC
+(ab) engSearchClick remove return dates; remove storing dates in gSearch
+(ab) Lookup resize - njuans!
+(ab)
+(om) shield icon - picture and text
+(om) helps - texts
+css mobile
+js files optimization - analisys and recommendations
 
 Minor things
 ------------
-Lookup windows does not resize
 
 Mobile version all must be darker
 unbalanced tree - firefox warning - find out
