@@ -7,11 +7,13 @@ Major things
 (ab) Command SKC
 (ab) engSearchClick remove return dates; remove storing dates in gSearch
 (ab) Lookup resize - njuans!
-(ab)
+(ab) print browser data on browser failure
 (om) shield icon - picture and text
 (om) helps - texts
 css mobile
 js files optimization - analisys and recommendations
+is it possible to make "Guess time" clickable?
+Lookup->Search->Block->Back=>Dates empty - sometimes
 
 Minor things
 ------------
