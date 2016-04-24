@@ -1,5 +1,5 @@
 
-@if NOT EXIST hide.exe (
+@if NOT EXIST hidee.exe (
 	@echo Please compile hidee.cpp
 	@echo e.g. g++ ../tools/hidee.cpp -o hidee.exe
 	@exit
@@ -11,7 +11,7 @@
 	@exit
 )
 
-hide
+hidee
 svn up timesheet.e
 hidee timesheet.e
 hidee tech_tasks.txt.e
