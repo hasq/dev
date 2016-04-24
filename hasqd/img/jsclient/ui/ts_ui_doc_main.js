@@ -117,6 +117,7 @@ function docInit()
     widShowHidePassword();
     widDatePickerInit();
     widSetDefaultDb(gRequiredDbHash);
+    widSetDivOverflowSize();
     widEmptyTab();
 
     engSendPing(0);

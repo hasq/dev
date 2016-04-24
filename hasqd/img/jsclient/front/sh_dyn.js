@@ -72,7 +72,7 @@ function getBrowser()
 {
     var ua = navigator.userAgent;
 
-    if (1)
+    if (0)
         alert(ua);
 
     var bName = function ()

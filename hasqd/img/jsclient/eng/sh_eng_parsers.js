@@ -273,7 +273,7 @@ function engIsAsciiOrLF(data)
     return true;
 }
 
-function engDataToRecErrorLevel(data)
+function engDataToRecErrorLevel(data, lim)
 {
     var r = 0;
 
@@ -285,7 +285,7 @@ function engDataToRecErrorLevel(data)
 
     data = engGetClearData(data);
 
-    if ((data.length) > 160 )
+    if ((data.length) > lim )
         return r = 2;
 
     if (!engIsAsciiOrLF(data))
@@ -293,7 +293,7 @@ function engDataToRecErrorLevel(data)
 
     var fmd = engGetDataToRec(data);
 
-    if ((fmd.length) > 160 )
+    if ((fmd.length) > lim )
         return r = 4;
 
     if (data !== engGetDataFromRec(fmd))

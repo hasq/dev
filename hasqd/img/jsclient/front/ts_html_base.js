@@ -229,7 +229,7 @@ function widGetHTMLMasterKey()
                 {
                     r += '<td style="width: 32px; text-align: center">\n';
                     r += widGetHTMLSpanImg('span_password_eye', 'widPasswordEyeClick($(this))');
-                 r += '<td style="width: 250px; text-align: center"/>\n';
+                 r += '<td style="width: 300px; text-align: center"/>\n';
                  r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
                     r += '<td style="width: 32px; text-align: center;">\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_password_pic'));

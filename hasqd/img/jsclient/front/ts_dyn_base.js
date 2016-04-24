@@ -332,7 +332,7 @@ function widToggleUI(lr, pwd)
         widSetDataTab().readonly(false);
 
         var d = widSetDataTab().val();
-        var e = engDataToRecErrorLevel(d);
+        var e = engDataToRecErrorLevel(d, +gCurrentDB.datalim);
 
         if (e === 0 && tokData !== engGetDataToRec(d))
             widSetDataTab().disable(false);
@@ -424,8 +424,11 @@ function widTokenTextRO(state)
 
 function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
 {
-    var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
 
+    if ( gCurrentDB === null )
+        return;
+
+    var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
 
     if (!engIsAsciiOrLF(dnOrRaw))
         return widModalWindow(gMsg.nonASCII, function() { $Obj.focus()});
@@ -563,7 +566,7 @@ function widGetLastRecord(tok, delay)
         }
 
         widShowTokenState().show(resp);
-        gTokInfo.raw = (engDataToRecErrorLevel(tok.raw) === 0) ? tok.raw : '';
+        gTokInfo.raw = (engDataToRecErrorLevel(tok.raw, +gCurrentDB.datalim) === 0) ? tok.raw : '';
         widPasswordOninput();
     }
 
@@ -785,7 +788,7 @@ function widSetDataButtonClick()
         return widModalWindow(gMsg.changeMasterKey, function () { $PwdInp.focus() });
 
     var data = $Data.val();
-    var err = engDataToRecErrorLevel(data);
+    var err = engDataToRecErrorLevel(data, +gCurrentDB.datalim);
 
     if (err !== 0)
         return widModalWindow(gDataErrorMsg[err], function () { $Data.focus() });
@@ -1250,6 +1253,15 @@ function widBlockingReceive(keys)
     engNcAdd(cb, gCurrentDB.name, keys, null);
 }
 
+function widSetDivOverflowSize()
+{
+    var width = $('#td_search_tabs_content').innerWidth() - 6;
+
+    $('.div-overflow')
+    .css('width', width + 'px')
+    .css('max-width', width + 'px');
+}
+
 function widSearchTab()
 {
     var $Table = $('#table_search_tab');
@@ -1266,13 +1278,7 @@ function widSearchTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 5);
-
-            var width = $('#td_search_tabs_content').innerWidth() - 6;
-
-            $('.div-overflow')
-            .css('width', width + 'px')
-            .css('max-width', width + 'px');
-
+            widSetDivOverflowSize();
         },
         isOn : function ()
         {
