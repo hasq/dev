@@ -61,3 +61,7 @@ clean:
 	cd $(OS) && make clean
 	cd $(PU) && make clean
 	cd $(MA) && make clean
+
+install:
+	mkdir -p ~/bin
+	cp _bin_$(PLAT)/* ~/bin/
