@@ -310,31 +310,6 @@ table
     height: 28px;
 }
 
-#label_file_upload
-{
-    vertical-align: top;
-    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
-    text-align: center;
-    width: unset;
-    height: unset;
-    border: 0px solid #F0F0FF;
-    background-color: #FCFCFC;
-    margin: 0;
-    padding: 0 2px 0 2px;
-    opacity: 1;
-}
-
-#label_file_upload:hover
-{
-    background-color: #87CEEB;
-    cursor: pointer;
-}
-
-#input_file_upload
-{
-    display: none;
-}
-
 /* END */
 
 /* Init data area - START */
@@ -363,7 +338,7 @@ table
 
 #td_token_hash_label
 {
-	width: 6.5em;
+	width: 7em;
 }
 
 #td_token_hash
@@ -381,8 +356,32 @@ table
 {
 	text-align: right;
 	vertical-align:top;
-}       
-		
+}  
+     
+#label_file_upload
+{
+    vertical-align: top;
+    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
+    text-align: center;
+    width: unset;
+    height: unset;
+    border: 0px solid #F0F0FF;
+    background-color: #FCFCFC;
+    margin: 0;
+    padding: 0 2px 0 2px;
+    opacity: 1;
+}
+
+#label_file_upload:hover
+{
+    background-color: #87CEEB;
+    cursor: pointer;
+}
+
+#input_file_upload
+{
+    display: none;
+}		
 #table_master_key
 {
 	margin: auto;
