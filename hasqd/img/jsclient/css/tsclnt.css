@@ -1227,9 +1227,22 @@ textarea::-moz-placeholder
 ----------------------------------*/
 
 
+/*
+w=1200 res=300 - mob
+w=600 res=140 - mob
+
+w=600 res=96 - mob
+w=1024 res=96 - mob
+
+w=1200 res=96 - pc
+w=1600 res=96 -pc
+*/
+
 /*@media screen and (max-width: 800px)*/
-/*@media not all and (min-device-width: 900px)*/
-@media not all and (orientation: landscape)
+/*@media not all and (min-device-width: 1200px)*/
+/*@media not all and (orientation: landscape)*/
+
+@media not all and (resolution: 96dpi) and (min-device-width: 1200px)
 {
 	body
 	{
