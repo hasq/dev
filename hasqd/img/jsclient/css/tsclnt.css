@@ -1228,10 +1228,11 @@ textarea::-moz-placeholder
 
 
 /*@media screen and (max-width: 800px)*/
-@media screen and (min-resolution: 180dpi)
+@media all and (max-width: 100mm)
 {
 	body
 	{
 		width: 95%;
+		background: #ACFCAF url("../img/bgfon.png");
 	}
 }
