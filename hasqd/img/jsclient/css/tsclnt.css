@@ -1229,7 +1229,7 @@ textarea::-moz-placeholder
 
 /*@media screen and (max-width: 800px)*/
 /*@media not all and (min-device-width: 900px)*/
-@media not all and (min-width: 700px)
+@media not all and (orientation: landscape)
 {
 	body
 	{
