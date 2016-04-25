@@ -75,15 +75,15 @@ function widGetHTMLTitleArea()
         {
             r += '<tr>\n';
             {
-             r += '<td/>';
-             r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
-             r += '<td/>\n';
-                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
-             r += '<td/>\n';
-                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
-             r += '<td/>\n';
-             r += '<td/>\n';
-                r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
+				r += '<td/>';
+				r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
+				r += '<td/>\n';
+				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
+				r += '<td/>\n';
+				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
+				r += '<td/>\n';
+				r += '<td/>\n';
+				r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
             }
          r += '</tr>\n';
         }
@@ -172,7 +172,7 @@ function widGetHTMLInitialDataArea()
     r += widGetHTMLTokenHash();
     r += widGetHTMLTrTdSubtitle(1, 'Master key', 'td-subtitle');
     r += widGetHTMLMasterKey();
- r += '</table>\n';
+	r += '</table>\n';
     r += '</tr>\n';
 
     return r;
@@ -231,8 +231,8 @@ function widGetHTMLMasterKey()
                 {
                     r += '<td/>\n';
                     r += widGetHTMLSpanImg('span_password_eye', 'widPasswordEyeClick($(this))');
-                 r += '<td/>\n';
-                 r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
+					r += '<td/>\n';
+					r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
                     r += '<td/>\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_password_pic'));
                 }
