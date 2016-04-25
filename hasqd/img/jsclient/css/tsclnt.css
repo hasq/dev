@@ -1236,13 +1236,15 @@ w=1024 res=96 - mob
 
 w=1200 res=96 - pc
 w=1600 res=96 -pc
+
+if res=96 and w>=1200 -> pc
 */
 
 /*@media screen and (max-width: 800px)*/
 /*@media not all and (min-device-width: 1200px)*/
 /*@media not all and (orientation: landscape)*/
-
-@media not all and (resolution: 96dpi) and (max-device-width: 1200px)
+/*@media not all and (resolution: 96dpi) and (min-device-width: 1200px)*/
+@media all and (min-resolution: 100dpi), (max-width: 1000px)
 {
 	body
 	{
