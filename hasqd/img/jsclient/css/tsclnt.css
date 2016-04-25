@@ -1242,7 +1242,7 @@ w=1600 res=96 -pc
 /*@media not all and (min-device-width: 1200px)*/
 /*@media not all and (orientation: landscape)*/
 
-@media not all and (resolution: 96dpi) and (min-device-width: 1200px)
+@media not all and (resolution: 96dpi) and (max-device-width: 1200px)
 {
 	body
 	{
