@@ -5,7 +5,7 @@ html
 
 body
 {
-	font-family: Arial, Verdana, Consolas, "Courier New", monospace;
+	font: normal 16px Arial, Verdana, Consolas, "Courier New", monospace;
 	background: #FCFCFC url("../img/bgfon.png");
 	color: black;
 	width: 60%;
@@ -310,9 +310,7 @@ table
     height: 28px;
 }
 
-/* END */
-
-/* Init data area - START */
+/* Init data area*/
 
 #table_initial_data_area
 {
@@ -327,7 +325,6 @@ table
 #textarea_token_name
 {
 	height: 3em;
-	font: normal 1em Consolas, "Lucida Console", monospace !important;
 }
 
 #td_reload_button
@@ -338,12 +335,13 @@ table
 
 #td_token_hash_label
 {
-	width: 7em;
+	font: italic 1em Consolas, "Courier New", monospace !important;
+	width: 8em;
 }
 
 #td_token_hash
 {
-	width: 18.5em;
+	width: 19em;
 }
 
 #td_token_pic
@@ -406,8 +404,7 @@ table
     cursor: pointer;
 }
 
-input[type='text'],
-input[type='password']
+#input_password
 {
     font: normal 1em Consolas, "Courier New", monospace !important;
     width: 100%;
@@ -418,8 +415,7 @@ input[type='password']
     
 }
 
-input[type='text']:focus,
-input[type='password']:focus
+#input_password:focus
 {
     border: 1px solid #DDDDDD;
 }
@@ -480,8 +476,6 @@ input::-moz-placeholder
 {
 	text-align: left;
 }
-
-
 
 /* END */
 
@@ -679,11 +673,10 @@ td
 }
 
 /* Main area - End */
-
 textarea[type='text']
 {
     width: 100%;
-    font: 16px Consolas, "Courier New", monospace !important;
+    font: normal 1em Consolas, "Courier New", monospace !important;
     border: 1px solid #DDDDDD;
     border-radius: 0;
     display: block;
@@ -791,7 +784,7 @@ textarea::-moz-placeholder
 
 .td-info
 {
-    font: italic 1em Consolas, "Courier New", monospace !important;
+    font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     vertical-align: middle;
     border-radius: 0px;
@@ -799,7 +792,7 @@ textarea::-moz-placeholder
 
 .td-log
 {
-    font: italic 1em Consolas, "Courier New", monospace !important;
+    font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     border-radius: 0px;
     visibility: hidden;
@@ -816,13 +809,13 @@ textarea::-moz-placeholder
 {
     text-align: center;
     vertical-align: top;
-    font: bold 17px Verdana !important;
+    font: bold 1.2em Verdana !important;
     color: #009070;
 }
 
 .td-subscribe
 {
-    font: italic 8px Consolas, "Courier New", monospace !important;
+    font: italic 0.5em Consolas, "Courier New", monospace !important;
     border-radius: 0px;
     text-align: right;
     vertical-align: top;
@@ -1320,6 +1313,11 @@ if res=96 and w>=1200 -> pc
 		width: 95%;
 		background: #FCFCBF url("../img/bgfon.png");
 	}
+
+	textarea[type='text']
+	{
+		font: normal 1.5em Consolas, "Courier New", monospace !important;
+	}
 	
 	/* Title area */
 	#table_title_area td:first-child
@@ -1357,7 +1355,6 @@ if res=96 and w>=1200 -> pc
 	#textarea_token_name
 	{
 		height: 4em;
-		font: normal 1.5em Consolas, "Lucida Console", monospace !important;
 	}
 
 	#span_reload:hover
@@ -1366,8 +1363,7 @@ if res=96 and w>=1200 -> pc
 		height: 1.5em;
 	}
 	
-	input[type='text'],
-	input[type='password']
+	#input_password
 	{
 		font: normal 1.5em Consolas, "Courier New", monospace !important;
 	}
