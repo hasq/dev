@@ -1228,7 +1228,7 @@ textarea::-moz-placeholder
 
 
 /*@media screen and (max-width: 800px)*/
-@media all and (max-width: 100mm)
+@media all and (min-resolution: 180dpi)
 {
 	body
 	{
