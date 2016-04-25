@@ -355,21 +355,49 @@ table
 	font: normal 1em Consolas, "Lucida Console", monospace !important;
 }
 
+#td_reload_button
+{
+	width: 1.5em; 
+	vertical-align: bottom;
+}
+
+#td_token_hash_label
+{
+	width: 6.5em;
+}
+
+#td_token_hash
+{
+	width: 18.5em;
+}
+
+#td_token_pic
+{
+	width: 1.5em;
+	vertical-align: middle;
+}
+
+#td_file_upload
+{
+	text-align: right;
+	vertical-align:top;
+}       
+		
 #table_master_key
 {
 	margin: auto;
 	border: 0;
 }
 
-#table_master_key td
+#table_master_key  tr:first-child  td
 {
-	width: 20em;
+	width: 22em;
 	text-align: center;
 	vertical-align: middle;
 }
 
-#table_master_key td:first-child,
-#table_master_key td:last-child
+#table_master_key tr:first-child td:first-child,
+#table_master_key tr:first-child td:last-child
 {
 	width: 2em; 
 }
@@ -448,6 +476,12 @@ input::-moz-placeholder
     text-align: left;
     text-overflow: ellipsis;
 }
+
+#td_password_zxcvbn
+{
+	text-align: left;
+}
+
 
 
 /* END */

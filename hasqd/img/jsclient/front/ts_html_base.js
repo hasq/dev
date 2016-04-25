@@ -183,14 +183,14 @@ function widGetHTMLTokenHash()
     var body = function()
     {
         var r = '';
-        r += '<td style="width: 1.5em; vertical-align: bottom;" title="' + gTooltip.refresh_token + '"/>\n';
+        r += '<td id="td_reload_button" title="' + gTooltip.refresh_token + '"/>\n';
         r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
-        r += '<td style="width: 7em;" class="td-info" nowrap/>\n';
+        r += '<td id="td_token_hash_label" class="td-info" nowrap/>\n';
         r += widGetHTMLMessageBox('Token hash:');
-        r += '<td id="td_token_hash" style="width: 18em;" class="td-info" nowrap/>\n';
-        r += '<td style="width: 2em; vertical-align: middle;" class="td-info" />\n';
+        r += '<td id="td_token_hash" class="td-info" nowrap/>\n';
+        r += '<td id="td_token_pic" class="td-info"/>\n';
         r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
-        r += '<td style="text-align: right; vertical-align:top" />\n';
+        r += '<td id="td_file_upload"/>\n';
         r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
         r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';
         return r;
@@ -201,9 +201,9 @@ function widGetHTMLTokenHash()
 
     r += '<tr>\n';
     {
-        r += '<td style="text-align:left;" class="td-info">\n';
+        r += '<td class="td-info">\n';
         {
-            r += '<table style="width: 100%" border="0">\n';
+            r += '<table style="width: 100%">\n';
             {
                 r += '<tr>\n';
                 r += body();
