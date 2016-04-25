@@ -2,7 +2,7 @@
 
 function gHelp(x)
 {
-    var r = "";
+    var r = '';
 
     if ( x == 'span_password_pic' )
     {

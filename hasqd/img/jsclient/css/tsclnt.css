@@ -245,76 +245,6 @@ input[class='hasDatepicker']
     font: 16px Consolas, "Courier New", monospace !important;
 }
 
-input[placeholder]
-{
-    font: italic 16px Consolas, "Courier New", monospace !important;
-    text-align: left;
-    text-overflow: ellipsis;
-}
-
-input::-webkit-input-placeholder
-{
-    font: italic 16px Consolas, "Courier New", monospace !important;
-    text-align: left;
-    text-overflow: ellipsis;
-}
-
-input:-ms-input-placeholder
-{
-    font: italic 16px Consolas, "Courier New", monospace !important;
-    text-align: left;
-    text-overflow: ellipsis;
-}
-
-input:-moz-placeholder
-{
-    font: italic 16px Consolas, "Courier New", monospace !important;
-    text-align: left;
-    text-overflow: ellipsis;
-}
-
-input::-moz-placeholder
-{
-    font: italic 16px Consolas, "Courier New", monospace !important;
-    text-align: left;
-    text-overflow: ellipsis;
-}
-
-input[type='text'],
-input[type='password']
-{
-    font: 16px Consolas, "Courier New", monospace !important;
-    width: 100%;
-    margin: 0;
-    border: 1px solid #DDDDDD;
-    border-radius: 0;
-    box-sizing: border-box;
-    
-}
-
-input[type='text']:focus,
-input[type='password']:focus
-{
-    border: 1px solid #DDDDDD;
-}
-
-input:required:valid
-{
-    border: 1px solid #DDDDDD;
-}
-
-input:invalid
-{
-    border: 1px solid #DDDDDD;
-    box-shadow: none;
-}
-
-input:focus:invalid
-{
-    border-color: red;
-}
-
-
 led
 {
     text-align: center;
@@ -326,11 +256,6 @@ p
     word-wrap: break-word;
     white-space: normal;
     margin: 0;
-}
-
-#span_password_eye:hover
-{
-    cursor: pointer;
 }
 
 table
@@ -429,6 +354,102 @@ table
 	height: 3em;
 	font: normal 1em Consolas, "Lucida Console", monospace !important;
 }
+
+#table_master_key
+{
+	margin: auto;
+	border: 0;
+}
+
+#table_master_key td
+{
+	width: 20em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#table_master_key td:first-child,
+#table_master_key td:last-child
+{
+	width: 2em; 
+}
+
+#span_password_eye:hover
+{
+    cursor: pointer;
+}
+
+input[type='text'],
+input[type='password']
+{
+    font: normal 1em Consolas, "Courier New", monospace !important;
+    width: 100%;
+    margin: 0;
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
+    box-sizing: border-box;
+    
+}
+
+input[type='text']:focus,
+input[type='password']:focus
+{
+    border: 1px solid #DDDDDD;
+}
+
+input:required:valid
+{
+    border: 1px solid #DDDDDD;
+}
+
+input:invalid
+{
+    border: 1px solid #DDDDDD;
+    box-shadow: none;
+}
+
+input:focus:invalid
+{
+    border-color: red;
+}
+
+
+input[placeholder]
+{
+    font: italic 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+input::-webkit-input-placeholder
+{
+    font: italic 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+input:-ms-input-placeholder
+{
+    font: italic 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+input:-moz-placeholder
+{
+    font: italic 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+input::-moz-placeholder
+{
+    font: italic 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+
 /* END */
 
 /* Main area - Start */
@@ -438,16 +459,16 @@ table
     width: 100%;
 }
 
+#ul_tabs
+{
+    display: none;
+}
+
 #td_main_tabs_content
 {
     vertical-align: top;
     padding: 3px 0 3px 3px;
 	width: 100%;
-}
-
-#ul_tabs
-{
-    display: none;
 }
 
 #td_main_tabs_buttons
@@ -596,20 +617,6 @@ table
     width: 100%;
     border: 0;
 }
-/* 
-#td_search_tabs_dates table tr td
-{
-    height: 30px;
-    vertical-align: top;
-    padding: 0
-}
-
-#td_search_tabs_dates table tr:last-child td
-{
-    text-align: center;
-    vertical-align: bottom;
-    height: 74px;
-} */
 
 #span_current_slice
 {
@@ -673,31 +680,30 @@ textarea:required:valid
     border: 1px solid #DDDDDD;
 }
 
-
 textarea::-webkit-input-placeholder
 {
-    font: italic 16px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 textarea:-ms-input-placeholder
 {
-    font: italic 16px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 textarea:-moz-placeholder
 {
-    font: italic 16px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
 textarea::-moz-placeholder
 {
-    font: italic 16px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
@@ -740,7 +746,6 @@ textarea::-moz-placeholder
 .span-message-box:hover
 {
     cursor: pointer;
-    /*text-shadow: 1px 1px #DDDDDD;*/
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 2px #1376BC;
 }
 
@@ -753,7 +758,7 @@ textarea::-moz-placeholder
 
 .td-info
 {
-    font: italic 14px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     vertical-align: middle;
     border-radius: 0px;
@@ -761,7 +766,7 @@ textarea::-moz-placeholder
 
 .td-log
 {
-    font: italic 16px Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     border-radius: 0px;
     visibility: hidden;
@@ -770,7 +775,7 @@ textarea::-moz-placeholder
 .td-subtitle
 {
     text-align: center;
-    font: bold 17px Verdana !important;
+    font: bold 1.2em Verdana !important;
     color: #1376BC;
 }
 
@@ -1296,6 +1301,7 @@ if res=96 and w>=1200 -> pc
 		height: 60px; 
 		text-align: center;
 	}	
+	
 	#span_logo img
 	{
 		width: 56px;
@@ -1319,6 +1325,35 @@ if res=96 and w>=1200 -> pc
 	{
 		height: 4em;
 		font: normal 1.5em Consolas, "Lucida Console", monospace !important;
+	}
 
+	#span_reload:hover
+	{
+		width: 1.5em;
+		height: 1.5em;
+	}
+	
+	input[type='text'],
+	input[type='password']
+	{
+		font: normal 1.5em Consolas, "Courier New", monospace !important;
+	}
+	
+	#span_password_eye,
+	#span_password_pic,
+	#span_password_eye img,	
+	#span_password_pic img
+	{
+		width: 1.5em;
+	}
+	
+	.td-log
+	{
+		font: italic 0.8em Consolas, "Courier New", monospace !important;
+	}
+	
+	.td-subtitle
+	{
+		font: bold 1.4em Verdana !important;
 	}
 }

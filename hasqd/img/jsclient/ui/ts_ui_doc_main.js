@@ -95,20 +95,9 @@ function docInit()
     $('#div_tabs').tabs();
     $('#div_search_result_tabs').tabs();
 
-    $('#span_info img')
-    .attr('src', imgClkInfo)
-    .attr('width', '28')
-    .attr('height', '28');
-
-    $('#span_shield img')
-    .attr('src', imgClkShield)
-    .attr('width', '28')
-    .attr('height', '28');
-
-    $('#span_logo img')
-    .attr('width', '28')
-    .attr('height', '28')
-    .attr('src', imgLogoBlue);
+    $('#span_info img').attr('src', imgClkInfo);
+    $('#span_shield img').attr('src', imgClkShield);
+    $('#span_logo img').attr('src', imgLogoBlue);
 
     $('#span_reload img').attr('src', imgClkReload);
     $('#span_password_pic img').attr('src', imgPwdDummy);

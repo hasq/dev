@@ -75,15 +75,15 @@ function widGetHTMLTitleArea()
         {
             r += '<tr>\n';
             {
-				r += '<td/>';
-				r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
-				r += '<td/>\n';
-				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
-				r += '<td/>\n';
-				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
-				r += '<td/>\n';
-				r += '<td/>\n';
-				r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
+             r += '<td/>';
+             r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
+             r += '<td/>\n';
+                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
+             r += '<td/>\n';
+                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
+             r += '<td/>\n';
+             r += '<td/>\n';
+                r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
             }
          r += '</tr>\n';
         }
@@ -183,12 +183,12 @@ function widGetHTMLTokenHash()
     var body = function()
     {
         var r = '';
-        r += '<td style="width: 20px; vertical-align: bottom;" title="'+gTooltip.refresh_token+'"/>\n';
+        r += '<td style="width: 1.5em; vertical-align: bottom;" title="' + gTooltip.refresh_token + '"/>\n';
         r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
-        r += '<td style="width: 100px;" class="td-info" nowrap/>\n';
+        r += '<td style="width: 7em;" class="td-info" nowrap/>\n';
         r += widGetHTMLMessageBox('Token hash:');
-        r += '<td id="td_token_hash" style="width: 280px;" class="td-info" nowrap/>\n';
-        r += '<td style="width: 20px; vertical-align: middle;" class="td-info" />\n';
+        r += '<td id="td_token_hash" style="width: 18em;" class="td-info" nowrap/>\n';
+        r += '<td style="width: 2em; vertical-align: middle;" class="td-info" />\n';
         r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
         r += '<td style="text-align: right; vertical-align:top" />\n';
         r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
@@ -225,15 +225,15 @@ function widGetHTMLMasterKey()
     {
      r += '<td />\n';
         {
-            r += '<table style="margin: auto; border: 0;" border="0">\n';
+            r += '<table id="table_master_key">\n';
             {
                 r += '<tr>\n';
                 {
-                    r += '<td style="width: 32px; text-align: center">\n';
+                    r += '<td/>\n';
                     r += widGetHTMLSpanImg('span_password_eye', 'widPasswordEyeClick($(this))');
-                 r += '<td style="width: 300px; text-align: center"/>\n';
+                 r += '<td/>\n';
                  r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
-                    r += '<td style="width: 32px; text-align: center;">\n';
+                    r += '<td/>\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_password_pic'));
                 }
              r += '</tr>\n';
