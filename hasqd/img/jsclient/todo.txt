@@ -1,6 +1,7 @@
 Critical things
 ---------------
-DONE shield icon - functionality only
+Uvelichit razmery widgetov ma mobilnoj versii
+is it possible to make "Guess time" clickable?
 
 Major things
 ------------
@@ -10,14 +11,11 @@ Major things
 (ab) print browser data on browser failure
 (om) shield icon - picture and text
 (om) helps - texts
-css mobile
 js files optimization - analisys and recommendations
-is it possible to make "Guess time" clickable?
-Lookup->Search->Block->Back=>Dates empty - sometimes
+block line make open in a new window
 
 Minor things
 ------------
-
 Mobile version all must be darker
 unbalanced tree - firefox warning - find out
 validate via generate.bat (nodejs)
