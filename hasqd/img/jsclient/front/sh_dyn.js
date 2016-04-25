@@ -201,6 +201,6 @@ function checkBrowser(b)
 
 function askToContinue(b)
 {
-    var r = 'Version ("' + b.verShort + '") of "' + b.name + '" browser have not been tested.\nDo You wish to continue loading?';
+    var r = 'Version ' + b.verShort + ' of "' + b.name + '" browser has not been tested.\nProceed?';
     return r;
 }
