@@ -44,31 +44,6 @@ button
     -webkit-border-radius: 4px; 
 }
 
-#label_file_upload
-{
-    vertical-align: top;
-    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
-    text-align: center;
-    width: unset;
-    height: unset;
-    border: 0px solid #F0F0FF;
-    background-color: #FCFCFC;
-    margin: 0;
-    padding: 0 2px 0 2px;
-    opacity: 1;
-}
-
-#label_file_upload:hover
-{
-    background-color: #87CEEB;
-    cursor: pointer;
-}
-
-#input_file_upload
-{
-    display: none;
-}
-
 button.search-dn
 {
     font: 12px Consolas, "Courier New", monospace !important;
@@ -364,6 +339,8 @@ table
     box-sizing: border-box;
 }
 
+/* Title area */
+
 #table_title_area
 {
     width: 100%;
@@ -372,6 +349,7 @@ table
 #table_title_area td:first-child
 {
     text-align: left;
+	vertical-align: middle;
     font: bold 32px Verdana !important;
     color: #1376BC;
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
@@ -389,6 +367,53 @@ table
 	text-align: center;
 }
 
+#span_logo img
+{
+    width: 28px;
+    height: 28px;
+}
+
+#span_info img
+{
+    width : 28px;
+    height: 28px;
+}
+
+#span_shield img
+{
+	width: 28px;
+    height: 28px;
+}
+
+#label_file_upload
+{
+    vertical-align: top;
+    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
+    text-align: center;
+    width: unset;
+    height: unset;
+    border: 0px solid #F0F0FF;
+    background-color: #FCFCFC;
+    margin: 0;
+    padding: 0 2px 0 2px;
+    opacity: 1;
+}
+
+#label_file_upload:hover
+{
+    background-color: #87CEEB;
+    cursor: pointer;
+}
+
+#input_file_upload
+{
+    display: none;
+}
+
+/* END */
+
+/* Init data area - START */
+
 #table_initial_data_area
 {
     width: 100%;
@@ -398,6 +423,13 @@ table
 {
     padding: 0 0 3px 0;
 }
+
+#textarea_token_name
+{
+	height: 3em;
+	font: normal 1em Consolas, "Lucida Console", monospace !important;
+}
+/* END */
 
 /* Main area - Start */
 
@@ -410,6 +442,7 @@ table
 {
     vertical-align: top;
     padding: 3px 0 3px 3px;
+	width: 100%;
 }
 
 #ul_tabs
@@ -419,9 +452,9 @@ table
 
 #td_main_tabs_buttons
 {
-    width: 82px;
+   /*  min-width: 82px; */
     text-align: right;
-     vertical-align: top;   
+    vertical-align: top;   
     padding: 3px 3px;
 }
 
@@ -1176,8 +1209,8 @@ textarea::-moz-placeholder
 /* states and images */
 
 .ui-icon {
-    width: 16px;
-    height: 16px;
+    width: 1em;
+    height: 1em;
 }
 
 .ui-icon,
@@ -1225,8 +1258,6 @@ textarea::-moz-placeholder
 
 /* Mobile version
 ----------------------------------*/
-
-
 /*
 w=1200 res=300 - mob
 w=600 res=140 - mob
@@ -1250,5 +1281,44 @@ if res=96 and w>=1200 -> pc
 	{
 		width: 95%;
 		background: #FCFCBF url("../img/bgfon.png");
+	}
+	
+	/* Title area */
+	#table_title_area td:first-child
+	{
+		font: bold 3em Verdana !important;
+		text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
+	}
+	
+	#table_title_area td:not(:first-child)
+	{
+		width: 60px; 
+		height: 60px; 
+		text-align: center;
+	}	
+	#span_logo img
+	{
+		width: 56px;
+		height: 56px;
+	}
+	
+	#span_info img
+	{
+		width : 56px;
+		height: 56px;
+	}
+	
+	#span_shield img
+	{
+		width: 56px;
+		height: 56px;
+	}
+	
+	/* Initial data area */
+	#textarea_token_name
+	{
+		height: 4em;
+		font: normal 1.5em Consolas, "Lucida Console", monospace !important;
+
 	}
 }

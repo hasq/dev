@@ -17,7 +17,6 @@ function ajxSendCommand(cmd, callback, logo)
     {
         callback('An error occurred while processing your request!');
         logo.fail();
-        alert('Failed to connect to server!');
     })
 
     .always(function () {});
