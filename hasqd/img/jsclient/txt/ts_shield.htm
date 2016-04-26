@@ -1,5 +1,32 @@
 <p style="text-align: left;">
-FIXME img/jsclient/txt/ts_shield.htm
-Why the tokens and keys are secure?
+This web page (the client) is written in JavaScript, open source. 
+The server is written in C++, open source as well. The client 
+and the server communicate by HTTP or HTTPS protocol.
 </p>
 
+<hr/>
+<p style="text-align: left;">
+<i><b>Why the tokens and keys are secure?</b></i>
+The client does not send the entered master key. It sends only calculated 
+hashes. The key remains inside your browser's web page. The safety of 
+your keys is as good as the security of the browser and your device. 
+Whenever the keys are generated to pass a token, the master key remains 
+secure. It means that the same master key can be used for many tokens. 
+For example, a user using the master key <b><i>M</i></b> for tokens 1, 2, 
+and 3, can pass token 2 by generating keys <b><i>K</i></b> in "Show keys" 
+section. <b><i>M</i></b> is used to generate <b><i>K</i></b>, 
+but <b><i>K</i></b> cannot be used to recover <b><i>M</i></b>.
+</p>
+
+<hr/>
+<p style="text-align: left;">
+<i><b>How complex the master key has to be?</b></i>
+Calculated from the master key hashes can be attacked with brute force 
+algorithm that can use dictionaries and intelligent guesses. With the 
+current computation power it is fair to assume that random 
+looking 10 symbol passwords can be cracked. However the difficulty 
+grows exponentially with every additional symbol. The hint complexity 
+provided is only a suggestion, which does not take into account 
+personal information such as dates, names or places that can be 
+known to adversary.
+</p>
