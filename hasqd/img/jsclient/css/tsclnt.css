@@ -199,7 +199,8 @@ button.button-disabled:hover
     margin: auto;
     padding: 0;
     border: 1px solid #13A0F0;
-    width: 500px;
+    width: 60%;
+    max-width: 95%;
     box-shadow: 0 0 20px 4px #C9C9C9;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -1324,11 +1325,11 @@ textarea::-moz-placeholder
 
 /* Mobile version
 ----------------------------------*/
-@media all and (min-resolution: 121dpi), (max-width: 1000px)
+@media all and (min-resolution: 100dpi), (max-width: 1000px)
 {
 	body
 	{
-		width: 98%;
+		width: 95%;
 		background: #F4FCF4 url("../img/bgfon.png");
 	}
 
@@ -1357,7 +1358,9 @@ textarea::-moz-placeholder
 
 	@media all and (max-width: 480px)
 	{
-		.td-info
+		/* .td-info */
+		#td_token_hash,
+		#td_token_hash_label
 		{
 			font: italic 0.65em Consolas, "Courier New", monospace !important;
 		}

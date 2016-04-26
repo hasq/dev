@@ -2,14 +2,14 @@ Critical things
 ---------------
 Uvelichit razmery widgetov ma mobilnoj versii
 is it possible to make "Guess time" clickable?
-click everywhere ili Esc
+DONE click everywhere ili Esc
 
 Major things
 ------------
 (ab) Command SKC
 (ab) engSearchClick remove return dates; remove storing dates in gSearch
 (ab) Lookup resize - njuans!
-(ab) print browser data on browser failure
+??? (ab) print browser data on browser failure
 (om) shield icon - text
 (om) helps - texts
 DONE block link make open in a new window

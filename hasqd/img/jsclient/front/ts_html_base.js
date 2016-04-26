@@ -78,7 +78,6 @@ function widGetHTMLTitleArea()
              r += '<td/>';
              r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
              r += '<td/>\n';
-             r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
              r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
@@ -161,7 +160,7 @@ function widGetHTMLInitialDataArea()
     var id = 'textarea_token_name';
     var oninput = 'widTokenTextOninput($(this), 500)';
     var style = 'overflow-x:hidden;';
-    var attr = 'type="text" placeholder="Enter token text" required';
+    var attr = 'type="text" placeholder="Enter token name" required';
 
     r += '<tr>\n';
     r += '<td nowrap>\n';

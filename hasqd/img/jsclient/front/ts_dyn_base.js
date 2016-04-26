@@ -105,22 +105,44 @@ function widShowHidePassword()
 
 function widModalWindow(msg, func)
 {
-    $('#div_modal_window_content')
-    .click
-    (function ()
+ //var $Window = $('#div_modal_window_content');
+    var $Window = $('#div_modal_window');
+    var $Content = $('#div_modal_window_content');
+    var width = $('body').outerWidth();
+    $Content.width(width);
+ //console.log(width);
+    var click = function()
     {
-        $(this).find('p').empty();
-        $('#div_modal_window').css('display', 'none');
+        $Window.find('p').empty();
+        //$('#div_modal_window').css('display', 'none');
+        $Window.css('display', 'none');
 
         if (func) func();
 
-        $(this).off('click');
+        $Window.off('click');
+        $(document).off('keyup');
+    };
+
+    var esc = function(e)
+    {
+        if (e.keyCode == 27)
+            click();
+    }
+
+    $Window.click(function()
+    {
+        click()
     });
 
-    $('#div_modal_window').css('display', 'block');
-    $('#div_modal_window_content')
-    .find('p')
-    .html(msg);
+    $(document).keyup(function(event)
+    {
+        esc(event);
+    });
+
+    //$('#div_modal_window').css('display', 'block');
+    $Window.css('display', 'block');
+    //$('#div_modal_window_content')
+    $Window.find('p').html(msg);
 }
 
 function widHelpMessageBox ($obj)
