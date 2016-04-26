@@ -183,9 +183,9 @@ function widGetHTMLTokenHash()
         var r = '';
         r += '<td id="td_reload_button" class="td-info" title="' + gTooltip.refresh_token + '"/>\n';
         r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
-        r += '<td id="td_token_hash_label" class="td-info" nowrap/>\n';
+        r += '<td id="td_token_hash_label" class="td-info"/>\n';
         r += widGetHTMLMessageBox('Token hash:');
-        r += '<td id="td_token_hash" class="td-info" nowrap/>\n';
+        r += '<td id="td_token_hash" class="td-info"/>\n';
         r += '<td id="td_token_pic" class="td-info"/>\n';
         r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
         r += '<td id="td_file_upload" class="td-info"/>\n';

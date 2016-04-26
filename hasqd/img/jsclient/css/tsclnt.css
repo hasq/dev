@@ -347,19 +347,17 @@ table
 
 #td_token_hash_label
 {
-	/* width: auto; */
-	width: 6.2em;
+	width: 6.3em;
 }
 
 #td_token_hash
 {
-	/* width: auto; */
-	width: 17.5em;
+	width: 18em;
 }
 
 #td_token_pic
 {
-	width: 1.5em;
+	max-width: 1.5em;
 	text-align: right;
 }
 
@@ -801,6 +799,12 @@ textarea::-moz-placeholder
     border: 0px solid;
     padding: 0;
     text-align: center;
+}
+
+.td-nostretch
+{
+	width: 1%;
+	white-space: nowrap;
 }
 
 .td-info
