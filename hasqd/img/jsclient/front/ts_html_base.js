@@ -75,15 +75,15 @@ function widGetHTMLTitleArea()
         {
             r += '<tr>\n';
             {
-				r += '<td/>';
-				r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
-				r += '<td/>\n';
-				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
-				r += '<td/>\n';
-				r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
-				r += '<td/>\n';
-				r += '<td/>\n';
-				r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
+             r += '<td/>';
+             r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
+             r += '<td/>\n';
+                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
+             r += '<td/>\n';
+                r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
+             r += '<td/>\n';
+             r += '<td/>\n';
+                r += widGetHTMLSpanImg('span_logo', 'engSendPing()');
             }
          r += '</tr>\n';
         }
@@ -146,7 +146,7 @@ function widGetHTMLTrTdButton(isTr, id, htmlClass, onclick, img)
 
     if (isTr) r += '<tr>\n';
 
-	r += '<td class="td-button" />\n'
+ r += '<td class="td-button" />\n'
     r += '<button id="' + id + '" class="' + htmlClass + '" onclick="return ' + onclick + '">' + img + '</button>\n';
 
     if (isTr) r += '</tr>\n';
@@ -170,7 +170,7 @@ function widGetHTMLInitialDataArea()
     r += widGetHTMLTokenHash();
     r += widGetHTMLTrTdSubtitle(1, 'Master key', 'td-subtitle');
     r += widGetHTMLMasterKey();
-	r += '</table>\n';
+ r += '</table>\n';
     r += '</tr>\n';
 
     return r;
@@ -229,8 +229,8 @@ function widGetHTMLMasterKey()
                 {
                     r += '<td/>\n';
                     r += widGetHTMLSpanImg('span_password_eye', 'widPasswordEyeClick($(this))');
-					r += '<td/>\n';
-					r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
+                 r += '<td/>\n';
+                 r += '<input oninput="widPasswordOninput($(this));" id="input_password" type="password" class="password" placeholder="Enter token master key" required/>\n';
                     r += '<td/>\n';
                     r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_password_pic'));
                 }
@@ -460,10 +460,10 @@ function widGetHTMLSearchInitialData()
         {
             r += '<tr>\n';
             {
-				r += '<td id="td_label_from_datepicker"/>\n';
-				r += '<label for="input_from_datepicker">From</label>\n';
-				r += '<td id="td_input_from_datepicker"/>\n';
-				r += '<input id="input_from_datepicker" type="text">\n';
+             r += '<td id="td_label_from_datepicker"/>\n';
+             r += '<label for="input_from_datepicker">From</label>\n';
+             r += '<td id="td_input_from_datepicker"/>\n';
+                r += '<input id="input_from_datepicker" type="text">\n';
             }
          r += '</tr>\n';
             r += '<tr>\n';

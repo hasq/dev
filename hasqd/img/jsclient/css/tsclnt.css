@@ -10,8 +10,8 @@ body
 	color: black;
 	width: 60%;
 	height: 100%;
-	min-width: 320px;
-	min-height: 480px;
+	min-width: 360px;
+	/* min-height: 600px; */
 	text-align: justify;
 	margin: auto;
 }
@@ -354,10 +354,15 @@ table
 	width: 18em;
 }
 
-#td_token_pic
+#td_token_pic img
 {
-	max-width: 1.5em;
 	text-align: right;
+}
+
+#td_token_pic img
+{
+	width: 1em;
+	height: auto;
 }
 
 #td_file_upload
@@ -1365,12 +1370,12 @@ textarea::-moz-placeholder
 		height: 1.5em;
 	}
 	
-	@media all and (max-width: 479px)
+	@media all and (max-width: 480px)
 	{
 		#td_token_hash_label,
 		#td_token_hash
 		{
-			font: italic 0.9em Consolas, "Courier New", monospace !important;
+			font: italic 0.8em Consolas, "Courier New", monospace !important;
 		}
 	}
 	
