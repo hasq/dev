@@ -1375,7 +1375,7 @@ textarea::-moz-placeholder
 		#td_token_hash_label,
 		#td_token_hash
 		{
-			font: italic 0.8em Consolas, "Courier New", monospace !important;
+			font: italic 0.7em Consolas, "Courier New", monospace !important;
 		}
 	}
 	
