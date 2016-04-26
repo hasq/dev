@@ -1332,6 +1332,13 @@ textarea::-moz-placeholder
 		font: normal 1.5em Consolas, "Courier New", monospace !important;
 	}
 	
+	@media all and (max-width: 479px)
+	{
+		.td-info
+		{
+			font: italic 1em Consolas, "Courier New", monospace !important;
+		}
+	}
 	/* Title area */
 	#table_title_area td:first-child
 	{
