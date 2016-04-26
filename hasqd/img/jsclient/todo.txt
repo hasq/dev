@@ -1,32 +1,32 @@
 Critical things
 ---------------
-Uvelichit razmery widgetov ma mobilnoj versii
-is it possible to make "Guess time" clickable?
+[A] Uvelichit razmery widgetov ma mobilnoj versii
+[A] is it possible to make "Guess time" clickable?
 DONE click everywhere ili Esc
 
 Major things
 ------------
-(ab) Command SKC
-(ab) engSearchClick remove return dates; remove storing dates in gSearch
-(ab) Lookup resize - njuans!
-??? (ab) print browser data on browser failure
-(om) shield icon - text
-(om) helps - texts
+[B] (ab) Command SKC
+[B] (ab) engSearchClick remove return dates; remove storing dates in gSearch
+[A] (ab) Lookup resize - njuans!
+[A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
+[A] (om) helps - texts
 DONE block link make open in a new window
-Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
-js files optimization - analisys and recommendations
+[C] Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
+[C] js files optimization - analisys and recommendations
 DONE ubrat alert "fail to connect" if(0)
+[A] (ab) Safari 8 tested - dobavit v spisok
 
 Minor things
 ------------
-Mobile version all must be darker
-unbalanced tree - firefox warning - find out
-validate via generate.bat (nodejs)
-fix makefile to remove action if not necessary
-all icon pictures lines darker
-drugie jazyki
+[C] Mobile version all must be darker
+[C] unbalanced tree - firefox warning - find out
+[C] validate via generate.bat (nodejs)
+[C] fix makefile to remove action if not necessary
+[B] all icon pictures lines darker
+[C] drugie jazyki
 
 Sergey comments
 ---------------
-(?) nuzhen li resize na razdviganie i sdviganie - nuzhno bolee podrobnyj analiz
+[A] (?) nuzhen li resize na razdviganie i sdviganie - nuzhno bolee podrobnyj analiz
 
