@@ -5,7 +5,7 @@ html
 
 body
 {
-	font: normal 16px Arial, Verdana, Consolas, "Courier New", monospace;
+	font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace;
 	background: #FCFCFC url("../img/bgfon.png");
 	color: black;
 	width: 60%;
@@ -24,6 +24,8 @@ body
 *
 {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;	
 }
 
 a:link,
@@ -34,7 +36,7 @@ a:visited
 
 button
 {
-    font: normal 12px Consolas, "Courier New", monospace !important;
+    font: normal 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     border: 0;
     margin: 0;
@@ -46,7 +48,7 @@ button
 
 button.search-dn
 {
-    font: 12px Consolas, "Courier New", monospace !important;
+    font: 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     width: unset;
     min-width: 230px;
@@ -60,7 +62,7 @@ button.search-dn
 
 button.search-tab-button
 {
-    font: 12px Consolas, "Courier New", monospace !important;
+    font: 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     width: 70px;
     height: 70px;
@@ -73,7 +75,7 @@ button.search-tab-button
 
 button.search-tab-button-active
 {
-    font: 12px Consolas, "Courier New", monospace !important;
+    font: 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     width: 70px;
     height: 70px;
@@ -237,14 +239,6 @@ button.button-disabled:hover
     color: white;
 }
 
-input[class='hasDatepicker']
-{
-    margin: 0px;
-    border: 1px solid #DDDDDD; /*#aaa;*/
-    border-radius: 0;
-    font: 16px Consolas, "Courier New", monospace !important;
-}
-
 led
 {
     text-align: center;
@@ -322,9 +316,20 @@ table
     padding: 0 0 3px 0;
 }
 
-#textarea_token_name
+#span_reload img
 {
-	height: 3em;
+    width: 1em;
+	height: auto;
+}
+
+#span_reload:hover
+{
+    cursor: pointer;    
+}
+
+#span_reload:active
+{
+    opacity: 0.7;    
 }
 
 #td_reload_button
@@ -333,9 +338,13 @@ table
 	vertical-align: bottom;
 }
 
+#textarea_token_name
+{
+	height: 3em;
+}
+
 #td_token_hash_label
 {
-	font: italic 1em Consolas, "Courier New", monospace !important;
 	width: 8em;
 }
 
@@ -347,7 +356,7 @@ table
 #td_token_pic
 {
 	width: 1.5em;
-	vertical-align: middle;
+	text-align: right;
 }
 
 #td_file_upload
@@ -359,7 +368,7 @@ table
 #label_file_upload
 {
     vertical-align: top;
-    font: bold italic 10px Consolas, "Lucida Console", monospace !important;
+    font: bold italic 0.65em Consolas, "Lucida Console", monospace !important;
     text-align: center;
     width: unset;
     height: unset;
@@ -495,12 +504,12 @@ input::-moz-placeholder
 {
     vertical-align: top;
     padding: 3px 0 3px 3px;
-	width: 100%;
+	/* width: 100%; */
 }
 
 #td_main_tabs_buttons
 {
-   /*  min-width: 82px; */
+    width: 82px;
     text-align: right;
     vertical-align: top;   
     padding: 3px 3px;
@@ -642,29 +651,48 @@ input::-moz-placeholder
 {
     table-layout: fixed;
     width: 100%;
+	min-width: 9.5em;
     border: 0;
-}
-
-#span_current_slice
-{
-    font: 16px Consolas, "Courier New", monospace !important;
 }
 
 #td_label_from_datepicker,
 #td_label_to_datepicker
 {
-    font: 16px Consolas, "Courier New", monospace !important;
+    font: normal 1em Consolas, "Courier New", monospace !important;
 	text-align: left;
-	width: 50px; 
-	height: 30px;
+	width: 3em; 
 }
 
 #td_input_from_datepicker,
 #td_input_to_datepicker
 {
-	text-align:right; 
-	width: 100px;
+	text-align: right;
 }
+
+#td_input_from_datepicker input,
+#td_input_to_datepicker input
+{
+    font: 1em Consolas, "Courier New", monospace !important;
+	border: 1px solid #DDDDDD; /*#aaa;*/
+	border-radius: 0;
+	text-align: left;
+	width: 6em;
+	margin: 0px;
+}
+
+#td_search_block
+{
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#span_current_slice
+{
+    font: normal 1em Consolas, "Courier New", monospace !important;
+}
+/* Main area - End */
+
 
 td
 {
@@ -672,7 +700,6 @@ td
     box-sizing: border-box;
 }
 
-/* Main area - End */
 textarea[type='text']
 {
     width: 100%;
@@ -741,16 +768,6 @@ textarea::-moz-placeholder
     height: 118px;
 }
 
-#span_reload:hover
-{
-    cursor: pointer;    
-}
-
-#span_reload:active
-{
-    opacity: 0.7;    
-}
-
 .ui-tabs-nav
 {
     display: none;
@@ -763,7 +780,7 @@ textarea::-moz-placeholder
     overflow-y: auto;
     border: 1px solid #DDDDDD;
     border-radius: 0px;
-    font: 12px Consolas;
+    font: 0.75em Consolas;
     text-align: left;
     height: 194px;
     max-height: 194px;
@@ -784,10 +801,11 @@ textarea::-moz-placeholder
 
 .td-info
 {
-    font: italic 0.9em Consolas, "Courier New", monospace !important;
+    font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     vertical-align: middle;
     border-radius: 0px;
+	height: 1.7em;
 }
 
 .td-log
@@ -904,7 +922,8 @@ textarea::-moz-placeholder
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-disabled {
+.ui-state-disabled 
+{
     cursor: default !important;
 }
 
@@ -913,7 +932,8 @@ textarea::-moz-placeholder
 ----------------------------------*/
 
 /* states and images */
-.ui-icon {
+.ui-icon 
+{
     display: block;
     text-indent: -99999px;
     overflow: hidden;
@@ -925,15 +945,17 @@ textarea::-moz-placeholder
 ----------------------------------*/
 
 /* Overlays */
-.ui-widget-overlay {
+.ui-widget-overlay
+{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
-.ui-datepicker {
-    width: 12em;
+.ui-datepicker 
+{
+    width: 16em;
     padding: .2em .2em 0;
     display: none;
 }
@@ -984,7 +1006,7 @@ textarea::-moz-placeholder
 }
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
-    font: 12px Consolas, monospace;
+    font: 1em Consolas, monospace;
     width: 50%;
 }
 .ui-datepicker table {
@@ -1133,7 +1155,7 @@ textarea::-moz-placeholder
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     color: #454545;
-    font: normal 12px Consolas, monospace;
+    font: normal 1em Consolas, monospace;
     padding: 0.1em;
 }
 .ui-state-default a,
@@ -1368,14 +1390,23 @@ if res=96 and w>=1200 -> pc
 		font: normal 1.5em Consolas, "Courier New", monospace !important;
 	}
 	
-	#span_password_eye,
-	#span_password_pic,
+	#td_reload_button
+	{
+		width: 2em;
+	}
+	
+	#span_reload img,
 	#span_password_eye img,	
 	#span_password_pic img
 	{
 		width: 1.5em;
+		height: auto;
 	}
-	
+	#label_file_upload
+	{
+		font: bold italic 1.2em Consolas, "Lucida Console", monospace !important;
+	}	
+	/* */
 	.td-log
 	{
 		font: italic 0.8em Consolas, "Courier New", monospace !important;

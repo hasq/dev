@@ -181,14 +181,14 @@ function widGetHTMLTokenHash()
     var body = function()
     {
         var r = '';
-        r += '<td id="td_reload_button" title="' + gTooltip.refresh_token + '"/>\n';
+        r += '<td id="td_reload_button" class="td-info" title="' + gTooltip.refresh_token + '"/>\n';
         r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
         r += '<td id="td_token_hash_label" class="td-info" nowrap/>\n';
         r += widGetHTMLMessageBox('Token hash:');
         r += '<td id="td_token_hash" class="td-info" nowrap/>\n';
         r += '<td id="td_token_pic" class="td-info"/>\n';
         r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
-        r += '<td id="td_file_upload"/>\n';
+        r += '<td id="td_file_upload" class="td-info"/>\n';
         r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
         r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';
         return r;
@@ -199,7 +199,7 @@ function widGetHTMLTokenHash()
 
     r += '<tr>\n';
     {
-        r += '<td class="td-info">\n';
+        r += '<td/>\n';
         {
             r += '<table style="width: 100%">\n';
             {
@@ -223,7 +223,7 @@ function widGetHTMLMasterKey()
     {
      r += '<td />\n';
         {
-            r += '<table id="table_master_key">\n';
+            r += '<table id="table_master_key" border="0">\n';
             {
                 r += '<tr>\n';
                 {
@@ -237,7 +237,7 @@ function widGetHTMLMasterKey()
              r += '</tr>\n';
                 r += '<tr>\n';
                 {
-                 r += '<td style="width: 20px;"/>&nbsp';
+                 r += '<td/>&nbsp';
                  r += '<td id="td_password_zxcvbn" class="td-info"/>\n';
                  r += '<td/>\n';
                 }
@@ -488,7 +488,7 @@ function widGetHTMLSearchInitialData()
                r += '<td colspan="2" style="width: 177px;"/>\u200c\n';
             r += '<tr>\n';
             {
-             r += '<td style="text-align: left; white-space:nowrap; overflow: hidden;" colspan="2"/>\n';
+             r += '<td id="td_search_block" colspan="2"/>\n';
              r += '<label for="span_current_slice">\u200c</label>';
              r += '<span id="span_current_slice"></span>';
             }
