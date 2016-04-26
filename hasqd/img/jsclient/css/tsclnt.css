@@ -1339,22 +1339,12 @@ textarea::-moz-placeholder
 		text-align: center;
 	}	
 	
-	#span_logo img
-	{
-		width: 56px;
-		height: 56px;
-	}
-	
-	#span_info img
-	{
-		width : 56px;
-		height: 56px;
-	}
-	
+	#span_logo img,
+	#span_info img,
 	#span_shield img
 	{
-		width: 56px;
-		height: 56px;
+		width: 48px;
+		height: auto;
 	}
 	
 	/* Initial data area */
@@ -1372,10 +1362,9 @@ textarea::-moz-placeholder
 	
 	@media all and (max-width: 480px)
 	{
-		#td_token_hash_label,
-		#td_token_hash
+		.td-info
 		{
-			font: italic 0.7em Consolas, "Courier New", monospace !important;
+			font: italic 0.65em Consolas, "Courier New", monospace !important;
 		}
 	}
 	
