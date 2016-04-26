@@ -341,7 +341,7 @@ table
 {
 	width: 1.5em;
 	height: auto;
-	vertical-align: bottom;
+	vertical-align: middle;
 }
 
 #td_token_hash_label
@@ -354,9 +354,10 @@ table
 	width: 18em;
 }
 
-#td_token_pic img
+#td_token_pic
 {
 	text-align: right;
+	vertical-align: middle;
 }
 
 #td_token_pic img
@@ -1350,16 +1351,10 @@ textarea::-moz-placeholder
 	/* Initial data area */
 	#textarea_token_name
 	{
-		font: normal 1.5em Consolas, "Courier New", monospace !important;
-		height: 3em;
+		font: normal 1.2em Consolas, "Courier New", monospace !important;
+		height: 2.6em;
 	}
 
-	#span_reload:hover
-	{
-		width: 1.5em;
-		height: 1.5em;
-	}
-	
 	@media all and (max-width: 480px)
 	{
 		.td-info
@@ -1370,7 +1365,7 @@ textarea::-moz-placeholder
 	
 	#input_password
 	{
-		font: normal 1.5em Consolas, "Courier New", monospace !important;
+		font: normal 1.2em Consolas, "Courier New", monospace !important;
 	}
 	
 	#td_reload_button
@@ -1393,6 +1388,6 @@ textarea::-moz-placeholder
 	
 	.td-subtitle
 	{
-		font: bold 1.4em Verdana !important;
+		font: bold 1.3em Verdana !important;
 	}
 }
