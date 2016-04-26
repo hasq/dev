@@ -11,10 +11,10 @@ Major things
 (ab) print browser data on browser failure
 (om) shield icon - text
 (om) helps - texts
-DONE block line make open in a new window
+DONE block link make open in a new window
 Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
 js files optimization - analisys and recommendations
-otodvinut kruzhochki "info" i "shield" ot limona
+DONE otodvinut kruzhochki "info" i "shield" ot limona
 ubrat alert "fail to connect" if(0)
 
 Minor things
