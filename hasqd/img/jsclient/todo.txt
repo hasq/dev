@@ -2,6 +2,7 @@ Critical things
 ---------------
 Uvelichit razmery widgetov ma mobilnoj versii
 is it possible to make "Guess time" clickable?
+click everywhere ili Esc
 
 Major things
 ------------
@@ -24,11 +25,9 @@ unbalanced tree - firefox warning - find out
 validate via generate.bat (nodejs)
 fix makefile to remove action if not necessary
 all icon pictures lines darker
+drugie jazyki
 
 Sergey comments
 ---------------
-may -> will
-click everywhere ili Esc
-shield napisat tekst
-drugie jazyki
-nuzhen li resize na razdviganie i sdviganie
+(?) nuzhen li resize na razdviganie i sdviganie - nuzhno bolee podrobnyj analiz
+
