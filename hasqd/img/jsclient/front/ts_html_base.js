@@ -78,6 +78,7 @@ function widGetHTMLTitleArea()
              r += '<td/>';
              r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
              r += '<td/>\n';
+             r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
              r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_shield'));
