@@ -15,6 +15,7 @@ DONE block line make open in a new window
 Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
 js files optimization - analisys and recommendations
 otodvinut kruzhochki "info" i "shield" ot limona
+ubrat alert "fail to connect" if(0)
 
 Minor things
 ------------
