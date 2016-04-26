@@ -23,3 +23,11 @@ unbalanced tree - firefox warning - find out
 validate via generate.bat (nodejs)
 fix makefile to remove action if not necessary
 all icon pictures lines darker
+
+Sergey comments
+---------------
+may -> will
+click everywhere ili Esc
+shield napisat tekst
+drugie jazyki
+nuzhen li resize na razdviganie i sdviganie
