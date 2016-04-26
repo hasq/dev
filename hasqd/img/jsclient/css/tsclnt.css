@@ -11,7 +11,6 @@ body
 	width: 60%;
 	height: 100%;
 	min-width: 360px;
-	/* min-height: 600px; */
 	text-align: justify;
 	margin: auto;
 }
@@ -21,12 +20,12 @@ body
     outline: none;
 }
 
-*
+/* *
 {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;	
-}
+} */
 
 a:link,
 a:visited
@@ -48,8 +47,8 @@ button
 
 button.search-dn
 {
-    font: 0.75em Consolas, "Courier New", monospace !important;
-    text-align: center;
+    font: 1em Consolas, "Courier New", monospace !important;
+    text-align: left;
     width: unset;
     min-width: 230px;
     height: unset;
@@ -270,7 +269,7 @@ table
 {
     text-align: left;
 	vertical-align: middle;
-    font: bold 32px Verdana !important;
+    font: bold 1.9em Verdana !important;
     color: #1376BC;
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
@@ -428,8 +427,9 @@ table
     margin: 0;
     border: 1px solid #DDDDDD;
     border-radius: 0;
-    box-sizing: border-box;
-    
+/*     box-sizing: border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing: border-box; */
 }
 
 #input_password:focus
@@ -456,7 +456,7 @@ input:focus:invalid
 
 input[placeholder]
 {
-    font: italic 1em Consolas, "Courier New", monospace !important;
+    font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
@@ -640,6 +640,18 @@ input::-moz-placeholder
     height: 200px;
 }
 
+.div-overflow
+{
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid #DDDDDD;
+    border-radius: 0px;
+    font: 0.75em Consolas;
+    text-align: left;
+    height: 16em;
+    max-height: 16em;
+}
 
 #div_search_result_tabs div
 {
@@ -651,15 +663,14 @@ input::-moz-placeholder
 #table_search_tab #td_search_tabs_dates
 {
     vertical-align: top;
-    padding: 3px 0 3px 3px;    
-    width: 180px;
+    padding: 3px 0 3px 3px; 
+	width: 9.5em;	
 }
 
 #td_search_tabs_dates table
 {
     table-layout: fixed;
-    width: 100%;
-	min-width: 9.5em;
+	width: 100%;
     border: 0;
 }
 
@@ -674,7 +685,8 @@ input::-moz-placeholder
 #td_input_from_datepicker,
 #td_input_to_datepicker
 {
-	text-align: right;
+	text-align: center;
+	width: 6.4em;
 }
 
 #td_input_from_datepicker input,
@@ -684,8 +696,11 @@ input::-moz-placeholder
 	border: 1px solid #DDDDDD; /*#aaa;*/
 	border-radius: 0;
 	text-align: left;
-	width: 6.5em;
+	width: 98%;
 	margin: 0px;
+/* 	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;	 */
 }
 
 #td_search_block
@@ -706,6 +721,8 @@ td
 {
     vertical-align: bottom;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;	
 }
 
 textarea[type='text']
@@ -779,19 +796,6 @@ textarea::-moz-placeholder
 .ui-tabs-nav
 {
     display: none;
-}
-
-.div-overflow
-{
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: auto;
-    border: 1px solid #DDDDDD;
-    border-radius: 0px;
-    font: 0.75em Consolas;
-    text-align: left;
-    height: 194px;
-    max-height: 194px;
 }
 
 .span-message-box:hover
@@ -1371,19 +1375,41 @@ textarea::-moz-placeholder
 		font: normal 1.2em Consolas, "Courier New", monospace !important;
 	}
 	
-	#td_reload_button
+/* 	#td_reload_button
+	{
+		width: 2em;
+	} */
+	#span_reload img
 	{
 		width: 2em;
 	}
 	
-	#span_reload img,
+	#span_reload img
+	{
+		width: 1.5em;
+		height: auto;
+	}
+
+	#span_password_eye,	
+	#span_password_pic
+	{
+		width: 2em;
+	}
+	
 	#span_password_eye img,	
 	#span_password_pic img
 	{
 		width: 1.5em;
 		height: auto;
 	}
+	
 	/* */
+	#textarea_set_data,
+	#textarea_show_keys,
+	#textarea_receive_keys
+	{
+		font: normal 0.8em Consolas, "Courier New", monospace !important;
+	}
 	.td-log
 	{
 		font: italic 0.8em Consolas, "Courier New", monospace !important;

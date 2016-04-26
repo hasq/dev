@@ -223,7 +223,7 @@ function widGetHTMLMasterKey()
     {
      r += '<td />\n';
         {
-            r += '<table id="table_master_key" border="0">\n';
+            r += '<table id="table_master_key" border="1">\n';
             {
                 r += '<tr>\n';
                 {
@@ -436,13 +436,13 @@ function widGetHTMLSearchTab()
          r += '<td id="td_search_tabs_buttons" rowspan="2"/>\n';
             r += widGetHTMLSearchResultsTabsButtons();
             r += widGetHTMLTrTdSubtitle(0, 'Search for tokens', 'td-tab-subtitle', 'colspan="2"');
-            r += widGetHTMLSearchInitialData();
         }
         r += '</tr>\n';
         r += '<tr>\n';
         {
             r += '<td id="td_search_tabs_content"/>\n';
             r += widGetHTMLSearchResultsTabs();
+            r += widGetHTMLSearchInitialData();
         }
         r += '</tr>\n';
     }
@@ -454,7 +454,7 @@ function widGetHTMLSearchInitialData()
 {
     var r = '';
 
- r += '<td id="td_search_tabs_dates" rowspan="2"/>\n';
+ r += '<td id="td_search_tabs_dates"/>\n';
     {
         r += '<table border="0">\n';
         {
@@ -476,7 +476,7 @@ function widGetHTMLSearchInitialData()
            r += '</tr>\n';
             r += '<tr>\n';
             {
-               r += '<td style="height: 89px; vertical-align: bottom;" colspan="2"/>\n';
+               r += '<td style="height: 80px; vertical-align: bottom;" colspan="2"/>\n';
                 {
                     r += '<button id="button_search" class="show-keys-button-off" '
                          + 'onclick="return widSearchButtonClick($(this));">'
@@ -485,7 +485,7 @@ function widGetHTMLSearchInitialData()
             }
            r += '</tr>\n';
            r += '</tr>\n';
-               r += '<td colspan="2" style="width: 177px;"/>\u200c\n';
+               r += '<td colspan="2"/>\u200c\n';
             r += '<tr>\n';
             {
              r += '<td id="td_search_block" colspan="2"/>\n';
