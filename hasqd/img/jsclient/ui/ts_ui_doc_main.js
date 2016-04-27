@@ -33,9 +33,9 @@ var imgLockClosed = 'img/lock_closed.png';
 var imgEyeOpen = 'img/eye_open.png';
 var imgEyeClosed = 'img/eye_closed.png';
 
-var imgLogoBlue = 'img/logo_blue.png';
-var imgLogoRed = 'img/logo_red.png';
-var imgLogoBlink = 'img/logo_blink.gif';
+var imgLogoBlue = 'img/logo_wait.png';
+var imgLogoRed = 'img/logo_fail.png';
+var imgLogoBlink = 'img/logo_anim.gif';
 
 var imgPwdDummy = 'img/pwd_dummy.png';
 var imgPwdOk = 'img/pwd_good.png';

@@ -71,9 +71,9 @@ var imgPwdDummy = 'img/pwd_dummy.png';
 
 var imgTknNodn = 'img/tkn_nodn.png';
 
-var imgLogoBlue = 'img/logo_blue.png';
-var imgLogoRed = 'img/logo_red.png';
-var imgLogoBlink = 'img/logo_blink.gif';
+var imgLogoBlue = 'img/logo_wait.png';
+var imgLogoRed = 'img/logo_fail.png';
+var imgLogoBlink = 'img/logo_anim.gif';
 
 var allImages = [
                     imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,

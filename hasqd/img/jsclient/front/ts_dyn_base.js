@@ -1424,7 +1424,7 @@ function widSearchUpdate()
         if ( x.state > 0 && x.state < 4 )
             t[x.state] += '<span class="span-search-dn">' + xn + '</span> ' + xs + '\n';
 
-        n[x.state]++;
+            n[x.state]++;
     }
 
     return {text:t, number:n};

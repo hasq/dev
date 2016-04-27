@@ -239,7 +239,7 @@ function widGetHTMLMasterKey()
                 {
                  r += '<td/>\u200c';
                  r += '<td class="td-info"/>\n';
-				 r += widGetHTMLMessageBox(widGetHTMLSpan('span_password_zxcvbn'));
+                    r += widGetHTMLMessageBox(widGetHTMLSpan('span_password_zxcvbn'));
                  r += '<td/>\n';
                 }
              r += '</tr>\n';
@@ -355,10 +355,10 @@ function widGetHTMLSetDataTab()
         {
             r += '<table id="table_set_data_button">';
             r += '<tr>';
-				r += '<td/>';
-					r += widGetHTMLMessageBox(widGetHTMLSpan('span_data_length'));
-				r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
-				r += '<td/>';
+             r += '<td/>';
+            r += widGetHTMLMessageBox(widGetHTMLSpan('span_data_length'));
+            r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+             r += '<td/>';
          r += '</tr>';
          r += '</table>';
         }
@@ -464,7 +464,7 @@ function widGetHTMLSearchInitialData()
              r += '<td id="td_label_from_datepicker"/>\n';
              r += '<label for="input_from_datepicker">From</label>\n';
              r += '<td id="td_input_from_datepicker"/>\n';
-             r += '<input id="input_from_datepicker" type="text">\n';
+                r += '<input id="input_from_datepicker" type="text">\n';
             }
          r += '</tr>\n';
             r += '<tr>\n';
