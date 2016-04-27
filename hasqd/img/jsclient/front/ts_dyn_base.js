@@ -1416,13 +1416,13 @@ function widSearchUpdate()
         var xs = x.s;
         if ( x.raw != "" ) xs = engGetDataToRec(x.raw);
 
-        xs = '<button class="search-dn" style="margin-bottom: 1px;" onclick="widDnSelect(\''+window.btoa(xs)+'\')">'+xs+'</button>';
+        xs = '<button class="search-dn" onclick="widDnSelect(\'' + window.btoa(xs) + '\')">' + xs + '</button>';
 
         var xn = ' ' + x.n;
         for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )
-            t[x.state] += xn + " " + xs + '\n';
+            t[x.state] += '<span class="span-search-dn">' + xn + '</span> ' + xs + '\n';
 
         n[x.state]++;
     }

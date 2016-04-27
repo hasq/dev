@@ -45,46 +45,6 @@ button
     -webkit-border-radius: 4px; 
 }
 
-button.search-dn
-{
-    font: 1em Consolas, "Courier New", monospace !important;
-    text-align: left;
-    width: unset;
-    min-width: 230px;
-    height: unset;
-    border: 0;
-    background: #EEEEFE;
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-}
-
-button.search-tab-button
-{
-    font: 0.75em Consolas, "Courier New", monospace !important;
-    text-align: center;
-    width: 70px;
-    height: 70px;
-    border: 1px solid #F0F0FF;
-    background: #FCFCFC;
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-}
-
-button.search-tab-button-active
-{
-    font: 0.75em Consolas, "Courier New", monospace !important;
-    text-align: center;
-    width: 70px;
-    height: 70px;
-    border: 1px solid #1376BC;
-    background: #FCFCFC;
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-}
-
 button.tab-button-off,
 button.show-keys-button-off,
 button.button-enabled
@@ -681,9 +641,8 @@ input::-moz-placeholder
     overflow-y: auto;
     border: 1px solid #DDDDDD;
     border-radius: 0px;
-    font: 0.75em Consolas;
     text-align: left;
-    height: 16em;
+    height: 12em;
     max-height: 16em;
 }
 
@@ -758,6 +717,49 @@ input::-moz-placeholder
     font: normal 1em Consolas, "Courier New", monospace !important;
 }
 
+.span-search-dn
+{
+	font: 0.75em Consolas, "Courier New", monospace !important;	
+}
+button.search-dn
+{
+    font: 0.75em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    width: unset;
+    min-width: 14.375em;
+    height: unset;
+    border: 0;
+    background: #EEEEFE;
+    margin-bottom: 1px;
+    padding: 0;
+    opacity: 1;
+}
+
+button.search-tab-button
+{
+    font: 0.75em Consolas, "Courier New", monospace !important;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #F0F0FF;
+    background: #FCFCFC;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+}
+
+button.search-tab-button-active
+{
+    font: 0.75em Consolas, "Courier New", monospace !important;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #1376BC;
+    background: #FCFCFC;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+}
 
 #ui-datepicker-div
 {
@@ -770,7 +772,7 @@ input::-moz-placeholder
 
 td
 {
-    vertical-align: bottom;
+/*     vertical-align: bottom; */
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;	

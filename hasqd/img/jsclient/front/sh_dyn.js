@@ -112,7 +112,7 @@ function getBrowser()
             break;
             /*
             case 'opera':
-                                                                       version = ua.split('Version/')[1];
+                                                           version = ua.split('Version/')[1];
                 break;
             */
         case gBrowsers.OP_D.name:
