@@ -174,7 +174,7 @@ function widSetDefaultDb(hash)
 function widShowPwdGuessTime(d)
 {
     // Shows password guess time
-    var $Zxcvbn = $('#td_password_zxcvbn');
+    var $Zxcvbn = $('#span_password_zxcvbn');
     return (d) ? $Zxcvbn.html(d) : $Zxcvbn.empty();
 }
 
@@ -843,7 +843,7 @@ function widSetDataButtonClick()
 
 function widShowTokenDataLength(data)
 {
-    var $DataLength = $('#td_set_data_length');
+    var $DataLength = $('#span_data_length');
     $DataLength.empty();
 
     if (!data)

@@ -20,12 +20,12 @@ body
     outline: none;
 }
 
-/* *
+*
 {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;	
-} */
+}
 
 a:link,
 a:visited
@@ -395,16 +395,20 @@ table
 #input_file_upload
 {
     display: none;
-}		
+}	
+
+/* Master key area*/
+
 #table_master_key
 {
 	margin: auto;
+	width: 80%;
 	border: 0;
 }
 
 #table_master_key  tr:first-child  td
 {
-	width: 22em;
+	max-width: 22em;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -412,18 +416,24 @@ table
 #table_master_key tr:first-child td:first-child,
 #table_master_key tr:first-child td:last-child
 {
-	width: 2em; 
-}
+	width: 2em;
+	vertical-align: middle;
+} 
 
 #span_password_eye:hover
 {
     cursor: pointer;
 }
+#span_password_eye img
+{
+    width: 1em;
+	height: auto;
+}
 
 #input_password
 {
     font: normal 1em Consolas, "Courier New", monospace !important;
-    width: 100%;
+    width: 99%;
     margin: 0;
     border: 1px solid #DDDDDD;
     border-radius: 0;
@@ -435,6 +445,12 @@ table
 #input_password:focus
 {
     border: 1px solid #DDDDDD;
+}
+
+#span_password_zxcvbn
+{
+	text-align: left;
+	vertical-align: top;
 }
 
 input:required:valid
@@ -487,11 +503,6 @@ input::-moz-placeholder
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
-}
-
-#td_password_zxcvbn
-{
-	text-align: left;
 }
 
 /* END */
@@ -560,20 +571,28 @@ input::-moz-placeholder
 	width: 100%;
 }
 
+
+#table_set_data_button td:first-child,
+#table_set_data_button td:last-child
+{
+	text-align:left;
+	vertical-align:top;
+	width: 2em;
+}
+
 #table_set_data_button td
 {
 	padding: 0;
 }
 
-#td_set_data_length
+#span_data_length
 {
-	font: italic 10px Consolas, "Courier New", monospace !important;
-	width: 50px; 
+	font: italic 0.7em Consolas, "Courier New", monospace !important;
 	text-align:left;
 	vertical-align:top;	
 }
 
-#td_set_data_length:hover
+#span_data_length:hover
 {
 	cursor: pointer;
 }
@@ -1344,6 +1363,11 @@ textarea::-moz-placeholder
 		height: 60px; 
 		text-align: center;
 	}	
+
+	#table_title_area td:first-child
+	{
+	    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
+	}
 	
 	#span_logo img,
 	#span_info img,
@@ -1368,6 +1392,10 @@ textarea::-moz-placeholder
 		{
 			font: italic 0.65em Consolas, "Courier New", monospace !important;
 		}
+		#table_master_key 
+		{
+			width: 95%;
+		}		
 	}
 	
 	#input_password
@@ -1420,8 +1448,4 @@ textarea::-moz-placeholder
 		font: bold 1.3em Verdana !important;
 	}
 
-	#table_title_area td:first-child
-	{
-	    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
-	}
 }

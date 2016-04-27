@@ -1,10 +1,10 @@
 Critical things
 ---------------
 [A] Uvelichit razmery widgetov ma mobilnoj versii
-[A] is it possible to make "Guess time" clickable?
+DONE[A] is it possible to make "Guess time" clickable?
 [A] (obsudit) v glavnyh knopkah text bold
 [A] (obsudit) v glavnyh disabled knopkah text black (and bold?) - mozhet bg bolee blednyj
-[A] "lesa" - ramka na master key field
+DONE [A] "lesa" - ramka na master key field
 [A] (obsudit) FIXME rasskazat gde vyzovy
 [A] (obsudit) kakie page bg v pc i mob versijah? nuzhem li v mob versii bolee igrovoj fon?
 [A] glaz bolshoj ?

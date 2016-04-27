@@ -223,7 +223,7 @@ function widGetHTMLMasterKey()
     {
      r += '<td />\n';
         {
-            r += '<table id="table_master_key" border="1">\n';
+            r += '<table id="table_master_key" border="0">\n';
             {
                 r += '<tr>\n';
                 {
@@ -237,8 +237,9 @@ function widGetHTMLMasterKey()
              r += '</tr>\n';
                 r += '<tr>\n';
                 {
-                 r += '<td/>&nbsp';
-                 r += '<td id="td_password_zxcvbn" class="td-info"/>\n';
+                 r += '<td/>\u200c';
+                 r += '<td class="td-info"/>\n';
+				 r += widGetHTMLMessageBox(widGetHTMLSpan('span_password_zxcvbn'));
                  r += '<td/>\n';
                 }
              r += '</tr>\n';
@@ -354,10 +355,10 @@ function widGetHTMLSetDataTab()
         {
             r += '<table id="table_set_data_button">';
             r += '<tr>';
-         r += '<td id="td_set_data_length"/>';
-
-            r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
-         r += '<td style="width: 50px;"/>';
+				r += '<td class="td-info"/>';
+					r += widGetHTMLMessageBox(widGetHTMLSpan('span_data_length'));
+				r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+				r += '<td/>';
          r += '</tr>';
          r += '</table>';
         }
