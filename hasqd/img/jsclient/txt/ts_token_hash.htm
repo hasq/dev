@@ -1,7 +1,6 @@
 <p style="text-align: left;">
-FIXME 
-In this implementation hash is calculated applying 
-in sequence two functions: SHA2-256 and MD5.
+This implementation calculates the hash by applying
+two functions in sequence: SHA2-256 and MD5.
 The result is equivalent to the following unix command:
 <br/><br/><b>
 sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum

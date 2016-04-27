@@ -2,31 +2,30 @@ Critical things
 ---------------
 [A] Uvelichit razmery widgetov ma mobilnoj versii
 [A] is it possible to make "Guess time" clickable?
-DONE click everywhere ili Esc
+[A] (obsudit) v glavnyh knopkah text bold
+[A] (obsudit) v glavnyh disabled knopkah text black (and bold?) - mozhet bg bolee blednyj
+[A] "lesa" - ramka na master key field
+[A] (obsudit) FIXME rasskazat gde vyzovy
+[A] (obsudit) kakie page bg v pc i mob versijah? nuzhem li v mob versii bolee igrovoj fon?
 
 Major things
 ------------
-[B] (ab) Command SKC
-[B] (ab) engSearchClick remove return dates; remove storing dates in gSearch
-[A] (ab) Lookup resize - njuans!
+[A] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 [A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
 [A] (om) helps - texts
-DONE block link make open in a new window
+[A] (ab) Safari 8 tested - dobavit v spisok
+[B] (ab) Command SKC
+[B] (ab) engSearchClick remove return dates; remove storing dates in gSearch
 [C] Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
 [C] js files optimization - analisys and recommendations
-DONE ubrat alert "fail to connect" if(0)
-[A] (ab) Safari 8 tested - dobavit v spisok
 
 Minor things
 ------------
-[C] Mobile version all must be darker
+[B] (?) all icon pictures lines darker
+[C] (?) Mobile version all must be darker
 [C] unbalanced tree - firefox warning - find out
 [C] validate via generate.bat (nodejs)
 [C] fix makefile to remove action if not necessary
-[B] all icon pictures lines darker
 [C] drugie jazyki
 
-Sergey comments
----------------
-[A] (?) nuzhen li resize na razdviganie i sdviganie - nuzhno bolee podrobnyj analiz
 
