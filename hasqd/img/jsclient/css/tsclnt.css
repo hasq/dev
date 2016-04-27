@@ -271,7 +271,7 @@ table
 	vertical-align: middle;
     font: bold 1.9em Verdana !important;
     color: #1376BC;
-    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #83F6AC;
+    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
 #table_title_area td:first-child a
@@ -1418,5 +1418,10 @@ textarea::-moz-placeholder
 	.td-subtitle
 	{
 		font: bold 1.3em Verdana !important;
+	}
+
+	#table_title_area td:first-child
+	{
+	    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
 	}
 }
