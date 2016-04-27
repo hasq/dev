@@ -1401,7 +1401,7 @@ textarea::-moz-placeholder
 
 /* Mobile version
 ----------------------------------*/
-@media all and (min-resolution: 100dpi), (max-width: 1000px)
+@media all and (min-resolution: 121dpi), (max-width: 1000px)
 {
 	body
 	{
