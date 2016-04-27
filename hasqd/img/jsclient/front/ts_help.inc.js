@@ -39,11 +39,6 @@ function gHelp(x)
         INCLUDEFILE
         txt/ts_master_key.htm
     }
-    else if (x == 'welcome_to_tokenswap')
-    {
-        INCLUDEFILE
-        txt/ts_welcome_to_tokenswap.htm
-    }
     else if (x == 'token_data')
     {
         INCLUDEFILE

@@ -643,6 +643,40 @@ function widPasswordEyeClick($obj)
     }
 }
 
+function widHideOnclick($Obj)
+{
+    $Obj.toggleClass('td-visible td-hidden');
+    $Inits = $('#td_search_inits');
+    $Results = $('#td_search_results');
+    $Div = $('.div-overflow');
+
+    var tdWidth = $Results.innerWidth();
+    var initsWidth = $Inits.innerWidth();
+
+    if ( $Obj.hasClass('td-visible') )
+    {
+     //to unhide;
+        $Obj.html('>');
+        $Inits.css('display', 'inline-block');
+        var decW = tdWidth - initsWidth - 7;
+        $Div.innerWidth(decW);
+        console.log(decW);
+    }
+    else
+    {
+     //to hide;
+        $Obj.html('<');
+        $Inits.css('display', 'none');
+        var incW = tdWidth + initsWidth;
+        $Div.innerWidth(incW);
+        console.log(incW);
+    }
+
+    widSetDivOverflowSize();
+
+    return false;
+}
+
 function widButtonsTable()
 {
     var $Buttons = $('.tab-buttons-table');
@@ -1277,17 +1311,17 @@ function widBlockingReceive(keys)
 
 function widSetDivOverflowSize()
 {
-    var width = $('#td_search_tabs_content').innerWidth() - 6;
+    var width = $('#td_search_results').innerWidth() - 6;
 
     $('.div-overflow')
-    .css('width', width + 'px')
+    .width(width)
     .css('max-width', width + 'px');
 }
 
 function widSearchTab()
 {
     var $Table = $('#table_search_tab');
-    //var $Button = $Table.find('button').not('.search-tab-button').not('.search-tab-button-active');
+    //var $Button = $Table.find('button').not('.search-tabs-buttons').not('.search-tabs-buttons-active');
     var $Button = $('#button_search');
     var $Tabs = $('#div_tabs');
 
@@ -1335,8 +1369,8 @@ function widSearchResultsTabsClick($obj, tabId)
     var $AllButtons = $('#td_search_tabs_buttons button');
 
     $Tabs.tabs('option', 'active', tabId);
-    $AllButtons.addClass('search-tab-button').removeClass('search-tab-button-active');
-    $obj.addClass('search-tab-button-active').removeClass('search-tab-button');
+    $AllButtons.addClass('search-tabs-buttons').removeClass('search-tabs-buttons-active');
+    $obj.addClass('search-tabs-buttons-active').removeClass('search-tabs-buttons');
 }
 
 //  1   Set button according to g_searchOn

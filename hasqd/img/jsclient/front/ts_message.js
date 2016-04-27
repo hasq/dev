@@ -7,15 +7,15 @@ var gMsg =
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
     changeMasterKey : 'Master key does not match token',
-    changeTokenName : 'FIXME Change token name',
-    createToken : 'FIXME Create token first',
+    changeTokenName : 'FIXME Change token name (kogda knopka Release disabled po prichine statusa OK)',
+    createToken : 'FIXME Create token first (kogda generirujutsa kluchi dlya nesushestvujushego tokena)',
     dataNotChanged : 'Token data has not been changed',
     enterDate : 'Date "From" must be earlier than "To"',
     enterMasterKey : 'Master key is absent',
     enterTokenName : 'Token is not specified',
     noRecs : 'No such record',
     recordParseError : 'An error occurred while processing record',
-    tokenIsLocked : 'FIXME Token is locked',
+    ///tokenIsLocked : 'FIXME Token is locked',
 
     fileLoadError : 'File reading error: maybe too big or not accesible.' +
  'Use linux commnd<br/><br/><b>'+

@@ -127,7 +127,7 @@ function processDone()
 {
     gSearch.isOn = false;
     gSearch.o.progr.button(gSearch.isOn);
-    console.log("processDone : " + gSearch.isOn);
+    ///console.log("processDone : " + gSearch.isOn);
 }
 
 function processDates()
@@ -139,7 +139,7 @@ function processDates()
 
     var name = o.sliceDate.path(++o.number);
 
-    console.log("processDates : " + name);
+    ///console.log("processDates : " + name);
 
     var useCache = true;
     if (useCache)

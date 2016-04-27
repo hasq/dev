@@ -1,26 +1,26 @@
 Critical things
 ---------------
-[A] Uvelichit razmery widgetov ma mobilnoj versii
-[A] (obsudit) v glavnyh knopkah text bold
-[A] (obsudit) v glavnyh disabled knopkah text black (and bold?) - mozhet bg bolee blednyj
-[A] (obsudit) FIXME rasskazat gde vyzovy
+DONE [A] Uvelichit razmery widgetov ma mobilnoj versii
+DONE [A] (obsudit) v glavnyh knopkah text bold
+DONE [A] (obsudit) v glavnyh disabled knopkah text black (and bold?) - mozhet bg bolee blednyj
+DONE [A] (obsudit) FIXME rasskazat gde vyzovy
 [A] (obsudit) kakie page bg v pc i mob versijah? nuzhem li v mob versii bolee igrovoj fon?
 
 Major things
 ------------
 [A] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 [A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
-[A] (om) helps - texts
-[A] (ab) Safari 8 tested - dobavit v spisok
+[A] (om) helps - texts and FIXME's
+DONE [A] (ab) Safari 8 tested - dobavit v spisok
 [B] (ab) Command SKC
-[B] (ab) engSearchClick remove return dates; remove storing dates in gSearch
-[C] Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
-[C] js files optimization - analisys and recommendations
+[B] engSearchClick remove return dates; remove storing dates in gSearch
 
 Minor things
 ------------
 [B] (?) all icon pictures lines darker
 [C] (?) Mobile version all must be darker
+[C] Firefox: "Error in parsing value for 'max-width'.  Declaration dropped."
+[C] js files optimization - analisys and recommendations
 [C] unbalanced tree - firefox warning - find out
 [C] validate via generate.bat (nodejs)
 [C] fix makefile to remove action if not necessary

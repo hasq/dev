@@ -63,7 +63,7 @@ gBrowsers.MX_M = {plat: 'mobile', name: 'maxthon', verFull: '', verShort: ''};
 gBrowsers.OP_D = {plat: 'desktop', name: 'opera', verFull: '36.0.2130.65', verShort: '36'};
 gBrowsers.OP_M = {plat: 'mobile', name: 'opera', verFull: '36.1.2126.102083', verShort: '36'};
 gBrowsers.SF_D = {plat: 'desktop', name: 'safari', verFull: '9.1', verShort: '9'};
-gBrowsers.SF_M = {plat: 'mobile', name: 'safari', verFull: '9.1', verShort: '9'};
+gBrowsers.SF_M = {plat: 'mobile', name: 'safari', verFull: '8', verShort: '8'};
 gBrowsers.YA_D = {plat: 'desktop', name: 'yabrowser', verFull: '16.3', verShort: '16'};
 gBrowsers.YA_M = {plat: 'mobile', name: 'yabrowser', verFull: '15.9', verShort: '15'};
 gBrowsers.UNKNOWN = {plat: 'unknown', name: 'unknown', verFull: '', verShort: ''};
@@ -112,7 +112,7 @@ function getBrowser()
             break;
             /*
             case 'opera':
-                                                                       version = ua.split('Version/')[1];
+                                                                                   version = ua.split('Version/')[1];
                 break;
             */
         case gBrowsers.OP_D.name:
