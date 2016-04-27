@@ -69,12 +69,12 @@ function gHelp(x)
         INCLUDEFILE
         txt/ts_search_for_tokens.htm
     }
-	else if (x == 'span_password_zxcvbn')
+    else if (x == 'span_password_zxcvbn')
     {
         INCLUDEFILE
         txt/ts_zxcvbn.htm
     }
-	else if (x == 'span_data_length')
+    else if (x == 'span_data_length')
     {
         INCLUDEFILE
         txt/ts_data_length.htm

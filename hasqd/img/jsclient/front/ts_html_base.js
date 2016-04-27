@@ -239,7 +239,7 @@ function widGetHTMLMasterKey()
                 {
                  r += '<td/>\u200c';
                  r += '<td class="td-info"/>\n';
-				 r += widGetHTMLMessageBox(widGetHTMLSpan('span_password_zxcvbn'));
+                    r += widGetHTMLMessageBox(widGetHTMLSpan('span_password_zxcvbn'));
                  r += '<td/>\n';
                 }
              r += '</tr>\n';
@@ -355,10 +355,10 @@ function widGetHTMLSetDataTab()
         {
             r += '<table id="table_set_data_button">';
             r += '<tr>';
-				r += '<td class="td-info"/>';
-					r += widGetHTMLMessageBox(widGetHTMLSpan('span_data_length'));
-				r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
-				r += '<td/>';
+             r += '<td class="td-info"/>';
+            r += widGetHTMLMessageBox(widGetHTMLSpan('span_data_length'));
+            r += widGetHTMLTrTdButton(0, 'button_set_data', 'button-disabled', 'widSetDataButtonClick($(this))', imgBtnData);
+             r += '<td/>';
          r += '</tr>';
          r += '</table>';
         }
@@ -477,7 +477,7 @@ function widGetHTMLSearchInitialData()
            r += '</tr>\n';
             r += '<tr>\n';
             {
-               r += '<td style="height: 80px; vertical-align: bottom;" colspan="2"/>\n';
+               r += '<td id="td_search_button" colspan="2"/>\n';
                 {
                     r += '<button id="button_search" class="show-keys-button-off" '
                          + 'onclick="return widSearchButtonClick($(this));">'
@@ -485,8 +485,6 @@ function widGetHTMLSearchInitialData()
                 }
             }
            r += '</tr>\n';
-           r += '</tr>\n';
-               r += '<td colspan="2"/>\u200c\n';
             r += '<tr>\n';
             {
              r += '<td id="td_search_block" colspan="2"/>\n';

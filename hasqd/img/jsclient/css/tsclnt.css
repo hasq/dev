@@ -356,6 +356,7 @@ table
 
 #td_token_pic
 {
+	width: 1em;
 	text-align: right;
 	vertical-align: middle;
 }
@@ -437,9 +438,9 @@ table
     margin: 0;
     border: 1px solid #DDDDDD;
     border-radius: 0;
-/*     box-sizing: border-box;
+     box-sizing: border-box;
 	-webkit-box-sizing:border-box;
-	-moz-box-sizing: border-box; */
+	-moz-box-sizing: border-box;
 }
 
 #input_password:focus
@@ -505,9 +506,9 @@ input::-moz-placeholder
     text-overflow: ellipsis;
 }
 
-/* END */
-
-/* Main area - Start */
+/********************************/
+/********** Tabs area ***********/
+/********************************/
 
 #table_main_area
 {
@@ -544,6 +545,9 @@ input::-moz-placeholder
     padding: 3px;
 }
 
+/********************************/
+/********** Create tab **********/
+/********************************/
 #table_create_tab
 {
     width: 100%;
@@ -554,7 +558,9 @@ input::-moz-placeholder
 {
     padding: 3px 0 3px 3px;
 }
-
+/********************************/
+/*********** Data tab ***********/
+/********************************/
 #table_set_data_tab
 {
     width: 100%;
@@ -597,6 +603,9 @@ input::-moz-placeholder
 	cursor: pointer;
 }
 
+/********************************/
+/********* Show keys tab ********/
+/********************************/
 #table_show_keys_tab
 {
     width: 100%;
@@ -618,6 +627,10 @@ input::-moz-placeholder
     padding: 0 3px 0 3px;
 }
 
+/********************************/
+/******* Receive keys tab *******/
+/********************************/
+
 #table_receive_tab
 {
     width: 100%;
@@ -628,7 +641,9 @@ input::-moz-placeholder
 {
     padding: 3px 0 3px 3px;
 }
-
+/********************************/
+/********** Search tab **********/
+/********************************/
 #table_search_tab
 {
     width: 100%;
@@ -656,7 +671,7 @@ input::-moz-placeholder
 {
     vertical-align: top;
     padding: 3px 3px 3px 3px;
-    height: 200px;
+    height: 12.5em;
 }
 
 .div-overflow
@@ -717,14 +732,23 @@ input::-moz-placeholder
 	text-align: left;
 	width: 98%;
 	margin: 0px;
-/* 	box-sizing: border-box;
+ 	box-sizing: border-box;
     -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;	 */
+    -webkit-box-sizing: border-box;
+}
+
+#td_search_button
+{
+	height: 6.5em; 
+	vertical-align: bottom;
 }
 
 #td_search_block
 {
+	font: normal 1em Consolas, "Courier New", monospace !important;
+	height: 1.875em; 
 	text-align: left;
+	vertical-align: bottom;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -733,8 +757,16 @@ input::-moz-placeholder
 {
     font: normal 1em Consolas, "Courier New", monospace !important;
 }
-/* Main area - End */
 
+
+#ui-datepicker-div
+{
+    display: none;
+}
+
+/********************************/
+/************ Other *************/
+/********************************/
 
 td
 {
@@ -838,7 +870,7 @@ textarea::-moz-placeholder
 
 .td-info
 {
-    font: italic 1em Consolas, "Courier New", monospace !important;
+    font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     vertical-align: middle;
     border-radius: 0px;
@@ -856,7 +888,7 @@ textarea::-moz-placeholder
 .td-subtitle
 {
     text-align: center;
-    font: bold 1.2em Verdana !important;
+    font: bold 1.25em Verdana !important;
     color: #1376BC;
 }
 
@@ -864,7 +896,7 @@ textarea::-moz-placeholder
 {
     text-align: center;
     vertical-align: top;
-    font: bold 1.2em Verdana !important;
+    font: bold 1.1em Verdana !important;
     color: #009070;
 }
 
@@ -890,18 +922,6 @@ textarea::-moz-placeholder
 {
     text-align: center;
 }
-
-.welcome-p
-{
-    text-align: justify;
-    font: normal 16px Consolas, "Courier New", monospace !important;
-}
-
-#ui-datepicker-div
-{
-    display: none;
-}
-
 
 /*   cutted from jquery ui custom */
 
@@ -1443,9 +1463,9 @@ textarea::-moz-placeholder
 		font: italic 0.8em Consolas, "Courier New", monospace !important;
 	}
 	
-	.td-subtitle
+/* 	.td-subtitle
 	{
-		font: bold 1.3em Verdana !important;
-	}
+		font: bold 1.2em Verdana !important;
+	} */
 
 }
