@@ -1,10 +1,11 @@
 Critical things
 ---------------
+[A!!] Token name binary data
 [A!] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
-[A] (om) helps - texts
 [A] (ab) Command SKC
-[A] engSearchClick remove return dates; remove storing dates in gSearch
-[A!] Token name binary data
+
+[A] (om) engSearchClick remove return dates; remove storing dates in gSearch
+[A] (om) helps - texts
 
 Major things
 ------------
