@@ -3,6 +3,7 @@
 function ajxSendCommand(cmd, callback, logo)
 {
     logo.wait();
+ cmd = cmd.replace(/\u0025/g,'%25');
     $.post ('/', 'command=' + cmd, function (data)  {})
 
     .done
@@ -15,7 +16,7 @@ function ajxSendCommand(cmd, callback, logo)
     .fail
     (function ()
     {
-        callback('An error occurred while processing your request!');
+        callback('FAIL');
         logo.fail();
     })
 

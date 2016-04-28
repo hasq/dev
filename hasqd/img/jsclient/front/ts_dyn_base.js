@@ -772,7 +772,11 @@ function widCreateButtonClick()
         if (resp === gResponse.OK)
             return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
 
-        widModalWindow(gResponse[resp]);
+        if ( resp === 'FAIL' )
+            widModalWindow(gMsg.fail);
+        else
+            widModalWindow(gMsg.unexpected + gResponse[resp]);
+
         widReloadTokenInfo(tok);
     }
 
@@ -947,9 +951,6 @@ function widTabButtonClick($Obj, tabId)
     $Obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($Obj).toggleClass('tab-button-on tab-button-off');
     textArea($('#textarea_show_keys')).clear();
-
-    if ( $Obj.hasClass('tab-button-off') )
-        $Obj.mouseleave();
 
     var f;
     switch (+tabId)

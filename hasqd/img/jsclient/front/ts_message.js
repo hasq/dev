@@ -25,7 +25,9 @@ var gMsg =
     fileTooBig : 'File is too big. For big files use linux command<br/><br/><b>'+
       'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
-    fileZero : 'File is empty'
+    fileZero : 'File is empty',
+    fail: 'Server refused connection',
+    unexpected: 'Unexpected server reply : '
 };
 
 var gTooltip =
