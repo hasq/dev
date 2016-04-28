@@ -6,7 +6,7 @@ html
 body
 {
 	font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace;
-	background: #FCFCFC url("../img/bgfon.png");
+	background: #FCFCFC /*url("../img/bgfon.png")*/;
 	color: black;
 	width: 60%;
 	height: 100%;
@@ -1406,7 +1406,7 @@ textarea::-moz-placeholder
 	body
 	{
 		width: 95%;
-		background: #FEFEFA url("../img/bgfon.png");
+		background: #FEFEFA /*url("../img/bgfon.png")*/;
 	}
 
 	/* Title area */
