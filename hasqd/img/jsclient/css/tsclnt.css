@@ -6,7 +6,7 @@ html
 body
 {
 	font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace;
-	background: #FCFCFC /*url("../img/bgfon.png")*/;
+	background: #FEFEFA /*url("../img/bgfon.png")*/;
 	color: black;
 	width: 60%;
 	height: 100%;
@@ -30,7 +30,7 @@ body
 a:link,
 a:visited
 {
-    color: #1376BC;
+    color: #1937A1;
 }
 
 button
@@ -228,9 +228,9 @@ table
 #table_title_area td:first-child
 {
     text-align: left;
-	vertical-align: middle;
+    vertical-align: middle;
     font: bold 1.9em Verdana !important;
-    color: #1376BC;
+    color: #1937A1;
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
@@ -922,7 +922,7 @@ textarea::-moz-placeholder
 {
     text-align: center;
     font: bold 1.25em Verdana !important;
-    color: #1376BC;
+    color: #1937A1;
 }
 
 .td-tab-subtitle
