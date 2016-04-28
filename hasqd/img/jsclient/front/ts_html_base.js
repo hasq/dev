@@ -442,7 +442,7 @@ function widGetHTMLSearchTab()
         {
             r += '<td id="td_search_results"/>\n';
             r += widGetHTMLSearchResults();
-         r += '<td class="td-visible" onclick="widHideOnclick($(this))"/>>';
+         r += '<td class="td-visible" onclick="widHideOnclick()"/>>';
             r += widGetHTMLSearchInits();
         }
         r += '</tr>\n';

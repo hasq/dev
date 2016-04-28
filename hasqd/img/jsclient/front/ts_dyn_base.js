@@ -643,8 +643,9 @@ function widPasswordEyeClick($obj)
     }
 }
 
-function widHideOnclick($Obj)
+function widHideOnclick()
 {
+    $Obj = $('.td-visible, .td-hidden');
     $Obj.toggleClass('td-visible td-hidden');
     var $Inits = $('#td_search_inits');
     var $Results = $('#td_search_results');
@@ -1371,14 +1372,18 @@ function widSearchButtonClick()
     engSearchClick(fromDate, toDate, widSearchProgress);
 }
 
-function widSearchResultsTabsClick($obj, tabId)
+function widSearchResultsTabsClick($Obj, tabId)
 {
     var $Tabs = $('#div_search_result_tabs');
     var $AllButtons = $('#td_search_tabs_buttons button');
 
+    if ( $Obj.hasClass('search-tabs-buttons-active') )
+        widHideOnclick();
+
     $Tabs.tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tabs-buttons').removeClass('search-tabs-buttons-active');
-    $obj.addClass('search-tabs-buttons-active').removeClass('search-tabs-buttons');
+    $Obj.addClass('search-tabs-buttons-active').removeClass('search-tabs-buttons');
+
 }
 
 //  1   Set button according to g_searchOn
