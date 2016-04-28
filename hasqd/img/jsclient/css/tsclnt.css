@@ -489,10 +489,10 @@ input::-moz-placeholder
 
 #td_main_tabs_buttons
 {
-    width: 82px;
+    width: 1%;
     text-align: right;
     vertical-align: top;   
-    padding: 3px 3px;
+    padding: 3px 3px 3px 0;
 }
 
 #td_main_tabs_buttons table
@@ -516,7 +516,7 @@ input::-moz-placeholder
 
 #table_create_tab td
 {
-    padding: 3px 0 3px 3px;
+    padding: 3px 3px 3px 3px;
 }
 /********************************/
 /*********** Data tab ***********/
@@ -529,7 +529,7 @@ input::-moz-placeholder
 
 #table_set_data_tab td
 {
-    padding: 3px 0 3px 3px;
+    padding: 3px 3px 3px 3px;
 }
 
 #table_set_data_button
@@ -574,7 +574,7 @@ input::-moz-placeholder
 
 #table_show_keys_tab td
 {
-    padding: 3px 0 3px 3px;
+    padding: 3px 3px 3px 3px;
 }
 
 #td_show_keys_button table
@@ -599,7 +599,7 @@ input::-moz-placeholder
 
 #table_receive_tab td
 {
-    padding: 3px 0 3px 3px;
+    padding: 3px 3px 3px 3px;
 }
 /********************************/
 /********** Search tab **********/
@@ -612,14 +612,15 @@ input::-moz-placeholder
 
 #table_search_tab td
 {
-    padding: 3px 0 3px 0;
+    padding: 3px 3px 3px 3px;
 }
 
 #table_search_tab #td_search_tabs_buttons
 {
     vertical-align: top;
     padding: 0;
-    width: 76px;
+    /* width: 76px; */
+	width: 1%;
 }
 
 #td_search_tabs_buttons table td
@@ -627,46 +628,47 @@ input::-moz-placeholder
     padding: 3px;
 }
 
-#table_search_tab #td_search_results
-{
-    vertical-align: top;
-    padding: 3px 3px 3px 3px;
-    height: 12.5em;
-}
-
-.div-overflow
-{
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: auto;
-    border: 1px solid #DDDDDD;
-    border-radius: 0px;
-    text-align: left;
-    height: 12em;
-    max-height: 16em;
-}
-
 #div_search_result_tabs div
 {
     border: 0 solid #DDDDDD;
     background-color: white;
-    width: 100%;
+	height: 12em;
+    max-height: 100%;
+	max-width:100%;
+	padding: 0;
 }
 
-/* #table_search_tab #td_search_inits
-{
-    vertical-align: top;
-    padding: 3px 0 3px 3px; 
-	width: 9.5em;	
-} */
 
-#table_search_tab #td_search_inits
+#table_search_tab #td_search_results
 {
     vertical-align: top;
-    padding: 3px 0 3px 3px; 
-	width: 9.6em;	
+	padding: 3px;
+    height: 100%; /*12.5em;*/
+	min-width: 1px;
+}
+
+.div-overflow
+{
+    border-radius: 0px;
+    text-align: left;
+	padding: 0;
 	
-    border: 0 solid lime;
+	white-space: pre;
+	text-overflow:ellipsis; 
+	overflow: auto;
+	max-width:100%;
+}
+
+#td_search_inits
+{
+    vertical-align: top;
+	text-align: right;
+    padding: 3px 3px 3px 0; 
+	width: 9.625em;
+	min-width: 9.625em;
+	max-width: 9.625em;
+	
+    border: 0;
     overflow: hidden;
     position: relative;
 	
@@ -675,11 +677,33 @@ input::-moz-placeholder
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);	
 }
 
+
+#td_search_inits table
+{
+    table-layout: fixed;
+	text-align: center;
+	width: 100%;
+    border: 0;
+	padding: 3px 0 3px 0;
+}
+
+#td_search_inits table td
+{
+	padding: 3px 0 3px 0;
+}
+
 .td-visible,
 .td-hidden
 {
-	width: 0.625em;
-	vertical-align: bottom;
+	font: normal 1em Consolas, "Courier New", monospace !important;
+	width: 1em;
+	min-width: 1em;
+	vertical-align: middle;
+	padding: 3px;
+	border: 0px solid #eef;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;  
 }
 
 
@@ -687,15 +711,9 @@ input::-moz-placeholder
 .td-hidden:hover
 {
 	background-color: #eef;
+	background-position: right bottom;;
 }
 
-
-#td_search_inits table
-{
-    table-layout: fixed;
-	width: 100%;
-    border: 0;
-}
 
 #td_label_from_datepicker,
 #td_label_to_datepicker

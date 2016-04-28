@@ -646,30 +646,29 @@ function widPasswordEyeClick($obj)
 function widHideOnclick($Obj)
 {
     $Obj.toggleClass('td-visible td-hidden');
-    $Inits = $('#td_search_inits');
-    $Results = $('#td_search_results');
+    var $Inits = $('#td_search_inits');
+    var $Results = $('#td_search_results');
     $Div = $('.div-overflow');
+ //var $Div = $('#div_search_result_tabs');
 
     var tdWidth = $Results.innerWidth();
     var initsWidth = $Inits.innerWidth();
+ var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
     if ( $Obj.hasClass('td-visible') )
     {
-     //to unhide;
-        $Obj.html('>');
         $Inits.css('display', 'inline-block');
-        var decW = tdWidth - initsWidth - 7;
+        var decW = tdWidth - initsWidth - pdnLeft - pdnRight;
         $Div.innerWidth(decW);
-        console.log(decW);
+        $Obj.html('>');
     }
     else
     {
-     //to hide;
-        $Obj.html('<');
         $Inits.css('display', 'none');
-        var incW = tdWidth + initsWidth;
-        $Div.innerWidth(incW);
-        console.log(incW);
+        //var incW = tdWidth + initsWidth;
+        $Div.innerWidth('100%');
+        $Obj.html('<');
     }
 
     widSetDivOverflowSize();
@@ -1311,11 +1310,20 @@ function widBlockingReceive(keys)
 
 function widSetDivOverflowSize()
 {
-    var width = $('#td_search_results').innerWidth() - 6;
+    var $Td = $('#td_search_results');
+    var $Div = $('.div-overflow');
+ //var $Div = $('#div_search_result_tabs');
+ var pdnLeft = +$Td.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Td.css('padding-right').replace(/[px]/g, '');
 
-    $('.div-overflow')
-    .width(width)
-    .css('max-width', width + 'px');
+    var tdWidth = $Td.innerWidth() - pdnLeft - pdnRight;
+    var divWidth = $Div.innerWidth();
+
+ //console.log('td_search_result: ' + tdWidth);
+ //console.log('.div-overflow: ' + divWidth);
+
+    $Div.css('max-width', tdWidth + 'px');
+
 }
 
 function widSearchTab()
