@@ -30,7 +30,7 @@ body
 a:link,
 a:visited
 {
-    color: #1937A1;
+    color: #1957A1;
 }
 
 button
@@ -922,7 +922,7 @@ textarea::-moz-placeholder
 {
     text-align: center;
     font: bold 1.25em Verdana !important;
-    color: #1937A1;
+    color: #1957A1;
 }
 
 .td-tab-subtitle
