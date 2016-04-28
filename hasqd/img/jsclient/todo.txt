@@ -1,14 +1,13 @@
 Critical things
 ---------------
-[A] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
-[A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
+[A!] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
 [A] (om) helps - texts
-na mob versii knopka "mine" delaet to zhe chto i ">"
+[A] (ab) Command SKC
+[A] engSearchClick remove return dates; remove storing dates in gSearch
+[A!] Token name binary data
 
 Major things
 ------------
-[B] (ab) Command SKC
-[B] engSearchClick remove return dates; remove storing dates in gSearch
 [B] kakie page bg v pc i mob versijah? nuzhem li v mob versii bolee igrovoj fon?
 
 Minor things
@@ -21,5 +20,7 @@ Minor things
 [C] validate via generate.bat (nodejs)
 [C] fix makefile to remove action if not necessary
 [C] drugie jazyki
+[C] (ab) mob versia button hover remains
+[C] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 
 
