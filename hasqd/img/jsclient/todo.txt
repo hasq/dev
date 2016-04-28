@@ -3,6 +3,7 @@ Critical things
 [A] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 [A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
 [A] (om) helps - texts and FIXME's
+na mob versii knopka "mine" delaet to zhe chto i ">"
 
 Major things
 ------------
