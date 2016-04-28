@@ -2,7 +2,7 @@
 
 function textArea($textarea)
 {
-    var obj =
+    var Obj =
     {
         add : function (data)
         {
@@ -25,7 +25,7 @@ function textArea($textarea)
         }
     }
 
-    return obj;
+    return Obj;
 }
 
 
@@ -145,14 +145,14 @@ function widModalWindow(msg, func)
     $Window.find('p').html(msg);
 }
 
-function widHelpMessageBox ($obj)
+function widHelpMessageBox ($Obj)
 {
-    var str = $obj.html();
+    var str = $Obj.html();
 
     if (str[0] !== '<')
      str = str.replace(/\s/g, '_').replace(/[^A-Za-z09_]/g, '').toLowerCase();
         else
-            str = $obj.find('span').attr('id');
+            str = $Obj.find('span').attr('id');
 
     return widModalWindow(gHelp(str));
 }
@@ -215,7 +215,7 @@ function widShowTokenState() // Shows message or image about tokens existense.
     .removeProp('title')
     .hide();
 
-    var obj =
+    var Obj =
     {
         show : function (d)
         {
@@ -239,7 +239,7 @@ function widShowTokenState() // Shows message or image about tokens existense.
         }
     }
 
-    return obj;
+    return Obj;
 }
 
 function widShowLog(text)
@@ -623,11 +623,11 @@ function widPasswordOninput()
     widToggleUI(gTokInfo, gPassword);
 }
 
-function widPasswordEyeClick($obj)
+function widPasswordEyeClick($Obj)
 {
     //shows/hides passwords by click;
     var $PwdInp = $('#input_password');
-    var $Eye = $obj.find('img');
+    var $Eye = $Obj.find('img');
 
     if ($PwdInp.attr('type') == 'text')
     {
@@ -941,12 +941,15 @@ function widShowKeysTab()
     return retObj;
 }
 
-function widTabButtonClick($obj, tabId)
+function widTabButtonClick($Obj, tabId)
 {
     widPasswordOninput();
-    $obj.toggleClass('tab-button-on tab-button-off');
-    $('.tab-button-on').not($obj).toggleClass('tab-button-on tab-button-off');
+    $Obj.toggleClass('tab-button-on tab-button-off');
+    $('.tab-button-on').not($Obj).toggleClass('tab-button-on tab-button-off');
     textArea($('#textarea_show_keys')).clear();
+
+    if ( $Obj.hasClass('tab-button-off') )
+        $Obj.mouseleave();
 
     var f;
     switch (+tabId)
@@ -958,27 +961,27 @@ function widTabButtonClick($obj, tabId)
     }
 
     if (typeof gTokInfo.state === 'undefined')
-        return ($obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
+        return ($Obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
 
     if (gTokInfo.state === gResponse.IDX_NODN)
-        return ($obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
+        return ($Obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
 
-    return ($obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
+    return ($Obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
 }
 
-function widShowInstantButtonClick($obj)
+function widShowInstantButtonClick($Obj)
 {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
 
     textArea($Keys).clear();
-    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
+    $('.show-keys-button-on').not($Obj).toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-disabled'))
+    if ($Obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('show-keys-button-on'))
-            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
+        if ($Obj.hasClass('show-keys-button-on'))
+            return $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
             return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
@@ -999,9 +1002,9 @@ function widShowInstantButtonClick($obj)
             return widModalWindow(gMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
-    $obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('show-keys-button-on'))
+    if ($Obj.hasClass('show-keys-button-on'))
     {
         var k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
         var k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1018,19 +1021,19 @@ function widShowInstantButtonClick($obj)
     }
 }
 
-function widShowOnHoldButtonClick($obj)
+function widShowOnHoldButtonClick($Obj)
 {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
 
     textArea($Keys).clear();
-    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
+    $('.show-keys-button-on').not($Obj).toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-disabled'))
+    if ($Obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('show-keys-button-on'))
-            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
+        if ($Obj.hasClass('show-keys-button-on'))
+            return $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
             return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
@@ -1045,9 +1048,9 @@ function widShowOnHoldButtonClick($obj)
             return widModalWindow(gMsg.changeMasterKey, function () { $PwdInp.focus() });
     }
 
-    $obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('show-keys-button-on'))
+    if ($Obj.hasClass('show-keys-button-on'))
     {
         if (gTokInfo.state === 'OK')
         {
@@ -1068,19 +1071,19 @@ function widShowOnHoldButtonClick($obj)
     }
 }
 
-function widShowReleaseButtonClick($obj)
+function widShowReleaseButtonClick($Obj)
 {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
 
     textArea($Keys).clear();
-    $('.show-keys-button-on').not($obj).toggleClass('show-keys-button-on show-keys-button-off');
+    $('.show-keys-button-on').not($Obj).toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('button-disabled'))
+    if ($Obj.hasClass('button-disabled'))
     {
-        if ($obj.hasClass('show-keys-button-on'))
-            return $obj.toggleClass('show-keys-button-on show-keys-button-off');
+        if ($Obj.hasClass('show-keys-button-on'))
+            return $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
         if (typeof gTokInfo.state === 'undefined')
             return widModalWindow(gMsg.enterTokenName, function () { $TokName.focus() });
@@ -1098,9 +1101,9 @@ function widShowReleaseButtonClick($obj)
             return widModalWindow(gMsg.changeTokenName);
     }
 
-    $obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
 
-    if ($obj.hasClass('show-keys-button-on'))
+    if ($Obj.hasClass('show-keys-button-on'))
     {
         var k;
         var prCode;
