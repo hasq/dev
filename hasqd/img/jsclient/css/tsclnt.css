@@ -81,8 +81,9 @@ button.tab-button-on:hover
     0% {}
     50%  
     {
-        background:#EEEEFE; 
-        border-radius: 15%;
+        /* background:#EEEEFE; */
+        background: rgba(200,200,254,0.2);
+        border-radius: 8px;
     }
     100% {}
 }
@@ -95,7 +96,7 @@ button.button-enabled:hover
 {
     /* background: #EEEEFE; */
     cursor: pointer;
-    animation: flash 400ms
+    animation: flash 500ms
 }
 
 button.tab-button-off:active:hover,
@@ -104,7 +105,7 @@ button.show-keys-button-off:active:hover,
 button.show-keys-button-on:active:hover
 {
     /* background: #20B2AA; */
-    border-radius: 20%;
+    border-radius: 8px;
 }
 
 button.button-disabled
