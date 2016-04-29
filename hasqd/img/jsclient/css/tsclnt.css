@@ -255,27 +255,18 @@ table
 
 #table_title_area td:not(:first-child)
 {
-    width: 30px; 
-	height: 30px; 
+    width: 1.5em; 
+	height: auto; 
 	text-align: center;
+	padding: 0;
 }
 
-#span_logo img
-{
-    width: 28px;
-    height: 28px;
-}
-
-#span_info img
-{
-    width : 28px;
-    height: 28px;
-}
-
+#span_logo img,
+#span_info img,
 #span_shield img
 {
-	width: 28px;
-    height: 28px;
+	width: 1.5em;
+    height: auto;
 }
 
 /* Init data area*/
@@ -1464,11 +1455,17 @@ textarea::-moz-placeholder
 	    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
 	}
 	
+	#table_title_area td:not(:first-child)
+	{
+		width: 3em; 
+		height: auto; 
+	}
+	
 	#span_logo img,
 	#span_info img,
 	#span_shield img
 	{
-		width: 48px;
+		width: 3em;
 		height: auto;
 	}
 	
@@ -1498,14 +1495,6 @@ textarea::-moz-placeholder
 		font: normal 1.2em Consolas, "Courier New", monospace !important;
 	}
 	
-/* 	#td_reload_button
-	{
-		width: 2em;
-	} */
-	#span_reload img
-	{
-		width: 2em;
-	}
 	
 	#span_reload img
 	{
