@@ -5,10 +5,11 @@ DONE [A!!] Token name binary data
 [A] (ab) Command SKC
 
 [A] (om) engSearchClick remove return dates; remove storing dates in gSearch
-[A] (om) helps - texts
+DONE [A] (om) helps - texts
 
 Major things
 ------------
+[B] derganie knopki zamenit na sprite
 [C] (ab) mob versia button hover remains
 [C] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 
