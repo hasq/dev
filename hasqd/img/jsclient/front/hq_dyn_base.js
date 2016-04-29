@@ -250,7 +250,7 @@ function widTokenHashOninput()
 
 function widShowRecordsTabLog(d)
 {
-    var $obj = $('#' + 'records_log_pre');
+    var $obj = $('#' + 'div_records_log');
     if (arguments.length == 0)
         $obj.html('&nbsp');
     else

@@ -200,8 +200,10 @@ function widShowTokenHash(dn)
     // Shows hashed value of token (if the value is not a default hash)
     var $TokHash = $('#td_token_hash');
 
-    if (!dn)
+    if (arguments.length == 0)
         return $TokHash.empty();
+    else if (dn === null)
+        return $TokHash.html(gMsg.badTokenName);
 
     $TokHash.html(engGetTokenHash(dn, gCurrentDB.hash));
 }
@@ -453,7 +455,21 @@ function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
     var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
 
     if (!engIsAsciiOrLF(dnOrRaw))
-        return widModalWindow(gMsg.nonASCII, function() { $Obj.focus()});
+    {
+        widEmptyTab().show();
+        widShowTokenHash(null);
+
+        if ( !gNonASCII )
+        {
+            gNonASCII = true;
+            $Obj.blur();
+            return widModalWindow(gMsg.nonASCII, function() { $Obj.focus()});
+        }
+
+        return;
+    }
+
+    gNonASCII = false;
 
     delay = +delay || 0;
     var tok = engGetTokenObj(engGetClearData(dnOrRaw));
@@ -552,7 +568,7 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     {
         widShowTokenName(tok);
         widTokenTextRO(false);
-     widTurnOffFileButton(); ///***
+        widTurnOffFileButton();
     }
 
     widShowTokenHash(tok.s);
@@ -643,39 +659,6 @@ function widPasswordEyeClick($Obj)
     }
 }
 
-function widHideOnclick()
-{
-    $Obj = $('.td-visible, .td-hidden');
-    $Obj.toggleClass('td-visible td-hidden');
-    var $Inits = $('#td_search_inits');
-    var $Results = $('#td_search_results');
-    $Div = $('.div-overflow');
- //var $Div = $('#div_search_result_tabs');
-
-    var tdWidth = $Results.innerWidth();
-    var initsWidth = $Inits.innerWidth();
- var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
- var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
-
-    if ( $Obj.hasClass('td-visible') )
-    {
-        $Inits.css('display', 'inline-block');
-        var decW = tdWidth - initsWidth - pdnLeft - pdnRight;
-        $Div.innerWidth(decW);
-        $Obj.html('>');
-    }
-    else
-    {
-        $Inits.css('display', 'none');
-        //var incW = tdWidth + initsWidth;
-        $Div.innerWidth('100%');
-        $Obj.html('<');
-    }
-
-    widSetDivOverflowSize();
-
-    return false;
-}
 
 function widButtonsTable()
 {
@@ -702,6 +685,10 @@ function widEmptyTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 0);
+            widShowTokenState();
+            widShowPwdInfo();
+            widShowTokenHash();
+            widShowTokenDataLength();
          ///$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
         },
         isOn : function ()
@@ -1313,24 +1300,6 @@ function widBlockingReceive(keys)
     engNcAdd(cb, gCurrentDB.name, keys, null);
 }
 
-function widSetDivOverflowSize()
-{
-    var $Td = $('#td_search_results');
-    var $Div = $('.div-overflow');
- //var $Div = $('#div_search_result_tabs');
- var pdnLeft = +$Td.css('padding-left').replace(/[px]/g, '');
- var pdnRight = +$Td.css('padding-right').replace(/[px]/g, '');
-
-    var tdWidth = $Td.innerWidth() - pdnLeft - pdnRight;
-    var divWidth = $Div.innerWidth();
-
- //console.log('td_search_result: ' + tdWidth);
- //console.log('.div-overflow: ' + divWidth);
-
-    $Div.css('max-width', tdWidth + 'px');
-
-}
-
 function widSearchTab()
 {
     var $Table = $('#table_search_tab');
@@ -1390,10 +1359,60 @@ function widSearchResultsTabsClick($Obj, tabId)
 
 }
 
+
+function widSetDivOverflowSize()
+{
+    var $Results = $('#td_search_results');
+    var $Div = $('.div-overflow');
+
+ var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
+
+    var tdWidth = $Results.innerWidth() - pdnLeft - pdnRight;
+    var divWidth = $Div.innerWidth();
+
+    $Div.css('max-width', tdWidth + 'px');
+}
+
+function widHideOnclick()
+{
+    $Obj = $('.td-visible, .td-hidden');
+    $Obj.toggleClass('td-visible td-hidden');
+    var $Inits = $('#td_search_inits');
+    var $Results = $('#td_search_results');
+    $Div = $('.div-overflow');
+
+    var tdWidth = $Results.innerWidth();
+    var initsWidth = $Inits.innerWidth();
+ var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
+
+    if ( $Obj.hasClass('td-visible') )
+    {
+        $Inits.css('display', 'inline-block');
+        var decW = tdWidth - initsWidth - pdnLeft - pdnRight;
+        $Div.innerWidth(decW);
+        $Obj.html('>');
+    }
+    else
+    {
+        $Inits.css('display', 'none');
+        var incW = tdWidth + initsWidth;
+        $Div.innerWidth('100%');
+        $Obj.html('<');
+    }
+
+    widSetDivOverflowSize();
+
+    return false;
+}
+
+
 //  1   Set button according to g_searchOn
 //  2   Show current file
 //  3   Update results
 var widSearchProgress = {};
+
 
 widSearchProgress.button = function(on)
 {
@@ -1469,7 +1488,7 @@ function widSearchUpdate()
 
         xs = '<button class="search-dn" onclick="widDnSelect(\'' + window.btoa(xs) + '\')">' + xs + '</button>';
 
-        var xn = '' + x.n +' ';
+        var xn = '' + x.n + ' ';
         ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )

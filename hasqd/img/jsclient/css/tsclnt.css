@@ -607,6 +607,7 @@ input::-moz-placeholder
 #table_search_tab
 {
     width: 100%;
+	/* table-layout:fixed; */
     border: 0;
 }
 
@@ -628,6 +629,19 @@ input::-moz-placeholder
     padding: 3px;
 }
 
+#td_search_results
+{
+    vertical-align: top;
+	padding: 3px;
+    height: 12.5em;
+	min-width: 1px;
+}
+
+#div_search_result_tabs
+{
+	vertical-align: top;
+}
+
 #div_search_result_tabs div
 {
     border: 0 solid #DDDDDD;
@@ -638,20 +652,12 @@ input::-moz-placeholder
 	padding: 0;
 }
 
-
-#table_search_tab #td_search_results
-{
-    vertical-align: top;
-	padding: 3px;
-    height: 100%; /*12.5em;*/
-	min-width: 1px;
-}
-
 .div-overflow
 {
     border-radius: 0px;
     text-align: left;
 	padding: 0;
+	height: 100%; /*12.5em;*/
 	
 	white-space: pre;
 	overflow: auto;
@@ -662,7 +668,8 @@ input::-moz-placeholder
 {
     vertical-align: top;
 	text-align: right;
-    padding: 3px 3px 3px 0; 
+    padding: 3px 3px 3px 0;
+	height: 100%; /*12.5em;*/
 	width: 9.625em;
 	min-width: 9.625em;
 	max-width: 9.625em;

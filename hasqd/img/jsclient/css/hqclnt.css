@@ -12,6 +12,13 @@ html {
 	overflow-y: scroll;
 }
 
+*
+{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;	
+}
+
 select {
 	width: 200px;
 }
@@ -251,8 +258,18 @@ textarea::-moz-placeholder
     vertical-align: bottom;
 }
 
-#div_tokens_log
+#div_tokens_log,
+#div_records_log
 {
 	font: italic 12px Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
+}
+
+@media all and (min-resolution: 121dpi), (max-width: 900px)
+{
+	body
+	{
+		width: 95%;
+		background: #FEFEFA /*url("../img/bgfon.png")*/;
+	}
 }

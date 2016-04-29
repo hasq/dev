@@ -3,6 +3,7 @@
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
+    badTokenName: 'Bad token name',
     nonASCII : 'Warning: this data seems binary; please use file instead',
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',

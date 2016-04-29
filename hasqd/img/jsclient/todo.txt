@@ -1,6 +1,6 @@
 Critical things
 ---------------
-[A!!] Token name binary data
+DONE [A!!] Token name binary data
 [A!] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
 [A] (ab) Command SKC
 

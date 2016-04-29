@@ -435,7 +435,7 @@ function widGetHTMLRecordsTab()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
-    r += '<pre id="records_log_pre">&nbsp;' + '</pre>\n';
+    r += '<div id="div_records_log">&nbsp;' + '</div>\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';

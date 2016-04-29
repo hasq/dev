@@ -5,6 +5,7 @@ var gMaxFileSize = 10000000;
 var gClientTitle = 'TokenSwap';
 var gRequiredDbHash = 'smd';
 var gPassword = '';
+var gNonASCII = false;
 
 var gCurrentDB = null; //'smd.db';
 var gTokInfo = {};
