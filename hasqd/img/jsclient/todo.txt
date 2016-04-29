@@ -24,3 +24,5 @@ REJECT [C] (?) Mobile version all must be darker
 [C] drugie jazyki
 
 
+example with sprites http://jsfiddle.net/necolas/fpfzb/
+http://learn.shayhowe.com/advanced-html-css/feature-support-polyfills/
