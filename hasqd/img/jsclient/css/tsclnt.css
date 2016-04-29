@@ -776,10 +776,14 @@ button.search-dn
     min-width: 14.375em;
     height: unset;
     border: 0;
-    background: #EEEEFE;
+    background: #E0E0FE;
     margin-bottom: 1px;
     padding: 0;
     opacity: 1;
+}
+button.search-dn:hover
+{
+    background: #D0F0F0;
 }
 
 button.search-tabs-buttons

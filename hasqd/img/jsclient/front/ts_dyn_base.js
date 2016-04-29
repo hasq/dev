@@ -1469,11 +1469,11 @@ function widSearchUpdate()
 
         xs = '<button class="search-dn" onclick="widDnSelect(\'' + window.btoa(xs) + '\')">' + xs + '</button>';
 
-        var xn = ' ' + x.n;
-        for ( var i = 0; i < 5 - xn.length; i++ ) xn += ' ';
+        var xn = '' + x.n +' ';
+        ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )
-            t[x.state] += '<span class="span-search-dn">' + xn + '</span> ' + xs + '\n';
+            t[x.state] += '<span class="span-search-dn">' + xn + '</span>' + xs + '\n';
 
             n[x.state]++;
     }
