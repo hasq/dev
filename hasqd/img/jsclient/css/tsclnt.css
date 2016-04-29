@@ -57,7 +57,7 @@ button.button-enabled
     /* -webkit-transition: background 0.20s;
     -moz-transition: background 0.20s;
     -o-transition: background 0.20s; */
-    transition: background 1.20s;
+    transition: background 0.2s, border-radius 0.2s;
 }
 
 button.tab-button-on,
@@ -68,18 +68,23 @@ button.show-keys-button-on
     background: #00CED1;
     opacity: 1;
     border: 1px solid #1376BC;
+    transition: background 0.2s, border-radius 0.2s;
 }
 
 button.tab-button-on:hover
 {
-    background: #90FEF1;
+    /* background: #90FEF1; */
     cursor: pointer;
 }
 
 @keyframes flash {
-    0% {background:#FEFEFA; }
-    50%  {background:#EEEEFE; border-radius: 20%; }
-    100% {background:#FEFEFA; }
+    0% {}
+    50%  
+    {
+        background:#EEEEFE; 
+        border-radius: 15%;
+    }
+    100% {}
 }
 
 button:hover,
@@ -90,7 +95,7 @@ button.button-enabled:hover
 {
     /* background: #EEEEFE; */
     cursor: pointer;
-    animation: flash 1s
+    animation: flash 400ms
 }
 
 button.tab-button-off:active:hover,
@@ -98,7 +103,7 @@ button.tab-button-on:active:hover,
 button.show-keys-button-off:active:hover,
 button.show-keys-button-on:active:hover
 {
-    background: #20B2AA;
+    /* background: #20B2AA; */
     border-radius: 20%;
 }
 
@@ -113,14 +118,14 @@ button.button-disabled
 
 button.button-disabled:active:hover
 {
-    background: #2F4F4F;
+    /* background: #2F4F4F; */
     color: #000;
     /* opacity: 0.4; */
 }
 
 button.button-disabled:hover
 {
-    background: #ddf;
+    /* background: #ddf; */
     color: #000;
     /* opacity: 0.4; */
 }
