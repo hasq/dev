@@ -127,13 +127,16 @@ function docMain(state, browser)
 
         if ( browser.name != 'unknown' )
         {
+            r += '<h1>';
             r += 'Browser: ' + browser.name + '\n';
-            r += 'ver. ' + browser.verFull + '\n';
-            r += 'need to update to ver.' + browser.tVerFull;
+            r += 'v ' + browser.verFull + '\n';
+            r += 'requires upgrade to v ' + browser.tVerFull;
+            r += '</h1>';
         }
         else
         {
-            r += 'Your browser have not been tested!';
+            r += 'This browser has not been tested<br/>';
+            r += ''+navigator.userAgent;
         }
 
      r += '</p>';

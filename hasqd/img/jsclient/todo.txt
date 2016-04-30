@@ -1,7 +1,5 @@
 Critical things
 ---------------
-DONE [A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
-	*Text mozjno zamenit na stroke 128+ v ts_ui_doc_main.js
 [A] (om) engSearchClick remove return dates; remove storing dates in gSearch
 DONE [A] hq: polomannye ssylki na img
 DONE [B] hq: HashCalc "Send To" buttons ne rabotajut (?)
