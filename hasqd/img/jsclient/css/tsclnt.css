@@ -82,8 +82,8 @@ button.tab-button-on:hover
     50%  
     {
         /* background:#EEEEFE; */
-        background: rgba(200,200,254,0.2);
-        border-radius: 8px;
+        background: rgba(100,100,255,0.2);
+        border-radius: 6px;
     }
     100% {}
 }
@@ -788,7 +788,7 @@ button.search-dn
     width: unset;
     min-width: 14.375em;
     height: unset;
-    border: 0;
+    border: 1px solid #8080FE;
     background: #E0E0FE;
     margin-bottom: 1px;
     padding: 0;
@@ -805,7 +805,7 @@ button.search-tabs-buttons
     text-align: center;
     width: 70px;
     height: 70px;
-    border: 1px solid #F0F0FF;
+    border: 1px solid #E0E0EF;
     background: #FCFCFC;
     margin: 0;
     padding: 0;
@@ -818,7 +818,7 @@ button.search-tabs-buttons-active
     text-align: center;
     width: 70px;
     height: 70px;
-    border: 1px solid #1376BC;
+    border: 1px solid #1336BC;
     background: #FCFCFC;
     margin: 0;
     padding: 0;
