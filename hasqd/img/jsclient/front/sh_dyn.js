@@ -1,3 +1,5 @@
+// Hasq Technology Pty Ltd (C) 2013-2016
+
 function HasqLogo(id)
 {
     var counter = 0;
