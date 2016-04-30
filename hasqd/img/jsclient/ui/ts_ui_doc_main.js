@@ -74,9 +74,9 @@ var allImages = [
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('span_logo');
 
-function docMainWrite(browser)
+function docMainWrite(state, browser)
 {
-    document.write(docMain(browser));
+    document.write(docMain(state, browser));
 }
 
 function docMainInit()
@@ -119,9 +119,9 @@ function docInit()
     engSendPing(0);
 }
 
-function docMain(browser)
+function docMain(state, browser)
 {
-    if (!browser.tested)
+    if ( !state )
     {
         var r = '<p>';
 
@@ -130,7 +130,6 @@ function docMain(browser)
             r += 'Browser: ' + browser.name + '\n';
             r += 'ver. ' + browser.verFull + '\n';
             r += 'need to update to ver.' + browser.tVerFull;
-
         }
         else
         {

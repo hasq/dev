@@ -41,11 +41,11 @@
     
     if ( browserInfo.tested || confirm(askToContinue(currentBrowser)) )
     {      
-      docMainWrite(browserInfo);
+      docMainWrite(true);
       docMainInit();
     }
     else
-      docMainWrite(browserInfo);     
+      docMainWrite(false, browserInfo);     
   </script>
 
 </body>
