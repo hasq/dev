@@ -171,7 +171,7 @@ function widAddSkc()
 {
     var $Img = $('#span_skc img')
 
-               gSkc = prompt('Enter SKC:', gSkc || '') || null;
+               gSkc = prompt('Enter SKC key:', gSkc || '') || null;
 
     if ( gSkc && !engIsAsciiOrLF(gSkc) )
         gSkc = null;
