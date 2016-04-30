@@ -115,12 +115,15 @@ button.button-disabled
     opacity: 0.8;
     width: 70px;
     height: 70px;    
+    border: 1px solid #1336BC;
+    transition: background 0.2s, border-radius 0.2s;
 }
 
 button.button-disabled:active:hover
 {
     /* background: #2F4F4F; */
     color: #000;
+    border-radius: 8px;
     /* opacity: 0.4; */
 }
 
@@ -823,6 +826,13 @@ button.search-tabs-buttons-active
     margin: 0;
     padding: 0;
     opacity: 1;
+}
+
+button.search-tabs-buttons:active:hover,
+button.search-tabs-buttons-active:active:hover
+{
+    /* background: #20B2AA; */
+    border-radius: 8px;
 }
 
 #ui-datepicker-div
