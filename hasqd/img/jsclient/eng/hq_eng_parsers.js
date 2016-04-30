@@ -109,18 +109,18 @@ function engGetOrderedTokens(tok)
 
     for (var i = 0; i < tok.length - 1; i++)
     {
-        if (tok[i].s == tok[i + 1].s && tok[i].r == tok[i + 1].r)
+        if (tok[i].s == tok[i + 1].s && tok[i].raw == tok[i + 1].raw)
         {
             tok.splice(i + 1, 1);
             i--;
         }
-        else if (tok[i].s == tok[i + 1].s && tok[i].r != tok[i + 1].r && tok[i].r == '')
+        else if (tok[i].s == tok[i + 1].s && tok[i].raw != tok[i + 1].raw && tok[i].raw == '')
         {
-            tok[i].r = tok[i + 1].r;
+            tok[i].raw = tok[i + 1].raw;
             tok.splice(i + 1, 1);
             i--;
         }
-        else if (tok[i].s == tok[i + 1].s && tok[i].r != tok[i + 1].r && tok[i + 1].r == '')
+        else if (tok[i].s == tok[i + 1].s && tok[i].raw != tok[i + 1].raw && tok[i + 1].raw == '')
         {
             tok.splice(i + 1, 1);
             i--;
@@ -147,14 +147,14 @@ function engGetTokens(rawTok, hash)
         {
             var l = tok.length;
             tok[l] = {};
-            tok[l].r = rawTok[i].slice(1, -1);
-            tok[l].s = engGetHash(tok[l].r, hash);
+            tok[l].raw = rawTok[i].slice(1, -1);
+            tok[l].s = engGetHash(tok[l].raw, hash);
         }
         else if (engIsHash(rawTok[i], hash))
         {
             var l = tok.length;
             tok[l] = {};
-            tok[l].r = '';
+            tok[l].raw = '';
             tok[l].s = rawTok[i];
         }
     }
@@ -168,7 +168,7 @@ function engGetRawList(data)
     var r = [];
 
     for (var i = 0; i < data.length; i++)
-        r[i] = (data[i].r != '') ? data[i].r : data[i].s;
+        r[i] = (data[i].raw != '') ? data[i].raw : data[i].s;
 
     return r;
 }

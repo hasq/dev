@@ -161,7 +161,7 @@ function widGetHTMLTokensCreateTab()
     r += '<td align="left">\n';
     r += '<button class="shared-button" data-title="Create" data-function="widPreCreate" onclick="widMainButtonClick($(this))">Create</button>\n';
     r += '<td align="right">\n';
-    r += widGetHTMLSpanImg('', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     return r;
@@ -175,7 +175,7 @@ function widGetHTMLTokensVerifyTab()
     r += '<td width="70" align="left">\n';
     r += '<button id="tokens_verify_button" data-title="Verify" class="shared-button" data-function="widPreVerify" onclick="widMainButtonClick($(this))">Verify</button>\n';
     r += '<td align="left">\n';
-    r += widGetHTMLSpanImg('', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '<div id="tokens_verify_div" class="div-hidden">\n';
@@ -206,7 +206,7 @@ function widGetHTMLTokensDataTab()
     r += '<td class="td-warning" align="center">\n';
     r += '&nbsp;The specified range contains unknown tokens. Continue?&nbsp;\n';
     r += '<td align="right">\n';
-    r += widGetHTMLSpanImg('', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '<td align="right">\n';
     r += '<button class="continue-button" onclick="return widContinueButtonClick($(this), true)" data-title="Continue">Hidden</button>\n';
     r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreUpdate" data-title="Update">Update</button>\n';
@@ -246,7 +246,7 @@ function widGetHTMLTokensSS1()
                      r += '<td align="left" />\n';
                          r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreSimpleSend" data-title="Initiate">Initiate</button>\n';
                      r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_ss1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss1_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';
@@ -275,7 +275,7 @@ function widGetHTMLTokensSS2()
                      r += '<td class="td-warning" align="center" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                      r += '<td align="right" />\n';
-    r += widGetHTMLSpanImg('tokens_ss2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss2_led_span', 'led-span') + '\n';
                      r += '<td align="right" />\n';
                          r += '<button class="continue-button" onclick="widContinueButtonClick($(this), true)" data-title="Continue">Hidden</button>\n';
                          r += '<button class="shared-button" onclick="widMainButtonClick($(this))"data-function="widPreSimpleAccept" data-title="Finalize">Finalize</button>\n';
@@ -300,7 +300,7 @@ function widGetHTMLTokensSS3()
                      r += '<td align="left" />\n';
                          r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep1" data-title="Initiate Step 1" >Initiate Step 1</button>\n';
                      r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_ss3_s1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss3_s1_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';
@@ -318,7 +318,7 @@ function widGetHTMLTokensSS3()
                      r += '<td align="left" />\n';
                          r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep2" data-title="Initiate Step 2">Initiate Step 2</button>\n';
                      r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_ss3_s2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss3_s2_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';
@@ -349,7 +349,7 @@ function widGetHTMLTokensSS4()
     r += '<td class="td-warning">\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                      r += '<td align="right" />\n';
-    r += widGetHTMLSpanImg('tokens_ss4_s1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss4_s1_led_span', 'led-span') + '\n';
                      r += '<td align="right" />\n';
                          r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
                          r += '<button data-function="widPreBlockingAcceptStep1" data-title="Finalize Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
@@ -370,7 +370,7 @@ function widGetHTMLTokensSS4()
                      r += '<td class="td-warning" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                      r += '<td align="right" />\n';
-    r += widGetHTMLSpanImg('tokens_ss4_s2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_ss4_s2_led_span', 'led-span') + '\n';
                      r += '<td align="right" />\n';
                          r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
                          r += '<button data-function="widPreBlockingAcceptStep2" data-title="Finalize Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
@@ -417,7 +417,7 @@ function widGetHTMLTokensRS1()
     r += '<td class="td-warning" align="center" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
     r += '<td align="right">\n';
-    r += widGetHTMLSpanImg('tokens_rs1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs1_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
     r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
     r += '<button data-function="widPreSimpleReceive" data-title="Finalize" class="shared-button" onclick="widMainButtonClick($(this))">Finalize</button>\n';
@@ -443,7 +443,7 @@ function widGetHTMLTokensRS2()
                          r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
                          r += '<button data-function="widPreSimpleRequest" data-title="Initiate" class="shared-button" onclick="widMainButtonClick($(this))">Initiate</button>\n';
                      r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_rs2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs2_led_span', 'led-span') + '\n';
                      r += '<td class="td-warning" align="center" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                  r += '</tr>\n';
@@ -474,7 +474,7 @@ function widGetHTMLTokensRS3()
                          r += '<td class="td-warning" align="center" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                          r += '<td align="right" />\n';
-    r += widGetHTMLSpanImg('tokens_rs3_s1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs3_s1_led_span', 'led-span') + '\n';
                          r += '<td align="right" />\n';
                              r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
                              r += '<button data-function="widPreBlockingReceiveStep1" data-title="Finalize Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
@@ -495,7 +495,7 @@ function widGetHTMLTokensRS3()
                          r += '<td class="td-warning" align="center" />\n';
     r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
                          r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_rs3_s2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs3_s2_led_span', 'led-span') + '\n';
                          r += '<td align="right" />\n';
                              r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
                              r += '<button data-function="widPreBlockingReceiveStep2" data-title="Finalize Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
@@ -520,7 +520,7 @@ function widGetHTMLTokensRS4()
                      r += '<td align="left" />\n';
                          r += '<button data-function="widPreBlockingRequestStep1" data-title="Initiate Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Initiate Step 1</button>\n';
                      r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_rs4_s1_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs4_s1_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';
@@ -538,7 +538,7 @@ function widGetHTMLTokensRS4()
                          r += '<td align="left" />\n';
                              r += '<button data-function="widPreBlockingRequestStep2" data-title="Initiate Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Initiate Step 2</button>\n';
                          r += '<td align="left" />\n';
-    r += widGetHTMLSpanImg('tokens_rs4_s2_led_span', 'led-span') + '\n';
+    r += widGetHTMLSpanLed('tokens_rs4_s2_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';

@@ -525,13 +525,16 @@ function widCreateTokens($obj, tokens)
 
         var resp = engGetResponseHeader(cbData);
 
-        if (resp !== 'OK')
+        if ( resp !== 'OK' )
             widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp);
 
-        if (!(cmdIdx + 1 < glCmdList.items.length))
-        {
-            widWarningLed($obj, imgMsgOk, 'OK');
-            widDone($obj, 'OK');
+		if ( resp === 'REQ_ZERO_POLICY' )
+			return widDone($obj, resp);
+		
+        if ( !(cmdIdx + 1 < glCmdList.items.length) )
+		{
+            widWarningLed($obj, imgMsgOk, resp);
+			widDone($obj, resp);
         }
     }
 
@@ -545,11 +548,11 @@ function widCreateTokens($obj, tokens)
 
         glCmdList.items[zCmdIdx] = {};
         glCmdList.items[zCmdIdx].cmd = zCmd;
-        glCmdList.items[zCmdIdx].r = tokens[i].r;
+        glCmdList.items[zCmdIdx].raw = tokens[i].raw;
         glCmdList.items[zCmdIdx].s = tokens[i].s;
         glCmdList.items[lastCmdIdx] = {};
         glCmdList.items[lastCmdIdx].cmd = lastCmd;
-        glCmdList.items[lastCmdIdx].r = tokens[i].r;
+        glCmdList.items[lastCmdIdx].raw = tokens[i].raw;
         glCmdList.items[lastCmdIdx].s = tokens[i].s;
     }
 
@@ -629,6 +632,7 @@ function widVerifyTokens($obj, tokens)
     {
         if (glCmdList.items.length == 0)
             return;
+		
         var resp = engGetResponseHeader(ajxData);
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
@@ -637,7 +641,7 @@ function widVerifyTokens($obj, tokens)
         widShowProgressbar(progress);
         widShowTokensLog('Verifying...');
 
-        var item = engGetTokenInfo(ajxData, glCmdList.items[cmdIdx].r, glCmdList.items[cmdIdx].s);
+        var item = engGetTokenInfo(ajxData, glCmdList.items[cmdIdx].raw, glCmdList.items[cmdIdx].s);
         glTokList.add(item);
 
         var idx = glTokList.items.length - 1;
@@ -659,7 +663,7 @@ function widVerifyTokens($obj, tokens)
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
-        glCmdList.items[i].r = tokens[i].r;
+        glCmdList.items[i].raw = tokens[i].raw;
         glCmdList.items[i].s = tokens[i].s;
     }
 
@@ -683,7 +687,7 @@ function widFillOutTokList($obj, tokens, extCb)
 
         widShowProgressbar(progress);
 
-        var item = engGetTokenInfo(cbData, glCmdList.items[cmdIdx].r, glCmdList.items[cmdIdx].s);
+        var item = engGetTokenInfo(cbData, glCmdList.items[cmdIdx].raw, glCmdList.items[cmdIdx].s);
 
         glTokList.add(item);
 
@@ -699,7 +703,7 @@ function widFillOutTokList($obj, tokens, extCb)
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
-        glCmdList.items[i].r = (tokens[i].r !== undefined) ? tokens[i].r : '';
+        glCmdList.items[i].raw = (tokens[i].raw !== undefined) ? tokens[i].raw : '';
         glCmdList.items[i].s = tokens[i].s;
     }
 
@@ -785,9 +789,8 @@ function widUpdateTokens($obj, data, items)
     {
         if (items[i].state == 'OK' && items[i].d != data)
         {
-
             var n = +items[i].n + 1;
-            var s = engGetHash(items[i].r, gCurrentDB.hash);
+            var s = items[i].s
             var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
             var addCmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + gCurrentDB.name + ' ' + s;
@@ -795,14 +798,14 @@ function widUpdateTokens($obj, data, items)
 
             glCmdList.items[idx] = {};
             glCmdList.items[idx].cmd = addCmd;
-            glCmdList.items[idx].r = items[i].r;
+            glCmdList.items[idx].raw = items[i].raw;
             glCmdList.items[idx].s = items[i].s;
 
             idx++;
 
             glCmdList.items[idx] = {};
             glCmdList.items[idx].cmd = lastCmd;
-            glCmdList.items[idx].r = items[i].r;
+            glCmdList.items[idx].raw = items[i].raw;
             glCmdList.items[idx].s = items[i].s;
         }
     }
@@ -981,14 +984,14 @@ function widSimpleReceive($obj, titleRecord)
         glCmdList.items[idx] = {};
         glCmdList.items[idx].cmd = addCmd1;
         glCmdList.items[idx].s = s;
-        glCmdList.items[idx].r = '';
+        glCmdList.items[idx].raw = '';
 
         idx++;
 
         glCmdList.items[idx] = {};
         glCmdList.items[idx].cmd = addCmd2;
         glCmdList.items[idx].s = s;
-        glCmdList.items[idx].r = '';
+        glCmdList.items[idx].raw = '';
     }
 
     var cb = function (cbData, cmdIdx, progress)
@@ -1149,14 +1152,14 @@ function widSimpleAccept($obj, titleRecord)
         glCmdList.items[idx] = {};
         glCmdList.items[idx].cmd = addCmd1;
         glCmdList.items[idx].s = s;
-        glCmdList.items[idx].r = '';
+        glCmdList.items[idx].raw = '';
 
         idx++;
 
         glCmdList.items[idx] = {};
         glCmdList.items[idx].cmd = addCmd2;
         glCmdList.items[idx].s = s;
-        glCmdList.items[idx].r = '';
+        glCmdList.items[idx].raw = '';
     }
 
     var cb = function (cbData, cmdIdx, progress)
@@ -1408,7 +1411,7 @@ function widBlockingReceiveStep1($obj, titleRecord)
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
         glCmdList.items[i].s = s;
-        glCmdList.items[i].r = '';
+        glCmdList.items[i].raw = '';
     }
 
     var cb = function (cbData, cmdIdx, progress)
@@ -1467,7 +1470,7 @@ function widBlockingReceiveStep2($obj, titleRecord)
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
         glCmdList.items[i].s = s;
-        glCmdList.items[i].r = '';
+        glCmdList.items[i].raw = '';
     }
 
     var cb = function (cbData, cmdIdx, progress)
@@ -1729,7 +1732,7 @@ function widBlockingAcceptStep1($obj, titleRecord)
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
         glCmdList.items[i].s = s;
-        glCmdList.items[i].r = '';
+        glCmdList.items[i].raw = '';
 
     }
 
@@ -1789,7 +1792,7 @@ function widBlockingAcceptStep2($obj, titleRecord)
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
         glCmdList.items[i].s = s;
-        glCmdList.items[i].r = '';
+        glCmdList.items[i].raw = '';
     }
 
     var cb = function (cbData, cmdIdx, progress)

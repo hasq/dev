@@ -36,14 +36,16 @@
 
 <body onload="preload(allImages)">
   <script>
-    var b = getBrowser();
-    if ( checkBrowser(b) || confirm(askToContinue(b)) )
+    var currentBrowser = getCurrentBrowser();
+    var browserInfo = getBrowserInfo(currentBrowser);
+    
+    if ( browserInfo.tested || confirm(askToContinue(currentBrowser)) )
     {      
-      docMainWrite(true);
+      docMainWrite(browserInfo);
       docMainInit();
     }
     else
-      docMainWrite(false);     
+      docMainWrite(browserInfo);     
   </script>
 
 </body>

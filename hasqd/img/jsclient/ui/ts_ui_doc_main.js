@@ -74,9 +74,9 @@ var allImages = [
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('span_logo');
 
-function docMainWrite(state)
+function docMainWrite(browser)
 {
-    document.write(docMain(state));
+    document.write(docMain(browser));
 }
 
 function docMainInit()
@@ -119,11 +119,27 @@ function docInit()
     engSendPing(0);
 }
 
-function docMain(state)
+function docMain(browser)
 {
-    if (!state)
+    if (!browser.tested)
     {
-     return '<h1 style="margin: auto; text-align: center;">UNKNOWN BROWSER</h1>';
+		var r = '<p>';
+		
+		if ( browser.name != 'unknown' )
+		{
+			r += 'Browser: ' + browser.name + '\n';
+			r += 'ver. ' + browser.verFull + '\n';
+			r += 'need to update to ver.' + browser.tVerFull;		
+
+		}
+		else
+		{
+			r += 'Your browser have not been tested!';
+		}	
+		
+		r += '</p>';		
+		
+		return r;
     }
 
     var tabs = [];

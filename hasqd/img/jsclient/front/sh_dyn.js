@@ -70,7 +70,7 @@ gBrowsers.YA_D = {plat: 'desktop', name: 'yabrowser', verFull: '16.3', verShort:
 gBrowsers.YA_M = {plat: 'mobile', name: 'yabrowser', verFull: '15.9', verShort: '15'};
 gBrowsers.UNKNOWN = {plat: 'unknown', name: 'unknown', verFull: '', verShort: ''};
 
-function getBrowser()
+function getCurrentBrowser()
 {
     var ua = navigator.userAgent;
 
@@ -165,9 +165,8 @@ function getBrowser()
     return browsrObj;
 }
 
-function checkBrowser(b)
+function getBrowserInfo(b)
 {
-    console.log(b);
     if (0)
     {
         alert('plat: ' + b.plat + '\n' +
@@ -175,8 +174,10 @@ function checkBrowser(b)
               'Full ver: ' + b.verFull + '\n' +
               'Short ver: ' + b.verShort + '\n');
     }
+	
+	var obj = {};
 
-    if (
+	if (
         (b.name === gBrowsers.ED_D.name && +b.verShort >= +gBrowsers.ED_D.verShort) ||
         (b.name === gBrowsers.ED_M.name && +b.verShort >= +gBrowsers.ED_B.verShort) ||
         (b.name === gBrowsers.FF_D.name && +b.verShort >= +gBrowsers.FF_D.verShort && b.plat === 'desktop') ||
@@ -194,9 +195,28 @@ function checkBrowser(b)
         (b.name === gBrowsers.YA_D.name && +b.verShort >= +gBrowsers.YA_D.verShort) ||
         (b.name === gBrowsers.YA_M.name && +b.verShort >= +gBrowsers.YA_M.verShort)
     )
-        return true;
+        obj.tested = true;
+	else
+	{
+		obj.tested = false;
+		obj.name = b.name;
+		obj.plat = b.plat;
+		obj.verShort = b.verShort;
+		obj.verFull = b.verFull;
+		obj.tVerShort = 'unknown';
+		obj.tVerFull = 'unknown';
+		
+		for (i in gBrowsers)
+		{
+			if ( obj.name == gBrowsers[i].name && obj.plat == gBrowsers[i].plat )
+			{
+				obj.tVerShort = gBrowsers[i].VerShort;
+				obj.tVerFull = gBrowsers[i].VerFull;
+			}
+		}
+	}
 
-    return false;
+    return obj;
 }
 
 function askToContinue(b)

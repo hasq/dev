@@ -283,3 +283,18 @@ textarea::-moz-placeholder
 		background: #FEFEFA /*url("../img/bgfon.png")*/;
 	}
 }
+
+
+/********************************/
+/********* Token Tab ************/
+/********************************/
+
+.ui-button
+{
+	width: 100px;
+}
+
+#lr_button
+{
+	width: 150px;
+}

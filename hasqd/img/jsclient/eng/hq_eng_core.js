@@ -48,21 +48,21 @@ function engRunCmdList(cmdList, cbFunc)
 {
     var cb = function (ajxData)
     {
-        if (cmdList.items.length == 0 && cmdList.idx >= cmdList.items.length) return;
+        if ( cmdList.items.length == 0 && cmdList.idx >= cmdList.items.length ) return;
 
         var progress = ((cmdList.idx + 1) / cmdList.items.length) * 100;
         var r = engGetResponseHeader(ajxData);
-
-        if (r === 'OK' || r === 'IDX_NODN')
+		
+		if ( r === 'OK' || r === 'IDX_NODN' || r === 'REQ_ZERO_POLICY')
         {
             cbFunc(ajxData, cmdList.idx, progress);
             cmdList.idx++;
             cmdList.counter = 100;
         }
-        else
+        else 
         {
             cmdList.counter--;
-            if (cmdList.counter === 0)
+            if ( cmdList.counter === 0 )
             {
                 cmdList.idx++;
                 cmdList.counter = 100;
@@ -72,11 +72,11 @@ function engRunCmdList(cmdList, cbFunc)
 
         if (cmdList.items.length != 0 && cmdList.idx < cmdList.items.length)
             engRunCmdList(cmdList, cbFunc)
-        }
+    }
 
     if (cmdList.items.length > 0 && cmdList.idx < cmdList.items.length)
         ajxSendCommand(cmdList.items[cmdList.idx].cmd, cb, hasqLogo);
-    else if (cmdList.items.length === 0)
+    else if ( cmdList.items.length === 0 )
         cbFunc('OK', 0, 0);
 }
 

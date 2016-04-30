@@ -1,8 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-/*
-
-function widGetHTMLSpanImg(id, htmlClass)
+function widGetHTMLSpanLed(id, htmlClass)
 {
     var r = '';
 
@@ -13,7 +11,7 @@ function widGetHTMLSpanImg(id, htmlClass)
 
             return r;
 }
-*/
+
 
 function widGetHTMLSpanImg(id, func)
 {
@@ -64,7 +62,7 @@ function widGetHTMLBody(tabs)
     r += '<tr>\n';
     r += '<td nowrap>\n' + widGetHTMLTitle(gClientTitle);
     r += '<td style="text-align:right;">&nbsp;\n';
-    r += widGetHTMLSpanImg('span_logo') + '\n';
+    r += widGetHTMLSpanLed('span_logo') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n' + widGetHTMLTabs(tabs);
@@ -481,9 +479,9 @@ function widGetHTMLHashcalcTab()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td align="right" nowrap>\n';
-    r += '<button id="send_to_k_button" onclick="return $(\'#newrec_k_input\').val($(\'#hashcalc_out_textarea\').val())">Send to K</button>\n';
-    r += '<button id="send_to_g_button" onclick="return $(\'#newrec_g_input\').val($(\'#hashcalc_out_textarea\').val())">Send to G</button>\n';
-    r += '<button id="send_to_o_button" onclick="return $(\'#newrec_o_input\').val($(\'#hashcalc_out_textarea\').val())">Send to O</button>\n';
+    r += '<button id="send_to_k_button" onclick="return $(\'#nr_k_input\').val($(\'#hashcalc_out_textarea\').val())">Send to K</button>\n';
+    r += '<button id="send_to_g_button" onclick="return $(\'#nr_g_input\').val($(\'#hashcalc_out_textarea\').val())">Send to G</button>\n';
+    r += '<button id="send_to_o_button" onclick="return $(\'#nr_o_input\').val($(\'#hashcalc_out_textarea\').val())">Send to O</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
 

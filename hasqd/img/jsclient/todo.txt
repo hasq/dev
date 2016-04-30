@@ -2,10 +2,14 @@ Critical things
 ---------------
 [A] (ab) print browser data on browser failure - esli otvet "net" to napisat na stranice (vmesto "UNKNOWN BROWSER") kakoj browser i versija i kakoj nuzhen
 [A] (om) engSearchClick remove return dates; remove storing dates in gSearch
-[A] hq: polomannye ssylki na img
-[B] hq: HashCalc "Send To" buttons ne rabotajut (?)
+DONE [A] hq: polomannye ssylki na img
+DONE [B] hq: HashCalc "Send To" buttons ne rabotajut (?)
 [B] hq: (obsudit) Dobavit ispolzovanie SKC v Record and Token - vazhno umet dobavit 0-ju zapis kak obhod limit
-[A] hq: nebolshoe zaciklivanie na dobavlenie tokenov (range) kogda limit ischerpan
+DONE [A] hq: nebolshoe zaciklivanie na dobavlenie tokenov (range) kogda limit ischerpan
+	Eto iz-za togo, chto server vozvrashaet soobshenije otlichnoe ot OK,
+	kotoroe vosprinimaetsja kak oshibka i dlja vseh tokenov popytka sozdanija
+	povtorjaetsja 100 raz.
+	Ya sdelal tak, chto pri vozniknovenii otveta REQ_ZERO_POLICY operacija 'create' prerivaetsja.
 [A] (om) nedopisannyj help
 [A] (om) help o data size ubrat
 
