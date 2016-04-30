@@ -4,14 +4,14 @@ Critical things
 [A] (om) engSearchClick remove return dates; remove storing dates in gSearch
 [A] hq: polomannye ssylki na img
 [B] hq: HashCalc "Send To" buttons ne rabotajut (?)
-[B] hq: (obsudit) Dobavit ispolzovanie SKC v Record and Token
+[B] hq: (obsudit) Dobavit ispolzovanie SKC v Record and Token - vazhno umet dobavit 0-ju zapis kak obhod limit
+[A] hq: nebolshoe zaciklivanie na dobavlenie tokenov (range) kogda limit ischerpan
 [A] (om) nedopisannyj help
 [A] (om) help o data size ubrat
 
 Major things
 ------------
 [B] sprite on hover
-[C] (ab) mob versia button hover remains
 [C] (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 
 Minor things
