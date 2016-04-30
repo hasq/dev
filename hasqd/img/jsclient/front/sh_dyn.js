@@ -113,7 +113,7 @@ function getCurrentBrowser()
          version = ua.split('Firefox/')[1];
             break;
         //case 'opera':
-	//	version = ua.split('Version/')[1];
+ //  version = ua.split('Version/')[1];
         //        break;
         case gBrowsers.OP_D.name:
          //bName = 'opera';
@@ -174,10 +174,10 @@ function getBrowserInfo(b)
               'Full ver: ' + b.verFull + '\n' +
               'Short ver: ' + b.verShort + '\n');
     }
-	
-	var obj = {};
 
-	if (
+    var obj = {};
+
+    if (
         (b.name === gBrowsers.ED_D.name && +b.verShort >= +gBrowsers.ED_D.verShort) ||
         (b.name === gBrowsers.ED_M.name && +b.verShort >= +gBrowsers.ED_B.verShort) ||
         (b.name === gBrowsers.FF_D.name && +b.verShort >= +gBrowsers.FF_D.verShort && b.plat === 'desktop') ||
@@ -196,25 +196,25 @@ function getBrowserInfo(b)
         (b.name === gBrowsers.YA_M.name && +b.verShort >= +gBrowsers.YA_M.verShort)
     )
         obj.tested = true;
-	else
-	{
-		obj.tested = false;
-		obj.name = b.name;
-		obj.plat = b.plat;
-		obj.verShort = b.verShort;
-		obj.verFull = b.verFull;
-		obj.tVerShort = 'unknown';
-		obj.tVerFull = 'unknown';
-		
-		for (i in gBrowsers)
-		{
-			if ( obj.name == gBrowsers[i].name && obj.plat == gBrowsers[i].plat )
-			{
-				obj.tVerShort = gBrowsers[i].VerShort;
-				obj.tVerFull = gBrowsers[i].VerFull;
-			}
-		}
-	}
+    else
+    {
+        obj.tested = false;
+        obj.name = b.name;
+        obj.plat = b.plat;
+        obj.verShort = b.verShort;
+        obj.verFull = b.verFull;
+        obj.tVerShort = 'unknown';
+        obj.tVerFull = 'unknown';
+
+        for (i in gBrowsers)
+        {
+            if ( obj.name == gBrowsers[i].name && obj.plat == gBrowsers[i].plat )
+            {
+                obj.tVerShort = gBrowsers[i].verShort;
+                obj.tVerFull = gBrowsers[i].verFull;
+            }
+        }
+    }
 
     return obj;
 }

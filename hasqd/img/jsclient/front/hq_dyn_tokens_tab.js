@@ -528,13 +528,13 @@ function widCreateTokens($obj, tokens)
         if ( resp !== 'OK' )
             widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp);
 
-		if ( resp === 'REQ_ZERO_POLICY' )
-			return widDone($obj, resp);
-		
+        if ( resp === 'REQ_ZERO_POLICY' )
+            return widDone($obj, resp);
+
         if ( !(cmdIdx + 1 < glCmdList.items.length) )
-		{
+        {
             widWarningLed($obj, imgMsgOk, resp);
-			widDone($obj, resp);
+            widDone($obj, resp);
         }
     }
 
@@ -632,7 +632,7 @@ function widVerifyTokens($obj, tokens)
     {
         if (glCmdList.items.length == 0)
             return;
-		
+
         var resp = engGetResponseHeader(ajxData);
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
@@ -791,7 +791,7 @@ function widUpdateTokens($obj, data, items)
         {
             var n = +items[i].n + 1;
             var s = items[i].s
-            var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+                    var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
             var addCmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + gCurrentDB.name + ' ' + s;
             var idx = (glCmdList.items.length == 0) ? 0 : glCmdList.items.length;

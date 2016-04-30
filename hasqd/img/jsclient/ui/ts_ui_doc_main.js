@@ -123,23 +123,23 @@ function docMain(browser)
 {
     if (!browser.tested)
     {
-		var r = '<p>';
-		
-		if ( browser.name != 'unknown' )
-		{
-			r += 'Browser: ' + browser.name + '\n';
-			r += 'ver. ' + browser.verFull + '\n';
-			r += 'need to update to ver.' + browser.tVerFull;		
+        var r = '<p>';
 
-		}
-		else
-		{
-			r += 'Your browser have not been tested!';
-		}	
-		
-		r += '</p>';		
-		
-		return r;
+        if ( browser.name != 'unknown' )
+        {
+            r += 'Browser: ' + browser.name + '\n';
+            r += 'ver. ' + browser.verFull + '\n';
+            r += 'need to update to ver.' + browser.tVerFull;
+
+        }
+        else
+        {
+            r += 'Your browser have not been tested!';
+        }
+
+     r += '</p>';
+
+        return r;
     }
 
     var tabs = [];
