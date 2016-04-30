@@ -74,7 +74,7 @@ function widGetHTMLBody(tabs)
         r += '<td class="td-subscribe" width="160" style="text-align: left;"/>\n';
         r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>\n';
         r += '<td class="td-subscribe" width="40" style="text-align: right;"/>\n';
-        r += '<a href="tsclnt.html">TsClnt</a>\n';
+        r += '<a href="tsclnt.html">TokenSwap</a>\n';
     }
     r += '</tr>\n';
     r += '</table>\n';
