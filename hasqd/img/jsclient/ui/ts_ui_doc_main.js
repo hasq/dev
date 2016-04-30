@@ -115,7 +115,7 @@ function docInit()
     widSetDefaultDb(gRequiredDbHash);
     widSetDivOverflowSize();
     widEmptyTab();
-
+	
     engSendPing(0);
 }
 

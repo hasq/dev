@@ -179,7 +179,7 @@ function widGetHTMLTokenHash()
     {
         var r = '';
         r += '<td id="td_reload_button" title="' + gTooltip.refresh_token + '"/>\n';
-        r += widGetHTMLSpanImg('span_reload', 'widReloadTokenInfo(null, 0, true)');
+        r += widGetHTMLSpanImg('span_reload', 'widReloadButtonOnclick($(this))');
         r += '<td id="td_token_hash_label" class="td-info"/>\n';
         r += widGetHTMLMessageBox('Token hash:');
         r += '<td id="td_token_hash" class="td-info"/>\n';

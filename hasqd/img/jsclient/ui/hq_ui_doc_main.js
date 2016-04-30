@@ -6,6 +6,9 @@ var gCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
 var gPassword = ''; // The specified password
 var gSkc = null;
+var gIv = null;
+var gSalt = null;
+var gCiferHash = 's22';
 
 var hasqLogo = HasqLogo('span_logo');
 var preloadImg = new Array();
@@ -357,11 +360,11 @@ function doc_init()
     $('#span_logo img').attr('width', '28');
     $('#span_logo img').attr('height', '28');
     $('#span_logo img').attr('src', imgLogoWait);
-    $('#span_skc img').attr('src', imgSkcOff);
+	$('#span_skc img').attr('src', imgSkcOff);
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();
-
+	
     setTimeout(widRefreshButtonClick, 2000);
 }
 

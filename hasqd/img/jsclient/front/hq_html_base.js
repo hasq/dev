@@ -515,9 +515,9 @@ function widGetHTMLCommandTab()
     r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
     r += '<td align="left" />\n';
     r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
- r += '<td id="td_skc"/>\n';
-    r += widGetHTMLSpanImg('span_skc', 'widAddSkc()');
- r += '<img></img>';
+	r += '<td id="td_skc"/>\n';
+	r += widGetHTMLSpanImg('span_skc', 'widAddSkc()');
+	r += '<img></img>';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="3"/>\n';

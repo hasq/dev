@@ -166,16 +166,35 @@ function widRefreshButtonClick()
     ajxSendCommand('info db', cb4, hasqLogo);
 }
 
+
+function widAddSkc()
+{
+	var $Img = $('#span_skc img')
+	
+	gSkc = prompt('Enter SKC:', gSkc || '') || null;
+
+	if ( gSkc )
+		$Img.attr('src', imgSkcOn);
+	else 
+		$Img.attr('src', imgSkcOff);
+	
+	return;
+}
+
 function widCommandSendButtonClick()
 {
     var $CmdInput = $('#cmd_input');
     var $CmdOutput = $('#cmd_output');
-    var cmd = $CmdInput.val();
+	var cmd = $CmdInput.val();
+	
+	if ( gSkc )	
+		cmd = '#' + engGetCifer(cmd);
+	 
     var cb = function (d)
     {
         $CmdOutput.html(d);
     }
-
+	
     ajxSendCommand(cmd, cb, hasqLogo);
 }
 
@@ -528,16 +547,4 @@ function widSendCommandInputOnpresskey(d, e)
 {
     if (e.keyCode == 13)
         widCommandSendButtonClick();
-}
-
-function widAddSkc()
-{
-    var $Img = $('#span_skc img')
-               gSkc = prompt('Enter SKC:');
-    if ( gSkc )
-        $Img.attr('src', imgSkcOn);
-    else
-        $Img.attr('src', imgSkcOff);
-
-    return;
 }

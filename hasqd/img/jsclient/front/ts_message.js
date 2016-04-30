@@ -3,7 +3,7 @@
 var gMsg =
 {
     badAcceptKeys : 'Keys are not recognised',
-    badTokenName: 'Bad token name',
+	badTokenName: 'Bad token name',
     nonASCII : 'Warning: this data seems binary; please use file instead',
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
@@ -27,8 +27,8 @@ var gMsg =
       'sha256sum <i>FILE</i> | gawk \'{print $1}\' | tr -d \\n | md5sum</b><br/>',
 
     fileZero : 'File is empty',
-    fail: 'Server refused connection',
-    unexpected: 'Unexpected server reply : '
+	fail: 'Server refused connection',
+	unexpected: 'Unexpected server reply : '
 };
 
 var gTooltip =
@@ -66,5 +66,6 @@ var gResponse =
     BUSY : 'BUSY',
     REQ_JOBID_BAD : 'REQ_JOBID_BAD',
     JOB_NOINFO : 'JOB_NOINFO',
-    REQ_PATH_BAD : 'REQ_PATH_BAD'
+    REQ_PATH_BAD : 'REQ_PATH_BAD',
+	REQ_BAD_CRYPT : 'REQ_BAD_CRYPT'
 };

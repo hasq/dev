@@ -74,5 +74,10 @@ function gHelp(x)
         INCLUDEFILE
         txt/ts_data_length.htm
     }
+	else if (x == 'span_reload')
+    {
+        INCLUDEFILE
+        txt/ts_span_reload.htm
+    }
     return r;
 }
