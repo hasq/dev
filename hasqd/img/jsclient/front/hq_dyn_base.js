@@ -529,3 +529,15 @@ function widSendCommandInputOnpresskey(d, e)
     if (e.keyCode == 13)
         widCommandSendButtonClick();
 }
+
+function widAddSkc()
+{
+    var $Img = $('#span_skc img')
+               gSkc = prompt('Enter SKC:');
+    if ( gSkc )
+        $Img.attr('src', imgSkcOn);
+    else
+        $Img.attr('src', imgSkcOff);
+
+    return;
+}

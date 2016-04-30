@@ -34,9 +34,9 @@ var imgLockClosed = 'img/lock_closed.png';
 var imgEyeOpen = 'img/eye_open.png';
 var imgEyeClosed = 'img/eye_closed.png';
 
-var imgLogoBlue = 'img/logo_wait.png';
-var imgLogoRed = 'img/logo_fail.png';
-var imgLogoBlink = 'img/logo_anim.gif';
+var imgLogoWait = 'img/logo_wait.png';
+var imgLogoFail = 'img/logo_fail.png';
+var imgLogoAnim = 'img/logo_anim.gif';
 
 var imgPwdDummy = 'img/pwd_dummy.png';
 var imgPwdOk = 'img/pwd_good.png';
@@ -69,7 +69,7 @@ var imgBtnStartPast = '<img width="24px" height="16px" src="img/pwd_wrong.png" t
 var allImages = [
                     imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgPwdDummy,
                     imgMsgWait, imgClkReload, imgEyeOpen, imgEyeClosed,
-                    imgLockOpen, imgLockClosed, imgLogoBlue, imgLogoRed, imgLogoBlink
+                    imgLockOpen, imgLockClosed, imgLogoWait, imgLogoFail, imgLogoAnim
                 ];
 var preloadImg = new Array();
 var hasqLogo = HasqLogo('span_logo');
@@ -98,11 +98,11 @@ function docInit()
 
     $('#span_info img').attr('src', imgClkInfo);
     $('#span_shield img').attr('src', imgClkShield);
-    $('#span_logo img').attr('src', imgLogoBlue);
+    $('#span_logo img').attr('src', imgLogoWait);
 
     $('#span_reload img').attr('src', imgClkReload);
     $('#span_password_pic img').attr('src', imgPwdDummy);
-    $('#span_token_pic img').hide();
+    $('#span_token_lock img').hide();
 
     $('#span_password_eye img')
     .attr('src', imgEyeOpen)
@@ -115,7 +115,7 @@ function docInit()
     widSetDefaultDb(gRequiredDbHash);
     widSetDivOverflowSize();
     widEmptyTab();
-	
+
     engSendPing(0);
 }
 

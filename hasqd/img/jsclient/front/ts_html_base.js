@@ -183,8 +183,8 @@ function widGetHTMLTokenHash()
         r += '<td id="td_token_hash_label" class="td-info"/>\n';
         r += widGetHTMLMessageBox('Token hash:');
         r += '<td id="td_token_hash" class="td-info"/>\n';
-        r += '<td id="td_token_pic"/>\n';
-        r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_pic'));
+        r += '<td id="td_token_lock"/>\n';
+        r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_token_lock'));
         r += '<td id="td_file_upload"/>\n';
         r += '<label id="label_file_upload" for="input_file_upload">File</label>\n';
         r += '<input id="input_file_upload" type="file" onchange="return widLoadFiles(this.files)"></input>';

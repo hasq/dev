@@ -5,6 +5,7 @@ var glDataBase = {};
 var gCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function
 var gPassword = ''; // The specified password
+var gSkc = null;
 
 var hasqLogo = HasqLogo('span_logo');
 var preloadImg = new Array();
@@ -71,14 +72,17 @@ var imgPwdDummy = 'img/pwd_dummy.png';
 
 var imgTknNodn = 'img/tkn_nodn.png';
 
-var imgLogoBlue = 'img/logo_wait.png';
-var imgLogoRed = 'img/logo_fail.png';
-var imgLogoBlink = 'img/logo_anim.gif';
+var imgSkcOn = 'img/lock_closed.png';
+var imgSkcOff = 'img/lock_open.png';
+
+var imgLogoWait = 'img/logo_wait.png';
+var imgLogoFail = 'img/logo_fail.png';
+var imgLogoAnim = 'img/logo_anim.gif';
 
 var allImages = [
                     imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,
                     imgPwdDummy, imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgTknNodn,
-                    imgLogoBlue, imgLogoRed, imgLogoBlink
+                    imgLogoWait, imgLogoFail, imgLogoAnim
                 ];
 
 function docMainWrite()
@@ -350,12 +354,14 @@ function doc_init()
     $('.continue-button').hide();
     $('.verify-table').hide();
 
-    $('#span_logo').find('img').attr('width', '28');
-    $('#span_logo').find('img').attr('height', '28');
-    $('#span_logo').find('img').attr('src', imgLogoBlue);
+    $('#span_logo img').attr('width', '28');
+    $('#span_logo img').attr('height', '28');
+    $('#span_logo img').attr('src', imgLogoWait);
+    $('#span_skc img').attr('src', imgSkcOff);
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();
+
     setTimeout(widRefreshButtonClick, 2000);
 }
 

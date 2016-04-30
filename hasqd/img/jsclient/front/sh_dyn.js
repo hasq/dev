@@ -10,7 +10,7 @@ function HasqLogo(id)
             counter++;
 
             if (counter > 0)
-                return $Logo.attr('src', imgLogoBlink);
+                return $Logo.attr('src', imgLogoAnim);
         },
         done : function ()
         {
@@ -22,7 +22,7 @@ function HasqLogo(id)
             if (counter == 0)
                 return setTimeout(function ()
             {
-                $Logo.attr('src', imgLogoBlue)
+                $Logo.attr('src', imgLogoWait)
             }, 200);
         },
         fail : function ()
@@ -30,7 +30,7 @@ function HasqLogo(id)
             var $Logo = $('#' + id + ' img');
             counter = 0;
 
-            return $Logo.attr('src', imgLogoRed);
+            return $Logo.attr('src', imgLogoFail);
         }
     }
     return retObj;
@@ -112,7 +112,7 @@ function getBrowser()
             break;
             /*
             case 'opera':
-                                                                                               version = ua.split('Version/')[1];
+                                                                                                           version = ua.split('Version/')[1];
                 break;
             */
         case gBrowsers.OP_D.name:

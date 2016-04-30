@@ -19,7 +19,7 @@ function gHelp(x)
         INCLUDEFILE
         txt/ts_shield.htm
     }
-    else if (x == 'span_token_pic')
+    else if (x == 'span_token_lock')
     {
         INCLUDEFILE
         txt/ts_yellow_lock.htm

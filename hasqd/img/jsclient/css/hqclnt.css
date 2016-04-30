@@ -247,12 +247,12 @@ textarea::-moz-placeholder
 }
 /* id's */
 
-#tabs {
+#main_tabs {
     white-space: nowrap;
     overflow: hidden;
 }
 
-#tabs ul li {
+#main_tabs ul li {
     display: inline-block;
     float: none;
     vertical-align: bottom;
@@ -264,6 +264,16 @@ textarea::-moz-placeholder
 	font: italic 12px Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
 }
+
+/********************************/
+/********* Tab Command **********/
+/********************************/
+#td_skc
+{
+	width: 16px;
+	height: auto;
+}
+
 
 @media all and (min-resolution: 121dpi), (max-width: 900px)
 {

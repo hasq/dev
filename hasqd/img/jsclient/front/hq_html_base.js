@@ -1,4 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
+
+/*
 function widGetHTMLSpanImg(id, htmlClass)
 {
     var r = '';
@@ -7,6 +9,19 @@ function widGetHTMLSpanImg(id, htmlClass)
         r += '<span id="' + id + '" class="' + htmlClass + '" align="center" valign="middle"><img></img></span>\n';
         else
         r += '<span id="' + id + '" align="center" valign="middle"><img></img></span>\n';
+
+            return r;
+}
+*/
+
+function widGetHTMLSpanImg(id, func)
+{
+    var r = '';
+
+    if (func)
+        r += '<span id="' + id + '" onclick="' + func + '" style="text-align:center;"><img src=""></img></span>\n';
+        else
+        r += '<span id="' + id + '" style="text-align:center;"><img src=""></img></span>\n';
 
             return r;
 }
@@ -47,11 +62,11 @@ function widGetHTMLBody(tabs)
     r += '<table id="table_body" border="0" nowrap>\n';
     r += '<tr>\n';
     r += '<td nowrap>\n' + widGetHTMLTitle(gClientTitle);
-    r += '<td style="text-align:right;">&nbsp;';
+    r += '<td style="text-align:right;">&nbsp;\n';
     r += widGetHTMLSpanImg('span_logo') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2" nowrap>\n' + widGetHTMLTabs(tabs);
+    r += '<td colspan="2"/>\n' + widGetHTMLTabs(tabs);
     r += '</tr>\n';
     r += '<tr>\n';
     {
@@ -494,15 +509,18 @@ function widGetHTMLCommandTab()
 {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table border="0">\n';
     r += '<tr>\n';
     r += '<td width="70"/>\n';
     r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
     r += '<td align="left" />\n';
     r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
+ r += '<td id="td_skc"/>\n';
+    r += widGetHTMLSpanImg('span_skc', 'widAddSkc()');
+ r += '<img></img>';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2"/>\n';
+    r += '<td colspan="3"/>\n';
     r += '<textarea rows="5" id="cmd_output" wrap="off" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';

@@ -320,14 +320,14 @@ table
 	width: 18em;
 }
 
-#td_token_pic
+#td_token_lock
 {
 	width: 1em;
 	text-align: right;
 	vertical-align: middle;
 }
 
-#td_token_pic img
+#td_token_lock img
 {
 	width: 1em;
 	height: auto;
