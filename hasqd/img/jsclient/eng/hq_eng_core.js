@@ -82,15 +82,18 @@ function engRunCmdList(cmdList, cbFunc)
 
 function engGetCifer(data)
 {
-	randomize();
-	
-	if (data)
-		return hjdbc_encrypt(data);
-	
+    randomize();
+
+    if (data)
+        return hjdbc_encrypt(data);
+
 }
 
 function randomize()
 {
+    gIv = gIv || engGetHash(Math.random(), gCiferHash);
+    gSalt = gSalt || engGetHash(Math.random(), gCiferHash);
+
     gIv = engGetHash(gIv + Math.random(), gCiferHash);
     gSalt = engGetHash(gSalt + Math.random(), gCiferHash);
 }
@@ -101,7 +104,7 @@ function text_to_hex(x)
     return x;
 }
 
-var ascii = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+var ascii = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_:abcdefghijklmnopqrstuvwxyz{|}~";
 var basc = new Object();
 
 function is_ascii(x)
@@ -128,20 +131,20 @@ initascii();
 function hjdbc_encrypt(data)
 {
     var t = data;
-	var iv = gIv;
-	var salt = gSalt;
-	var hash = gCiferHash;
-	
+    var iv = gIv;
+    var salt = gSalt;
+    var hash = gCiferHash;
+
 
     if ( !is_ascii(t) )
         return alert("The text is not plain ASCII. "
-              + "Convert it first to ASCII by clicking button 'Uni->ASCII'.");
-			  
-	var H = function(raw)
-	{
-		return engGetHash(raw, hash)
-	}
-	
+                     + "Convert it first to ASCII by clicking button 'Uni->ASCII'.");
+
+    var H = function(raw)
+    {
+        return engGetHash(raw, hash)
+    }
+
     var blk_size = H('').length;
 
     if ( iv.length != salt.length )
@@ -150,7 +153,7 @@ function hjdbc_encrypt(data)
     if ( iv.length != blk_size )
         return alert("IV size does not match Digest function");
 
-    var add_sign = false; /// 
+    var add_sign = true;
     var min_salt = 4;
     var min_salt = parseInt(min_salt);
 
@@ -183,16 +186,18 @@ function hjdbc_encrypt(data)
 
     N = C.length;
     if ( !add_sign ) --N;
-    var c_text = iv + '\n';
+    //var c_text = iv + '\n';
+    var c_text = iv;
     for ( var i = 0; i < N; i++ )
     {
-        c_text += C[i] + '\n';
+        //c_text += C[i] + '\n';
+        c_text += C[i];
     }
 
-	console.log('Iv: ' + gIv);
-	console.log('Salt: ' + gSalt);
-	console.log('c_text: ' + c_text);
-	return c_text;
+    console.log('Iv: ' + gIv);
+    console.log('Salt: ' + gSalt);
+    console.log('c_text: ' + c_text);
+    return c_text;
 
 }
 

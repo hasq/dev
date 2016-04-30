@@ -202,8 +202,8 @@ function widShowTokenHash(dn)
 
     if (arguments.length == 0)
         return $TokHash.empty();
-	else if (dn === null)
-		return $TokHash.html(gMsg.badTokenName);
+    else if (dn === null)
+        return $TokHash.html(gMsg.badTokenName);
 
     $TokHash.html(engGetTokenHash(dn, gCurrentDB.hash));
 }
@@ -293,7 +293,7 @@ function widGetTokenStateImg(status)
             r.title = 'Token is locked (wrong password)';
             break;
         default:
-            r.img = imgPwdDummy;
+                r.img = imgPwdDummy;
             r.title = '';
             break;
     }
@@ -455,24 +455,24 @@ function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
     var dnOrRaw = $Obj.val().replace(/\t/g, '\u0020');
 
     if (!engIsAsciiOrLF(dnOrRaw))
-	{
-		gTokInfo = {};
-		
-		if ( !gNonASCII )
-		{
-			gNonASCII = true;
-			$Obj.blur();
-			return widModalWindow(gMsg.nonASCII, function() 
-			{ 
-				widReloadTokenInfo();
-				$Obj.focus();
-			});
-		}
-		
-		return;		
-	}
-   
-	gNonASCII = false;
+    {
+        gTokInfo = {};
+
+        if ( !gNonASCII )
+        {
+            gNonASCII = true;
+            $Obj.blur();
+            return widModalWindow(gMsg.nonASCII, function()
+            {
+                widReloadTokenInfo();
+                $Obj.focus();
+            });
+        }
+
+        return;
+    }
+
+    gNonASCII = false;
 
     delay = +delay || 0;
     var tok = engGetTokenObj(engGetClearData(dnOrRaw));
@@ -516,10 +516,10 @@ function widLoadFiles(files)
         });
 
         $TokName.val('File: ' + data.name + '\nSize: ' + data.size);
-		
+
         var tok = engGetTokenObj(engGetClearData(data.raw));
-		
-		gNonASCII = false;
+
+        gNonASCII = false;
         widTokenTextRO(true);
         widReloadTokenInfo(tok, 0, true);
     }
@@ -534,13 +534,13 @@ function widLoadFiles(files)
 
 function widReloadButtonOnclick($Obj)
 {
-	var id = $Obj.prop('id');
-	var text = $('#textarea_token_name').val();
-	
-	if ( !gTokInfo.s && !text ) 
-		return widModalWindow(gHelp(id));
-	
-	widReloadTokenInfo(null, 0, true);
+    var id = $Obj.prop('id');
+    var text = $('#textarea_token_name').val();
+
+    if ( !gTokInfo.s && !text )
+        return widModalWindow(gHelp(id));
+
+    widReloadTokenInfo(null, 0, true);
 }
 
 function widReloadTokenInfo(tok, delay, noRefresh)
@@ -548,14 +548,14 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     delay = +delay || 0;
 
     clearTimeout(gTimerId);
-	
-	widShowTokenState();
+
+    widShowTokenState();
     widShowPwdInfo();
     widShowTokenHash();
     widShowTokenDataLength();
-	
-	if ( gNonASCII ) return widShowTokenHash(null);;
-   	
+
+    if ( gNonASCII ) return widShowTokenHash(null);;
+
     if ( tok === null && !gTokInfo.s )
         return;
 
@@ -585,7 +585,7 @@ function widReloadTokenInfo(tok, delay, noRefresh)
     {
         widShowTokenName(tok);
         widTokenTextRO(false);
-		widTurnOffFileButton();
+        widTurnOffFileButton();
     }
 
     widShowTokenHash(tok.s);
@@ -702,10 +702,10 @@ function widEmptyTab()
         show : function ()
         {
             $Tabs.tabs('option', 'active', 0);
-			widShowTokenState();
-			widShowPwdInfo();
-			widShowTokenHash();
-			widShowTokenDataLength();
+            widShowTokenState();
+            widShowPwdInfo();
+            widShowTokenHash();
+            widShowTokenDataLength();
          ///$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
         },
         isOn : function ()
@@ -773,14 +773,14 @@ function widCreateButtonClick()
 
     var addCb0 = function (resp)
     {
-		if (resp === gResponse.OK)
+        if (resp === gResponse.OK)
             return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
-        
-		if ( resp === 'FAIL' )
-			widModalWindow(gMsg.fail);
-		else
+
+        if ( resp === 'FAIL' )
+            widModalWindow(gMsg.fail);
+        else
             widModalWindow(gMsg.unexpected + gResponse[resp]);
-		
+
         widReloadTokenInfo(tok);
     }
 
@@ -955,7 +955,7 @@ function widTabButtonClick($Obj, tabId)
     $Obj.toggleClass('tab-button-on tab-button-off');
     $('.tab-button-on').not($Obj).toggleClass('tab-button-on tab-button-off');
     textArea($('#textarea_show_keys')).clear();
-		
+
     var f;
     switch (+tabId)
     {
@@ -1382,12 +1382,12 @@ function widSetDivOverflowSize()
     var $Results = $('#td_search_results');
     var $Div = $('.div-overflow');
 
-	var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
-	var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
+ var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
 
     var tdWidth = $Results.innerWidth() - pdnLeft - pdnRight;
     var divWidth = $Div.innerWidth();
-	
+
     $Div.css('max-width', tdWidth + 'px');
 }
 
@@ -1401,8 +1401,8 @@ function widHideOnclick()
 
     var tdWidth = $Results.innerWidth();
     var initsWidth = $Inits.innerWidth();
-	var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
-	var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
+ var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
     if ( $Obj.hasClass('td-visible') )
     {
@@ -1505,7 +1505,7 @@ function widSearchUpdate()
 
         xs = '<button class="search-dn" onclick="widDnSelect(\'' + window.btoa(xs) + '\')">' + xs + '</button>';
 
-        var xn = '' + x.n +' ';
+        var xn = '' + x.n + ' ';
         ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )

@@ -360,11 +360,11 @@ function doc_init()
     $('#span_logo img').attr('width', '28');
     $('#span_logo img').attr('height', '28');
     $('#span_logo img').attr('src', imgLogoWait);
-	$('#span_skc img').attr('src', imgSkcOff);
+    $('#span_skc img').attr('src', imgSkcOff);
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();
-	
+
     setTimeout(widRefreshButtonClick, 2000);
 }
 
