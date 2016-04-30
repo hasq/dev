@@ -173,6 +173,9 @@ function widAddSkc()
 
                gSkc = prompt('Enter SKC:', gSkc || '') || null;
 
+    if ( gSkc && !engIsAsciiOrLF(gSkc) )
+        gSkc = null;
+
     if ( gSkc )
         $Img.attr('src', imgSkcOn);
     else
@@ -185,7 +188,11 @@ function widCommandSendButtonClick()
 {
     var $CmdInput = $('#cmd_input');
     var $CmdOutput = $('#cmd_output');
+
     var cmd = $CmdInput.val();
+
+    if ( !engIsAsciiOrLF(cmd))
+        return $CmdOutput.empty();
 
     if ( gSkc )
         cmd = '#' + engGetCifer(cmd);

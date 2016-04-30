@@ -186,19 +186,16 @@ function hjdbc_encrypt(data)
 
     N = C.length;
     if ( !add_sign ) --N;
-    //var c_text = iv + '\n';
+
     var c_text = iv;
+
     for ( var i = 0; i < N; i++ )
-    {
-        //c_text += C[i] + '\n';
         c_text += C[i];
-    }
 
-    console.log('Iv: ' + gIv);
-    console.log('Salt: ' + gSalt);
-    console.log('c_text: ' + c_text);
+ ///console.log('Iv: ' + gIv);
+ ///console.log('Salt: ' + gSalt);
+ ///console.log('c_text: ' + c_text);
     return c_text;
-
 }
 
 function hjdbc_enc_cipher(v, iv, H)
