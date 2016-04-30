@@ -112,11 +112,9 @@ function getBrowser()
         case gBrowsers.FF_D.name:
          version = ua.split('Firefox/')[1];
             break;
-            /*
-            case 'opera':
-                                                                                                           version = ua.split('Version/')[1];
-                break;
-            */
+        //case 'opera':
+	//	version = ua.split('Version/')[1];
+        //        break;
         case gBrowsers.OP_D.name:
          //bName = 'opera';
          version = ua.split('OPR/')[1];
