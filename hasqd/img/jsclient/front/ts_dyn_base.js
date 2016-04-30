@@ -293,7 +293,7 @@ function widGetTokenStateImg(status)
             r.title = 'Token is locked (wrong password)';
             break;
         default:
-                r.img = imgPwdDummy;
+            r.img = imgPwdDummy;
             r.title = '';
             break;
     }
@@ -1498,7 +1498,7 @@ function widSearchUpdate()
         ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
         if ( x.state > 0 && x.state < 4 )
-            t[x.state] += '<span class="span-search-dn">' + xn + '</span>' + xs + '\n';
+            t[x.state] += xs + ' <span class="span-search-dn">' + xn + '</span>' + '\n';
 
             n[x.state]++;
     }

@@ -789,14 +789,14 @@ button.search-dn
     min-width: 14.375em;
     height: unset;
     border: 1px solid #8080FE;
-    background: #E0E0FE;
+    background: #E8E8FE;
     margin-bottom: 1px;
     padding: 0;
     opacity: 1;
 }
 button.search-dn:hover
 {
-    background: #D0F0F0;
+     background: #EEEEFE;
 }
 
 button.search-tabs-buttons
