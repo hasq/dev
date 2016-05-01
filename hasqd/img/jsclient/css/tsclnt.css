@@ -1476,7 +1476,7 @@ textarea::-moz-placeholder
 	#span_info img,
 	#span_shield img
 	{
-		width: 3em;
+		width: 2em;
 		height: auto;
 	}
 	
@@ -1509,7 +1509,7 @@ textarea::-moz-placeholder
 	
 	#span_reload img
 	{
-		width: 1.5em;
+		width: 1.2em;
 		height: auto;
 	}
 
