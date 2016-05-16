@@ -726,7 +726,9 @@ input::-moz-placeholder
 .td-hidden:hover
 {
 	background-color: #eef;
-	background-position: right bottom;;
+	background-position: right bottom;
+	cursor: pointer;
+	
 }
 
 

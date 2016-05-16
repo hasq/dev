@@ -260,7 +260,7 @@ function widGetHTMLRecTabTokArea()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2" align="right" />\n';
-    r += '<button id="lr_button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
+    r += '<button id="lr_button" class="long-button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
 

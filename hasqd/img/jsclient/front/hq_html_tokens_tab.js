@@ -298,7 +298,7 @@ function widGetHTMLTokensSS3()
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
                      r += '<td align="left" />\n';
-                         r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep1" data-title="Initiate Step 1" >Initiate Step 1</button>\n';
+                         r += '<button class="shared-button long-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep1" data-title="Initiate Step 1" >Initiate Step 1</button>\n';
                      r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_ss3_s1_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
@@ -316,7 +316,7 @@ function widGetHTMLTokensSS3()
     r += '<table style="width:auto;" >\n';
     r += '<tr>\n';
                      r += '<td align="left" />\n';
-                         r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep2" data-title="Initiate Step 2">Initiate Step 2</button>\n';
+                         r += '<button class="shared-button long-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep2" data-title="Initiate Step 2">Initiate Step 2</button>\n';
                      r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_ss3_s2_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
@@ -352,7 +352,7 @@ function widGetHTMLTokensSS4()
     r += widGetHTMLSpanLed('tokens_ss4_s1_led_span', 'led-span') + '\n';
                      r += '<td align="right" />\n';
                          r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
-                         r += '<button data-function="widPreBlockingAcceptStep1" data-title="Finalize Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
+                         r += '<button data-function="widPreBlockingAcceptStep1" data-title="Finalize Step 1" class="shared-button long-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
                  r += '</tr>\n';
              r += '</table>\n';
      r += '</tr>\n';
@@ -373,7 +373,7 @@ function widGetHTMLTokensSS4()
     r += widGetHTMLSpanLed('tokens_ss4_s2_led_span', 'led-span') + '\n';
                      r += '<td align="right" />\n';
                          r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
-                         r += '<button data-function="widPreBlockingAcceptStep2" data-title="Finalize Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
+                         r += '<button data-function="widPreBlockingAcceptStep2" data-title="Finalize Step 2" class="shared-button long-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
                  r += '</tr>\n';
              r += '</table>\n';
     r += '</tr>\n';
@@ -477,7 +477,7 @@ function widGetHTMLTokensRS3()
     r += widGetHTMLSpanLed('tokens_rs3_s1_led_span', 'led-span') + '\n';
                          r += '<td align="right" />\n';
                              r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
-                             r += '<button data-function="widPreBlockingReceiveStep1" data-title="Finalize Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
+                             r += '<button data-function="widPreBlockingReceiveStep1" data-title="Finalize Step 1" class="shared-button long-button" onclick="widMainButtonClick($(this))">Finalize Step 1</button>\n';
                      r += '</tr>\n';
                  r += '</table>\n';
          r += '</tr>\n';
@@ -498,7 +498,7 @@ function widGetHTMLTokensRS3()
     r += widGetHTMLSpanLed('tokens_rs3_s2_led_span', 'led-span') + '\n';
                          r += '<td align="right" />\n';
                              r += '<button data-title="Continue" class="continue-button" onclick="widContinueButtonClick($(this), true)">Hidden</button>\n';
-                             r += '<button data-function="widPreBlockingReceiveStep2" data-title="Finalize Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
+                             r += '<button data-function="widPreBlockingReceiveStep2" data-title="Finalize Step 2" class="shared-button long-button" onclick="widMainButtonClick($(this))">Finalize Step 2</button>\n';
                      r += '</tr>\n';
                  r += '</table>\n';
          r += '</tr>\n';
@@ -518,7 +518,7 @@ function widGetHTMLTokensRS4()
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
                      r += '<td align="left" />\n';
-                         r += '<button data-function="widPreBlockingRequestStep1" data-title="Initiate Step 1" class="shared-button" onclick="widMainButtonClick($(this))">Initiate Step 1</button>\n';
+                         r += '<button data-function="widPreBlockingRequestStep1" data-title="Initiate Step 1" class="shared-button long-button" onclick="widMainButtonClick($(this))">Initiate Step 1</button>\n';
                      r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_rs4_s1_led_span', 'led-span') + '\n';
                  r += '</tr>\n';
@@ -536,7 +536,7 @@ function widGetHTMLTokensRS4()
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
                          r += '<td align="left" />\n';
-                             r += '<button data-function="widPreBlockingRequestStep2" data-title="Initiate Step 2" class="shared-button" onclick="widMainButtonClick($(this))">Initiate Step 2</button>\n';
+                             r += '<button data-function="widPreBlockingRequestStep2" data-title="Initiate Step 2" class="shared-button long-button" onclick="widMainButtonClick($(this))">Initiate Step 2</button>\n';
                          r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_rs4_s2_led_span', 'led-span') + '\n';
                  r += '</tr>\n';

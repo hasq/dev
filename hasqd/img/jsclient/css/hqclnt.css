@@ -294,7 +294,7 @@ textarea::-moz-placeholder
 	width: 100px;
 }
 
-#lr_button
+.long-button
 {
 	width: 150px;
 }
