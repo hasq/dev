@@ -6,6 +6,8 @@ Critical things
 [A] (om) nedopisannyj help
 [A] (om) help o data size ubrat
 [B] warn on backpace - chasto user klikaet nazad posle prochtenija popup window
+[A] palec na knopke levo-pravo
+[A] nginx statistika
 
 Major things
 ------------
