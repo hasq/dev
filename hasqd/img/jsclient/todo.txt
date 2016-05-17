@@ -2,7 +2,7 @@ Critical things
 ---------------
 [A] (om) engSearchClick remove return dates; remove storing dates in gSearch
 DONE [A] hq: polomannye knopki "Initiate Step 1" (Firefox)
-[B] hq: (obsudit) Dobavit ispolzovanie SKC v Record and Token - vazhno umet dobavit 0-ju zapis kak obhod limit
+DONE [B] hq: (obsudit) Dobavit ispolzovanie SKC v Record and Token - vazhno umet dobavit 0-ju zapis kak obhod limit
 [A] (om) nedopisannyj help
 [A] (om) help o data size ubrat
 [B] warn on backpace - chasto user klikaet nazad posle prochtenija popup window

@@ -1,10 +1,9 @@
 body {
-    font: normal 14px Consolas, "Courier New", monospace !important;
+    font: normal 1em Consolas, "Courier New", monospace !important;
     color: black;
 	background: #FCFCFC;
 	width: 60%;
-	min-width: 630px;
-	min-height: 480px;
+	min-width: 640px;
     margin: auto;
 }
 
@@ -30,6 +29,11 @@ td tr {
 p {
 	word-wrap: break-word;
 	white-space: normal;
+}
+
+button
+{
+	font: bold 1em Consolas, "Courier New", monospace !important;
 }
 
 table {
@@ -126,6 +130,15 @@ input:focus:invalid
     border-color: red;
 }
 
+label
+{
+	font: normal 14px Consolas, "Courier New", monospace !important;
+	white-space: nowrap;
+	text-align: left;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
 textarea
 {
 	font: normal 14px Consolas, "Courier New", monospace !important;
@@ -196,6 +209,11 @@ textarea::-moz-placeholder
     padding: 4px;
 }
 
+.ui-widget
+{
+	font-size: 0.75em;	
+}
+
 /* .ui-widget-header {
     font-weight: bold;
     height: 30px
@@ -218,12 +236,6 @@ textarea::-moz-placeholder
     top:-2px ;
 } */
 
-
-.td-label {
-    font: normal 14px Consolas, "Courier New", monospace !important;
-	white-space: nowrap;
-	align: left;
-}
 
 .td-records-title {
 	text-align: left;

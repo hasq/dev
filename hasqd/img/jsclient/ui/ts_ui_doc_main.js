@@ -116,6 +116,10 @@ function docInit()
     widSetDivOverflowSize();
     widEmptyTab();
 
+/*	
+	window.onbeforeunload  = function(e) {	return	};
+*/
+	
     engSendPing(0);
 }
 

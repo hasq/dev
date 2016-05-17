@@ -364,6 +364,10 @@ function doc_init()
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();
+    
+	$('#td_records_encrypt').hide();
+    $('#td_tokens_encrypt').hide();
+    $('#td_tokens_encrypt').hide();
 
     setTimeout(widRefreshButtonClick, 2000);
 }

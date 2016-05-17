@@ -515,6 +515,8 @@ function widPreCreate($obj)
 
 function widCreateTokens($obj, tokens)
 {
+	var enc = $('#input_tokens_encrypt').prop('checked');
+	
     var cbFunc = function (cbData, cmdIdx, progress)
     {
         if (glCmdList.items.length === 0)
@@ -542,6 +544,10 @@ function widCreateTokens($obj, tokens)
     {
         var r = engGetRecord(0, tokens[i].s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
         var zCmd = 'z * ' + gCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
+		
+		if ( enc )
+			zCmd = '#' + engGetCifer(zCmd);
+		
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
         var zCmdIdx = (i == 0) ? 0 : i * 2;
         var lastCmdIdx = zCmdIdx + 1;

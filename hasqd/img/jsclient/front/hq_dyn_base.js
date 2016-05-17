@@ -169,18 +169,25 @@ function widRefreshButtonClick()
 
 function widAddSkc()
 {
-    var $Img = $('#span_skc img')
+    var $Img = $('#span_skc img');
 
-               gSkc = prompt('Enter SKC key:', gSkc || '') || null;
+    gSkc = prompt('Enter SKC key:', gSkc || '') || null;
 
     if ( gSkc && !engIsAsciiOrLF(gSkc) )
         gSkc = null;
 
     if ( gSkc )
+	{
         $Img.attr('src', imgSkcOn);
+		$('#td_records_encrypt').show();
+		$('#td_tokens_encrypt').show();	
+	}
     else
+	{
         $Img.attr('src', imgSkcOff);
-
+		$('#td_records_encrypt').hide();
+		$('#td_tokens_encrypt').hide();		
+	}
     return;
 }
 
@@ -533,7 +540,9 @@ function widSubmitButtonClick()
     var nr_g = $('#nr_g_input').val();
     var nr_o = $('#nr_o_input').val();
     var nr_d = $('#nr_d_input').val();
-
+	var enc = $('#input_records_encrypt').prop('checked');
+	var cmd = ( +nr_n == 0 ) ? 'z' : 'add';
+	
     var cb = function (data)
     {
         var $HistorySelect = $('#tokens_history_select');
@@ -544,9 +553,12 @@ function widSubmitButtonClick()
         var d = +$HistorySelect.get(0).options[i].text;
         widTokensHistorySelect(d);
     }
+	
+    var nr = cmd + ' * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
 
-    var nr = 'add * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
-
+	if ( enc )
+		nr = '#' + engGetCifer(nr);
+	
     ajxSendCommand(nr, cb, hasqLogo);
 }
 
