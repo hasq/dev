@@ -29,6 +29,7 @@ td tr {
 p {
 	word-wrap: break-word;
 	white-space: normal;
+	font-size: 0.75em;
 }
 
 pre
