@@ -3,26 +3,36 @@
 function widGetHTMLSpanLed(id, htmlClass)
 {
     var r = '';
+    var style = 'style="text-align:center; vertical-align:middle;"';
 
     if (arguments.length > 1)
-        r += '<span id="' + id + '" class="' + htmlClass + '" align="center" valign="middle"><img></img></span>\n';
-        else
-        r += '<span id="' + id + '" align="center" valign="middle"><img></img></span>\n';
+    {
+        r += '<span id="' + id + '" class="' + htmlClass + '" ' + style + '><img></img></span>\n';
+    }
+    else
+    {
+        r += '<span id="' + id + '" ' + style + '><img></img></span>\n';
+    }
 
-            return r;
+    return r;
 }
 
 
 function widGetHTMLSpanImg(id, func)
 {
     var r = '';
+    var style = 'style="text-align:center;"';
 
     if (func)
-        r += '<span id="' + id + '" onclick="' + func + '" style="text-align:center;"><img src=""></img></span>\n';
-        else
-        r += '<span id="' + id + '" style="text-align:center;"><img src=""></img></span>\n';
+    {
+        r += '<span id="' + id + '" onclick="' + func + '" ' + style + '><img src=""></img></span>\n';
+    }
+    else
+    {
+        r += '<span id="' + id + '" ' + style + '><img src=""></img></span>\n';
+    }
 
-            return r;
+    return r;
 }
 
 function widGetHTMLTd(x)
@@ -58,10 +68,10 @@ function widGetHTMLBody(tabs)
 {
     var r = '';
 
-    r += '<table id="table_body" border="0" nowrap>\n';
+    r += '<table id="table_body" border="0">\n';
     r += '<tr>\n';
-    r += '<td nowrap>\n' + widGetHTMLTitle(gClientTitle);
-    r += '<td style="text-align:right;">&nbsp;\n';
+    r += '<td>\n' + widGetHTMLTitle(gClientTitle);
+    r += '<td style="text-align:right;"/>&nbsp;\n';
     r += widGetHTMLSpanLed('span_logo') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
@@ -86,8 +96,7 @@ function widGetHTMLTitle(text)
 
     r += '<table border="0">\n';
     r += '<tr>\n';
-    r += '<td>\n';
-    r += '<div style="font-size:20px">\n' + text + '</div>\n';
+    r += '<td id="td_client_title"/>' + text + '\n';
     r += '</tr>\n';
     r += '</table>\n';
 
@@ -132,7 +141,7 @@ function widGetHTMLServerTab()
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td>\n';
-    r += '<table border="1" style="width:auto; font-family:monospace;">\n';
+    r += '<table id="table_server">\n';
     r += '<tr>\n' + widGetHTMLTd('Host') + widGetHTMLTdSpan('server_host', widGetHTMLRefreshButton()) + '</tr>\n';
     r += '<tr>\n' + widGetHTMLTd('Server') + widGetHTMLTdSpan('server_id') + '</tr>\n';
     r += '<tr>\n' + widGetHTMLTd('System') + widGetHTMLTdSpan('server_sys') + '</tr>\n';
@@ -165,7 +174,7 @@ function widGetHTMLFamilyTable(data)
     if (data.length === 0 )
         return r;
 
-    r += '<table border="1" style="width:auto; font-family:monospace;">\n';
+    r += '<table id="table_family">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
     for (var i = 0; i < data.list.length; i++)
@@ -222,44 +231,43 @@ function widGetHTMLDatabaseTraitTable(data)
 {
     var r = '';
 
-    r += '<table border="1" style="width:auto;font-family:monospace;">\n';
+    r += '<table id="table_database">\n';
     r += '<tr><th>Trait</th><th>Value</th></tr>\n';
 
     for (var key in data)
+    {
         r += '<tr><td>' + key + '<td>' + data[key] + '</tr>\n';
+    }
 
     r += '</table>\n';
 
-        return r;
+    return r;
 }
 
 function widGetHTMLRecTabTokArea()
 {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table id="table_tok_area">\n';
     r += '<tr>\n';
     r += '<td colspan="2" class="td-records-title"/>\n';
     r += '<b>&nbsp;Current DB:</b>\n';
     r += '<b><span id="current_db">No database</span></b>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2" height="5px"/>';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="70"/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="rdn_input">Raw token</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="rdn_input" oninput="return widTokenNameOninput()">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
-	r += '<label for="dn_input">Token</label>\n';
+    r += '<td class="td-label"/>\n';
+ r += '<label for="dn_input">Token</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="dn_input" oninput="return widTokenHashOninput()">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2" align="right"/>\n';
+    r += '<td colspan="2" id="td_lr_button"/>\n';
     r += '<button id="lr_button" class="long-button" onclick="widGetLastRecordButtonClick()">Get Last Record</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
@@ -271,33 +279,33 @@ function widGetHTMLRecTabLRArea()
 {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table id="table_lr_area" border="0">\n';
     r += '<tr>\n';
-    r += '<td width="70"/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="lr_n_input">Record #</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="lr_n_input" readonly/>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="lr_k_input">Key</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="lr_k_input" readonly>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="lr_g_input">Generator</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="lr_g_input" readonly>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="lr_o_input">Owner</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="lr_o_input" readonly>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="lr_d_input">Data</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="lr_d_input" readonly>\n';
@@ -311,31 +319,28 @@ function widGetHTMLRecTabPwdArea()
 {
     var r = '';
 
-    r += '<table border="0">';
+    r += '<table id="table_pwd_area">';
     r += '<tr>\n';
     r += '<td class="td-records-title" colspan="2"/>\n';
     r += '<b>&nbsp;New record</b>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2" height="5px"/>';
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td width="40%" align="left"/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
     r += '<label for="one_pwd_checkbox">One password</label>\n';
-    r += '<td align="left">\n';
+    r += '<td/>\n';
     r += '<input type="password" class="password" id="nr_pwd0_input" oninput="widShowNewRecOninput()" disabled>\n';
 
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
-	r += '<label for="three_pwd_checkbox">Three passwords</label>\n';
-    r += '<td align="left"/>\n';
+ r += '<label for="three_pwd_checkbox">Three passwords</label>\n';
+    r += '<td/>\n';
     r += '<input type="password" class="password" id="nr_pwd1_input" oninput="widShowNewRecOninput()" disabled>\n';
 
     r += '<tr>\n';
-    r += '<td  align="left">';
-    r += '<td  align="left">\n';
+    r += '<td/>';
+    r += '<td/>\n';
     r += '<input type="password" class="password" id="nr_pwd2_input" oninput="widShowNewRecOninput()" disabled>\n';
 
     r += '</table>';
@@ -347,33 +352,33 @@ function widGetHTMLRecTabNRArea()
 {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table id="table_nr_area">\n';
     r += '<tr>\n';
-    r += '<td width="70"/>\n';
-	r += '<label for="nr_n_input">Record #</label>\n';
+    r += '<td class="td-label"/>\n';
+ r += '<label for="nr_n_input">Record #</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_n_input" oninput="widShowNewRecOninput();" >\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
-	r += '<label for="nr_k_input">Key</label>\n';
+    r += '<td class="td-label"/>\n';
+ r += '<label for="nr_k_input">Key</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety(this.id)">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
-	r += '<label for="nr_g_input">Generator</label>\n';
+    r += '<td class="td-label"/>\n';
+ r += '<label for="nr_g_input">Generator</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety(this.id)">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="nr_o_input">Owner</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety(this.id)">\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>\n';
+    r += '<td class="td-label"/>\n';
     r += '<label for="nr_d_input">Data</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_d_input" oninput="">\n';
@@ -383,26 +388,55 @@ function widGetHTMLRecTabNRArea()
     return r;
 }
 
-function widGetHTMLRecTabHistoryMenuArea()
+function widGetHTMLRecTabSubmitArea()
+{
+    var r = '';
+
+    r += '<table id="table_submit_area">\n';
+    r += '<tr>\n';
+ r += '<td id="td_label_records_encrypt" class="td-label"/>\n';
+ r += '<label for="input_records_encrypt">Admin mode</label>';
+ r += '<td id="td_input_records_encrypt"/>\n';
+    r += '<input id="input_records_encrypt" type="checkbox">\n';
+ r += '<td id="td_submit_button"/>\n';
+ r += '<button id="submit_button" onclick="widSubmitButtonClick()">Submit</button>\n';
+ r += '</tr>\n';
+ r += '</table>\n';
+
+    return r;
+}
+
+function widGetHTMLRecTabHistoryArea()
 {
     var r = '';
 
     r += '<table>';
     r += '<tr>\n';
-    r += '<td class="td-records-title" width="50%">\n';
+    r += '<td class="td-records-title td-50">\n';
     r += '<b>&nbsp;History</b>\n';
-    r += '<td align="right" valign="middle" width="70">\n';
-    r += '<select name="tokens_history" id="tokens_history_select">\n';
+    r += '<td id="td_select_records_history">\n';
+    r += '<select name="tokens_history" id="select_records_history">\n';
     r += '<option selected="selected">0</option>\n';
     r += '<option>3</option>\n';
     r += '<option>10</option>\n';
     r += '<option>30</option>\n';
     r += '</select>\n';
-    r += '<td align="left" valign="middle"/>\n';
-    r += '<label for="tokens_history_select">last records</label>\n';
+    r += '<td/>\n';
+    r += '<label for="select_records_history">last records</label>\n';
+    r += '</tr>\n';
+    r += '<tr>\n';
+    r += '<td colspan="3"/>\n';
+    r += '<textarea id="textarea_records_history" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>';
 
+    return r;
+}
+
+function widGetHTMLRecTabLogArea()
+{
+    var r = '';
+ r += '<div id="div_records_log">&nbsp;</div>\n';
     return r;
 }
 
@@ -412,9 +446,9 @@ function widGetHTMLRecordsTab()
 
     r += '<table border="0">\n';
     r += '<tr>\n';
-    r += '<td width="50%"/>\n';
+    r += '<td class="td-50"/>\n';
     r += widGetHTMLRecTabTokArea();
-    r += '<td width="50%"/>\n';
+    r += '<td class="td-50"/>\n';
     r += widGetHTMLRecTabLRArea();
     r += '</tr>\n';
     r += '<tr>\n';
@@ -422,24 +456,15 @@ function widGetHTMLRecordsTab()
     r += '<hr/>';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td width="50%"/>\n';
+    r += '<td class="td-50"/>\n';
     r += widGetHTMLRecTabPwdArea();
-    r += '<td width="50%"/>\n';
+    r += '<td class="td-50"/>\n';
     r += widGetHTMLRecTabNRArea();
     r += '</tr>\n';
     r += '<tr>\n';
-	
-    r += '<td colspan="2" style="text-align: right"/>\n';
-		r += '<table style="width: auto; margin-left: auto" border="0">\n';
-		r += '<tr>\n';
-		r += '<td id="td_records_encrypt"/>\n';
-		r += '<input id="input_records_encrypt" type="checkbox">\n';
-		r += '<label for="input_records_encrypt">Encrypt</label>';
-		r += '<td/>\n';
-		r += '<button id="submit_button" onclick="widSubmitButtonClick()">Submit</button>\n';
-		r += '</tr>\n';
-		r += '</table>\n';
-	
+    r += '<td/>\n';
+    r += '<td/>\n';
+    r += widGetHTMLRecTabSubmitArea();
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
@@ -447,11 +472,7 @@ function widGetHTMLRecordsTab()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
-    r += widGetHTMLRecTabHistoryMenuArea();
-    r += '</tr>\n';
-    r += '<tr>\n';
-    r += '<td colspan="2"/>\n';
-    r += '<textarea id="tokens_history_textarea" wrap="off" rows="4" readonly></textarea>\n';
+    r += widGetHTMLRecTabHistoryArea();
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
@@ -459,13 +480,12 @@ function widGetHTMLRecordsTab()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
-    r += '<div id="div_records_log">&nbsp;' + '</div>\n';
+    r += widGetHTMLRecTabLogArea();
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="2"/>\n';
     r += '<hr/>';
     r += '</tr>\n';
-
     r += '</table>\n';
 
     return r;
@@ -477,21 +497,21 @@ function widGetHTMLHashcalcTab()
 
     r += '<table>\n';
     r += '<tr>\n';
-    r += '<td align="left">' + widGetHTMLHashcalcSelect();
+    r += '<td/>' + widGetHTMLHashcalcSelect();
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td>\n';
-    r += '<textarea rows="5" id="hashcalc_in_textarea" oninput="widHashcalcOninput()"></textarea>';
+    r += '<td/>\n';
+    r += '<textarea rows="5" id="textarea_hashcalc_in" oninput="widHashcalcOninput()"></textarea>';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td>';
-    r += '<textarea rows="3" id="hashcalc_out_textarea" readonly></textarea>';
+    r += '<td/>';
+    r += '<textarea rows="3" id="textarea_hashcalc_out" readonly></textarea>';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td align="right" nowrap>\n';
-    r += '<button id="send_to_k_button" onclick="return $(\'#nr_k_input\').val($(\'#hashcalc_out_textarea\').val())">Send to K</button>\n';
-    r += '<button id="send_to_g_button" onclick="return $(\'#nr_g_input\').val($(\'#hashcalc_out_textarea\').val())">Send to G</button>\n';
-    r += '<button id="send_to_o_button" onclick="return $(\'#nr_o_input\').val($(\'#hashcalc_out_textarea\').val())">Send to O</button>\n';
+    r += '<td id="td_hashcalc_buttons"/>\n';
+    r += '<button id="send_to_k_button" onclick="return $(\'#nr_k_input\').val($(\'#textarea_hashcalc_out\').val())">Send to K</button>\n';
+    r += '<button id="send_to_g_button" onclick="return $(\'#nr_g_input\').val($(\'#textarea_hashcalc_out\').val())">Send to G</button>\n';
+    r += '<button id="send_to_o_button" onclick="return $(\'#nr_o_input\').val($(\'#textarea_hashcalc_out\').val())">Send to O</button>\n';
     r += '</tr>\n';
     r += '</table>\n';
 
@@ -502,7 +522,7 @@ function widGetHTMLHashcalcSelect()
 {
     var r = '';
 
-    r += '<select id="hashcalc_select">\n';
+    r += '<select id="select_hashcalc">\n';
     r += '<option value="0">MD5</option>\n';
     r += '<option value="1">RIPEMD-160</option>\n';
     r += '<option value="2">SHA2-256</option>\n';
@@ -520,17 +540,17 @@ function widGetHTMLCommandTab()
 
     r += '<table border="0">\n';
     r += '<tr>\n';
-    r += '<td width="70"/>\n';
-    r += '<button type="submit" id="cmd_button" onclick="widCommandSendButtonClick()">Send</button>\n';
-    r += '<td align="left"/>\n';
-    r += '<input type="text" id="cmd_input" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
+    r += '<td id="td_button_cmd"/>\n';
+    r += '<button type="submit" id="button_cmd" onclick="widCommandSendButtonClick()">Send</button>\n';
+    r += '<td/>\n';
+    r += '<input type="text" id="input_cmd" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
  r += '<td id="td_skc"/>\n';
     r += widGetHTMLSpanImg('span_skc', 'widAddSkc()');
  r += '<img></img>';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td colspan="3"/>\n';
-    r += '<textarea rows="5" id="cmd_output" wrap="off" readonly></textarea>\n';
+    r += '<textarea id="textarea_cmd" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
 

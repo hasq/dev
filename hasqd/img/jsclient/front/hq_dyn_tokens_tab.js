@@ -515,8 +515,8 @@ function widPreCreate($obj)
 
 function widCreateTokens($obj, tokens)
 {
-	var enc = $('#input_tokens_encrypt').prop('checked');
-	
+    var enc = $('#input_tokens_encrypt').prop('checked');
+
     var cbFunc = function (cbData, cmdIdx, progress)
     {
         if (glCmdList.items.length === 0)
@@ -544,11 +544,14 @@ function widCreateTokens($obj, tokens)
     {
         var r = engGetRecord(0, tokens[i].s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
         var zCmd = 'z * ' + gCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
-		
-		if ( enc )
-			zCmd = '#' + engGetCifer(zCmd);
-		
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
+
+        if ( enc )
+        {
+            zCmd = '#' + engGetCifer(zCmd);
+            lastCmd = '#' + engGetCifer(lastCmd);
+        }
+
         var zCmdIdx = (i == 0) ? 0 : i * 2;
         var lastCmdIdx = zCmdIdx + 1;
 
@@ -556,6 +559,7 @@ function widCreateTokens($obj, tokens)
         glCmdList.items[zCmdIdx].cmd = zCmd;
         glCmdList.items[zCmdIdx].raw = tokens[i].raw;
         glCmdList.items[zCmdIdx].s = tokens[i].s;
+
         glCmdList.items[lastCmdIdx] = {};
         glCmdList.items[lastCmdIdx].cmd = lastCmd;
         glCmdList.items[lastCmdIdx].raw = tokens[i].raw;
@@ -634,6 +638,7 @@ function widPreVerify($obj)
 
 function widVerifyTokens($obj, tokens)
 {
+    var enc = $('#input_tokens_encrypt').prop('checked');
     var cbFunc = function (ajxData, cmdIdx, progress)
     {
         if (glCmdList.items.length == 0)
@@ -642,7 +647,10 @@ function widVerifyTokens($obj, tokens)
         var resp = engGetResponseHeader(ajxData);
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
+        {
+            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
             return widDone($obj, resp);
+        }
 
         widShowProgressbar(progress);
         widShowTokensLog('Verifying...');
@@ -667,6 +675,10 @@ function widVerifyTokens($obj, tokens)
     for (var i = 0; i < tokens.length; i++)
     {
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
+
+        if ( enc )
+            lastCmd = '#' + engGetCifer(lastCmd);
+
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
         glCmdList.items[i].raw = tokens[i].raw;
@@ -681,6 +693,7 @@ function widFillOutTokList($obj, tokens, extCb)
     glTokList.clear();
     glCmdList.clear();
 
+    var enc = $('#input_tokens_encrypt').prop('checked');
     var cbFunc = function (cbData, cmdIdx, progress)
     {
         if (glCmdList.items.length == 0)
@@ -689,7 +702,10 @@ function widFillOutTokList($obj, tokens, extCb)
         var resp = engGetResponseHeader(cbData);
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
+        {
+            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp)
             return widDone($obj, resp);
+        }
 
         widShowProgressbar(progress);
 
@@ -707,6 +723,10 @@ function widFillOutTokList($obj, tokens, extCb)
     for (var i = 0; i < tokens.length; i++)
     {
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
+
+        if ( enc )
+            lastCmd = '#' + engGetCifer(lastCmd);
+
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
         glCmdList.items[i].raw = (tokens[i].raw !== undefined) ? tokens[i].raw : '';
@@ -719,7 +739,9 @@ function widFillOutTokList($obj, tokens, extCb)
 function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
 {
     // callback function for all functions which update tokens;
+    console.log('1');
     var msg = 'No tokens or keys to processing!';
+    var resp = engGetResponseHeader(cbData);
 
     if (glCmdList.items.length == 0)
     {
@@ -730,8 +752,6 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     msg = 'Processing...';
     widShowProgressbar(progress);
     widShowTokensLog(msg);
-
-    var resp = engGetResponseHeader(cbData);
 
     (resp !== 'OK' && resp !== 'IDX_NODN')
     ? widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp)
@@ -789,6 +809,8 @@ function widPreUpdate($obj, click)
 
 function widUpdateTokens($obj, data, items)
 {
+    var enc = $('#input_tokens_encrypt').prop('checked');
+
     glTokList.clear();
 
     for (var i = 0; i < items.length; i++)
@@ -796,10 +818,17 @@ function widUpdateTokens($obj, data, items)
         if (items[i].state == 'OK' && items[i].d != data)
         {
             var n = +items[i].n + 1;
-            var s = items[i].s
-                    var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
+            var s = items[i].s;
+            var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
             var addCmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + gCurrentDB.name + ' ' + s;
+
+            if ( enc )
+            {
+                addCmd = '#' + engGetCifer(addCmd);
+                lastCmd = '#' + engGetCifer(lastCmd);
+            }
+
             var idx = (glCmdList.items.length == 0) ? 0 : glCmdList.items.length;
 
             glCmdList.items[idx] = {};
@@ -815,10 +844,12 @@ function widUpdateTokens($obj, data, items)
             glCmdList.items[idx].s = items[i].s;
         }
     }
+
     var cb = function (cbData, cmdIdx, progress)
     {
         cbTokensUpdate(cbData, cmdIdx, progress, $obj);
     }
+
     engRunCmdList(glCmdList, cb);
 }
 
@@ -970,6 +1001,8 @@ function widPreSimpleReceive($obj, click)
 
 function widSimpleReceive($obj, titleRecord)
 {
+    var enc = $('#input_tokens_encrypt').prop('checked');
+
     for (var i = 0; i < titleRecord.length; i++)
     {
         var n1 = titleRecord[i].n1;
@@ -984,6 +1017,12 @@ function widSimpleReceive($obj, titleRecord)
 
         var addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+
+        if ( enc )
+        {
+            addCmd1 = '#' + engGetCifer(addCmd1);
+            addCmd2 = '#' + engGetCifer(addCmd2);
+        }
 
         var idx = (i == 0) ? 0 : i * 2;
 
@@ -1033,6 +1072,7 @@ function widPreSimpleRequest($obj)
         default:
                 if (!widIsRawTokens())
                     return widDone($obj, 'Empty or bad tokens!');
+
             if (!widIsPassword())
                 return widDone($obj, 'Empty password!');
 
@@ -1041,6 +1081,7 @@ function widPreSimpleRequest($obj)
             {
                 widPreSimpleRequest($obj);
             }
+
             led($obj).set(imgMsgBlink, msg);
             widFillOutTokList($obj, tok, extCb);
             break;
@@ -1139,6 +1180,8 @@ function widSimpleAccept($obj, titleRecord)
         addCmd2,
         idx;
 
+    var enc = $('#input_tokens_encrypt').prop('checked');
+
     for (var i = 0; i < titleRecord.length; i++)
     {
         n1 = titleRecord[i].n1;
@@ -1152,6 +1195,12 @@ function widSimpleAccept($obj, titleRecord)
         o2 = titleRecord[i].o2;
         addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
+
+        if ( enc )
+        {
+            addCmd1 = '#' + engGetCifer(addCmd1);
+            addCmd2 = '#' + engGetCifer(addCmd2);
+        }
 
         idx = (i == 0) ? 0 : i * 2;
 
@@ -1403,6 +1452,7 @@ function widBlockingReceiveStep1($obj, titleRecord)
         g1,
         o1,
         addCmd;
+    var enc = $('#input_tokens_encrypt').prop('checked');
 
     for (var i = 0; i < titleRecord.length; i++)
     {
@@ -1413,6 +1463,9 @@ function widBlockingReceiveStep1($obj, titleRecord)
         o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+        if ( enc )
+            addCmd = '#' + engGetCifer(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1462,6 +1515,7 @@ function widBlockingReceiveStep2($obj, titleRecord)
         g1,
         o1,
         addCmd;
+    var enc = $('#input_tokens_encrypt').prop('checked');
 
     for (var i = 0; i < titleRecord.length; i++)
     {
@@ -1472,6 +1526,9 @@ function widBlockingReceiveStep2($obj, titleRecord)
         o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+        if ( enc )
+            addCmd = '#' + engGetCifer(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1724,6 +1781,7 @@ function widBlockingAcceptStep1($obj, titleRecord)
         g1,
         o1,
         addCmd;
+    var enc = $('#input_tokens_encrypt').prop('checked');
 
     for (var i = 0; i < titleRecord.length; i++)
     {
@@ -1734,6 +1792,9 @@ function widBlockingAcceptStep1($obj, titleRecord)
         o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+        if ( enc )
+            addCmd = '#' + engGetCifer(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1784,6 +1845,7 @@ function widBlockingAcceptStep2($obj, titleRecord)
         g1,
         o1,
         addCmd;
+    var enc = $('#input_tokens_encrypt').prop('checked');
 
     for (var i = 0; i < titleRecord.length; i++)
     {
@@ -1794,6 +1856,9 @@ function widBlockingAcceptStep2($obj, titleRecord)
         o1 = titleRecord[i].o1;
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+        if ( enc )
+            addCmd = '#' + engGetCifer(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;

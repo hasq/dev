@@ -134,33 +134,33 @@ function doc_init()
                 {
              case 'md5': //md5
                         widHashcalcOninput();
-                 //$('#hashcalc_select').get(0).selectedIndex = 0;
-                        $('#hashcalc_select').val(0);
+                 //$('#select_hashcalc').get(0).selectedIndex = 0;
+                        $('#select_hashcalc').val(0);
                         break;
              case 'r16': //r16
                         widHashcalcOninput();
-                        $('#hashcalc_select').val(1);
+                        $('#select_hashcalc').val(1);
                         break;
              case 's22': //s22
                         widHashcalcOninput();
-                        $('#hashcalc_select').val(2);
+                        $('#select_hashcalc').val(2);
                         break;
              case 's25': //s25
                         widHashcalcOninput();
-                        $('#hashcalc_select').val(3);
+                        $('#select_hashcalc').val(3);
                         break;
              case 'smd': //s25
                         widHashcalcOninput();
-                        $('#hashcalc_select').val(4);
+                        $('#select_hashcalc').val(4);
                         break;
              case 'wrd': //wrd
                         widHashcalcOninput();
-                        $('#hashcalc_select').val(5);
+                        $('#select_hashcalc').val(5);
                         break;
                     default:
                             break;
                 }
-                $('#hashcalc_select').selectmenu('refresh');
+                $('#select_hashcalc').selectmenu('refresh');
             }
             return true;
         }
@@ -189,7 +189,7 @@ function doc_init()
         }
     });
 
-    $('#hashcalc_select').selectmenu(
+    $('#select_hashcalc').selectmenu(
     {
         select : function (event, ui)
         {
@@ -225,7 +225,7 @@ function doc_init()
         }
     });
 
-    $('#tokens_history_select').selectmenu(
+    $('#select_records_history').selectmenu(
     {
         disabled: true,
         width: '60px',
@@ -245,7 +245,7 @@ function doc_init()
                             'info id'
                         ];
 
-    $('#cmd_input').autocomplete(
+    $('#input_cmd').autocomplete(
     {
         source : cmdinputHints
     });
@@ -364,9 +364,9 @@ function doc_init()
 
     $('#server_host').html('' + location.host);
     $('#tokens_verify_div').hide();
-    
-	$('#td_records_encrypt').hide();
-    $('#td_tokens_encrypt').hide();
+
+    $('#td_label_records_encrypt').hide();
+    $('#td_input_records_encrypt').hide();
     $('#td_tokens_encrypt').hide();
 
     setTimeout(widRefreshButtonClick, 2000);

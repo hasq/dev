@@ -1,10 +1,18 @@
-body {
-    font: normal 1em Consolas, "Courier New", monospace !important;
-    color: black;
-	background: #FCFCFC;
+body 
+{
+	font: normal 16px Arial, Verdana, Consolas, "Courier New", monospace;
+	background: #FEFEFA /*url("../img/bgfon.png")*/;
+	color: black;
 	width: 60%;
-	min-width: 640px;
-    margin: auto;
+	height: 100%;
+	min-width: 360px;
+	text-align: justify;
+	margin: auto;
+}
+
+.ui-widget
+{
+	font-size: 1em;
 }
 
 html {
@@ -18,12 +26,14 @@ html {
     -webkit-box-sizing: border-box;	
 }
 
+
 select {
 	width: 200px;
 }
 
-td tr {
+td {
 	box-sizing: border-box;
+	padding: 1px;
 }
 
 p {
@@ -87,16 +97,11 @@ input::-moz-placeholder
 
 input[type='checkbox']
 {
-    margin: 5px;
+    margin: 3px;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 }
 
-input[type='checkbox']:focus
-{
-    background: #fff;
-    border: 1px solid #DDDDDD;
-}
 
 input[type='text'],
 input[type='password']
@@ -107,12 +112,6 @@ input[type='password']
     border: 1px solid #DDDDDD;
     border-radius: 0;
 	width: 100%;
-}
-
-input[type='text']:focus,
-input[type='password']:focus
-{
-    border: 1px solid #DDDDDD;
 }
 
 input:required:valid
@@ -136,8 +135,8 @@ label
 	font: normal 14px Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
 	text-align: left;
-	padding-left: 6px;
-	padding-right: 6px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 
 textarea
@@ -197,14 +196,17 @@ textarea::-moz-placeholder
 	height: 20px;
 }
 
-.ui-accordion .ui-accordion-content {
+.ui-accordion .ui-accordion-content
+{
 	padding: 4px;
 }
 
-.ui-accordion .ui-accordion-header{
+.ui-accordion .ui-accordion-header
+{
 	font-size: 0.75em;
-	padding-top: 1px;
-	padding-bottom: 1px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	vertical-align: middle;
 }
 
 .ui-tabs .ui-tabs-panel {
@@ -221,9 +223,21 @@ textarea::-moz-placeholder
 	font-size: 0.75em;	
 }
 
+.ui-selectmenu-button
+{
+	height: 1.75em;
+}
+
 .ui-selectmenu-text
 {
 	font-size: 0.75em;	
+}
+
+.ui-button
+{
+	height: 1.75em;
+	width: 5em;
+	margin: 0;
 }
 
 .ui-button-text
@@ -231,6 +245,7 @@ textarea::-moz-placeholder
 	font-weight: bold;
 	font-size: 0.75em;
 }
+
 /* .ui-widget-header {
     font-weight: bold;
     height: 30px
@@ -253,15 +268,6 @@ textarea::-moz-placeholder
     top:-2px ;
 } */
 
-
-.td-records-title {
-	text-align: left;
-	font: bold 16px Arial;
-	color: #1376BC;
-	white-space: nowrap;
-	text-align: left;
-}
-
 .td-subscribe
 {
     font: italic 0.5em Consolas, "Courier New", monospace !important;
@@ -283,6 +289,14 @@ textarea::-moz-placeholder
 	text-shadow: 1px 1px 0 #fff;
 }
 /* id's */
+#td_client_title
+{
+    text-align: left;
+    vertical-align: middle;
+    font: bold 1.9em Verdana !important;
+    color: #1937A1;
+    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
+}
 
 #main_tabs {
     white-space: nowrap;
@@ -295,11 +309,138 @@ textarea::-moz-placeholder
     vertical-align: bottom;
 }
 
-#div_tokens_log,
-#div_records_log
+
+
+#div_tokens_log
 {
 	font: italic 12px Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
+}
+
+
+/********************************/
+/********** Tab Server **********/
+/********************************/
+
+#table_server,
+#table_family
+{
+	border-collapse: collapse;
+	border: 1px solid #DDDDDD;
+
+	width: auto;
+	font-family:monospace;
+}
+
+#table_server td,
+#table_family td
+{
+	border: 1px solid #DDDDDD;
+}
+
+/********************************/
+/********* Tab Database *********/
+/********************************/
+#table_database
+{
+	border-collapse: collapse;
+	border: 1px solid #DDDDDD;
+
+	width: auto;
+	font-family:monospace;
+}
+
+#table_database td,
+#table_database th
+{
+	border: 1px solid #DDDDDD;
+}
+
+/********************************/
+/********* Tab Records **********/
+/********************************/
+
+#table_tok_area td.td-label
+{
+	width: 5em;
+}
+
+#td_lr_button
+{
+	text-align: right;
+}
+
+#table_lr_area td.td-label,
+#table_nr_area td.td-label,
+#table_submit_area td.td-label
+{
+	width: 5.3em;
+}
+
+#td_input_records_encrypt
+{
+	text-align: left;
+	width: 1%;
+}
+
+#input_records_encrypt
+{
+	margin-left: 0;
+}
+
+#td_submit_button
+{
+	text-align: right;
+}
+
+#table_pwd_area td.td-label
+{
+	width: 8.5em;
+}
+
+#td_select_records_history
+{
+	text-align: right;
+	vertical-align: middle;
+	width: 5.3em;
+}
+
+#textarea_records_history
+{
+	white-space: pre;
+	overflow: auto;
+	height: 5em;
+}
+
+#div_records_log
+{
+	font: italic 0.75em Consolas, "Courier New", monospace !important;
+	white-space: nowrap;
+}
+
+.td-records-title 
+{
+	text-align: left;
+	font: bold 1em Helvetica;
+	color: #1376BC;
+	white-space: nowrap;
+	text-align: left;
+	vertical-align: middle;
+	height: 1.5em;
+}
+
+.td-50
+{
+	width: 50%;
+}
+
+/********************************/
+/********* Tab Hashcalc**********/
+/********************************/
+
+#td_hashcalc_buttons
+{
+	text-align: right;
 }
 
 /********************************/
@@ -311,6 +452,17 @@ textarea::-moz-placeholder
 	height: auto;
 }
 
+#td_button_cmd
+{
+	width: 5em;
+}
+
+#textarea_cmd
+{
+	white-space: pre;
+	overflow: auto;
+	height: 6em;	
+}
 
 @media all and (min-resolution: 121dpi), (max-width: 900px)
 {

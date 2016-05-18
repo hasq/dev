@@ -116,10 +116,10 @@ function docInit()
     widSetDivOverflowSize();
     widEmptyTab();
 
-/*	
-	window.onbeforeunload  = function(e) {	return	};
-*/
-	
+    /*
+        window.onbeforeunload  = function(e) {  return  };
+    */
+
     engSendPing(0);
 }
 
@@ -140,7 +140,7 @@ function docMain(state, browser)
         else
         {
             r += 'This browser has not been tested<br/>';
-            r += ''+navigator.userAgent;
+            r += '' + navigator.userAgent;
         }
 
      r += '</p>';

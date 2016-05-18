@@ -70,7 +70,7 @@ function widShowNewRecord(newRec)
 
 function widCleanHistoryData()
 {
-    var $obj = $('#tokens_history_select');
+    var $obj = $('#select_records_history');
     $obj.get(0).selectedIndex = 0;
     $obj.selectmenu('refresh');
 }
@@ -177,24 +177,26 @@ function widAddSkc()
         gSkc = null;
 
     if ( gSkc )
-	{
+    {
         $Img.attr('src', imgSkcOn);
-		$('#td_records_encrypt').show();
-		$('#td_tokens_encrypt').show();	
-	}
+        $('#td_label_records_encrypt').show();
+        $('#td_input_records_encrypt').show();
+        $('#td_tokens_encrypt').show();
+    }
     else
-	{
+    {
         $Img.attr('src', imgSkcOff);
-		$('#td_records_encrypt').hide();
-		$('#td_tokens_encrypt').hide();		
-	}
+        $('#td_label_records_encrypt').hide();
+        $('#td_input_records_encrypt').hide();
+        $('#td_tokens_encrypt').hide();
+    }
     return;
 }
 
 function widCommandSendButtonClick()
 {
-    var $CmdInput = $('#cmd_input');
-    var $CmdOutput = $('#cmd_output');
+    var $CmdInput = $('#input_cmd');
+    var $CmdOutput = $('#textarea_cmd');
 
     var cmd = $CmdInput.val();
 
@@ -217,7 +219,7 @@ function widTokenNameOninput()
     var $Dn = $('#dn_input');
     var $RawDn = $('#rdn_input');
     var $SubmitButton = $('#submit_button');
-    var $HistorySelect = $('#tokens_history_select');
+    var $HistorySelect = $('#select_records_history');
 
     widShowLastRecord();
     widShowNewRecord();
@@ -247,7 +249,7 @@ function widTokenHashOninput()
     var $Dn = $('#dn_input');
     var $RawDn = $('#rdn_input');
     var $SubmitButton = $('#submit_button');
-    var $HistorySelect = $('#tokens_history_select');
+    var $HistorySelect = $('#select_records_history');
     var tok = $Dn.val();
 
     widShowLastRecord();
@@ -495,7 +497,7 @@ function widShowNewRecCompability()
 
 function widTokensHistorySelect(range)
 {
-    var $HistorySelect = $('#tokens_history_textarea');
+    var $HistorySelect = $('#textarea_records_history');
     var s = $('#dn_input').val();
     $HistorySelect.val('');
     var cb = function (data)
@@ -520,8 +522,8 @@ function widTokensHistorySelect(range)
 
 function widHashcalcOninput()
 {
-    var $In = $('#hashcalc_in_textarea');
-    var $Out = $('#hashcalc_out_textarea');
+    var $In = $('#textarea_hashcalc_in');
+    var $Out = $('#textarea_hashcalc_out');
 
     if ($In.val().length > 0)
         $Out.val(engGetHash($In.val(), glHashCalcHash));
@@ -540,12 +542,12 @@ function widSubmitButtonClick()
     var nr_g = $('#nr_g_input').val();
     var nr_o = $('#nr_o_input').val();
     var nr_d = $('#nr_d_input').val();
-	var enc = $('#input_records_encrypt').prop('checked');
-	var cmd = ( +nr_n == 0 ) ? 'z' : 'add';
-	
+    var enc = $('#input_records_encrypt').prop('checked');
+    var cmd = ( +nr_n == 0 ) ? 'z' : 'add';
+
     var cb = function (data)
     {
-        var $HistorySelect = $('#tokens_history_select');
+        var $HistorySelect = $('#select_records_history');
 
         widShowRecordsTabLog(engGetResponseHeader(data));
 
@@ -553,12 +555,12 @@ function widSubmitButtonClick()
         var d = +$HistorySelect.get(0).options[i].text;
         widTokensHistorySelect(d);
     }
-	
+
     var nr = cmd + ' * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
 
-	if ( enc )
-		nr = '#' + engGetCifer(nr);
-	
+    if ( enc )
+        nr = '#' + engGetCifer(nr);
+
     ajxSendCommand(nr, cb, hasqLogo);
 }
 
