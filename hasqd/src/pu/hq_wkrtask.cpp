@@ -48,7 +48,7 @@ string Worker2::process(bool * recog)
         return job();
 
     else if ( ( tok.is("add") || tok.is("a") ) && (en || pn.add) )
-        return add();
+        return add(false);
 
     else if ( ( tok.is("zero") || tok.is("z") ) && (en || pn.zero) )
         return zero();
@@ -309,10 +309,10 @@ string Worker2::zero()
             return er::Code(er::REQ_ZERO_POLICY);
     }
 
-    return add();
+    return add(true);
 }
 
-string Worker2::add()
+string Worker2::add(bool zr)
 {
     if ( !tok.next() ) return er::Code(er::REQ_HASHTYPE_BAD);
     string signature = tok.sub();
@@ -348,6 +348,9 @@ string Worker2::add()
     // 4 semaphore ce
     // 5 place note in bin
     // 6 leave
+
+    if( !zr && record->n()==0 )
+       return er::Code(er::REQ_ADD_ZERO);
 
     if ( !record->checkSign(signature) )
     {

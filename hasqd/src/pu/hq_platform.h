@@ -38,7 +38,7 @@
 
 #endif
 
-#define VERSION "0.4.0"
+#define VERSION "0.4.1"
 
 #define LOGO "Hasq server " VERSION " (" PLATFORM ") Hasq Technology Pty Ltd (C) 2013-2015"
 

@@ -50,6 +50,7 @@ enum CodeType
     REQ_PRX_DEAD,
     REQ_BAD_CRYPT,
     REQ_ZERO_POLICY,
+    REQ_ADD_ZERO,
 
     REC_INIT_BAD_N,
     REC_INIT_BAD_S,
