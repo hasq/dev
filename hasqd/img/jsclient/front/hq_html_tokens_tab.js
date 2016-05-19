@@ -41,22 +41,22 @@ function widGetHTMLTokensTabBody(tabs)
 
     r += '<table >\n';
     r += '<tr>\n';
-    r += '<td />' + widGetHTMLTokensInitialData() + '\n';
+    r += '<td/>' + widGetHTMLTokensInitialData() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />' + widGetHTMLTokensProgressbar() + '\n';
+    r += '<td/>' + widGetHTMLTokensProgressbar() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />' + widGetHTMLTokensTabWrite(tabs) + '\n';
+    r += '<td/>' + widGetHTMLTokensTabWrite(tabs) + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td /><hr/>\n';
+    r += '<td/><hr/>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />' + widGetHTMLTokensLog() + '\n';
+    r += '<td/>' + widGetHTMLTokensLog() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td /><hr/>\n';
+    r += '<td/><hr/>\n';
     r += '</tr>\n';
     r += '</table>\n';
 
@@ -141,12 +141,12 @@ function widGetHTMLTokensInitialData()
 function widGetHTMLTokensProgressbar()
 {
     var r = '';
-    r += '<div id="tokens_progressbar" align="center" valign="middle">\n';
-    r +='<div class="tokens-progressbar-label" align="center" valign="middle"></div>\n';
+    r += '<div id="div_progressbar_main">\n';
+    r += '<div id="div_progressbar_label">\n';
+ r += '</div>\n';
     r += '</div>\n';
     return r;
 }
-
 
 function widGetHTMLTokensLog()
 {

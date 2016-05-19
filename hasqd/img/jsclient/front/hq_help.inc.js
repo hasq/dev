@@ -54,13 +54,13 @@ function widHelpTab()
     r += '</table>@n';
     r += '</div>@n';
 
-    r += '<H3>Command tab</H3>@n';
+    r += '<H3>Admin tab</H3>@n';
     r += '<div>@n';
     r += '<table>@n';
     r += '<tr>@n';
     r += '<td>@n';
     INCLUDEFILE
-    txt/hq_help_command_tab.htm
+    txt/hq_help_admin_tab.htm
     r += '</tr>@n';
     r += '</table>@n';
     r += '</div>@n';

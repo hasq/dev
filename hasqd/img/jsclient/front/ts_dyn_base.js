@@ -1344,6 +1344,31 @@ function widSearchTab()
     return retObj;
 }
 
+function widWelcomeTab()
+{
+    var $Tabs = $('#div_tabs');
+    //widPasswordOninput();
+
+    var retObj =
+    {
+        show : function ()
+        {
+            $Tabs.tabs('option', 'active', 6);
+            widShowTokenState();
+            widShowPwdInfo();
+            widShowTokenHash();
+            widShowTokenDataLength();
+         ///$('.tab-button-on').toggleClass('tab-button-on tab-button-off');
+        },
+        isOn : function ()
+        {
+            return ($Tabs.tabs('option', 'active') === 0) ? true : false;
+        }
+    }
+
+    return retObj;
+}
+
 function widSearchButtonClick()
 {
     var $PwdInp = $('#input_password');

@@ -10,11 +10,6 @@ body
 	margin: auto;
 }
 
-.ui-widget
-{
-	font-size: 1em;
-}
-
 html {
 	overflow-y: scroll;
 }
@@ -26,6 +21,15 @@ html {
     -webkit-box-sizing: border-box;	
 }
 
+*:focus
+{
+    outline: none;
+}
+
+*::-moz-focus-inner 
+{
+	border: 0;
+}
 
 select {
 	width: 200px;
@@ -246,6 +250,11 @@ textarea::-moz-placeholder
 	font-size: 0.75em;
 }
 
+.ui-widget
+{
+	font-size: 1em;
+}
+
 /* .ui-widget-header {
     font-weight: bold;
     height: 30px
@@ -268,9 +277,14 @@ textarea::-moz-placeholder
     top:-2px ;
 } */
 
+.long-button
+{
+	width: 150px;
+}
+
 .td-subscribe
 {
-    font: italic 0.5em Consolas, "Courier New", monospace !important;
+    font: italic 0.6em Consolas, "Courier New", monospace !important;
     border-radius: 0px;
     text-align: right;
     vertical-align: top;
@@ -282,13 +296,8 @@ textarea::-moz-placeholder
 	text-align: center;
 }
 
-.tokens-progressbar-label {
-	position: absolute;
-	left: 46%;
-	font-weight: bold;
-	text-shadow: 1px 1px 0 #fff;
-}
 /* id's */
+
 #td_client_title
 {
     text-align: left;
@@ -309,7 +318,21 @@ textarea::-moz-placeholder
     vertical-align: bottom;
 }
 
+#div_progressbar_main
+{
+	text-align: center;
+	vertical-align: middle;
+}
 
+#div_progressbar_label 
+{
+	position: absolute;
+	left: 46%;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+	text-align: center;
+	vertical-align: middle;	
+}
 
 #div_tokens_log
 {
@@ -464,6 +487,11 @@ textarea::-moz-placeholder
 	height: 6em;	
 }
 
+/********************************/
+/********* Token Tab ************/
+/********************************/
+
+
 @media all and (min-resolution: 121dpi), (max-width: 900px)
 {
 	body
@@ -473,12 +501,3 @@ textarea::-moz-placeholder
 	}
 }
 
-
-/********************************/
-/********* Token Tab ************/
-/********************************/
-
-.long-button
-{
-	width: 150px;
-}

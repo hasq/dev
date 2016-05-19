@@ -585,6 +585,18 @@ function widGetHTMLEmptyTab()
     return r;
 }
 
+function widGetHTMLWelcomeTab()
+{
+    var r = '';
+
+    r += '<table style="width: 100%" border="0">\n';
+    r += '<tr>\n';
+    r += '<td/> Welcome to TokenSwap\n';
+    r += '</tr>\n';
+    r += '</table>\n';
+
+    return r;
+}
 
 function widGetHTMLLogArea()
 {

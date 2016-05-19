@@ -90,7 +90,7 @@ function docMainInit()
 function docInit()
 {
     $('#div_modal_window').css('display', 'none');
-    $('input, textarea').val('').attr('maxlength', '65536');;
+    $('input, textarea').val('').attr('maxlength', '65536');
     $('input, select, textarea').attr('autocomplete', 'off');
 
     $('#div_tabs').tabs();
@@ -114,7 +114,7 @@ function docInit()
     widDatePickerInit();
     widSetDefaultDb(gRequiredDbHash);
     widSetDivOverflowSize();
-    widEmptyTab();
+    widWelcomeTab().show();
 
     /*
         window.onbeforeunload  = function(e) {  return  };
@@ -179,6 +179,11 @@ function docMain(state, browser)
     item = {};
     item.title = 'View my tokens';
     item.data = widGetHTMLSearchTab();
+    tabs[tabs.length] = item;
+
+    item = {};
+    item.title = 'Welcome';
+    item.data = widGetHTMLWelcomeTab();
     tabs[tabs.length] = item;
 
     var body = widGetHTMLBody(tabs);

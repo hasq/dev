@@ -86,7 +86,7 @@ function widWarningLed($obj, image, text)
 
 function widShowProgressbar(val)
 {
-    var $Progressbar = $('#tokens_progressbar');
+    var $Progressbar = $('#div_progressbar_main');
     val = Math.ceil(val) || 0;
     $Progressbar.progressbar('value', val);
 }

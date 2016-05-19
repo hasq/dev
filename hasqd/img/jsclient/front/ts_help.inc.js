@@ -4,10 +4,10 @@ function gHelp(x)
 {
     var r = '';
 
-    if ( x == 'span_password_pic' )
+    if (x == 'span_password_pic')
     {
         INCLUDEFILE
-     txt/ts_tok_state.htm
+        txt/ts_tok_state.htm
     }
     else if (x == 'span_info')
     {

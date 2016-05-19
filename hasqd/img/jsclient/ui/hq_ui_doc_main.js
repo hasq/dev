@@ -250,8 +250,8 @@ function doc_init()
         source : cmdinputHints
     });
 
-    var progressbar = $('#tokens_progressbar');
-    var progressbarLabel = $('.tokens-progressbar-label');
+    var progressbar = $('#div_progressbar_main');
+    var progressbarLabel = $('#div_progressbar_label');
 
     progressbar.progressbar(
     {
@@ -317,7 +317,11 @@ function doc_init()
 
     $('#tokens_send_accordion').accordion(
     {
-        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
+        icons:
+        {
+            'header': 'ui-icon-plus',
+            'activeHeader': 'ui-icon-minus'
+        },
         active : 0,
         heightStyle : 'content',
         collapsible : 'true',
@@ -350,8 +354,6 @@ function doc_init()
         collapsible : 'false',
         header : 'h2',
     });
-
- //$('#progressbar').progressbar({value: false});
 
     $('.td-warning').hide();
     $('.continue-button').hide();
@@ -398,7 +400,7 @@ function docMain()
     tabs[tabs.length] = item;
 
     item = {};
-    item.title = 'Command';
+    item.title = 'Admin';
     item.data = widGetHTMLCommandTab();
     tabs[tabs.length] = item;
 
