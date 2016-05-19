@@ -1,38 +1,38 @@
-Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=mach ip=192.168.197.129 port=13131
+Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=mach ip=192.168.0.1 port=13131
 Database: DB_EMPTY
 Starting with threads: all
 <svt> print ex 0 OK 100 tcp self [ info id ]
 OK
 mach
 Family: []
-Version: 0.4.0
+Version: 0.4.1
 SkcKeys: 0
 PublicKey: 0,0
 
 <svt> quit
-Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=mach2 ip=192.168.197.129 port=13131
+Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=mach2 ip=192.168.0.1 port=13131
 Database: DB_EMPTY
 Starting with threads: all
 <svt> print ex 0 OK 100 tcp self [ info id ]
 OK
 mach2
 Family: []
-Version: 0.4.0
+Version: 0.4.1
 SkcKeys: 0
 PublicKey: 0,0
 
 <svt> quit
-Hasq server 0.4.0 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2015
-HOST: name=mach3 ip=192.168.197.129 port=13131
+Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+HOST: name=mach3 ip=192.168.0.1 port=13131
 Database: DB_EMPTY
 Starting with threads: all
 <svt> print ex 0 OK 100 tcp self [ info id ]
 OK
 mach3
 Family: []
-Version: 0.4.0
+Version: 0.4.1
 SkcKeys: 0
 PublicKey: 0,0
 
