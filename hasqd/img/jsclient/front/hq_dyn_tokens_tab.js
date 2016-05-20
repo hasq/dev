@@ -527,11 +527,15 @@ function widCreateTokens($obj, tokens)
 
         var resp = engGetResponseHeader(cbData);
 
+
+        if ( resp === 'REQ_ZERO_POLICY' || resp === 'REQ_BAD_CRYPT')
+        {
+            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
+            return widDone($obj, resp);
+        }
+
         if ( resp !== 'OK' )
             widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp);
-
-        if ( resp === 'REQ_ZERO_POLICY' )
-            return widDone($obj, resp);
 
         if ( !(cmdIdx + 1 < glCmdList.items.length) )
         {
@@ -739,7 +743,6 @@ function widFillOutTokList($obj, tokens, extCb)
 function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
 {
     // callback function for all functions which update tokens;
-    console.log('1');
     var msg = 'No tokens or keys to processing!';
     var resp = engGetResponseHeader(cbData);
 
@@ -753,6 +756,12 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     widShowProgressbar(progress);
     widShowTokensLog(msg);
 
+    if ( resp === 'REQ_BAD_CRYPT')
+    {
+        widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
+        return widDone($obj, resp);
+    }
+
     (resp !== 'OK' && resp !== 'IDX_NODN')
     ? widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp)
     : widWarningLed($obj, imgMsgBlink, msg)
@@ -760,7 +769,7 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     if (!(cmdIdx + 1 < glCmdList.items.length))
     {
         widWarningLed($obj, imgMsgOk, 'OK');
-        widDone($obj, 'Done.');
+        return widDone($obj, 'Done.');
     }
 }
 

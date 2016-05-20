@@ -6,16 +6,11 @@ function engSearchClick(fromDate, toDate, progr)
     gSearch.isOn = !gSearch.isOn;
     progr.button(gSearch.isOn);
 
-    if (gSearch.isOn) engSearchStart(fromDate, toDate, progr);
+    if (gSearch.isOn)
+        return engSearchStart(fromDate, toDate, progr);
 
-    ///return engSearchStop();
+    return engSearchStop();
 }
-
-///function engSearchStop()
-///{
-    ///var o = gSearch.o;
-    ///return { from : o.fromDate, to : o.toDate };
-///}
 
 function engSearchStart(fromDate, toDate, progr)
 {
@@ -49,7 +44,13 @@ function engSearchStart(fromDate, toDate, progr)
     // start process
     setTimeout(processDates, 50);
 
-    ///return { from : fromDate, to : toDate };
+    return { from : fromDate, to : toDate };
+}
+
+function engSearchStop()
+{
+    var o = gSearch.o;
+    return { from : o.fromDate, to : o.toDate };
 }
 
 function calendarDays(year, month)

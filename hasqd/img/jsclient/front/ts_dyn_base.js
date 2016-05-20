@@ -121,6 +121,7 @@ function widModalWindow(msg, func)
 
         $Window.off('click');
         $(document).off('keyup');
+        $(window).off('beforeunload');
     };
 
     var esc = function(e)
@@ -131,7 +132,7 @@ function widModalWindow(msg, func)
 
     $Window.click(function()
     {
-        click()
+        click();
     });
 
     $(document).keyup(function(event)
@@ -139,9 +140,12 @@ function widModalWindow(msg, func)
         esc(event);
     });
 
-    //$('#div_modal_window').css('display', 'block');
+    $(window).on('beforeunload', function()
+    {
+        return 'Do you realy wont to leave this page?'
+    });
+
     $Window.css('display', 'block');
-    //$('#div_modal_window_content')
     $Window.find('p').html(msg);
 }
 
@@ -1407,8 +1411,8 @@ function widSetDivOverflowSize()
     var $Results = $('#td_search_results');
     var $Div = $('.div-overflow');
 
-    var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
-    var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
+ var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
 
     var tdWidth = $Results.innerWidth() - pdnLeft - pdnRight;
     var divWidth = $Div.innerWidth();
@@ -1426,8 +1430,8 @@ function widHideOnclick()
 
     var tdWidth = $Results.innerWidth();
     var initsWidth = $Inits.innerWidth();
-    var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
-    var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
+ var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
+ var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
     if ( $Obj.hasClass('td-visible') )
     {

@@ -53,6 +53,12 @@ function engRunCmdList(cmdList, cbFunc)
         var progress = ((cmdList.idx + 1) / cmdList.items.length) * 100;
         var r = engGetResponseHeader(ajxData);
 
+        if ( r === 'REQ_BAD_CRYPT' )
+        {
+            return cbFunc(ajxData, cmdList.idx, progress);
+        }
+
+
         if ( r === 'OK' || r === 'IDX_NODN' || r === 'REQ_ZERO_POLICY')
         {
             cbFunc(ajxData, cmdList.idx, progress);
