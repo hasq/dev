@@ -26,7 +26,7 @@ nG=1
 magic=[]
 size=1
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=e55b
 }
 
@@ -40,7 +40,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=3d9dcd16980d97dcf6ef91cca54f8a9f
 }
 {
@@ -51,7 +51,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=2685e994c02da786b977f32a6fc4dc1075ad3aac
 }
 {
@@ -62,7 +62,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=bb6abf760fe53131e9350fef5f835c403f1a7684352269dee46ec589e9f1335d
 }
 {
@@ -73,7 +73,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=84f247e8faa9b30f786e607f210cc713aecba1aee56505a02894284ae57d16debe639bac006da9d9d3c979e92399b34df5c9399f0299d87963bf7c7270a2b91d
 }
 {
@@ -84,7 +84,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=9f48f6962e8ff4dad9f7120e9033b418
 }
 {
@@ -95,7 +95,7 @@ nG=1
 magic=[]
 size=100
 thin=0
-datalimit=-1
+datalimit=10000000
 altname=e55b
 }
 
