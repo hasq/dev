@@ -1,0 +1,14 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create md5.db md5 MD5 1 [] 1 0
+<svt> print ex 0 OK 100 tcp self { [ z * md5.db 0 [rdn0] [k0] ] }
+OK 1000
+<svt> print ex 0 OK 100 tcp self { [ z * md5.db 0 [rdn1] [k0] ] }
+OK 1001
+<svt> print ex 0 REQ_ZERO_POLICY 100 tcp self { [ z * md5.db 0 [rdn2] [k0] ] }
+REQ_ZERO_POLICY
+<svt> print ex 0 REQ_ADD_ZERO 100 tcp self { [ add * md5.db 0 [rdn2] [k0] ] }
+REQ_ADD_ZERO
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully
