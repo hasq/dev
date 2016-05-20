@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Testing FID_CL_ZLIM
+
+tn=$(basename $0)
+tn=${tn%.*}
+$1/zdb erasedisk "create md5.db md5 MD5 1 [] 1 0"
+$1/hasqd -cqx s=$tn.inp dprn=1 dsvt=1 | grep -v "sendnote"
+$1/zdb erasedisk
+

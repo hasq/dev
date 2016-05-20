@@ -1,0 +1,4 @@
+print ex 0 REQ_ADD_ZERO 100 tcp self { [ add * md5.db 0 [rdn] [k0] ] }
+print ex 0 OK 100 tcp self { [ z * md5.db 0 [rdn] [k0] ] }
+print ex 0 OK 100 tcp self { [ add * md5.db 1 [rdn1] [k0] ] }
+quit
