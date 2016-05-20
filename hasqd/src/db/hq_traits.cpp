@@ -10,16 +10,16 @@
 #include "hq_traits.h"
 #include "hq_db.h"
 
-bool db::normRecDataLimit(const string & hashName, RecDataLimit & dl)
+bool db::RecDataLimit::norm(const string & hashName)
 {
-    if ( dl.ssize.empty() || dl.ssize[0] == '-' )
+    if ( ssize.empty() || ssize[0] == '-' )
     {
-        dl.size = INT_MAX;
-        dl.ssize = "-1";
+        isize = RD_MAX;
+        ssize = "-1";
     }
     else
     {
-        char sk = dl.ssize[dl.ssize.size() - 1];
+        char sk = ssize[ssize.size() - 1];
         int k = 1, n = -1;
         db::Dn * dn = 0;
         switch (sk)
@@ -36,12 +36,12 @@ bool db::normRecDataLimit(const string & hashName, RecDataLimit & dl)
                 break;
             case 'b' :
             case 'B' : sk = 'B'; break;
-            default  : sk = 'B'; n = gl::toi(dl.ssize);
+            default  : sk = 'B'; n = gl::toi(ssize);
         }
-        if ( n == -1 ) n = gl::toi(dl.ssize.substr(0, dl.ssize.size() - 1));
-        if ( n > INT_MAX / k ) dl.size = INT_MAX;
-        else dl.size = n * k;
-        dl.ssize = gl::tos(n) + sk;
+        if ( n == -1 ) n = gl::toi(ssize.substr(0, ssize.size() - 1));
+        if ( n > RD_MAX / k ) isize = RD_MAX;
+        else isize = n * k;
+        ssize = gl::tos(n) + sk;
     }
     return true;
 }
@@ -72,7 +72,7 @@ bool db::loadTraitsData(const string & filename, TraitsData & data)
 
     in >> data.dl.ssize;
 
-    return db::normRecDataLimit(data.hashNameShort, data.dl);
+    return data.dl.norm(data.hashNameShort);
 }
 
 db::Traits::Traits(const Database & db): config(db.cfg()) {}
@@ -101,7 +101,7 @@ db::Traits::Traits(const Database & db, string un, string hns, string hnf, int n
     data.thinness = thin;
 
     data.dl.ssize = datalimit;
-    db::normRecDataLimit(hns, data.dl);
+    data.dl.norm(hns);
 
     generateAltName();
 }
@@ -139,7 +139,7 @@ string db::Traits::str() const
     os << "magic=" << "[" << data.magic << "]" << gl::CRLF;
     os << "size=" << data.sliceKb << gl::CRLF;
     os << "thin=" << data.thinness << gl::CRLF;
-    os << "datalimit=" << data.dl.size << gl::CRLF;
+    os << "datalimit=" << data.dl.isize << gl::CRLF;
     os << "altname=" << altName << gl::CRLF;
     os << "}" << gl::CRLF;
     return os.str();

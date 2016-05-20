@@ -17,8 +17,11 @@ class Database;
 
 struct RecDataLimit
 {
+    static const int RD_MAX = 10000000;
     string ssize;
-    int    size;
+    int    isize;
+
+    bool norm(const string & hashName);
 };
 
 struct TraitsData
@@ -33,7 +36,6 @@ struct TraitsData
     RecDataLimit dl;
 };
 
-bool normRecDataLimit(const string & hashName, RecDataLimit & dl);
 bool loadTraitsData(const string & filename, TraitsData & data);
 
 class Traits
@@ -70,7 +72,7 @@ class Traits
         const string & mag() const { return data.magic; }
         int nG() const { return data.nG; }
         int skb() const { return data.sliceKb; }
-        int dls() const { return data.dl.size; }
+        int dls() const { return data.dl.isize; }
         string un() const { return data.uniqueName; }
         int thinness() const { return data.thinness; }
 };
