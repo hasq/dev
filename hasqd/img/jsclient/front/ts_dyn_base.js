@@ -1407,8 +1407,8 @@ function widSetDivOverflowSize()
     var $Results = $('#td_search_results');
     var $Div = $('.div-overflow');
 
- var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
- var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
+    var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
+    var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
 
     var tdWidth = $Results.innerWidth() - pdnLeft - pdnRight;
     var divWidth = $Div.innerWidth();
@@ -1426,8 +1426,8 @@ function widHideOnclick()
 
     var tdWidth = $Results.innerWidth();
     var initsWidth = $Inits.innerWidth();
- var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
- var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
+    var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
+    var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
     if ( $Obj.hasClass('td-visible') )
     {
