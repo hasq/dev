@@ -17,7 +17,7 @@ cd front
 sh ../stylejs.sh hq_dyn_base.js
 sh ../stylejs.sh hq_dyn_tokens_tab.js
 sh ../stylejs.sh hq_html_base.js
-sh ../stylejs.sh hq_html_help_tab.inc
+sh ../stylejs.sh hq_help.inc.js
 sh ../stylejs.sh hq_html_tokens_tab.js
 sh ../stylejs.sh sh_dyn.js
 sh ../stylejs.sh ts_dyn_base.js
