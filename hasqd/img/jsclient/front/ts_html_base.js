@@ -591,7 +591,8 @@ function widGetHTMLWelcomeTab()
 
     r += '<table style="width: 100%" border="0">\n';
     r += '<tr>\n';
-    r += '<td/> Welcome to TokenSwap\n';
+    r += '<td/>\n';
+    r += gWelcome();
     r += '</tr>\n';
     r += '</table>\n';
 
