@@ -1,1 +1,16 @@
-<p>"Receive" tab help
+<p>"Send" and "Receive" tabs contain controls that are used by a user when they wish to pass 
+tokens\' ownership to another person or to accept a new token from somebody else.
+
+<p>There are 4 scenarios how ownership can be 
+transferred. Scenarios 1 and 3 assume that the current token owner initiate the steps 
+necessary to change the ownership. Pressing buttons "Initiate", "Initiate Step 1" and 
+"Initiate Step 2" generate hex strings that should by passed to a new token owner via 
+any communication channel.
+
+<p>Upon receiveing the generated hex strings, the new token owner should insert them into 
+the corresponding fields in the "Receive" tab and press one of "Finalize", "Finalize Step 1"
+or "Finalize Step 2" buttons. Pressing the button either finalizes token ownership 
+transfer or initiates the second step.
+
+<p>Scenarios 2 and 4 are similar to scenarios 1 and 3 with the difference being the new 
+token owner initiating the token ownership transfer.
