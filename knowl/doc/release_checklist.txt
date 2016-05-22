@@ -1,22 +1,13 @@
 
-- Hasq license is included into the src package (website also?)
-  Verify that licence.txt is inside zip-file from the link from the web page
 
-- instruction (1) on how to compile source code is current and included
-  Write/check that readme.txt in source zip-file
-
-- Release notes
+- Release notes 0.4.1
 
 - source code compiles in accordance with the provided instruction (1)
-  Verify that source zip-file unpacks and builds
 
 - compiled binaries pass tests
-  Run tests with built from source zip-file hasqd
-
-
 
 - instruction (2) on how to create ISO image is up to date and working
-  Instruction in hasqd/doc/makeIso.txt
+  Instruction in doc/make_iso.txt
 
 - instruction (3) on how to create a VM with hasqd software is current and included
   Public document how to start server with ISO image
@@ -34,18 +25,13 @@
   Verify doc versions
   Verify doc modifications against release notes
 
-
-- new release notice is placed on the home page
+- new release notice is placed on the home page - readme.md
 
 - release notes (a list of changes between prev and current versions) is on the website
 
 - all necessary src/doc/binaries are made available for downloading
   iso
-  source-zip
   wxviewer
   tools
   documents
-
-- public Hasq server is updated
-  Check that public hasq server is up and running
 
