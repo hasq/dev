@@ -16,13 +16,30 @@ Prerequisites
 How to build
 
   - in the 'src' directory type
-           'make PLAT=unx' if you compile under Linux
-        or 'make PLAT=msc' if you compile in ap14 environment
+    'make PLAT=unx' if you compile under Linux
+    or 'make PLAT=msc' if you compile in ap14 environment
   - hasqd executable will be located in '_bin_unx'
     or '_bin_msc' respectively
 
 
+Release 0.4.1
+-------------------------
 
+   - Hasq server:
+     - conflict resolution fixed
+     - zlim command line option added
+     - workDelay command line option added
+     - add zero records with net command add disabled
+     - SMD-hash function added
+     
+   - Hasq JavaScript Client:
+     - Tokens tab help added
+     - Admin mode function added
+     - SMD-hash support added
+   
+   - TokenSwap JavaScript Client added
+   
+   
 Release 0.3.1, build 1463
 -------------------------
 
