@@ -22,25 +22,24 @@ How to build
     or '_bin_msc' respectively
 
 
-Release 0.4.1
+Release 0.4.1, build 727 (github)
 -------------------------
 
    - Hasq server:
-     - conflict resolution fixed
-     - zlim command line option added
-     - workDelay command line option added
-     - add zero records with net command add disabled
-     - SMD-hash function added
+     - fixed conflict resolution algorithm
+     - added "zlim" command line option
+     - added "workDelay" command line option
+     - fixed "add" command with N=0
+     - SMD hash function added
      
-   - Hasq JavaScript Client:
-     - Tokens tab help added
-     - Admin mode function added
-     - SMD-hash support added
-   
    - TokenSwap JavaScript Client added
-   
-   
-Release 0.3.1, build 1463
+
+   - Hasq JavaScript Client:
+     - Tokens tab help updated
+     - Added Admin mode function
+
+  
+Release 0.3.1, build 1463 (hasq)
 -------------------------
 
    - Hasq server codebase
