@@ -189,6 +189,7 @@ function widAddSkc()
         $('#td_label_records_encrypt').hide();
         $('#td_input_records_encrypt').hide();
         $('#td_tokens_encrypt').hide();
+        $('#input_records_encrypt').prop('checked', false);
     }
     return;
 }
