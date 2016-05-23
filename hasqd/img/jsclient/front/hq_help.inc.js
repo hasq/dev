@@ -4,7 +4,7 @@ function widHelpTab()
 {
     var r = '';
 
-    r += '<table width="70%"">\n';
+    r += '<table width="70%">\n';
     r += '<tr>\n';
     r += '<td width="100%">\n';
 
