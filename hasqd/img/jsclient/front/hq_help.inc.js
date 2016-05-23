@@ -109,7 +109,7 @@ function widHelpTab()
     r += '</table>@n';
     r += '</div>@n';
 
-    r += '<H2>Send/Receive tab</H2>@n';
+    r += '<H2>Send and Receive tabs</H2>@n';
     r += '<div>@n';
     r += '<table>@n';
     r += '<tr>@n';
