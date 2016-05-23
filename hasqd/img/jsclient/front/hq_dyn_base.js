@@ -190,6 +190,7 @@ function widAddSkc()
         $('#td_input_records_encrypt').hide();
         $('#td_tokens_encrypt').hide();
         $('#input_records_encrypt').prop('checked', false);
+        $('#input_tokens_encrypt').prop('checked', false);
     }
     return;
 }
