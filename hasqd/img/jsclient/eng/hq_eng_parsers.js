@@ -64,7 +64,8 @@ function engGetParsedInfoFam(data)
 
 function engGetOnlyNumber(data)
 {
-    return (data.replace(/[^0-9]/g, '').length > 0) ? +data.replace(/[^0-9]/g, '') : '';
+ var r = data.replace(/[^0-9]/g, '');
+    return (r.length > 0) ? +r : 0;
 }
 
 function engIsNull(data)
@@ -83,6 +84,7 @@ function engIsRawTokens(data, hash)
     for (var i = 0; i < n.length; i++)
     {
         n[i] = n[i].replace(/^\s+|\s+$/g, '');
+
         if ((n[i].length == 0) || (n[i] === undefined) || (n[i] === null))
             true;
         else if (n[i].charAt(0) == '[' && n[i].charAt(n[i].length - 1) == ']' && n[i].length > 2)

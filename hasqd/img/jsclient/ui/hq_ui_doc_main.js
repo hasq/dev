@@ -174,17 +174,19 @@ function doc_init()
         {
             var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
             var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-            var pwdCheckBoxIsOn = document.getElementById('one_tkn_checkbox').checked + document.getElementById('three_tkn_checkbox').checked
+            var pwdCheckBoxIsOn = $('#one_pwd_checkbox').is(':checked') + $('#three_pwd_checkbox').is(':checked');
+            //var pwdCheckBoxIsOn = document.getElementById('one_pwd_checkbox').checked + document.getElementById('three_pwd_checkbox').checked;
             gCurrentDB = glDataBase[this.selectedIndex];
 
             $('#database_table').html(db_table);
             $('#current_db').html(current_db);
+
             widShowLastRecord();
             widTokenNameOninput();
+
             if (pwdCheckBoxIsOn)
-            {
                 widShowNewRecOninput();
-            }
+
             return true;
         }
     });

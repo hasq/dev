@@ -294,22 +294,21 @@ function widShowRecordsTabLog(d)
         $obj.html(d);
 }
 
-function widShowKeysPropriety(id)
+function widShowKeysPropriety($Obj)
 {
     var $SubmitButton = $('#submit_button');
-    var $Id = $('#' + id);
 
-    $Id.val(engGetOnlyHex($Id.val()));
+    $Obj.val(engGetOnlyHex($Obj.val()));
 
-    if (engIsHash($Id.val(), gCurrentDB.hash) || $Id.val() == '')
+    if (engIsHash($Obj.val(), gCurrentDB.hash) || $Obj.val() == '')
     {
-        widShowBordersColor($Id);
+        widShowBordersColor($Obj);
         widShowBordersColor($SubmitButton);
         widShowRecordsTabLog();
     }
     else
     {
-        widShowBordersColor($Id, 'red');
+        widShowBordersColor($Obj, 'red');
         widShowBordersColor($SubmitButton, 'red');
         widShowRecordsTabLog('BAD_HASH');
     }
@@ -388,39 +387,42 @@ function widShowNewRecOninput()
     var $NewRecPwd1 = $('#nr_pwd1_input');
     var $NewRecPwd2 = $('#nr_pwd2_input');
 
-    var s = $('#dn_input').val();
-    var nr_n = +$NewRecN.val();
-    var p0 = $NewRecPwd0.val();
-
     if ($NewRecN.val() == '' && $NewRecK.val() == '' && $NewRecG.val() == '' && $NewRecO.val() == '')
         return;
 
     $NewRecN.val(engGetOnlyNumber($NewRecN.val()));
 
-    if ($OnePwd.prop('checked'))
+    var s = $('#dn_input').val();
+    var nr_n = +$NewRecN.val();
+    var p0 = $NewRecPwd0.val();
+
+    if ($OnePwd.is(':checked'))
     {
         var p1 = null;
         var p2 = null;
     }
-    else if ($ThreePwd.prop('checked'))
+    else if ($ThreePwd.is(':checked'))
     {
         var p1 = $NewRecPwd1.val();
         var p2 = $NewRecPwd2.val();
     }
 
-    var pwdCheckboxIsOn = $OnePwd.prop('checked') + $ThreePwd.prop('checked');
+    var pwdCheckboxIsOn = $OnePwd.is(':checked') + $ThreePwd.is(':checked');
 
     if ((s != '') && pwdCheckboxIsOn == 1)
     {
         widShowNewRecord(engGetRecord(nr_n, s, p0, p1, p2, gCurrentDB.magic, gCurrentDB.hash));
         widShowRecordsTabLog();
     }
+
     widShowNewRecCompability();
 }
 
-function widRecordsOnePwdCheckboxClick($obj)
+function widRecordsOnePwdCheckboxClick($Obj)
 {
-    if ($obj.checked == true)
+    var state = $Obj.is(':checked');
+
+    if ( state )
     {
         $('#three_pwd_checkbox').prop('checked', false);
         $('#nr_pwd0_input').prop('disabled', false);
@@ -435,20 +437,22 @@ function widRecordsOnePwdCheckboxClick($obj)
     }
 }
 
-function widRecordsThreePwdCheckboxClick($obj)
+function widRecordsThreePwdCheckboxClick($Obj)
 {
     var $NewRecPwd0 = $('#nr_pwd0_input');
     var $NewRecPwd1 = $('#nr_pwd1_input');
     var $NewRecPwd2 = $('#nr_pwd2_input');
     var $NewRecOnePwdCheckbox = $('#one_pwd_checkbox');
 
-    $NewRecPwd0.prop('disabled', !$obj.checked);
-    $NewRecPwd1.prop('disabled', !$obj.checked);
-    $NewRecPwd2.prop('disabled', !$obj.checked);
+    var state = $Obj.is(':checked');
 
-    if ($obj.checked)
+    $NewRecPwd0.prop('disabled', !state);
+    $NewRecPwd1.prop('disabled', !state);
+    $NewRecPwd2.prop('disabled', !state);
+
+    if ( state )
     {
-        $NewRecOnePwdCheckbox.prop('checked', !$obj.checked);
+        $NewRecOnePwdCheckbox.prop('checked', !state);
         widShowNewRecOninput();
     }
     else

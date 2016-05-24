@@ -326,14 +326,14 @@ function widGetHTMLRecTabPwdArea()
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
-    r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick(this);" unchecked>\n';
+    r += '<input type="checkbox" id="one_pwd_checkbox" onclick="widRecordsOnePwdCheckboxClick($(this));" unchecked>\n';
     r += '<label for="one_pwd_checkbox">One password</label>\n';
     r += '<td/>\n';
     r += '<input type="password" class="password" id="nr_pwd0_input" oninput="widShowNewRecOninput()" disabled>\n';
 
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
-    r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick(this)" unchecked/>\n';
+    r += '<input type="checkbox" id="three_pwd_checkbox" onclick="widRecordsThreePwdCheckboxClick($(this))" unchecked/>\n';
  r += '<label for="three_pwd_checkbox">Three passwords</label>\n';
     r += '<td/>\n';
     r += '<input type="password" class="password" id="nr_pwd1_input" oninput="widShowNewRecOninput()" disabled>\n';
@@ -355,27 +355,27 @@ function widGetHTMLRecTabNRArea()
     r += '<table id="table_nr_area">\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
- r += '<label for="nr_n_input">Record #</label>\n';
+    r += '<label for="nr_n_input">Record #</label>\n';
     r += '<td/>\n';
     r += '<input type="text" id="nr_n_input" oninput="widShowNewRecOninput();" >\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
- r += '<label for="nr_k_input">Key</label>\n';
+    r += '<label for="nr_k_input">Key</label>\n';
     r += '<td/>\n';
-    r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety(this.id)">\n';
+    r += '<input type="text" id="nr_k_input" oninput="widShowKeysPropriety($(this))">\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
- r += '<label for="nr_g_input">Generator</label>\n';
+    r += '<label for="nr_g_input">Generator</label>\n';
     r += '<td/>\n';
-    r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety(this.id)">\n';
+    r += '<input type="text" id="nr_g_input" oninput="widShowKeysPropriety($(this))">\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
     r += '<label for="nr_o_input">Owner</label>\n';
     r += '<td/>\n';
-    r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety(this.id)">\n';
+    r += '<input type="text" id="nr_o_input" oninput="widShowKeysPropriety($(this))">\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td class="td-label"/>\n';
@@ -394,14 +394,14 @@ function widGetHTMLRecTabSubmitArea()
 
     r += '<table id="table_submit_area">\n';
     r += '<tr>\n';
- r += '<td id="td_label_records_encrypt" class="td-label"/>\n';
- r += '<label for="input_records_encrypt">Admin mode</label>';
- r += '<td id="td_input_records_encrypt"/>\n';
+    r += '<td id="td_label_records_encrypt" class="td-label"/>\n';
+    r += '<label for="input_records_encrypt">Admin mode</label>';
+    r += '<td id="td_input_records_encrypt"/>\n';
     r += '<input id="input_records_encrypt" type="checkbox">\n';
- r += '<td id="td_submit_button"/>\n';
- r += '<button id="submit_button" onclick="widSubmitButtonClick()">Submit</button>\n';
- r += '</tr>\n';
- r += '</table>\n';
+    r += '<td id="td_submit_button"/>\n';
+    r += '<button id="submit_button" onclick="widSubmitButtonClick()">Submit</button>\n';
+    r += '</tr>\n';
+    r += '</table>\n';
 
     return r;
 }
@@ -543,7 +543,7 @@ function widGetHTMLCommandTab()
     r += '<td id="td_button_cmd"/>\n';
     r += '<button type="submit" id="button_cmd" onclick="widCommandSendButtonClick()">Send</button>\n';
     r += '<td/>\n';
-    r += '<input type="text" id="input_cmd" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey(this.value, event);"/>\n';
+    r += '<input type="text" id="input_cmd" title="type a command;" value="ping" onkeypress="return widSendCommandInputOnpresskey($(this), event);"/>\n';
  r += '<td id="td_skc"/>\n';
     r += widGetHTMLSpanImg('span_skc', 'widAddSkc()');
  r += '<img></img>';

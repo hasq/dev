@@ -142,7 +142,7 @@ function widModalWindow(msg, func)
 
     $(window).on('beforeunload', function()
     {
-        return 'Click anywhere to close the message window';
+        return 'Do you realy wont to leave this page?'
     });
 
     $Window.css('display', 'block');
