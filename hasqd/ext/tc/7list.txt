@@ -1,3 +1,5 @@
+acl.tcz
+acl-dev.tcz
 apr.tcz
 apr-util.tcz
 autoconf.tcz
@@ -29,12 +31,13 @@ glibc_base-dev.tcz
 gmp.tcz
 grep.tcz
 isl.tcz
+libattr.tcz
 libffi.tcz
 libgcrypt.tcz
 libgpg-error.tcz
 libproxy.tcz
 libssh2.tcz
-linux-3.16.2_api_headers.tcz
+linux-4.2.1_api_headers.tcz
 m4.tcz
 make.tcz
 mc.tcz

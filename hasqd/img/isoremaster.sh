@@ -9,7 +9,7 @@
 # tak i avtomaticheski iz scripts/automate.sh
 #.
 
-TCVERSION=6 #change to 5 if you are working with 5.3
+TCVERSION=7 #change to 6 if you are working with 6.4.1
 
 error() {
 	[ -z "$1" ] || echo "$1"
@@ -33,23 +33,18 @@ loc="local"
 ext="internet"
 unp="unpack"
 
-if [ "$TCVERSION" == "6" ]
+if [ "$TCVERSION" == "7" ]
 then
+  tcurl="http://tinycorelinux.net/7.x/x86/release/"
+  iso2="Core-7.1.iso"
+else
   tcurl="http://distro.ibiblio.org/tinycorelinux/6.x/x86/"
   iso2="Core-6.4.1.iso"
-#  packets="svn compiletc mc bash squashfs-tools wget mkisofs-tools udev-dev openssl-1.0.1-dev boost-dev db-dev automake"
-  packets="svn compiletc mc bash squashfs-tools wget mkisofs-tools udev-dev openss-dev boost-dev db-dev automake"
-#  relpackets="nginx udev-lib openssl-1.0.1 pcre"
-  relpackets="nginx udev-lib openssl pcre"
-else
-  tcurl="http://distro.ibiblio.org/tinycorelinux/5.x/x86/"
-  iso2="Core-5.3.iso"
-#  packets="svn compiletc mc bash squashfs-tools-4.x wget mkisofs-tools udev-dev openssl-1.0.0-dev boost-dev bsddb-dev automake"
-  packets="svn compiletc mc bash squashfs-tools-4.x wget mkisofs-tools udev-dev openssl-dev boost-dev bsddb-dev automake"
-#  relpackets="nginx udev-lib openssl-1.0.0"
-  relpackets="nginx udev-lib openssl"  
 fi
 
+packets="svn compiletc mc bash squashfs-tools wget mkisofs-tools udev-dev openss-dev boost-dev db-dev automake"
+relpackets="nginx udev-lib openssl pcre"
+  
 need_tools="wget awk cpio unsquashfs mkisofs"
 
 iso1="Core-current.iso"

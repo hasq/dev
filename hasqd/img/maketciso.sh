@@ -7,6 +7,17 @@ temp="additional"
 worksrc="worksrc"
 jqfile=""
 
+if [[ -z $1 || $1 == "7" ]]
+then
+	ver="7"
+elif [ $1 == "6" ]
+then
+	ver="6"
+else
+	echo "Unknown parameter "$1""
+	exit
+fi
+
 # 2015.12.28 - BEGIN: recursive search of TC folder
 
 findinc() {
@@ -16,9 +27,9 @@ findinc() {
 	for i in "$1"/*; do
 		if [ -d "$i" -a ! -L "$i" -a "$i" != "$2" ]
 		then
-			if [ -d "$i/iso" -a -d "$i/tcz" ]
+			if [ -d "$i/$ver.x/iso" -a -d "$i/$ver.x/tcz" ]
 			then 
-				tcdir="$i"
+				tcdir="$i/$ver.x"
 				echo "$tcdir"
 			else
 				findinc "$i"
