@@ -22,7 +22,7 @@ else
 	exit
 fi
 
-logfile="get-tcz.log"
+logfile="gettcz.log"
 tcz="tcz"
 iso="iso"
 update="$1"
@@ -93,6 +93,10 @@ echo ">searching for TinyCore folder..."
 [ -f "$(pwd)/$list" ] || error "Run scrip from proper folder!"
 
 list="$(cat "$list")"
+
+echo "TinyCore ver: $ver.x" >"$logfile"
+echo "Directory: $workdir" >>"$logfile"
+echo "" >>"$logfile"
 
 for i in ${list[@]}
 do
