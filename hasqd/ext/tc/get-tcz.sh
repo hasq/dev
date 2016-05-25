@@ -3,9 +3,22 @@
 # search tcz folder and download/update tcz-packages
 # run with "up"/"UP" for update tcz-packages
 
-listfile="tczlist.txt"
+if [[ -z $1 || $1 == "6" ]]
+then
+	ver="6"
+	list="6list.txt"
+	link="http://tinycorelinux.net/6.x/x86/tcz/"
+elif [ $1 == "7" ]
+then
+	ver="7"
+	list="7list.txt"
+	link="http://tinycorelinux.net/7.x/x86/tcz/"
+else
+	echo "Unknown parameter "$1""
+	exit
+fi
+
 logfile="get-tcz.log"
-link="http://tinycorelinux.net/6.x/x86/tcz/"
 tcz="tcz"
 iso="iso"
 workdir=""
@@ -25,9 +38,9 @@ findinc() {
 	for i in "$1"/*; do
 		if [ -d "$i" -a ! -L "$i" -a "$i" != "$2" ]
 		then
-			if [ -d "$i/$tcz" -a -d "$i/$iso" ]
+			if [ -d "$i/$ver.x/$tcz" -a -d "$i/$ver.x/$iso" ]
 			then 
-				workdir="$i/tcz"
+				workdir="$i/$ver.x/tcz"
 				echo "$workdir"
 			else
 				findinc "$i"
@@ -74,9 +87,9 @@ echo ">searching for TinyCore folder..."
 [ -z "$(svn status "$workdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$workdir/tcz" 2>&1 | grep "was not found.")" ] || error "$workdir - is not a working copy of TinyCore."
 [ -z "$(svn status "$workdir" | grep "^M")" ] || error ">>$workdir folder have uncommited changes, please commit it before."
 
-[ -f "$(pwd)/$listfile" ] || error "Run scrip from proper folder!"
+[ -f "$(pwd)/$list" ] || error "Run scrip from proper folder!"
 
-list="$(cat "$listfile")"
+list="$(cat "$list")"
 
 for i in ${list[@]}
 do
