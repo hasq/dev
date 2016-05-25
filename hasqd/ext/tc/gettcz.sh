@@ -2,26 +2,29 @@
 
 # search tcz folder and download/update tcz-packages
 # run with "up"/"UP" for update tcz-packages
+#
+# Default version of TinyCore is 7.x
 
-if [[ -z $1 || $1 == "6" ]]
-then
-	ver="6"
-	list="6list.txt"
-	link="http://tinycorelinux.net/6.x/x86/tcz/"
-elif [ $1 == "7" ]
+if [[ -z $1 || $1 == "7" ]]
 then
 	ver="7"
 	list="7list.txt"
 	link="http://tinycorelinux.net/7.x/x86/tcz/"
+elif [ $1 == "6" ]
+then
+	ver="6"
+	list="6list.txt"
+	link="http://tinycorelinux.net/6.x/x86/tcz/"
 else
-	echo "Unknown parameter "$1""
+	echo "Error: unknown parameter: \"$1\""
+	echo "Use \"6\" for TinyCore 6.x or \"7\" for TinyCore 7.x"
+	echo "Default version of TinyCore is 7.x (without parameter)"
 	exit
 fi
 
 logfile="get-tcz.log"
 tcz="tcz"
 iso="iso"
-workdir=""
 update="$1"
 
 [ "$update" == "up" -o "$update" == "UP" ] || update=""
