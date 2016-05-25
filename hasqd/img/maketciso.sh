@@ -1,5 +1,6 @@
 #!/bin/bash
 
+counter=0
 startdir="$(pwd)"
 tcdir=""
 srcdir=""
@@ -40,6 +41,10 @@ findinc() {
 
 finddec() {
 	local tcdir=$(findinc "$1" "$2")
+	let "counter = counter + 1"
+	
+	[ "$counter" -eq 8 ] && exit 1
+	
 	if [ -z "$tcdir" ]
 	then
 		local parentdir="$(dirname "$1")"
@@ -91,8 +96,10 @@ exportsvn() {
 
 delfolder "$temp"
 
-tcdir=$(finddec "$startdir")
 echo "> searching for TinyCore folder..."
+
+tcdir=$(finddec "$startdir")
+
 [ -z "$tcdir" ] && error "TinyCore folder not found!"
 [ -z "$(svn status "$tcdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$tcdir/tcz" 2>&1 | grep "was not found.")" ] || error ">>$tcdir is not a working copy of TinyCore."
 [ -z "$(svn status "$tcdir" | grep "^M")" ] || error ">>$tcdir - folder have uncommited changes, please commit it before."
