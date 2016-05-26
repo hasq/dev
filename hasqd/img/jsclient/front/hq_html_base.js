@@ -177,14 +177,14 @@ function widGetHTMLFamilyTable(data)
     r += '<table id="table_family">\n';
     r += '<tr><th>Name</th><th>Link</th><th>Neighbour</th><th>Alive</th><th>Locked</th></tr>\n';
 
-    for (var i = 0; i < data.list.length; i++)
+    for (var i = 0; i < data.length; i++)
     {
         r += '<tr>\n';
-        r += widGetHTMLTd(data.list[i].name);
-        r += widGetHTMLTd(widGetHTMLHref(data.list[i].link));
-        r += widGetHTMLTd(data.list[i].neighbor ? 'Yes' : 'No');
-        r += widGetHTMLTd(data.list[i].alive ? 'Yes' : 'No');
-        r += widGetHTMLTd(data.list[i].unlock ? 'No' : 'Yes');
+        r += widGetHTMLTd(data[i].name);
+        r += widGetHTMLTd(widGetHTMLHref(data[i].link));
+        r += widGetHTMLTd(data[i].neighbor ? 'Yes' : 'No');
+        r += widGetHTMLTd(data[i].alive ? 'Yes' : 'No');
+        r += widGetHTMLTd(data[i].unlock ? 'No' : 'Yes');
         r += '</tr>\n';
     }
 
