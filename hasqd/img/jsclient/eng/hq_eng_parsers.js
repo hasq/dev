@@ -39,13 +39,11 @@ function engGetParsedInfoFam(data)
 
     var infoFam = data.replace(/^OK/g, '').replace(/^\s+|\r|\s+$/g, '');
 
-    console.log('infoFam:\n' + infoFam);
-
     if (infoFam.length === 0)
         return list;
 
     var lines = infoFam.split(/\n/);
-    console.log('lines:\n' + lines);
+
     for (var i = 0; i < lines.length; i++)
     {
         var parts = lines[i].split(/\s/);
@@ -60,7 +58,7 @@ function engGetParsedInfoFam(data)
         list[i].alive = (parts[3] == 'A');
         list[i].unlock = (parts[4] == 'U');
     }
-    console.log(list);
+
     return list;
 }
 

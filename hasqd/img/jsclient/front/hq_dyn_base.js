@@ -119,7 +119,7 @@ function widRefreshButtonClick()
             return;
 
         var infoFam = engGetParsedInfoFam(data);
-        console.log(infoFam);
+
         if (typeof(infoFam) === 'null' || infoFam.length === 0)
             return;
 

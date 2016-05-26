@@ -358,6 +358,7 @@ textarea::-moz-placeholder
 }
 
 #table_server td,
+#table_family th,
 #table_family td
 {
 	border: 1px solid #DDDDDD;
