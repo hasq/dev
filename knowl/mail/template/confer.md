@@ -1,31 +1,11 @@
-Zdravstvujte,
+Hello,
 
-Ja predstavljaju interesy kompanii HASQ Technology Pty Ltd zanimajushhujusja 
-razrabotkoj i vnedreniem tehnologii pozvoljajushhej odnoznachno ustanalivat' 
-i menjat' sobstvennoka jelektronnogo ob#ekta. Jelektronnym ob#ektom mozhet' 
-byt' zapis' o ljuboj sobstennosti, ljubaja valjuta, zadalzhennos' i tak dalee. 
-Takaja vozmozhnost' javljaetsja ochen' jeffektivnym instrumentom v bankovskoj 
-i finansovoj sferah. Nasha tehnologija ne trebuet znachitel'nyh resusov dlja 
-raboty i mozhet' byt' legko protestirovana ochen' nebolshimi resursami:
-kak tehnicheskimi tak i chelovecheskimi.
+I represent the interests of the company HASQ Technology Pty Ltd, which is working on the development and implementation of technology that uniquely installs and changes the owners, digital object. The digital object can be a record of any personal information, any currency, any debt etc. This mechanism appears to have the most effective tool, in the bank and financial industry. Our technology doesn’t require significant resources for work and may easily be tested with very little technical and human effort. 
 
-Tehnologija, pozvoljaet odnoznachno i jeffekstivno ustanovit sobstvennika 
-jeliktronnoj ob#ekta i javljaetsja principrial'no otlichnoj ot rjada tehnologij 
-tipa BitCoin. Ona imeet gorazdo bolee obshhee primenenie i znachitel'no bolee 
-shirokie vozmozhnosti dlja ispol'zovanija. Korotko, HASQ jeto tehnologija 
-polnost'ju anonimnogo vedenija raznoobraznyh decentralizovannyh nezavisimyh 
-reestrov. Krome vsego sakazannogo, hotelos' by podcherknut' chto odnazhdy 
-sozdannaja informacija hronitsja v seti neogranichenno dolgo i po zhelaniju 
-vladel'ca takoj seti mozhet byt' dostupnoj.
+This technology allows to uniquely and effectively identify the owners of the digital object and it is different from other technologies like BitCoin. This technology has a lot greater public application and a broader variety of opportunity for usage. So, in a few words, HASQ is a technology, which is anonymously recording different information. Further more, the created information remains on the web indefinitely. 
 
-V prilozhenii k jetomu pis'mu vy najdete razvernutoe opisanie kak nashu 
-tehnologiju mozhno ispol'zovat' v razlichnyh oblastjah. HASQ Technology Pty Ltd 
-ishhet investora gotovogo investirovat' v razvitie tehnologii i v ee vnedrenii. 
-Tehnologija HASQ uzhe  zashhishhena Avstralijskim i mezhdunarodnym patentami. 
-Na segodnja komanda Hask jeto gruppa iz treh Avstralijcev russkogo i 
-ukrainskogo proishozhdenija.
+On our website, you will find a detailed description on how you can use our technology in different fields. HASQ Technology Pty Ltd is searching for an investor who is ready to invest in the development of the technology and its implementation. HASQ Technology is already protected by an Australian and international patent. Today our team consists of several Australian people, with a Russian and Ukrainian background. 
 
-Esli vas zainteresovalo nashe predlozhenie - my budem rady otvetit' 
-na ljubye voprosy. Nashi sotrudniki budet rady vozmozhnosti vstretit'sja, 
-chtoby obsudit' vozmozhnoe sotrudnichestvo.
+If you are interested in our proposal - we will be happy to answer any questions. Our colleagues will be glad for the opportunity to discuss possible collaboration.
+
 
