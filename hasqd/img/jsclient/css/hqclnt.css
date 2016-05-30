@@ -309,12 +309,12 @@ textarea::-moz-placeholder
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
-#main_tabs {
+#div_main_tabs {
     white-space: nowrap;
     overflow: hidden;
 }
 
-#main_tabs ul li {
+#div_main_tabs ul li {
     display: inline-block;
     float: none;
     vertical-align: bottom;
@@ -491,8 +491,40 @@ textarea::-moz-placeholder
 }
 
 /********************************/
-/********* Token Tab ************/
+/********** Tab Tokens **********/
 /********************************/
+
+/********** Init data ***********/
+
+#table_tokens_range
+{
+	width: auto;
+}
+
+#td_lst_idx
+{
+	text-align: right;
+}
+
+#table_tokens_password
+{
+	width: auto;
+}
+
+/********** Create tab **********/
+
+
+/********** Verify tab **********/
+
+
+/*********** Data tab ***********/
+
+
+/*********** Send tab ***********/
+
+
+/********* Receive tab **********/
+
 
 
 @media all and (min-resolution: 121dpi), (max-width: 900px)

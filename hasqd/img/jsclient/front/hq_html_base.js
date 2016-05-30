@@ -64,7 +64,7 @@ function widGetHTMLHref(x)
     return r;
 }
 
-function widGetHTMLBody(tabs)
+function widGetHTMLMainBody(tabs)
 {
     var r = '';
 
@@ -75,7 +75,7 @@ function widGetHTMLBody(tabs)
     r += widGetHTMLSpanLed('span_logo') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td colspan="2"/>\n' + widGetHTMLTabs(tabs);
+    r += '<td colspan="2"/>\n' + widGetHTMLTabsDivs(tabs, 'div_main_tab');
     r += '</tr>\n';
     r += '<tr>\n';
     {
@@ -113,21 +113,21 @@ function widGetHTMLSpan(span_id)
 
 }
 
-function widGetHTMLTabs(items)
+function widGetHTMLTabsDivs(items, id)
 {
     var r = '';
 
-    r += '<div id="main_tabs">\n';
+    r += '<div id="' + id + 's">\n';
 
     r += '\t<ul>\n';
 
     for (var i = 0; i < items.length; i++)
-        r += '\t<li><a href="#tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
+        r += '\t<li><a href="#' + id + '_' + (i + 1) + '">' + items[i].title + '</a>\n';
 
     r += '\t</ul>\n';
 
         for (var i = 0; i < items.length; i++)
-        r += '\t<div id="tabs-' + (i + 1) + '_div">' + items[i].data + '</div>\n';
+        r += '\t<div id="' + id + '_' + (i + 1) + '">' + items[i].data + '</div>\n';
 
     r += '</div>\n';
 

@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function widGetHTMLTokensTab()
+function widGetHTMLTokensTabs()
 {
     var r = '';
     var tabs = [];
@@ -47,7 +47,7 @@ function widGetHTMLTokensTabBody(tabs)
     r += '<td/>' + widGetHTMLTokensProgressbar() + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td/>' + widGetHTMLTokensTabWrite(tabs) + '\n';
+    r += '<td/>' + widGetHTMLTabsDivs(tabs, 'div_tokens_tab') + '\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td/><hr/>\n';
@@ -63,70 +63,51 @@ function widGetHTMLTokensTabBody(tabs)
     return r;
 }
 
-function widGetHTMLTokensTabWrite(items)
-{
-    var r = '';
-    r += '<div id="tokens_tabs">\n';
-
-    r += '\t<ul>\n';
-    for (var i = 0; i < items.length; i++)//
-        r += '\t<li style="list-style-type:none;"><a href="#tokens_tabs-' + (i + 1) + '_div">' + items[i].title + '</a>\n';
-
-    r += '\t</ul>\n';
-
-    for (var i = 0; i < items.length; i++)//
-        r += '\t<div id="tokens_tabs-' + (i + 1) + '_div">\n' + items[i].data + '</div>\n';
-
-    r += '</div>\n';
-
-    return r;
-}
-
 function widGetHTMLTokensInitialData()
 {
     var r = '';
 
-    r += '<table>\n';
+    r += '<table id="table_tokens_init_data">\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<textarea rows="3" id="tokens_names_textarea" maxlength="16511" oninput="widTokensNamesOninput($(this));" placeholder="Enter tokens \[raw names\] or hashes here."></textarea>\n';
+    r += '<td/>\n';
+    r += '<textarea rows="3" id="textarea_tokens_names" oninput="widTokensNamesOninput($(this));"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td />\n';
-    r += '<div id="tokens_add_range_accordion">\n';
+    r += '<div id="div_add_range_accordion">\n';
     r += '<h3>Add tokens range</h3>\n';
     r += '<div>\n';
-    r += '<table style="width:auto">\n';
+    r += '<table id="table_tokens_range">\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
-    r += '<label for="tokens_basename_input">Base name</label>\n';
- r += '<td colspan="3" align="left" />\n';
-    r += '<input type="text" size="24" id="tokens_basename_input" >\n';
-    r += '<td align="right" valign="middle" rowspan="2" />\n';
+    r += '<td/>\n';
+    r += '<label for="input_tokens_basename">Base name</label>\n';
+ r += '<td colspan="3"/>\n';
+    r += '<input type="text" size="24" id="input_tokens_basename" >\n';
+    r += '<td rowspan="2"/>\n';
     r += '<button onclick="widMainButtonClick($(this))" data-title="Add" data-function="widAddTokens">Add</button>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
- r += '<label for="tokens_first_idx_input">Start index</label>\n';
-    r += '<td align="left" />\n';
-    r += '<input type="text" size="3" id="tokens_first_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
-    r += '<td align="right" />\n';
-    r += '<label for="tokens_last_idx_input">End index</label>\n';
-    r += '<td align="right" />\n';
-    r += '<input type="text" size="3" id="tokens_last_idx_input" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
+    r += '<td/>\n';
+ r += '<label for="input_fst_idx">Start index</label>\n';
+    r += '<td/>\n';
+    r += '<input id="input_fst_idx" type="text" size="3" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
+    r += '<td id="td_lst_idx"/>\n';
+    r += '<label for="input_lst_idx">End index</label>\n';
+    r += '<td/>\n';
+    r += '<input id="input_lst_idx" type="text" size="3" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
     r += '</div>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
-    r += '<table style="width:auto;">\n';
+    r += '<td/>\n';
+    r += '<table id="table_tokens_password">\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
+    r += '<td/>\n';
     r += '<label for="tokens_input_password">Password</label>\n';
-    r += '<td align="left" />\n';
-    r += '<input type="text" id="tokens_input_password" placeholder="Enter a password" oninput="widTokensPasswordOninput(this.value);" />\n';
+    r += '<td/>\n';
+    r += '<input type="text" id="tokens_input_password" oninput="widTokensPasswordOninput(this.value);" />\n';
  r += '<td id="td_tokens_encrypt"/>\n';
  r += '<label for="input_tokens_encrypt">&nbsp;Admin mode</label>\n';
     r += '<input id="input_tokens_encrypt" type="checkbox">\n';

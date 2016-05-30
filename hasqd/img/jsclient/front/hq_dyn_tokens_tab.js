@@ -166,7 +166,7 @@ function widGetClosestTextarea($obj)
 
 function widDisableTokensInput()
 {
-    var $obj = $('#tokens_tabs');
+    var $obj = $('#div_tokens_tabs');
     $obj.tabs('option', 'disabled', true);
     $obj
     .closest('div[id^="tabs"]')
@@ -181,7 +181,7 @@ function widDisableTokensInput()
 
 function widEnableTokensInput()
 {
-    var $obj = $('#tokens_tabs');
+    var $obj = $('#div_tokens_tabs');
     $obj.tabs('enable');
 
     $obj
@@ -192,7 +192,7 @@ function widEnableTokensInput()
 
 function widDisableAllTokensUI($obj)
 {
-    var $Tabs = $('#tokens_tabs');
+    var $Tabs = $('#div_tokens_tabs');
     $Tabs.tabs('option', 'disabled', true);
 
     $Tabs
@@ -206,7 +206,7 @@ function widDisableAllTokensUI($obj)
 
 function widEnableAllTokensUI()
 {
-    var $obj = $('#tokens_tabs');
+    var $obj = $('#div_tokens_tabs');
     $obj.tabs('enable');
 
     $obj.closest('div[id^="tabs"]')
@@ -359,7 +359,7 @@ function widTokensPasswordOninput(data)
 
 function widGetRawTokens(data)
 {
-    $Text = $('#tokens_names_textarea');
+    $Text = $('#textarea_tokens_names');
 
     if (data)
         return $Text.val(data);
@@ -379,9 +379,9 @@ function widIsRawTokens()
 
 function widGetRangeDataState()
 {
-    var baseName = $('#tokens_basename_input').val();
-    var idx0 = +$('#tokens_first_idx_input').val();
-    var idx1 = +$('#tokens_last_idx_input').val();
+    var baseName = $('#input_tokens_basename').val();
+    var idx0 = +$('#input_fst_idx').val();
+    var idx1 = +$('#input_lst_idx').val();
     var r = 'OK';
 
     if (baseName == '')
@@ -428,9 +428,9 @@ function widTokensNamesOninput($obj)
 
 function widAddTokens($obj, data)
 {
-    var $Basename = $('#tokens_basename_input');
-    var $FirstIdx = $('#tokens_first_idx_input');
-    var $LastIdx = $('#tokens_last_idx_input');
+    var $Basename = $('#input_tokens_basename');
+    var $FirstIdx = $('#input_fst_idx');
+    var $LastIdx = $('#input_lst_idx');
     var chk = widGetRangeDataState();
 
     if (chk !== 'OK')

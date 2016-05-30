@@ -103,19 +103,10 @@ function docMainInit()
 
 function doc_init()
 {
-    /*$('input, textarea').val('');
-    $('input, select, textarea').attr('autocomplete', 'off');
-    $('input, select, textarea').prop('disabled', true);
-    setTimeout(
-        function ()
-        {
-            $('input, select, textarea').prop('disabled', false)
-        }
-        , 50
-    );
-    */
+    $('#textarea_tokens_names').prop('maxlength', '16511').prop('placeholder', 'Enter tokens \[raw names\] or hashes here.');
+    $('#tokens_input_password').prop('placeholder', 'Enter a password');
 
-    $('#main_tabs').tabs(
+    $('#div_main_tabs').tabs(
     {
         activate : function (event, ui)
         {
@@ -166,7 +157,7 @@ function doc_init()
         }
     });
 
-    $('#main_tabs').tabs().tabs('option', 'active', 2);
+    $('#div_main_tabs').tabs().tabs('option', 'active', 2);
 
     $('#database_select').selectmenu(
     {
@@ -277,7 +268,7 @@ function doc_init()
         }
     });
 
-    $('#tokens_tabs').tabs(
+    $('#div_tokens_tabs').tabs(
     {
         activate : function (event, ui)
         {
@@ -306,9 +297,9 @@ function doc_init()
         }
     })
 
-    $('#tokens_tabs').tabs().tabs('option', 'active', 0);
+    $('#div_tokens_tabs').tabs().tabs('option', 'active', 0);
 
-    $('#tokens_add_range_accordion').accordion(
+    $('#div_add_range_accordion').accordion(
     {
         icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
         active : 'false',
@@ -408,7 +399,7 @@ function docMain()
 
     item = {};
     item.title = 'Tokens';
-    item.data = widGetHTMLTokensTab();
+    item.data = widGetHTMLTokensTabs();
     tabs[tabs.length] = item;
 
     item = {};
@@ -416,7 +407,7 @@ function docMain()
     item.data = widHelpTab();
     tabs[tabs.length] = item;
 
-    var body = widGetHTMLBody(tabs);
+    var body = widGetHTMLMainBody(tabs);
 
     return body;
 }
