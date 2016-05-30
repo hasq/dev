@@ -134,9 +134,9 @@ function widCleanUI($obj)
 
 function widCleanVerifyTab()
 {
-    $('#tokens_verify_table').find('tr:gt(0)').remove();
-    led($('#tokens_verify_button')).clear();
-    $('.div-hidden').hide();
+    $('#table_verify').find('tr:gt(0)').remove();
+    led($('#button_verify')).clear();
+    $('#div_table_verify').hide();
 }
 
 function widGetClosestMainButton($obj)
@@ -575,7 +575,7 @@ function widCreateTokens($obj, tokens)
 
 function widAddVerifyTR(rec, statePic)
 {
-    var $Table = $('#tokens_verify_table');
+    var $Table = $('#table_verify');
     var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>';
     var tr = widGetHTMLTr(widGetHTMLTd(pic + rec.state) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
     $Table.append(tr);
@@ -624,7 +624,7 @@ function widPreVerify($obj)
     if (!widIsPassword())
         return widDone($obj, 'Empty password!');
 
-    var $TableArea = $('.div-hidden');
+    var $TableArea = $('#div_table_verify');
     var width = $obj.closest('.wrap').outerWidth() - 6;
     var maxHeight =
         (($(window).height() - $('body').height()) > 200)

@@ -82,7 +82,7 @@ function widGetHTMLTokensInitialData()
     r += '<td/>\n';
     r += '<label for="input_tokens_basename">Base name</label>\n';
  r += '<td colspan="3"/>\n';
-    r += '<input type="text" size="24" id="input_tokens_basename" >\n';
+    r += '<input type="text" id="input_tokens_basename" >\n';
     r += '<td rowspan="2"/>\n';
     r += '<button onclick="widMainButtonClick($(this))" data-title="Add" data-function="widAddTokens">Add</button>\n';
     r += '</tr>\n';
@@ -90,11 +90,11 @@ function widGetHTMLTokensInitialData()
     r += '<td/>\n';
  r += '<label for="input_fst_idx">Start index</label>\n';
     r += '<td/>\n';
-    r += '<input id="input_fst_idx" type="text" size="3" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
-    r += '<td id="td_lst_idx"/>\n';
+    r += '<input id="input_fst_idx" type="text" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
+    r += '<td id="td_label_lst_idx"/>\n';
     r += '<label for="input_lst_idx">End index</label>\n';
-    r += '<td/>\n';
-    r += '<input id="input_lst_idx" type="text" size="3" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
+    r += '<td id="td_input_lst_idx"/>\n';
+    r += '<input id="input_lst_idx" type="text" oninput="return $(this).val(engGetOnlyNumber($(this).val()))">\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -107,7 +107,7 @@ function widGetHTMLTokensInitialData()
     r += '<td/>\n';
     r += '<label for="tokens_input_password">Password</label>\n';
     r += '<td/>\n';
-    r += '<input type="text" id="tokens_input_password" oninput="widTokensPasswordOninput(this.value);" />\n';
+    r += '<input id="tokens_input_password" type="text" oninput="widTokensPasswordOninput(this.value);" />\n';
  r += '<td id="td_tokens_encrypt"/>\n';
  r += '<label for="input_tokens_encrypt">&nbsp;Admin mode</label>\n';
     r += '<input id="input_tokens_encrypt" type="checkbox">\n';
@@ -140,11 +140,11 @@ function widGetHTMLTokensLog()
 function widGetHTMLTokensCreateTab()
 {
     var r = '';
-    r += '<table class="wrap" style="width: auto;">\n';
+    r += '<table id="table_create_tab" class="wrap">\n';
     r += '<tr>\n';
-    r += '<td align="left">\n';
+    r += '<td/>\n';
     r += '<button class="shared-button" data-title="Create" data-function="widPreCreate" onclick="widMainButtonClick($(this))">Create</button>\n';
-    r += '<td align="right">\n';
+    r += '<td id="td_create_led"/>\n';
     r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
@@ -154,21 +154,30 @@ function widGetHTMLTokensCreateTab()
 function widGetHTMLTokensVerifyTab()
 {
     var r = '';
-    r += '<table class="wrap">\n';
+    r += '<table class="wrap">';
+    r += '<tr>';
+    r += '<td>';
+    r += '<table id="table_button_verify">\n';
     r += '<tr>\n';
-    r += '<td width="70" align="left">\n';
-    r += '<button id="tokens_verify_button" data-title="Verify" class="shared-button" data-function="widPreVerify" onclick="widMainButtonClick($(this))">Verify</button>\n';
-    r += '<td align="left">\n';
+    r += '<td id="td_button_verify"/>\n';
+    r += '<button id="button_verify" data-title="Verify" class="shared-button" data-function="widPreVerify" onclick="widMainButtonClick($(this))">Verify</button>\n';
+    r += '<td id="td_verify_led"/>\n';
     r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
-    r += '<div id="tokens_verify_div" class="div-hidden">\n';
-    r += '<table id="tokens_verify_table" border="1" style="font-family:monospace;">\n';
+ r += '</tr>';
+
+    r += '<tr>';
+    r += '<td>';
+    r += '<div id="div_table_verify">\n';
+    r += '<table id="table_verify" border="1">\n';
     r += '<tr>\n';
-    r +='<th nowrap>Status</th><th nowrap>Raw name</th><th>Hash</th><th nowrap>Last rec. N</th><th>Data</th>\n';
+    r +='<th>Status</th><th>Raw name</th><th>Hash</th><th>Last rec. N</th><th>Data</th>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
+ r += '</tr>';
+ r += '</table>';
     return r;
 }
 

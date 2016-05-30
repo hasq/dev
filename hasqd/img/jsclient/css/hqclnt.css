@@ -189,14 +189,6 @@ textarea::-moz-placeholder
 	position: absolute;
 }
 
-.div-hidden {
-    box-sizing: border-box;
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: auto;
-    font: 14px monospace;
-}
-
 .ui-progressbar {
 	position: relative;
 	height: 20px;
@@ -501,7 +493,18 @@ textarea::-moz-placeholder
 	width: auto;
 }
 
-#td_lst_idx
+#input_tokens_basename
+{
+	width: 12em;
+}
+
+#input_fst_idx,
+#input_lst_idx
+{
+	width: 3em;
+}
+#td_label_lst_idx,
+#td_input_lst_idx
 {
 	text-align: right;
 }
@@ -513,10 +516,45 @@ textarea::-moz-placeholder
 
 /********** Create tab **********/
 
+#table_create_tab
+{
+	width: auto;
+}
+
+#td_create_led
+{
+	text-align: right;
+}
 
 /********** Verify tab **********/
 
+#table_button_verify
+{
+	width: auto;
+}
 
+#td_button_verify
+{
+	
+}
+
+#td_verify_led
+{
+	text-align: right;
+}
+
+#div_table_verify
+{
+    box-sizing: border-box;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#table_verify
+{
+	font: normal 0.875em monospace;
+}
 /*********** Data tab ***********/
 
 

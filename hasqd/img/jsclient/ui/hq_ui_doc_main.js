@@ -358,7 +358,7 @@ function doc_init()
     $('#span_skc img').attr('src', imgSkcOff);
 
     $('#server_host').html('' + location.host);
-    $('#tokens_verify_div').hide();
+    $('#div_table_verify').hide();
 
     $('#td_label_records_encrypt').hide();
     $('#td_input_records_encrypt').hide();
