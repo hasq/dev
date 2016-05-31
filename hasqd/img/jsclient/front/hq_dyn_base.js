@@ -206,7 +206,7 @@ function widCommandSendButtonClick()
         return $CmdOutput.empty();
 
     if ( gSkc )
-        cmd = '#' + engGetCifer(cmd);
+        cmd = '#' + engGetCipher(cmd);
 
     var cb = function (d)
     {
@@ -565,7 +565,7 @@ function widSubmitButtonClick()
     var nr = cmd + ' * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
 
     if ( enc )
-        nr = '#' + engGetCifer(nr);
+        nr = '#' + engGetCipher(nr);
 
     ajxSendCommand(nr, cb, hasqLogo);
 }

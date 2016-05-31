@@ -86,7 +86,7 @@ function engRunCmdList(cmdList, cbFunc)
         cbFunc('OK', 0, 0);
 }
 
-function engGetCifer(data)
+function engGetCipher(data)
 {
     randomize();
 

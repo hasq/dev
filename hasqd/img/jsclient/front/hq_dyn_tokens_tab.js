@@ -224,7 +224,7 @@ function widSwitchShowHide($obj)
 
 function widGetWarningsMode($obj)
 {
-    return ($obj.button('option', 'label') == 'Continue') ? true : false;
+    return ($obj.button('option', 'label') == gButton.continueBtn) ? true : false;
 }
 
 function widGetButtonsMode($obj)
@@ -263,15 +263,15 @@ function widSwitchButtonsMode($obj)
     var objWarning = widGetClosestWarningTd($obj);
     var objContinue = widGetClosestContinueButton($obj);
 
-    if (label === title && title === 'Continue')
+    if (label === title && title === gButton.continueBtn)
     {
         widSwitchShowHide($obj);
         widSwitchShowHide(objWarning);
-        $obj.button('option', 'label', 'Hidden');
+        $obj.button('option', 'label', gButton.hiddenBtn);
         return;
     }
 
-    if (label !== title && title === 'Continue')
+    if (label !== title && title === gButton.continueBtn)
     {
         widSwitchShowHide($obj);
         widSwitchShowHide(objWarning);
@@ -288,7 +288,7 @@ function widSwitchButtonsMode($obj)
     {
         widSwitchShowHide(objContinue);
         widSwitchShowHide(objWarning);
-        $(objContinue).button('option', 'label', 'Hidden');
+        $(objContinue).button('option', 'label', gButton.hiddenBtn);
     }
 }
 
@@ -323,14 +323,14 @@ function widCancel($obj, text)
     glCmdList.clear();
 
     if (!text)
-    { //if process was cancelled by "Cancel" button
-        text = 'Operation cancelled!';
-    glTokList.clear();
-    widWarningLed($obj, imgMsgError, text);
-}
+    {
+        text = gMsg.cancel;
+        glTokList.clear();
+        widWarningLed($obj, imgMsgError, text);
+    };
 
-widShowTokensLog(text);
-widEnableAllTokensUI();
+    widShowTokensLog(text);
+    widEnableAllTokensUI();
 }
 
 function widContinueButtonClick($obj, click)
@@ -340,7 +340,7 @@ function widContinueButtonClick($obj, click)
 
     (click)
     ? setTimeout(widGetFunctionById(widGetClosestMainButton($obj), click))
-    : widShowTokensLog('Waiting for user decision...');
+    : widShowTokensLog(gMsg.userWait);
 
 }
 
@@ -382,16 +382,16 @@ function widGetRangeDataState()
     var baseName = $('#input_tokens_basename').val();
     var idx0 = +$('#input_fst_idx').val();
     var idx1 = +$('#input_lst_idx').val();
-    var r = 'OK';
+    var r = gMsg.ok;
 
     if (baseName == '')
-        r = 'Empty basename.';
+        r = gMsg.emptyName;
     else if (/[\s]/g.test(baseName))
-    r = 'Incorrect basename. Please, remove spaces.';
+    r = gMsg.incorrectName;
     else if (idx0 > idx1)
-        r = 'Incorrect indexes. The start index should not be bigger the end index.';
+        r = gMsg.incorrectIdx;
     else if (idx1 - idx0 > 127)
-        r = 'Too many tokens, the maximum quantity - 128';
+        r = g.Msg.manyTokens;
 
     return r;
 }
@@ -408,14 +408,14 @@ function widTokensNamesOninput($obj)
     {
         widDisableTokensInput();
         widShowBordersColor($obj, '#FF0000'); //RED BORDER
-        widShowTokensLog('Please enter a hashes or raw value in square brackets.');
+        widShowTokensLog(gMsg.namePlaceholder);
     }
     else if (tokens.length >= 15479)
     {
         widEnableTokensInput();
         widShowBordersColor($obj, '#FFFF00'); //YELLOW BORDER
         var l = 16511 - tokens.length;
-        $obj.prop('title', 'Warning! ' + l + ' chars left.');
+        $obj.prop('title', gMsg.charsLeft + l );
         widShowTokensLog();
     }
     else
@@ -433,7 +433,7 @@ function widAddTokens($obj, data)
     var $LastIdx = $('#input_lst_idx');
     var chk = widGetRangeDataState();
 
-    if (chk !== 'OK')
+    if (chk !== gMsg.ok)
         return widDone($obj, chk);
 
     var baseName = $Basename.val();
@@ -490,10 +490,10 @@ function widAddTokens($obj, data)
         $Basename.val('');
         $FirstIdx.val('');
         $LastIdx.val('');
-        widDone($obj, 'OK');
+        widDone($obj, gMsg.ok);
     }
     else
-        widDone($obj, 'REQ_TOKENS_TOO_MANY');
+        widDone($obj, gMsg.manyTokens);
 }
 
 function widPreCreate($obj)
@@ -502,12 +502,12 @@ function widPreCreate($obj)
     glTokList.clear();
 
     if (!widIsRawTokens())
-        return widDone($obj, 'Empty or bad tokens!');
+        return widDone($obj, gMsg.badTokens);
 
     if (!widIsPassword())
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
-    led($obj).set(imgMsgBlink, 'Please wait...');
+    led($obj).set(imgMsgBlink, gMsg.wait);
 
     var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
     widCreateTokens($obj, tokens);
@@ -530,12 +530,12 @@ function widCreateTokens($obj, tokens)
 
         if ( resp === 'REQ_ZERO_POLICY' || resp === 'REQ_BAD_CRYPT')
         {
-            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
+            widWarningLed($obj, imgMsgError, gMsg.error + resp);
             return widDone($obj, resp);
         }
 
         if ( resp !== 'OK' )
-            widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp);
+            widWarningLed($obj, imgMsgWarning, gMsg.error + resp);
 
         if ( !(cmdIdx + 1 < glCmdList.items.length) )
         {
@@ -552,8 +552,8 @@ function widCreateTokens($obj, tokens)
 
         if ( enc )
         {
-            zCmd = '#' + engGetCifer(zCmd);
-            lastCmd = '#' + engGetCifer(lastCmd);
+            zCmd = '#' + engGetCipher(zCmd);
+            lastCmd = '#' + engGetCipher(lastCmd);
         }
 
         var zCmdIdx = (i == 0) ? 0 : i * 2;
@@ -590,23 +590,23 @@ function widGetTokenStateImg(status)
     {
         case 'OK':
             r.img = imgPwdOk;
-            r.title = 'OK';
+            r.title = gTokStateMsg.ok;
             break;
         case 'PWD_SNDNG':
             r.img = imgPwdSndng;
-            r.title = 'Token is locked by sending';
+            r.title = gTokStateMsg.sending;
             break;
         case 'PWD_RCVNG':
             r.img = imgPwdRcvng;
-            r.title = 'Token is locked by receiving';
+            r.title = gTokStateMsg.receiving;
             break;
         case 'PWD_WRONG':
             r.img = imgPwdWrong;
-            r.title = 'Wrong password';
+            r.title = gTokStateMsg.wrong;
             break;
         default:
                 r.img = imgTknNodn;
-            r.title = 'No such token';
+            r.title = gTokStateMsg.nodn;
             break;
     }
     return r;
@@ -619,16 +619,16 @@ function widPreVerify($obj)
     widCleanVerifyTab();
 
     if (!widIsRawTokens())
-        return widDone($obj, 'Empty or bad tokens!');
+        return widDone($obj, gMsg.badTokens);
 
     if (!widIsPassword())
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     var $TableArea = $('#div_table_verify');
     var width = $obj.closest('.wrap').outerWidth() - 6;
     var maxHeight =
         (($(window).height() - $('body').height()) > 200)
-     ? ($(window).height() - $('body').height()) / 2
+         ? ($(window).height() - $('body').height()) / 2
         : 100;
 
     $TableArea.outerWidth(width);
@@ -636,7 +636,7 @@ function widPreVerify($obj)
     $TableArea.show();
 
     var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    led($obj).set(imgMsgBlink, 'Please wait...');
+    led($obj).set(imgMsgBlink, gMsg.wait);
     widVerifyTokens($obj, tokens);
 }
 
@@ -652,7 +652,7 @@ function widVerifyTokens($obj, tokens)
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
         {
-            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
+            widWarningLed($obj, imgMsgError, gMsg.error + resp);
             return widDone($obj, resp);
         }
 
@@ -663,16 +663,19 @@ function widVerifyTokens($obj, tokens)
         glTokList.add(item);
 
         var idx = glTokList.items.length - 1;
+
         var lineLed = widGetTokenStateImg(glTokList.items[idx].state);
+        console.log(glTokList.items[idx].state);
+        console.log(lineLed);
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
         if (glTokList.unfit)
-            widWarningLed($obj, imgMsgWarning, 'Unavailable tokens presents!');
+            widWarningLed($obj, imgMsgWarning, gMsg.unavailable);
 
         if (!(cmdIdx + 1 < glCmdList.items.length))
         {
-            widWarningLed($obj, imgMsgOk, 'OK');
-            widDone($obj, 'OK');
+            widWarningLed($obj, imgMsgOk, gMsg.ok);
+            widDone($obj, gMsg.ok);
         }
     }
 
@@ -681,7 +684,7 @@ function widVerifyTokens($obj, tokens)
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
 
         if ( enc )
-            lastCmd = '#' + engGetCifer(lastCmd);
+            lastCmd = '#' + engGetCipher(lastCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
@@ -707,7 +710,7 @@ function widFillOutTokList($obj, tokens, extCb)
 
         if (resp !== 'OK' && resp !== 'IDX_NODN')
         {
-            widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp)
+            widWarningLed($obj, imgMsgError, gMsg.error + resp)
             return widDone($obj, resp);
         }
 
@@ -729,7 +732,7 @@ function widFillOutTokList($obj, tokens, extCb)
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
 
         if ( enc )
-            lastCmd = '#' + engGetCifer(lastCmd);
+            lastCmd = '#' + engGetCipher(lastCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = lastCmd;
@@ -758,17 +761,17 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
 
     if ( resp === 'REQ_BAD_CRYPT')
     {
-        widWarningLed($obj, imgMsgError, 'Error occurred: ' + resp);
+        widWarningLed($obj, imgMsgError, gMsg.error + resp);
         return widDone($obj, resp);
     }
 
     (resp !== 'OK' && resp !== 'IDX_NODN')
-    ? widWarningLed($obj, imgMsgWarning, 'Error occurred: ' + resp)
+    ? widWarningLed($obj, imgMsgWarning, gMsg.error + resp)
     : widWarningLed($obj, imgMsgBlink, msg)
 
     if (!(cmdIdx + 1 < glCmdList.items.length))
     {
-        widWarningLed($obj, imgMsgOk, 'OK');
+        widWarningLed($obj, imgMsgOk, gMsg.ok);
         return widDone($obj, 'Done.');
     }
 }
@@ -779,7 +782,7 @@ function widPreUpdate($obj, click)
     widCleanUI().full();
 
     var d = $obj.closest('.wrap').find('input').val();
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -799,9 +802,9 @@ function widPreUpdate($obj, click)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             led($obj).set(imgMsgBlink, msg);
 
@@ -834,8 +837,8 @@ function widUpdateTokens($obj, data, items)
 
             if ( enc )
             {
-                addCmd = '#' + engGetCifer(addCmd);
-                lastCmd = '#' + engGetCifer(lastCmd);
+                addCmd = '#' + engGetCipher(addCmd);
+                lastCmd = '#' + engGetCipher(lastCmd);
             }
 
             var idx = (glCmdList.items.length == 0) ? 0 : glCmdList.items.length;
@@ -897,7 +900,7 @@ function widPreSimpleSend($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -929,10 +932,10 @@ function widPreSimpleSend($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             led($obj).set(imgMsgBlink, msg);
 
@@ -979,9 +982,9 @@ function widSimpleSend($obj, items)
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23132';
 
     closestTextArea($obj).add(line);
-    led($obj).set(imgMsgOk, 'OK');
+    led($obj).set(imgMsgOk, gMsg.ok);
 
-    widDone($obj, 'OK');
+    widDone($obj, gMsg.ok);
 }
 
 function widPreSimpleReceive($obj, click)
@@ -993,7 +996,7 @@ function widPreSimpleReceive($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1029,8 +1032,8 @@ function widSimpleReceive($obj, titleRecord)
 
         if ( enc )
         {
-            addCmd1 = '#' + engGetCifer(addCmd1);
-            addCmd2 = '#' + engGetCifer(addCmd2);
+            addCmd1 = '#' + engGetCipher(addCmd1);
+            addCmd2 = '#' + engGetCipher(addCmd2);
         }
 
         var idx = (i == 0) ? 0 : i * 2;
@@ -1060,7 +1063,7 @@ function widPreSimpleRequest($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -1080,10 +1083,10 @@ function widPreSimpleRequest($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
@@ -1140,7 +1143,7 @@ function widSimpleRequest($obj, items)
 
         closestTextArea($obj).add(line);
 
-        msg = 'OK';
+        msg = gMsg.ok;
         img = imgMsgOk;
     }
 
@@ -1158,7 +1161,7 @@ function widPreSimpleAccept($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1207,8 +1210,8 @@ function widSimpleAccept($obj, titleRecord)
 
         if ( enc )
         {
-            addCmd1 = '#' + engGetCifer(addCmd1);
-            addCmd2 = '#' + engGetCifer(addCmd2);
+            addCmd1 = '#' + engGetCipher(addCmd1);
+            addCmd2 = '#' + engGetCipher(addCmd2);
         }
 
         idx = (i == 0) ? 0 : i * 2;
@@ -1239,7 +1242,7 @@ function widPreBlockingSendStep1($obj)
     glCmdList.clear();
     widCleanUI($obj).near();
 
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -1270,10 +1273,10 @@ function widPreBlockingSendStep1($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             led($obj).set(imgMsgBlink, msg);
 
@@ -1323,16 +1326,16 @@ function widBlockingSendStep1($obj, items)
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23141';
 
     closestTextArea($obj).add(line);
-    led($obj).set(imgMsgOk, 'OK');
+    led($obj).set(imgMsgOk, gMsg.ok);
 
-    widDone($obj, 'OK');
+    widDone($obj, gMsg.ok);
 }
 
 function widPreBlockingSendStep2($obj)
 {
     glCmdList.clear();
     widCleanUI($obj).near();
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -1363,10 +1366,10 @@ function widPreBlockingSendStep2($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             led($obj).set(imgMsgBlink, msg);
 
@@ -1421,7 +1424,7 @@ function widBlockingSendStep2($obj, items)
             var line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '231';
 
         closestTextArea($obj).add(line);
-        msg = 'OK';
+        msg = gMsg.ok;
         img = imgMsgOk;
     }
 
@@ -1438,7 +1441,7 @@ function widPreBlockingReceiveStep1($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1474,7 +1477,7 @@ function widBlockingReceiveStep1($obj, titleRecord)
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         if ( enc )
-            addCmd = '#' + engGetCifer(addCmd);
+            addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1500,7 +1503,7 @@ function widPreBlockingReceiveStep2($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword)
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1537,7 +1540,7 @@ function widBlockingReceiveStep2($obj, titleRecord)
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         if ( enc )
-            addCmd = '#' + engGetCifer(addCmd);
+            addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1558,7 +1561,7 @@ function widPreBlockingRequestStep1($obj)
     glCmdList.clear();
     widCleanUI($obj).near();
 
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -1583,10 +1586,10 @@ function widPreBlockingRequestStep1($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
@@ -1642,7 +1645,7 @@ function widBlockingRequestStep1($obj, items)
             line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '251';
 
         closestTextArea($obj).add(line);
-        msg = 'OK';
+        msg = gMsg.ok;
         img = imgMsgOk;
     }
 
@@ -1655,7 +1658,7 @@ function widPreBlockingRequestStep2($obj)
     glCmdList.clear();
     widCleanUI($obj).near();
 
-    var msg = 'Please wait...';
+    var msg = gMsg.wait;
 
     switch (glTokList.state())
     {
@@ -1680,10 +1683,10 @@ function widPreBlockingRequestStep2($obj)
             break;
         default:
                 if (!widIsRawTokens())
-                    return widDone($obj, 'Empty or bad tokens!');
+                    return widDone($obj, gMsg.badTokens);
 
             if (!widIsPassword())
-                return widDone($obj, 'Empty password!');
+                return widDone($obj, gMsg.emptyPassword);
 
             var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
             var extCb = function ()
@@ -1748,7 +1751,7 @@ function widBlockingRequestStep2($obj, items)
 
         closestTextArea($obj).add(line);
 
-        msg = 'OK';
+        msg = gMsg.ok;
         img = imgMsgOk;
     }
 
@@ -1766,7 +1769,7 @@ function widPreBlockingAcceptStep1($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1803,7 +1806,7 @@ function widBlockingAcceptStep1($obj, titleRecord)
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         if ( enc )
-            addCmd = '#' + engGetCifer(addCmd);
+            addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;
@@ -1830,7 +1833,7 @@ function widPreBlockingAcceptStep2($obj, click)
         return widDone($obj, 'Bad acceptKeys!');
 
     if (!widIsPassword())
-        return widDone($obj, 'Empty password!');
+        return widDone($obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
         return widContinueButtonClick(widGetClosestContinueButton($obj));
@@ -1867,7 +1870,7 @@ function widBlockingAcceptStep2($obj, titleRecord)
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
         if ( enc )
-            addCmd = '#' + engGetCifer(addCmd);
+            addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
         glCmdList.items[i].cmd = addCmd;

@@ -85,7 +85,7 @@ var imgLogoAnim = 'img/logo_anim.gif';
 var allImages = [
                     imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,
                     imgPwdDummy, imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgTknNodn,
-                    imgLogoWait, imgLogoFail, imgLogoAnim
+                    imgLogoWait, imgLogoFail, imgLogoAnim, imgSkcOn, imgSkcOff
                 ];
 
 function docMainWrite()
