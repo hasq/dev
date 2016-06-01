@@ -523,7 +523,7 @@ function widCreateTokens($obj, tokens)
             return;
 
         widShowProgressbar(progress);
-        widShowTokensLog('Creating... ');
+        widShowTokensLog(gMsg.creating);
 
         var resp = engGetResponseHeader(cbData);
 
@@ -657,7 +657,7 @@ function widVerifyTokens($obj, tokens)
         }
 
         widShowProgressbar(progress);
-        widShowTokensLog('Verifying...');
+        widShowTokensLog(gMsg.verifying);
 
         var item = engGetTokenInfo(ajxData, glCmdList.items[cmdIdx].raw, glCmdList.items[cmdIdx].s);
         glTokList.add(item);
@@ -670,7 +670,7 @@ function widVerifyTokens($obj, tokens)
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
         if (glTokList.unfit)
-            widWarningLed($obj, imgMsgWarning, gMsg.unavailable);
+            widWarningLed($obj, imgMsgWarning, gMsg.someUnavailable);
 
         if (!(cmdIdx + 1 < glCmdList.items.length))
         {
@@ -723,7 +723,7 @@ function widFillOutTokList($obj, tokens, extCb)
         var idx = glTokList.items.length - 1;
 
         (cmdIdx + 1 < glCmdList.items.length)
-        ? widShowTokensLog('Filling out tokens list...')
+        ? widShowTokensLog(gMsg.makelist)
         : setTimeout(extCb);
     }
 
@@ -746,7 +746,7 @@ function widFillOutTokList($obj, tokens, extCb)
 function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
 {
     // callback function for all functions which update tokens;
-    var msg = 'No tokens or keys to processing!';
+    var msg = gMsg.noTokensOrKeys;
     var resp = engGetResponseHeader(cbData);
 
     if (glCmdList.items.length == 0)
@@ -755,7 +755,7 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
         return widDone($obj, msg);
     }
 
-    msg = 'Processing...';
+    msg = gMsg.processing;
     widShowProgressbar(progress);
     widShowTokensLog(msg);
 
@@ -772,7 +772,7 @@ function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
     if (!(cmdIdx + 1 < glCmdList.items.length))
     {
         widWarningLed($obj, imgMsgOk, gMsg.ok);
-        return widDone($obj, 'Done.');
+        return widDone($obj, gMsg.done);
     }
 }
 
@@ -791,7 +791,7 @@ function widPreUpdate($obj, click)
             widUpdateTokens($obj, d, glTokList.items);
             break;
         case false:
-            msg = 'All tokens are unknown!';
+            msg = gMsg.unknown;
             led($obj).set(imgMsgError, msg);
             widDone($obj, msg);
             break;
@@ -883,7 +883,7 @@ function widUpgradeAcceptKeys($obj, acceptKeys, func)
     else if (prCode.charAt(0) === '2' && glTokList.items.length > 0)
     {
         if (acceptKeys.length !== glTokList.items.length)
-            return widDone($obj, 'acceptKeys update error!');
+            return widDone($obj, gMsg.keysError);
 
         acceptKeys = engGetNumberedAcceptKeys(acceptKeys, glTokList.items);
     }
@@ -911,7 +911,7 @@ function widPreSimpleSend($obj)
 
             break;
         case false:
-            msg = 'All tokens are unavailable!';
+            msg = gMsg.allUnavailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -921,7 +921,7 @@ function widPreSimpleSend($obj)
 
             break;
         case undefined:
-            msg = 'Some tokens are unavailable!';
+            msg = gMsg.someUnavailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -972,7 +972,7 @@ function widSimpleSend($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
@@ -993,7 +993,7 @@ function widPreSimpleReceive($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
         return widDone($obj, gMsg.emptyPassword);
@@ -1068,7 +1068,7 @@ function widPreSimpleRequest($obj)
     switch (glTokList.state())
     {
         case true:
-            msg = 'All tokens in the list are already available!';
+            msg = gMsg.allAvailable;
             led($obj).set(imgMsgError, msg);
             widDone($obj, msg);
             break;
@@ -1077,7 +1077,7 @@ function widPreSimpleRequest($obj)
             widSimpleRequest($obj, glTokList.items);
             break;
         case undefined:
-            msg = 'There are some available tokens in the list!';
+            msg = gMsg.someAvailable;
             led($obj).set(imgMsgError, msg);
             widDone($obj, msg);
             break;
@@ -1127,10 +1127,10 @@ function widSimpleRequest($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
-    var msg = 'Inappropriate tokens!';
+    var msg = gMsg.nonexistentTokens;
     var img = imgMsgError;
 
     if (closestTextArea($obj).val().length > 0)
@@ -1158,7 +1158,7 @@ function widPreSimpleAccept($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
         return widDone($obj, gMsg.emptyPassword);
@@ -1252,7 +1252,7 @@ function widPreBlockingSendStep1($obj)
 
             break;
         case false:
-            msg = 'All tokens are unavailable!';
+            msg = gMsg.allUnavailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -1262,7 +1262,7 @@ function widPreBlockingSendStep1($obj)
 
             break;
         case undefined:
-            msg = 'Some tokens are unavailable!';
+            msg = gMsg.someUnavailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -1316,7 +1316,7 @@ function widBlockingSendStep1($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
     var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
@@ -1340,7 +1340,7 @@ function widPreBlockingSendStep2($obj)
     switch (glTokList.state())
     {
         case true:
-            msg = 'All tokens in the list are still fully available!';
+            msg = gMsg.allAvailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -1355,7 +1355,7 @@ function widPreBlockingSendStep2($obj)
 
             break;
         case undefined:
-            msg = 'Some tokens in the list are already available!';
+            msg = gMsg.someAvailable;
             led($obj).set(imgMsgError, msg);
 
             if (closestTextArea($obj).val().length > 0)
@@ -1404,7 +1404,7 @@ function widBlockingSendStep2($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
     var msg,
@@ -1412,7 +1412,7 @@ function widBlockingSendStep2($obj, items)
 
     if (closestTextArea($obj).val().length == 0)
     {
-        msg = 'Inappropriate tokens!';
+        msg = gMsg.nonexistentTokens;
         img = imgMsgError;
     }
     else
@@ -1438,7 +1438,7 @@ function widPreBlockingReceiveStep1($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
         return widDone($obj, gMsg.emptyPassword);
@@ -1500,7 +1500,7 @@ function widPreBlockingReceiveStep2($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
         return widDone($obj, gMsg.emptyPassword);
@@ -1566,7 +1566,7 @@ function widPreBlockingRequestStep1($obj)
     switch (glTokList.state())
     {
         case true:
-            msg = 'All tokens in the list are already available!';
+            msg = gMsg.allAvailable;
             led($obj).set(imgMsgError, msg);
 
             widDone($obj, msg);
@@ -1578,7 +1578,7 @@ function widPreBlockingRequestStep1($obj)
 
             break;
         case undefined:
-            msg = 'There are some available tokens in the list!';
+            msg = gMsg.someAvailable;
             led($obj).set(imgMsgError, msg);
 
             widDone($obj, msg);
@@ -1630,10 +1630,10 @@ function widBlockingRequestStep1($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
-    var msg = 'Inappropriate tokens!'
+    var msg = gMsg.nonexistentTokens
               var img = imgMsgError;
 
     if (closestTextArea($obj).val().length > 0)
@@ -1663,7 +1663,7 @@ function widPreBlockingRequestStep2($obj)
     switch (glTokList.state())
     {
         case true:
-            msg = 'All tokens in the list are already available!';
+            msg = gMsg.allAvailable;
 
             led($obj).set(imgMsgError, msg);
             widDone($obj, msg);
@@ -1675,7 +1675,7 @@ function widPreBlockingRequestStep2($obj)
 
             break;
         case undefined:
-            msg = 'There are some available tokens in the list!';
+            msg = gMsg.someAvailable;
 
             led($obj).set(imgMsgError, msg);
             widDone($obj, msg);
@@ -1735,10 +1735,10 @@ function widBlockingRequestStep2($obj, items)
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
-        widShowTokensLog('Generation...');
+        widShowTokensLog(gMsg.generation);
     }
 
-    var msg = 'Inappropriate tokens!';
+    var msg = gMsg.nonexistentTokens;
     var img = imgMsgError;
 
     if (closestTextArea($obj).val().length > 0)
@@ -1766,7 +1766,7 @@ function widPreBlockingAcceptStep1($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
         return widDone($obj, gMsg.emptyPassword);
@@ -1830,7 +1830,7 @@ function widPreBlockingAcceptStep2($obj, click)
     var rawAcceptKeys = widGetClosestTextarea($obj).val();
 
     if (!engIsAcceptKeys(rawAcceptKeys))
-        return widDone($obj, 'Bad acceptKeys!');
+        return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
         return widDone($obj, gMsg.emptyPassword);

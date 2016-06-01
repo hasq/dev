@@ -19,8 +19,22 @@ var gMsg =
 	charsLeft: 'Warning! Chars left: ',
 	wait: 'Please wait...',
 	error: 'Error occured: ',
-	unavailable: 'Unavailable tokens presents!',
-	ok: 'OK'
+	someUnavailable: 'There are some unavailable tokens presents!',
+	allUnavailable: 'All tokens in the list are unavailable!',
+	allAvailable: 'All tokens in the list are already available!',
+	someAvailable: 'There are some available tokens in the list!',
+	ok: 'OK',
+	noTokensOrKeys: 'No tokens or keys to processing!',
+	creating: 'Creating... ',
+	verifying: 'Verifying...',
+	processing: 'Processing...',
+	makeList: 'Filling out tokens list...',
+	unknown: 'All tokens are unknown!',
+	keysError: 'acceptKeys update error!',
+	generation: 'Generation...',
+	badKeys: 'Bad acceptKeys!',
+	nonexistentTokens: 'Tokens are nonexistent!',
+	done: 'Done'
 };
 
 var gTokStateMsg = 
