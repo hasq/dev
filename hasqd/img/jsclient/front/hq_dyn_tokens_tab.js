@@ -369,7 +369,7 @@ function widGetRawTokens(data)
 
 function widIsPassword()
 {
-    return ($('#tokens_input_password').val().length > 0);
+    return ($('#input_tokens_password').val().length > 0);
 }
 
 function widIsRawTokens()

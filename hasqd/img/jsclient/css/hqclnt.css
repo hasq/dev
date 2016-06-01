@@ -286,8 +286,9 @@ textarea::-moz-placeholder
 
 .td-warning {
 	background: pink;
-	font: 100% monospace;
+	font: italic 0.7em monospace;
 	text-align: center;
+	width: 100%;
 }
 
 /* id's */
@@ -557,7 +558,22 @@ textarea::-moz-placeholder
 }
 /*********** Data tab ***********/
 
+#td_label_tokens_data
+{
+	width: 4.5em;
+	
+}
 
+#input_tokens_data
+{
+	width: 100%;
+}
+
+#td_tokens_data_led
+{
+	width: 100%;
+	text-align: right;
+}
 /*********** Send tab ***********/
 
 
