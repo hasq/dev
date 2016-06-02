@@ -536,11 +536,6 @@ textarea::-moz-placeholder
 	width: auto;
 }
 
-#td_button_verify
-{
-	
-}
-
 #td_verify_led
 {
 	text-align: right;
@@ -576,63 +571,50 @@ textarea::-moz-placeholder
 	width: 100%;
 	text-align: right;
 }
-/*********** Send tab ***********/
+/******* Send/Receive tabs *******/
 
-/********** Simple send *********/
-
-#td_tokens_ss1_led
-{
-	width: 100%;
-	text-align: left;
-	vertical-align: middle;
-}
-
-#textarea_tokens_ss1
-{
-	white-space: pre;
-	overflow: auto;
-	width: 100%;
-	height: 5em;
-}
-
-/******** Simple accept *********/
-
-#textarea_tokens_ss2
-{
-	white-space: pre;
-	overflow: auto;
-	width: 100%;
-	height: 5em;
-}
-
-#td_tokens_ss2_led
-{
-	width: 100%;
-	text-align: right;
-	vertical-align: middle;		
-}
-
-/******** Blocking send *********/
-
-#textarea_tokens_ss3_s1,
-#textarea_tokens_ss3_s2
-{
-	white-space: pre;
-	overflow: auto;
-	width: 100%;
-	height: 5em;
-}
-
+#td_tokens_ss1_led,
 #td_tokens_ss3_s1_led,
-#td_tokens_ss3_s2_led
+#td_tokens_ss3_s2_led,
+#td_tokens_rs2_led,
+#td_tokens_rs4_s1_led,
+#td_tokens_rs4_s2_led
 {
 	width: 100%;
 	text-align: left;
 	vertical-align: middle;			
 }
 
-/********* Receive tab **********/
+#td_tokens_ss2_led,
+#td_tokens_ss4_s1_led,
+#td_tokens_ss4_s2_led,
+#td_tokens_rs1_led,
+#td_tokens_rs3_s1_led,
+#td_tokens_rs3_s2_led
+{
+	width: 100%;
+	text-align: right;
+	vertical-align: middle;		
+}
 
+#textarea_tokens_ss1,
+#textarea_tokens_ss2,
+#textarea_tokens_ss3_s1,
+#textarea_tokens_ss3_s2,
+#textarea_tokens_ss4_s1,
+#textarea_tokens_ss4_s2,
+#textarea_tokens_rs1,
+#textarea_tokens_rs2,
+#textarea_tokens_rs3_s1,
+#textarea_tokens_rs3_s2,
+#textarea_tokens_rs4_s1,
+#textarea_tokens_rs4_s2
+{
+	white-space: pre;
+	overflow: auto;
+	width: 100%;
+	height: 5em;
+}
 
 
 @media all and (min-resolution: 121dpi), (max-width: 900px)

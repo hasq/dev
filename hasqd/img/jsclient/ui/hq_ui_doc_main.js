@@ -324,7 +324,7 @@ function doc_init()
         header : 'h3',
     });
 
-    $('#tokens_receive_accordion').accordion(
+    $('#div_tokens_receive').accordion(
     {
         icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
         active : 0,
