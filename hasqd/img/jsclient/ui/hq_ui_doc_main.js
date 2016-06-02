@@ -103,6 +103,8 @@ function docMainInit()
 
 function doc_init()
 {
+
+    $('textarea').prop('maxlength', '66435');
     $('#textarea_tokens_names').prop('maxlength', '16511').prop('placeholder', 'Enter tokens \[raw names\] or hashes here');
     $('#input_tokens_password').prop('placeholder', 'Enter a password');
     $('#input_tokens_data').prop('placeholder', 'Enter a new data');
@@ -309,7 +311,7 @@ function doc_init()
         header : 'h3',
     });
 
-    $('#tokens_send_accordion').accordion(
+    $('#div_tokens_send').accordion(
     {
         icons:
         {

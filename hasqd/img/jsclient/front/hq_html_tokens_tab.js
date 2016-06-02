@@ -73,7 +73,7 @@ function widGetHTMLTokensInitialData()
     r += '<textarea rows="3" id="textarea_tokens_names" oninput="widTokensNamesOninput($(this));"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<div id="div_add_range_accordion">\n';
     r += '<h3>Add tokens range</h3>\n';
     r += '<div>\n';
@@ -197,7 +197,7 @@ function widGetHTMLTokensDataTab()
     r += '<table>\n';
     r += '<tr>\n';
     r += '<td class="td-warning"/>\n';
-    r += '&nbsp;The specified range contains unknown tokens. Continue?&nbsp;\n';
+    r += '&nbsp;The specified range contains unknown tokens.&nbsp;\n';
     r += '<td id="td_tokens_data_led"/>\n';
     r += widGetHTMLSpanLed('', 'led-span') + '\n';
     r += '<td/>\n';
@@ -213,7 +213,7 @@ function widGetHTMLTokensDataTab()
 function widGetHTMLTokensSendTab()
 {
     var r = '';
-    r += '<div id="tokens_send_accordion">\n';
+    r += '<div id="div_tokens_send">\n';
     r += '<h3>Scenario 1: Simple send</h3>\n';
     r += widGetHTMLTokensSS1();
     r += '<h3>Scenario 2: Simple accept</h3>\n';
@@ -230,22 +230,22 @@ function widGetHTMLTokensSendTab()
 function widGetHTMLTokensSS1()
 {
     var r = '';
-    r += '<div id="SS1_div">';
+    r += '<div id="div_ss1">';
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<table style="width:auto;">\n';
+    r += '<td/>\n';
+    r += '<table>\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
+    r += '<td/>\n';
     r += '<button class="shared-button" onclick="widMainButtonClick($(this))" data-function="widPreSimpleSend" data-title="Initiate">Initiate</button>\n';
-    r += '<td align="left" />\n';
-    r += widGetHTMLSpanLed('tokens_ss1_led_span', 'led-span') + '\n';
+    r += '<td id="td_tokens_ss1_led"/>\n';
+    r += widGetHTMLSpanLed('span_tokens_ss1_led', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<textarea wrap="off" rows="4" id="tokens_ss1_textarea" readonly></textarea>\n';
+    r += '<td/>\n';
+    r += '<textarea id="textarea_tokens_ss1" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>';
@@ -255,21 +255,21 @@ function widGetHTMLTokensSS1()
 function widGetHTMLTokensSS2()
 {
     var r = '';
-    r += '<div id="SS2_div">';
+    r += '<div id="div_ss2">';
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<textarea wrap="off" rows="4" maxlength="66435" oninput="led($(this)).clear();" id="tokens_ss2_textarea"></textarea>\n';
+    r += '<td/>\n';
+    r += '<textarea id="textarea_tokens_ss2" oninput="return led($(this)).clear();"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td align="right" />\n';
-    r += '<table style="width:auto;">\n';
+    r += '<td/>\n';
+    r += '<table>\n';
     r += '<tr>\n';
-    r += '<td class="td-warning" align="center" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
-    r += '<td align="right" />\n';
-    r += widGetHTMLSpanLed('tokens_ss2_led_span', 'led-span') + '\n';
-    r += '<td align="right" />\n';
+    r += '<td class="td-warning"/>\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
+    r += '<td id="td_tokens_ss2_led"/>\n';
+    r += widGetHTMLSpanLed('span_tokens_ss2_led', 'led-span') + '\n';
+    r += '<td/>\n';
     r += '<button class="continue-button" onclick="widContinueButtonClick($(this), true)" data-title="Continue">Hidden</button>\n';
     r += '<button class="shared-button" onclick="widMainButtonClick($(this))"data-function="widPreSimpleAccept" data-title="Finalize">Finalize</button>\n';
     r += '</tr>\n';
@@ -283,41 +283,41 @@ function widGetHTMLTokensSS2()
 function widGetHTMLTokensSS3()
 {
     var r = '';
-    r += '<div id="SS3_div">\n';
+    r += '<div id="div_ss3">\n';
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<table style="width:auto;">\n';
+    r += '<td/>\n';
+    r += '<table>\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
+    r += '<td/>\n';
     r += '<button class="shared-button long-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep1" data-title="Initiate Step 1" >Initiate Step 1</button>\n';
-    r += '<td align="left" />\n';
-    r += widGetHTMLSpanLed('tokens_ss3_s1_led_span', 'led-span') + '\n';
+    r += '<td id="td_tokens_ss3_s1_led"/>\n';
+    r += widGetHTMLSpanLed('span_tokens_ss3_s1_led', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<textarea wrap="off" rows="4" id="tokens_ss3_s1_textarea" readonly></textarea>\n';
+    r += '<td/>\n';
+    r += '<textarea id="textarea_tokens_ss3_s1" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<table style="width:auto;" >\n';
+    r += '<td/>\n';
+    r += '<table >\n';
     r += '<tr>\n';
-    r += '<td align="left" />\n';
+    r += '<td/>\n';
     r += '<button class="shared-button long-button" onclick="widMainButtonClick($(this))" data-function="widPreBlockingSendStep2" data-title="Initiate Step 2">Initiate Step 2</button>\n';
-    r += '<td align="left" />\n';
-    r += widGetHTMLSpanLed('tokens_ss3_s2_led_span', 'led-span') + '\n';
+    r += '<td id="td_tokens_ss3_s2_led"/>\n';
+    r += widGetHTMLSpanLed('span_tokens_ss3_s2_led', 'led-span') + '\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
-    r += '<textarea wrap="off" rows="4" id="tokens_ss3_s2_textarea" readonly></textarea>\n';
+    r += '<td/>\n';
+    r += '<textarea id="textarea_tokens_ss3_s2" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
 
@@ -332,7 +332,7 @@ function widGetHTMLTokensSS4()
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" maxlength="66435" oninput="led($(this)).clear();" id="tokens_ss4_s1_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
@@ -340,7 +340,7 @@ function widGetHTMLTokensSS4()
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
     r += '<td class="td-warning">\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '<td align="right" />\n';
     r += widGetHTMLSpanLed('tokens_ss4_s1_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
@@ -361,7 +361,7 @@ function widGetHTMLTokensSS4()
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
     r += '<td class="td-warning" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '<td align="right" />\n';
     r += widGetHTMLSpanLed('tokens_ss4_s2_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
@@ -399,7 +399,7 @@ function widGetHTMLTokensRS1()
     r += '<div id="RS1_div">';
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" maxlength="66435" oninput="led($(this)).clear();" id="tokens_rs1_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '</tr>\n';
@@ -408,7 +408,7 @@ function widGetHTMLTokensRS1()
     r += '<table style="width:auto">\n';
     r += '<tr>\n';
     r += '<td class="td-warning" align="center" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '<td align="right">\n';
     r += widGetHTMLSpanLed('tokens_rs1_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
@@ -429,7 +429,7 @@ function widGetHTMLTokensRS2()
     r += '<div id="RS2_div">\n';
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
     r += '<td align="left" />\n';
@@ -438,12 +438,12 @@ function widGetHTMLTokensRS2()
     r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_rs2_led_span', 'led-span') + '\n';
     r += '<td class="td-warning" align="center" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" id="tokens_rs2_textarea" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
@@ -465,7 +465,7 @@ function widGetHTMLTokensRS3()
     r += '<table style="width:auto">\n';
     r += '<tr>\n';
     r += '<td class="td-warning" align="center" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '<td align="right" />\n';
     r += widGetHTMLSpanLed('tokens_rs3_s1_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
@@ -478,7 +478,7 @@ function widGetHTMLTokensRS3()
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" maxlength="66435" oninput="led($(this)).clear();" id="tokens_rs3_s2_textarea"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
@@ -486,7 +486,7 @@ function widGetHTMLTokensRS3()
     r += '<table style="width:auto">\n';
     r += '<tr>\n';
     r += '<td class="td-warning" align="center" />\n';
-    r += '&nbsp;Tokens names will be updated. Continue?&nbsp;\n';
+    r += '&nbsp;Tokens names will be updated.&nbsp;\n';
     r += '<td align="left" />\n';
     r += widGetHTMLSpanLed('tokens_rs3_s2_led_span', 'led-span') + '\n';
     r += '<td align="right" />\n';
@@ -507,7 +507,7 @@ function widGetHTMLTokensRS4()
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
     r += '<td align="left" />\n';
@@ -518,14 +518,14 @@ function widGetHTMLTokensRS4()
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" id="tokens_rs4_s1_textarea" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
 
     r += '<table class="wrap">\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<table style="width:auto;">\n';
     r += '<tr>\n';
     r += '<td align="left" />\n';
@@ -536,7 +536,7 @@ function widGetHTMLTokensRS4()
     r += '</table>\n';
     r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td />\n';
+    r += '<td/>\n';
     r += '<textarea wrap="off" rows="4" id="tokens_rs4_s2_textarea" readonly></textarea>\n';
     r += '</tr>\n';
     r += '</table>\n';
