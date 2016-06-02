@@ -2,7 +2,7 @@
 
 body 
 {
-	font: normal 16px Arial, Verdana, Consolas, "Courier New", monospace;
+	font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace !important;
 	background: #FEFEFA /*url("../img/bgfon.png")*/;
 	color: black;
 	width: 60%;
@@ -34,12 +34,12 @@ html {
 }
 
 select {
-	width: 200px;
+	width: 12.5em;
 }
 
 td {
 	box-sizing: border-box;
-	padding: 1px;
+	/* padding: 1px; */
 }
 
 p {
@@ -50,7 +50,7 @@ p {
 
 pre
 {
-	font: normal 0.75em Consolas, "Courier New", monospace !important;
+	font: normal 1em Consolas, "Courier New", monospace !important;
 }
 
 table {
@@ -64,7 +64,7 @@ input
 {
 	font: normal 1em Consolas, "Courier New", monospace !important;
 	box-sizing: border-box;
-	margin: 0px;
+	margin: 0;
 }
 
 input[placeholder]
@@ -104,7 +104,7 @@ input::-moz-placeholder
 
 input[type='checkbox']
 {
-    margin: 3px;
+    margin: 0.25em;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 }
@@ -115,7 +115,7 @@ input[type='password']
 {
     font: normal 1em Consolas, "Courier New", monospace !important;
     width: 100%;
-    margin: 0px;
+    margin: 0;
     border: 1px solid #DDDDDD;
     border-radius: 0;
 	width: 100%;
@@ -142,14 +142,14 @@ label
 	font: normal 1em Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
 	text-align: left;
-	padding-left: 3px;
-	padding-right: 3px;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
 }
 
 textarea
 {
 	font: normal 1em Consolas, "Courier New", monospace !important;
-	border:1px solid #DDDDDD;
+	border: 1px solid #DDDDDD;
 	box-sizing: border-box;
 	width: 100%;
 	display: block;
@@ -334,7 +334,7 @@ textarea::-moz-placeholder
 
 #div_tokens_log
 {
-	font: italic 12px Consolas, "Courier New", monospace !important;
+	font: italic 1em Consolas, "Courier New", monospace !important;
 	white-space: nowrap;
 }
 
@@ -350,9 +350,13 @@ textarea::-moz-placeholder
 	border: 1px solid #DDDDDD;
 
 	width: auto;
-	font-family:monospace;
+	font: normal 0.875em Consolas, "Courier New", monospace !important;
 }
 
+#table_server tr td:first-child
+{
+	font-weight: bold;
+}
 #table_server td,
 #table_family th,
 #table_family td
@@ -369,7 +373,7 @@ textarea::-moz-placeholder
 	border: 1px solid #DDDDDD;
 
 	width: auto;
-	font-family:monospace;
+	font: normal 0.875em Consolas, "Courier New", monospace !important;
 }
 
 #table_database td,
@@ -470,7 +474,7 @@ textarea::-moz-placeholder
 /********************************/
 #td_skc
 {
-	width: 16px;
+	width: 1em;
 	height: auto;
 }
 
