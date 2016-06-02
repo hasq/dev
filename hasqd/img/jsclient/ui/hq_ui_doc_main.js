@@ -172,7 +172,7 @@ function doc_init()
             //var pwdCheckBoxIsOn = document.getElementById('one_pwd_checkbox').checked + document.getElementById('three_pwd_checkbox').checked;
             gCurrentDB = glDataBase[this.selectedIndex];
 
-            $('#database_table').html(db_table);
+            $('#div_database_table').html(db_table);
             $('#current_db').html(current_db);
 
             widShowLastRecord();

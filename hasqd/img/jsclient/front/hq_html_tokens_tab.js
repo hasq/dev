@@ -70,7 +70,7 @@ function widGetHTMLTokensInitialData()
     r += '<table id="table_tokens_init_data">\n';
     r += '<tr>\n';
     r += '<td/>\n';
-    r += '<textarea rows="3" id="textarea_tokens_names" oninput="widTokensNamesOninput($(this));"></textarea>\n';
+    r += '<textarea id="textarea_tokens_names" oninput="widTokensNamesOninput($(this));"></textarea>\n';
     r += '</tr>\n';
     r += '<tr>\n';
     r += '<td/>\n';

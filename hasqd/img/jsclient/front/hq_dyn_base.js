@@ -147,7 +147,7 @@ function widRefreshButtonClick()
                 case 0:
                     $Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
                     var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
-                    $('#database_table').html(db_table);
+                    $('#div_database_table').html(db_table);
 
                     var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
                     $('#current_db').html(current_db);

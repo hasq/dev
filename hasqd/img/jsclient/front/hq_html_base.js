@@ -198,8 +198,7 @@ function widGetHTMLDatabaseTab()
 
     r += '<table>\n';
     r += '<tr>\n';
-    r += '<td>\n';
- r += '<div>' + widGetHTMLTdSpan('server_db', widGetHTMLDatabaseSelect()) + '</div>\n';
+    r += widGetHTMLTdSpan('server_db', widGetHTMLDatabaseSelect());
  r += '</tr>\n';
  r += '</table>\n';
 
@@ -212,14 +211,14 @@ function widGetHTMLDatabaseSelect()
 
     r += '<table>\n';
     r += '<tr>\n';
- r += '<td />';
+ r += '<td/>';
     r += '<select name="database_select" id="database_select">';
  r += '<option>No database</option>\n';
  r += '</select>\n';
  r += '</tr>\n';
     r += '<tr>\n';
-    r += '<td>\n';
- r += '<div id="database_table">\n</div>\n';
+ r += '<td/>\n';
+ r += '<div id="div_database_table"></div>\n';
  r += '</tr>\n';
  r += '</table>\n';
 
