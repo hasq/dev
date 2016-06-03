@@ -38,7 +38,7 @@ function led($obj)
     var $led = undefined;
 
     if ($obj)
-        $led = $obj.closest('.wrap').find('img');
+        $led = $obj.closest('.wrap').find('img:first');
 
     var retObj =
     {
@@ -576,8 +576,9 @@ function widCreateTokens($obj, tokens)
 function widAddVerifyTR(rec, statePic)
 {
     var $Table = $('#table_verify');
-    var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>';
-    var tr = widGetHTMLTr(widGetHTMLTd(pic + rec.state) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
+    var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>' + '&nbsp;' + rec.state;
+    var tr = widGetHTMLTr(widGetHTMLTd(pic) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
+
     $Table.append(tr);
 }
 
@@ -585,7 +586,7 @@ function widGetTokenStateImg(status)
 {
     // Returns an image source and title displaying tokens/password state
     var r = {};
-
+    console.log(status)
     switch (status)
     {
         case 'OK':
@@ -636,7 +637,6 @@ function widPreVerify($obj)
     $TableArea.show();
 
     var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    led($obj).set(imgMsgBlink, gMsg.wait);
     widVerifyTokens($obj, tokens);
 }
 
@@ -664,13 +664,11 @@ function widVerifyTokens($obj, tokens)
 
         var idx = glTokList.items.length - 1;
 
-        var lineLed = widGetTokenStateImg(glTokList.items[idx].state);
-        console.log(glTokList.items[idx].state);
-        console.log(lineLed);
-        widAddVerifyTR(glTokList.items[idx], lineLed);
-
         if (glTokList.unfit)
             widWarningLed($obj, imgMsgWarning, gMsg.someUnavailable);
+
+        var lineLed = widGetTokenStateImg(glTokList.items[idx].state);
+        widAddVerifyTR(glTokList.items[idx], lineLed);
 
         if (!(cmdIdx + 1 < glCmdList.items.length))
         {
@@ -692,6 +690,7 @@ function widVerifyTokens($obj, tokens)
         glCmdList.items[i].s = tokens[i].s;
     }
 
+    led($obj).set(imgMsgBlink, gMsg.wait);
     engRunCmdList(glCmdList, cbFunc);
 }
 

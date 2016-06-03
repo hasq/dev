@@ -564,6 +564,11 @@ textarea::-moz-placeholder
 	font: normal 0.9em Consolas, "Courier New", monospace !important;
 }
 
+#table_verify td
+{
+	text-align: left;
+	vertical-align: middle;
+}
 /*********** Data tab ***********/
 
 #td_label_tokens_data
@@ -633,7 +638,7 @@ textarea::-moz-placeholder
 	body
 	{
 		font: normal 0.875em Arial, Verdana, Consolas, "Courier New", monospace !important;
-		width: 95%;
+		width: 98%;
 		background: #FEFEFA /*url("../img/bgfon.png")*/;
 	}
 	
