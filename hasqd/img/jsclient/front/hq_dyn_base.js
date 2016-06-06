@@ -77,93 +77,78 @@ function widCleanHistoryData()
 
 function widRefreshButtonClick()
 {
-    var cb1 = function (data)
+    var cb1 = function (resp, id)
     {
-        var $Id = $('#server_id');
-
-        if (engGetResponseHeader(data) !== 'OK')
+		var $Id = $('#server_id');
+		
+        if (resp === gResponse.OK && id)
+             $Id.html('<pre>' + id + '</pre>');
+        else
             return;
-
-        var infoId = engGetParsedInfoId(data);
-
-        if (typeof(infoId) === 'null')
-            return;
-
-        $Id.html('<pre>' + infoId + '</pre>');
     }
 
-    ajxSendCommand('info id', cb1, hasqLogo);
+	engNcInfoId(cb1);
 
-    var cb2 = function (data)
+    var cb2 = function (resp, sys)
     {
         var $Sys = $('#server_sys');
 
-        if (engGetResponseHeader(data) !== 'OK')
+        if (resp === gResponse.OK && sys)
+             $Sys.html('<pre>' + sys + '</pre>');
+        else
             return;
-
-        var infoSys = engGetParsedInfoSys(data);
-
-        if (typeof(infoSys) === 'null')
-            return;
-
-        $Sys.html('<pre>' + infoSys + '</pre>');
     }
 
-    ajxSendCommand('info sys', cb2, hasqLogo);
+	engNcInfoSys(cb2);
 
-    var cb3 = function (data)
+    var cb3 = function (resp, fam)
     {
         var $Fam = $('#server_fam');
 
-        if (engGetResponseHeader(data) !== 'OK')
+        if ( resp === gResponse.OK && fam && fam.length > 0 )
+		{
+			var table = widGetHTMLFamilyTable(fam);
+			$Fam.html('<pre>' + table + '</pre>');			
+		}
+        else
             return;
-
-        var infoFam = engGetParsedInfoFam(data);
-
-        if (typeof(infoFam) === 'null' || infoFam.length === 0)
-            return;
-
-        var table = widGetHTMLFamilyTable(infoFam);
-        $Fam.html('<pre>' + table + '</pre>');
     }
+	
+	engNcInfoFam(cb3);
 
-    ajxSendCommand('info fam', cb3, hasqLogo);
-
-    var cb4 = function (data)
+    var cb4 = function (resp, db)
     {
-        if (engGetResponseHeader(data) !== 'OK')
-            return;
-
-        glDataBase = engGetParsedInfoDb(data);
-
-        if (glDataBase.length === 0)
-            return;
-
-        var $Db = $('#database_select'); //document.getElementById('database_select');
-        for (var i = 0; i < glDataBase.length; i++)
+		glDataBase = db;
+        if (resp === gResponse.OK && glDataBase.length !== 0)
         {
-            switch (i)
-            {
-                case 0:
-                    $Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
-                    var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
-                    $('#div_database_table').html(db_table);
+			var $Db = $('#database_select');
+			
+			for (var i = 0; i < glDataBase.length; i++)
+			{
+				if ( i == 0 )
+				{
+					$Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
+					var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
+					$('#div_database_table').html(db_table);
 
-                    var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
-                    $('#current_db').html(current_db);
+					var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
+					$('#current_db').html(current_db);
 
-                    gCurrentDB = glDataBase[0];
-                    glHashCalcHash = gCurrentDB.hash;
-                    widShowNewRecOninput();
-                    break;
-                default:
-                        $Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
-                    break;
-            }
-        }
+					gCurrentDB = glDataBase[0];
+					glHashCalcHash = gCurrentDB.hash;
+					//widShowNewRecOninput();
+				}
+				else
+					$Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
+			}			
+		}    
+        else
+			return;
     }
-
-    ajxSendCommand('info db', cb4, hasqLogo);
+		
+	engNcInfoDb(cb4);
+	
+    //ajxSendCommand('info db', cb4, hasqLogo);
 }
 
 
