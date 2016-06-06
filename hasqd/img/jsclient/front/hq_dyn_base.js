@@ -79,15 +79,15 @@ function widRefreshButtonClick()
 {
     var cb1 = function (resp, id)
     {
-		var $Id = $('#server_id');
-		
+        var $Id = $('#server_id');
+
         if (resp === gResponse.OK && id)
              $Id.html('<pre>' + id + '</pre>');
-        else
-            return;
+            else
+                return;
     }
 
-	engNcInfoId(cb1);
+    engNcInfoId(cb1);
 
     var cb2 = function (resp, sys)
     {
@@ -95,59 +95,59 @@ function widRefreshButtonClick()
 
         if (resp === gResponse.OK && sys)
              $Sys.html('<pre>' + sys + '</pre>');
-        else
-            return;
+            else
+                return;
     }
 
-	engNcInfoSys(cb2);
+    engNcInfoSys(cb2);
 
     var cb3 = function (resp, fam)
     {
         var $Fam = $('#server_fam');
 
         if ( resp === gResponse.OK && fam && fam.length > 0 )
-		{
-			var table = widGetHTMLFamilyTable(fam);
-			$Fam.html('<pre>' + table + '</pre>');			
-		}
+        {
+            var table = widGetHTMLFamilyTable(fam);
+         $Fam.html('<pre>' + table + '</pre>');
+        }
         else
             return;
     }
-	
-	engNcInfoFam(cb3);
+
+    engNcInfoFam(cb3);
 
     var cb4 = function (resp, db)
     {
-		glDataBase = db;
+        glDataBase = db;
         if (resp === gResponse.OK && glDataBase.length !== 0)
         {
-			var $Db = $('#database_select');
-			
-			for (var i = 0; i < glDataBase.length; i++)
-			{
-				if ( i == 0 )
-				{
-					$Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
-					var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
-					$('#div_database_table').html(db_table);
+            var $Db = $('#database_select');
 
-					var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
-					$('#current_db').html(current_db);
+            for (var i = 0; i < glDataBase.length; i++)
+            {
+                if ( i == 0 )
+                {
+                    $Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
+                    var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
+                    $('#div_database_table').html(db_table);
 
-					gCurrentDB = glDataBase[0];
-					glHashCalcHash = gCurrentDB.hash;
-					//widShowNewRecOninput();
-				}
-				else
-					$Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
-			}			
-		}    
+                    var current_db = glDataBase[0].name + '(' + glDataBase[0].hash + ')';
+                    $('#current_db').html(current_db);
+
+                    gCurrentDB = glDataBase[0];
+                    glHashCalcHash = gCurrentDB.hash;
+                 //widShowNewRecOninput();
+                }
+                else
+                    $Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
+            }
+        }
         else
-			return;
+            return;
     }
-		
-	engNcInfoDb(cb4);
-	
+
+    engNcInfoDb(cb4);
+
     //ajxSendCommand('info db', cb4, hasqLogo);
 }
 
