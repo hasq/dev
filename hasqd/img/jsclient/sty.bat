@@ -1,5 +1,6 @@
 cd eng
 sh ../stylejs.sh hq_eng_core.js
+sh ../stylejs.sh hq_eng_nc.js
 sh ../stylejs.sh hq_eng_parsers.js
 sh ../stylejs.sh sh_eng_ajax.js
 sh ../stylejs.sh sh_eng_parsers.js
