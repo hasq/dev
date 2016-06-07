@@ -3,8 +3,9 @@
 function ajxSendCommand(cmd, callback, logo)
 {
     logo.wait();
- cmd = cmd.replace(/\u0025/g,'%25');
-    $.post ('/', 'command=' + cmd, function (data)  {})
+    cmd = cmd.replace(/\u0025/g,'%25');
+
+    $.post ('/', 'command=' + cmd, function (data) {})
 
     .done
     (function (data)

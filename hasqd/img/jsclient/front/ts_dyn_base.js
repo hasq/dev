@@ -1197,7 +1197,6 @@ function widReceiveTextareaOninput($Obj)
 
 function widSearchTokenRaw(dn)
 {
-    console.log('widSearchTokenRaw');
     var $TokName = $('#textarea_token_name');
     var tok = engGetTokenObj(dn);
 
@@ -1543,7 +1542,7 @@ function widSearchUpdate()
             n[x.state]++;
     }
 
-    return {text:t, number:n};
+    return { text:t, number:n };
 }
 
 function widDnSelect(b64)

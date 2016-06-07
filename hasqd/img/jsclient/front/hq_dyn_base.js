@@ -64,7 +64,7 @@ function widShowNewRecord(newRec)
         $K.val(newRec.k);
         $G.val(newRec.g);
         $O.val(newRec.o);
-        $D.val(''); //
+        $D.val('');
     }
 }
 
@@ -82,39 +82,33 @@ function widRefreshButtonClick()
         var $Id = $('#server_id');
 
         if (resp === gResponse.OK && id)
-             $Id.html('<pre>' + id + '</pre>');
+            $Id.html('<pre>' + id + '</pre>');
             else
                 return;
     }
-
-    engNcInfoId(cb1);
 
     var cb2 = function (resp, sys)
     {
         var $Sys = $('#server_sys');
 
         if (resp === gResponse.OK && sys)
-             $Sys.html('<pre>' + sys + '</pre>');
+            $Sys.html('<pre>' + sys + '</pre>');
             else
                 return;
     }
-
-    engNcInfoSys(cb2);
 
     var cb3 = function (resp, fam)
     {
         var $Fam = $('#server_fam');
 
-        if ( resp === gResponse.OK && fam && fam.length > 0 )
+        if (resp === gResponse.OK && fam && fam.length > 0)
         {
             var table = widGetHTMLFamilyTable(fam);
-         $Fam.html('<pre>' + table + '</pre>');
+            $Fam.html('<pre>' + table + '</pre>');
         }
         else
             return;
     }
-
-    engNcInfoFam(cb3);
 
     var cb4 = function (resp, db)
     {
@@ -125,7 +119,7 @@ function widRefreshButtonClick()
 
             for (var i = 0; i < glDataBase.length; i++)
             {
-                if ( i == 0 )
+                if (i == 0)
                 {
                     $Db.html(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name, true, true)).selectmenu('refresh');
                     var db_table = widGetHTMLDatabaseTraitTable(glDataBase[i]);
@@ -136,7 +130,7 @@ function widRefreshButtonClick()
 
                     gCurrentDB = glDataBase[0];
                     glHashCalcHash = gCurrentDB.hash;
-                 //widShowNewRecOninput();
+                    //widShowNewRecOninput();
                 }
                 else
                     $Db.append(new Option(glDataBase[i].name + '(' + glDataBase[i].hash + ')', glDataBase[i].name)).selectmenu('refresh');
@@ -146,11 +140,11 @@ function widRefreshButtonClick()
             return;
     }
 
+    engNcInfoId(cb1);
+    engNcInfoSys(cb2);
+    engNcInfoFam(cb3);
     engNcInfoDb(cb4);
-
-    //ajxSendCommand('info db', cb4, hasqLogo);
 }
-
 
 function widAddSkc()
 {
@@ -158,10 +152,10 @@ function widAddSkc()
 
     gSkc = prompt('Enter SKC key:', gSkc || '') || null;
 
-    if ( gSkc && !engIsAsciiOrLF(gSkc) )
+    if (gSkc && !engIsAsciiOrLF(gSkc))
         gSkc = null;
 
-    if ( gSkc )
+    if (gSkc)
     {
         $Img.attr('src', imgSkcOn);
         $('#td_label_records_encrypt').show();
@@ -187,10 +181,10 @@ function widCommandSendButtonClick()
 
     var cmd = $CmdInput.val();
 
-    if ( !engIsAsciiOrLF(cmd))
+    if (!engIsAsciiOrLF(cmd))
         return $CmdOutput.empty();
 
-    if ( gSkc )
+    if (gSkc)
         cmd = '#' + engGetCipher(cmd);
 
     var cb = function (d)
@@ -199,6 +193,7 @@ function widCommandSendButtonClick()
     }
 
     ajxSendCommand(cmd, cb, hasqLogo);
+    //engSendCommand(cmd, cb);
 }
 
 function widTokenNameOninput()
@@ -305,23 +300,19 @@ function widGetLastRecordButtonClick()
 {
     var $Dn = $('#dn_input');
     var s = $Dn.val();
-    var getlast = 'last' + ' ' + gCurrentDB.name + ' ' + s;
-    var cb = function (data)
+
+    var cb = function (resp, rec)
     {
-        if (engGetResponseHeader(data) !== 'OK')
-            return widShowRecordsTabLog(data);
+        if ( resp === gMsg.ok && rec )
+            widShowLastRecord(rec);
+        else
+            return widShowRecordsTabLog(resp);
 
-        var lastRec = engGetParsedRecord(data);
-
-        if (typeof(lastRec) === 'null')
-            return widShowRecordsTabLog(data);
-
-        widShowLastRecord(lastRec);
         widShowNewRecordAuto();
     }
 
     widShowLastRecord();
-    ajxSendCommand(getlast, cb, hasqLogo);
+    engNcLast(s, gCurrentDB.name, cb)
 }
 
 function widShowNewRecordAuto()
@@ -332,9 +323,9 @@ function widShowNewRecordAuto()
     var $NewRecPwd1 = $('#nr_pwd1_input');
     var $NewRecPwd2 = $('#nr_pwd2_input');
     var $OnePwd = $('#one_pwd_checkbox');
-    var $ThreePwd = $('#three_pwd_checkbox')
+    var $ThreePwd = $('#three_pwd_checkbox');
 
-                    var lr_n = $LastRecN.val();
+    var lr_n = $LastRecN.val();
     var s = $Dn.val();
     var p0 = $NewRecPwd0.val();
 
@@ -407,7 +398,7 @@ function widRecordsOnePwdCheckboxClick($Obj)
 {
     var state = $Obj.is(':checked');
 
-    if ( state )
+    if (state)
     {
         $('#three_pwd_checkbox').prop('checked', false);
         $('#nr_pwd0_input').prop('disabled', false);
@@ -435,7 +426,7 @@ function widRecordsThreePwdCheckboxClick($Obj)
     $NewRecPwd1.prop('disabled', !state);
     $NewRecPwd2.prop('disabled', !state);
 
-    if ( state )
+    if (state)
     {
         $NewRecOnePwdCheckbox.prop('checked', !state);
         widShowNewRecOninput();
@@ -534,7 +525,7 @@ function widSubmitButtonClick()
     var nr_o = $('#nr_o_input').val();
     var nr_d = $('#nr_d_input').val();
     var enc = $('#input_records_encrypt').prop('checked');
-    var cmd = ( +nr_n == 0 ) ? 'z' : 'add';
+    var cmd = (+nr_n == 0) ? 'z' : 'add';
 
     var cb = function (data)
     {
@@ -549,7 +540,7 @@ function widSubmitButtonClick()
 
     var nr = cmd + ' * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
 
-    if ( enc )
+    if (enc)
         nr = '#' + engGetCipher(nr);
 
     ajxSendCommand(nr, cb, hasqLogo);

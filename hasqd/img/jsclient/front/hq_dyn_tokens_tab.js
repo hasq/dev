@@ -17,6 +17,7 @@ function closestTextArea($obj)
         {
             if (typeof data == 'undefined')
                 return $textarea.val('');
+
             $textarea.val('');
             $textarea.val(data);
         },

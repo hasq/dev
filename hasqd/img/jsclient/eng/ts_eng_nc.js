@@ -2,7 +2,7 @@
 
 function engNcDeferredLast(extCb, tok, delay)
 {
-    var cmd = 'last' + '\u0020' + gCurrentDB.name + '\u0020' + tok;
+    var cmd = engGetSplitted(' ', 'last', gCurrentDB.name, tok);
 
     var intCb = function (data)
     {
@@ -22,8 +22,9 @@ function engNcZ(extCb, db, rec, data)
 {
     data = (data) ? '[' + data + ']' : '';
 
-    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
-              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + data;
+///    var cmd = 'z *' + ' ' + db + ' ' + 0 + ' ' + rec.s + ' '
+///              + rec.k + ' ' + rec.g + ' ' + rec.o + ' ' + data;
+    var cmd = engGetSplitted(' ', 'z *', db, 0, rec.s, rec.k, rec.g, rec.o, data);
 
     var jobCb = function (resp, jobId)
     {
@@ -49,9 +50,7 @@ function engNcAdd(extCb, db, rec, data)
     var g1 = rec.g || rec.g1 || rec.g2;
     var o1 = rec.o || rec.o1 || rec.o2;
 
-    var cmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n1 + ' '
-              + rec.s + ' ' + k1 + ' ' + g1 + ' ' + o1 + ' ' + data;
-
+    var cmd = engGetSplitted(' ', 'add *', gCurrentDB.name, n1, rec.s, k1, g1, o1, data);
     var jobCb = function (resp, jobId)
     {
         if (resp === gResponse.JOB_QUEUED)
@@ -79,7 +78,8 @@ function engNcAdd(extCb, db, rec, data)
 
 function engNcRecordZero(extCb, s)
 {
-    var cmd = 'record' + '\u0020' + gCurrentDB.name + '\u0020' + '0' + '\u0020' + s;
+    ///var cmd = 'record' + '\u0020' + gCurrentDB.name + '\u0020' + '0' + '\u0020' + s;
+    var cmd = engGetSplitted(' ', 'record', gCurrentDB.name, 0, s);
 
     var intCb = function (data)
     {
@@ -97,7 +97,8 @@ function engNcRecordZero(extCb, s)
 
 function engNcJob(extCb, jobId)
 {
-    var cmd = 'job' + '\u0020' + jobId;
+    ///var cmd = 'job' + '\u0020' + jobId;
+    var cmd = engGetSplitted(' ', 'job', jobId);
 
     var intCb = function (data)
     {
@@ -112,4 +113,3 @@ function engNcJob(extCb, jobId)
 
     setTimeout(f, 500);
 }
-

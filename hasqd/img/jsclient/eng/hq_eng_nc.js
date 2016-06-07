@@ -13,7 +13,7 @@ function engNcInfoId(extCb)
         extCb(resp, id);
     }
 
-    return ajxSendCommand(cmd, intCb, hasqLogo);
+    ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
 function engNcInfoSys(extCb)
@@ -31,7 +31,7 @@ function engNcInfoSys(extCb)
         extCb(resp, sys);
     }
 
-    return ajxSendCommand(cmd, intCb, hasqLogo);
+    ajxSendCommand(cmd, intCb, hasqLogo);
 }
 
 function engNcInfoFam(extCb)
@@ -49,5 +49,41 @@ function engNcInfoFam(extCb)
         extCb(resp, fam);
     }
 
-    return ajxSendCommand(cmd, intCb, hasqLogo);
+    ajxSendCommand(cmd, intCb, hasqLogo);
+}
+
+function engNcInfoFam(extCb)
+{
+    var cmd = 'info fam';
+
+    var intCb = function (data)
+    {
+        var resp = engGetResponseHeader(data);
+        var fam = null;
+
+        if (engGetResponseHeader(data) == 'OK')
+            fam = engGetParsedInfoFam(data);
+
+        extCb(resp, fam);
+    }
+
+    ajxSendCommand(cmd, intCb, hasqLogo);
+}
+
+function engNcLast(tok, db, extCb)
+{
+    var cmd = engGetSplitted(' ', 'last', db, tok);
+
+    var intCb = function (data)
+    {
+        var resp = engGetResponseHeader(data);
+        var record = null;
+
+        if (resp === gResponse.OK)
+            record = engGetParsedRecord(data);
+
+        extCb(resp, record);
+    }
+
+    ajxSendCommand(cmd, intCb, hasqLogo);
 }

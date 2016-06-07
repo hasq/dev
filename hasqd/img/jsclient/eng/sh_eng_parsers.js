@@ -739,3 +739,20 @@ function engIsNumber(num)
 {
     return !/[^0-9]/.test(num)
 }
+
+
+function engGetSplitted()
+{
+    var l = arguments.length;
+
+    if ( l < 3 )
+        return null;
+
+    var s = arguments[0];
+    var r = '';
+
+    for ( var i = 1; i < l; i++ )
+        r += ( i < l - 1) ? arguments[i] + s : arguments[i];
+
+    return r;
+}
