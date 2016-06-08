@@ -425,11 +425,19 @@ textarea::-moz-placeholder
 	width: 8.5em;
 }
 
+#table_select_history
+{
+     width: auto;
+}
+
 #td_select_records_history
 {
 	text-align: right;
-	vertical-align: middle;
-	width: 5.3em;
+}
+
+#select_records_history
+{
+	width: 5em;
 }
 
 #textarea_records_history
@@ -459,6 +467,7 @@ textarea::-moz-placeholder
 .td-50
 {
 	width: 50%;
+    min-width: 50%;
 }
 
 /********************************/

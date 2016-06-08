@@ -107,6 +107,7 @@ function doc_init()
     $('#textarea_tokens_names').prop('maxlength', '16511').prop('placeholder', 'Enter tokens \[raw names\] or hashes here');
     $('#input_tokens_password').prop('placeholder', 'Enter a password');
     $('#input_tokens_data').prop('placeholder', 'Enter a new data');
+    $('#input_cmd').prop('placeholder', 'Enter a command').prop('value', 'ping');
 
     $('#div_main_tabs').tabs(
     {
@@ -223,7 +224,6 @@ function doc_init()
     $('#select_records_history').selectmenu(
     {
         disabled: true,
-        width: '60px',
         select: function(event, data)
         {
             var d = +this.options[this.selectedIndex].text;

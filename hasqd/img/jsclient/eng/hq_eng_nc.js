@@ -72,7 +72,7 @@ function engNcInfoFam(extCb)
 
 function engNcLast(tok, db, extCb)
 {
-    var cmd = engGetSplitted(' ', 'last', db, tok);
+    var cmd = engGetSplitted('last', db, tok);
 
     var intCb = function (data)
     {
@@ -85,5 +85,32 @@ function engNcLast(tok, db, extCb)
         extCb(resp, record);
     }
 
+    ajxSendCommand(cmd, intCb, hasqLogo);
+}
+
+function engNcRange(range, tok, db, extCb)
+{
+    var cmd = engGetSplitted('range', db, -range, -1, tok);
+
+    var intCb = function (data)
+    {
+        var resp = engGetResponseHeader(data);
+        var range = null;
+
+        if (resp === gResponse.OK)
+            range = engGetParsedRange(data);
+
+        extCb(resp, range);
+    }
+
+    ajxSendCommand(cmd, intCb, hasqLogo);
+}
+
+function engNcRawCommand(cmd, extCb)
+{
+    var intCb = function (data)
+    {
+        extCb(engGetResponseHeader(data));
+    }
     ajxSendCommand(cmd, intCb, hasqLogo);
 }

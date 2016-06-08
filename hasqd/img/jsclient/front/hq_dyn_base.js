@@ -180,27 +180,25 @@ function widCommandSendButtonClick()
     var $CmdOutput = $('#textarea_cmd');
 
     var cmd = $CmdInput.val();
-
-    if (!engIsAsciiOrLF(cmd))
-        return $CmdOutput.empty();
+    if (!cmd) return;
+    if (!engIsAsciiOrLF(cmd)) return $CmdOutput.empty();
 
     if (gSkc)
         cmd = '#' + engGetCipher(cmd);
 
-    var cb = function (d)
+    var cb = function (data)
     {
-        $CmdOutput.html(d);
+        $CmdOutput.html(data);
     }
 
-    ajxSendCommand(cmd, cb, hasqLogo);
-    //engSendCommand(cmd, cb);
+    engNcRawCommand(cmd, cb);
 }
 
 function widTokenNameOninput()
 {
-    var $Dn = $('#dn_input');
-    var $RawDn = $('#rdn_input');
-    var $SubmitButton = $('#submit_button');
+    var $Dn = $('#input_dn');
+    var $RawDn = $('#input_rdn');
+    var $SubmitButton = $('#button_submit');
     var $HistorySelect = $('#select_records_history');
 
     widShowLastRecord();
@@ -228,9 +226,9 @@ function widTokenNameOninput()
 
 function widTokenHashOninput()
 {
-    var $Dn = $('#dn_input');
-    var $RawDn = $('#rdn_input');
-    var $SubmitButton = $('#submit_button');
+    var $Dn = $('#input_dn');
+    var $RawDn = $('#input_rdn');
+    var $SubmitButton = $('#button_submit');
     var $HistorySelect = $('#select_records_history');
     var tok = $Dn.val();
 
@@ -276,7 +274,7 @@ function widShowRecordsTabLog(d)
 
 function widShowKeysPropriety($Obj)
 {
-    var $SubmitButton = $('#submit_button');
+    var $SubmitButton = $('#button_submit');
 
     $Obj.val(engGetOnlyHex($Obj.val()));
 
@@ -298,12 +296,12 @@ function widShowKeysPropriety($Obj)
 
 function widGetLastRecordButtonClick()
 {
-    var $Dn = $('#dn_input');
+    var $Dn = $('#input_dn');
     var s = $Dn.val();
 
     var cb = function (resp, rec)
     {
-        if ( resp === gMsg.ok && rec )
+        if ( resp === gResponse.OK && rec )
             widShowLastRecord(rec);
         else
             return widShowRecordsTabLog(resp);
@@ -318,7 +316,7 @@ function widGetLastRecordButtonClick()
 function widShowNewRecordAuto()
 {
     var $LastRecN = $('#lr_n_input');
-    var $Dn = $('#dn_input');
+    var $Dn = $('#input_dn');
     var $NewRecPwd0 = $('#nr_pwd0_input');
     var $NewRecPwd1 = $('#nr_pwd1_input');
     var $NewRecPwd2 = $('#nr_pwd2_input');
@@ -368,7 +366,7 @@ function widShowNewRecOninput()
 
     $NewRecN.val(engGetOnlyNumber($NewRecN.val()));
 
-    var s = $('#dn_input').val();
+    var s = $('#input_dn').val();
     var nr_n = +$NewRecN.val();
     var p0 = $NewRecPwd0.val();
 
@@ -437,7 +435,7 @@ function widRecordsThreePwdCheckboxClick($Obj)
 
 function widShowNewRecCompability()
 {
-    var s = $('#dn_input').val();
+    var s = $('#input_dn').val();
     var p0 = $('#nr_pwd0_input').val();
     var p1 = $('#nr_pwd1_input').val();
     var p2 = $('#nr_pwd2_input').val();
@@ -453,7 +451,7 @@ function widShowNewRecCompability()
     var g0 = engGetKey(nr_n, s, nr_k, gCurrentDB.magic, gCurrentDB.hash);
     var o0 = engGetKey(nr_n, s, nr_g, gCurrentDB.magic, gCurrentDB.hash);
 
-    var $SubmitButton = $('#submit_button');
+    var $SubmitButton = $('#button_submit');
 
     if (nr_n == '') //new record number is required
     {
@@ -480,26 +478,21 @@ function widShowNewRecCompability()
 function widTokensHistorySelect(range)
 {
     var $HistorySelect = $('#textarea_records_history');
-    var s = $('#dn_input').val();
-    $HistorySelect.val('');
-    var cb = function (data)
+    var tok = $('#input_dn').val();
+    var cb = function (resp, out)
     {
-        if (engGetResponseHeader(data) !== 'OK')
-            return widShowRecordsTabLog(data);
-
-        var range = engGetParsedRange(data);
-        if (typeof(range) === 'null')
-            return widShowRecordsTabLog(data);
-
-        $HistorySelect.val(range.substr(range.indexOf('\n') + 1));
+        if (resp === gResponse.OK && out)
+            $HistorySelect.val(out.substr(out.indexOf('\n') + 1));
+        else
+            widShowRecordsTabLog(resp);
     }
 
-    if (range === 0)
+    $HistorySelect.val('');
+
+    if (!range)
         return;
 
-    var cmd = 'range' + ' ' + gCurrentDB.name + ' ' + '-' + range + ' ' + '-1' + ' ' + s;
-
-    ajxSendCommand(cmd, cb, hasqLogo);
+    engNcRange(range, tok, gCurrentDB.name, cb);
 }
 
 function widHashcalcOninput()
@@ -515,35 +508,36 @@ function widHashcalcOninput()
 
 function widSubmitButtonClick()
 {
-    var s = $('#dn_input').val();
+    var rec = {};
+    rec.n = +$('#nr_n_input').val();
+    rec.s = $('#input_dn').val();
+    rec.k = $('#nr_k_input').val();
+    rec.g = $('#nr_g_input').val();
+    rec.o = $('#nr_o_input').val();
+    rec.d = $('#nr_d_input').val();
+    var cmd = (rec.n === 0) ? 'z' : 'add';
     var p0 = $('#nr_pwd0_input').val();
     var p1 = $('#nr_pwd1_input').val();
     var p2 = $('#nr_pwd2_input').val();
-    var nr_n = $('#nr_n_input').val();
-    var nr_k = $('#nr_k_input').val();
-    var nr_g = $('#nr_g_input').val();
-    var nr_o = $('#nr_o_input').val();
-    var nr_d = $('#nr_d_input').val();
     var enc = $('#input_records_encrypt').prop('checked');
-    var cmd = (+nr_n == 0) ? 'z' : 'add';
 
-    var cb = function (data)
+    var cb = function (out)
     {
+        widShowRecordsTabLog(engGetResponseHeader(out));
+        if (out !== gResponse.OK) return;
         var $HistorySelect = $('#select_records_history');
-
-        widShowRecordsTabLog(engGetResponseHeader(data));
-
         var i = $HistorySelect.get(0).selectedIndex;
         var d = +$HistorySelect.get(0).options[i].text;
+
         widTokensHistorySelect(d);
     }
 
-    var nr = cmd + ' * ' + gCurrentDB.name + ' ' + nr_n + ' ' + s + ' ' + nr_k + ' ' + nr_g + ' ' + nr_o + ' ' + engGetDataToRec(nr_d);
+    cmd = engGetSplitted(cmd, '*', gCurrentDB.name, rec.n, rec.s, rec.k, rec.g, rec.o, engGetDataToRec(rec.d));
 
     if (enc)
-        nr = '#' + engGetCipher(nr);
+        cmd = '#' + engGetCipher(cmd);
 
-    ajxSendCommand(nr, cb, hasqLogo);
+    engNcRawCommand(cmd, cb, hasqLogo);
 }
 
 function widSendCommandInputOnpresskey(d, e)
