@@ -589,7 +589,7 @@ function widGetHTMLWelcomeTab()
 {
     var r = '';
 
-    r += '<table style="width: 100%" border="0">\n';
+    r += '<table id="table_welcome">\n';
     r += '<tr>\n';
     r += '<td/>\n';
     r += gWelcome();

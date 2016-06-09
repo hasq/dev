@@ -8,7 +8,6 @@ var gMsg =
     noDn : 'No such token',
     badDataBase : 'Database is not accessible<br/>Please, reload the page',
     changeMasterKey : 'Master key does not match token',
-//FIXME change name "changeTokenName"
     changeTokenName : 'Release keys can be used only on tokens in "On Hold" state',
     createToken : 'Token does not exist',
     dataNotChanged : 'Token data has not been changed',

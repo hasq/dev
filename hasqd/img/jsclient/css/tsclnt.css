@@ -1536,20 +1536,21 @@ textarea::-moz-placeholder
 	}
 	
 	/* */
+    #table_welcome
+	{
+		font: normal 0.9em Arial, Verdana, Consolas, "Courier New", monospace;
+	}
+    
 	#textarea_set_data,
 	#textarea_show_keys,
 	#textarea_receive_keys
 	{
 		font: normal 0.8em Consolas, "Courier New", monospace !important;
 	}
-	.td-log
+	
+    .td-log
 	{
 		font: italic 0.8em Consolas, "Courier New", monospace !important;
 	}
 	
-/* 	.td-subtitle
-	{
-		font: bold 1.2em Verdana !important;
-	} */
-
 }
