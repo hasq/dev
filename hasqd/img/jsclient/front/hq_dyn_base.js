@@ -181,14 +181,14 @@ function widCommandSendButtonClick()
 
     var cmd = $CmdInput.val();
     if (!cmd) return;
-    if (!engIsAsciiOrLF(cmd)) return $CmdOutput.empty();
+    if (!engIsAsciiOrLF(cmd)) return $CmdOutput.val('');
 
     if (gSkc)
         cmd = '#' + engGetCipher(cmd);
 
     var cb = function (data)
     {
-        $CmdOutput.html(data);
+        $CmdOutput.val(data);
     }
 
     engNcRawCommand(cmd, cb);

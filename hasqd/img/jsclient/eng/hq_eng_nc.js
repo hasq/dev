@@ -110,7 +110,7 @@ function engNcRawCommand(cmd, extCb)
 {
     var intCb = function (data)
     {
-        extCb(engGetResponseHeader(data));
+        extCb(data);
     }
     ajxSendCommand(cmd, intCb, hasqLogo);
 }
