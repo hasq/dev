@@ -11,6 +11,8 @@ jqfile=""
 nosvn=false
 ver="7"
 
+[ -f "${iso}.iso" ] && rm "${iso}.iso"
+
 while [ ! -z "$1" ]; do
     case $1 in
         "nosvn"|"-nosvn"|"/nosvn"|"NOSVN"|"-NOSVN"|"/NOSVN")
@@ -139,7 +141,7 @@ then
 fi
 
 
-echo "> exporting $temp"
+[[ "$nosvn" = false ]] && echo "> exporting to $temp..." || echo "> copying to $temp..."
 
 if [[ "$nosvn" = false ]]
 then
@@ -165,7 +167,6 @@ exportsvn "$TARGETDIR"
 cd "$startdir"
 [ -d "$temp" -a -d "${temp}/$worksrc" ] || exit
 which genisoimage > /dev/null 2>&1 || error "! please install genisoimage"
-[ -f "${iso}.iso" ] && rm "${iso}.iso"
 echo "> making iso"
 genisoimage -J -D -o "${iso}.iso" "$temp" > /dev/null 2>&1
 [ $? -eq 0 -a -f "${iso}.iso" ] && echo ">> OK!"
