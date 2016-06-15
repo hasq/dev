@@ -4,22 +4,40 @@ counter=0
 startdir="$(pwd)"
 tcdir=""
 srcdir=""
-temp="additional"
+iso="additional"
+temp="../$iso"
 worksrc="worksrc"
 jqfile=""
+nosvn=false
+ver="7"
 
-if [[ -z $1 || $1 == "7" ]]
-then
-	ver="7"
-elif [ $1 == "6" ]
-then
-	ver="6"
-else
-	echo "Unknown parameter "$1""
-	exit
-fi
+[ -f "${iso}.iso" ] && rm "${iso}.iso"
 
-# 2015.12.28 - BEGIN: recursive search of TC folder
+while [ ! -z "$1" ]; do
+    case $1 in
+        "nosvn"|"-nosvn"|"/nosvn"|"NOSVN"|"-NOSVN"|"/NOSVN")
+            nosvn=true
+            echo "Warning! SVN status will not checked."
+            ;;
+        "6")
+            ver="6"
+            echo "TinyCore v6.x ISO will be used."
+            ;;
+        "help"|"-help"|"/help"|"-h"|"HELP"|"-HELP"|"/HELP"|"-H"|"/?")
+            echo "Options:"
+            echo -e "\t6\t:\tuse TinyCore 6.x version."
+            echo -e "\tnosvn\t:\tuse unversioned copy of sources."
+            echo -e "\thelp\t:\tthis help."
+            exit
+            ;;
+        *)
+            echo "Unknown parameter "$1""
+            exit
+            ;;
+    esac
+
+    shift      
+done
 
 findinc() {
 # $1 - this folder will be scanned
@@ -54,8 +72,6 @@ finddec() {
 	fi
 }
 
-# 2015.12.28 - END: recursive search of TC folder
-
 error() {
 	[ -z "$1" ] || echo "$1"
 	exit 1
@@ -81,17 +97,33 @@ makeexport() {
 	svn export "$1" "$2" > /dev/null || svnerror
 }
 
+makecopy() {
+	[ $# -ge 2 ] || return
+	[ -z "$3" ] && echo "> copying $1" || echo "> copying $3"
+    [ -z "$4" ] && cp -R "$1" "$2" > /dev/null
+}
+
 exportsvn() {
 	VERFILE="${1}/img/root/hasq/build.txt"
 	[ -z "$1" ] && return
-	makeexport src "${1}/src" "src folder"
-	makeexport srcu "${1}/srcu" "srcu folder"
-	makeexport img "${1}/img" "img folder"
-	svnversion > "$VERFILE"
-	mkdir -p "${1}/ext/jq"
-	makeexport "ext/jq/$jqfile" "${1}/ext/jq/$jqfile" "external libraries"
+	if [[ "$nosvn" = false ]]
+    then
+        makeexport src "${1}/src" "src folder"
+        makeexport srcu "${1}/srcu" "srcu folder"
+        makeexport img "${1}/img" "img folder"
+        svnversion > "$VERFILE"
+        mkdir -p "${1}/ext/jq"
+        makeexport "ext/jq/$jqfile" "${1}/ext/jq/$jqfile" "external libraries"
 # TODO: find ":" in rev num
-	grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
+        grep "M" "$VERFILE" && echo ">> revision: $(cat "$VERFILE")"
+    else
+        makecopy src "${1}/src" "src folder"
+        makecopy srcu "${1}/srcu" "srcu folder"
+        makecopy img "${1}/img" "img folder"
+        svnversion > "$VERFILE"
+        mkdir -p "${1}/ext/jq"
+        makecopy "ext/jq/$jqfile" "${1}/ext/jq/$jqfile" "external libraries"
+    fi
 }
 
 delfolder "$temp"
@@ -101,12 +133,23 @@ echo "> searching for TinyCore folder..."
 tcdir=$(finddec "$startdir")
 
 [ -z "$tcdir" ] && error "TinyCore folder not found!"
-[ -z "$(svn status "$tcdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$tcdir/tcz" 2>&1 | grep "was not found.")" ] || error ">>$tcdir is not a working copy of TinyCore."
-[ -z "$(svn status "$tcdir" | grep "^M")" ] || error ">>$tcdir - folder have uncommited changes, please commit it before."
-[ -z "$(svn status "$tcdir" | grep "^!")" ] || error ">>$tcdir - folder have missing files, please update it before."
+if [[ "$nosvn" = false ]]
+then
+    [ -z "$(svn status "$tcdir/iso" 2>&1 | grep "was not found.")" -a -z "$(svn status "$tcdir/tcz" 2>&1 | grep "was not found.")" ] || echo ">>$tcdir is not a working copy of TinyCore."
+    [ -z "$(svn status "$tcdir" | grep "^M")" ] || error ">>$tcdir - folder have uncommited changes, please commit it before."
+    [ -z "$(svn status "$tcdir" | grep "^!")" ] || error ">>$tcdir - folder have missing files, please update it before."
+fi
 
-echo "> exporting $temp"
-makeexport "$tcdir"/tcz "$temp" > /dev/null || svnerror
+
+[[ "$nosvn" = false ]] && echo "> exporting to $temp..." || echo "> copying to $temp..."
+
+if [[ "$nosvn" = false ]]
+then
+    makeexport "$tcdir"/tcz "$temp" > /dev/null || svnerror
+else
+    makecopy "$tcdir"/tcz "$temp" > /dev/null   
+fi
+
 cp "$tcdir"/iso/* "${temp}/"
 
 [ -d ".." -a -d "../src" -a -d "../srcu" -a -d "../ext/jq" ] && srcdir=".."
@@ -124,8 +167,7 @@ exportsvn "$TARGETDIR"
 cd "$startdir"
 [ -d "$temp" -a -d "${temp}/$worksrc" ] || exit
 which genisoimage > /dev/null 2>&1 || error "! please install genisoimage"
-[ -f "${temp}.iso" ] && rm "${temp}.iso"
 echo "> making iso"
-genisoimage -J -D -o "${temp}.iso" "$temp" > /dev/null 2>&1
-[ $? -eq 0 -a -f "${temp}.iso" ] && echo ">> OK!"
+genisoimage -J -D -o "${iso}.iso" "$temp" > /dev/null 2>&1
+[ $? -eq 0 -a -f "${iso}.iso" ] && echo ">> OK!"
 delfolder "$temp"
