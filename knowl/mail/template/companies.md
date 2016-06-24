@@ -35,3 +35,10 @@ Hasq Technology Pty Ltd
 http://hasq.org
 email: om@hasq.org
 
+
+5) Not only DOES this MAKE it easier for...etc
+
+9) ...in which neither THE receiving nor THE sending party has full control OF. (Maybe choose where to put the "THE"
+
+(Maybe put a comma) - we have a fully developed, scalable, high performance, generic software solution, ready to be used...etc
+It all sounds fine, and I think you can just choose where to change it .. But it's all ok I think
