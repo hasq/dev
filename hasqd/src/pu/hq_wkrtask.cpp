@@ -353,8 +353,8 @@ string Worker2::add(bool zr)
     // 5 place note in bin
     // 6 leave
 
-    if( !zr && record->n()==0 )
-       return er::Code(er::REQ_ADD_ZERO);
+    if ( !zr && record->n() == 0 )
+        return er::Code(er::REQ_ADD_ZERO);
 
     if ( !record->checkSign(signature) )
     {
@@ -693,7 +693,7 @@ string Worker2::unlink()
     if ( ipport.find(":") == string::npos )
         return er::Code(er::REQ_CON_BAD);
 
-    Connection c(ipport,"");
+    Connection c(ipport, "");
     Connector(gs).unlinkNbs_safe(c);
 
     return er::Code(er::OK);

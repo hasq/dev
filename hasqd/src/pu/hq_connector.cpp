@@ -431,7 +431,7 @@ void Connector::unlinkNbs_safe(const Connection & c)
         newnbs.push_back(nbs[i]);
     }
 
-	nbs.swap(newnbs);
+    nbs.swap(newnbs);
 
 
     std::vector<Connection> & fam = ca.otherfamily;
@@ -444,7 +444,7 @@ void Connector::unlinkNbs_safe(const Connection & c)
         newfam.push_back(fam[i]);
     }
 
-	fam.swap(newfam);
+    fam.swap(newfam);
 
     // release mutex
 }
