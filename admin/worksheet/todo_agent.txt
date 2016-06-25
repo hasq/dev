@@ -1,0 +1,19 @@
+Agent
+1. Delaem ego v HSL
+2. v HSL eto budet funkcija kotoraja beret vvodnye dannye i pishet otchet (report)
+3. Output: Report - nuzhno budet opretelit v kakoj forme
+4. Input: Daty From To - po umolchaniju From 2016 Jan To today
+5. Input: Glavnyj URL - tot server s kakogo kachajutsja slajsy
+6. Input: Spisok URLs - s kotorymi sverjajutsja DNy
+7. Input: Kljuch posylat notification (default - yes)
+8. Input: Kljuch klonirovat k sebe v bazu (default - no)
+
+
+agent filesys mkdir dir
+agent filesys rmdir dir
+agent download tokenswap.com:80 160301 today dirS
+agent chain dirS dir
+agent validate dir hashnote.org:80
+agent notify dir hashnote.org:80
+agent push dir hashnote.org:80
+agent push dir self
