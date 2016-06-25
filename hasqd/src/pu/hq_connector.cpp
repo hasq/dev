@@ -415,6 +415,40 @@ void Connector::updateNbs_safe(const Connection & c)
     // release mutex
 }
 
+
+void Connector::unlinkNbs_safe(const Connection & c)
+{
+    ConArea & ca = gs->conArea;
+    sgl::Mutex mtx(ca.access2conArea);
+
+    std::vector<Connection> & nbs = ca.neighbours;
+
+    std::vector<Connection> newnbs;
+
+    for ( size_t i = 0; i < nbs.size(); i++ )
+    {
+        if ( nbs[i] == c ) continue;
+        newnbs.push_back(nbs[i]);
+    }
+
+	nbs.swap(newnbs);
+
+
+    std::vector<Connection> & fam = ca.otherfamily;
+
+    std::vector<Connection> newfam;
+
+    for ( size_t i = 0; i < fam.size(); i++ )
+    {
+        if ( fam[i] == c ) continue;
+        newfam.push_back(fam[i]);
+    }
+
+	fam.swap(newfam);
+
+    // release mutex
+}
+
 void Connector::updateFam_safe(const Connection & c)
 {
     ConArea & ca = gs->conArea;

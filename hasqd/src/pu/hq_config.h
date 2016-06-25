@@ -44,6 +44,7 @@ struct PublicNetCmd
     bool add;
     bool conflict;
     bool connect;
+    bool unlink;
     bool pleb;
     bool file;
     bool data;

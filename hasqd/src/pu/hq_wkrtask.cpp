@@ -16,6 +16,7 @@
 
 #include "hq_wkrtask.h"
 #include "hq_plebfile.h"
+#include "hq_connector.h"
 
 
 string Worker2::process(bool * recog)
@@ -93,6 +94,9 @@ string Worker2::process(bool * recog)
         return file(true, true);
 
     else if ( ( tok.is("connect") || tok.is("c") ) && (en || pn.connect) )
+        return conn();
+
+    else if ( ( tok.is("unlink") || tok.is("u") ) && (en || pn.unlink) )
         return conn();
 
     else if ( ( tok.is("note") || tok.is("n") ) && (en || pn.note) )
@@ -678,6 +682,21 @@ string Worker2::conn()
         return er::Code(er::OK);
 
     return er::Code(er::CON_HIN_BUSY);
+}
+
+string Worker2::unlink()
+{
+    if ( !tok.next() ) return er::Code(er::REQ_CON_BAD);
+
+    const string & ipport = tok.sub();
+
+    if ( ipport.find(":") == string::npos )
+        return er::Code(er::REQ_CON_BAD);
+
+    Connection c(ipport,"");
+    Connector(gs).unlinkNbs_safe(c);
+
+    return er::Code(er::OK);
 }
 
 string Worker2::note()

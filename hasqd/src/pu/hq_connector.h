@@ -53,6 +53,7 @@ class Connector
         std::vector<Connection> getFamily_safe();
         void updateNbs_safe(const Connection & c);
         void updateFam_safe(const Connection & c);
+        void unlinkNbs_safe(const Connection & c);
 
         std::vector<db::Record *> getRangeFrom
         (

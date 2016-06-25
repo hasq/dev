@@ -422,6 +422,7 @@ void cfg::PublicNetCmd::set(string s, bool v)
     else if ( s == "add" )      add = v;
     else if ( s == "conflict" ) conflict = v;
     else if ( s == "connect" )  connect = v;
+    else if ( s == "unink" )    unlink = v;
     else if ( s == "pleb" )     pleb = v;
     else if ( s == "file" )     file = v;
     else if ( s == "data" )     data = v;

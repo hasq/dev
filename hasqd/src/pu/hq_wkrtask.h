@@ -37,6 +37,7 @@ struct Worker2
         string range();
         string file(bool html, bool argument);
         string conn();
+        string unlink();
         string note();
         string conflict();
         string quit();
