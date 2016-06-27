@@ -72,4 +72,16 @@ email shadow - /var/mail/vhosts/hasq.org/shadow
 	$ tce-load -i ssmtp
 	$ tce-load -iw bash
 	This need for hooks working
-	
+
+15. How to remove all messages in a mailbox
+    
+    When we need to remove all messages in mailbox we need to run this commands:
+        
+        doveadm expunge -u user at domain mailbox INBOX ALL
+        doveadm expunge -u user at domain mailbox INBOX.* ALL
+
+    The first remove mailboxes in inbox and the second in other subfolders.
+
+    And in case you use dbox format:
+        
+        doveadm purge -u user at domain
