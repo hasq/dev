@@ -4,22 +4,7 @@
 in=$(basename $0)
 in=${in%.*} 
 
-rm -fr db-14001
-mkdir db-14001
-cd db-14001
-$1/zdb erasedisk "create _md5base md5 md5 1 [abc] 100 0"
-cd ..
+$1/hasqd -cqnx nn=node-14001 dprn=0 dsvt=0 lock=1 tcp_port=14001 &
+$1/hasqd -cqnx nn=node-14000 dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp  | grep -v "<svt> sendnote\|<svt> conupdate\|<svt> reorg\|<svt> noterecv\|<svt> chkconfl\|<svt> setconfl\|<svt> conflict"  
 
-$1/hasqd -cqnx db=db-14001 nn=node-14001 dprn=0 dsvt=0 lock=1 tcp_port=14001 &
-
-rm -fr db-14000
-mkdir db-14000
-cd db-14000
-$1/zdb erasedisk "create _md5base md5 md5 1 [abc] 100 0" 
-cd ..
-
-$1/hasqd -cqnx db=db-14000 nn=node-14000 dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp  | grep -v "<svt> sendnote\|<svt> conupdate\|<svt> reorg\|<svt> noterecv\|<svt> chkconfl\|<svt> setconfl\|<svt> conflict"  
-
-rm -fr db-14000
-rm -fr db-14001
 

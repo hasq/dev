@@ -1,9 +1,3 @@
-<zdb> erasedisk
-Database on disk erased successfully
-<zdb> create _md5base md5 md5 1 [abc] 100 0
-<zdb> erasedisk
-Database on disk erased successfully
-<zdb> create _md5base md5 md5 1 [abc] 100 0
 <svt> node0 = [ 127.0.0.1:14000 ]
 <svt> node1 = [ 127.0.0.1:14001 ]
 <svt> print ex 0 OK 100 tcp node1 [ ping ] 
