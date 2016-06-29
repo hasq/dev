@@ -97,7 +97,7 @@ string Worker2::process(bool * recog)
         return conn();
 
     else if ( ( tok.is("unlink") || tok.is("u") ) && (en || pn.unlink) )
-        return conn();
+        return unlink();
 
     else if ( ( tok.is("note") || tok.is("n") ) && (en || pn.note) )
         return note();
