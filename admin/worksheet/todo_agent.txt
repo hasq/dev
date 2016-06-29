@@ -1,18 +1,21 @@
 Agent
-1. Delaem ego v HSL
-2. v HSL eto budet funkcija kotoraja beret vvodnye dannye i pishet otchet (report)
-3. Output: Report - nuzhno budet opretelit v kakoj forme
-4. Input: Daty From To - po umolchaniju From 2016 Jan To today
-5. Input: Glavnyj URL - tot server s kakogo kachajutsja slajsy
-6. Input: Spisok URLs - s kotorymi sverjajutsja DNy
-7. Input: Kljuch posylat notification (default - yes)
-8. Input: Kljuch klonirovat k sebe v bazu (default - no)
-
 
 agent filesys mkdir dir
 agent filesys rmdir dir
+agent filesys rm file
+
 agent download tokenswap.com:80 160301 today dirS
-agent chain dirS dir [last|all]
-agent validate (check|notify|push) dir hashnote.org:80 \
-             tokenswap.com:80 ... (delete dn_file if all good)
-self
+
+agent list dirS list_file hashnote.org:80 tokenswap.com:80 ...
+agent chain dirS dirI
+
+[ N DN server1 server2 ... ]
+[ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
+[ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
+
+agent validate list_file_in list_file_out (check|notify|push) [dirI]
+agent report list_file
+OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
+
+"self"
+
