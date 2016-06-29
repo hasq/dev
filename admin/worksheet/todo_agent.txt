@@ -1,10 +1,30 @@
 Agent
 
-agent filesys mkdir dir
-agent filesys rmdir dir
-agent filesys rm file
+[Done:Tested]
 
-agent download tokenswap.com:80 160301 today dirS
+[] agent mode - enter command in agent mode ".|agent" exit
+alarm - set alarm so hsl script can be executed periodically
+self - can be used instead of server
+
+config logfile file
+config webpath path 
+	need support for 
+	1. nginx html "//"
+	2. hasq file "file%20"
+	2. hasq html "html%20"
+
+config prot hasq|html
+
+agent filesys mkdir dir
+agent filesys rmdir dir - delete all
+agent filesys rm file
+agent filesys mv file1 file2
+agent filesys cp file1 file2
+
+agent download tokenswap.com:80 160301:160303 dirS
+agent download server 160301: dirS (date:today)
+agent download server : dirS (today:today)
+agent download server 2 dirS (last 2 slices)
 
 agent list dirS list_file hashnote.org:80 tokenswap.com:80 ...
 agent chain dirS dirI
@@ -17,5 +37,4 @@ agent validate list_file_in list_file_out (check|notify|push) [dirI]
 agent report list_file
 OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 
-"self"
 
