@@ -12,8 +12,7 @@ Agent
 agent filesys mkdir dir
 agent filesys rmdir dir
 agent download tokenswap.com:80 160301 today dirS
-agent chain dirS dir
-agent validate dir hashnote.org:80
-agent notify dir hashnote.org:80
-agent push dir hashnote.org:80
-agent push dir self
+agent chain dirS dir [last|all]
+agent validate (check|notify|push) dir hashnote.org:80 \
+             tokenswap.com:80 ... (delete dn_file if all good)
+self
