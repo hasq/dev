@@ -12,7 +12,6 @@ OK
 OK
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
-127.0.0.1:14001
 
 <svt> print ex 0 OK 100 tcp node1 [ quit ]
 OK
