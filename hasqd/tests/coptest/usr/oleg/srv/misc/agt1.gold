@@ -1,1 +1,4 @@
-Error: Bad key [dagt]
+Offensive command (parse): agent hello
+Error: Bad agent command : hello
+<svt> sleep 100
+<svt> quit
