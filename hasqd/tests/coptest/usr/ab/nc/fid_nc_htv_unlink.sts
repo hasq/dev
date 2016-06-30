@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Testing NC unlink
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/htview < $tn.inp
+

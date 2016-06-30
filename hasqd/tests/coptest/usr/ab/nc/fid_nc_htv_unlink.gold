@@ -1,0 +1,84 @@
+<htv> new canvas db 3 3
+<htv> new pub 0 0 hint
+Cmd: -lnqc tcp_port=13131 db=db/db_0_0
+<htv> new pub 1 0 hint
+Cmd: -lnqc tcp_port=13132 db=db/db_1_0
+<htv> new pub 2 0 hint
+Cmd: -lnqc tcp_port=13133 db=db/db_2_0
+<htv> new pub 0 1 hint
+Cmd: -lnqc tcp_port=13134 db=db/db_0_1
+<htv> new pub 1 1 hint
+Cmd: -lnqc tcp_port=13135 db=db/db_1_1
+<htv> new pub 2 1 hint
+Cmd: -lnqc tcp_port=13136 db=db/db_2_1
+<htv> new pub 1 2 hint
+Cmd: -lnqc tcp_port=13138 db=db/db_1_2
+<htv> show
+[ P--][ P--][ P--]
+[ P--][ P--][ P--]
+[  --][ P--][  --]
+<htv> send 1 1 connect ${1:0}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 connect ${0:1}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 connect ${2:1}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 connect ${1:2}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 connect ${0:0}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 connect ${2:0}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 info fam
+Reply: OK
+HP847013132 127.0.0.1:13132 N A U
+HP847013134 127.0.0.1:13134 N A U
+HP847013136 127.0.0.1:13136 N A U
+HP847013138 127.0.0.1:13138 N A U
+HP847013131 127.0.0.1:13131 F A U
+HP847013133 127.0.0.1:13133 F A U
+
+<htv> send 1 1 unlink ${0:1}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 unlink ${2:1}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 unlink ${2:0}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 info fam
+Reply: OK
+HP847013132 127.0.0.1:13132 N A U
+HP847013138 127.0.0.1:13138 N A U
+HP847013131 127.0.0.1:13131 F A U
+
+<htv> shut 0 0
+<htv> shut 1 0
+<htv> show
+[  --][  --][ P--]
+[ P--][ P--][ P--]
+[  --][ P--][  --]
+<htv> send 1 1 unlink ${1:0}
+Reply: OK
+<htv> nextsleep 50
+<htv> send 1 1 info fam
+Reply: OK
+HP847013138 127.0.0.1:13138 N A U
+HP847013131 127.0.0.1:13131 F A U
+
+<htv> shut 0 0
+<htv> shut 1 0
+<htv> shut 2 0
+<htv> shut 0 1
+<htv> shut 1 2
+<htv> nextsleep 50
+<htv> erase db
+erasing db ok
+<htv> q
