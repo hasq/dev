@@ -8,7 +8,7 @@ Database on disk erased successfully
 <svt> g = file get.inp
 <svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ ]
 HTTP/1.0 200 OK
-Server: Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+Server: Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
 Access-Control-Allow-Origin: *
 Content-Type: text/plain
 Content-Length: 12
@@ -16,7 +16,7 @@ Content-Length: 12
 REQ_MSG_HEAD
 <svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ a ]
 HTTP/1.0 200 OK
-Server: Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+Server: Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
 Access-Control-Allow-Origin: *
 Content-Type: text/plain
 Content-Length: 16
@@ -24,12 +24,12 @@ Content-Length: 16
 REQ_HASHTYPE_BAD
 <svt> print ex 0 HTTP/1.0 100 tcp self replace g [ $1 ] [ / ]
 HTTP/1.0 200 OK
-Server: Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015
+Server: Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
 Access-Control-Allow-Origin: *
 Content-Type: text/html
 Content-Length: 238
 
-<html><head><title>Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</title></head><body><h2>Hasq server 0.4.1 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2015</h2><ul>
+<html><head><title>Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016</title></head><body><h2>Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016</h2><ul>
 <li><a href="_md5/">_md5/</a></li>
 </ul></body></html>
 <svt> p = file post.inp
@@ -40,6 +40,6 @@ REQ_MSG_HEAD
 <svt> quit
 <wkr> (127.0.0.1)[] -> [REQ_MSG_HEAD]
 <wkr> (127.0.0.1)[a] -> [REQ_HASHTYPE_BAD]
-<wkr> (127.0.0.1)[/] -> [<html><head><title>Hasq server 0.4.1 ...]
+<wkr> (127.0.0.1)[/] -> [<html><head><title>Hasq server 0.4.2 ...]
 <wkr> (127.0.0.1)[POST / HTTP/1.1] -> [REQ_MSG_HEAD]
 <wkr> (127.0.0.1)[POST / HTTP/1.1] -> [REQ_MSG_HEAD]
