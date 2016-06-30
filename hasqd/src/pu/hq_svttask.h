@@ -274,6 +274,15 @@ class SvtTaskArg : public SvtTask
         string process();
 };
 
+class SvtTaskAgent : public SvtTask
+{
+        string sub1, sub2;
+    public:
+        SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i);
+        string process();
+};
+
+
 #endif
 
 

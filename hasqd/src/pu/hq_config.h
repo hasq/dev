@@ -26,6 +26,7 @@ struct Dbg
     bool sec;
     bool prn; // allow print from Svt by "print" command
     bool evt;
+    bool agt; // agent
     bool pul; // pulse
     unsigned short id;
 

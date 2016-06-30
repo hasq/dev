@@ -99,6 +99,9 @@ SvtTask * SvtTask::parse(GlobalSpace * gs, const vs & cmd, size_t & i)
     if ( f == "arg" )
         return new SvtTaskArg(gs, cmd, i);
 
+    if ( f == "agent" || f == "ag" )
+        return new SvtTaskAgent(gs, cmd, i);
+
     else if ( cmd.size() > i && at(cmd, i) == "=" )
         return new SvtTaskAssign(gs, cmd, ++i, f);
 
@@ -697,4 +700,32 @@ string SvtTaskArg::process()
     if ( index < 0 || index >= (int)vs.size() ) return "ARG_INDEX_OUT";
 
     return vs[index];
+}
+
+SvtTaskAgent::SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
+{
+    sub1 = at(cmd, i++);
+
+    if ( sub1 == "config" )
+    {
+        sub2 = at(cmd, i++);
+        tasks.push_back( parse(g, cmd, i) );
+    }
+    else if ( sub1 == "filesys" )
+    {
+        sub2 = at(cmd, i++);
+        tasks.push_back( parse(g, cmd, i) );
+
+        if ( sub2 == "mkdir" || sub2 == "rmdir" || sub2 == "rm" ) {}
+        else if ( sub2 == "mv" || sub2 == "cp" )
+            tasks.push_back( parse(g, cmd, i) );
+        else throw gl::ex("Bad filesys command : " + sub2);
+    }
+    else
+        throw gl::ex("Bad agent command : " + sub1);
+}
+
+string SvtTaskAgent::process()
+{
+    return "agent_ok";
 }

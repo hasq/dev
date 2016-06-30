@@ -7,8 +7,8 @@
 
 class Agent
 {
-public:
-	Agent();
+    public:
+        Agent();
 };
 
 #endif

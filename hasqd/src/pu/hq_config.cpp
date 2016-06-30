@@ -112,6 +112,7 @@ cfg::Dbg::Dbg()
     , prn(false)
     , evt(false)
     , pul(false)
+    , agt(false)
     , id(0)
 {}
 
@@ -198,6 +199,9 @@ void Config::processOptionKeyVal(const string & k, const string & v)
 
     else if ( k == "dsvt" )
         dbg.svt = getbool(v);
+
+    else if ( k == "dagt" )
+        dbg.agt = getbool(v);
 
     else if ( k == "dprn" )
         dbg.prn = getbool(v);
