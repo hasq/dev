@@ -2,18 +2,17 @@ Agent
 
 [Done:Tested]
 
-[] agent mode - enter command in agent mode ".|agent" exit
-alarm - set alarm so hsl script can be executed periodically
-self - can be used instead of server
+add agent log
+NC: info log agent
 
-config logfile file
-config webpath path 
+agent config logfile file
+agent config webpath path 
 	need support for 
 	1. nginx html "//"
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-config prot hasq|html
+agent config prot (hasq|html)
 
 agent filesys mkdir dir
 agent filesys rmdir dir - delete all
@@ -37,4 +36,9 @@ agent validate list_file_in list_file_out (check|notify|push) [dirI]
 agent report list_file
 OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 
+------------------------------------
+self - can be used instead of server
+missing date is today
+(low) agent mode - enter command in agent mode ".|agent" exit
+(low) alarm - set alarm so hsl script can be executed periodically
 
