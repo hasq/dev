@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 #ifndef _MA_UTILS_H
 #define _MA_UTILS_H

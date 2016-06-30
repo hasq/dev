@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 #ifndef _OS_MUTEX
 #define _OS_MUTEX

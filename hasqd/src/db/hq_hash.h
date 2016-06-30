@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 #ifndef _HQ_HASH
 #define _HQ_HASH

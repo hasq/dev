@@ -1,4 +1,4 @@
-// Hasq Technology Pty Ltd (C) 2013-2015
+// Hasq Technology Pty Ltd (C) 2013-2016
 
 #ifndef _HQ_PLATFORM
 #define _HQ_PLATFORM
@@ -40,10 +40,10 @@
 
 #define VERSION "0.4.2"
 
-#define LOGO "Hasq server " VERSION " (" PLATFORM ") Hasq Technology Pty Ltd (C) 2013-2015"
+#define LOGO "Hasq server " VERSION " (" PLATFORM ") Hasq Technology Pty Ltd (C) 2013-2016"
 
 #define LICENCE \
-"Copyright (C) 2013-2015 Hasq Technology Pty Ltd\n" \
+"Copyright (C) 2013-2016 Hasq Technology Pty Ltd\n" \
 "All rights reserved.\n" \
 "\n" \
 "\n" \
