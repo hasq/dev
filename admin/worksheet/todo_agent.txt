@@ -2,6 +2,7 @@ Agent
 
 [Done:Tested]
 
+add <agt> debug output and CLO dagt
 add agent log
 NC: info log agent
 
