@@ -210,6 +210,7 @@ $(TRG)/hq_h.tmp:
 	@cat $(SRC)/pu/hq_logger.h >> $@
 	@cat $(SRC)/pu/hq_globalspace.h >> $@
 	@cat $(SRC)/pu/hq_alarms.h >> $@
+	@cat $(SRC)/pu/hq_agent.h >> $@
 	@cat $(SRC)/pu/hq_automachine.h >> $@
 	@cat $(SRC)/pu/hq_chiefeditor.h >> $@
 	@cat $(SRC)/pu/hq_connector.h >> $@
