@@ -14,7 +14,7 @@ Here is a brief description of what has been done. Back in 2013 we devised an id
 
 4) There is no limit on a number of tokens in the system.
 
-5) No electronic wallet is required for storing tokens. Not only this makes it easier for tokens' owners to manage them, but also reduces the risk of losing tokens.
+5) No electronic wallet is required for storing tokens. Not only does this make it easier for tokens' owners to manage them, but also reduces the risk of losing tokens.
 
 6) Theoretical ideas behind the technology are simple and easy to understand and validate by anyone with minimal mathematical knowledge.
 
@@ -22,9 +22,9 @@ Here is a brief description of what has been done. Back in 2013 we devised an id
 
 8) Transactions are very cheap since no high performance hardware is required.
 
-9) Transactions allow a “hold on” state in which neither receiving nor sending party has full control.
+9) Transactions allow a "hold on" state in which neither the receiving nor the sending party has full control.
 
-Seeing the technology's potential, we patented it in 2014 and started developing a working prototype. As of now, we have a fully developed, scalable high performance generic software solution ready to be used in commercial environment. The solution is available for anyone to download from our website http://hasq.com. We have also recently developed a demonstration example (http://tokenswap.com) where users can create and modify their tokens for research or practical purposes.
+Seeing the technology's potential, we patented it in 2014 and started developing a working prototype. As of now, we have a fully developed, scalable, high performance generic software solution, ready to be used in commercial environment. The solution is available for anyone to download from our website http://hasq.com. We have also recently developed a demonstration example (http://tokenswap.com) where users can create and modify their tokens for research or practical purposes.
 
 To summarize the above, we believe that we have created a technology and a product that may be of significant importance to the financial and banking sectors as well as to have applications in many other fields. While the core engine of the technology is completed, field-specific front ends and protocols may be needed in order to satisfy different industries' requirements. This is where we see potential for cooperation with companies like yours. I hope you find Hasq technology interesting and deserving some attention. Please don't hesitate to ask any questions, we are open to communicating with anyone who wants to know more about Hasq technology. Thank you for your time.
 
@@ -35,10 +35,3 @@ Hasq Technology Pty Ltd
 http://hasq.org
 email: om@hasq.org
 
-
-5) Not only DOES this MAKE it easier for...etc
-
-9) ...in which neither THE receiving nor THE sending party has full control OF. (Maybe choose where to put the "THE"
-
-(Maybe put a comma) - we have a fully developed, scalable, high performance, generic software solution, ready to be used...etc
-It all sounds fine, and I think you can just choose where to change it .. But it's all ok I think
