@@ -8,11 +8,9 @@ print ex 0 DISABLED 100 tcp self [ ping ]
 print ex 0 OK 100 tcp self { [ admin enable net ] sleep 30 }
 print ex 0 OK 100 tcp self [ ping ]
 
-# print ex 0 OK 100 tcp self { [ connect ] node1 sleep 30 }
-print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect ] node1 sleep 30 }
+print ex 0 OK 100 tcp self { [ connect ] node1 sleep 30 }
 print ex 0 OK 100 tcp self [ info nbs ]
-# print ex 0 OK 100 tcp self { [ unlink ] node1 sleep 30 }
-print ex 0 REQ_MSG_HEAD 100 tcp self { [ unlink ] node1 sleep 30 }
+print ex 0 OK 100 tcp self { [ unlink ] node1 sleep 30 }
 print ex 0 OK 100 tcp self [ info nbs ]
 
 print ex 0 OK 100 tcp node1 [ quit ]

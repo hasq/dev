@@ -1,4 +1,3 @@
-<svt> 
 <svt> node0 = [ 127.0.0.1:14000 ]
 <svt> node1 = [ 127.0.0.1:14001 ]
 <svt> print ex 0 OK 100 tcp node1 [ ping ] 
@@ -11,18 +10,20 @@ DISABLED
 OK
 <svt> print ex 0 OK 100 tcp self [ ping ]
 OK
-<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect ] node1 sleep 30 }
-REQ_MSG_HEAD
+<svt> print ex 0 OK 100 tcp self { [ connect ] node1 sleep 30 }
+OK
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
+127.0.0.1:14001
 
-<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ unlink ] node1 sleep 30 }
-REQ_MSG_HEAD
+<svt> print ex 0 OK 100 tcp self { [ unlink ] node1 sleep 30 }
+OK
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
 
 <svt> print ex 0 OK 100 tcp node1 [ quit ]
-OK
+Expect error: [REQ_MSG_HEAD] expected [OK] at [0]
+error
 <svt> print ex 0 OK 100 tcp self [ quit ]
 OK
 <svt> quit
