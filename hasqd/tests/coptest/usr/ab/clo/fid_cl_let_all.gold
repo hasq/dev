@@ -1,3 +1,4 @@
+<svt> 
 <svt> node0 = [ 127.0.0.1:14000 ]
 <svt> node1 = [ 127.0.0.1:14001 ]
 <svt> print ex 0 OK 100 tcp node1 [ ping ] 
@@ -22,8 +23,7 @@ OK
 OK
 
 <svt> print ex 0 OK 100 tcp node1 [ quit ]
-Expect error: [REQ_MSG_HEAD] expected [OK] at [0]
-error
+OK
 <svt> print ex 0 OK 100 tcp self [ quit ]
 OK
 <svt> quit
