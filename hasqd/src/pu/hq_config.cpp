@@ -416,7 +416,9 @@ void Config::oneOption(const string & s)
 
 void cfg::PublicNetCmd::all(bool v)
 {
-    admin = quit = conflict = add = v;
+    admin = quit = conflict = add = connect = unlink = pleb = v;
+    file = data = file = first = html = info = job = last = v;
+    lastdata = list = note = range = record = zero = ping = proxy = v;
 }
 
 void cfg::PublicNetCmd::set(string s, bool v)
@@ -426,7 +428,7 @@ void cfg::PublicNetCmd::set(string s, bool v)
     else if ( s == "add" )      add = v;
     else if ( s == "conflict" ) conflict = v;
     else if ( s == "connect" )  connect = v;
-    else if ( s == "unlink" )    unlink = v;
+    else if ( s == "unlink" )   unlink = v;
     else if ( s == "pleb" )     pleb = v;
     else if ( s == "file" )     file = v;
     else if ( s == "data" )     data = v;
