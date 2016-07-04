@@ -1,0 +1,12 @@
+print ex 0 OK 100 tcp self [ ping ]
+
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info db ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info fam ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info id ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info nbs ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info sys ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info log conflict ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info log connect ] sleep 30 }
+print ex 0 REQ_MSG_HEAD 100 tcp self { [ info log critical ] sleep 30 }
+
+quit
