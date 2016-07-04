@@ -1,0 +1,30 @@
+#!/bin/sh
+
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC:conflict
+
+in=$(basename $0)
+in=${in%.*} 
+
+inp0="""print ex 0 OK 100 tcp self [ file / ]; quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ file / ]; quit"""
+
+mkdir slice
+
+echo "skckey+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 webdir="home" skckey="abc" s=@"$inp0" | grep -v chkconfl
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 webdir="home" skckey="abc" s=@"$inp0" let="file" | grep -v chkconfl
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 webdir="home" skckey="abc" s=@"$inp1" ban="file" | grep -v chkconfl
+
+rm -rf slice
