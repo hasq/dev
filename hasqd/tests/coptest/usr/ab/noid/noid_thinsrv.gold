@@ -30,9 +30,9 @@ _md5base-1-1 - slice size 1K
 1080 20150101-4.md5.txt
 _md5base-4-8 - slice size 4K
 4175 20150101-1.md5.txt
-135 20150101-2.md5.txt
+ 135 20150101-2.md5.txt
 _md5base-8-0 - slice size 8K
 8225 20150101-1.md5.txt
-405 20150101-2.md5.txt
+ 405 20150101-2.md5.txt
 <zdb> erasedisk
 Database on disk erased successfully

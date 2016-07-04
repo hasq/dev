@@ -16,14 +16,16 @@ $1/hasqd -cnqx s="@quit" lock=1 dprn=1 dsvt=1 tcp_port=0
 
 cd $db/slice/_md5base-1-1/2015/01/01
 echo _md5base-1-1 - slice size 1K
-ls -gA * | tr -s "\t " " " | cut -f 4,8 -d ' '
-#ls -gA | sed -i 's/\ \{1,\}/ /g' *
+#ls -gA * | tr -s "\t " " " | gawk '{print $(NF) " " $(NF-4)}'
+wc -c * | grep -v "total"
 cd ../../../../_md5base-4-8/2015/01/01
 echo _md5base-4-8 - slice size 4K
-ls -gA * | tr -s "\t " " " | cut -f 4,8 -d ' '
+#ls -gA * | tr -s "\t " " " | gawk '{print $(NF) " " $(NF-4)}'
+wc -c * | grep -v "total"
 cd ../../../../_md5base-8-0/2015/01/01
 echo _md5base-8-0 - slice size 8K
-ls -gA * | tr -s "\t " " " | cut -f 4,8 -d ' '
+#ls -gA * | tr -s "\t " " " | gawk '{print $(NF) " " $(NF-4)}'
+wc -c * | grep -v "total"
 cd ../../../../../../
 
 $1/zdb erasedisk
