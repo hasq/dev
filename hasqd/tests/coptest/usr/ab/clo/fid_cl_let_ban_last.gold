@@ -1,0 +1,17 @@
+skckey+
+................
+<svt> print ex 0 IDX_NODN 100 tcp self [ last wrd.db 0cc1 ]
+IDX_NODN
+<svt>  quit
+................
+skckey+ let+
+................
+<svt> print ex 0 IDX_NODN 100 tcp self [ last wrd.db 0cc1 ]
+IDX_NODN
+<svt>  quit
+................
+skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ last wrd.db 0cc1 ]
+REQ_MSG_HEAD
+<svt>  quit
