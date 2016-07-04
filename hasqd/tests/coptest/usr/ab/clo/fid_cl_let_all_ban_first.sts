@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# CLO let=all ban=last
+# CLO let=all ban=first
 
 in=$(basename $0)
 in=${in%.*} 
