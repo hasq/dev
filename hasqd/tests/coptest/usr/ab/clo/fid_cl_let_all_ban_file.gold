@@ -1,0 +1,7 @@
+<svt> print ex 0 OK 100 tcp self [ ping ]
+OK
+<svt> print tcp self [ f / ]
+REQ_MSG_HEAD
+<svt> print tcp self [ file / ]
+REQ_MSG_HEAD
+<svt> quit
