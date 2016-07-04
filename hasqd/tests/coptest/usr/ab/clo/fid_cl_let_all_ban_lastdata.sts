@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# CLO let=all ban=lastdata
+
+in=$(basename $0)
+in=${in%.*} 
+
+rm -fr dbs
+mkdir dbs
+cd dbs
+$1/zdb erasedisk "create md5.db md5 MD5 1 [] 1 0"  >/dev/null 2>&1
+cd ..
+
+$1/hasqd -cqnx db=dbs lock=1 dprn=1 dsvt=1 tcp_port=14000 s=$in.inp skckey="key" let="all" ban="lastdata" | grep -v "<svt> sendnote\|<svt> conupdate\|<svt> reorg\|<svt> noterecv\|<svt> chkconfl\|<svt> setconfl\|<svt> conflict"  
+
+rm -rf dbs
