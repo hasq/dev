@@ -25,9 +25,21 @@ $1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 &
 $1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp0" skckey="key" let="connect" | grep -v "<svt> conupdate"
 
 echo ................
+echo "skckey+ let=all"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp0" skckey="key" let="all" | grep -v "<svt> conupdate"
+
+echo ................
 echo "skckey+ ban+"
 echo ................
 $1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
 $1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key" ban="connect"
+
+echo ................
+echo "skckey+ ban=all"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key" ban="all" let="ping" let="info" let="quit"
 
 rm -rf dbs
