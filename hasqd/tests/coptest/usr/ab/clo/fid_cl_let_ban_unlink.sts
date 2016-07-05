@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: unlink
+
+ping="print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]"
+connect="print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }"
+unlinkOK="print ex 0 OK 100 tcp self { [ unlink 127.0.0.1:14001 ] sleep 30 }"
+unlinkFAIL="print ex 0 REQ_MSG_HEAD 100 tcp self { [ unlink 127.0.0.1:14001 ] sleep 30 }"
+infonbs="print ex 0 OK 100 tcp self [ info nbs ]"
+quit="print ex 0 OK 100 tcp 127.0.0.1:14001 [ quit ]"
+inp0="$ping;$connect;$infonbs;$unlinkOK;$infonbs;$quit;quit"
+inp1="$ping;$connect;$infonbs;$unlinkFAIL;$infonbs;$quit;quit"
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key" let="connect" | grep -v "<svt> conupdate"
+
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp0" skckey="key" let="connect" let="unlink" | grep -v "<svt> conupdate"
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key" let="connect" ban="unlink" | grep -v "<svt> conupdate"
+
+rm -rf dbs
