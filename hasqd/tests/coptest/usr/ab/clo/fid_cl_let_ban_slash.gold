@@ -1,0 +1,25 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create wrd.db wrd Word 1 [] 1 0
+................
+skckey+
+................
+<svt> print tcp self [ / ]
+<html><head><title>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</title></head><body><h2>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</h2><ul>
+<li><a href="wrd.db/">wrd.db/</a></li>
+</ul></body></html>
+<svt> quit
+................
+skckey+ let+
+................
+<svt> print tcp self [ / ]
+<html><head><title>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</title></head><body><h2>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</h2><ul>
+<li><a href="wrd.db/">wrd.db/</a></li>
+</ul></body></html>
+<svt> quit
+................
+skckey+ ban+
+................
+<svt> print tcp self [ / ]
+REQ_MSG_HEAD
+<svt> quit
