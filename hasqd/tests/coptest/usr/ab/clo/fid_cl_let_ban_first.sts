@@ -15,6 +15,7 @@ $1/zdb erasedisk "create wrd.db wrd Word 1 [] 1 0"
 $1/zdb load "add wrd.db 0 0cc1 0000 2e6c adb2"
 cd ..
 
+echo ................
 echo "skckey+"
 echo ................
 $1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp0"
