@@ -11,6 +11,7 @@ inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ file / ]; quit"""
 
 mkdir slice
 
+echo ................
 echo "skckey+"
 echo ................
 $1/hasqd -lqnc dprn=1 dsvt=1 webdir="home" skckey="abc" s=@"$inp0" | grep -v chkconfl
