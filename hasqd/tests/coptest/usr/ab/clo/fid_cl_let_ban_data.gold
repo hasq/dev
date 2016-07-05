@@ -17,7 +17,19 @@ skckey+ let+
 OK [data1]
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print ex 0 OK 100 tcp self [ data wrd.db 0cc1 ]
+OK [data1]
+<svt> quit
+................
 skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ data wrd.db 0cc1 ]
+REQ_MSG_HEAD
+<svt> quit
+................
+skckey+ ban=all
 ................
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ data wrd.db 0cc1 ]
 REQ_MSG_HEAD
