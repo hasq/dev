@@ -13,7 +13,7 @@ HP847013131
 Family: []
 Version: 0.4.2
 SkcKeys: 1
-0337d5e2a6184200265dbc8682919beaf3be83482fec1c3629c45ce8a3e78994
+4ee3c1a48207d4d41279f6cf1aa876f6e6239eddd990d59ecd25f34ef6fc5207
 PublicKey: 0,0
 
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
@@ -21,9 +21,9 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk usg: 295882 M
+Dsk usg: 295884 M
 Dsk tot: 305240 M
-Mem usg: 3534 M
+Mem usg: 3424 M
 Mem tot: 8051 M
 Cpu load: 0 %
 
@@ -51,7 +51,7 @@ HP847013131
 Family: []
 Version: 0.4.2
 SkcKeys: 1
-a527ea954c7f45529d00ab25709864c1944d212a804f82e7c60f0bcfdbd95acf
+bb1c84bf2b41057fa9e03c386838f1136a3563110576898f937767617c6326e5
 PublicKey: 0,0
 
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
@@ -59,9 +59,9 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk usg: 295882 M
+Dsk usg: 295884 M
 Dsk tot: 305240 M
-Mem usg: 3597 M
+Mem usg: 3424 M
 Mem tot: 8051 M
 Cpu load: 0 %
 

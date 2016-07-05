@@ -5,8 +5,8 @@
 
 in=$(basename $0)
 in=${in%.*} 
-inp0="""print ex 0 OK 100 tcp self [ pleb mkdir webroot ]; print ex 0 OK 100 tcp self [ pleb del webroot ]; quit"""
-inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ pleb mkdir webroot ]; quit"""
+inp0="""print ex 0 OK 100 tcp self [ pleb mkdir webroot ]; print ex 0 OK 100 tcp self [ pleb del webroot ];quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ pleb mkdir webroot ];quit"""
 
 echo ................
 echo "skckey+"

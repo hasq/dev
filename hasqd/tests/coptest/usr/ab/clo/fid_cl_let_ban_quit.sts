@@ -5,8 +5,8 @@
 
 in=$(basename $0)
 in=${in%.*} 
-inp0="""print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]; quit"""
-inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ]; quit"""
+inp0="""print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ];quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ];quit"""
 
 echo "skckey+"
 echo ................

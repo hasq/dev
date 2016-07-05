@@ -31,4 +31,4 @@ echo "skckey+ ban+"
 echo ................
 $1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp2" ban="add" | grep -v "<svt> sendnote\|OK 1000"
 
-# rm -rf dbs
+rm -rf dbs
