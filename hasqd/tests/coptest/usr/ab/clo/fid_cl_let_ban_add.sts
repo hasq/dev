@@ -5,9 +5,10 @@
 
 in=$(basename $0)
 in=${in%.*} 
-inp0="""print ex 0 OK 100 tcp self [ add * wrd.db 1 0cc1 3217 345d 64e1 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"""
-inp1="""print ex 0 OK 100 tcp self [ add * wrd.db 2 0cc1 1433 8eb1 3782 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"""
-inp2="""print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"""
+inp0="print ex 0 OK 100 tcp self [ add * wrd.db 1 0cc1 3217 345d 64e1 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
+inp1="print ex 0 OK 100 tcp self [ add * wrd.db 2 0cc1 1433 8eb1 3782 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
+inp2="print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
+inp3="print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ];print ex 0 REQ_MSG_HEAD 100 tcp self [ last wrd.db 0cc1 ];quit"
 
 rm -fr dbs
 mkdir dbs
@@ -27,8 +28,18 @@ echo ................
 $1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" let="add" | grep -v "<svt> sendnote\|OK 1000"
 
 echo ................
+echo "skckey+ let=all"
+echo ................
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" let="all" | grep -v "<svt> sendnote\|OK 1000"
+
+echo ................
 echo "skckey+ ban+"
 echo ................
 $1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp2" ban="add" | grep -v "<svt> sendnote\|OK 1000"
+
+echo ................
+echo "skckey+ ban=all"
+echo ................
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp3" ban="all" | grep -v "<svt> sendnote\|OK 1000"
 
 rm -rf dbs

@@ -18,10 +18,25 @@ skckey+ let+
 OK 2 0cc1 1433 8eb1 3782
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print ex 0 OK 100 tcp self [ add * wrd.db 2 0cc1 1433 8eb1 3782 ]
+<svt> print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ]
+OK 2 0cc1 1433 8eb1 3782
+<svt> quit
+................
 skckey+ ban+
 ................
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ]
 REQ_MSG_HEAD
 <svt> print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ]
 OK 2 0cc1 1433 8eb1 3782
+<svt> quit
+................
+skckey+ ban=all
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ]
+REQ_MSG_HEAD
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ last wrd.db 0cc1 ]
+REQ_MSG_HEAD
 <svt> quit
