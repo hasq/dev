@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # CLO: "let" and "ban" 
-# NC: add
+# NC: zero
 
 in=$(basename $0)
 in=${in%.*} 

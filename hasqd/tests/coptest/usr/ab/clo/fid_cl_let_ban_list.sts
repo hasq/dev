@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # CLO: "let" and "ban" 
-# NC: lastdata
-
+# NC: list
 in=$(basename $0)
 in=${in%.*} 
 inp0="""print ex 0 OK 100 tcp self [ list ];quit"""

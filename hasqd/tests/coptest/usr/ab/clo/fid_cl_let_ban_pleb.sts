@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # CLO: "let" and "ban" 
-# NC: здуи
+# NC: pleb
 
 in=$(basename $0)
 in=${in%.*} 
