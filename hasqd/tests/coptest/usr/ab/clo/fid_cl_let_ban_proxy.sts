@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: proxy
+
+in=$(basename $0)
+in=${in%.*} 
+
+inp0="""print ex 1 OK 100 tcp self [ proxy 127.0.0.1:13131 ping ];quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ proxy 127.0.0.1:13131 ping ];quit"""
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 p=13131 skckey="abc" s=@"$inp0"
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 p=13131 skckey="abc" s=@"$inp0" let="proxy"
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -lqnc dprn=1 dsvt=1 p=13131 skckey="abc" s=@"$inp1" ban="proxy"
+
+rm -rf dbs
