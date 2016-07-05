@@ -1,0 +1,22 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create wrd.db wrd Word 1 [] 1 0
+<zdb> load
+<zdb> add wrd.db 0 0cc1 0000 2e6c adb2 TESTDATA
+skckey+
+................
+<svt> print ex 0 OK 100 tcp self [ lastdata wrd.db 0cc1 0 ]
+OK 0 TESTDATA
+<svt>  quit
+................
+skckey+ let+
+................
+<svt> print ex 0 OK 100 tcp self [ lastdata wrd.db 0cc1 0 ]
+OK 0 TESTDATA
+<svt>  quit
+................
+skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ lastdata wrd.db 0cc1 0 ]
+REQ_MSG_HEAD
+<svt>  quit

@@ -1,4 +1,0 @@
-print ex 0 OK 100 tcp self [ ping ]
-print ex 0 REQ_MSG_HEAD 100 tcp self [ lastdata md5.db 0cc175b9c0f1b6a831c399e269772661 ]
-
-quit
