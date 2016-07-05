@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: connect
+
+ping="print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]"
+connectOK="print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }"
+connectFAIL="print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }"
+infonbs="print ex 0 OK 100 tcp self [ info nbs ]"
+quit="print ex 0 OK 100 tcp 127.0.0.1:14001 [ quit ]"
+inp0="$ping;$connectOK;$infonbs;$quit;quit"
+inp1="$ping;$connectFAIL;$infonbs;$quit;quit"
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key"
+
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp0" skckey="key" let="connect" | grep -v "<svt> conupdate"
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -clqnx dprn=0 dsvt=0 tcp_port=14001 & 
+$1/hasqd -clqnx dprn=1 dsvt=1 tcp_port=14000 s=@"$inp1" skckey="key" ban="connect"
+
+rm -rf dbs
