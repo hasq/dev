@@ -747,5 +747,5 @@ string SvtTaskAgent::process()
 
     Agent ag(gs, sub1, sub2, args);
 
-    return "agent_ok";
+    return "";
 }

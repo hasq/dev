@@ -12,7 +12,12 @@ using std::string;
 
 class Agent
 {
+        static string logfile;
+        static string webpath;
+
         GlobalSpace * gs;
+
+        void print(const string & s) const;
 
     public:
         Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string> & args);
