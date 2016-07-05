@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: quit
+
+in=$(basename $0)
+in=${in%.*} 
+inp0="""print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]; quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ]; quit"""
+
+echo "skckey+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 id=13132 tcp_port="13132" &
+$1/hasqd -clqnx dprn=1 dsvt=1 id=13131 skckey="abc" s=@"$inp0"
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 id=13132 tcp_port="13132" &
+$1/hasqd -clqnx dprn=1 dsvt=1 id=13131 skckey="abc" s=@"$inp0" let="quit"
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 id=13131 skckey="abc" s=@"$inp1" ban="quit"

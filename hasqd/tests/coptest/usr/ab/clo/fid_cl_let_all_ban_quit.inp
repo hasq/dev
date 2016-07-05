@@ -1,4 +1,0 @@
-print ex 0 OK 100 tcp self [ ping ]
-print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ]
-
-quit
