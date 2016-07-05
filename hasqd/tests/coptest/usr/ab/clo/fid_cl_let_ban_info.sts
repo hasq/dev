@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: info
+
+in=$(basename $0)
+in=${in%.*} 
+
+echo ................
+echo "skckey+"
+echo ................
+
+for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical"
+do
+    inp="""print ex 0 OK 100 tcp self [ "$i" ]; quit"""
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" | grep -v "<svt>  quit"
+done
+
+echo ................
+echo "skckey+ let+"
+echo ................
+
+for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical"
+do
+    inp="""print ex 0 OK 100 tcp self [ "$i" ]; quit"""
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" let="info" | grep -v "<svt>  quit"
+done
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+
+for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical"
+do
+    inp="""print ex 0 REQ_MSG_HEAD 100 tcp self [ "$i" ]; quit"""
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" ban="info" | grep -v "<svt>  quit"
+done
