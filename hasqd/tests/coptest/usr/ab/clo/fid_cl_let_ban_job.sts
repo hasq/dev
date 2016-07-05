@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: job
+
+in=$(basename $0)
+in=${in%.*} 
+inp0="""print ex 0 JOB_NOINFO 100 tcp self [ job 1000 ];quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ job 1000 ];quit"""
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 skckey="abc" s=@"$inp0"
+
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 skckey="abc" s=@"$inp0" let="job"
+
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -clqnx dprn=1 dsvt=1 skckey="abc" s=@"$inp1" ban="job"
