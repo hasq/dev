@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: lastdata
+
+in=$(basename $0)
+in=${in%.*} 
+inp="""print tcp self [ html / ];quit"""
+
+rm -fr dbs
+mkdir dbs
+cd dbs
+$1/zdb erasedisk "create wrd.db wrd Word 1 [] 1 0"
+cd ..
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp"
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp" let="html"
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp" ban="html"
+
+rm -rf dbs
