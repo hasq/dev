@@ -35,7 +35,43 @@ OK
 OK
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print ex 0 OK 100 tcp self [ admin disable net ]
+OK
+<svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin enable net ]
+OK
+<svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin reorg ]
+OK
+<svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin skc add abc ]
+OK
+<svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin skc pop ]
+OK
+<svt> quit
+................
 skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin disable net ]
+REQ_MSG_HEAD
+<svt> quit
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin enable net ]
+REQ_MSG_HEAD
+<svt> quit
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin reorg ]
+REQ_MSG_HEAD
+<svt> quit
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin skc add abc ]
+REQ_MSG_HEAD
+<svt> quit
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin skc pop ]
+REQ_MSG_HEAD
+<svt> quit
+................
+skckey+ ban=all
 ................
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin disable net ]
 REQ_MSG_HEAD
