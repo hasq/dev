@@ -14,6 +14,7 @@
 #include "hq_svttask.h"
 
 #include "hq_connector.h"
+#include "hq_agent.h"
 
 SvtTask * SvtTask::parse(GlobalSpace * gs, const vs & cmd, size_t & i)
 {
@@ -704,28 +705,47 @@ string SvtTaskArg::process()
 
 SvtTaskAgent::SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
 {
+    /*///
+        sub1 = at(cmd, i++);
+
+        if ( sub1 == "config" )
+        {
+            sub2 = at(cmd, i++);
+            tasks.push_back( parse(g, cmd, i) );
+        }
+        else if ( sub1 == "filesys" )
+        {
+            sub2 = at(cmd, i++);
+            tasks.push_back( parse(g, cmd, i) );
+
+            if ( sub2 == "mkdir" || sub2 == "rmdir" || sub2 == "rm" ) {}
+            else if ( sub2 == "mv" || sub2 == "cp" )
+                tasks.push_back( parse(g, cmd, i) );
+            else throw gl::ex("Bad filesys command : " + sub2);
+        }
+        else
+            throw gl::ex("Bad agent command : " + sub1);
+    */
     sub1 = at(cmd, i++);
 
-    if ( sub1 == "config" )
-    {
-        sub2 = at(cmd, i++);
-        tasks.push_back( parse(g, cmd, i) );
-    }
-    else if ( sub1 == "filesys" )
-    {
-        sub2 = at(cmd, i++);
-        tasks.push_back( parse(g, cmd, i) );
+    if ( sub1 == "config" || sub1 == "filesys" )
+        sub2 += at(cmd, i++);
 
-        if ( sub2 == "mkdir" || sub2 == "rmdir" || sub2 == "rm" ) {}
-        else if ( sub2 == "mv" || sub2 == "cp" )
-            tasks.push_back( parse(g, cmd, i) );
-        else throw gl::ex("Bad filesys command : " + sub2);
+    while ( i < cmd.size() )
+    {
+        ///os::Cout()<<"AAA "<<at(cmd, i)<<'\n';
+        tasks.push_back( parse(g, cmd, i) );
     }
-    else
-        throw gl::ex("Bad agent command : " + sub1);
 }
 
 string SvtTaskAgent::process()
 {
+    std::vector<string> args;
+
+    for ( size_t i = 0; i < tasks.size(); i++ )
+        args.push_back( tasks[i]->process() );
+
+    Agent ag(gs, sub1, sub2, args);
+
     return "agent_ok";
 }

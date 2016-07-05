@@ -3,12 +3,19 @@
 #ifndef _HQ_AGENT
 #define _HQ_AGENT
 
-//#include <vector>
+#include <vector>
+#include <string>
+
+#include "hq_globalspace.h"
+
+using std::string;
 
 class Agent
 {
+        GlobalSpace * gs;
+
     public:
-        Agent();
+        Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string> & args);
 };
 
 #endif

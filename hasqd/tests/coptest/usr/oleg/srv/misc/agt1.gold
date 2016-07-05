@@ -1,4 +1,4 @@
-Offensive command (parse): agent hello
-Error: Bad agent command : hello
+<svt> agent config hello [ hel1 ] [ hel2 ] [ hel3 ]
+<agt> cmd1=[config] cmd2=[hello] args={ hel1 hel2 hel3 }
 <svt> sleep 100
 <svt> quit
