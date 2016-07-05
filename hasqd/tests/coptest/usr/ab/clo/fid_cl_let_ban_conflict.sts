@@ -31,4 +31,3 @@ echo ................
 $1/hasqd -lqnc db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" ban="conflict" | grep -v chkconfl
 
 rm -rf dbs
-

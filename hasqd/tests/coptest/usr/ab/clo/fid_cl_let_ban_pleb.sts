@@ -23,4 +23,4 @@ echo "skckey+ ban+"
 echo ................
 $1/hasqd -clqnx db="dbs" webroot="webroot" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" ban="pleb"
 
-#rm -rf webroot
+rm -rf webroot
