@@ -15,6 +15,7 @@ cd dbs
 $1/zdb erasedisk "create wrd.db wrd WORD 1 [] 1 0"  >/dev/null 2>&1
 cd ..
 
+echo ................
 echo "skckey+"
 echo ................
 $1/hasqd -lqnc db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" | grep -v chkconfl
