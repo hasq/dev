@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# CLO: "let" and "ban" 
+# NC: note
+
+in=$(basename $0)
+in=${in%.*} 
+
+inp0="""print ex 0 OK 100 tcp self [ note wrd.db 0 0cc1 ];quit"""
+inp1="""print ex 0 REQ_MSG_HEAD 100 tcp self [ note wrd.db 0 0cc1 ];quit"""
+
+rm -fr dbs
+mkdir dbs
+cd dbs
+$1/zdb erasedisk "create wrd.db wrd WORD 1 [] 1 0"  >/dev/null 2>&1
+$1/zdb load "add wrd.db 0 0cc1 0000 2e6c adb2"
+cd ..
+
+echo ................
+echo "skckey+"
+echo ................
+$1/hasqd -lqnc db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp0" | grep -v noterecv
+
+echo ................
+echo "skckey+ let+"
+echo ................
+$1/hasqd -lqnc db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp0" let="note" | grep -v noterecv
+
+echo ................
+echo "skckey+ ban+"
+echo ................
+$1/hasqd -lqnc db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" ban="note"
+
+rm -rf dbs
