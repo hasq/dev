@@ -23,15 +23,18 @@ class Agent
 
         void config(const string & s);
         void filesys(const string & s);
+        void download(const string & srv, const string & date);
 
         void operator=(const Agent &);
         Agent(const Agent &);
 
     public:
-        Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string> & args);
+        Agent(GlobalSpace * g, string cmd1, string cmd2, string cmd3,
+              const std::vector<string> & args);
 
         static bool validCmd(string c);
-        static bool subCmd(string c);
+        static bool sub2Cmd(string c);
+        static bool sub3Cmd(string c);
 };
 
 #endif

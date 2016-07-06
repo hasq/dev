@@ -27,12 +27,12 @@ NC - slice
 [Done:] slice db check name -> OK or Err
 [Done:] log info agent
 
-agent download 160301:160303 "self" "dirS" (self - this server IP:port)
-agent download 160301:160303 "tokenswap.com:80" "dirS"
-agent download 160301:today <server> "dirS" (date:today)
-agent download 160301 <server> "dirS" (date)
-agent download today <server> "dirS" (today)
-agent download 2 <server> "dirS" (last 2 slices of today)
+agent download self 160301:160303 "dirS" (self - this server IP:port)
+agent download tokenswap.com:80 160301:160303 "dirS"
+agent download <server> 160301:today "dirS" (date:today)
+agent download <server> 160301 "dirS" (date)
+agent download <server> today "dirS" (today)
+agent download <server> 2 "dirS" (last 2 slices of today)
 ag dl ...
 
 agent list "dirS" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]

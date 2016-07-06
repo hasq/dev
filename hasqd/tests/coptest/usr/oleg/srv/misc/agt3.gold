@@ -1,0 +1,18 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<svt> set date "20110101"
+<svt> r0 = recpwd _wrd 0 rdn pass
+<svt> r1 = recpwd _wrd 1 rdn pass
+<svt> expect 0 OK 100 tcp self { [ zero * _wrd ] r0 }
+<svt> expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
+<svt> expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+<svt> sendnote
+<svt> sendnote
+<svt> expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+<svt> ag download 100101:160101 "self" dirS
+Offensive command (exec): ag download 100101:160101 "self" dirS
+Error: Bad input: dirS
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

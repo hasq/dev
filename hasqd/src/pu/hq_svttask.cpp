@@ -371,10 +371,23 @@ SvtTaskTcp::SvtTaskTcp(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g),
     tasks.push_back( parse(g, cmd, ++i) );
 }
 
+void SvtTask::translateIpAddr(string & s)
+{
+    if ( s == "self" )
+        s = gs->config->seIpLink.str();
+    else
+        gs->svtArea.translateVar(s);
+
+    if ( s.find(":") == string::npos )
+        throw gl::ex("Bad tcp address $1, expecting ip:port", s);
+}
+
 os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
 {
     string s = x;
+    translateIpAddr(s);
 
+    /*///
     if ( s == "self" )
         return gs->config->seIpLink;
 
@@ -387,6 +400,12 @@ os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
 
     unsigned short port = static_cast<unsigned short>(gl::toi( s.substr(i + 1) ));
     return os::IpAddr( s.substr(0, i).c_str(), port );
+    */
+
+    bool ok = false;
+    os::IpAddr r(s, ok);
+    if ( !ok ) throw gl::ex("Bad address $1", s);
+    return r;
 }
 
 string SvtTaskTcp::proc(const gl::Protocol & prot)
@@ -711,7 +730,10 @@ string SvtTaskArg::process()
 SvtTaskAgent::SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
 {
     sub1 = at(cmd, i++);
-    if ( Agent::subCmd(sub1) ) sub2 += at(cmd, i++);
+
+    if ( Agent::sub2Cmd(sub1) ) sub2 += at(cmd, i++);
+    if ( Agent::sub3Cmd(sub1) ) sub3 += at(cmd, i++);
+
     if ( !Agent::validCmd(sub1) ) throw gl::ex("Invalid command: " + sub1);
     while ( i < cmd.size() ) tasks.push_back( parse(g, cmd, i) );
 }
@@ -723,7 +745,7 @@ string SvtTaskAgent::process()
     for ( size_t i = 0; i < tasks.size(); i++ )
         args.push_back( tasks[i]->process() );
 
-    Agent ag(gs, sub1, sub2, args);
+    Agent ag(gs, sub1, sub2, sub3, args);
 
     return "";
 }

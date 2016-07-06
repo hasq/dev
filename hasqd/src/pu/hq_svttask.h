@@ -24,6 +24,7 @@ class SvtTask
         typedef std::vector<string> vs;
         static const string & at(const vs & q, size_t i);
         void clear_tasks();
+        void translateIpAddr(string & s);
 
     public:
         static SvtTask * parse(GlobalSpace * gs, const vs & cmd, size_t & i);
@@ -276,7 +277,7 @@ class SvtTaskArg : public SvtTask
 
 class SvtTaskAgent : public SvtTask
 {
-        string sub1, sub2;
+        string sub1, sub2, sub3;
     public:
         SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i);
         string process();

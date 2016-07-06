@@ -24,13 +24,11 @@ bool Agent::validCmd(string c)
     return false;
 }
 
-bool Agent::subCmd(string c)
+bool Agent::sub3Cmd(string c) { return ( c == "download" || c == "dl" ); }
+bool Agent::sub2Cmd(string c)
 {
-    return ( c == "config"
-             || c == "filesys" || c == "fs"
-             || c == "download" || c == "dl" );
+    return ( c == "config" || c == "filesys" || c == "fs" || sub3Cmd(c) );
 }
-
 
 void Agent::print(const string & s) const
 {
@@ -51,7 +49,8 @@ void Agent::print(const string & s) const
     gs->logger.add(Logger::Agent, ts );
 }
 
-Agent::Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string> & args)
+Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
+             string cmd3, const std::vector<string> & args)
     : gs(g), as(args)
 {
     if ( gs->config->dbg.agt )
@@ -66,7 +65,8 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string
 
     if (false);
     else if ( cmd1 == "config" ) config(cmd2);
-    else if ( cmd1 == "filesys" ) filesys(cmd2);
+    else if ( cmd1 == "filesys" || cmd1 == "fs" ) filesys(cmd2);
+    else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
     else throw gl::ex("Agent bad command: " + cmd1);
 }
 
@@ -122,16 +122,7 @@ void Agent::filesys(const string & s)
     throw gl::ex("Agent bad command: " + s);
 }
 
-/*///
-string Plebfile::del()
+void Agent::download(const string & srv, const string & date)
 {
-    if ( !tok.next() ) return err;
-
-    os::Path dirname = root + tok.sub();
-
-    if ( os::FileSys::erase(dirname) )
-        return er::Code(er::OK);
-
-    return er::Code(er::REQ_PATH_BAD);
+    os::Cout() << "DOWNLOAD " << srv << ' ' << date << '\n';
 }
-*/
