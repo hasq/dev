@@ -19,32 +19,39 @@ NC: info log agent
 [Done:] agent filesys rm "file|dir"
 [Done:] agent filesys mv "file1" "file2"
 [Done:] agent filesys cp "file1" "file2"
+ag fs ...
 
 NC - slice
 [Done:] slice db -> OK + name last
-[Done:] slice db get name -> OK+\n+content or Err
+[Done:] slice db get name -> content or empty
 [Done:] slice db check name -> OK or Err
+[Done:] log info agent
 
-agent download tokenswap.com:80 160301:160303 dirS
-agent download server 160301:today dirS (date:today)
-agent download server 160301 dirS (date)
-agent download server today dirS (today)
-agent download server 2 dirS (last 2 slices of today)
+agent download 160301:160303 "self" "dirS" (self - this server IP:port)
+agent download 160301:160303 "tokenswap.com:80" "dirS"
+agent download 160301:today <server> "dirS" (date:today)
+agent download 160301 <server> "dirS" (date)
+agent download today <server> "dirS" (today)
+agent download 2 <server> "dirS" (last 2 slices of today)
+ag dl ...
 
-agent list dirS list_file hashnote.org:80 tokenswap.com:80 ...
-agent chain dirS dirI
+agent list "dirS" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
+agent chain "dirS" "dirI"
+ag ls ...
+ag ch ...
 
 [ N DN server1 server2 ... ]
 [ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 [ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
-agent validate list_file_in list_file_out (check|notify|push) [dirI]
-agent report list_file
-OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
+agent validate check  "list_file_in" "list_file_out"
+agent validate notify "list_file_in" "list_file_out"
+agent validate push "list_file_in" "list_file_out" "dirI"
+ag vd ...
 
-------------------------------------
-self - can be used instead of server
-missing date is today
-(low) agent mode - enter command in agent mode ".|agent" exit
-(low) alarm - set alarm so hsl script can be executed periodically
+agent report "list_file"
+	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
+ag re ...
+
+
 

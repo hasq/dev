@@ -19,11 +19,17 @@ bool Agent::prot_html = false;
 bool Agent::validCmd(string c)
 {
     if ( c == "config" ) return true;
-    if ( c == "filesys" ) return true;
+    if ( c == "filesys" || c == "fs" ) return true;
+    if ( c == "download" || c == "dl" ) return true;
     return false;
 }
 
-bool Agent::subCmd(string c) { return ( c == "config" || c == "filesys" ); }
+bool Agent::subCmd(string c)
+{
+    return ( c == "config"
+             || c == "filesys" || c == "fs"
+             || c == "download" || c == "dl" );
+}
 
 
 void Agent::print(const string & s) const
