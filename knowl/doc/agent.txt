@@ -21,9 +21,9 @@ NC: info log agent
 [Done:] agent filesys cp "file1" "file2"
 
 NC - slice
-slice db -> OK + name last
-slice db get name -> OK+\n+content or Err
-slice db check name -> OK or Err
+[Done:] slice db -> OK + name last
+[Done:] slice db get name -> OK+\n+content or Err
+[Done:] slice db check name -> OK or Err
 
 agent download tokenswap.com:80 160301:160303 dirS
 agent download server 160301:today dirS (date:today)
