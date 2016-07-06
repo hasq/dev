@@ -88,6 +88,8 @@ class Database
         int getDbIndex(const string & uNorT) const;
 
         std::vector<string> getClocks() const ;
+
+        er::Code getSlice(int idx, string & data, const string & name, bool body) const;
 };
 
 } // db

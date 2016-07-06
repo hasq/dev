@@ -18,6 +18,11 @@ void db::SliceFile::make_gmd_dir()
     gmd_dir = os::Path(year) + mon + day;
 }
 
+string db::SliceFile::basename() const
+{
+    return gmd + "-" + gl::tos(n);
+}
+
 os::Path db::SliceFile::file() const
 {
     os::Path r = dir() + gmd;

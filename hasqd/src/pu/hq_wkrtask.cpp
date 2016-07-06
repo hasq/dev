@@ -862,24 +862,31 @@ string Worker2::slice()
     if ( dbidx < 0 )
         return er::Code(er::REQ_HASHTYPE_BAD);
 
+
+    string name;
     if ( !tok.next() )
     {
         // return current slice
-        return er::Code(er::OK);
+        er::Code k = gs->database.getSlice(dbidx, name, "", false);
+        if (k) return k;
+        return string(er::Code(er::OK)) + " " + name;
     }
 
     string cmd = tok.sub();
 
     if ( !tok.next() ) return er::Code(er::REQ_SLICE_BAD);
-    string name = tok.sub();
+    name = tok.sub();
 
+    string data;
     if ( cmd == "get" )
     {
-        return er::Code(er::OK);
+        er::Code k = gs->database.getSlice(dbidx, data, name, true);
+        if (k) return "";
+        return data;
     }
     else if ( cmd == "check" )
     {
-        return er::Code(er::OK);
+        return gs->database.getSlice(dbidx, data, name, false);
     }
 
     return er::Code(er::REQ_SLICE_BAD);

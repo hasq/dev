@@ -483,3 +483,8 @@ void db::Database::cutIndexAt(int idx, const string & sdn, gl::intint N)
     dbs[idx]->cutIndexAt(sdn, N);
 }
 
+er::Code db::Database::getSlice(int idx, string & data, const string & name, bool body) const
+{
+    return dbs[idx]->getSlice(data, name, body);
+}
+

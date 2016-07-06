@@ -44,6 +44,7 @@ class Slice
 
         er::Code addRecord(const RecordT<H> & rec);
         string getClock() const { return cur_hash.str(); }
+        er::Code getSlice(string & data, const string & name, bool body) const;
 };
 
 } // db

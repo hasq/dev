@@ -27,6 +27,7 @@ class SliceFile
         bool empty() const { return n == 0; }
         os::Path dir() const { return slice_dir + gmd_dir; }
         os::Path file() const;
+        string basename() const;
         void make_gmd_dir();
         void initFromFilename(const string & filename);
         void initCurTime();

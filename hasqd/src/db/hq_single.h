@@ -60,6 +60,7 @@ class Single
 
         virtual string getClock() const = 0;
         virtual void cutIndexAt(const string & sdn, gl::intint N) = 0;
+        virtual er::Code getSlice(string & data, const string & name, bool body) const = 0;
 
         const Traits traits;
 
@@ -127,6 +128,9 @@ class SingleT : public Single
         string getClock() const { return slice.getClock(); }
 
         void cutIndexAt(const string & sdn, gl::intint N) { index.cutIndexAt(sdn, N); }
+
+        er::Code getSlice(string & data, const string & name, bool body) const
+        { return slice.getSlice(data, name, body); }
 
     private:
         int getDbSegment(const H & dn) const;

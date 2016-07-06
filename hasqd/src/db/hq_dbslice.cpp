@@ -197,4 +197,21 @@ void db::Slice<H>::lastMetaRec(string & sliceFile, string & hashStr, string & ym
     }
 }
 
+#include <iostream>
+template <class H>
+er::Code db::Slice<H>::getSlice(string & data, const string & name, bool body) const
+{
+    std::cout << "AAA name=[" << name << "] body=" << (body) << '\n';
+
+    if ( name.empty() ) // request for current slice
+    {
+        data = cur_slice.basename();
+        return er::Code(er::OK);
+    }
+
+    std::cout << "AAA NA";
+
+    return er::Code(er::OK);
+}
+
 #include "hq_dbslice.inc"
