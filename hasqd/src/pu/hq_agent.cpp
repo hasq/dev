@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include "gl_utils.h"
+
 #include "os_timer.h"
 #include "os_exec.h"
 #include "sg_cout.h"
@@ -91,6 +93,24 @@ void Agent::filesys(const string & s)
         if ( os::FileSys::erase(as[0]) ) print(er::Code(er::OK));
         else print(er::Code(er::REQ_PATH_BAD));
         return;
+    }
+
+    if ( s == "mv" )
+    {
+        if ( as.size() != 2 ) throw gl::ex("Agent needs 1 argument");
+        if ( os::rename(as[0], as[1]) ) print(er::Code(er::OK));
+        else print(er::Code(er::FILE_CANT_CREATE));
+        return;
+    }
+
+    if ( s == "cp" )
+    {
+        if ( as.size() != 2 ) throw gl::ex("Agent needs 1 argument");
+        string file = gl::file2str(as[0]);
+        if ( file.empty() ) return print(er::Code(er::REQ_PATH_BAD));
+        std::ofstream of(as[1].c_str(), std::ios::binary);
+        of << file;
+        return print(string(er::Code(er::OK)) + " " + gl::tos(file.size()));
     }
 
     throw gl::ex("Agent bad command: " + s);

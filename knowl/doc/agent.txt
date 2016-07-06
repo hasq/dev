@@ -17,8 +17,8 @@ NC: info log agent
 
 [Done:] agent filesys mk "dir"
 [Done:] agent filesys rm "file|dir"
-agent filesys mv "file1" "file2"
-agent filesys cp "file1" "file2"
+[Done:] agent filesys mv "file1" "file2"
+[Done:] agent filesys cp "file1" "file2"
 
 agent download tokenswap.com:80 160301:160303 dirS
 agent download server 160301: dirS (date:today)
