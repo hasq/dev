@@ -1,4 +1,1 @@
-<agt> filesys mk agt1
-<agt> OK
-<agt> filesys rm agt1
-<agt> OK
+<agt> config logfile agt1.log

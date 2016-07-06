@@ -79,7 +79,7 @@ string Worker2::process(bool * recog)
         return er::Code(er::OK);
 
     else if ( tok.is("slice") || tok.is("s") )
-        return er::Code(er::OK);
+        return slice();
 
     else if ( ( tok.is("list") || tok.is("t") ) && (en || pn.list) )
         return er::Code(er::OK);
@@ -853,4 +853,35 @@ string Worker2::admin()
     return er::Code(er::OK);
 }
 
+
+string Worker2::slice()
+{
+    if ( !tok.next() ) return er::Code(er::REQ_SLICE_BAD);
+
+    int dbidx = gs->database.getDbIndex(tok.sub());
+    if ( dbidx < 0 )
+        return er::Code(er::REQ_HASHTYPE_BAD);
+
+    if ( !tok.next() )
+    {
+        // return current slice
+        return er::Code(er::OK);
+    }
+
+    string cmd = tok.sub();
+
+    if ( !tok.next() ) return er::Code(er::REQ_SLICE_BAD);
+    string name = tok.sub();
+
+    if ( cmd == "get" )
+    {
+        return er::Code(er::OK);
+    }
+    else if ( cmd == "check" )
+    {
+        return er::Code(er::OK);
+    }
+
+    return er::Code(er::REQ_SLICE_BAD);
+}
 

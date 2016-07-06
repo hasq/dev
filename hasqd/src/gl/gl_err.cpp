@@ -55,6 +55,7 @@ string er::tos(CodeType e)
     IFF( REQ_BAD_CRYPT )
     IFF( REQ_ZERO_POLICY )
     IFF( REQ_ADD_ZERO )
+    IFF( REQ_SLICE_BAD )
 
     IFF( REC_INIT_BAD_N )
     IFF( REC_INIT_BAD_S )

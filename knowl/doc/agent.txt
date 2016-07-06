@@ -20,10 +20,16 @@ NC: info log agent
 [Done:] agent filesys mv "file1" "file2"
 [Done:] agent filesys cp "file1" "file2"
 
+NC - slice
+slice db -> OK + name last
+slice db get name -> OK+\n+content or Err
+slice db check name -> OK or Err
+
 agent download tokenswap.com:80 160301:160303 dirS
-agent download server 160301: dirS (date:today)
-agent download server : dirS (today:today)
-agent download server 2 dirS (last 2 slices)
+agent download server 160301:today dirS (date:today)
+agent download server 160301 dirS (date)
+agent download server today dirS (today)
+agent download server 2 dirS (last 2 slices of today)
 
 agent list dirS list_file hashnote.org:80 tokenswap.com:80 ...
 agent chain dirS dirI

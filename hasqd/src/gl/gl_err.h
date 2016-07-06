@@ -51,6 +51,7 @@ enum CodeType
     REQ_BAD_CRYPT,
     REQ_ZERO_POLICY,
     REQ_ADD_ZERO,
+    REQ_SLICE_BAD,
 
     REC_INIT_BAD_N,
     REC_INIT_BAD_S,
