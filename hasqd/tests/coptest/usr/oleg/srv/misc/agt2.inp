@@ -1,0 +1,19 @@
+
+set date "20100101"
+
+r0 = recpwd _wrd 0 rdn pass
+r1 = recpwd _wrd 1 rdn pass
+expect 0 OK 100 tcp self { [ zero * _wrd ] r0 }
+expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
+expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+
+print tcp self [ slice _wrd ]
+print tcp self [ slice _wrd dummy name ]
+print tcp self [ slice _wrd get dummy ]
+print tcp self [ slice _wrd check dummy ]
+print tcp self [ slice _wrd get name ]
+print tcp self [ slice _wrd check name ]
+
+quit
+
