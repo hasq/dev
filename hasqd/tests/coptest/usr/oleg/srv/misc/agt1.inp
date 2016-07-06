@@ -1,14 +1,16 @@
 #agent dummy hello [ hel1 ] [ hel2 ] [ hel3 ]
 #agent config hello [ hel1 ] [ hel2 ] [ hel3 ]
 #agent config hello [ hel1 ]
-agent config logfile [ agt1.log ]
-agent config logfile [ agt1.log ]
-agent config logfile
-agent config logfile [ agt1.log ]
-agent config webpath [ webpath ]
-agent config hasq
-agent config html
-agent config hasq
+#agent config logfile [ agt1.log ]
+#agent config logfile [ agt1.log ]
+#agent config logfile
+#agent config logfile [ agt1.log ]
+#agent config webpath [ webpath ]
+#agent config hasq
+#agent config html
+#agent config hasq
+agent filesys mk "agt1"
+agent filesys rm "agt1"
 sleep 100
 quit
 

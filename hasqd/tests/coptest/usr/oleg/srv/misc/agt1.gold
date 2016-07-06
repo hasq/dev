@@ -1,8 +1,4 @@
-<agt> config logfile agt1.log
-<agt> config logfile agt1.log
-<agt> config logfile
-<agt> config logfile agt1.log
-<agt> config webpath webpath
-<agt> config hasq
-<agt> config html
-<agt> config hasq
+<agt> filesys mk agt1
+<agt> OK
+<agt> filesys rm agt1
+<agt> OK

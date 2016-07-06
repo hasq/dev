@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "os_timer.h"
+#include "os_exec.h"
 #include "sg_cout.h"
 
 #include "hq_logger.h"
@@ -55,7 +56,7 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string
         print(s);
     }
 
-    if(false);
+    if (false);
     else if ( cmd1 == "config" ) config(cmd2);
     else if ( cmd1 == "filesys" ) filesys(cmd2);
     else throw gl::ex("Agent bad command: " + cmd1);
@@ -66,7 +67,7 @@ void Agent::config(const string & s)
 {
     if ( as.size() > 1 ) throw gl::ex("Agent too many arguments");
 
-    if(false);
+    if (false);
     else if ( s == "logfile" ) logfile = (as.empty() ? "" : as[0]);
     else if ( s == "webpath" ) webpath = (as.empty() ? "" : as[0]);
     else if ( s == "hasq" ) prot_html = false;
@@ -76,6 +77,35 @@ void Agent::config(const string & s)
 
 void Agent::filesys(const string & s)
 {
-    print("filesys NA");
+    if ( s == "mk" )
+    {
+        if ( as.size() != 1 ) throw gl::ex("Agent needs 1 argument");
+        if ( os::FileSys::trymkdir(as[0]).isdir() ) print(er::Code(er::OK));
+        else print(er::Code(er::FILE_CANT_CREATE));
+        return;
+    }
+
+    if ( s == "rm" )
+    {
+        if ( as.size() != 1 ) throw gl::ex("Agent needs 1 argument");
+        if ( os::FileSys::erase(as[0]) ) print(er::Code(er::OK));
+        else print(er::Code(er::REQ_PATH_BAD));
+        return;
+    }
+
+    throw gl::ex("Agent bad command: " + s);
 }
 
+/*///
+string Plebfile::del()
+{
+    if ( !tok.next() ) return err;
+
+    os::Path dirname = root + tok.sub();
+
+    if ( os::FileSys::erase(dirname) )
+        return er::Code(er::OK);
+
+    return er::Code(er::REQ_PATH_BAD);
+}
+*/

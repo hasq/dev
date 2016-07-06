@@ -14,7 +14,7 @@ class Agent
 {
         static string logfile;
         static string webpath;
-	static bool prot_html;
+        static bool prot_html;
 
         GlobalSpace * gs;
         const std::vector<string> & as;

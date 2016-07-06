@@ -164,7 +164,12 @@ string SvtTaskVar::process()
     mss::iterator j = vars.find(name);
 
     if ( j == vars.end() )
+    {
+        if ( name.size() > 1 && name[0] == '"' && name[name.size() - 1] == '"' )
+            return name.substr(1, name.size() - 2);
+
         throw gl::ex("Bad input: " + name);
+    }
 
     return j->second;
 }

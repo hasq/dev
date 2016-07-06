@@ -6,8 +6,8 @@ add <agt> debug output and CLO dagt
 add agent log
 NC: info log agent
 
-[Done:] agent config logfile [ file ]
-[Done:] agent config webpath [ path ]
+[Done:] agent config logfile "file"
+[Done:] agent config webpath "path"
 	need support for 
 	1. nginx html "//"
 	2. hasq file "file%20"
@@ -15,11 +15,10 @@ NC: info log agent
 
 [Done:] agent config (hasq|html)
 
-agent filesys mkdir dir
-agent filesys rmdir dir - delete all
-agent filesys rm file
-agent filesys mv file1 file2
-agent filesys cp file1 file2
+[Done:] agent filesys mk "dir"
+[Done:] agent filesys rm "file|dir"
+agent filesys mv "file1" "file2"
+agent filesys cp "file1" "file2"
 
 agent download tokenswap.com:80 160301:160303 dirS
 agent download server 160301: dirS (date:today)
