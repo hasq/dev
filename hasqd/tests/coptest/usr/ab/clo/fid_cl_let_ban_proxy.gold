@@ -11,7 +11,19 @@ skckey+ let+
 OK OK
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print ex 1 OK 100 tcp self [ proxy 127.0.0.1:13131 ping ]
+OK OK
+<svt> quit
+................
 skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ proxy 127.0.0.1:13131 ping ]
+REQ_MSG_HEAD
+<svt> quit
+................
+skckey+ ban=all
 ................
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ proxy 127.0.0.1:13131 ping ]
 REQ_MSG_HEAD
