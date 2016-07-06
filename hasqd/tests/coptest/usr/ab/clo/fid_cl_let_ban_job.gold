@@ -11,7 +11,19 @@ skckey+ let+
 JOB_NOINFO
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print ex 0 JOB_NOINFO 100 tcp self [ job 1000 ]
+JOB_NOINFO
+<svt> quit
+................
 skckey+ ban+
+................
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ job 1000 ]
+REQ_MSG_HEAD
+<svt> quit
+................
+skckey+ ban=all
 ................
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ job 1000 ]
 REQ_MSG_HEAD
