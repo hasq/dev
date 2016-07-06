@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "gl_utils.h"
+#include "gl_protocol.h"
 
 #include "os_timer.h"
 #include "os_exec.h"
@@ -124,5 +125,17 @@ void Agent::filesys(const string & s)
 
 void Agent::download(const string & srv, const string & date)
 {
-    os::Cout() << "DOWNLOAD " << srv << ' ' << date << '\n';
+    const string & dir = as[0];
+    os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir << '\n';
+
+    gl::HttpPost prot(gl::Protocol::Client);
+
+    bool ok = false;
+    os::net::TcpClient c(&prot, os::IpAddr(srv,ok), gs->config->netLimits);
+    if( !ok ) throw gl::ex("Creating IpAddr failed: $1",srv);
+
+    c.send_msg("slice _wrd");
+    string r = c.recvMsgOrEmpty();
+
+    os::Cout() << "DOWNLOAD " << r << '\n';
 }

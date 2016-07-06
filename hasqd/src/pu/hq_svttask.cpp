@@ -733,6 +733,7 @@ SvtTaskAgent::SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask
 
     if ( Agent::sub2Cmd(sub1) ) sub2 += at(cmd, i++);
     if ( Agent::sub3Cmd(sub1) ) sub3 += at(cmd, i++);
+    if ( Agent::sub3Cmd(sub1) ) translateIpAddr(sub2);
 
     if ( !Agent::validCmd(sub1) ) throw gl::ex("Invalid command: " + sub1);
     while ( i < cmd.size() ) tasks.push_back( parse(g, cmd, i) );

@@ -13,7 +13,8 @@ NC: info log agent
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-[Done:] agent config (hasq|html)
+agent config protocol [ (hasq|http_get|http_post) ]
+agent config show
 
 [Done:] agent filesys mk "dir"
 [Done:] agent filesys rm "file|dir"
