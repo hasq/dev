@@ -18,7 +18,21 @@ skckey+ let+
 </ul></body></html>
 <svt> quit
 ................
+skckey+ let=all
+................
+<svt> print tcp self [ html / ]
+<html><head><title>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</title></head><body><h2>Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016</h2><ul>
+<li><a href="wrd.db/">wrd.db/</a></li>
+</ul></body></html>
+<svt> quit
+................
 skckey+ ban+
+................
+<svt> print tcp self [ html / ]
+REQ_MSG_HEAD
+<svt> quit
+................
+skckey+ ban=all
 ................
 <svt> print tcp self [ html / ]
 REQ_MSG_HEAD
