@@ -1,18 +1,28 @@
 skckey+
 ................
 <svt:13131> print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
-<svt:13132> 
 OK
 <svt:13131> quit
 ................
 skckey+ let+
 ................
 <svt:13131> print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
-<svt:13132> 
+OK
+<svt:13131> quit
+................
+skckey+ let=all
+................
+<svt:13131> print ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
 OK
 <svt:13131> quit
 ................
 skckey+ ban+
+................
+<svt:13131> print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ]
+REQ_MSG_HEAD
+<svt:13131> quit
+................
+skckey+ ban=all
 ................
 <svt:13131> print ex 0 REQ_MSG_HEAD 100 tcp self [ quit ]
 REQ_MSG_HEAD
