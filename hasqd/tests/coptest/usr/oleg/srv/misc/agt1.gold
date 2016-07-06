@@ -1,20 +1,8 @@
-<svt> agent config logfile [ agt1.log ]
 <agt> config logfile agt1.log
-Offensive command (exec): agent config logfile [ agt1.log ]
-Error: Agent bad command: logfile
-<svt> agent config logfile [ agt1.log ]
 <agt> config logfile agt1.log
-Offensive command (exec): agent config logfile [ agt1.log ]
-Error: Agent bad command: logfile
-<svt> agent config logfile
 <agt> config logfile
-Offensive command (exec): agent config logfile
-Error: Agent bad command: logfile
-<svt> agent config logfile [ agt1.log ]
 <agt> config logfile agt1.log
-Offensive command (exec): agent config logfile [ agt1.log ]
-Error: Agent bad command: logfile
-<svt> agent config webpath [ webpath ]
 <agt> config webpath webpath
-<svt> sleep 100
-<svt> quit
+<agt> config hasq
+<agt> config html
+<agt> config hasq

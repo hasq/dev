@@ -417,7 +417,7 @@ void Config::oneOption(const string & s)
 void cfg::PublicNetCmd::all(bool v)
 {
     admin = quit = conflict = add = connect = unlink = pleb = v;
-    file = data = file = first = html = info = job = last = v;
+    file = data = first = html = info = job = last = v;
     lastdata = list = note = range = record = zero = ping = proxy = v;
 }
 

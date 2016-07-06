@@ -6,6 +6,9 @@ agent config logfile [ agt1.log ]
 agent config logfile
 agent config logfile [ agt1.log ]
 agent config webpath [ webpath ]
+agent config hasq
+agent config html
+agent config hasq
 sleep 100
 quit
 

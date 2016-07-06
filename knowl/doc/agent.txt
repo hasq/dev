@@ -6,14 +6,14 @@ add <agt> debug output and CLO dagt
 add agent log
 NC: info log agent
 
-agent config logfile file
-agent config webpath path 
+[Done:] agent config logfile [ file ]
+[Done:] agent config webpath [ path ]
 	need support for 
 	1. nginx html "//"
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-agent config prot (hasq|html)
+[Done:] agent config (hasq|html)
 
 agent filesys mkdir dir
 agent filesys rmdir dir - delete all

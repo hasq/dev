@@ -11,6 +11,7 @@
 
 string Agent::logfile;
 string Agent::webpath;
+bool Agent::prot_html = false;
 
 bool Agent::validCmd(string c)
 {
@@ -54,7 +55,8 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string
         print(s);
     }
 
-    if ( cmd1 == "config" ) config(cmd2);
+    if(false);
+    else if ( cmd1 == "config" ) config(cmd2);
     else if ( cmd1 == "filesys" ) filesys(cmd2);
     else throw gl::ex("Agent bad command: " + cmd1);
 }
@@ -64,8 +66,11 @@ void Agent::config(const string & s)
 {
     if ( as.size() > 1 ) throw gl::ex("Agent too many arguments");
 
-    if ( s == "logfile" ) logfile = (as.empty() ? "" : as[0]);
-    if ( s == "webpath" ) webpath = (as.empty() ? "" : as[0]);
+    if(false);
+    else if ( s == "logfile" ) logfile = (as.empty() ? "" : as[0]);
+    else if ( s == "webpath" ) webpath = (as.empty() ? "" : as[0]);
+    else if ( s == "hasq" ) prot_html = false;
+    else if ( s == "html" ) prot_html = true;
     else throw gl::ex("Agent bad command: " + s);
 }
 
