@@ -705,37 +705,10 @@ string SvtTaskArg::process()
 
 SvtTaskAgent::SvtTaskAgent(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
 {
-    /*///
-        sub1 = at(cmd, i++);
-
-        if ( sub1 == "config" )
-        {
-            sub2 = at(cmd, i++);
-            tasks.push_back( parse(g, cmd, i) );
-        }
-        else if ( sub1 == "filesys" )
-        {
-            sub2 = at(cmd, i++);
-            tasks.push_back( parse(g, cmd, i) );
-
-            if ( sub2 == "mkdir" || sub2 == "rmdir" || sub2 == "rm" ) {}
-            else if ( sub2 == "mv" || sub2 == "cp" )
-                tasks.push_back( parse(g, cmd, i) );
-            else throw gl::ex("Bad filesys command : " + sub2);
-        }
-        else
-            throw gl::ex("Bad agent command : " + sub1);
-    */
     sub1 = at(cmd, i++);
-
-    if ( sub1 == "config" || sub1 == "filesys" )
-        sub2 += at(cmd, i++);
-
-    while ( i < cmd.size() )
-    {
-        ///os::Cout()<<"AAA "<<at(cmd, i)<<'\n';
-        tasks.push_back( parse(g, cmd, i) );
-    }
+    if ( Agent::subCmd(sub1) ) sub2 += at(cmd, i++);
+    if ( !Agent::validCmd(sub1) ) throw gl::ex("Invalid command: " + sub1);
+    while ( i < cmd.size() ) tasks.push_back( parse(g, cmd, i) );
 }
 
 string SvtTaskAgent::process()

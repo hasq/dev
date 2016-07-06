@@ -16,11 +16,21 @@ class Agent
         static string webpath;
 
         GlobalSpace * gs;
+        const std::vector<string> & as;
 
         void print(const string & s) const;
 
+        void config(const string & s);
+        void filesys(const string & s);
+
+        void operator=(const Agent &);
+        Agent(const Agent &);
+
     public:
         Agent(GlobalSpace * g, string cmd1, string cmd2, const std::vector<string> & args);
+
+        static bool validCmd(string c);
+        static bool subCmd(string c);
 };
 
 #endif

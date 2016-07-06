@@ -272,6 +272,9 @@ string Worker2::info_log()
     else if ( tok.is("conflict") )
         mtype = Logger::Conflict;
 
+    else if ( tok.is("agent") )
+        mtype = Logger::Agent;
+
     else
         return er::Code(er::REQ_MSG_BAD);
 

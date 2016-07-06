@@ -6,6 +6,7 @@
 #include <string>
 #include <deque>
 #include <ostream>
+#include <vector>
 
 #include "os_ipaddr.h"
 #include "os_sem.h"
@@ -45,12 +46,13 @@ class Logger
         Queue reads;
         Queue conns;
         Queue conflicts;
+        Queue agent;
 
         bool nologfile;
 
     public:
 
-        enum MsgType { Critical, Overflow, Write, Read, Connect, Conflict };
+        enum MsgType { Critical, Overflow, Write, Read, Connect, Conflict, Agent };
 
         void add(MsgType t, const string & s);
         void operator()(MsgType t, const string & s) { add(t, s); }

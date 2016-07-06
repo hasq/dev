@@ -1,4 +1,11 @@
-agent config hello [ hel1 ] [ hel2 ] [ hel3 ]
+#agent dummy hello [ hel1 ] [ hel2 ] [ hel3 ]
+#agent config hello [ hel1 ] [ hel2 ] [ hel3 ]
+#agent config hello [ hel1 ]
+agent config logfile [ agt1.log ]
+agent config logfile [ agt1.log ]
+agent config logfile
+agent config logfile [ agt1.log ]
+agent config webpath [ webpath ]
 sleep 100
 quit
 

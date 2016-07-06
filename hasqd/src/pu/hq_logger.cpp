@@ -42,6 +42,7 @@ void Logger::add(MsgType t, const string & s)
         case Read: return reads.add(maxB, s);
         case Connect: return conns.add(maxB, s);
         case Conflict: return conflicts.add(maxB, s);
+        case Agent: return agent.add(maxB, s);
     }
 
     throw gl::Never("MemLogger::add bad type");
@@ -57,6 +58,7 @@ void Logger::get(MsgType t, std::vector<string> & s)
         case Read: return reads.get(s);
         case Connect: return conns.get(s);
         case Conflict: return conflicts.get(s);
+        case Agent: return agent.get(s);
     }
 
     throw gl::Never("MemLogger::get bad type");
@@ -82,6 +84,7 @@ Logger::~Logger()
     of << "Read     : " << reads.q.size()     << "\n"; reads.deflate(of);
     of << "Connect  : " << conns.q.size()     << "\n"; conns.deflate(of);
     of << "Conflict : " << conflicts.q.size() << "\n"; conflicts.deflate(of);
+    of << "Agent    : " << agent.q.size()     << "\n"; agent.deflate(of);
     of << "===============\n";
 }
 
