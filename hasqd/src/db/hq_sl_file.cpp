@@ -30,18 +30,23 @@ os::Path db::SliceFile::file() const
     return r;
 }
 
-void db::SliceFile::initFromFilename(const string & filename)
+bool db::SliceFile::initFromFilename(const string & filename, bool thr)
 {
     string::size_type i = filename.find("-");
     string::size_type j = filename.find(".");
+
     if ( i == string::npos || i < 8 || j == string::npos || j < i )
-        throw gl::ex("Bad slice filename " + filename);
+    {
+        if ( thr) throw gl::ex("Bad slice filename " + filename);
+        return false;
+    }
 
     gmd = filename.substr(i - 8, 8);
     ++i;
     n = gl::toi( filename.substr(i, j - i) );
     make_gmd_dir();
     slice_dir = tr->getSlicePath();
+    return true;
 }
 
 void db::SliceFile::initCurTime()

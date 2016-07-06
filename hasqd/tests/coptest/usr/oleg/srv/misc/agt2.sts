@@ -8,11 +8,6 @@ tn=${tn%.*}
 $1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0"
 $1/hasqd -nlqc s=$tn.inp dprn=1 dsvt=1 nn=a@a
 
-#echo "=============="
-#ls -R slice/_wrd/
-#ls -R index/_wrd/
-#echo "=============="
-
 $1/zdb erasedisk
 
 

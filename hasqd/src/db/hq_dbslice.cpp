@@ -197,19 +197,25 @@ void db::Slice<H>::lastMetaRec(string & sliceFile, string & hashStr, string & ym
     }
 }
 
-#include <iostream>
 template <class H>
 er::Code db::Slice<H>::getSlice(string & data, const string & name, bool body) const
 {
-//    std::cout << "AAA name=[" << name << "] body=" << (body) << '\n';
-
     if ( name.empty() ) // request for current slice
     {
         data = cur_slice.basename();
         return er::Code(er::OK);
     }
 
-//    std::cout << "AAA NA";
+    SliceFile sf(traits);
+    if ( !sf.initFromFilename(name + ".", false) ) return er::Code(er::REQ_PATH_BAD);
+
+    if ( !body )
+    {
+        if ( sf.file().isfile() ) return er::Code(er::OK);
+        return er::Code(er::REQ_FILE_BAD);
+    }
+
+    data = gl::file2str(sf.file().str());
 
     return er::Code(er::OK);
 }

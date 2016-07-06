@@ -29,7 +29,7 @@ class SliceFile
         os::Path file() const;
         string basename() const;
         void make_gmd_dir();
-        void initFromFilename(const string & filename);
+        bool initFromFilename(const string & filename, bool thr = true);
         void initCurTime();
         void advance();
         void write(const string & r);

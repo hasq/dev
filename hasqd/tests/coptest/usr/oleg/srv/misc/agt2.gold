@@ -14,14 +14,20 @@ Database on disk erased successfully
 OK 20100101-1
 <svt> print tcp self [ slice _wrd dummy name ]
 REQ_SLICE_BAD
+<svt> print tcp self [ slice _wrd check dummy ]
+REQ_PATH_BAD
 <svt> print tcp self [ slice _wrd get dummy ]
 
-<svt> print tcp self [ slice _wrd check dummy ]
-OK
-<svt> print tcp self [ slice _wrd get name ]
+<svt> print tcp self [ slice _wrd check 22221122-1 ]
+REQ_FILE_BAD
+<svt> print tcp self [ slice _wrd get 22221122-1 ]
 
-<svt> print tcp self [ slice _wrd check name ]
+<svt> print tcp self [ slice _wrd check 20100101-1 ]
 OK
+<svt> print tcp self [ slice _wrd get 20100101-1 ]
+0 a7c4 0000 d9e6 fbfc
+1 a7c4 7ccf 811f 2159
+
 <svt> quit
 <zdb> erasedisk
 Database on disk erased successfully
