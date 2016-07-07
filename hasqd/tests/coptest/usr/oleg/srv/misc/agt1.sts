@@ -1,8 +1,8 @@
 #!/bin/sh
 $1/hasqd -nlqc s=agt1.inp dprn=1 dagt=1 p=0
-echo "=============="
-cat agt1.log
-echo "=============="
+#echo "=============="
+#cat agt1.log
+#echo "=============="
 rm -f agt1.log
 
 

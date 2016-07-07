@@ -11,13 +11,3 @@ Error: Invalid value aaa, use (hasq|http_get|http_post)
 <agt> > config protocol http_post
 <agt> > config protocol
 <agt> : http_post
-==============
-094110 > config logfile
-094110 : agt1.log
-094110 > config protocol aaa
-094110 > config protocol
-094110 : hasq
-094110 > config protocol http_post
-094110 > config protocol
-094110 : http_post
-==============
