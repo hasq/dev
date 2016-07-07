@@ -32,6 +32,7 @@ class Agent
         void downlast(const string & srv, string num, string slice);
         void saveSlice(const string & file, const string & data);
         void listfile();
+        void validate(const string & s);
 
         void operator=(const Agent &);
         Agent(const Agent &);

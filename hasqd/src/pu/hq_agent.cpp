@@ -26,13 +26,15 @@ bool Agent::validCmd(string c)
     if ( c == "filesys" || c == "fs" ) return true;
     if ( c == "download" || c == "dl" ) return true;
     if ( c == "build" || c == "bd" ) return true;
+    if ( c == "validate" || c == "vd" ) return true;
     return false;
 }
 
 bool Agent::sub3Cmd(string c) { return ( c == "download" || c == "dl" ); }
 bool Agent::sub2Cmd(string c)
 {
-    return ( c == "config" || c == "cf" || c == "filesys" || c == "fs" || sub3Cmd(c) );
+    return ( c == "config" || c == "cf" || c == "filesys" || c == "fs"
+             || c == "validate" || c == "vd" || sub3Cmd(c) );
 }
 
 void Agent::print(const string & s, bool cmd) const
@@ -79,7 +81,8 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         else if ( cmd1 == "config"   || cmd1 == "cf")  config(cmd2);
         else if ( cmd1 == "filesys"  || cmd1 == "fs" ) filesys(cmd2);
         else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
-        else if ( cmd1 == "build"     || cmd1 == "bd")  listfile();
+        else if ( cmd1 == "build"    || cmd1 == "bd")  listfile();
+        else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd1);
         else throw gl::ex("Agent bad command: " + cmd1);
     }
     catch (gl::ex e)
@@ -376,7 +379,12 @@ void Agent::listfile()
         oflist << '\n';
     }
 
-    os::Cout() << "LIST " << inDir.str() << ' ' << ouDir.str() << ' ' << outFile << '\n';
+    ///os::Cout() << "LIST " << inDir.str() << ' ' << ouDir.str() << ' ' << outFile << '\n';
 }
 
+
+void Agent::validate(const string & cmd)
+{
+    os::Cout() << "VALIDATE " << '\n';
+}
 

@@ -4,8 +4,6 @@ Database on disk erased successfully
 <agt> > cf database _wrd
 <agt> > cf database
 <agt> : _wrd
-<agt> > fs rm agt3S
-<agt> : OK
 <agt> > fs mk agt3S
 <agt> : OK
 <agt> > dl 127.0.0.1:13131 101230:110103 agt3S

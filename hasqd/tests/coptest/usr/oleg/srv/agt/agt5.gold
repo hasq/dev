@@ -2,20 +2,25 @@
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
 <agt> > cf database _wrd
-<agt> > fs mk agt4S
+<agt> > fs mk agt5S
 <agt> : OK
-<agt> > fs mk agt4I
+<agt> > fs mk agt5I
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 today agt4S
+<agt> > dl 127.0.0.1:13131 today agt5S
 <agt> : [slice _wrd] -> {OK 20110101-1}
 <agt> : [slice _wrd check 20110101-1] -> {OK}
 <agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
 <agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
-<agt> > bd agt4S agt4I agt4_list.txt self localhost:13131
+<agt> > bd agt5S agt5I agt5_1.txt self localhost:13131
+<agt> > vd check agt5_1.txt agt5_2.txt
+VALIDATE 
+<agt> > fs rm agt5S
+<agt> : OK
+<agt> > fs rm agt5I
+<agt> : OK
+<agt> > fs rm agt5_1.txt
+<agt> : OK
+<agt> > fs rm agt5_2.txt
+<agt> : REQ_PATH_BAD
 <zdb> erasedisk
 Database on disk erased successfully
-==============
-1 a7c4 127.0.0.1:13131 localhost:13131
-a7c4
-20110101-1
-==============

@@ -9,15 +9,21 @@ expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 
 ag cf database "_wrd"
-ag cf database
-dirS = "agt3S"
+dirS = "agt5S"
+dirI = "agt5I"
 
 ag fs mk dirS
-ag dl self 101230:110103 dirS
+ag fs mk dirI
 ag dl self today dirS
-ag dl self 2 dirS
+list1 = "agt5_1.txt"
+list2 = "agt5_2.txt"
+ag bd dirS dirI list1 [ self localhost:13131 ]
 
+ag vd check list1 list2
 
 ag fs rm dirS
+ag fs rm dirI
+ag fs rm list1
+ag fs rm list2
 quit
 
