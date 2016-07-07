@@ -6,25 +6,25 @@ add <agt> debug output and CLO dagt
 add agent log
 NC: info log agent
 
-[Done:] agent config logfile "file"
-[Done:] agent config webpath "path"
+[Done:Tested] agent config logfile "file"
+[Done:Tested] agent config webpath "path"
 	need support for 
 	1. nginx html "//"
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-[Done:] agent config database "_wrd"
-[Done:] agent config protocol [ (hasq|http_get|http_post) ]
-[Done:] agent config show - no such command - missing arg works as show
+[Done:Tested:?] agent config database "_wrd"
+[Done:Tested] agent config protocol [ (hasq|http_get|http_post) ]
+[Done:Tested] agent config show - no such command - missing arg works as show
 	logfile, database, protocol
 
-[Done:] ag cf ...
+[Done:Tested] ag cf ...
 
-[Done:] agent filesys mk "dir"
-[Done:] agent filesys rm "file|dir"
-[Done:] agent filesys mv "file1" "file2"
-[Done:] agent filesys cp "file1" "file2"
-[Done:] ag fs ...
+[Done:Tested] agent filesys mk "dir"
+[Done:Tested] agent filesys rm "file|dir"
+[Done:Tested] agent filesys mv "file1" "file2"
+[Done:Tested:?] agent filesys cp "file1" "file2"
+[Done:Tested] ag fs ...
 
 NC - slice
 [Done:] slice db -> OK + name last
