@@ -1,0 +1,6 @@
+agent config webpath
+agent config webpath "/"
+agent config webpath
+ag cf webpath [ / ]
+ag cf webpath
+quit
