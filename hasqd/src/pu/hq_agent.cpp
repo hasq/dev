@@ -60,7 +60,9 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
 {
     if ( gs->config->dbg.agt )
     {
-        string s = cmd1 + (cmd2.empty() ? "" : " " + cmd2);
+        string s = cmd1;
+        s += (cmd2.empty() ? "" : " " + cmd2);
+        s += (cmd3.empty() ? "" : " " + cmd3);
 
         for ( size_t i = 0; i < as.size(); i++ )
             s += " " + as[i];
@@ -115,7 +117,7 @@ void Agent::setshow_prot(const string & v) const
             case HttpGet: print("http_get"); return;
             case HttpPost: print("http_post"); return;
         }
-        throw gl::ex("Bad prot enum");
+        throw gl::Never("Bad prot enum");
     }
 
     if (false);
@@ -181,12 +183,24 @@ string Agent::fetch(const string & srv, const string & cmd)
 
     bool ok = false;
     os::net::TcpClient c(prot, os::IpAddr(srv, ok), gs->config->netLimits);
-    if ( !ok ) throw gl::ex("Creating IpAddr failed: $1", srv);
+    if ( !ok ) throw gl::Never("Creating IpAddr failed: $1", srv);
 
     c.send_msg(cmd);
     string r = c.recvMsgOrEmpty();
 
     return r;
+}
+
+void Agent::translateDate(string & s)
+{
+    string today = os::Timer::getGmd();
+    if ( s == "today" ) s = today;
+    if ( s.size() == 6 ) s = "20" + s;
+}
+
+void Agent::downlast(const string & srv, const string & num)
+{
+    os::Cout() << "DOWNLAST " << num << '\n';
 }
 
 void Agent::download(const string & srv, const string & date)
@@ -203,6 +217,27 @@ void Agent::download(const string & srv, const string & date)
     if ( s.size() < 4 || s.substr(0, 2) != "OK" ) throw gl::ex(ER01, database, srv);
 
     string cur_slice = s.substr(3);
+    string today = os::Timer::getGmd();
 
-    os::Cout() << "DOWNLOAD " << cur_slice << '\n';
+    if ( date.empty() ) throw gl::Never("bad date");
+
+    string date_fr, date_to; // 8 digit dates
+
+    date_fr = date_to = date;
+
+    size_t i = date.find(":");
+    if ( i != string::npos )
+    {
+        date_fr = date.substr(0, i);
+        date_to = date.substr(i + 1);
+    }
+
+    translateDate(date_fr);
+    translateDate(date_to);
+
+    if ( date_fr.size() < 6 )
+        return downlast(srv, date_fr);
+
+    os::Cout() << "DOWNLOAD " << cur_slice << ' ' << today << ' '
+               << date_fr << ' ' << date_to << '\n';
 }

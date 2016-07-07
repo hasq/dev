@@ -4,8 +4,8 @@ Database on disk erased successfully
 <agt> > cf database _wrd
 <agt> > cf database
 <agt> : _wrd
-<agt> > dl 127.0.0.1:13131 agt3S
+<agt> > dl 127.0.0.1:13131 100101:160101 agt3S
 DOWNLOAD 127.0.0.1:13131 100101:160101 agt3S
-DOWNLOAD 20110101-1
+DOWNLOAD 20110101-1 20110101 20100101 20160101
 <zdb> erasedisk
 Database on disk erased successfully
