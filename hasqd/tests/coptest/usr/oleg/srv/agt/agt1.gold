@@ -4,6 +4,7 @@
 <agt> > config logfile
 <agt> : agt1.log
 <agt> > config protocol aaa
+<agt> : Error: Invalid value aaa, use (hasq|http_get|http_post)
 Offensive command (exec): agent config protocol "aaa"
 Error: Invalid value aaa, use (hasq|http_get|http_post)
 <agt> > config protocol

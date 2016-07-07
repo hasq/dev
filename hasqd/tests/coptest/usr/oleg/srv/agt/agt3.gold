@@ -6,6 +6,6 @@ Database on disk erased successfully
 <agt> : _wrd
 <agt> > dl 127.0.0.1:13131 agt3S
 DOWNLOAD 127.0.0.1:13131 100101:160101 agt3S
-DOWNLOAD OK 20110101-1
+DOWNLOAD 20110101-1
 <zdb> erasedisk
 Database on disk erased successfully

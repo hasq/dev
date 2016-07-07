@@ -27,6 +27,7 @@ class Agent
         void config(const string & s);
         void filesys(const string & s);
         void download(const string & srv, const string & date);
+        string fetch(const string & srv, const string & cmd);
 
         void operator=(const Agent &);
         Agent(const Agent &);

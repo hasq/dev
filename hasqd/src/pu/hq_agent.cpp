@@ -35,12 +35,12 @@ bool Agent::sub2Cmd(string c)
 void Agent::print(const string & s, bool cmd) const
 {
     string pf = ": ";
-    if( cmd ) pf = "> ";
+    if ( cmd ) pf = "> ";
 
     if ( gs->config->dbg.agt )
     {
         os::Cout out;
-        out << os::prmpt("agt", gs->config->dbg.id) << pf<< s << os::endl;
+        out << os::prmpt("agt", gs->config->dbg.id) << pf << s << os::endl;
     }
 
     string ts = os::Timer::getHms() + " " + pf + s;
@@ -65,14 +65,22 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         for ( size_t i = 0; i < as.size(); i++ )
             s += " " + as[i];
 
-        print(s,true);
+        print(s, true);
     }
 
-    if (false);
-    else if ( cmd1 == "config" || cmd1 == "cf") config(cmd2);
-    else if ( cmd1 == "filesys" || cmd1 == "fs" ) filesys(cmd2);
-    else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
-    else throw gl::ex("Agent bad command: " + cmd1);
+    try
+    {
+        if (false);
+        else if ( cmd1 == "config" || cmd1 == "cf") config(cmd2);
+        else if ( cmd1 == "filesys" || cmd1 == "fs" ) filesys(cmd2);
+        else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
+        else throw gl::ex("Agent bad command: " + cmd1);
+    }
+    catch (gl::ex e)
+    {
+        print("Error: " + e.str());
+        throw;
+    }
 }
 
 
@@ -156,22 +164,45 @@ void Agent::filesys(const string & s)
     throw gl::ex("Agent bad command: " + s);
 }
 
+string Agent::fetch(const string & srv, const string & cmd)
+{
+    gl::ProtHq prot_0(gl::Protocol::Client);
+    gl::HttpGet prot_1(gl::Protocol::Client);
+    gl::HttpPost prot_2(gl::Protocol::Client);
+
+    gl::Protocol * prot = 0;
+
+    switch (protocol)
+    {
+        case Hasq:     prot = &prot_0; break;
+        case HttpGet:  prot = &prot_1; break;
+        case HttpPost: prot = &prot_2; break;
+    }
+
+    bool ok = false;
+    os::net::TcpClient c(prot, os::IpAddr(srv, ok), gs->config->netLimits);
+    if ( !ok ) throw gl::ex("Creating IpAddr failed: $1", srv);
+
+    c.send_msg(cmd);
+    string r = c.recvMsgOrEmpty();
+
+    return r;
+}
+
 void Agent::download(const string & srv, const string & date)
 {
+    const string ER01 = "Database $1 is not present on $2";
+
     if ( database.empty() )
         throw gl::ex("Database is not set - try 'agent config database'");
 
     const string & dir = as[0];
     os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir << '\n';
 
-    gl::HttpPost prot(gl::Protocol::Client);
+    string s = fetch(srv, "slice " + database);
+    if ( s.size() < 4 || s.substr(0, 2) != "OK" ) throw gl::ex(ER01, database, srv);
 
-    bool ok = false;
-    os::net::TcpClient c(&prot, os::IpAddr(srv, ok), gs->config->netLimits);
-    if ( !ok ) throw gl::ex("Creating IpAddr failed: $1", srv);
+    string cur_slice = s.substr(3);
 
-    c.send_msg("slice _wrd");
-    string r = c.recvMsgOrEmpty();
-
-    os::Cout() << "DOWNLOAD " << r << '\n';
+    os::Cout() << "DOWNLOAD " << cur_slice << '\n';
 }

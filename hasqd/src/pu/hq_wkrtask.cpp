@@ -858,7 +858,8 @@ string Worker2::slice()
 {
     if ( !tok.next() ) return er::Code(er::REQ_SLICE_BAD);
 
-    int dbidx = gs->database.getDbIndex(tok.sub());
+    string sdb = tok.sub();
+    int dbidx = gs->database.getDbIndex(sdb);
     if ( dbidx < 0 )
         return er::Code(er::REQ_HASHTYPE_BAD);
 
