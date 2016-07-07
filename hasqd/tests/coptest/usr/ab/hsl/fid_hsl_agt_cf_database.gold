@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create wrd.db wrd WRD 1 [] 1 0
+<zdb> create md5.db md5 MD5 1 [] 1 0
+<agt> > config database
+<agt> : 
+<agt> > config database wrd.db
+<agt> > config database
+<agt> : wrd.db
+<agt> > config database md5.db
+<agt> > config database
+<agt> : md5.db
+<agt> > cf database sh2.db
+<agt> > cf database
+<agt> : sh2.db

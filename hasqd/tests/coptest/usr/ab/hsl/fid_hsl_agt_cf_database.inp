@@ -1,0 +1,8 @@
+agent config database
+agent config database "wrd.db"
+agent config database
+agent config database [ md5.db ]
+agent config database
+ag cf database [ sh2.db ]
+ag cf database
+quit
