@@ -1,18 +1,49 @@
-ag filesys mk "A0"
-ag filesys cp "A0"
-ag filesys mv "A0"
+print [ >>>  >>> Test "mk" <<< ]
+ag filesys mk [ aaa ]
+ag filesys mk [ bbb/ccc ]
 
-ag filesys cp "A0" "A1"
-ag fs rm "A1"
+print [ >>>  Test "mk" for an existing dir <<< ]
+ag fs mk [ aaa ]
 
-ag filesys mv "A0" "A1"
-ag fs rm "A1"
+print [ >>>  Test "rm" for a folders <<< ]
+ag fs rm [ bbb ]
 
-ag filesys mk "A1/A0/A0"
-ag fs mv [ A1 ] [ A0 ]
+print [ >>>  Test "cp" for a folders <<< ]
 
-ag filesys cp "A0" "A1"
-ag fs rm "A0"
-ag fs rm "A1"
+ag fs cp [ aaa ] [ bbb ]
+ag fs rm [ bbb ]
+
+print [ >>>  Test "mv" for a folders <<< ]
+ag fs mv [ aaa ] [ bbb ]
+
+print [ >>>  Test "mv" for an existing dir <<< ]
+ag fs mv [ aaa ] [ bbb ]
+
+print [ >>>  Test "cp" for a files <<< ]
+ag fs mk [ aaa ]
+ag fs mk [ bbb ]
+ag cf logfile [ aaa/logfile.log ]
+ag cf logfile
+ag fs cp [ aaa/logfile.log ] [ bbb/logfile.log ]
+
+print [ >>>  Test "cp" for itself <<< ]
+ag fs cp [ aaa/logfile.log ] [ aaa/logfile.log ]
+
+print [ >>>  Test "cp" for an existing files <<< ]
+ag fs cp [ aaa/logfile.log ] [ bbb/logfile.log ]
+
+print [ >>>  Test "cp" for a non-existent folder <<< ]
+ag fs cp [ aaa/logfile.log ] [ ccc/logfile.log ]
+
+print [ >>>  Test "cp" for a non-existent files <<< ]
+ag fs cp [ ccc/empty.file ] [ aaa/empty.file ]
+
+print [ >>>  Test "rm" for a files <<< ]
+ag fs rm [ bbb/logfile.log ]
+
+print [ >>>  Test "rm" for a non-empty folders <<< ]
+ag fs cp [ aaa/logfile.log ] [ bbb/logfile.log ]
+ag fs rm [ bbb ]
+
+ag fs rm [ aaa ]
 quit
-
