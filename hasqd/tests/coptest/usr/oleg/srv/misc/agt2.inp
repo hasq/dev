@@ -8,6 +8,8 @@ expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
 expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 
+print tcp self [ slice xxx ]
+
 print tcp self [ slice _wrd ]
 print tcp self [ slice _wrd dummy name ]
 

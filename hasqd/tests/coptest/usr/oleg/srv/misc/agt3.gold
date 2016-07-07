@@ -1,7 +1,10 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-<agt> download 127.0.0.1:13131 agt3S
+<agt> > cf database _wrd
+<agt> > cf database
+<agt> : _wrd
+<agt> > dl 127.0.0.1:13131 agt3S
 DOWNLOAD 127.0.0.1:13131 100101:160101 agt3S
 DOWNLOAD OK 20110101-1
 <zdb> erasedisk

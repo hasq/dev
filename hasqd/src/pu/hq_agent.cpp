@@ -15,11 +15,12 @@
 
 string Agent::logfile;
 string Agent::webpath;
-bool Agent::prot_html = false;
+string Agent::database;
+Agent::Prot Agent::protocol = Agent::Hasq;
 
 bool Agent::validCmd(string c)
 {
-    if ( c == "config" ) return true;
+    if ( c == "config" || c == "cf" ) return true;
     if ( c == "filesys" || c == "fs" ) return true;
     if ( c == "download" || c == "dl" ) return true;
     return false;
@@ -28,18 +29,21 @@ bool Agent::validCmd(string c)
 bool Agent::sub3Cmd(string c) { return ( c == "download" || c == "dl" ); }
 bool Agent::sub2Cmd(string c)
 {
-    return ( c == "config" || c == "filesys" || c == "fs" || sub3Cmd(c) );
+    return ( c == "config" || c == "cf" || c == "filesys" || c == "fs" || sub3Cmd(c) );
 }
 
-void Agent::print(const string & s) const
+void Agent::print(const string & s, bool cmd) const
 {
+    string pf = ": ";
+    if( cmd ) pf = "> ";
+
     if ( gs->config->dbg.agt )
     {
         os::Cout out;
-        out << os::prmpt("agt", gs->config->dbg.id) << s << os::endl;
+        out << os::prmpt("agt", gs->config->dbg.id) << pf<< s << os::endl;
     }
 
-    string ts = os::Timer::getHms() + " " + s;
+    string ts = os::Timer::getHms() + " " + pf + s;
 
     if ( !logfile.empty() )
     {
@@ -61,11 +65,11 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         for ( size_t i = 0; i < as.size(); i++ )
             s += " " + as[i];
 
-        print(s);
+        print(s,true);
     }
 
     if (false);
-    else if ( cmd1 == "config" ) config(cmd2);
+    else if ( cmd1 == "config" || cmd1 == "cf") config(cmd2);
     else if ( cmd1 == "filesys" || cmd1 == "fs" ) filesys(cmd2);
     else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
     else throw gl::ex("Agent bad command: " + cmd1);
@@ -76,12 +80,41 @@ void Agent::config(const string & s)
 {
     if ( as.size() > 1 ) throw gl::ex("Agent too many arguments");
 
+    string val;
+    if ( !as.empty() ) val = as[0];
+
     if (false);
-    else if ( s == "logfile" ) logfile = (as.empty() ? "" : as[0]);
-    else if ( s == "webpath" ) webpath = (as.empty() ? "" : as[0]);
-    else if ( s == "hasq" ) prot_html = false;
-    else if ( s == "html" ) prot_html = true;
+    else if ( s == "logfile" ) setshow(logfile, val);
+    else if ( s == "webpath" ) setshow(webpath, val);
+    else if ( s == "protocol" ) setshow_prot(val);
+    else if ( s == "database" ) setshow(database, val);
     else throw gl::ex("Agent bad command: " + s);
+}
+
+void Agent::setshow(string & k, const string & v) const
+{
+    if ( v.empty() ) print(k);
+    else k = v;
+}
+
+void Agent::setshow_prot(const string & v) const
+{
+    if ( v.empty() )
+    {
+        switch (protocol)
+        {
+            case Hasq: print("hasq"); return;
+            case HttpGet: print("http_get"); return;
+            case HttpPost: print("http_post"); return;
+        }
+        throw gl::ex("Bad prot enum");
+    }
+
+    if (false);
+    else if ( v == "hasq" ) protocol = Hasq;
+    else if ( v == "http_get" ) protocol = HttpGet;
+    else if ( v == "http_post" ) protocol = HttpPost;
+    else throw gl::ex("Invalid value $1, use (hasq|http_get|http_post)", v);
 }
 
 void Agent::filesys(const string & s)
@@ -125,14 +158,17 @@ void Agent::filesys(const string & s)
 
 void Agent::download(const string & srv, const string & date)
 {
+    if ( database.empty() )
+        throw gl::ex("Database is not set - try 'agent config database'");
+
     const string & dir = as[0];
     os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir << '\n';
 
     gl::HttpPost prot(gl::Protocol::Client);
 
     bool ok = false;
-    os::net::TcpClient c(&prot, os::IpAddr(srv,ok), gs->config->netLimits);
-    if( !ok ) throw gl::ex("Creating IpAddr failed: $1",srv);
+    os::net::TcpClient c(&prot, os::IpAddr(srv, ok), gs->config->netLimits);
+    if ( !ok ) throw gl::ex("Creating IpAddr failed: $1", srv);
 
     c.send_msg("slice _wrd");
     string r = c.recvMsgOrEmpty();

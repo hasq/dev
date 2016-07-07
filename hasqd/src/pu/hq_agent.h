@@ -14,12 +14,15 @@ class Agent
 {
         static string logfile;
         static string webpath;
-        static bool prot_html;
+        static string database;
+        static enum Prot { Hasq, HttpGet, HttpPost } protocol;
 
         GlobalSpace * gs;
         const std::vector<string> & as;
 
-        void print(const string & s) const;
+        void print(const string & s, bool cmd = false) const;
+        void setshow(string & k, const string & v) const;
+        void setshow_prot(const string & v) const;
 
         void config(const string & s);
         void filesys(const string & s);

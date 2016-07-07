@@ -13,14 +13,18 @@ NC: info log agent
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-agent config protocol [ (hasq|http_get|http_post) ]
-agent config show
+[Done:] agent config database "_wrd"
+[Done:] agent config protocol [ (hasq|http_get|http_post) ]
+[Done:] agent config show - no such command - missing arg works as show
+	logfile, database, protocol
+
+[Done:] ag cf ...
 
 [Done:] agent filesys mk "dir"
 [Done:] agent filesys rm "file|dir"
 [Done:] agent filesys mv "file1" "file2"
 [Done:] agent filesys cp "file1" "file2"
-ag fs ...
+[Done:] ag fs ...
 
 NC - slice
 [Done:] slice db -> OK + name last

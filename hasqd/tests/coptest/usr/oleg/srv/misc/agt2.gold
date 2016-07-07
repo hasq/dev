@@ -10,6 +10,8 @@ Database on disk erased successfully
 <svt> sendnote
 <svt> sendnote
 <svt> expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+<svt> print tcp self [ slice xxx ]
+REQ_HASHTYPE_BAD
 <svt> print tcp self [ slice _wrd ]
 OK 20100101-1
 <svt> print tcp self [ slice _wrd dummy name ]

@@ -8,8 +8,10 @@ expect 0 OK 100 tcp self { [ zero * _wrd ] r1 }
 expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 
+ag cf database "_wrd"
+ag cf database
 dirS = "agt3S"
-ag download self 100101:160101 dirS
+ag dl self 100101:160101 dirS
 
 quit
 

@@ -1,12 +1,17 @@
 #agent dummy hello [ hel1 ] [ hel2 ] [ hel3 ]
 #agent config hello [ hel1 ] [ hel2 ] [ hel3 ]
 #agent config hello [ hel1 ]
+agent config logfile
 agent config logfile "agt1.log"
 #agent config logfile [ agt1.log ]
 #agent config logfile
 #agent config logfile [ agt1.log ]
 #agent config webpath [ webpath ]
-#agent config hasq
+agent config logfile
+agent config protocol "aaa"
+agent config protocol
+agent config protocol "http_post"
+agent config protocol
 #agent config html
 #agent config hasq
 #agent filesys mk "agt1"
@@ -14,6 +19,6 @@ agent config logfile "agt1.log"
 #agent filesys rm "agt2.log"
 #agent filesys mv "agt1.log" "agt2.log"
 #agent filesys cp "agt1.inp" "agt3.log"
-sleep 100
+sleep 10
 quit
 
