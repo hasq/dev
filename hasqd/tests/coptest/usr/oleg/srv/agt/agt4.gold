@@ -1,0 +1,15 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+Offensive command (parse): ag list dirS list [ self aaa:20 ]
+Error: Invalid command: list
+<agt> > cf database _wrd
+<agt> > fs mk agt4S
+<agt> : OK
+<agt> > dl 127.0.0.1:13131 today agt4S
+<agt> : [slice _wrd] -> {OK 20110101-1}
+<agt> : [slice _wrd check 20110101-1] -> {OK}
+<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
+<zdb> erasedisk
+Database on disk erased successfully

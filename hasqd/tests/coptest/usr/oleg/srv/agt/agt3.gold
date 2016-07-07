@@ -25,5 +25,7 @@ Database on disk erased successfully
 <agt> > dl 127.0.0.1:13131 2 agt3S
 <agt> : [slice _wrd] -> {OK 20110101-1}
 <agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> > fs rm agt3S
+<agt> : OK
 <zdb> erasedisk
 Database on disk erased successfully
