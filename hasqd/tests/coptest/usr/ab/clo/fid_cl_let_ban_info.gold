@@ -21,11 +21,8 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk usg: 295895 M
 Dsk tot: 305240 M
-Mem usg: 3750 M
 Mem tot: 8051 M
-Cpu load: 0 %
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
@@ -59,11 +56,8 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk usg: 295895 M
 Dsk tot: 305240 M
-Mem usg: 3750 M
 Mem tot: 8051 M
-Cpu load: 0 %
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
@@ -97,11 +91,8 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk usg: 295895 M
 Dsk tot: 305240 M
-Mem usg: 3756 M
 Mem tot: 8051 M
-Cpu load: 0 %
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
