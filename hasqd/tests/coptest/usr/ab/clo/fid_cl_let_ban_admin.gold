@@ -16,6 +16,9 @@ REQ_MSG_HEAD
 <svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin skc pop ]
 REQ_MSG_HEAD
 <svt> quit
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ admin skc show ]
+REQ_MSG_HEAD
+<svt> quit
 ................
 skckey+ let+
 ................
@@ -34,6 +37,11 @@ OK
 <svt> print ex 0 OK 100 tcp self [ admin skc pop ]
 OK
 <svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin skc show ]
+OK
+5b5e1e05e95f9e872b02b8d25ac26e284b4664b2e88db83427db34b9e69a9f25
+
+<svt> quit
 ................
 skckey+ let=all
 ................
@@ -51,6 +59,11 @@ OK
 <svt> quit
 <svt> print ex 0 OK 100 tcp self [ admin skc pop ]
 OK
+<svt> quit
+<svt> print ex 0 OK 100 tcp self [ admin skc show ]
+OK
+5b5e1e05e95f9e872b02b8d25ac26e284b4664b2e88db83427db34b9e69a9f25
+
 <svt> quit
 ................
 skckey+ ban+
