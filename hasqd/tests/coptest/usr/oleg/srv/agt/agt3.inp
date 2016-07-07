@@ -11,7 +11,12 @@ expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 ag cf database "_wrd"
 ag cf database
 dirS = "agt3S"
-ag dl self 100101:160101 dirS
 
+ag fs rm dirS
+ag fs mk dirS
+ag dl self 101230:110103 dirS
+
+
+#ag fs rm dirS
 quit
 

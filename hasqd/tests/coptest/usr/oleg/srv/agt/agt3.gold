@@ -4,8 +4,20 @@ Database on disk erased successfully
 <agt> > cf database _wrd
 <agt> > cf database
 <agt> : _wrd
-<agt> > dl 127.0.0.1:13131 100101:160101 agt3S
-DOWNLOAD 127.0.0.1:13131 100101:160101 agt3S
-DOWNLOAD 20110101-1 20110101 20100101 20160101
+<agt> > fs rm agt3S
+<agt> : OK
+<agt> > fs mk agt3S
+<agt> : OK
+<agt> > dl 127.0.0.1:13131 101230:110103 agt3S
+DOWNLOAD 127.0.0.1:13131 101230:110103 agt3S
+<agt> : [slice _wrd] -> {OK 20110101-1}
+<agt> : [slice _wrd check 20101230-1] -> {REQ_FILE_BAD}
+<agt> : [slice _wrd check 20101231-1] -> {REQ_FILE_BAD}
+<agt> : [slice _wrd check 20110101-1] -> {OK}
+<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
+<agt> : [slice _wrd check 20110102-1] -> {REQ_FILE_BAD}
+<agt> : [slice _wrd check 20110103-1] -> {REQ_FILE_BAD}
+DOWNLOAD 20110101-1 20101230 20110103
 <zdb> erasedisk
 Database on disk erased successfully

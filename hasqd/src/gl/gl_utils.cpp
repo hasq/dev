@@ -183,3 +183,51 @@ void printStack()
 }
 
 
+int gl::calendarDays(int year, int month)
+{
+    // returns the number of the days in a month
+    int day = 0;
+
+    if (month == 1 || month == 3 || month == 5 || month == 7
+            || month == 8 || month == 10 || month == 12)
+        day = 31;
+
+    if (month == 4 || month == 6 || month == 9 || month == 11 )
+        day = 30;
+
+    if (month == 2)
+        day = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? 29 : 28;
+
+    return day;
+}
+
+void gl::nextDay(int & year, int & month, int & day)
+{
+    if ( ++day > calendarDays(year, month) )
+    {
+        day = 1;
+        ++month;
+    }
+
+    if ( month > 12 )
+    {
+        month = 1;
+        ++year;
+    }
+}
+
+string gl::nextDay(const string & date)
+{
+    size_t sz = date.size();
+    int day = toi( date.substr(sz - 2, 2) );
+    int month = toi( date.substr(sz - 4, 2) );
+    int year = toi( date.substr(0, sz - 4) );
+
+    nextDay(year, month, day);
+
+    string r = tos(year);
+    r += (month < 10 ? "0" : "") + tos(month);
+    r += (day < 10 ? "0" : "") + tos(day);
+
+    return r;
+}

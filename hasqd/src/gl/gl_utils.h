@@ -101,6 +101,11 @@ class Removec
         void disable() { v.clear(); }
 };
 
+// calendar
+int calendarDays(int year, int month);
+void nextDay(int & year, int & month, int & day);
+string nextDay(const string & date);
+
 } // gl
 
 

@@ -188,6 +188,8 @@ string Agent::fetch(const string & srv, const string & cmd)
     c.send_msg(cmd);
     string r = c.recvMsgOrEmpty();
 
+    print("[" + cmd + "] -> {" + (r.size() < 20 ? r : (r.substr(0, 15) + "...")) + "}");
+
     return r;
 }
 
@@ -208,16 +210,18 @@ void Agent::download(const string & srv, const string & date)
     const string ER01 = "Database $1 is not present on $2";
 
     if ( database.empty() )
-        throw gl::ex("Database is not set - try 'agent config database'");
+        return print("Database is not set - try 'agent config database'");
 
-    const string & dir = as[0];
-    os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir << '\n';
+    os::Path dir(as[0]);
+    if ( !dir.isdir() )
+        return print("Directory does not exist [" + dir.str() + "]");
+
+    os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir.str() << '\n';
 
     string s = fetch(srv, "slice " + database);
     if ( s.size() < 4 || s.substr(0, 2) != "OK" ) throw gl::ex(ER01, database, srv);
 
     string cur_slice = s.substr(3);
-    string today = os::Timer::getGmd();
 
     if ( date.empty() ) throw gl::Never("bad date");
 
@@ -238,6 +242,43 @@ void Agent::download(const string & srv, const string & date)
     if ( date_fr.size() < 6 )
         return downlast(srv, date_fr);
 
-    os::Cout() << "DOWNLOAD " << cur_slice << ' ' << today << ' '
+    string cur_date = date_fr;
+    int n = 1;
+
+    while (1)
+    {
+        string file = cur_date + "-" + gl::tos(n);
+        string schk = "slice " + database + " check " + file;
+        string sget = "slice " + database + " get " + file;
+
+        s = fetch(srv, schk);
+
+        if ( s != "OK" )
+        {
+            cur_date = gl::nextDay(cur_date);
+            if ( cur_date > date_to ) break;
+            n = 1;
+            continue;
+        }
+
+        s = fetch(srv, sget);
+        saveSlice((dir + file).str(), s);
+
+        n++;
+    }
+
+    os::Cout() << "DOWNLOAD " << cur_slice << ' '
                << date_fr << ' ' << date_to << '\n';
 }
+
+void Agent::saveSlice(const string & file, const string & data)
+{
+    std::ofstream of(file.c_str(), std::ios::binary);
+
+    if ( !of )
+        throw gl::ex("cannot open $1 for writing", file);
+
+    of << data;
+}
+
+
