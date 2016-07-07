@@ -1,0 +1,18 @@
+ag filesys mk "A0"
+ag filesys cp "A0"
+ag filesys mv "A0"
+
+ag filesys cp "A0" "A1"
+ag fs rm "A1"
+
+ag filesys mv "A0" "A1"
+ag fs rm "A1"
+
+ag filesys mk "A1/A0/A0"
+ag fs mv [ A1 ] [ A0 ]
+
+ag filesys cp "A0" "A1"
+ag fs rm "A0"
+ag fs rm "A1"
+quit
+

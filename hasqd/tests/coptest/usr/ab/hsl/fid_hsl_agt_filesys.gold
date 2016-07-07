@@ -1,0 +1,28 @@
+<agt> > filesys mk A0
+<agt> : OK
+<agt> > filesys cp A0
+<agt> : Error: Agent needs 1 argument
+Offensive command (exec): ag filesys cp "A0"
+Error: Agent needs 1 argument
+<agt> > filesys mv A0
+<agt> : Error: Agent needs 1 argument
+Offensive command (exec): ag filesys mv "A0"
+Error: Agent needs 1 argument
+<agt> > filesys cp A0 A1
+<agt> : REQ_PATH_BAD
+<agt> > fs rm A1
+<agt> : REQ_PATH_BAD
+<agt> > filesys mv A0 A1
+<agt> : OK
+<agt> > fs rm A1
+<agt> : OK
+<agt> > filesys mk A1/A0/A0
+<agt> : OK
+<agt> > fs mv A1 A0
+<agt> : OK
+<agt> > filesys cp A0 A1
+<agt> : REQ_PATH_BAD
+<agt> > fs rm A0
+<agt> : OK
+<agt> > fs rm A1
+<agt> : REQ_PATH_BAD
