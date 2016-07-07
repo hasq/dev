@@ -40,10 +40,10 @@ NC - slice
 [Done:] agent download <server> 2 "dirS" (last 2 slices of today)
 [Done:] ag dl ...
 
-agent list "dirS" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
-agent chain "dirS" "dirI"
-ag ls ...
-ag ch ...
+[Done:] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
+[Done:] ag bd ...
+
+agent sort "dirI" (non chronological slices)
 
 [ N DN server1 server2 ... ]
 [ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
@@ -51,10 +51,10 @@ ag ch ...
 
 agent validate check  "list_file_in" "list_file_out"
 agent validate notify "list_file_in" "list_file_out"
-agent validate push "list_file_in" "list_file_out" "dirI"
+agent validate push   "list_file_in" "list_file_out" "dirI" 
 ag vd ...
 
-agent report "list_file"
+agent report "list_file"|"dirI"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 ag re ...
 

@@ -10,4 +10,13 @@ $1/hasqd -nlqc s=$tn.inp dprn=1 dagt=1 nn=a@a
 
 $1/zdb erasedisk
 
+echo "=============="
+cat agt4_list.txt
+ls agt4I
+ls agt4S
+echo "=============="
+
+rm -rf agt4_list.txt agt4I agt4S
+
+
 

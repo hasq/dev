@@ -10,13 +10,20 @@ expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 
 ag cf database "_wrd"
 dirS = "agt4S"
+dirI = "agt4I"
 
 ag fs mk dirS
+ag fs mk dirI
 ag dl self today dirS
 
 list = "agt4_list.txt"
-ag list dirS list [ self aaa:20 ]
+
+#ag build dirS dirI list [ self aaa ]
+#ag build dirS dirI list [ self aaa:20 ]
+
+ag bd dirS dirI list [ self localhost:13131 ]
 
 #ag fs rm dirS
+#ag fs rm dirI
 quit
 

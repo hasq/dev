@@ -1,9 +1,11 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
 #include <fstream>
+#include <sstream>
 
 #include "gl_utils.h"
 #include "gl_protocol.h"
+#include "gl_token.h"
 
 #include "os_timer.h"
 #include "os_exec.h"
@@ -23,6 +25,7 @@ bool Agent::validCmd(string c)
     if ( c == "config" || c == "cf" ) return true;
     if ( c == "filesys" || c == "fs" ) return true;
     if ( c == "download" || c == "dl" ) return true;
+    if ( c == "build" || c == "bd" ) return true;
     return false;
 }
 
@@ -73,9 +76,10 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
     try
     {
         if (false);
-        else if ( cmd1 == "config" || cmd1 == "cf") config(cmd2);
-        else if ( cmd1 == "filesys" || cmd1 == "fs" ) filesys(cmd2);
+        else if ( cmd1 == "config"   || cmd1 == "cf")  config(cmd2);
+        else if ( cmd1 == "filesys"  || cmd1 == "fs" ) filesys(cmd2);
         else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
+        else if ( cmd1 == "build"     || cmd1 == "bd")  listfile();
         else throw gl::ex("Agent bad command: " + cmd1);
     }
     catch (gl::ex e)
@@ -295,6 +299,84 @@ void Agent::saveSlice(const string & file, const string & data)
         throw gl::ex("cannot open $1 for writing", file);
 
     of << data;
+}
+
+void Agent::listfile()
+{
+    if ( as.size() != 4 ) throw gl::ex("Agent list requires 4 arguments");
+
+    string outFile = as[2];
+    os::Path ouDir(as[1]);
+    os::Path inDir(as[0]);
+
+    if ( !ouDir.isdir() ) return print("Directory " + ouDir.str() + " not accessible");
+    if ( !inDir.isdir() ) return print("Directory " + inDir.str() + " not accessible");
+
+    std::vector<string> srvs = gl::tokenise(as[3]);
+
+    // validate and convert self
+    for ( size_t i = 0; i < srvs.size(); i++ )
+    {
+        string & s = srvs[i];
+
+        if ( s == "self" ) s = gs->config->seIpLink.str();
+
+        if ( s.find(":") == string::npos )
+            throw gl::ex("Bad address $1, expecting ip:port", s);
+
+        bool ok = false;
+        os::IpAddr p(s, ok);
+
+        if (!ok)
+            throw gl::ex("Address $1 does not DNS resolve", s);
+    }
+
+    // build index directory
+    os::Dir dir = os::FileSys::readDirEx(inDir, true, true);
+    for ( size_t i = 0; i < dir.files.size(); i++ )
+    {
+        string file = dir.files[i].first;
+        std::ifstream in((inDir + file).str().c_str());
+        for ( string line; std::getline(in, line); )
+        {
+            std::istringstream is(line);
+            string dn; is >> dn >> dn;
+
+            string sof = (ouDir + dn).str();
+            std::ofstream of(sof.c_str(), std::ios::app | std::ios::binary);
+            of << line << '\n';
+        }
+    }
+
+    // build list
+    std::ofstream oflist(outFile.c_str(), std::ios::binary);
+    dir = os::FileSys::readDirEx(ouDir, true, true);
+
+    for ( size_t i = 0; i < dir.files.size(); i++ )
+    {
+        string file = dir.files[i].first;
+        std::ifstream in((ouDir + file).str().c_str());
+
+        string last, sn;
+        for ( string line; std::getline(in, line); )
+        {
+            std::istringstream is(line);
+            string dn; is >> sn >> dn;
+
+            if ( dn != file ) { last = ""; break; }
+            last = dn;
+        }
+
+        if ( last.empty() ) continue;
+
+        oflist << sn << ' ' << last;
+
+        for ( size_t j = 0; j < srvs.size(); j++ ) oflist << ' ' << srvs[j];
+
+        oflist << '\n';
+    }
+
+    os::Cout() << "LIST " << inDir.str() << ' ' << ouDir.str() << ' ' << outFile << '\n';
 }
 
 
