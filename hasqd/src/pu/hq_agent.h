@@ -29,7 +29,7 @@ class Agent
         void filesys(const string & s);
         void download(const string & srv, const string & date);
         string fetch(const string & srv, const string & cmd);
-        void downlast(const string & srv, const string & num);
+        void downlast(const string & srv, string num, string slice);
         void saveSlice(const string & file, const string & data);
 
         void operator=(const Agent &);

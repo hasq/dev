@@ -200,15 +200,31 @@ void Agent::translateDate(string & s)
     if ( s.size() == 6 ) s = "20" + s;
 }
 
-void Agent::downlast(const string & srv, const string & num)
+void Agent::downlast(const string & srv, string num, string slice)
 {
-    os::Cout() << "DOWNLAST " << num << '\n';
+    size_t i = slice.find("-");
+    if ( i == string::npos ) throw gl::ex("Bad returned slice name [$1]", slice);
+
+    os::Path dir(as[0]);
+
+    int n = gl::toi(slice.substr(i + 1));
+    int k = gl::toi(num);
+    int b = n + 1 - k;
+    if ( b < 1 ) b = 1;
+
+    for ( int j = b; j <= n; j++ )
+    {
+        string file = slice.substr(0, i + 1) + gl::tos(j);
+        ///os::Cout() << "DOWNLAST s: " << file << '\n';
+        string sget = "slice " + database + " get " + file;
+        saveSlice((dir + file).str(), fetch(srv, sget));
+    }
+
+    ///os::Cout() << "DOWNLAST " << num << ' ' << n << '\n';
 }
 
 void Agent::download(const string & srv, const string & date)
 {
-    const string ER01 = "Database $1 is not present on $2";
-
     if ( database.empty() )
         return print("Database is not set - try 'agent config database'");
 
@@ -216,10 +232,11 @@ void Agent::download(const string & srv, const string & date)
     if ( !dir.isdir() )
         return print("Directory does not exist [" + dir.str() + "]");
 
-    os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir.str() << '\n';
+    ///os::Cout() << "DOWNLOAD " << srv << ' ' << date << ' ' << dir.str() << '\n';
 
     string s = fetch(srv, "slice " + database);
-    if ( s.size() < 4 || s.substr(0, 2) != "OK" ) throw gl::ex(ER01, database, srv);
+    if ( s.size() < 4 || s.substr(0, 2) != "OK" )
+        return print("Database " + database + " is not present on " + srv);
 
     string cur_slice = s.substr(3);
 
@@ -239,8 +256,8 @@ void Agent::download(const string & srv, const string & date)
     translateDate(date_fr);
     translateDate(date_to);
 
-    if ( date_fr.size() < 6 )
-        return downlast(srv, date_fr);
+    if ( date_fr.size() < 6 ) // "today" has been translated
+        return downlast(srv, date_fr, cur_slice);
 
     string cur_date = date_fr;
     int n = 1;
@@ -267,8 +284,7 @@ void Agent::download(const string & srv, const string & date)
         n++;
     }
 
-    os::Cout() << "DOWNLOAD " << cur_slice << ' '
-               << date_fr << ' ' << date_to << '\n';
+    ///os::Cout() << "DOWNLOAD " << cur_slice << ' ' << date_fr << ' ' << date_to << '\n';
 }
 
 void Agent::saveSlice(const string & file, const string & data)

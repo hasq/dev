@@ -15,6 +15,8 @@ dirS = "agt3S"
 ag fs rm dirS
 ag fs mk dirS
 ag dl self 101230:110103 dirS
+ag dl self today dirS
+ag dl self 2 dirS
 
 
 #ag fs rm dirS
