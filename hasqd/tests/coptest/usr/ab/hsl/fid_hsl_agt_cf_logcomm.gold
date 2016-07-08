@@ -1,0 +1,8 @@
+<agt> > config logcomm
+<agt> : no
+<agt> > config logcomm yes
+<agt> > cf logcomm
+<agt> : yes
+<agt> > cf logcomm no
+<agt> > cf logcomm
+<agt> : no
