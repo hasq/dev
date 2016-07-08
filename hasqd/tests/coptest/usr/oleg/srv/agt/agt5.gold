@@ -24,6 +24,8 @@ Database on disk erased successfully
 <agt> : [note _wrd 1 a7c5] -> {OK}
 <agt> : Server localhost:13131 drags on a7c5 with -1, needs 1
 <agt> : [note _wrd 1 a7c5] -> {OK}
+<agt> > re agt5.txt
+<agt> : 2 DNs out-of-sync on: 127.0.0.1:13131 localhost:13131
 <agt> > fs rm agt5S
 <agt> : OK
 <agt> > fs rm agt5I

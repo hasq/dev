@@ -28,6 +28,7 @@ bool Agent::validCmd(string c)
     if ( c == "download" || c == "dl" ) return true;
     if ( c == "build" || c == "bd" ) return true;
     if ( c == "validate" || c == "vd" ) return true;
+    if ( c == "report" || c == "re" ) return true;
     return false;
 }
 
@@ -84,6 +85,7 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
         else if ( cmd1 == "build"    || cmd1 == "bd")  listfile();
         else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd2);
+        else if ( cmd1 == "report" || cmd1 == "re")  report();
         else throw gl::ex("Agent bad command: " + cmd1);
     }
     catch (gl::ex e)
@@ -497,13 +499,50 @@ void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::int
         string cmd = "note " + database + " " + gl::tos(maxN) + " " + dn;
         string data = fetch(srv, cmd);
 
-	if( data.size()<2 || data.substr(0,2) != "OK" )
-        	print("Server " + srv + " on 'note' replied ["+data+"]");
+        if ( data.size() < 2 || data.substr(0, 2) != "OK" )
+            print("Server " + srv + " on 'note' replied [" + data + "]");
 
-	return;
+        return;
     }
 
-
+    // FIXME implement 'push'
     os::Cout() << "DRAG " << sub << '\n';
+}
+
+void Agent::report()
+{
+    if ( as.size() != 1 ) throw gl::ex("Agent report requires 1 argument");
+
+    std::set<string> dns;
+    std::set<string> svs;
+
+    std::ifstream in(as[0].c_str());
+
+    for ( string line; std::getline(in, line); )
+    {
+        vecstr vs = gl::tokenise(line);
+        if ( vs.size() < 3 ) continue;
+        string dn = vs[1];
+        vs.erase(vs.begin());
+        vs.erase(vs.begin());
+
+        dns.insert(dn);
+
+        for ( size_t i = 0; i < vs.size(); i++ )
+            svs.insert(vs[i]);
+    }
+
+    if ( dns.empty() && svs.empty() )
+    {
+        print("OK");
+        return;
+    }
+
+    string r = gl::tos(dns.size()) + " DNs out-of-sync on:";
+
+    for ( std::set<string>::const_iterator i = svs.begin(); i != svs.end(); i++ )
+        r += " " + *i;
+
+    print(r);
 }
 

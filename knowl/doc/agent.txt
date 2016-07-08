@@ -1,38 +1,24 @@
 Agent specs
 
-[Done:Tested]
-
-add <agt> debug output and CLO dagt
-add agent log
-NC: info log agent
-
 [Done:Tested] agent config logfile "file"
 [Done:Tested] agent config webpath "path"
-	need support for 
-	1. nginx html "//"
-	2. hasq file "file%20"
-	2. hasq html "html%20"
 
 [Done:Tested:] agent config database "_wrd"
 [Done:] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"
 [Done:Tested] agent config protocol [ (hasq|http_get|http_post) ]
-[Done:Tested] agent config show - no such command - missing arg works as show
-	logfile, database, protocol
-
-
 [Done:Tested] ag cf ...
 
 [Done:Tested] agent filesys mk "dir"
 [Done:Tested] agent filesys rm "file|dir"
 [Done:Tested] agent filesys mv "file1" "file2"
-[Done:Tested:] agent filesys cp "file1" "file2"
+[Done:Tested] agent filesys cp "file1" "file2"
+[] agent filesys cat "file"
 [Done:Tested] ag fs ...
 
-NC - slice
-[Done:] slice db -> OK + name last
-[Done:] slice db get name -> content or empty
-[Done:] slice db check name -> OK or Err
-[Done:] log info agent
+[Done:] NC: slice db -> OK + name last
+[Done:] NC: slice db get name -> content or empty
+[Done:] NC: slice db check name -> OK or Err
+[Done:] NC: log info agent
 
 [Done:] agent download self 160301:160303 "dirS" (self - this server IP:port)
 [Done:] agent download tokenswap.com:80 160301:160303 "dirS"
@@ -45,19 +31,19 @@ NC - slice
 [Done:] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
 [Done:] ag bd ...
 
-agent sort "dirI" (non chronological slices)
-
 [ N DN server1 server2 ... ]
 [ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 [ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
+agent sort "dirI" (non chronological slices)
 [Done:] agent validate check  "list_file_in" "list_file_out"
-agent validate notify "list_file_in" "list_file_out"
+[Done:] agent validate notify "list_file_in" "list_file_out"
 agent validate push   "list_file_in" "list_file_out" "dirI" 
 ag vd ...
 
 agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
+
 agent report "dirI"
 ag re ...
 
