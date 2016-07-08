@@ -11,7 +11,6 @@ ag fs rm [ bbb ]
 print [ >>>  Test "cp" for a folders <<< ]
 
 ag fs cp [ aaa ] [ bbb ]
-ag fs rm [ bbb ]
 
 print [ >>>  Test "mv" for a folders <<< ]
 ag fs mv [ aaa ] [ bbb ]

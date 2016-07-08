@@ -12,8 +12,6 @@
 >>> Test "cp" for a folders <<<
 <agt> > fs cp aaa bbb
 <agt> : REQ_PATH_BAD
-<agt> > fs rm bbb
-<agt> : REQ_PATH_BAD
 >>> Test "mv" for a folders <<<
 <agt> > fs mv aaa bbb
 <agt> : OK
