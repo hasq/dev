@@ -15,15 +15,17 @@ dirI = "agt5I"
 ag fs mk dirS
 ag fs mk dirI
 ag dl self today dirS
+list0 = "agt5.txt"
 list1 = "agt5_1.txt"
 list2 = "agt5_2.txt"
 ag bd dirS dirI list1 [ self localhost:13131 ]
 
 ag vd check list1 list2
+ag vd check list0 list2
 
 ag fs rm dirS
 ag fs rm dirI
-ag fs rm list1
+#ag fs rm list1
 ag fs rm list2
 quit
 

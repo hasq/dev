@@ -23,7 +23,7 @@ NC: info log agent
 [Done:Tested] agent filesys mk "dir"
 [Done:Tested] agent filesys rm "file|dir"
 [Done:Tested] agent filesys mv "file1" "file2"
-[Done:Tested:?] agent filesys cp "file1" "file2"
+[Done:Tested:] agent filesys cp "file1" "file2"
 [Done:Tested] ag fs ...
 
 NC - slice

@@ -385,6 +385,27 @@ void Agent::listfile()
 
 void Agent::validate(const string & cmd)
 {
-    os::Cout() << "VALIDATE " << '\n';
+    if ( as.size() != 2 )
+    {
+        if ( cmd != "push" || as.size() != 3 )
+            throw gl::ex("Agent list requires 2 (check,notify) or 3 (push) arguments");
+    }
+
+    string inFile = as[0];
+    string ouFile = as[1];
+
+    std::ifstream in(inFile.c_str());
+
+    for ( string line; std::getline(in, line); )
+    {
+        std::istringstream is(line);
+        string sn, dn;
+        is >> sn >> dn;
+
+        os::Cout() << "VALIDATE " << sn << ' ' << dn << '\n';
+    }
+
+
+    os::Cout() << "VALIDATE " << inFile << ' ' << ouFile << '\n';
 }
 
