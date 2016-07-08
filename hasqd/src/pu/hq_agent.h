@@ -12,13 +12,15 @@ using std::string;
 
 class Agent
 {
+        typedef std::vector<string> vecstr;
+
         static string logfile;
         static string webpath;
         static string database;
         static enum Prot { Hasq, HttpGet, HttpPost } protocol;
 
         GlobalSpace * gs;
-        const std::vector<string> & as;
+        const vecstr & as;
 
         void print(const string & s, bool cmd = false) const;
         void setshow(string & k, const string & v) const;
@@ -33,13 +35,15 @@ class Agent
         void saveSlice(const string & file, const string & data);
         void listfile();
         void validate(const string & s);
+        std::vector<gl::intint> enquire(const string & dn, const vecstr & srvs);
+        void dragging(string dn, string srv, gl::intint srvN, gl::intint maxN);
 
         void operator=(const Agent &);
         Agent(const Agent &);
 
     public:
         Agent(GlobalSpace * g, string cmd1, string cmd2, string cmd3,
-              const std::vector<string> & args);
+              const vecstr & args);
 
         static bool validCmd(string c);
         static bool sub2Cmd(string c);

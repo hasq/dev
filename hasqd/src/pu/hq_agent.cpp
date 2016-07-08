@@ -60,7 +60,7 @@ void Agent::print(const string & s, bool cmd) const
 }
 
 Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
-             string cmd3, const std::vector<string> & args)
+             string cmd3, const vecstr & args)
     : gs(g), as(args)
 {
     if ( gs->config->dbg.agt )
@@ -315,7 +315,7 @@ void Agent::listfile()
     if ( !ouDir.isdir() ) return print("Directory " + ouDir.str() + " not accessible");
     if ( !inDir.isdir() ) return print("Directory " + inDir.str() + " not accessible");
 
-    std::vector<string> srvs = gl::tokenise(as[3]);
+    vecstr srvs = gl::tokenise(as[3]);
 
     // validate and convert self
     for ( size_t i = 0; i < srvs.size(); i++ )
@@ -395,17 +395,86 @@ void Agent::validate(const string & cmd)
     string ouFile = as[1];
 
     std::ifstream in(inFile.c_str());
+    if ( !in) return print("Cannot open file " + inFile);
+
+    std::ofstream of(ouFile.c_str());
+    if ( !of) return print("Cannot open file " + ouFile);
 
     for ( string line; std::getline(in, line); )
     {
-        std::istringstream is(line);
-        string sn, dn;
-        is >> sn >> dn;
+        vecstr vs = gl::tokenise(line);
+        if ( vs.size() < 3 ) continue;
+        gl::intint ni = gl::toii(vs[0]);
+        string dn = vs[1];
+        vs.erase(vs.begin());
+        vs.erase(vs.begin());
 
-        os::Cout() << "VALIDATE " << sn << ' ' << dn << '\n';
+        std::vector<gl::intint> vi = enquire(dn, vs);
+
+        for ( size_t i = 0; i < vi.size(); i++ ) if (ni < vi[i]) ni = vi[i];
+
+        if ( vi.size() != vs.size() ) throw gl::Never("bad enquire");
+
+        bool cool = true;
+
+        for ( size_t i = 0; i < vs.size(); i++ )
+        {
+            if ( vi[i] < ni )
+            {
+                if (cool) { cool = false; of << ni << ' ' << dn; }
+                of << ' ' << vs[i];
+                dragging(dn, vs[i], vi[i], ni);
+            }
+        }
+
+        if (!cool) of << '\n';
+
+        ///os::Cout() << "VALIDATE " << gl::tos(ni) << ' ' << dn << '\n';
     }
 
 
-    os::Cout() << "VALIDATE " << inFile << ' ' << ouFile << '\n';
+    ///os::Cout() << "VALIDATE " << inFile << ' ' << ouFile << '\n';
+}
+
+std::vector<gl::intint> Agent::enquire(const string & dn, const vecstr & srvs)
+{
+    std::vector<gl::intint> r;
+    for ( size_t i = 0; i < srvs.size(); i++ )
+    {
+        string cmd = "last " + database + " " + dn;
+        string data = fetch(srvs[i], cmd);
+
+        gl::intint rr = -1ll;
+        if ( !data.empty() )
+        {
+            std::istringstream is(data);
+            string s;
+
+            is >> s;
+            if ( s == er::Code(er::IDX_NODN).str() ) goto done;
+            if ( !is || s != "OK" ) goto bad;
+
+            is >> s;  if ( !is ) goto bad;
+            gl::intint x = gl::toii(s);
+
+            is >> s;  if ( !is || s != dn ) goto bad;
+            rr = x;
+
+            goto done;
+        }
+bad:
+        print("Server " + srvs[i] + " returned unexpected data [" + data + "]");
+done:
+        r.push_back(rr);
+
+        ///os::Cout() << "ENQUIRE " << gl::tos(rr) << ' ' << data << '\n';
+    }
+
+    return r;
+}
+
+void Agent::dragging(string dn, string srv, gl::intint srvN, gl::intint maxN)
+{
+    os::Cout() << "DRAG " << '\n';
 }
 

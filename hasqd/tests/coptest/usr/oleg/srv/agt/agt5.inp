@@ -26,6 +26,6 @@ ag vd check list0 list2
 ag fs rm dirS
 ag fs rm dirI
 #ag fs rm list1
-ag fs rm list2
+#ag fs rm list2
 quit
 

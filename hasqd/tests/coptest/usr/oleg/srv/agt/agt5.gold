@@ -13,18 +13,22 @@ Database on disk erased successfully
 <agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
 <agt> > bd agt5S agt5I agt5_1.txt self localhost:13131
 <agt> > vd check agt5_1.txt agt5_2.txt
-VALIDATE 1 a7c4
-VALIDATE agt5_1.txt agt5_2.txt
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> > vd check agt5.txt agt5_2.txt
-VALIDATE 1 a7c4
-VALIDATE 2 a7c4
-VALIDATE 1 a7c5
-VALIDATE agt5.txt agt5_2.txt
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+DRAG 
+DRAG 
+<agt> : [last _wrd a7c5] -> {IDX_NODN}
+<agt> : [last _wrd a7c5] -> {IDX_NODN}
+DRAG 
+DRAG 
 <agt> > fs rm agt5S
 <agt> : OK
 <agt> > fs rm agt5I
 <agt> : OK
-<agt> > fs rm agt5_2.txt
-<agt> : REQ_PATH_BAD
 <zdb> erasedisk
 Database on disk erased successfully

@@ -18,6 +18,8 @@ NC: info log agent
 [Done:Tested] agent config show - no such command - missing arg works as show
 	logfile, database, protocol
 
+ag cf logcomm "no|yes"
+
 [Done:Tested] ag cf ...
 
 [Done:Tested] agent filesys mk "dir"
