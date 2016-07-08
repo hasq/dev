@@ -6,7 +6,7 @@ tn=$(basename $0)
 tn=${tn%.*}
 
 $1/zdb erasedisk "create _wrd wrd Word 1 [abc] 1 0"
-$1/hasqd -nlqc s=$tn.inp dprn=1 dagt=1 nn=a@a
+$1/hasqd -nlqc s=$tn.inp dprn=1 dagt=1 dsvt=0 nn=a@a
 
 $1/zdb erasedisk
 

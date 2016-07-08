@@ -13,12 +13,12 @@ NC: info log agent
 	2. hasq file "file%20"
 	2. hasq html "html%20"
 
-[Done:Tested:?] agent config database "_wrd"
+[Done:Tested:] agent config database "_wrd"
+[Done:] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"
 [Done:Tested] agent config protocol [ (hasq|http_get|http_post) ]
 [Done:Tested] agent config show - no such command - missing arg works as show
 	logfile, database, protocol
 
-ag cf logcomm "no|yes"
 
 [Done:Tested] ag cf ...
 
@@ -51,7 +51,7 @@ agent sort "dirI" (non chronological slices)
 [ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 [ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
-agent validate check  "list_file_in" "list_file_out"
+[Done:] agent validate check  "list_file_in" "list_file_out"
 agent validate notify "list_file_in" "list_file_out"
 agent validate push   "list_file_in" "list_file_out" "dirI" 
 ag vd ...

@@ -2,6 +2,7 @@
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
 <agt> > cf database _wrd
+<agt> > cf logcomm all
 <agt> > fs mk agt4S
 <agt> : OK
 <agt> > fs mk agt4I

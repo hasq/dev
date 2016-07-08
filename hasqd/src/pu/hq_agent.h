@@ -17,7 +17,15 @@ class Agent
         static string logfile;
         static string webpath;
         static string database;
+        static string logcomm;
         static enum Prot { Hasq, HttpGet, HttpPost } protocol;
+
+        static bool islogc(char x)
+        {
+            const string & m = logcomm;
+            return ( !m.empty() && ( m[0] == 'a' || m[0] == x ) );
+        }
+
 
         GlobalSpace * gs;
         const vecstr & as;
@@ -36,7 +44,9 @@ class Agent
         void listfile();
         void validate(const string & s);
         std::vector<gl::intint> enquire(const string & dn, const vecstr & srvs);
-        void dragging(string dn, string srv, gl::intint srvN, gl::intint maxN);
+
+        void dragging(string cmd, string dn, string srv,
+                      gl::intint srvN, gl::intint maxN);
 
         void operator=(const Agent &);
         Agent(const Agent &);

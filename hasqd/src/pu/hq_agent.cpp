@@ -18,6 +18,7 @@
 string Agent::logfile;
 string Agent::webpath;
 string Agent::database;
+string Agent::logcomm = "no";
 Agent::Prot Agent::protocol = Agent::Hasq;
 
 bool Agent::validCmd(string c)
@@ -82,7 +83,7 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         else if ( cmd1 == "filesys"  || cmd1 == "fs" ) filesys(cmd2);
         else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
         else if ( cmd1 == "build"    || cmd1 == "bd")  listfile();
-        else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd1);
+        else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd2);
         else throw gl::ex("Agent bad command: " + cmd1);
     }
     catch (gl::ex e)
@@ -105,6 +106,7 @@ void Agent::config(const string & s)
     else if ( s == "webpath" ) setshow(webpath, val);
     else if ( s == "protocol" ) setshow_prot(val);
     else if ( s == "database" ) setshow(database, val);
+    else if ( s == "logcomm" ) setshow(logcomm, val);
     else throw gl::ex("Agent bad command: " + s);
 }
 
@@ -195,7 +197,9 @@ string Agent::fetch(const string & srv, const string & cmd)
     c.send_msg(cmd);
     string r = c.recvMsgOrEmpty();
 
-    print("[" + cmd + "] -> {" + (r.size() < 20 ? r : (r.substr(0, 15) + "...")) + "}");
+    if ( islogc('c') )
+        print("[" + cmd + "] -> {"
+              + (r.size() < 20 ? r : (r.substr(0, 15) + "...")) + "}");
 
     return r;
 }
@@ -385,10 +389,17 @@ void Agent::listfile()
 
 void Agent::validate(const string & cmd)
 {
-    if ( as.size() != 2 )
+    if ( cmd == "check" )
     {
-        if ( cmd != "push" || as.size() != 3 )
-            throw gl::ex("Agent list requires 2 (check,notify) or 3 (push) arguments");
+        if ( as.size() != 2 ) throw gl::ex("Agent check requires 2 arguments");
+    }
+    else if ( cmd == "notify" )
+    {
+        if ( as.size() != 2 ) throw gl::ex("Agent notify requires 2 arguments");
+    }
+    else if ( cmd == "push" )
+    {
+        if ( as.size() != 3 ) throw gl::ex("Agent push requires 3 arguments");
     }
 
     string inFile = as[0];
@@ -423,7 +434,7 @@ void Agent::validate(const string & cmd)
             {
                 if (cool) { cool = false; of << ni << ' ' << dn; }
                 of << ' ' << vs[i];
-                dragging(dn, vs[i], vi[i], ni);
+                dragging(cmd, dn, vs[i], vi[i], ni);
             }
         }
 
@@ -473,8 +484,14 @@ done:
     return r;
 }
 
-void Agent::dragging(string dn, string srv, gl::intint srvN, gl::intint maxN)
+void Agent::dragging(string cmd, string dn, string srv, gl::intint srvN, gl::intint maxN)
 {
-    os::Cout() << "DRAG " << '\n';
+    if ( islogc('d') )
+        print("Server " + srv + " drags on " + dn + " with "
+              + gl::tos(srvN) + ", needs " + gl::tos(maxN));
+
+    if( cmd == "check" ) return;
+
+    os::Cout() << "DRAG " << cmd<< '\n';
 }
 

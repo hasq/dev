@@ -7,11 +7,8 @@ Database on disk erased successfully
 <agt> > fs mk agt5I
 <agt> : OK
 <agt> > dl 127.0.0.1:13131 today agt5S
-<agt> : [slice _wrd] -> {OK 20110101-1}
-<agt> : [slice _wrd check 20110101-1] -> {OK}
-<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
-<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
 <agt> > bd agt5S agt5I agt5_1.txt self localhost:13131
+<agt> > cf logcomm all
 <agt> > vd check agt5_1.txt agt5_2.txt
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
@@ -20,12 +17,12 @@ Database on disk erased successfully
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
-DRAG 
-DRAG 
+<agt> : Server 127.0.0.1:13131 drags on a7c4 with 1, needs 2
+<agt> : Server localhost:13131 drags on a7c4 with 1, needs 2
 <agt> : [last _wrd a7c5] -> {IDX_NODN}
 <agt> : [last _wrd a7c5] -> {IDX_NODN}
-DRAG 
-DRAG 
+<agt> : Server 127.0.0.1:13131 drags on a7c5 with -1, needs 1
+<agt> : Server localhost:13131 drags on a7c5 with -1, needs 1
 <agt> > fs rm agt5S
 <agt> : OK
 <agt> > fs rm agt5I

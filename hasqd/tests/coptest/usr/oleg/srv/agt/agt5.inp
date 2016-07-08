@@ -20,6 +20,8 @@ list1 = "agt5_1.txt"
 list2 = "agt5_2.txt"
 ag bd dirS dirI list1 [ self localhost:13131 ]
 
+ag cf logcomm "all"
+
 ag vd check list1 list2
 ag vd check list0 list2
 

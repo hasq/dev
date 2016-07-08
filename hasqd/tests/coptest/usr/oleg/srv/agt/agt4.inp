@@ -11,6 +11,7 @@ expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 ag cf database "_wrd"
 dirS = "agt4S"
 dirI = "agt4I"
+ag cf logcomm "all"
 
 ag fs mk dirS
 ag fs mk dirI
