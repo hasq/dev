@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# HSL: agent logfile
+# HSL: agent filesys
 
 in=$(basename $0)
 in=${in%.*} 
