@@ -56,8 +56,9 @@ agent validate notify "list_file_in" "list_file_out"
 agent validate push   "list_file_in" "list_file_out" "dirI" 
 ag vd ...
 
-agent report ("list_file"|"dirI")
+agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
+agent report "dirI"
 ag re ...
 
 

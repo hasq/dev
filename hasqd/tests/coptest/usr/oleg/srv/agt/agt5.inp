@@ -22,8 +22,8 @@ ag bd dirS dirI list1 [ self localhost:13131 ]
 
 ag cf logcomm "all"
 
-ag vd check list1 list2
-ag vd check list0 list2
+#ag vd check list1 list2
+ag vd notify list0 list2
 
 ag fs rm dirS
 ag fs rm dirI

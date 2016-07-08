@@ -484,14 +484,26 @@ done:
     return r;
 }
 
-void Agent::dragging(string cmd, string dn, string srv, gl::intint srvN, gl::intint maxN)
+void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::intint maxN)
 {
     if ( islogc('d') )
         print("Server " + srv + " drags on " + dn + " with "
               + gl::tos(srvN) + ", needs " + gl::tos(maxN));
 
-    if( cmd == "check" ) return;
+    if ( sub == "check" ) return;
 
-    os::Cout() << "DRAG " << cmd<< '\n';
+    if ( sub == "notify" )
+    {
+        string cmd = "note " + database + " " + gl::tos(maxN) + " " + dn;
+        string data = fetch(srv, cmd);
+
+	if( data.size()<2 || data.substr(0,2) != "OK" )
+        	print("Server " + srv + " on 'note' replied ["+data+"]");
+
+	return;
+    }
+
+
+    os::Cout() << "DRAG " << sub << '\n';
 }
 

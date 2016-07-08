@@ -9,20 +9,21 @@ Database on disk erased successfully
 <agt> > dl 127.0.0.1:13131 today agt5S
 <agt> > bd agt5S agt5I agt5_1.txt self localhost:13131
 <agt> > cf logcomm all
-<agt> > vd check agt5_1.txt agt5_2.txt
-<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
-<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
-<agt> > vd check agt5.txt agt5_2.txt
+<agt> > vd notify agt5.txt agt5_2.txt
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
 <agt> : Server 127.0.0.1:13131 drags on a7c4 with 1, needs 2
+<agt> : [note _wrd 2 a7c4] -> {OK}
 <agt> : Server localhost:13131 drags on a7c4 with 1, needs 2
+<agt> : [note _wrd 2 a7c4] -> {OK}
 <agt> : [last _wrd a7c5] -> {IDX_NODN}
 <agt> : [last _wrd a7c5] -> {IDX_NODN}
 <agt> : Server 127.0.0.1:13131 drags on a7c5 with -1, needs 1
+<agt> : [note _wrd 1 a7c5] -> {OK}
 <agt> : Server localhost:13131 drags on a7c5 with -1, needs 1
+<agt> : [note _wrd 1 a7c5] -> {OK}
 <agt> > fs rm agt5S
 <agt> : OK
 <agt> > fs rm agt5I
