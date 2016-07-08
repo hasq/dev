@@ -142,7 +142,7 @@ void Agent::filesys(const string & s)
 {
     if ( s == "mk" )
     {
-        if ( as.size() != 1 ) throw gl::ex("Agent needs 1 argument");
+        if ( as.size() != 1 ) throw gl::ex("Agent mk needs 1 argument");
         if ( os::FileSys::trymkdir(as[0]).isdir() ) print(er::Code(er::OK));
         else print(er::Code(er::FILE_CANT_CREATE));
         return;
@@ -150,7 +150,7 @@ void Agent::filesys(const string & s)
 
     if ( s == "rm" )
     {
-        if ( as.size() != 1 ) throw gl::ex("Agent needs 1 argument");
+        if ( as.size() != 1 ) throw gl::ex("Agent rm needs 1 argument");
         if ( os::FileSys::erase(as[0]) ) print(er::Code(er::OK));
         else print(er::Code(er::REQ_PATH_BAD));
         return;
@@ -158,7 +158,7 @@ void Agent::filesys(const string & s)
 
     if ( s == "mv" )
     {
-        if ( as.size() != 2 ) throw gl::ex("Agent needs 1 argument");
+        if ( as.size() != 2 ) throw gl::ex("Agent mv needs 2 arguments");
         if ( os::rename(as[0], as[1]) ) print(er::Code(er::OK));
         else print(er::Code(er::FILE_CANT_CREATE));
         return;
@@ -166,7 +166,7 @@ void Agent::filesys(const string & s)
 
     if ( s == "cp" )
     {
-        if ( as.size() != 2 ) throw gl::ex("Agent needs 1 argument");
+        if ( as.size() != 2 ) throw gl::ex("Agent cp needs 2 arguments");
         string file = gl::file2str(as[0]);
         if ( file.empty() ) return print(er::Code(er::REQ_PATH_BAD));
         std::ofstream of(as[1].c_str(), std::ios::binary);
@@ -174,7 +174,14 @@ void Agent::filesys(const string & s)
         return print(string(er::Code(er::OK)) + " " + gl::tos(file.size()));
     }
 
-    throw gl::ex("Agent bad command: " + s);
+    if ( s == "cat" )
+    {
+        if ( as.size() != 1 ) throw gl::ex("Agent cat needs 1 argument");
+        string file = gl::file2str(as[0]);
+        return print(as[0] + '\n' + file);
+    }
+
+    throw gl::ex("Bad filesys command: " + s);
 }
 
 string Agent::fetch(const string & srv, const string & cmd)

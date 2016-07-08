@@ -26,6 +26,7 @@ ag cf logcomm "all"
 ag vd notify list0 list2
 
 ag re list0
+ag fs cat list0
 
 ag fs rm dirS
 ag fs rm dirI
