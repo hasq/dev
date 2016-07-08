@@ -1,0 +1,23 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create md5.db md5 MD5 1 [] 1 0
+<svt> set date "20160101"
+<svt> print ex 0 REQ_HASHTYPE_BAD 100 tcp self [ slice wrd.db ] 
+REQ_HASHTYPE_BAD
+<svt> print ex 0 OK 100 tcp self [ slice md5.db ] 
+OK -0
+<svt> print ex 0 OK 100 tcp self { [ z * md5.db 0 [rdn] [pwd] ] sleep 30 }
+OK 1000
+<svt> print ex 0 OK 100 tcp self { [ add * md5.db 1 [rdn] [pwd] ] sleep 30 }
+OK 1001
+<svt> print ex 0 OK 100 tcp self [ slice md5.db ]
+OK 20160101-1
+<svt> print ex 0 OK 100 tcp self [ slice md5.db check 20160101-1 ]
+OK
+<svt> print ex 0 0 100 tcp self [ slice md5.db get 20160101-1 ]
+0 a7c4eb7a67911d7c03fb9703168ed3e7 9916b3316c2198fd53068632c909849a c34266b53fcd47065a39ebc730d14bb1 4e830ac6aa480eb1c83351c4992ae974 sleeping
+1 a7c4eb7a67911d7c03fb9703168ed3e7 24c448deb5699c327ec077748040556a d6326df239f504479661346e2881089e bafc153b3bf2564ea76ed7210492e775 sleeping
+
+<svt> print ex 0 REQ_FILE_BAD 100 tcp self [ slice md5.db check 20160101-2 ]
+REQ_FILE_BAD
+<svt> quit

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#	IP-address of servers
+in=$(basename $0)
+in=${in%.*} 
+
+rm -fr dbs
+mkdir dbs
+cd dbs
+$1/zdb erasedisk "create md5.db md5 MD5 1 [] 1 0"
+cd ..
+
+$1/hasqd -cqnx db="dbs" dprn=1 dsvt=1 lock=1 tcp_port=14000 s=$in.inp  | grep -v "sendnote\|conupdate\|reorg\|noterecv\|chkconfl\|setconfl\|conflict"  
+
+rm -fr dbs
+
+

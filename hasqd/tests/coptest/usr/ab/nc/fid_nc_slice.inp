@@ -1,0 +1,13 @@
+set date "20160101"
+print ex 0 REQ_HASHTYPE_BAD 100 tcp self [ slice wrd.db ] 
+print ex 0 OK 100 tcp self [ slice md5.db ] 
+
+print ex 0 OK 100 tcp self { [ z * md5.db 0 [rdn] [pwd] ] sleep 30 }
+print ex 0 OK 100 tcp self { [ add * md5.db 1 [rdn] [pwd] ] sleep 30 }
+
+print ex 0 OK 100 tcp self [ slice md5.db ]
+print ex 0 OK 100 tcp self [ slice md5.db check 20160101-1 ]
+print ex 0 0 100 tcp self [ slice md5.db get 20160101-1 ]
+print ex 0 REQ_FILE_BAD 100 tcp self [ slice md5.db check 20160101-2 ]
+
+quit
