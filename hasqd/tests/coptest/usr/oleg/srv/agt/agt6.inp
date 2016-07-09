@@ -9,5 +9,7 @@ ag vd push "agt6.txt" "agt6_2.txt" "a/6"
 expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 print expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 
+ag fs rm "agt6_2.txt"
+
 quit
 

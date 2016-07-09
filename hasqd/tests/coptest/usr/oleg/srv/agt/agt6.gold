@@ -16,6 +16,9 @@ Database on disk erased successfully
 <svt> sendnote
 <svt> print expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
 OK 1 a7c4 7ccf 811f 2159
+<svt> ag fs rm "agt6_2.txt"
+<agt> > fs rm agt6_2.txt
+<agt> : OK
 <svt> sendnote
 <svt> quit
 <zdb> erasedisk

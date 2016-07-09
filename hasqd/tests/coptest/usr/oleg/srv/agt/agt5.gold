@@ -36,5 +36,9 @@ Database on disk erased successfully
 <agt> : OK
 <agt> > fs rm agt5I
 <agt> : OK
+<agt> > fs rm agt5_1.txt
+<agt> : OK
+<agt> > fs rm agt5_2.txt
+<agt> : OK
 <zdb> erasedisk
 Database on disk erased successfully
