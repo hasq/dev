@@ -170,6 +170,7 @@ void Agent::filesys(const string & s)
         string file = gl::file2str(as[0]);
         if ( file.empty() ) return print(er::Code(er::REQ_PATH_BAD));
         std::ofstream of(as[1].c_str(), std::ios::binary);
+        if ( !of ) print("Cannot open file " + as[1]);
         of << file;
         return print(string(er::Code(er::OK)) + " " + gl::tos(file.size()));
     }
@@ -398,21 +399,28 @@ void Agent::build()
 
 void Agent::validate(const string & cmd)
 {
+
     if ( cmd == "check" )
     {
-        if ( as.size() != 2 ) throw gl::ex("Agent check requires 2 arguments");
+        if ( as.size() != 2 ) \
+            throw gl::ex("Agent check requires 2 arguments");
     }
     else if ( cmd == "notify" )
     {
-        if ( as.size() != 2 ) throw gl::ex("Agent notify requires 2 arguments");
+        if ( as.size() != 2 )
+            throw gl::ex("Agent notify requires 2 arguments");
     }
     else if ( cmd == "push" )
     {
-        if ( as.size() != 3 ) throw gl::ex("Agent push requires 3 arguments");
+        if ( as.size() != 3 )
+            throw gl::ex("Agent push requires 3 arguments");
     }
+    else
+        return print("Agent validate unexpected command: " + cmd);
 
     if ( database.empty() )
         return print("Database is not set - try 'agent config database'");
+
 
     string inFile = as[0];
     string ouFile = as[1];

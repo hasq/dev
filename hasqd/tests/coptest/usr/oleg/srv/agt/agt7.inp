@@ -10,11 +10,14 @@ dn = hash wrd "rdn"
 tmp = "agt6/1/a"
 file = "agt6/1/a7c4"
 
-#ag fs cp file tmp
-#ag vd sort "agt6/1"
-#ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
-#ag fs rm file
-#ag fs mv tmp file
+print tmp
+print file
+
+ag fs cp file tmp
+ag vd sort "agt6/1"
+ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
+ag fs rm file
+ag fs mv tmp file
 
 #expect 0 OK 100 tcp self { [ last _wrd ] dn }
 #print expect 1 1 50 tcp self { [ last _wrd ] dn }

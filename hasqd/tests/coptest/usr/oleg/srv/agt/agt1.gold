@@ -8,3 +8,7 @@
 <agt> > config protocol http_post
 <agt> > config protocol
 <agt> : http_post
+<agt> > fs cp agt1.log agt1_2.log
+<agt> : OK 203
+<agt> > fs rm agt1_2.log
+<agt> : OK

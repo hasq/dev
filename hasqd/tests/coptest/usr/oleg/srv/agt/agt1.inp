@@ -17,8 +17,12 @@ agent config protocol
 #agent filesys mk "agt1"
 #agent filesys rm "agt1"
 #agent filesys rm "agt2.log"
-#agent filesys mv "agt1.log" "agt2.log"
-#agent filesys cp "agt1.inp" "agt3.log"
+
+a = "agt1.log"
+b = "agt1_2.log"
+ag fs cp a b
+ag fs rm b
+
 sleep 10
 quit
 
