@@ -6,8 +6,8 @@ Database on disk erased successfully
 <agt> > cf lc all
 <svt> ag cf db "_wrd"
 <agt> > cf db _wrd
-<svt> ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
-<agt> > vd push agt6.txt agt6_2.txt agt6/1
+<svt> ag vd push "agt6.txt" "agt6_2.txt" "a/6"
+<agt> > vd push agt6.txt agt6_2.txt a/6
 <agt> : [last _wrd a7c4] -> {IDX_NODN}
 <agt> : Server localhost:13131 drags on a7c4 with -1, needs 1
 <agt> : [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> {OK 1000}
