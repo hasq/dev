@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Testing NC slice
+# Testing 
 
 tn=$(basename $0)
 tn=${tn%.*}

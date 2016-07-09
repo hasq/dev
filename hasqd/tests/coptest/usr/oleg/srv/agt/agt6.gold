@@ -1,0 +1,8 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<agt> > cf logcomm all
+<agt> > vd push agt6.txt agt6_2.txt agt6/1
+<agt> : Database is not set - try 'agent config database'
+<zdb> erasedisk
+Database on disk erased successfully

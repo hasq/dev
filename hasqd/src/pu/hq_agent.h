@@ -41,15 +41,13 @@ class Agent
         string fetch(const string & srv, const string & cmd);
         void downlast(const string & srv, string num, string slice);
         void saveSlice(const string & file, const string & data);
-        void listfile();
+        void build();
         void validate(const string & s);
         std::vector<gl::intint> enquire(const string & dn, const vecstr & srvs);
 
         void dragging(string cmd, string dn, string srv,
                       gl::intint srvN, gl::intint maxN);
         void report();
-        void report_file();
-        void report_dir();
 
         void operator=(const Agent &);
         Agent(const Agent &);

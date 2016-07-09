@@ -38,8 +38,8 @@ Agent specs
 [] agent sort "dirI" (non chronological slices)
 [Done:] agent validate check  "list_file_in" "list_file_out"
 [Done:] agent validate notify "list_file_in" "list_file_out"
-[] agent validate push   "list_file_in" "list_file_out" "dirI" 
-[] ag vd ...
+[:] agent validate push   "list_file_in" "list_file_out" "dirI" 
+[Done:] ag vd ...
 
 [Done:] agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...

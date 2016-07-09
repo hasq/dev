@@ -83,7 +83,7 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         else if ( cmd1 == "config"   || cmd1 == "cf")  config(cmd2);
         else if ( cmd1 == "filesys"  || cmd1 == "fs" ) filesys(cmd2);
         else if ( cmd1 == "download" || cmd1 == "dl" ) download(cmd2, cmd3);
-        else if ( cmd1 == "build"    || cmd1 == "bd")  listfile();
+        else if ( cmd1 == "build"    || cmd1 == "bd")  build();
         else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd2);
         else if ( cmd1 == "report" || cmd1 == "re")  report();
         else throw gl::ex("Agent bad command: " + cmd1);
@@ -317,9 +317,9 @@ void Agent::saveSlice(const string & file, const string & data)
     of << data;
 }
 
-void Agent::listfile()
+void Agent::build()
 {
-    if ( as.size() != 4 ) throw gl::ex("Agent list requires 4 arguments");
+    if ( as.size() != 4 ) throw gl::ex("Agent build requires 4 arguments");
 
     string outFile = as[2];
     os::Path ouDir(as[1]);
@@ -410,6 +410,9 @@ void Agent::validate(const string & cmd)
     {
         if ( as.size() != 3 ) throw gl::ex("Agent push requires 3 arguments");
     }
+
+    if ( database.empty() )
+        return print("Database is not set - try 'agent config database'");
 
     string inFile = as[0];
     string ouFile = as[1];
@@ -512,19 +515,18 @@ void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::int
         return;
     }
 
-    // FIXME implement 'push'
-    os::Cout() << "DRAG " << sub << '\n';
+    if( sub!="push" || as.size() != 3 ) throw gl::Never("Bad subcommand");
+
+    string dirI = as[2];
+
+    os::Cout() << "DRAG " << dn << ' '<< srv << ' ' << dirI << ' ' 
+		<< gl::tos(srvN) << ' ' << gl::tos(maxN)  << ' ' << '\n';
 }
 
 void Agent::report()
 {
     if ( as.size() != 1 ) throw gl::ex("Agent report requires 1 argument");
 
-    report_file();
-}
-
-void Agent::report_file()
-{
     std::set<string> dns;
     std::set<string> svs;
 
