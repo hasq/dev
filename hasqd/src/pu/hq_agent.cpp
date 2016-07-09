@@ -520,6 +520,11 @@ void Agent::report()
 {
     if ( as.size() != 1 ) throw gl::ex("Agent report requires 1 argument");
 
+    report_file();
+}
+
+void Agent::report_file()
+{
     std::set<string> dns;
     std::set<string> svs;
 

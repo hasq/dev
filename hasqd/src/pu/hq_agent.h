@@ -48,6 +48,8 @@ class Agent
         void dragging(string cmd, string dn, string srv,
                       gl::intint srvN, gl::intint maxN);
         void report();
+        void report_file();
+        void report_dir();
 
         void operator=(const Agent &);
         Agent(const Agent &);
