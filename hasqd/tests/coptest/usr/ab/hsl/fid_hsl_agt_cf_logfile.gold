@@ -3,6 +3,6 @@
 <agt> > config logfile agt0.log
 <agt> > config logfile
 <agt> : agt0.log
-<agt> > cf logfile agt1.log
-<agt> > cf logfile
+<agt> > cf lf agt1.log
+<agt> > cf lf
 <agt> : agt1.log
