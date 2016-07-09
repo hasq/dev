@@ -2,6 +2,8 @@
 
 #include <fstream>
 #include <sstream>
+#include <map>
+#include <set>
 
 #include "gl_utils.h"
 #include "gl_protocol.h"
@@ -29,6 +31,7 @@ bool Agent::validCmd(string c)
     if ( c == "build" || c == "bd" ) return true;
     if ( c == "validate" || c == "vd" ) return true;
     if ( c == "report" || c == "re" ) return true;
+    if ( c == "sort" ) return true;
     return false;
 }
 
@@ -86,6 +89,7 @@ Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
         else if ( cmd1 == "build"    || cmd1 == "bd")  build();
         else if ( cmd1 == "validate" || cmd1 == "vd")  validate(cmd2);
         else if ( cmd1 == "report" || cmd1 == "re")  report();
+        else if ( cmd1 == "sort" )  sorti();
         else throw gl::ex("Agent bad command: " + cmd1);
     }
     catch (gl::ex e)
@@ -598,3 +602,42 @@ void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::int
     ///os::Cout() << "DRAG " << dn << ' ' << srv << ' ' << dirI << ' ' << gl::tos(srvN) << ' ' << gl::tos(maxN)  << ' ' << '\n';
 }
 
+void Agent::sorti()
+{
+    if ( as.size() != 1 ) throw gl::ex("Agent sort requires 1 argument");
+
+    os::Path dir(as[0]);
+    if ( !dir.isdir() )
+        throw gl::ex("Directory $1 is not accessible", dir.str());
+
+    os::Dir dr = os::FileSys::readDirEx(dir, true, true);
+
+    for ( size_t i = 0; i < dr.files.size(); i++ )
+    {
+        string file = dr.files[i].first;
+        string path = (dir + file).str();
+
+        std::map<gl::intint, string> content;
+        {
+            std::ifstream in(path.c_str());
+            for ( string line; std::getline(in, line); )
+            {
+                vecstr vs = gl::tokenise(line);
+                if ( vs.size() < 3 ) goto next;
+                gl::intint ni = gl::toii(vs[0]);
+                string dn = vs[1];
+                if ( dn != file ) goto next;
+                content[ni] = line;
+            }
+        } // file loaded
+
+        // save file
+        {
+            std::ofstream of(path.c_str(), std::ios::binary );
+            for ( std::map<gl::intint, string>::iterator i = content.begin();
+                    i != content.end(); i++ )
+                of << (i->second) << '\n';
+        }
+next:;
+    } // next file
+}

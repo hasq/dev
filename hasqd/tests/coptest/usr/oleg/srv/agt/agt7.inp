@@ -7,20 +7,27 @@ ag cf db "_wrd"
 # a7c4
 dn = hash wrd "rdn"
 
-tmp = "agt6/1/a"
-file = "agt6/1/a7c4"
+tmp = "a/7/a"
+fil = "a/7/a7c4"
 
 print tmp
-print file
+print fil
 
-ag fs cp file tmp
-ag vd sort "agt6/1"
-ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
-ag fs rm file
-ag fs mv tmp file
+ag fs cp fil tmp
+
+ag fs cat fil
+ag fs cat tmp
+ag sort "a/7"
+ag fs cat fil
+ag fs cat tmp
+
+
+ag vd push "agt6.txt" "agt7_2.txt" "a/7"
+ag fs rm fil
+ag fs mv tmp fil
 
 #expect 0 OK 100 tcp self { [ last _wrd ] dn }
-#print expect 1 1 50 tcp self { [ last _wrd ] dn }
+print expect 1 1 50 tcp self { [ last _wrd ] dn }
 
 quit
 

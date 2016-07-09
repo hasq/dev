@@ -1,55 +1,58 @@
 Agent specs
 
-[Done:Tested] agent config logfile "file"
-[Done:Tested] agent config webpath "path"
-[Done:] ag cf lf
-[Done:] ag cf wp
-[Done:] ag cf db
-[Done:] ag cf lc
-[Done:] ag cf pr
+all Done
+not all Tested yet
 
-[Done:Tested:] agent config database "_wrd"
-[Done:] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"
-[Done:Tested] agent config protocol [ (hasq|http_get|http_post) ]
-[Done:Tested] ag cf ...
+[Tested] agent config logfile "file"
+[Tested] agent config webpath "path"
+[] ag cf lf
+[] ag cf wp
+[] ag cf db
+[] ag cf lc
+[] ag cf pr
 
-[Done:Tested] agent filesys mk "dir"
-[Done:Tested] agent filesys rm "file|dir"
-[Done:Tested] agent filesys mv "file1" "file2"
-[Done:Tested] agent filesys cp "file1" "file2"
-[Done:] agent filesys cat "file"
-[Done:Tested] ag fs ...
+[Tested] agent config database "_wrd"
+[] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"
+[Tested] agent config protocol [ (hasq|http_get|http_post) ]
+[Tested] ag cf ...
 
-[Done:] NC: slice db -> OK + name last
-[Done:] NC: slice db get name -> content or empty
-[Done:] NC: slice db check name -> OK or Err
-[Done:] NC: log info agent
+[Tested] agent filesys mk "dir"
+[Tested] agent filesys rm "file|dir"
+[Tested] agent filesys mv "file1" "file2"
+[Tested] agent filesys cp "file1" "file2"
+[] agent filesys cat "file"
+[Tested] ag fs ...
 
-[Done:] agent download self 160301:160303 "dirS" (self - this server IP:port)
-[Done:] agent download tokenswap.com:80 160301:160303 "dirS"
-[Done:] agent download <server> 160301:today "dirS" (date:today)
-[Done:] agent download <server> 160301 "dirS" (date)
-[Done:] agent download <server> today "dirS" (today)
-[Done:] agent download <server> 2 "dirS" (last 2 slices of today)
-[Done:] ag dl ...
+[] NC: slice db -> OK + name last
+[] NC: slice db get name -> content or empty
+[] NC: slice db check name -> OK or Err
+[] NC: log info agent
 
-[Done:] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
+[] agent download self 160301:160303 "dirS" (self - this server IP:port)
+[] agent download tokenswap.com:80 160301:160303 "dirS"
+[] agent download <server> 160301:today "dirS" (date:today)
+[] agent download <server> 160301 "dirS" (date)
+[] agent download <server> today "dirS" (today)
+[] agent download <server> 2 "dirS" (last 2 slices of today)
+[] ag dl ...
+
+[] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
 	[ N DN server1 server2 ... ]
 	[ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 	[ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
-[Done:] ag bd ...
+[] ag bd ...
 
 [] agent sort "dirI" (non chronological slices)
-[Done:] agent validate check  "list_file_in" "list_file_out"
-[Done:] agent validate notify "list_file_in" "list_file_out"
-[:] agent validate push   "list_file_in" "list_file_out" "dirI" 
-[Done:] ag vd ...
+[] agent validate check  "list_file_in" "list_file_out"
+[] agent validate notify "list_file_in" "list_file_out"
+[] agent validate push   "list_file_in" "list_file_out" "dirI" 
+[] ag vd ...
 
-[Done:] agent report "list_file"
+[] agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 
-[Done:] ag re ...
+[] ag re ...
 
 
 

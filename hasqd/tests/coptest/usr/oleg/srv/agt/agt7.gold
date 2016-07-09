@@ -1,37 +1,42 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-Offensive command (parse): print file
-Error: Servant parser - not enough args: 2
-Offensive command (parse): ag fs rm file
-Error: Servant parser - not enough args: 4
-Offensive command (parse): ag fs mv tmp file
-Error: Servant parser - not enough args: 5
-<svt> set date "20110101"
-<svt> ag cf lc "all"
 <agt> > cf lc all
-<svt> ag cf db "_wrd"
 <agt> > cf db _wrd
-<svt> dn = hash wrd "rdn"
-<svt> tmp = "agt6/1/a"
-<svt> file = "agt6/1/a7c4"
-<svt> print tmp
-agt6/1/a
-<svt> ag fs cp file tmp
-<agt> > fs cp 
-<agt> : Error: Agent cp needs 2 arguments
-Offensive command (exec): ag fs cp file tmp
-Error: Agent cp needs 2 arguments
-<svt> ag vd sort "agt6/1"
-<agt> > vd sort agt6/1
-<agt> : Agent validate unexpected command: sort
-<svt> ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
-<agt> > vd push agt6.txt agt6_2.txt agt6/1
+a/7/a
+a/7/a7c4
+<agt> > fs cp a/7/a7c4 a/7/a
+<agt> : OK 44
+<agt> > fs cat a/7/a7c4
+<agt> : a/7/a7c4
+1 a7c4 7ccf 811f 2159
+0 a7c4 0000 d9e6 fbfc
+
+<agt> > fs cat a/7/a
+<agt> : a/7/a
+1 a7c4 7ccf 811f 2159
+0 a7c4 0000 d9e6 fbfc
+
+<agt> > sort a/7
+<agt> > fs cat a/7/a7c4
+<agt> : a/7/a7c4
+0 a7c4 0000 d9e6 fbfc
+1 a7c4 7ccf 811f 2159
+
+<agt> > fs cat a/7/a
+<agt> : a/7/a
+1 a7c4 7ccf 811f 2159
+0 a7c4 0000 d9e6 fbfc
+
+<agt> > vd push agt6.txt agt7_2.txt a/7
 <agt> : [last _wrd a7c4] -> {IDX_NODN}
 <agt> : Server localhost:13131 drags on a7c4 with -1, needs 1
-<agt> : Error: Directory agt6/1 is not accessible
-Offensive command (exec): ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
-Error: Directory agt6/1 is not accessible
-<svt> quit
+<agt> : [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> {OK 1000}
+<agt> : [add * _wrd 1 a7c4 7ccf 811f 2159] -> {OK 1001}
+<agt> > fs rm a/7/a7c4
+<agt> : OK
+<agt> > fs mv a/7/a a/7/a7c4
+<agt> : OK
+OK 1 a7c4 7ccf 811f 2159
 <zdb> erasedisk
 Database on disk erased successfully
