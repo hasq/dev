@@ -1,0 +1,14 @@
+<zdb> erasedisk
+Database on disk erased successfully
+<zdb> create _wrd wrd Word 1 [abc] 1 0
+<svt> set date "20110101"
+<svt> ag cf lc "all"
+<agt> > cf lc all
+<svt> ag cf db "_wrd"
+<agt> > cf db _wrd
+<svt> dn = hash wrd "rdn"
+<svt> tmp = "agt6/1/a"
+<svt> file = "agt6/1/a7c4"
+<svt> quit
+<zdb> erasedisk
+Database on disk erased successfully

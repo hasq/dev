@@ -5,4 +5,4 @@
 @cd ..
 @make
 @popd
-cop run agt6.sts
+cop run agt7.sts
