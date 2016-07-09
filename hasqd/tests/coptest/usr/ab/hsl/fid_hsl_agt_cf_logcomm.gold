@@ -1,11 +1,17 @@
 <agt> > config logcomm
 <agt> : no
-<agt> > config logcomm aaa
+<agt> > config logcomm all
 <agt> > config logcomm
-<agt> : aaa
-<agt> > config logcomm yes
+<agt> : all
+<agt> > config logcomm c
 <agt> > cf logcomm
-<agt> : yes
-<agt> > cf logcomm no
-<agt> > cf logcomm
+<agt> : c
+<agt> > cf lc d
+<agt> > cf lc
+<agt> : d
+<agt> > cf lc no
+<agt> > cf lc
 <agt> : no
+<agt> > cf lc aaa
+<agt> > cf lc
+<agt> : aaa

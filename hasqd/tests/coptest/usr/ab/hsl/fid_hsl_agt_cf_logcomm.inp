@@ -1,8 +1,13 @@
 agent config logcomm
-agent config logcomm [ aaa ]
+agent config logcomm [ all ]
 agent config logcomm
-agent config logcomm [ yes ]
+agent config logcomm [ c ]
 ag cf logcomm
-ag cf logcomm "no"
-ag cf logcomm 
+ag cf lc [ d ]
+ag cf lc
+ag cf lc "no"
+ag cf lc 
+ag cf lc "aaa"
+ag cf lc 
+
 quit
