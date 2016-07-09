@@ -5,9 +5,6 @@
 in=$(basename $0)
 in=${in%.*} 
 
-$1/hasqd -lqnc dprn=1 dsvt=0 dagt=1 p=0 s=$in.inp
+$1/hasqd -lqnc dprn=1 dsvt=0 dagt=1 p=0 s=$in.inp | sed -r "s/^[0-9]{6}//"
 
-[ ! -f agt0.log -o ! -f agt1.log ] && echo "Agent logfile error!"
 
-rm -f agt0.log
-rm -f agt1.log

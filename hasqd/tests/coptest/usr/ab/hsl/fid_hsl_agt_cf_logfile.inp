@@ -5,10 +5,10 @@ ag cf lf [ agt1.log ]
 ag cf lf
 ag cf lf [ log/agt1.log ]
 ag cf lf
-ag fs cp "log/agt1.log" "log/agt2.log"
+ag fs cat [ log/agt1.log ]
 ag fs mk "log"
-ag cf lf [ log/agt1.log ]
-ag cf lf
-ag fs cp "log/agt1.log" "log/agt2.log"
+ag fs cat [ log/agt1.log ]
 ag fs rm "log"
+ag fs rm "agt0.log"
+ag fs rm "agt1.log"
 quit

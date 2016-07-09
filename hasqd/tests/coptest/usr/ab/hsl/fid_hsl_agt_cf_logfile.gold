@@ -9,14 +9,19 @@
 <agt> > cf lf log/agt1.log
 <agt> > cf lf
 <agt> : log/agt1.log
-<agt> > fs cp log/agt1.log log/agt2.log
-<agt> : REQ_PATH_BAD
+<agt> > fs cat log/agt1.log
+<agt> : log/agt1.log
+
 <agt> > fs mk log
 <agt> : OK
-<agt> > cf lf log/agt1.log
-<agt> > cf lf
+<agt> > fs cat log/agt1.log
 <agt> : log/agt1.log
-<agt> > fs cp log/agt1.log log/agt2.log
-<agt> : OK 123
+ : OK
+ > fs cat log/agt1.log
+
 <agt> > fs rm log
+<agt> : OK
+<agt> > fs rm agt0.log
+<agt> : OK
+<agt> > fs rm agt1.log
 <agt> : OK
