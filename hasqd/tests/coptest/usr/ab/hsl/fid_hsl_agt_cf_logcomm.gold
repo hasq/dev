@@ -3,15 +3,27 @@
 <agt> > config logcomm all
 <agt> > config logcomm
 <agt> : all
-<agt> > config logcomm c
+<agt> > config logcomm a
+<agt> > config logcomm
+<agt> : a
+<agt> > config logcomm connection
 <agt> > cf logcomm
+<agt> : connection
+<agt> > cf lc c
+<agt> > cf lc
 <agt> : c
+<agt> > cf lc dragging
+<agt> > cf lc
+<agt> : dragging
 <agt> > cf lc d
 <agt> > cf lc
 <agt> : d
 <agt> > cf lc no
 <agt> > cf lc
 <agt> : no
+<agt> > cf lc n
+<agt> > cf lc
+<agt> : n
 <agt> > cf lc aaa
 <agt> > cf lc
 <agt> : aaa

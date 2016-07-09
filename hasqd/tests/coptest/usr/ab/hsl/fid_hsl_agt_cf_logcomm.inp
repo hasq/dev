@@ -1,11 +1,19 @@
 agent config logcomm
 agent config logcomm [ all ]
 agent config logcomm
-agent config logcomm [ c ]
+agent config logcomm [ a ]
+agent config logcomm
+agent config logcomm [ connection ]
 ag cf logcomm
+ag cf lc [ c ]
+ag cf lc
+ag cf lc [ dragging ]
+ag cf lc
 ag cf lc [ d ]
 ag cf lc
 ag cf lc "no"
+ag cf lc
+ag cf lc "n"
 ag cf lc 
 ag cf lc "aaa"
 ag cf lc 
