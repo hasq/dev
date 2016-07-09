@@ -9,6 +9,7 @@ dn = hash wrd "rdn"
 
 tmp = "a/7/a"
 fil = "a/7/a7c4"
+rep = "agt7_2.txt"
 
 print tmp
 print fil
@@ -22,12 +23,16 @@ ag fs cat fil
 ag fs cat tmp
 
 
-ag vd push "agt6.txt" "agt7_2.txt" "a/7"
+ag vd push "agt6.txt" rep "a/7"
+print expect 1 1 50 tcp self { [ last _wrd ] dn }
+
+ag vd check "agt6.txt" rep
 ag fs rm fil
 ag fs mv tmp fil
 
-#expect 0 OK 100 tcp self { [ last _wrd ] dn }
-print expect 1 1 50 tcp self { [ last _wrd ] dn }
+ag re rep
+ag fs cat rep
+ag fs rm rep
 
 quit
 
