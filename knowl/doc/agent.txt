@@ -2,6 +2,11 @@ Agent specs
 
 [Done:Tested] agent config logfile "file"
 [Done:Tested] agent config webpath "path"
+[Done:] ag cf lf
+[Done:] ag cf wp
+[Done:] ag cf db
+[Done:] ag cf lc
+[Done:] ag cf pr
 
 [Done:Tested:] agent config database "_wrd"
 [Done:] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"

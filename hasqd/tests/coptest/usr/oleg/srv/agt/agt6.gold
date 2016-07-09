@@ -1,8 +1,22 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-<agt> > cf logcomm all
+<svt> set date "20110101"
+<svt> ag cf lc "all"
+<agt> > cf lc all
+<svt> ag cf db "_wrd"
+<agt> > cf db _wrd
+<svt> ag vd push "agt6.txt" "agt6_2.txt" "agt6/1"
 <agt> > vd push agt6.txt agt6_2.txt agt6/1
-<agt> : Database is not set - try 'agent config database'
+<agt> : [last _wrd a7c4] -> {IDX_NODN}
+<agt> : Server localhost:13131 drags on a7c4 with -1, needs 1
+<agt> : [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> {OK 1000}
+<agt> : [add * _wrd 1 a7c4 7ccf 811f 2159] -> {OK 1001}
+<svt> expect 0 OK 100 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+<svt> sendnote
+<svt> print expect 1 1 50 tcp self { [ last _wrd ] hash wrd [ rdn ] }
+OK 1 a7c4 7ccf 811f 2159
+<svt> sendnote
+<svt> quit
 <zdb> erasedisk
 Database on disk erased successfully

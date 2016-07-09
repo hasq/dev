@@ -104,11 +104,11 @@ void Agent::config(const string & s)
     if ( !as.empty() ) val = as[0];
 
     if (false);
-    else if ( s == "logfile" ) setshow(logfile, val);
-    else if ( s == "webpath" ) setshow(webpath, val);
-    else if ( s == "protocol" ) setshow_prot(val);
-    else if ( s == "database" ) setshow(database, val);
-    else if ( s == "logcomm" ) setshow(logcomm, val);
+    else if ( s == "logfile"  || s == "lf" ) setshow(logfile, val);
+    else if ( s == "webpath"  || s == "wp" ) setshow(webpath, val);
+    else if ( s == "protocol" || s == "pr" ) setshow_prot(val);
+    else if ( s == "database" || s == "db" ) setshow(database, val);
+    else if ( s == "logcomm"  || s == "lc" ) setshow(logcomm, val);
     else throw gl::ex("Agent bad command: " + s);
 }
 
@@ -496,33 +496,6 @@ done:
     return r;
 }
 
-void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::intint maxN)
-{
-    if ( islogc('d') )
-        print("Server " + srv + " drags on " + dn + " with "
-              + gl::tos(srvN) + ", needs " + gl::tos(maxN));
-
-    if ( sub == "check" ) return;
-
-    if ( sub == "notify" )
-    {
-        string cmd = "note " + database + " " + gl::tos(maxN) + " " + dn;
-        string data = fetch(srv, cmd);
-
-        if ( data.size() < 2 || data.substr(0, 2) != "OK" )
-            print("Server " + srv + " on 'note' replied [" + data + "]");
-
-        return;
-    }
-
-    if( sub!="push" || as.size() != 3 ) throw gl::Never("Bad subcommand");
-
-    string dirI = as[2];
-
-    os::Cout() << "DRAG " << dn << ' '<< srv << ' ' << dirI << ' ' 
-		<< gl::tos(srvN) << ' ' << gl::tos(maxN)  << ' ' << '\n';
-}
-
 void Agent::report()
 {
     if ( as.size() != 1 ) throw gl::ex("Agent report requires 1 argument");
@@ -558,5 +531,62 @@ void Agent::report()
         r += " " + *i;
 
     print(r);
+}
+
+void Agent::dragging(string sub, string dn, string srv, gl::intint srvN, gl::intint maxN)
+{
+    if ( islogc('d') )
+        print("Server " + srv + " drags on " + dn + " with "
+              + gl::tos(srvN) + ", needs " + gl::tos(maxN));
+
+    if ( sub == "check" ) return;
+
+    if ( sub == "notify" )
+    {
+        string cmd = "note " + database + " " + gl::tos(maxN) + " " + dn;
+        string data = fetch(srv, cmd);
+
+        if ( data.size() < 2 || data.substr(0, 2) != "OK" )
+            print("Server " + srv + " on 'note' replied [" + data + "]");
+
+        return;
+    }
+
+    if ( sub != "push" || as.size() != 3 ) throw gl::Never("Bad subcommand");
+
+    string dirI = as[2];
+
+    os::Path dir(dirI);
+    if ( !dir.isdir() )
+        throw gl::ex("Directory $1 is not accessible", dirI);
+
+    string filename = (dir + dn).str();
+    std::ifstream in( filename.c_str() );
+
+    if ( !in )
+        return print("Cannot open file " + filename);
+
+    for ( string line; std::getline(in, line); )
+    {
+        vecstr vs = gl::tokenise(line);
+        if ( vs.size() < 3 ) continue;
+        gl::intint ni = gl::toii(vs[0]);
+        string fdn = vs[1];
+
+        if ( dn != vs[1] )
+            return print("File corrupted " + filename);
+
+        if ( ni <= srvN ) continue;
+
+        string cmd = "zero";
+        if ( ni > 0 ) cmd = "add";
+        cmd += " * " + database + " " + line;
+
+        string data = fetch(srv, cmd);
+        for ( int i = 0; ( data.size() < 2 || data.substr(0, 2) != "OK" ) && i < 10; i++ )
+            data = fetch(srv, cmd);
+    }
+
+    ///os::Cout() << "DRAG " << dn << ' ' << srv << ' ' << dirI << ' ' << gl::tos(srvN) << ' ' << gl::tos(maxN)  << ' ' << '\n';
 }
 
