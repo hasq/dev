@@ -8,7 +8,7 @@ agent config logfile "agt1.log"
 #agent config logfile [ agt1.log ]
 #agent config webpath [ webpath ]
 agent config logfile
-agent config protocol "aaa"
+#agent config protocol "aaa"
 agent config protocol
 agent config protocol "http_post"
 agent config protocol
