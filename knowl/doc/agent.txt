@@ -5,14 +5,14 @@ not all Tested yet
 
 [Tested] agent config logfile "file"
 [Tested] agent config webpath "path"
-[] ag cf lf
-[] ag cf wp
-[] ag cf db
-[] ag cf lc
-[] ag cf pr
+[Tested] ag cf lf
+[Tested] ag cf wp
+[Tested] ag cf db
+[Tested] ag cf lc
+[Tested] ag cf pr
 
 [Tested] agent config database "_wrd"
-[] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"
+[Tested] ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"  >>> "ag cf logcomm" prinimaet ljuboe znachenie    
 [Tested] agent config protocol [ (hasq|http_get|http_post) ]
 [Tested] ag cf ...
 
@@ -20,12 +20,12 @@ not all Tested yet
 [Tested] agent filesys rm "file|dir"
 [Tested] agent filesys mv "file1" "file2"
 [Tested] agent filesys cp "file1" "file2"
-[] agent filesys cat "file"
+[Tested] agent filesys cat "file"
 [Tested] ag fs ...
 
-[] NC: slice db -> OK + name last
-[] NC: slice db get name -> content or empty
-[] NC: slice db check name -> OK or Err
+[Tested] NC: slice db -> OK + name last
+[Tested] NC: slice db get name -> content or empty
+[Tested] NC: slice db check name -> OK or Err
 [] NC: log info agent
 
 [] agent download self 160301:160303 "dirS" (self - this server IP:port)
