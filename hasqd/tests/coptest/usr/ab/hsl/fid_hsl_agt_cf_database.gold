@@ -7,9 +7,9 @@ Database on disk erased successfully
 <agt> > config database wrd.db
 <agt> > config database
 <agt> : wrd.db
-<agt> > config database md5.db
-<agt> > config database
+<agt> > cf db md5.db
+<agt> > cf db
 <agt> : md5.db
-<agt> > cf database sh2.db
-<agt> > cf database
+<agt> > cf db sh2.db
+<agt> > cf db
 <agt> : sh2.db

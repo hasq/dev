@@ -1,4 +1,6 @@
 agent config logcomm
+agent config logcomm [ aaa ]
+agent config logcomm
 agent config logcomm [ yes ]
 ag cf logcomm
 ag cf logcomm "no"
