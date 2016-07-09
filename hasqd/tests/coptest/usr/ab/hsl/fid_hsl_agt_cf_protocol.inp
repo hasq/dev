@@ -3,8 +3,8 @@ ag cf protocol [ http_get ]
 ag cf protocol
 ag cf protocol [ http_post ]
 ag cf protocol
-ag cf protocol [ tcp ]
-ag cf protocol "hasq"
-ag cf protocol
+ag cf pr "hasq"
+ag cf pr
+ag cf pr [ tcp ]
 
 quit

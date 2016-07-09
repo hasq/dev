@@ -6,10 +6,10 @@
 <agt> > cf protocol http_post
 <agt> > cf protocol
 <agt> : http_post
-<agt> > cf protocol tcp
-<agt> : Error: Invalid value tcp, use (hasq|http_get|http_post)
-Offensive command (exec): ag cf protocol [ tcp ]
-Error: Invalid value tcp, use (hasq|http_get|http_post)
-<agt> > cf protocol hasq
-<agt> > cf protocol
+<agt> > cf pr hasq
+<agt> > cf pr
 <agt> : hasq
+<agt> > cf pr tcp
+<agt> : Error: Invalid value tcp, use (hasq|http_get|http_post)
+Offensive command (exec): ag cf pr [ tcp ]
+Error: Invalid value tcp, use (hasq|http_get|http_post)
