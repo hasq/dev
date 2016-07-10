@@ -28,20 +28,20 @@ Database on disk erased successfully
 <zdb> addurf md5.db 0 [rdn]16:23 [pwd]
 Offensive command (parse): ag download
 Error: Servant parser - not enough args: 2
-<agt> > download 127.0.0.1:13131 160101:160103 idx
+<agt> > download 127.0.0.1:13131 160101:160103 slcs
 <agt> : Database is not set - try 'agent config database'
 <agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 idx
-<agt> : Directory does not exist [idx]
-<agt> > fs mk idx
+<agt> > dl 127.0.0.1:13131 160101:160103 slcs
+<agt> : Directory does not exist [slcs]
+<agt> > fs mk slcs
 <agt> : OK
 <agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160102:160103 idx
-<agt> > fs cat idx/20160101-1
-<agt> : idx/20160101-1
+<agt> > dl 127.0.0.1:13131 160102:160103 slcs
+<agt> > fs cat slcs/20160101-1
+<agt> : slcs/20160101-1
 
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 0 14fc21b590b4d5167ec0e18e19f773e6 b00aa5801c24baaab5e05d0b561a767e 6ed3ae7553562245a2aa2cf358a4cd6d ab5e0ce2a66aa91dd2bf987320a8a3b1
 0 69b3bb243382961a12b2f2e9f5ae78eb 9fc5333f183a60d3e1e15fae512296eb 853a9a0449dcfc168c97c98681ed00d2 837e1da6d891de6d054223184e3f821d
 0 02d1b4ade425bb3eae8a3b8003282443 389211d22319e3ece9095e1fcd5e111a 959ade98998d85403cf74da23394c094 31868d7373ef80015486f93dd3f680eb
@@ -51,8 +51,8 @@ Error: Servant parser - not enough args: 2
 0 d4d835c72f5d0a80112b1c9c763456cc 01ba675da9c918e71ea89a9e9736761f 9f7d39f96b93b9b4c719f3a8333df279 479d7ed6b32a9ec57db8df7f23d20129
 0 d04b677f5d547c2ddeadc877bdfca6b0 47e0f404c48dbf32c7842ea54c132412 ab34b2a05e2fdbd64f41d88b06127a5a 170ce4b1161f7c99b8993c2880beb035
 
-<agt> > fs cat idx/20160103-1
-<agt> : idx/20160103-1
+<agt> > fs cat slcs/20160103-1
+<agt> : slcs/20160103-1
 0 cca247210529c34bc22a52eb0027af68 a738f0d472e27337d87e9b67d6964cf0 5ac633508ab93cb53c465dbc5647f076 bda4f122f6ff7fe2ee51f3cfd19afbf8
 0 b180041a31fd33a76bcbf660f3b87be3 3d544e07360fcde87b0d9de41055fcf9 ac95b2bcb540e733bab9ed526b18685e 6501f57f0d59660517c12cc8b8ee5104
 0 1fd233bf5fde1c8d8c8a4762239214b0 a5bd828d6ecb9b040d473a31190310bc ecc916961ea98e6d7403c8c675ea8568 10f73e2c069ef747bad8d056ec64ddd6
@@ -62,17 +62,17 @@ Error: Servant parser - not enough args: 2
 0 daaf14a22e47caf0c5df1c320bd6ae6e ec8da4c60c53ba89617b37be779ed146 f7657593fa4849bde66b9eac6c2087db d2c4c3f29c36f053fd8c94fb8b4c78fa
 0 3e811d6952d97b41065a3c364476e50b 7273752dd4bc5fe7ea7ccf86b25d3dcb 3d610b1f39f667d38e1a4efbf15b5248 38a68b90cbc5737a9b6318d897f5ac9e
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
 <agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13132 160102:160103 idx
-<agt> > fs cat idx/20160101-1
-<agt> : idx/20160101-1
+<agt> > dl 127.0.0.1:13132 160102:160103 slcs
+<agt> > fs cat slcs/20160101-1
+<agt> : slcs/20160101-1
 
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 0 14fc21b590b4d5167ec0e18e19f773e6 b00aa5801c24baaab5e05d0b561a767e 6ed3ae7553562245a2aa2cf358a4cd6d ab5e0ce2a66aa91dd2bf987320a8a3b1
 0 69b3bb243382961a12b2f2e9f5ae78eb 9fc5333f183a60d3e1e15fae512296eb 853a9a0449dcfc168c97c98681ed00d2 837e1da6d891de6d054223184e3f821d
 0 02d1b4ade425bb3eae8a3b8003282443 389211d22319e3ece9095e1fcd5e111a 959ade98998d85403cf74da23394c094 31868d7373ef80015486f93dd3f680eb
@@ -82,19 +82,19 @@ Error: Servant parser - not enough args: 2
 0 d4d835c72f5d0a80112b1c9c763456cc 01ba675da9c918e71ea89a9e9736761f 9f7d39f96b93b9b4c719f3a8333df279 479d7ed6b32a9ec57db8df7f23d20129
 0 d04b677f5d547c2ddeadc877bdfca6b0 47e0f404c48dbf32c7842ea54c132412 ab34b2a05e2fdbd64f41d88b06127a5a 170ce4b1161f7c99b8993c2880beb035
 
-<agt> > fs cat idx/20160103-1
-<agt> : idx/20160103-1
+<agt> > fs cat slcs/20160103-1
+<agt> : slcs/20160103-1
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 160103:today idx
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > dl 127.0.0.1:13131 160103:today slcs
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 
-<agt> > fs cat idx/20160103-1
-<agt> : idx/20160103-1
+<agt> > fs cat slcs/20160103-1
+<agt> : slcs/20160103-1
 0 cca247210529c34bc22a52eb0027af68 a738f0d472e27337d87e9b67d6964cf0 5ac633508ab93cb53c465dbc5647f076 bda4f122f6ff7fe2ee51f3cfd19afbf8
 0 b180041a31fd33a76bcbf660f3b87be3 3d544e07360fcde87b0d9de41055fcf9 ac95b2bcb540e733bab9ed526b18685e 6501f57f0d59660517c12cc8b8ee5104
 0 1fd233bf5fde1c8d8c8a4762239214b0 a5bd828d6ecb9b040d473a31190310bc ecc916961ea98e6d7403c8c675ea8568 10f73e2c069ef747bad8d056ec64ddd6
@@ -104,13 +104,13 @@ Error: Servant parser - not enough args: 2
 0 daaf14a22e47caf0c5df1c320bd6ae6e ec8da4c60c53ba89617b37be779ed146 f7657593fa4849bde66b9eac6c2087db d2c4c3f29c36f053fd8c94fb8b4c78fa
 0 3e811d6952d97b41065a3c364476e50b 7273752dd4bc5fe7ea7ccf86b25d3dcb 3d610b1f39f667d38e1a4efbf15b5248 38a68b90cbc5737a9b6318d897f5ac9e
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 160102 idx
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > dl 127.0.0.1:13131 160102 slcs
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 0 14fc21b590b4d5167ec0e18e19f773e6 b00aa5801c24baaab5e05d0b561a767e 6ed3ae7553562245a2aa2cf358a4cd6d ab5e0ce2a66aa91dd2bf987320a8a3b1
 0 69b3bb243382961a12b2f2e9f5ae78eb 9fc5333f183a60d3e1e15fae512296eb 853a9a0449dcfc168c97c98681ed00d2 837e1da6d891de6d054223184e3f821d
 0 02d1b4ade425bb3eae8a3b8003282443 389211d22319e3ece9095e1fcd5e111a 959ade98998d85403cf74da23394c094 31868d7373ef80015486f93dd3f680eb
@@ -120,24 +120,24 @@ Error: Servant parser - not enough args: 2
 0 d4d835c72f5d0a80112b1c9c763456cc 01ba675da9c918e71ea89a9e9736761f 9f7d39f96b93b9b4c719f3a8333df279 479d7ed6b32a9ec57db8df7f23d20129
 0 d04b677f5d547c2ddeadc877bdfca6b0 47e0f404c48dbf32c7842ea54c132412 ab34b2a05e2fdbd64f41d88b06127a5a 170ce4b1161f7c99b8993c2880beb035
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 today idx
-<agt> > fs rm idx
+<agt> > dl 127.0.0.1:13131 today slcs
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 1 idx
-<agt> > fs cat idx/20160101-1
-<agt> : idx/20160101-1
+<agt> > dl 127.0.0.1:13131 1 slcs
+<agt> > fs cat slcs/20160101-1
+<agt> : slcs/20160101-1
 
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 
-<agt> > fs cat idx/20160103-1
-<agt> : idx/20160103-1
+<agt> > fs cat slcs/20160103-1
+<agt> : slcs/20160103-1
 0 cca247210529c34bc22a52eb0027af68 a738f0d472e27337d87e9b67d6964cf0 5ac633508ab93cb53c465dbc5647f076 bda4f122f6ff7fe2ee51f3cfd19afbf8
 0 b180041a31fd33a76bcbf660f3b87be3 3d544e07360fcde87b0d9de41055fcf9 ac95b2bcb540e733bab9ed526b18685e 6501f57f0d59660517c12cc8b8ee5104
 0 1fd233bf5fde1c8d8c8a4762239214b0 a5bd828d6ecb9b040d473a31190310bc ecc916961ea98e6d7403c8c675ea8568 10f73e2c069ef747bad8d056ec64ddd6
@@ -147,19 +147,19 @@ Error: Servant parser - not enough args: 2
 0 daaf14a22e47caf0c5df1c320bd6ae6e ec8da4c60c53ba89617b37be779ed146 f7657593fa4849bde66b9eac6c2087db d2c4c3f29c36f053fd8c94fb8b4c78fa
 0 3e811d6952d97b41065a3c364476e50b 7273752dd4bc5fe7ea7ccf86b25d3dcb 3d610b1f39f667d38e1a4efbf15b5248 38a68b90cbc5737a9b6318d897f5ac9e
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 2 idx
-<agt> > fs cat idx/20160101-1
-<agt> : idx/20160101-1
+<agt> > dl 127.0.0.1:13131 2 slcs
+<agt> > fs cat slcs/20160101-1
+<agt> : slcs/20160101-1
 
-<agt> > fs cat idx/20160102-1
-<agt> : idx/20160102-1
+<agt> > fs cat slcs/20160102-1
+<agt> : slcs/20160102-1
 
-<agt> > fs cat idx/20160103-1
-<agt> : idx/20160103-1
+<agt> > fs cat slcs/20160103-1
+<agt> : slcs/20160103-1
 0 cca247210529c34bc22a52eb0027af68 a738f0d472e27337d87e9b67d6964cf0 5ac633508ab93cb53c465dbc5647f076 bda4f122f6ff7fe2ee51f3cfd19afbf8
 0 b180041a31fd33a76bcbf660f3b87be3 3d544e07360fcde87b0d9de41055fcf9 ac95b2bcb540e733bab9ed526b18685e 6501f57f0d59660517c12cc8b8ee5104
 0 1fd233bf5fde1c8d8c8a4762239214b0 a5bd828d6ecb9b040d473a31190310bc ecc916961ea98e6d7403c8c675ea8568 10f73e2c069ef747bad8d056ec64ddd6
@@ -169,13 +169,13 @@ Error: Servant parser - not enough args: 2
 0 daaf14a22e47caf0c5df1c320bd6ae6e ec8da4c60c53ba89617b37be779ed146 f7657593fa4849bde66b9eac6c2087db d2c4c3f29c36f053fd8c94fb8b4c78fa
 0 3e811d6952d97b41065a3c364476e50b 7273752dd4bc5fe7ea7ccf86b25d3dcb 3d610b1f39f667d38e1a4efbf15b5248 38a68b90cbc5737a9b6318d897f5ac9e
 
-<agt> > fs rm idx
+<agt> > fs rm slcs
 <agt> : OK
-<agt> > fs mk idx
+<agt> > fs mk slcs
 <agt> : OK
-<agt> > dl 127.0.0.1:13131 000000 idx
-<agt> > dl 127.0.0.1:13131 000000:000000 idx
-<agt> > dl 127.0.0.1:13131 2016010101:2016010102 idx
-<agt> > fs rm idx
+<agt> > dl 127.0.0.1:13131 000000 slcs
+<agt> > dl 127.0.0.1:13131 000000:000000 slcs
+<agt> > dl 127.0.0.1:13131 2016010101:2016010102 slcs
+<agt> > fs rm slcs
 <agt> : OK
 OK
