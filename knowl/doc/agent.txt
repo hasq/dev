@@ -28,13 +28,13 @@ NC: slice db get name -> content or empty
 NC: slice db check name -> OK or Err
 [NotTested] NC: log info agent
 
-[NotTested] agent download self 160301:160303 "dirS" (self - this server IP:port)
-[NotTested] agent download tokenswap.com:80 160301:160303 "dirS"
-[NotTested] agent download <server> 160301:today "dirS" (date:today)
-[NotTested] agent download <server> 160301 "dirS" (date)
-[NotTested] agent download <server> today "dirS" (today)
-[NotTested] agent download <server> 2 "dirS" (last 2 slices of today)
-[NotTested] ag dl ...
+[Tested] agent download self 160301:160303 "dirS" (self - this server IP:port)
+[Tested] agent download tokenswap.com:80 160301:160303 "dirS"
+[Tested] agent download <server> 160301:today "dirS" (date:today)
+[Tested] agent download <server> 160301 "dirS" (date)
+[Partially Tested] agent download <server> today "dirS" (today)
+[NotTested] agent download <server> 2 "dirS" (last 2 slices of today)  >>> kachaet tolko odin poslednij slice
+[Tested] ag dl ...
 
 [NotTested] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
 	[ N DN server1 server2 ... ]
