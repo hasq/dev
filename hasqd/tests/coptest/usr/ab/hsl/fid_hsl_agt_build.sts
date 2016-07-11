@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# HSL: agent download
+
+in=$(basename $0)
+in=${in%.*} 
+
+rm -fr db slcs slcs idxs tokenlist.txt
+
+d1="set date 20160101"
+d2="set date 20160102"
+d3="set date 20160103"
+er="erasedisk"
+cr="create md5.db md5 MD5 1 [] 1 0"
+a1="addurf md5.db 0 [rdn]0:7 [pwd]"
+a2="addurf md5.db 0 [rdn]8:15 [pwd]"
+a3="addurf md5.db 0 [rdn]16:23 [pwd]"
+
+mkdir -p db
+$1/zdb "set base db" "$er" "$cr" 
+$1/zdb "set base db" "$d1" load "$a1"
+$1/zdb "set base db" "$d2" load "$a2" 
+$1/zdb "set base db" "$d3" load "$a3"
+
+$1/hasqd -lqnxc db="db" dprn=1 dsvt=0 dagt=1 tcp_port=13131 s=$in.inp
+
+rm -fr db slcs idxs tokenlist.txt
+
