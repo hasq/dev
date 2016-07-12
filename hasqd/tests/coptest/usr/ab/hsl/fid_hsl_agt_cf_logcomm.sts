@@ -5,4 +5,27 @@
 in=$(basename $0)
 in=${in%.*} 
 
-$1/hasqd -lqnc dprn=1 dsvt=0 dagt=1 p=0 s=$in.inp
+rm -fr db1 db2 slcs idxs tokenlist.in tokenlist.out
+
+d1="set date 20160101"
+er="erasedisk"
+cr="create md5.db md5 MD5 1 [] 1 0"
+z1="addurf md5.db 0 [rdn]0:3 [pwd]"
+z2="addurf md5.db 0 [rdn]0:1 [pwd]"
+a1="addurf md5.db 1 [rdn]0:3 [pwd]"
+a2="addurf md5.db 2 [rdn]0:3 [pwd]"
+
+mkdir -p db2
+$1/zdb "set base db2" "$er" "$cr" >/dev/null
+$1/zdb "set base db2" "$d1" load "$z2" >/dev/null
+$1/hasqd -lqnxc db="db2" dprn=0 dsvt=0 dagt=1 tcp_port=13132 &
+
+mkdir -p db1
+$1/zdb "set base db1" "$er" "$cr" >/dev/null
+$1/zdb "set base db1" "$d1" load "$z1" #>/dev/null
+$1/zdb "set base db1" "$d1" load "$a1" #>/dev/null
+$1/zdb "set base db1" "$d1" load "$a2" #>/dev/null
+
+$1/hasqd -lqnc db="db1" dprn=1 dsvt=0 dagt=1 p=13131 s=$in.inp
+
+rm -fr db1 db2 slcs idxs tokenlist.in tokenlist.out

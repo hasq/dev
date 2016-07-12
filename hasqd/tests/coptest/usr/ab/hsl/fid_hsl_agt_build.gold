@@ -1,36 +1,17 @@
-<zdb> set base db
-<zdb> erasedisk
-Database on disk erased successfully
-<zdb> create md5.db md5 MD5 1 [] 1 0
-<zdb> set base db
-<zdb> set date 20160101
-<zdb> load
-<zdb> addurf md5.db 0 [rdn]0:7 [pwd]
-<zdb> set base db
-<zdb> set date 20160102
-<zdb> load
-<zdb> addurf md5.db 0 [rdn]8:15 [pwd]
-<zdb> set base db
-<zdb> set date 20160103
-<zdb> load
-<zdb> addurf md5.db 0 [rdn]16:23 [pwd]
-<agt> > build
-<agt> : Error: Agent build requires 4 arguments
-Offensive command (exec): ag build
-Error: Agent build requires 4 arguments
-<agt> > fs mk slcs
-<agt> : OK
 <agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
 <agt> : Directory idxs not accessible
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
-
 <agt> > fs mk idxs
 <agt> : OK
 <agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
+<agt> : Directory slcs not accessible
+<agt> > fs mk slcs
+<agt> : OK
+<agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
 <agt> > fs cat tokenlist.txt
 <agt> : tokenlist.txt
 
+<agt> > fs rm tokenlist.txt
+<agt> : OK
 <agt> > cf db md5.db
 <agt> > dl 127.0.0.1:13131 160101:today slcs
 <agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80

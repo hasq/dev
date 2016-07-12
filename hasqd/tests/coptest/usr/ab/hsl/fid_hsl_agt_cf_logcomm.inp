@@ -1,21 +1,60 @@
 agent config logcomm
-agent config logcomm [ all ]
-agent config logcomm
-agent config logcomm [ a ]
-agent config logcomm
-agent config logcomm [ connection ]
-ag cf logcomm
-ag cf lc [ c ]
-ag cf lc
-ag cf lc [ dragging ]
-ag cf lc
-ag cf lc [ d ]
-ag cf lc
-ag cf lc "no"
-ag cf lc
-ag cf lc "n"
-ag cf lc 
-ag cf lc "aaa"
-ag cf lc 
 
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101:160103 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 ]
+ag vd check "tokenlist.in" "tokenlist.out"
+
+ag fs rm "slcs"
+ag fs rm "idxs"
+ag fs rm "tokenlist.in"
+
+agent cf lc [ a ]
+agent cf lc
+
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101:160103 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 ]
+ag vd check "tokenlist.in" "tokenlist.out"
+
+ag fs rm "slcs"
+ag fs rm "idxs"
+ag fs rm "tokenlist.in"
+ag fs rm "tokenlist.out"
+
+agent cf lc [ d ]
+agent cf lc
+
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101:160103 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 ]
+ag vd check "tokenlist.in" "tokenlist.out"
+
+ag fs rm "slcs"
+ag fs rm "idxs"
+ag fs rm "tokenlist.in"
+ag fs rm "tokenlist.out"
+
+agent cf lc [ c ]
+agent cf lc
+
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101:160103 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 ]
+ag vd check "tokenlist.in" "tokenlist.out"
+
+ag fs rm "slcs"
+ag fs rm "idxs"
+ag fs rm "tokenlist.in"
+ag fs rm "tokenlist.out"
+
+ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
 quit

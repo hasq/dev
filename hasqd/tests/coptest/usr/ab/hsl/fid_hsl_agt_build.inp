@@ -1,15 +1,19 @@
-ag build
+ag build "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 ]
+ag fs mk "idxs"
+ag build "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 ]
 ag fs mk "slcs"
 ag build "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 ]
 ag fs cat "tokenlist.txt"
-ag fs mk "idxs"
-ag build "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 ]
-ag fs cat "tokenlist.txt"
+
+ag fs rm "tokenlist.txt"
+
 ag cf db "md5.db"
 ag dl self 160101:today "slcs"
 ag build "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80 ]
 ag fs cat "tokenlist.txt"
+
 ag fs rm "tokenlist.txt"
+
 ag fs cat "tokenlist.txt"
 ag bd "slcs" "idxs" "tokenlist.txt" [ 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80 ]
 ag fs cat "tokenlist.txt"

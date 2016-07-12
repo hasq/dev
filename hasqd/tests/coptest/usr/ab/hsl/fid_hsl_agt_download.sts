@@ -5,7 +5,7 @@
 in=$(basename $0)
 in=${in%.*} 
 
-rm -fr db1 db2 idx
+rm -fr db1 db2 slcs
 
 d1="set date 20160101"
 d2="set date 20160102"
@@ -14,20 +14,20 @@ er="erasedisk"
 cr="create md5.db md5 MD5 1 [] 1 0"
 a1="addurf md5.db 0 [rdn]0:7 [pwd]"
 a2="addurf md5.db 0 [rdn]8:15 [pwd]"
-a3="addurf md5.db 0 [rdn]16:23 [pwd]"
+a3="addurf md5.db 0 [rdn]16:31 [pwd]"
 
 mkdir -p db2
-$1/zdb "set base db2" "$er" "$cr" 
-$1/zdb "set base db2" "$d1" load "$a1" 
-$1/zdb "set base db2" "$d2" load "$a2" 
+$1/zdb "set base db2" "$er" "$cr" >/dev/null
+$1/zdb "set base db2" "$d1" load "$a1" >/dev/null
+$1/zdb "set base db2" "$d2" load "$a2" >/dev/null
 mkdir -p db1
-$1/zdb "set base db1" "$er" "$cr" 
-$1/zdb "set base db1" "$d1" load "$a1"
-$1/zdb "set base db1" "$d2" load "$a2" 
-$1/zdb "set base db1" "$d3" load "$a3"
+$1/zdb "set base db1" "$er" "$cr" >/dev/null
+$1/zdb "set base db1" "$d1" load "$a1" >/dev/null
+$1/zdb "set base db1" "$d2" load "$a2" >/dev/null
+$1/zdb "set base db1" "$d3" load "$a3" >/dev/null
 
 $1/hasqd -lqncx db="db2" dprn=0 dsvt=0 tcp_port=13132 &
 $1/hasqd -lqnxc db="db1" dprn=1 dsvt=0 dagt=1 tcp_port=13131 s=$in.inp
 
-rm -fr db1 db2 idx
+rm -fr db1 db2 slcs
 
