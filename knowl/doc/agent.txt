@@ -26,28 +26,28 @@ ag fs ...
 NC: slice db -> OK + name last
 NC: slice db get name -> content or empty
 NC: slice db check name -> OK or Err
-[NotTested] NC: log info agent
+[NotTested] NC: info log agent
 
 [Tested] agent download self 160301:160303 "dirS" (self - this server IP:port)
 [Tested] agent download tokenswap.com:80 160301:160303 "dirS"
 [Tested] agent download <server> 160301:today "dirS" (date:today)
 [Tested] agent download <server> 160301 "dirS" (date)
-[Partially Tested] agent download <server> today "dirS" (today)
-[NotTested] agent download <server> 2 "dirS" (last 2 slices of today)  >>> kachaet tolko odin poslednij slice
+[Tested] agent download <server> today "dirS" (today)
+[Tested] agent download <server> 2 "dirS" (last 2 slices of today)
 [Tested] ag dl ...
 
-[NotTested] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
+[Tested] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
 	[ N DN server1 server2 ... ]
 	[ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 	[ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
-[NotTested] ag bd ...
+[Tested] ag bd ...
 
 [NotTested] agent sort "dirI" (non chronological slices)
-[NotTested] agent validate check  "list_file_in" "list_file_out"
-[NotTested] agent validate notify "list_file_in" "list_file_out"
+[Tested] agent validate check  "list_file_in" "list_file_out"
+[Tested] agent validate notify "list_file_in" "list_file_out"
 [NotTested] agent validate push   "list_file_in" "list_file_out" "dirI" 
-[NotTested] ag vd ...
+[Tested] ag vd ...
 
 [NotTested] agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
