@@ -46,7 +46,7 @@ NC: slice db check name -> OK or Err
 [NotTested] agent sort "dirI" (non chronological slices)
 [Tested] agent validate check  "list_file_in" "list_file_out"
 [Tested] agent validate notify "list_file_in" "list_file_out"
-[NotTested] agent validate push   "list_file_in" "list_file_out" "dirI" 
+[Tested] agent validate push   "list_file_in" "list_file_out" "dirI" 
 [Tested] ag vd ...
 
 [NotTested] agent report "list_file"
