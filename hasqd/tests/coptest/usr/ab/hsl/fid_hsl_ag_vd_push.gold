@@ -1,0 +1,82 @@
+<svt> ag fs mk "slcs"
+<agt> > fs mk slcs
+<agt> : OK
+<svt> ag fs mk "idxs"
+<agt> > fs mk idxs
+<agt> : OK
+<svt> ag cf db "md5.db"
+<agt> > cf db md5.db
+<svt> ag dl self 160101:160103 "slcs"
+<agt> > dl 127.0.0.1:13131 160101:160103 slcs
+<svt> ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 127.0.0.1:13133 ]
+<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132 127.0.0.1:13133
+<svt> ag fs cat "tokenlist.in"
+<agt> > fs cat tokenlist.in
+<agt> : tokenlist.in
+0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13132 127.0.0.1:13133
+0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132 127.0.0.1:13133
+0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132 127.0.0.1:13133
+0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13132 127.0.0.1:13133
+
+<svt> agent vd check "tokenlist.in" "tokenlist.out"
+<agt> > vd check tokenlist.in tokenlist.out
+<svt> ag fs rm "tokenlist.in"
+<agt> > fs rm tokenlist.in
+<agt> : OK
+<svt> ag fs mv "tokenlist.out" "tokenlist.in"
+<agt> > fs mv tokenlist.out tokenlist.in
+<agt> : OK
+<svt> ag fs cat "tokenlist.in"
+<agt> > fs cat tokenlist.in
+<agt> : tokenlist.in
+0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132
+0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132
+0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13133
+
+<svt> print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
+IDX_NODN
+<svt> print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
+IDX_NODN
+<svt> print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+IDX_NODN
+<svt> ag cf lc "a"
+<agt> > cf lc a
+<svt> agent vd push "tokenlist.in" "tokenlist.out" "idxs"
+<agt> > vd push tokenlist.in tokenlist.out idxs
+<agt> : [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] -> {IDX_NODN}
+<agt> : Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
+<agt> : [zero * md5.db 0 1fe1f6d2b098d0117afc89e03a64dec3 d28d4cd462598daed4473547a01ec684 f5a2bfb97ba62db651ade2f163030cf5 91153634e900064ef49d545566c1c0b7] -> {OK 1000}
+<agt> : [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] -> {IDX_NODN}
+<agt> : Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
+<agt> : [zero * md5.db 0 8e692b8ce018d1a58146bd2ca8908b3b abe9d5fca23d7de538ecfae13fd3875b eb7e1d4666eefa438db8715b538b4c2a 8e90924b5698b498bf0e578c36b3a4aa] -> {OK 1001}
+<agt> : [last md5.db dd20be44d1d8dcfcf63a69622390ef88] -> {IDX_NODN}
+<agt> : Server 127.0.0.1:13133 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
+<agt> : [zero * md5.db 0 dd20be44d1d8dcfcf63a69622390ef88 25312a6cac23fce5a38512b415605144 cd9b4e5714e64063f723ade78ef4bd45 55e5e2a8ed9acf0278657088c24ea8f5] -> {OK 1000}
+<svt> agent fs cat "tokenlist.out"
+<agt> > fs cat tokenlist.out
+<agt> : tokenlist.out
+0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132
+0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132
+0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13133
+
+<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
+OK 0 1fe1f6d2b098d0117afc89e03a64dec3 d28d4cd462598daed4473547a01ec684 f5a2bfb97ba62db651ade2f163030cf5 91153634e900064ef49d545566c1c0b7
+<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
+OK 0 8e692b8ce018d1a58146bd2ca8908b3b abe9d5fca23d7de538ecfae13fd3875b eb7e1d4666eefa438db8715b538b4c2a 8e90924b5698b498bf0e578c36b3a4aa
+<svt> print ex 0 OK 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+OK 0 dd20be44d1d8dcfcf63a69622390ef88 25312a6cac23fce5a38512b415605144 cd9b4e5714e64063f723ade78ef4bd45 55e5e2a8ed9acf0278657088c24ea8f5
+<svt> ag fs rm "tokenlist.out"
+<agt> > fs rm tokenlist.out
+<agt> : OK
+<svt> ag fs rm "tokenlist.in"
+<agt> > fs rm tokenlist.in
+<agt> : OK
+<svt> ag fs rm "slcs"
+<agt> > fs rm slcs
+<agt> : OK
+<svt> ag fs rm "idxs"
+<agt> > fs rm idxs
+<agt> : OK
+<svt> ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
+<svt> ex 0 OK 100 tcp 127.0.0.1:13133 [ quit ]
+<svt> quit
