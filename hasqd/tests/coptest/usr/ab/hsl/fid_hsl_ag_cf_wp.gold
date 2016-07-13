@@ -3,6 +3,6 @@
 <agt> > config webpath /
 <agt> > config webpath
 <agt> : /
-<agt> > cf webpath /
-<agt> > cf webpath
+<agt> > cf wp /
+<agt> > cf wp
 <agt> : /

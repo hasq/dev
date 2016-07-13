@@ -1,6 +1,6 @@
 agent config webpath
 agent config webpath "/"
 agent config webpath
-ag cf webpath [ / ]
-ag cf webpath
+ag cf wp [ / ]
+ag cf wp
 quit
