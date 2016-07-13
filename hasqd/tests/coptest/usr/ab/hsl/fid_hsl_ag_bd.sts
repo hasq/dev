@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# HSL: agent download
+# HSL: agent build
 
 in=$(basename $0)
 in=${in%.*} 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# HSL: agent logcomm
+# HSL: agent config logcomm
 
 in=$(basename $0)
 in=${in%.*} 
