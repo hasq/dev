@@ -1,0 +1,53 @@
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101:160103 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134 ]
+ag fs cat "tokenlist.in"
+
+agent vd check "tokenlist.in" "tokenlist.out"
+ag fs cat "tokenlist.out"
+
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ info nbs ]
+print ex 0 OK 100 tcp 127.0.0.1:13133 [ info nbs ]
+
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+
+ag cf lc "a"
+
+# notify nodes (no family)
+agent vd notify "tokenlist.in" "tokenlist.out"
+agent fs cat "tokenlist.out"
+
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+
+ag cf lc "n"
+
+ex 0 OK 100 tcp 127.0.0.1:13132 { [ connect 127.0.0.1:13131 ] sleep 50 }
+ex 0 OK 100 tcp 127.0.0.1:13133 { [ connect 127.0.0.1:13131 ] sleep 50 }
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ info nbs ]
+print ex 0 OK 100 tcp 127.0.0.1:13133 [ info nbs ]
+
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 127.0.0.1:13133 ]
+agent vd check "tokenlist.in" "tokenlist.out"
+ag fs cat "tokenlist.out"
+
+agent vd notify "tokenlist.in" "tokenlist.out"
+agent fs cat "tokenlist.out"
+
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
+print ex 0 OK 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+
+ag fs rm "tokenlist.out"
+ag fs rm "tokenlist.in"
+ag fs rm "slcs"
+ag fs rm "idxs"
+
+ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
+ex 0 OK 100 tcp 127.0.0.1:13133 [ quit ]
+quit
