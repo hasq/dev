@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# HSL: agent validate check
+
+in=$(basename $0)
+in=${in%.*} 
+
+rm -fr db1 db2 db3 slcs idxs tokenlist.in tokenlist.out
+
+d1="set date 20160101"
+d2="set date 20160102"
+d3="set date 20160103"
+er="erasedisk"
+cr="create md5.db md5 MD5 1 [] 1 0"
+a1="addurf md5.db 0 [rdn]0:3 [pwd]"
+a2="addurf md5.db 0 [rdn]0:1 [pwd]"
+a3="addurf md5.db 0 [rdn]1:3 [pwd]"
+
+mkdir -p db3
+$1/zdb "set base db3" "$er" "$cr" >/dev/null
+$1/zdb "set base db3" "$d3" load "$a3" >/dev/null
+$1/hasqd -lqnxc db="db3" dprn=0 dsvt=0 dagt=1 tcp_port=13133 &
+
+mkdir -p db2
+$1/zdb "set base db2" "$er" "$cr" >/dev/null
+$1/zdb "set base db2" "$d2" load "$a2" >/dev/null
+$1/hasqd -lqnxc db="db2" dprn=0 dsvt=0 dagt=1 tcp_port=13132 &
+
+mkdir -p db1
+$1/zdb "set base db1" "$er" "$cr" >/dev/null
+$1/zdb "set base db1" "$d1" load "$a1" >/dev/null
+$1/hasqd -lqnxc db="db1" dprn=1 dsvt=1 dagt=1 tcp_port=13131 s=$in.inp net_conntime=800 net_readtime=800 | grep -v "noterecv\|conupdate"
+
+rm -fr db1 db2 db3 slcs idxs tokenlist.in tokenlist.out
