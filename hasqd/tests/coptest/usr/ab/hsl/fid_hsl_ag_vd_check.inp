@@ -2,26 +2,26 @@ ag fs mk "slcs"
 ag fs mk "idxs"
 ag cf db "md5.db"
 ag dl self 160101:160103 "slcs"
-ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134 ]
-ag fs cat "tokenlist.in"
+ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134 ]
+ag fs cat "tokenlist.bd"
 
 ag cf lc "d"
 
-agent validate check "tokenlist.in" "tokenlist.out"
-ag fs cat "tokenlist.out"
+agent validate check "tokenlist.bd" "tokenlist.chk"
+ag fs cat "tokenlist.chk"
 
-ag fs rm "tokenlist.out"
+ag fs rm "tokenlist.chk"
 ag fs rm "idxs"
 ag fs mk "idxs"
 
-ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 127.0.0.1:13133 ]
-ag fs cat "tokenlist.in"
+ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 ]
+ag fs cat "tokenlist.bd"
 
-agent vd check "tokenlist.in" "tokenlist.out"
-ag fs cat "tokenlist.out"
+agent vd check "tokenlist.bd" "tokenlist.chk"
+ag fs cat "tokenlist.chk"
 
-ag fs rm "tokenlist.out"
-ag fs rm "tokenlist.in"
+ag fs rm "tokenlist.chk"
+ag fs rm "tokenlist.bd"
 ag fs rm "slcs"
 ag fs rm "idxs"
 

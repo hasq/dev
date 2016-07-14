@@ -5,7 +5,7 @@
 in=$(basename $0)
 in=${in%.*} 
 
-rm -fr db1 db2 db3 slcs idxs tokenlist.in tokenlist.out
+rm -fr db1 db2 db3
 
 d1="set date 20160101"
 d2="set date 20160102"
@@ -31,4 +31,4 @@ $1/zdb "set base db1" "$er" "$cr" >/dev/null
 $1/zdb "set base db1" "$d1" load "$a1" >/dev/null
 $1/hasqd -lqnxc db="db1" dprn=1 dsvt=1 dagt=1 tcp_port=13131 s=$in.inp net_conntime=800 net_readtime=800 | grep -v "noterecv\|conupdate"
 
-rm -fr db1 db2 db3 slcs idxs tokenlist.in tokenlist.out
+rm -fr db1 db2 db3
