@@ -1,0 +1,18 @@
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "md5.db"
+ag dl self 160101 "slcs"
+ag bd "slcs" "idxs" "tokenlist.in" [ 127.0.0.1:13132 ]
+agent vd check "tokenlist.in" "tokenlist.out"
+agent fs cat "tokenlist.in"
+
+ag report "tokenlist.in"
+ag re "tokenlist.out"
+
+ag fs rm "slcs"
+ag fs rm "idxs"
+ag fs rm "tokenlist.in"
+ag fs rm "tokenlist.out"
+
+ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
+quit

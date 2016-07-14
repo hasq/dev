@@ -1,0 +1,26 @@
+<agt> > fs mk slcs
+<agt> : OK
+<agt> > fs mk idxs
+<agt> : OK
+<agt> > cf db md5.db
+<agt> > dl 127.0.0.1:13131 160101 slcs
+<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132
+<agt> > vd check tokenlist.in tokenlist.out
+<agt> > fs cat tokenlist.in
+<agt> : tokenlist.in
+0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13132
+0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132
+0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13132
+
+<agt> > report tokenlist.in
+<agt> : 3 DNs out-of-sync on: 127.0.0.1:13132
+<agt> > re tokenlist.out
+<agt> : 3 DNs out-of-sync on: 127.0.0.1:13132
+<agt> > fs rm slcs
+<agt> : OK
+<agt> > fs rm idxs
+<agt> : OK
+<agt> > fs rm tokenlist.in
+<agt> : OK
+<agt> > fs rm tokenlist.out
+<agt> : OK
