@@ -1,15 +1,13 @@
 print [ >>> Test "mk" <<< ]
 print [ ]
 
-agent filesys mk
-ag fs mk "aaa"
-ag fs mk "aaa"
+ag filesys mk "aaa"
+ag filesys mk "aaa"
 
 print [ ]
 print [ >>> Test "cat" <<< ]
 print [ ]
 
-ag fs cat
 ag fs cat "aaa"
 ag fs cat "file.log"
 ag cf lf "aaa/file.log"
@@ -19,8 +17,6 @@ print [ ]
 print [ >>> Test "cp" <<< ]
 print [ ]
 
-ag fs cp
-ag fs cp "aaa"
 ag fs cp "aaa/file.log" "bbb/file.log"
 ag fs cp "bbb/file.log" "ccc/file.log"
 ag fs mk "bbb"
@@ -31,7 +27,6 @@ print [ ]
 print [ >>> Test "rm" <<< ]
 print [ ]
 
-ag fs rm
 ag fs rm "ccc"
 ag fs cp "bbb/file.log" "bbb/file2.log"
 ag fs cat "bbb/file2.log"
@@ -44,8 +39,6 @@ print [ ]
 print [ >>> Test "mv" <<< ]
 print [ ]
 
-ag fs mv
-ag fs mv "aaa"
 ag fs mv "bbb" "ccc"
 ag fs mk "bbb"
 ag fs mv "bbb" "aaa"

@@ -1,20 +1,12 @@
 >>> Test "mk" <<<
 
-<agt> > filesys mk
-<agt> : Error: Agent mk needs 1 argument
-Offensive command (exec): agent filesys mk
-Error: Agent mk needs 1 argument
-<agt> > fs mk aaa
+<agt> > filesys mk aaa
 <agt> : OK
-<agt> > fs mk aaa
+<agt> > filesys mk aaa
 <agt> : OK
 
 >>> Test "cat" <<<
 
-<agt> > fs cat
-<agt> : Error: Agent cat needs 1 argument
-Offensive command (exec): ag fs cat
-Error: Agent cat needs 1 argument
 <agt> > fs cat aaa
 <agt> : aaa
 
@@ -24,76 +16,56 @@ Error: Agent cat needs 1 argument
 <agt> > cf lf aaa/file.log
 <agt> > fs cat aaa/file.log
 <agt> : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
 
 
 >>> Test "cp" <<<
 
-<agt> > fs cp
-<agt> : Error: Agent cp needs 2 arguments
-Offensive command (exec): ag fs cp
-Error: Agent cp needs 2 arguments
-<agt> > fs cp aaa
-<agt> : Error: Agent cp needs 2 arguments
-Offensive command (exec): ag fs cp "aaa"
-Error: Agent cp needs 2 arguments
 <agt> > fs cp aaa/file.log bbb/file.log
 <agt> : Cannot open file bbb/file.log
-<agt> : OK 252
+<agt> : OK 128
 <agt> > fs cp bbb/file.log ccc/file.log
 <agt> : REQ_PATH_BAD
 <agt> > fs mk bbb
 <agt> : OK
 <agt> > fs cp aaa/file.log bbb/file.log
-<agt> : OK 449
+<agt> : OK 325
 <agt> > fs cat bbb/file.log
 <agt> : bbb/file.log
-000000 > fs cat aaa/file.log
-000000 : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
+101035 : aaa/file.log
+101035 > fs cat aaa/file.log
 
-000000 > fs cp
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : Cannot open file bbb/file.log
-000000 : OK 252
-000000 > fs cp bbb/file.log ccc/file.log
-000000 : REQ_PATH_BAD
-000000 > fs mk bbb
-000000 : OK
-000000 > fs cp aaa/file.log bbb/file.log
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : Cannot open file bbb/file.log
+101035 : OK 128
+101035 > fs cp bbb/file.log ccc/file.log
+101035 : REQ_PATH_BAD
+101035 > fs mk bbb
+101035 : OK
+101035 > fs cp aaa/file.log bbb/file.log
 
 
 >>> Test "rm" <<<
 
-<agt> > fs rm
-<agt> : Error: Agent rm needs 1 argument
-Offensive command (exec): ag fs rm
-Error: Agent rm needs 1 argument
 <agt> > fs rm ccc
 <agt> : REQ_PATH_BAD
 <agt> > fs cp bbb/file.log bbb/file2.log
-<agt> : OK 449
+<agt> : OK 325
 <agt> > fs cat bbb/file2.log
 <agt> : bbb/file2.log
-000000 > fs cat aaa/file.log
-000000 : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
+101035 : aaa/file.log
+101035 > fs cat aaa/file.log
 
-000000 > fs cp
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : Cannot open file bbb/file.log
-000000 : OK 252
-000000 > fs cp bbb/file.log ccc/file.log
-000000 : REQ_PATH_BAD
-000000 > fs mk bbb
-000000 : OK
-000000 > fs cp aaa/file.log bbb/file.log
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : Cannot open file bbb/file.log
+101035 : OK 128
+101035 > fs cp bbb/file.log ccc/file.log
+101035 : REQ_PATH_BAD
+101035 > fs mk bbb
+101035 : OK
+101035 > fs cp aaa/file.log bbb/file.log
 
 <agt> > fs rm bbb/file2.log
 <agt> : OK
@@ -108,14 +80,6 @@ Error: Agent rm needs 1 argument
 
 >>> Test "mv" <<<
 
-<agt> > fs mv
-<agt> : Error: Agent mv needs 2 arguments
-Offensive command (exec): ag fs mv
-Error: Agent mv needs 2 arguments
-<agt> > fs mv aaa
-<agt> : Error: Agent mv needs 2 arguments
-Offensive command (exec): ag fs mv "aaa"
-Error: Agent mv needs 2 arguments
 <agt> > fs mv bbb ccc
 <agt> : FILE_CANT_CREATE
 <agt> > fs mk bbb
@@ -128,90 +92,72 @@ Error: Agent mv needs 2 arguments
 <agt> : OK
 <agt> > fs cat ccc/file.log
 <agt> : ccc/file.log
-000000 > fs cat aaa/file.log
-000000 : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
+101035 : aaa/file.log
+101035 > fs cat aaa/file.log
 
-000000 > fs cp
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : Cannot open file bbb/file.log
-000000 : OK 252
-000000 > fs cp bbb/file.log ccc/file.log
-000000 : REQ_PATH_BAD
-000000 > fs mk bbb
-000000 : OK
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : OK 449
-000000 > fs cat bbb/file.log
-000000 : bbb/file.log
-000000 > fs cat aaa/file.log
-000000 : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : Cannot open file bbb/file.log
+101035 : OK 128
+101035 > fs cp bbb/file.log ccc/file.log
+101035 : REQ_PATH_BAD
+101035 > fs mk bbb
+101035 : OK
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : OK 325
+101035 > fs cat bbb/file.log
+101035 : bbb/file.log
+101035 > fs cat aaa/file.log
+101035 : aaa/file.log
+101035 > fs cat aaa/file.log
 
-000000 > fs cp
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : Cannot open file bbb/file.log
-000000 : OK 252
-000000 > fs cp bbb/file.log ccc/file.log
-000000 : REQ_PATH_BAD
-000000 > fs mk bbb
-000000 : OK
-000000 > fs cp aaa/file.log bbb/file.log
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : Cannot open file bbb/file.log
+101035 : OK 128
+101035 > fs cp bbb/file.log ccc/file.log
+101035 : REQ_PATH_BAD
+101035 > fs mk bbb
+101035 : OK
+101035 > fs cp aaa/file.log bbb/file.log
 
-000000 > fs rm
-000000 : Error: Agent rm needs 1 argument
-000000 > fs rm ccc
-000000 : REQ_PATH_BAD
-000000 > fs cp bbb/file.log bbb/file2.log
-000000 : OK 449
-000000 > fs cat bbb/file2.log
-000000 : bbb/file2.log
-000000 > fs cat aaa/file.log
-000000 : aaa/file.log
-000000 > fs cat aaa/file.log
+101035 > fs rm ccc
+101035 : REQ_PATH_BAD
+101035 > fs cp bbb/file.log bbb/file2.log
+101035 : OK 325
+101035 > fs cat bbb/file2.log
+101035 : bbb/file2.log
+101035 > fs cat aaa/file.log
+101035 : aaa/file.log
+101035 > fs cat aaa/file.log
 
-000000 > fs cp
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa
-000000 : Error: Agent cp needs 2 arguments
-000000 > fs cp aaa/file.log bbb/file.log
-000000 : Cannot open file bbb/file.log
-000000 : OK 252
-000000 > fs cp bbb/file.log ccc/file.log
-000000 : REQ_PATH_BAD
-000000 > fs mk bbb
-000000 : OK
-000000 > fs cp aaa/file.log bbb/file.log
+101035 > fs cp aaa/file.log bbb/file.log
+101035 : Cannot open file bbb/file.log
+101035 : OK 128
+101035 > fs cp bbb/file.log ccc/file.log
+101035 : REQ_PATH_BAD
+101035 > fs mk bbb
+101035 : OK
+101035 > fs cp aaa/file.log bbb/file.log
 
-000000 > fs rm bbb/file2.log
-000000 : OK
-000000 > fs cat bbb/file2.log
-000000 : bbb/file2.log
+101035 > fs rm bbb/file2.log
+101035 : OK
+101035 > fs cat bbb/file2.log
+101035 : bbb/file2.log
 
-000000 > fs rm bbb
-000000 : OK
-000000 > fs cat bbb/file.log
-000000 : bbb/file.log
+101035 > fs rm bbb
+101035 : OK
+101035 > fs cat bbb/file.log
+101035 : bbb/file.log
 
-000000 > fs mv
-000000 : Error: Agent mv needs 2 arguments
-000000 > fs mv aaa
-000000 : Error: Agent mv needs 2 arguments
-000000 > fs mv bbb ccc
-000000 : FILE_CANT_CREATE
-000000 > fs mk bbb
-000000 : OK
-000000 > fs mv bbb aaa
-000000 : FILE_CANT_CREATE
-000000 > fs mv bbb ccc
-000000 : OK
-000000 > fs mv aaa/file.log ccc/file.log
+101035 > fs mv bbb ccc
+101035 : FILE_CANT_CREATE
+101035 > fs mk bbb
+101035 : OK
+101035 > fs mv bbb aaa
+101035 : FILE_CANT_CREATE
+101035 > fs mv bbb ccc
+101035 : OK
+101035 > fs mv aaa/file.log ccc/file.log
 
 <agt> > fs rm aaa
 <agt> : OK
