@@ -12,7 +12,7 @@ ag cf lc
 ag cf pr
 
 agent config database "_wrd"
-ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"  >>> "ag cf logcomm" prinimaet ljuboe znachenie    
+ag cf logcomm "no|connection|dragging|all" - "n|c|d|a"    
 agent config protocol [ (hasq|http_get|http_post) ]
 ag cf ...
 
@@ -26,7 +26,7 @@ ag fs ...
 NC: slice db -> OK + name last
 NC: slice db get name -> content or empty
 NC: slice db check name -> OK or Err
-[NotTested] NC: info log agent
+[Tested] NC: info log agent
 
 [Tested] agent download self 160301:160303 "dirS" (self - this server IP:port)
 [Tested] agent download tokenswap.com:80 160301:160303 "dirS"
@@ -49,10 +49,10 @@ NC: slice db check name -> OK or Err
 [Tested] agent validate push   "list_file_in" "list_file_out" "dirI" 
 [Tested] ag vd ...
 
-[NotTested] agent report "list_file"
+[Tested] agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 
-[NotTested] ag re ...
+[Tested] ag re ...
 
 
 
