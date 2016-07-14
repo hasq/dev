@@ -1,6 +1,9 @@
 agent config logfile
 agent config logfile "agt0.log"
 agent config logfile
+ag fs cp "agt0.log" "temp.log"
+ag fs rm "temp.log"
+ag fs cat [ agt0.log ]
 ag cf lf [ agt1.log ]
 ag cf lf
 ag cf lf [ log/agt1.log ]

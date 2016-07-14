@@ -3,6 +3,20 @@
 <agt> > config logfile agt0.log
 <agt> > config logfile
 <agt> : agt0.log
+<agt> > fs cp agt0.log temp.log
+<agt> : OK 78
+<agt> > fs rm temp.log
+<agt> : OK
+<agt> > fs cat agt0.log
+<agt> : agt0.log
+101035 > config logfile
+101035 : agt0.log
+101035 > fs cp agt0.log temp.log
+101035 : OK 78
+101035 > fs rm temp.log
+101035 : OK
+101035 > fs cat agt0.log
+
 <agt> > cf lf agt1.log
 <agt> > cf lf
 <agt> : agt1.log
@@ -16,8 +30,8 @@
 <agt> : OK
 <agt> > fs cat log/agt1.log
 <agt> : log/agt1.log
- : OK
- > fs cat log/agt1.log
+101035 : OK
+101035 > fs cat log/agt1.log
 
 <agt> > fs rm log
 <agt> : OK
