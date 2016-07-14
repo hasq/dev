@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing NC: info log agent
+
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -lqnc dprn=1 dsvt=1 dagt=1 p=13131 s=$in.inp | sed -r "s/^[0-9]{6}/101035/"

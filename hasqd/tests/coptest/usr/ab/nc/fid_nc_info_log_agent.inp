@@ -1,0 +1,12 @@
+print ex 0 OK 100 tcp self [ info log agent ] 
+
+ag fs mk "aaa"
+ag fs rm "aaa"
+ag cf db "md5.db"
+ag cf db
+ag cf lc
+
+
+print ex 0 OK 100 tcp self [ info log agent ] 
+
+quit

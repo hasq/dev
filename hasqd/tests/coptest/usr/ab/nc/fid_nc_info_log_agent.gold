@@ -1,0 +1,30 @@
+<svt> print ex 0 OK 100 tcp self [ info log agent ] 
+OK
+
+<svt> ag fs mk "aaa"
+<agt> > fs mk aaa
+<agt> : OK
+<svt> ag fs rm "aaa"
+<agt> > fs rm aaa
+<agt> : OK
+<svt> ag cf db "md5.db"
+<agt> > cf db md5.db
+<svt> ag cf db
+<agt> > cf db
+<agt> : md5.db
+<svt> ag cf lc
+<agt> > cf lc
+<agt> : no
+<svt> print ex 0 OK 100 tcp self [ info log agent ] 
+OK
+101035 > fs mk aaa
+101035 : OK
+101035 > fs rm aaa
+101035 : OK
+101035 > cf db md5.db
+101035 > cf db
+101035 : md5.db
+101035 > cf lc
+101035 : no
+
+<svt> quit
