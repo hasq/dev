@@ -1,0 +1,9 @@
+ag fs mk "slcs"
+ag fs mk "idxs"
+ag cf db "wrd.db"
+ag dl self 160101 "slcs"
+ag bd "slcs" "idxs" "tokenlist.out" [ 127.0.0.1:13131 ]
+
+print [ >>> unsorted file: ]
+
+quit
