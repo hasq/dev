@@ -34,6 +34,7 @@ struct TraitsData
     int    sliceKb;
     int    thinness;
     RecDataLimit dl;
+    TraitsData(): nG(0), sliceKb(100), thinness(0) {}
 };
 
 bool loadTraitsData(const string & filename, TraitsData & data);

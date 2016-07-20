@@ -75,7 +75,7 @@ bool db::loadTraitsData(const string & filename, TraitsData & data)
     return data.dl.norm(data.hashNameShort);
 }
 
-db::Traits::Traits(const Database & db): config(db.cfg()) {}
+db::Traits::Traits(const Database & db): data(), config(db.cfg()) {}
 
 void db::Traits::generateAltName()
 {

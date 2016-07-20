@@ -27,7 +27,7 @@ struct Node
     //static const unsigned TOOBIG = std::numeric_limits<unsigned>::max();
     static const unsigned TOOBIG = UINT_MAX;
 
-    Node(const string & n, bool lc): name(n), locked(lc) {}
+    Node(const string & n, bool lc): name(n), level(0), locked(lc) {}
     void add(Node * o);
 };
 

@@ -111,7 +111,7 @@ SvtTask * SvtTask::parse(GlobalSpace * gs, const vs & cmd, size_t & i)
 
 const string & SvtTask::at(const vs & q, size_t i)
 {
-    if ( i < 0 ) throw gl::Never("Servant parser - bad index");
+    ///if ( i < 0 ) throw gl::Never("Servant parser - bad index");
     if ( i >= q.size() ) throw gl::Never("Servant parser - not enough args: " + gl::tos(i));
     return q[i];
 }
