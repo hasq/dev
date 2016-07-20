@@ -119,7 +119,8 @@ void MD5::transform(const uint1 block[blocksize]) {
   state[2] += c;
   state[3] += d;
 
-  memset(x, 0, sizeof x);
+  volatile uint4 * y = x; // prevent removing by optimizer
+  memset((void*)y, 0, sizeof x);
 }
 
 void MD5::update(const unsigned char input[], size_type length) {
