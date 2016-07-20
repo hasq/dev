@@ -1031,7 +1031,7 @@ er::CodeType db::IndexGenerator::processMeta(const string & meta_file, const str
     string bufs(buf, gl::ii2i(fsize));
     size_t pos1 = 0, pos2, pos3;
 
-    delete buf;
+    delete [] buf;
 
     pos2 = bufs.find('\n', pos1);
     while ( pos2 != string::npos )
@@ -1084,7 +1084,7 @@ er::CodeType db::IndexGenerator::processSlice(const string & slice_base, const s
     string bufs(buf, gl::ii2i(fsize));
     size_t pos1 = 0, pos2 = bufs.find('\n', pos1);
 
-    delete buf;
+    delete [] buf;
 
     while ( pos2 != string::npos )
     {
