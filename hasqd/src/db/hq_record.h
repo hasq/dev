@@ -82,7 +82,7 @@ class RecordT : public Record
         er::Code init(std::istream & is, int nG, const string magic = "");
         er::Code init(const string & s, int nG, const string magic = "");
 
-        RecordT() {}
+        RecordT(): N(-1) {}
         bool checkSign(const string &);
 
         ~RecordT() {};

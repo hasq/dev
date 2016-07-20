@@ -77,7 +77,8 @@ template<typename T>
 class Hash : public T
 {
         char val[T::SIZE];
-        static void calc(const char * in, int inlen, char * out) { T::calc(in, inlen, out); }
+        static void calc(const char * in, int inlen, char * out) 
+		{ T::calc(in, inlen, out); }
 
     public:
 
@@ -99,7 +100,8 @@ class Hash : public T
 };
 
 
-template<typename T> inline std::ostream & operator<<(std::ostream & os, const Hash<T> & h)
+template<typename T> 
+inline std::ostream & operator<<(std::ostream & os, const Hash<T> & h)
 {
     os << h.str(); return os;
 }

@@ -54,7 +54,7 @@ class GlobalSpace
         void stopPublisherSignal();
 
     private:
-        void operator=(const GlobalSpace &) const;
+        void operator=(const GlobalSpace &);
         GlobalSpace(const GlobalSpace &);
 
 };

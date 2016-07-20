@@ -17,7 +17,7 @@ class Unumber
 
     public:
         Unumber(unsigned long long x);
-        Unumber() {}
+        Unumber() {} // z default - not init
 
         enum StringType { Binary, Decimal };
         Unumber(const string & s, StringType st);
@@ -32,7 +32,7 @@ class Unumber
         void operator/=(const Unumber & n) { Cunumber a; cdiv_QnotND(&z, &n.z, &a); z = a; }
 
         void setbit1(int b) { csetbit1(&z, b); }
-	unsigned getbit(int b) const { return cgetbit(&z,b); }
+        unsigned getbit(int b) const { return cgetbit(&z, b); }
 
         Unumber pow_recur(Unumber e, const Unumber & mod) const;
         void pow_r(Unumber e, const Unumber & mod) { *this = pow_recur(e, mod); }
@@ -71,7 +71,7 @@ class Unumber
         bool iszero() const { return 0 != ciszero(&z); }
 
         Unumber & operator++() { cinc(&z); return *this; }
-        Unumber & operator--() { *this-=1; return *this; }
+        Unumber & operator--() { *this -= 1; return *this; }
 
         void operator<<=(int b) { cshl(&z, b); }
         void operator>>=(int b) { cshr(&z, b); }
@@ -94,7 +94,7 @@ class Unumber
         friend bool operator<(const Unumber & n1, const Unumber & n2)
         { return 0 != cless(&n1.z, &n2.z); }
 
-        friend bool operator>(const Unumber & n1, const Unumber & n2){ return n2<n1; }
+        friend bool operator>(const Unumber & n1, const Unumber & n2) { return n2 < n1; }
 
         friend bool operator!=(const Unumber & n1, const Unumber & n2)
         { return !(n1 == n2); }
@@ -104,7 +104,7 @@ class Unumber
 
         void swap(Unumber & n) { Cunumber y(z); z = n.z; n.z = y; }
 
-        string str(unsigned base=10) const;
+        string str(unsigned base = 10) const;
         unsigned long long to_ull() const;
 
         friend std::ostream & operator<<(std::ostream & os, const Unumber & n)
@@ -174,8 +174,8 @@ string Unumber::str(unsigned base) const
     while (1)
     {
         Cunumber m = cdiv_QnotND(&q, &ten.z, &q1);
-	char digit = char('0') + char(m.x[0]);
-	if( digit > '9' ) ( digit -= '9' ) += ( 'a' - char(1) );
+        char digit = char('0') + char(m.x[0]);
+        if ( digit > '9' ) ( digit -= '9' ) += ( 'a' - char(1) );
         r = digit + r;
         if ( ciszero(&q1) ) break;
         q = q1;
@@ -235,8 +235,8 @@ Unumber Unumber::pow_recur(Unumber e, const Unumber & mod) const
 inline
 std::istream & operator>>(std::istream & os, Unumber & n)
 {
-    std::string s; os>>s;
-    Unumber u(s,Unumber::Decimal);
+    std::string s; os >> s;
+    Unumber u(s, Unumber::Decimal);
     n.swap(u);
     return os;
 }
