@@ -102,7 +102,7 @@ class Unumber
         friend bool operator==(const Unumber & n1, const Unumber & n2)
         { return 0 != cequal(&n1.z, &n2.z); }
 
-        void swap(Unumber & n) { Cunumber y; y = z; z = n.z; n.z = y; }
+        void swap(Unumber & n) { Cunumber y(z); z = n.z; n.z = y; }
 
         string str(unsigned base=10) const;
         unsigned long long to_ull() const;

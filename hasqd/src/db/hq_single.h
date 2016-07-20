@@ -74,6 +74,7 @@ class Single
 
     private:
         void operator=(const Single &);
+        Single(const Single &);
 
 };
 

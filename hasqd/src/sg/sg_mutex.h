@@ -17,6 +17,7 @@ class Mutex
         ~Mutex() { sem.up(); }
     private:
         void operator=(const Mutex &);
+        Mutex(const Mutex &);
 };
 
 } // sgl

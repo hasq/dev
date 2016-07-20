@@ -46,6 +46,7 @@ class Traits
 
         void generateAltName();
         void operator=(const Traits &);
+        //Traits(const Traits &); copy constructor must be generated
 
         void save(std::ostream & os) const;
 
