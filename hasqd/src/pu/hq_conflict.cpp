@@ -25,7 +25,7 @@ void Branch::destroy()
 }
 
 Conflictor::Conflictor(GlobalSpace * g, int i, const string & s)
-    : gs(g), idx(i), sdn(s), connector(g), groups(g, &family)
+    : gs(g), idx(i), sdn(s), connector(g), groups(g, &family), winner(0)
 {
     db::Record * r = gs->database.getLast(idx, sdn);
     if ( !r ) return;

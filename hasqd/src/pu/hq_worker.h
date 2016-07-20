@@ -20,7 +20,7 @@ class WorkerCore
         string decrypt(const string & msg);
 
     public:
-        WorkerCore(GlobalSpace * g): gs(g) {}
+        WorkerCore(GlobalSpace * g): gs(g), id(-1) {}
 
         string process(const string & msg, const char ** mime,
                        const os::net::Socket * sock);
