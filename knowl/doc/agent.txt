@@ -1,8 +1,5 @@
 Agent specs
 
-all Done
-not all Tested yet
-
 agent config logfile "file"
 agent config webpath "path"
 ag cf lf
@@ -26,33 +23,31 @@ ag fs ...
 NC: slice db -> OK + name last
 NC: slice db get name -> content or empty
 NC: slice db check name -> OK or Err
-[Tested] NC: info log agent
+NC: info log agent
 
-[Tested] agent download self 160301:160303 "dirS" (self - this server IP:port)
-[Tested] agent download tokenswap.com:80 160301:160303 "dirS"
-[Tested] agent download <server> 160301:today "dirS" (date:today)
-[Tested] agent download <server> 160301 "dirS" (date)
-[Tested] agent download <server> today "dirS" (today)
-[Tested] agent download <server> 2 "dirS" (last 2 slices of today)
-[Tested] ag dl ...
+agent download self 160301:160303 "dirS" (self - this server IP:port)
+agent download tokenswap.com:80 160301:160303 "dirS"
+agent download <server> 160301:today "dirS" (date:today)
+agent download <server> 160301 "dirS" (date)
+agent download <server> today "dirS" (today)
+agent download <server> 2 "dirS" (last 2 slices of today)
+ag dl ...
 
-[Tested] agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
+agent build "dirS" "dirI" "list_file" [ hashnote.org:80 tokenswap.com:80 ... ]
 	[ N DN server1 server2 ... ]
 	[ 7 dn TS HN X1 ] -> (TS:7 HN:9 X1:7) -> [ 9 dn TS X1 ]
 	[ 9 dn TS X1 ] -> (TS:9 X1:8) -> [ 9 dn X1 ]
 
-[Tested] ag bd ...
+ag bd ...
 
-[Tested] agent sort "dirI" (non chronological slices)
-[Tested] agent validate check  "list_file_in" "list_file_out"
-[Tested] agent validate notify "list_file_in" "list_file_out"
-[Tested] agent validate push   "list_file_in" "list_file_out" "dirI" 
-[Tested] ag vd ...
+agent sort "dirI" (non chronological slices)
+agent validate check  "list_file_in" "list_file_out"
+agent validate notify "list_file_in" "list_file_out"
+agent validate push   "list_file_in" "list_file_out" "dirI" 
+ag vd ...
 
-[Tested] agent report "list_file"
+agent report "list_file"
 	OK | 23 DNs are out-of-sync. List of late servers : HN, X1, ...
 
-[Tested] ag re ...
-
-
+ag re ...
 
