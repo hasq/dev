@@ -34,9 +34,11 @@ typedef std::vector<Digit> digs;
 
 int readline = 1;
 
+const char * myname = "hideg.pwd";
+
 string getname()
 {
-    std::ifstream in("myname");
+    std::ifstream in(myname);
     if ( in )
     {
         string name;
@@ -53,8 +55,8 @@ string getname()
     cout << "Enter password : ";
     std::cin >> pw;
 
-    std::ofstream of("myname");
-    of << nm << '\n' << pw;
+    std::ofstream of(myname,std::ios::binary);
+    of << nm << '\n' << pw << '\n';
 
     cout << "Thank you, " << nm << "!\nStart again";
     return "";
