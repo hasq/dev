@@ -565,7 +565,7 @@ er::CodeType db::IndexReader::findEnd(std::streamoff from, std::streamoff & pos)
         REPORT(rdbuf);
 
         rdbuf_pos = from;
-        if ( rdbuf_pos + rdbuf_size - 1 >= last_N_pos + last_N_data_size - 1 )
+        if ( rdbuf_pos + rdbuf_size >= last_N_pos + last_N_data_size )
             rdbuf_pos = last_N_pos + last_N_data_size - rdbuf_size;
 
         file.seekg(rdbuf_pos);
@@ -588,7 +588,7 @@ er::CodeType db::IndexReader::findEnd(std::streamoff from, std::streamoff & pos)
         }
 
         rdbuf_pos = from;
-        if ( rdbuf_pos + rdbuf_size - 1 >= last_N_pos + last_N_data_size - 1 )
+        if ( rdbuf_pos + rdbuf_size >= last_N_pos + last_N_data_size )
             rdbuf_pos = last_N_pos + last_N_data_size - rdbuf_size;
 
         file.seekg(rdbuf_pos);
