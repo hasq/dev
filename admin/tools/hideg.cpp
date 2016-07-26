@@ -51,11 +51,10 @@ string getname()
     string nm, pw;
     cout << "Enter your name: ";
     std::cin >> nm;
-    cout << "If you do not know the password, ask your team\n";
     cout << "Enter password : ";
     std::cin >> pw;
 
-    std::ofstream of(myname,std::ios::binary);
+    std::ofstream of(myname, std::ios::binary);
     of << nm << '\n' << pw << '\n';
 
     cout << "Thank you, " << nm << "!\nStart again";
@@ -118,7 +117,7 @@ string b64dec(const string & s);
 
 void crypt(string fin, string fout, bool enc)
 {
-    cout << fin << " -> " << fout << '\n';
+    cout << fin << " -> " << fout;
 
     std::ifstream in(fin.c_str(), std::ios::binary);
     if ( !in ) throw "cannot open " + fin;
@@ -127,7 +126,7 @@ void crypt(string fin, string fout, bool enc)
 
     string crline(const string & s, bool e);
 
-    bool textual = true;
+    int notext = 0;
     for (string line; std::getline(in, line); readline++)
     {
         if ( line.empty() ) { r += '\n'; continue; }
@@ -138,7 +137,11 @@ void crypt(string fin, string fout, bool enc)
             ///if ( line[line.size() - 1] == ' ' )
             ///    throw string() + "Line has trailing spaces";
             bool isbin = testbin(line);
-            if ( isbin ) { textual = false; line = b64enc(line); }
+            if ( isbin )
+            {
+                if (!notext) notext = readline;
+                line = b64enc(line);
+            }
 
             crl = crline(line, enc);
             crl = crl.substr(SZ - 1);
@@ -160,8 +163,10 @@ void crypt(string fin, string fout, bool enc)
     std::ofstream of(fout.c_str(), std::ios::binary);
     of << r;
 
-    if ( !textual )
-        std::cout << "File is not textual, has tabs, trailing spaces or dos style";
+    if ( notext ) // has tabs, trailing spaces or dos style;
+        std::cout << " [binary:" << notext << "]";
+
+    cout << '\n';
 }
 
 std::vector<int> s2v(const string & s)
