@@ -220,19 +220,13 @@ os::net::Socket * os::net::TcpAcceptor::returnSocketConnected(gl::NetworkLimits 
     error = getnameinfo((struct sockaddr *)&fromAddr, fromAddrSize, hostname,
                         MAXHOSTNAMELEN, 0, 0, 0);
 
-    string addrip = "0.0.0.0"; // FIXME
+    ///string addrip = "0.0.0.0";
     string addrnm = "<unknown>";
-    unsigned short port = 0;
-
-    addrip = inet_ntoa(fromAddr.sin_addr);
-    port = ntohs(fromAddr.sin_port);
-
     if (!error)
-    {
-        addrip = inet_ntoa(fromAddr.sin_addr);
         addrnm = hostname;
-        port = ntohs(fromAddr.sin_port);
-    }
+
+    string addrip = inet_ntoa(fromAddr.sin_addr);
+    unsigned short port = ntohs(fromAddr.sin_port);
 
     PlaceholderSocket retSocData;
     native(retSocData).fd = fd;
