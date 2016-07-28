@@ -16,6 +16,20 @@ string gl::Http_base::httpHeaderHead(const char * mime)
     return r;
 }
 
+string gl::HttpGet::httpProxyHead(const string & s, const Pmd * p) const
+{
+    string srv = p->proxy_serv;
+    string cre = p->proxy_auth;
+
+    string r = "GET http://" + srv + "/" + s + " HTTP/1.1"; r += CRLF;
+    r += "Proxy-Authorization: Basic " + cre; r += CRLF;
+    r += "User-Agent: "; r += logo; r += CRLF;
+    r += "Host: " + srv; r += CRLF;
+    r += "Accept: */*"; r += CRLF;
+    r += "Proxy-Connection: Keep-Alive"; r += CRLF2;
+    return r;
+}
+
 string gl::Http_base::httpHeader(size_t sz, const char * mime)
 {
     return httpHeaderHead(mime) + tos(sz) + CRLF2;
@@ -124,7 +138,10 @@ string gl::HttpGet::msg2raw(const string & s, const Pmd * p) const
         return Http_base::httpHeader(s.size(), m) + s + CRLF2;
     }
 
-    return GET + s + CRLF2;
+    if ( !p->proxy ) // simple httpget
+        return GET + s + CRLF2;
+
+    return httpProxyHead(s, p);
 }
 
 gl::ProtocolPacketStatus gl::HttpGet::extractMsg(string & msg, const string & raw, Pmd * p) const

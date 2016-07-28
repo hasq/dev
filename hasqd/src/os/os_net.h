@@ -40,8 +40,8 @@ struct NetInitialiser
     static int findpid();
     static string list_ips(bool all);
 
-    static string xserv;
-    static string xauth;
+    static string httpget_proxy_server;
+    static string httpget_proxy_auth64;
 };
 
 class Selector;
@@ -122,9 +122,19 @@ class TcpClient : public TcpSocket
 {
         void init(gl::intint tryTime);
 
+        struct X
+        {
+            IpAddr addr;
+            bool proxy;
+            string err;
+            X(IpAddr a): addr(a), proxy(false) {}
+        };
+
+        X proxy(const gl::Protocol * p, IpAddr il);
+        X x;
+
     public:
-        TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl) :
-            TcpSocket(p, il, nl) { init(nl.maxConnTime); }
+        TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl);
 
         bool isConnected() const { return state == Connected; }
 };

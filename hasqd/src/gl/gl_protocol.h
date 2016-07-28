@@ -102,9 +102,15 @@ struct PacketMetaData
 {
     enum Format { Hq, HttpGet, HttpPost } format;
     const char * mime;
-    PacketMetaData( Format f = Hq ): format(f), mime("text/plain") {}
-    void resolveMime(const string & filename);
     string ip;
+    bool proxy;
+    string proxy_auth;
+    string proxy_serv;
+
+    PacketMetaData( Format f = Hq ):
+        format(f), mime("text/plain"), proxy(false) {}
+
+    void resolveMime(const string & filename);
 };
 
 typedef PacketMetaData Pmd;
@@ -144,6 +150,7 @@ class Http_base : virtual public Protocol
 class HttpGet : public Http_base
 {
         ProtocolPacketStatus extrMsgServer(string & msg, const string & raw, Pmd * p) const;
+        string httpProxyHead(const string & s, const Pmd * p) const;
 
     public:
         HttpGet(Side s): Protocol(s), Http_base(s) {}

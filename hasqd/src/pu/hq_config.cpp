@@ -6,6 +6,7 @@
 #include "gl_utils.h"
 
 #include "os_net.h"
+#include "ma_utils.h"
 
 #include "sg_cout.h"
 
@@ -363,12 +364,9 @@ void Config::processOptionKeyVal(const string & k, const string & v)
             publicNetCmd.set(v, false);
     }
 
-    else if ( k == "xserv" )
-	os::net::NetInitialiser::xserv = v;
-    else if ( k == "xauth" )
-	os::net::NetInitialiser::xauth = v;
+    else if ( k == "http_get_proxy" )
+        setHttpGetProxy(v);
 
-	
     else
         throw gl::ex("Bad key [$1]", k);
 }
@@ -485,3 +483,19 @@ cfg::PublicNetCmd::PublicNetCmd()
     , ping(true)
     , proxy(true)
 {}
+
+void Config::setHttpGetProxy(const string & s)
+{
+    if ( s.empty() ) return;
+    size_t i = s.find('@');
+
+    if ( i == string::npos )
+    {
+        os::net::NetInitialiser::httpget_proxy_server = s;
+        return;
+    }
+
+    os::net::NetInitialiser::httpget_proxy_server = s.substr(i + 1);
+    os::net::NetInitialiser::httpget_proxy_auth64 = ma::b64enc(s.substr(0, i));
+}
+

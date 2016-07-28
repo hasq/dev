@@ -158,6 +158,7 @@ class Config
         void setHomeValid();
         void loadFile(const char * cfgfile, bool forced);
         void oneOption(const string & s);
+        void setHttpGetProxy(const string & s);
 };
 
 #endif

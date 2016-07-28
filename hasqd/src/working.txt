@@ -1,0 +1,241 @@
+hasqd.exe dprn=1 dsec=1 dtcp=z.log
+curl -x 127.0.0.1:13131 -U aaa:bbb http://ccc.ddd/eee
+curl http://127.0.0.1:13131/ping
+
+
+GET /ping HTTP/1.1
+User-Agent: curl/7.39.0
+Host: 127.0.0.1:13131
+Accept: */*
+================
+GET http://ccc.ddd/eee HTTP/1.1
+Proxy-Authorization: Basic YWFhOmJiYg==
+User-Agent: curl/7.39.0
+Host: ccc.ddd
+Accept: */*
+Proxy-Connection: Keep-Alive
+
+echo aaa:bbb | base64
+YWFhOmJiYgo=
+
+#hasqd.exe dprn=1 dsvt=1 -p http_get_proxy=mazonkao:Cde3o39282@10.52.0.202:8080 s=@"print http_get tokenswap.com:80 [ ping ]; quit"
+hasqd.exe dprn=1 dsvt=1 -p http_get_proxy=aaa.bbb@127.0.0.1:13131 s=@"print http_get tokenswap.com:80 [ ping ]; quit"
+
+
+C:\user\oleg\dev.git\trunk\hasqd\src>svn diff 
+Index: gl/gl_protocol.cpp
+===================================================================
+--- gl/gl_protocol.cpp	(revision 1066)
++++ gl/gl_protocol.cpp	(working copy)
+@@ -16,6 +16,20 @@
+     return r;
+ }
+ 
++string gl::HttpGet::httpProxyHead(const string & s, const Pmd * p) const
++{
++    string srv = p->proxy_serv;
++    string cre = p->proxy_auth;
++
++    string r = "GET http://" + srv + "/" + s + " HTTP/1.1"; r += CRLF;
++    r += "Proxy-Authorization: Basic " + cre; r += CRLF;
++    r += "User-Agent: "; r += logo; r += CRLF;
++    r += "Host: " + srv; r += CRLF;
++    r += "Accept: */*"; r += CRLF;
++    r += "Proxy-Connection: Keep-Alive"; r += CRLF2;
++    return r;
++}
++
+ string gl::Http_base::httpHeader(size_t sz, const char * mime)
+ {
+     return httpHeaderHead(mime) + tos(sz) + CRLF2;
+@@ -124,7 +138,10 @@
+         return Http_base::httpHeader(s.size(), m) + s + CRLF2;
+     }
+ 
+-    return GET + s + CRLF2;
++    if ( !p->proxy ) // simple httpget
++        return GET + s + CRLF2;
++
++    return httpProxyHead(s, p);
+ }
+ 
+ gl::ProtocolPacketStatus gl::HttpGet::extractMsg(string & msg, const string & raw, Pmd * p) const
+Index: gl/gl_protocol.h
+===================================================================
+--- gl/gl_protocol.h	(revision 1066)
++++ gl/gl_protocol.h	(working copy)
+@@ -102,9 +102,15 @@
+ {
+     enum Format { Hq, HttpGet, HttpPost } format;
+     const char * mime;
+-    PacketMetaData( Format f = Hq ): format(f), mime("text/plain") {}
++    string ip;
++    bool proxy;
++    string proxy_auth;
++    string proxy_serv;
++
++    PacketMetaData( Format f = Hq ):
++        format(f), mime("text/plain"), proxy(false) {}
++
+     void resolveMime(const string & filename);
+-    string ip;
+ };
+ 
+ typedef PacketMetaData Pmd;
+@@ -144,6 +150,7 @@
+ class HttpGet : public Http_base
+ {
+         ProtocolPacketStatus extrMsgServer(string & msg, const string & raw, Pmd * p) const;
++        string httpProxyHead(const string & s, const Pmd * p) const;
+ 
+     public:
+         HttpGet(Side s): Protocol(s), Http_base(s) {}
+Index: os/os_net.cpp
+===================================================================
+--- os/os_net.cpp	(revision 1066)
++++ os/os_net.cpp	(working copy)
+@@ -12,8 +12,8 @@
+ char os::net::NetInitialiser::hostname_[100];
+ char os::net::NetInitialiser::ips_[16][16];
+ int os::net::NetInitialiser::ips_size_ = 0;
+-string os::net::NetInitialiser::xserv;
+-string os::net::NetInitialiser::xauth;
++string os::net::NetInitialiser::httpget_proxy_server;
++string os::net::NetInitialiser::httpget_proxy_auth64;
+ 
+ os::net::NetInitialiser::NetInitialiser()
+ {
+@@ -167,3 +167,37 @@
+ 
+     return allips;
+ }
++
++os::net::TcpClient::X os::net::TcpClient::proxy(const gl::Protocol * p, IpAddr ia)
++{
++    X r(ia);
++    const gl::HttpGet * g = dynamic_cast<const gl::HttpGet *>(p);
++    if ( !g ) return r;
++
++    const string & s = NetInitialiser::httpget_proxy_server;
++    if ( s.empty() ) return r;
++
++    bool ok = false;
++    IpAddr xsrv( s, ok );
++
++    if ( !ok ) { r.err = "bad proxy name"; return r; }
++
++    r.addr = xsrv;
++    r.proxy = true;
++    return r;
++}
++
++os::net::TcpClient::TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl) :
++    TcpSocket(p, proxy(p, il).addr, nl), x(proxy(p, il))
++{
++    init(nl.maxConnTime);
++
++    if ( x.proxy )
++    {
++	auto & pmd = request.accessPmd();
++        pmd.proxy = true;
++        pmd.proxy_auth = NetInitialiser::httpget_proxy_auth64;
++        pmd.proxy_serv = il.str();
++    }
++}
++
+Index: os/os_net.h
+===================================================================
+--- os/os_net.h	(revision 1066)
++++ os/os_net.h	(working copy)
+@@ -40,8 +40,8 @@
+     static int findpid();
+     static string list_ips(bool all);
+ 
+-    static string xserv;
+-    static string xauth;
++    static string httpget_proxy_server;
++    static string httpget_proxy_auth64;
+ };
+ 
+ class Selector;
+@@ -122,9 +122,19 @@
+ {
+         void init(gl::intint tryTime);
+ 
++        struct X
++        {
++            IpAddr addr;
++            bool proxy;
++            string err;
++            X(IpAddr a): addr(a), proxy(false) {}
++        };
++
++        X proxy(const gl::Protocol * p, IpAddr il);
++        X x;
++
+     public:
+-        TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl) :
+-            TcpSocket(p, il, nl) { init(nl.maxConnTime); }
++        TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl);
+ 
+         bool isConnected() const { return state == Connected; }
+ };
+Index: pu/hq_config.cpp
+===================================================================
+--- pu/hq_config.cpp	(revision 1066)
++++ pu/hq_config.cpp	(working copy)
+@@ -6,6 +6,7 @@
+ #include "gl_utils.h"
+ 
+ #include "os_net.h"
++#include "ma_utils.h"
+ 
+ #include "sg_cout.h"
+ 
+@@ -363,12 +364,9 @@
+             publicNetCmd.set(v, false);
+     }
+ 
+-    else if ( k == "xserv" )
+-	os::net::NetInitialiser::xserv = v;
+-    else if ( k == "xauth" )
+-	os::net::NetInitialiser::xauth = v;
++    else if ( k == "http_get_proxy" )
++        setHttpGetProxy(v);
+ 
+-	
+     else
+         throw gl::ex("Bad key [$1]", k);
+ }
+@@ -485,3 +483,19 @@
+     , ping(true)
+     , proxy(true)
+ {}
++
++void Config::setHttpGetProxy(const string & s)
++{
++    if ( s.empty() ) return;
++    size_t i = s.find('@');
++
++    if ( i == string::npos )
++    {
++        os::net::NetInitialiser::httpget_proxy_server = s;
++        return;
++    }
++
++    os::net::NetInitialiser::httpget_proxy_server = s.substr(i + 1);
++    os::net::NetInitialiser::httpget_proxy_auth64 = ma::b64enc(s.substr(0, i));
++}
++
+Index: pu/hq_config.h
+===================================================================
+--- pu/hq_config.h	(revision 1066)
++++ pu/hq_config.h	(working copy)
+@@ -158,6 +158,7 @@
+         void setHomeValid();
+         void loadFile(const char * cfgfile, bool forced);
+         void oneOption(const string & s);
++        void setHttpGetProxy(const string & s);
+ };
+ 
+ #endif
