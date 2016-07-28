@@ -1,107 +1,24 @@
-<agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
+<agt> > build slcs idxs tokenlist.txt localhost:13131
 <agt> : Directory idxs not accessible
 <agt> > fs mk idxs
 <agt> : OK
-<agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
+<agt> > build slcs idxs tokenlist.txt localhost:13131
 <agt> : Directory slcs not accessible
 <agt> > fs mk slcs
 <agt> : OK
-<agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131
+<agt> > build slcs idxs tokenlist.txt localhost:13131
 <agt> > fs cat tokenlist.txt
 <agt> : tokenlist.txt
 
-<agt> > fs rm tokenlist.txt
-<agt> : OK
-<agt> > cf db md5.db
+<agt> > cf db wrd.db
 <agt> > dl 127.0.0.1:13131 160101:today slcs
-<agt> > build slcs idxs tokenlist.txt 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
+<agt> > build slcs idxs tokenlist.txt localhost:13131 127.0.0.1:13132
 <agt> > fs cat tokenlist.txt
 <agt> : tokenlist.txt
-0 02d1b4ade425bb3eae8a3b8003282443 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 11e3f9867abe5fe87bf29f486b51b40a 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 14fc21b590b4d5167ec0e18e19f773e6 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fd233bf5fde1c8d8c8a4762239214b0 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 232dbdd145cbe801c1787fbcffc3db64 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 267bef2f88efb2f89eeb01f74d3d0be9 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 32f5f687c28d60669b0de9fd7c37c747 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 331795d242261f345e2bd50cac5f1741 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 3e811d6952d97b41065a3c364476e50b 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 5299ce412e27d9b179dc197280077f2d 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 69b3bb243382961a12b2f2e9f5ae78eb 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 79786b35af533650bcaebd7f124004e6 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 8b37721dd906e7cceed88c442fb685ab 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 b180041a31fd33a76bcbf660f3b87be3 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 bea52518742eef34e68d332d475a0f3f 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 becd59ed1201befabd8f24be4a834571 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 cca247210529c34bc22a52eb0027af68 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 d04b677f5d547c2ddeadc877bdfca6b0 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 d4d835c72f5d0a80112b1c9c763456cc 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 daaf14a22e47caf0c5df1c320bd6ae6e 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-
-<agt> > fs rm tokenlist.txt
-<agt> : OK
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
-
-<agt> > bd slcs idxs tokenlist.txt 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
-0 02d1b4ade425bb3eae8a3b8003282443 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 11e3f9867abe5fe87bf29f486b51b40a 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 14fc21b590b4d5167ec0e18e19f773e6 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fd233bf5fde1c8d8c8a4762239214b0 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 232dbdd145cbe801c1787fbcffc3db64 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 267bef2f88efb2f89eeb01f74d3d0be9 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 32f5f687c28d60669b0de9fd7c37c747 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 331795d242261f345e2bd50cac5f1741 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 3e811d6952d97b41065a3c364476e50b 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 5299ce412e27d9b179dc197280077f2d 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 69b3bb243382961a12b2f2e9f5ae78eb 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 79786b35af533650bcaebd7f124004e6 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 8b37721dd906e7cceed88c442fb685ab 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 b180041a31fd33a76bcbf660f3b87be3 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 bea52518742eef34e68d332d475a0f3f 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 becd59ed1201befabd8f24be4a834571 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 cca247210529c34bc22a52eb0027af68 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 d04b677f5d547c2ddeadc877bdfca6b0 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 d4d835c72f5d0a80112b1c9c763456cc 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 daaf14a22e47caf0c5df1c320bd6ae6e 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13131 127.0.0.1:13132 tokenswap.com:80
-
-<agt> > bd slcs idxs tokenlist.txt tokenswap.com:80
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
-0 02d1b4ade425bb3eae8a3b8003282443 tokenswap.com:80
-0 11e3f9867abe5fe87bf29f486b51b40a tokenswap.com:80
-0 14fc21b590b4d5167ec0e18e19f773e6 tokenswap.com:80
-0 1fae9fb8104184ffa074fa8b24bb10f7 tokenswap.com:80
-0 1fd233bf5fde1c8d8c8a4762239214b0 tokenswap.com:80
-0 1fe1f6d2b098d0117afc89e03a64dec3 tokenswap.com:80
-0 232dbdd145cbe801c1787fbcffc3db64 tokenswap.com:80
-0 267bef2f88efb2f89eeb01f74d3d0be9 tokenswap.com:80
-0 32f5f687c28d60669b0de9fd7c37c747 tokenswap.com:80
-0 331795d242261f345e2bd50cac5f1741 tokenswap.com:80
-0 3e811d6952d97b41065a3c364476e50b tokenswap.com:80
-0 5299ce412e27d9b179dc197280077f2d tokenswap.com:80
-0 69b3bb243382961a12b2f2e9f5ae78eb tokenswap.com:80
-0 79786b35af533650bcaebd7f124004e6 tokenswap.com:80
-0 8b37721dd906e7cceed88c442fb685ab tokenswap.com:80
-0 8e692b8ce018d1a58146bd2ca8908b3b tokenswap.com:80
-0 b180041a31fd33a76bcbf660f3b87be3 tokenswap.com:80
-0 bea52518742eef34e68d332d475a0f3f tokenswap.com:80
-0 becd59ed1201befabd8f24be4a834571 tokenswap.com:80
-0 cca247210529c34bc22a52eb0027af68 tokenswap.com:80
-0 d04b677f5d547c2ddeadc877bdfca6b0 tokenswap.com:80
-0 d4d835c72f5d0a80112b1c9c763456cc tokenswap.com:80
-0 daaf14a22e47caf0c5df1c320bd6ae6e tokenswap.com:80
-0 dd20be44d1d8dcfcf63a69622390ef88 tokenswap.com:80
+0 1fae localhost:13131 127.0.0.1:13132
+0 1fe1 localhost:13131 127.0.0.1:13132
+0 8e69 localhost:13131 127.0.0.1:13132
+0 dd20 localhost:13131 127.0.0.1:13132
 
 <agt> > fs rm tokenlist.txt
 <agt> : OK
