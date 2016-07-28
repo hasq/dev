@@ -68,13 +68,13 @@
 <agt> : [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
 <agt> > fs rm slcs
 <agt> : OK
+<agt> > cf lc n
 <agt> > fs mk slcs
 <agt> : OK
 <agt> > dl 127.0.0.1:13131 today slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 20160712-1] -> {REQ_FILE_BAD}
 <agt> > fs rm slcs
 <agt> : OK
+<agt> > cf lc a
 <agt> > fs mk slcs
 <agt> : OK
 <agt> > dl 127.0.0.1:13131 1 slcs

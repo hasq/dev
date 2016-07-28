@@ -25,10 +25,12 @@ ag fs mk "slcs"
 ag dl self 160102 "slcs"
 ag fs rm "slcs"
 
+ag cf lc "n"
 ag fs mk "slcs"
 ag dl self today "slcs"
 ag fs rm "slcs"
 
+ag cf lc "a"
 ag fs mk "slcs"
 ag dl self 1 "slcs"
 ag fs rm "slcs"
