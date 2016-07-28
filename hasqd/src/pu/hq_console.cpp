@@ -73,6 +73,12 @@ void Console::runOnceUnconditionally()
         else
             os::Cout() << "unknown command: " << toks[0] << ", try help" << os::endl;
 
+        // wait for servant
+        {
+            os::Thread::sleep(10);
+            sgl::Mutex svtBusy(publisher->getGlobalSpace()->svtArea.busy);
+        }
+
         os::Cout() << (svt_mode ? "." : "") << "> " << os::flush;
     }
     catch (gl::Exception e)

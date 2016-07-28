@@ -75,12 +75,14 @@ Servant::Servant(GlobalSpace * g) : Blockable(&g->stopPublisher)
 
 void Servant::runOnceUnconditionally()
 {
+    SvtArea & sa = gs->svtArea;
+    sgl::Mutex busy(sa.busy);
+
     while (1)
     {
         SvtTask * task = 0;
         SvtJob job;
         {
-            SvtArea & sa = gs->svtArea;
             sgl::Mutex mutex_sa(sa.access2svtArea);
 
             if ( !sa.jobQueue.empty() )

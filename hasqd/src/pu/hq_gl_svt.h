@@ -12,6 +12,7 @@ struct SvtArea
 {
     os::Semaphore svtSemaphore;
     os::Semaphore access2svtArea;
+    os::Semaphore busy; // let know console if necessary
 
     size_t maxLength;
 
@@ -21,7 +22,7 @@ struct SvtArea
     typedef std::map<string, string> mss;
     mss vars;
 
-    SvtArea(size_t x): access2svtArea(1), maxLength(x) {}
+    SvtArea(size_t x): access2svtArea(1), busy(1), maxLength(x) {}
     ~SvtArea();
     static void clearX(std::deque<SvtTask *> & q);
 
