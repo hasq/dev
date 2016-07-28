@@ -64,10 +64,10 @@ void Agent::print(const string & s, bool cmd) const
     gs->logger.add(Logger::Agent, ts );
 }
 
-Agent::Agent(GlobalSpace * g, string cmd1, string cmd2,
-             string cmd3, const vecstr & args)
-    : gs(g), as(args)
+void Agent::run(string cmd1, string cmd2, string cmd3, const vecstr & args)
 {
+	as =  args;
+
     if ( gs->config->dbg.agt )
     {
         string s = cmd1;

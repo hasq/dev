@@ -28,7 +28,7 @@ class Agent
 
 
         GlobalSpace * gs;
-        const vecstr & as;
+        vecstr as;
 
         void print(const string & s, bool cmd = false) const;
         void setshow(string & k, const string & v) const;
@@ -54,7 +54,9 @@ class Agent
         Agent(const Agent &);
 
     public:
-        Agent(GlobalSpace * g, string cmd1, string cmd2, string cmd3,
+        Agent(GlobalSpace * g): gs(g) {}
+
+        void run(string cmd1, string cmd2, string cmd3,
               const vecstr & args);
 
         static bool validCmd(string c);

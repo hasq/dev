@@ -1,3 +1,8 @@
+1. build agent into gl
+2. set default client protocol
+3. make httpget_proxy (HG) error on non HG protocols
+4. if HG proxy is set convert addr only for proxy
+
 hasqd.exe dprn=1 dsec=1 dtcp=z.log
 curl -x 127.0.0.1:13131 -U aaa:bbb http://ccc.ddd/eee
 curl http://127.0.0.1:13131/ping
