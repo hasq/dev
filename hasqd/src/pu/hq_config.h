@@ -29,6 +29,7 @@ struct Dbg
     bool pul; // pulse
     bool agt; // agent
     unsigned short id;
+    string tcp; // save incoming connection
 
     Dbg();
 };

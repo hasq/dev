@@ -114,6 +114,7 @@ cfg::Dbg::Dbg()
     , pul(false)
     , agt(false)
     , id(0)
+    , tcp()
 {}
 
 
@@ -220,6 +221,9 @@ void Config::processOptionKeyVal(const string & k, const string & v)
 
     else if ( k == "dpul" )
         dbg.pul = getbool(v);
+
+    else if ( k == "dtcp" )
+        dbg.tcp = v;
 
     else if ( k == "db" )
         dbcfg.addBase(v);

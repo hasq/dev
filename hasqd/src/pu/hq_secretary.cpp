@@ -44,9 +44,11 @@ void Secretary::runOnceUnconditionally()
     os::net::Socket * s = selector.wait(gs->config->seTimeout);
     alarms.trigger();
 
+    auto & dbg = gs->config->dbg;
+
     if ( !s )
     {
-        if (gs->config->dbg.pul) os::Cout() << '.' << os::flush;
+        if (dbg.pul) os::Cout() << '.' << os::flush;
         return;
     }
 
@@ -56,7 +58,18 @@ void Secretary::runOnceUnconditionally()
         return;
     }
 
-    if (gs->config->dbg.sec)
+    if (!dbg.tcp.empty())
+    {
+        string raw;
+        const string & msg = s->getReceivedMessage(&raw);
+
+        std::ofstream of(dbg.tcp.c_str(), std::ios::app);
+        of << "\n=== Received ===\n" << raw;
+        of << "\n=== Payload  ===\n" << msg;
+        of << "\n================\n";
+    }
+
+    if (dbg.sec)
     {
         const size_t MXL = 80;
 
@@ -69,11 +82,12 @@ void Secretary::runOnceUnconditionally()
         gl::replaceAll(raw, "\r", "");
         gl::replaceAll(raw, "\n", "\\n");
 
-        string pr = os::prmpt("sec", gs->config->dbg.id);
+        string pr = os::prmpt("sec", dbg.id);
         os::Cout() << pr << "Received [" << raw << "]\n"
                    << pr << "Submitting job ["
                    << (msg.size() < MXL ? msg : msg.substr(0, MXL))
                    << "]" << os::endl;
+
     }
 
     submitJob(s);
