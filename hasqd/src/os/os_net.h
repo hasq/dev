@@ -27,10 +27,10 @@ int getLastError();
 
 struct NetInitialiser
 {
-    static int    pid_;
+    static int  pid_;
     static char hostname_[100];
     static char ips_[16][16];
-    static int ips_size_;
+    static int  ips_size_;
 
     NetInitialiser();
     ~NetInitialiser();
@@ -39,6 +39,9 @@ struct NetInitialiser
     static void findip();
     static int findpid();
     static string list_ips(bool all);
+
+    static string xserv;
+    static string xauth;
 };
 
 class Selector;

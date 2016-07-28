@@ -12,6 +12,8 @@ int    os::net::NetInitialiser::pid_ = -1;
 char os::net::NetInitialiser::hostname_[100];
 char os::net::NetInitialiser::ips_[16][16];
 int os::net::NetInitialiser::ips_size_ = 0;
+string os::net::NetInitialiser::xserv;
+string os::net::NetInitialiser::xauth;
 
 os::net::NetInitialiser::NetInitialiser()
 {

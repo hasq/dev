@@ -363,6 +363,12 @@ void Config::processOptionKeyVal(const string & k, const string & v)
             publicNetCmd.set(v, false);
     }
 
+    else if ( k == "xserv" )
+	os::net::NetInitialiser::xserv = v;
+    else if ( k == "xauth" )
+	os::net::NetInitialiser::xauth = v;
+
+	
     else
         throw gl::ex("Bad key [$1]", k);
 }
