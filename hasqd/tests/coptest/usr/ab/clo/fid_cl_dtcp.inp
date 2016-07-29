@@ -1,0 +1,5 @@
+ex 0 OK 100 tcp self [ ping ]
+
+ag fs cat "tcp.log"
+ag fs rm "tcp.log"
+quit

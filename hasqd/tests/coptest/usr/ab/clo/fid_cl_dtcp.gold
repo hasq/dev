@@ -1,0 +1,17 @@
+<svt> ex 0 OK 100 tcp self [ ping ]
+<svt> ag fs cat "tcp.log"
+<agt> > fs cat tcp.log
+<agt> : tcp.log
+
+=== Received ===
+ping
+
+
+=== Payload  ===
+ping
+================
+
+<svt> ag fs rm "tcp.log"
+<agt> > fs rm tcp.log
+<agt> : OK
+<svt> quit

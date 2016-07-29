@@ -5,8 +5,8 @@
 tn=$(basename $0)
 tn=${tn%.*}
 
-$1/hasqd -cq quit=1 lock=0 nn="test14001" tcp_port=14001 &
-$1/hasqd -cq quit=1 lock=0 nn="test14002" tcp_port=14002 &
-$1/hasqd -cq quit=1 lock=0 s=$tn.inp nn="test14000" iplock=127.0.0.1:14001 tcp_port=14000 dprn=1 dsvt=1
+$1/hasqd -cqlx quit=1 lock=0 nn="test14001" tcp_port=14001 &
+$1/hasqd -cqlx quit=1 lock=0 nn="test14002" tcp_port=14002 &
+$1/hasqd -cqlx quit=1 lock=0 s=$tn.inp nn="test14000" iplock=127.0.0.1:14001 tcp_port=14000 dprn=1 dsvt=1
 
  

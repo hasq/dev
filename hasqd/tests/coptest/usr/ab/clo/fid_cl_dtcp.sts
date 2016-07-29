@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing CLO dtcp
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/hasqd -cqlnx dtcp="tcp.log" dprn=1 dsvt=1 dagt=1 s=$in.inp
