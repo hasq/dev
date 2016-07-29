@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# HSL: agent sort
+
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -lqnxc dprn=1 dsvt=0 dagt=1 tcp_port=0 s=$in.inp

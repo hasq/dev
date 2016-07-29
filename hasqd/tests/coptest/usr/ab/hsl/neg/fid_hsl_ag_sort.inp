@@ -1,0 +1,5 @@
+ag sort
+ag sort "a" 
+ag sort "a" "b"
+
+quit
