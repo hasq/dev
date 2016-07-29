@@ -4,7 +4,7 @@
 <agt> > config logfile
 <agt> : agt0.log
 <agt> > fs cp agt0.log temp.log
-<agt> : OK 78
+<agt> : OK 75
 <agt> > fs rm temp.log
 <agt> : OK
 <agt> > fs cat agt0.log
@@ -12,7 +12,7 @@
 101035 > config logfile
 101035 : agt0.log
 101035 > fs cp agt0.log temp.log
-101035 : OK 78
+101035 : OK 75
 101035 > fs rm temp.log
 101035 : OK
 101035 > fs cat agt0.log

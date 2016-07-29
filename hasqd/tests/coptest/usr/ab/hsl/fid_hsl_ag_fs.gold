@@ -23,13 +23,13 @@
 
 <agt> > fs cp aaa/file.log bbb/file.log
 <agt> : Cannot open file bbb/file.log
-<agt> : OK 128
+<agt> : OK 122
 <agt> > fs cp bbb/file.log ccc/file.log
 <agt> : REQ_PATH_BAD
 <agt> > fs mk bbb
 <agt> : OK
 <agt> > fs cp aaa/file.log bbb/file.log
-<agt> : OK 325
+<agt> : OK 312
 <agt> > fs cat bbb/file.log
 <agt> : bbb/file.log
 101035 > fs cat aaa/file.log
@@ -38,7 +38,7 @@
 
 101035 > fs cp aaa/file.log bbb/file.log
 101035 : Cannot open file bbb/file.log
-101035 : OK 128
+101035 : OK 122
 101035 > fs cp bbb/file.log ccc/file.log
 101035 : REQ_PATH_BAD
 101035 > fs mk bbb
@@ -51,7 +51,7 @@
 <agt> > fs rm ccc
 <agt> : REQ_PATH_BAD
 <agt> > fs cp bbb/file.log bbb/file2.log
-<agt> : OK 325
+<agt> : OK 312
 <agt> > fs cat bbb/file2.log
 <agt> : bbb/file2.log
 101035 > fs cat aaa/file.log
@@ -60,7 +60,7 @@
 
 101035 > fs cp aaa/file.log bbb/file.log
 101035 : Cannot open file bbb/file.log
-101035 : OK 128
+101035 : OK 122
 101035 > fs cp bbb/file.log ccc/file.log
 101035 : REQ_PATH_BAD
 101035 > fs mk bbb
@@ -98,22 +98,22 @@
 
 101035 > fs cp aaa/file.log bbb/file.log
 101035 : Cannot open file bbb/file.log
-101035 : OK 128
+101035 : OK 122
 101035 > fs cp bbb/file.log ccc/file.log
 101035 : REQ_PATH_BAD
 101035 > fs mk bbb
 101035 : OK
 101035 > fs cp aaa/file.log bbb/file.log
-101035 : OK 325
+101035 : OK 312
 101035 > fs cat bbb/file.log
 101035 : bbb/file.log
 101035 > fs cat aaa/file.log
 101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
 
 101035 > fs cp aaa/file.log bbb/file.log
 101035 : Cannot open file bbb/file.log
-101035 : OK 128
+101035 : OK 122
 101035 > fs cp bbb/file.log ccc/file.log
 101035 : REQ_PATH_BAD
 101035 > fs mk bbb
@@ -123,16 +123,16 @@
 101035 > fs rm ccc
 101035 : REQ_PATH_BAD
 101035 > fs cp bbb/file.log bbb/file2.log
-101035 : OK 325
+101035 : OK 312
 101035 > fs cat bbb/file2.log
 101035 : bbb/file2.log
 101035 > fs cat aaa/file.log
 101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+101035 > fs cat aaa/file.log
 
 101035 > fs cp aaa/file.log bbb/file.log
 101035 : Cannot open file bbb/file.log
-101035 : OK 128
+101035 : OK 122
 101035 > fs cp bbb/file.log ccc/file.log
 101035 : REQ_PATH_BAD
 101035 > fs mk bbb
