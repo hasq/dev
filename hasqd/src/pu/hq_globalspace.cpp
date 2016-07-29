@@ -39,6 +39,8 @@ GlobalSpace::GlobalSpace(const Config * c) :
     , activity(c->actQueSize)
     , cpu_load(0)
     , netdisabled(false)
+    , agent(this)
+    , clntProtocol(c->clntProt)
 {}
 
 

@@ -14,12 +14,18 @@
 #include "hq_logger.h"
 #include "hq_platform.h"
 
+gl::ProtHq   Config::clntHq(gl::Protocol::Client);
+gl::HttpGet  Config::clntHttpGet(gl::Protocol::Client);
+gl::HttpPost Config::clntHttpPost(gl::Protocol::Client);
+
 Config::Config(int ac, const char * av[], const char * cfgfile)
     :
     createThreads(ALL)
     , seTimeout(6000)
     , reorgToutS(60 * 60 * 3)
     , cpuLoadCycle(0)
+
+    , clntProt(&clntHq)
 
     , wkrAreaLimSize(1000)  // qlim
     , wkrAreaJobSize(100)   // qwkr

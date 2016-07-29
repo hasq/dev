@@ -746,7 +746,7 @@ string SvtTaskAgent::process()
     for ( size_t i = 0; i < tasks.size(); i++ )
         args.push_back( tasks[i]->process() );
 
-    Agent(gs).run(sub1, sub2, sub3, args);
+    gs->agent.run(sub1, sub2, sub3, args);
 
     return "";
 }

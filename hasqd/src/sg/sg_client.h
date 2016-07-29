@@ -13,12 +13,12 @@ namespace sgl
 class Client
 {
         bool ok;
-        gl::ProtHq prot;
+        ///gl::ProtHq prot;
         os::IpAddr addr;
         os::net::TcpClient tcpClient;
 
     public:
-        Client(gl::NetworkLimits nl, const string & link) throw ();
+        Client(gl::Protocol * prot, gl::NetworkLimits nl, const string & link) throw ();
 
         bool isok() const { return ok; }
 

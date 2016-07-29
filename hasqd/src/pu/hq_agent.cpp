@@ -16,12 +16,13 @@
 #include "hq_logger.h"
 
 #include "hq_agent.h"
+#include "hq_globalspace.h"
 
-string Agent::logfile;
-string Agent::webpath;
-string Agent::database;
-string Agent::logcomm = "no";
-Agent::Prot Agent::protocol = Agent::Hasq;
+///string Agent::logfile;
+///string Agent::webpath;
+///string Agent::database;
+///string Agent::logcomm = "no";
+///Agent::Prot Agent::protocol = Agent::Hasq;
 
 bool Agent::validCmd(string c)
 {
@@ -66,7 +67,7 @@ void Agent::print(const string & s, bool cmd) const
 
 void Agent::run(string cmd1, string cmd2, string cmd3, const vecstr & args)
 {
-	as =  args;
+    as =  args;
 
     if ( gs->config->dbg.agt )
     {
@@ -122,7 +123,7 @@ void Agent::setshow(string & k, const string & v) const
     else k = v;
 }
 
-void Agent::setshow_prot(const string & v) const
+void Agent::setshow_prot(const string & v)
 {
     if ( v.empty() )
     {
@@ -218,7 +219,7 @@ string Agent::fetch(const string & srv, const string & cmd)
     return r;
 }
 
-void Agent::translateDate(string & s)
+void Agent::translateDate(string & s) const
 {
     string today = os::Timer::getGmd();
     if ( s == "today" ) s = today;

@@ -3,11 +3,12 @@
 #include "sg_client.h"
 
 
-sgl::Client::Client(gl::NetworkLimits netLimits, const string & link) throw() :
+sgl::Client::Client(gl::Protocol * prot,
+                    gl::NetworkLimits netLimits, const string & link) throw() :
     ok(false)
-    , prot(gl::ProtHq::Client)
+    ///, prot(gl::ProtHq::Client)
     , addr(link, ok)
-    , tcpClient(&prot, addr, netLimits)
+    , tcpClient(prot, addr, netLimits)
 {
     if (ok) ok = tcpClient.isConnected();
 }

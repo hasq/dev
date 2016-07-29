@@ -7,6 +7,7 @@
 
 #include "hq_config.h"
 #include "hq_logger.h"
+#include "hq_agent.h"
 
 #include "hq_db.h"
 
@@ -47,6 +48,9 @@ class GlobalSpace
 
         int cpu_load; // percent
         bool netdisabled;
+
+        Agent agent;
+        gl::Protocol * clntProtocol;
 
     public:
         GlobalSpace(const Config * c);

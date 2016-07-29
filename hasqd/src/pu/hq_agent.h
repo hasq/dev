@@ -6,21 +6,23 @@
 #include <vector>
 #include <string>
 
-#include "hq_globalspace.h"
+///#include "hq_globalspace.h"
 
 using std::string;
+
+class GlobalSpace;
 
 class Agent
 {
         typedef std::vector<string> vecstr;
 
-        static string logfile;
-        static string webpath;
-        static string database;
-        static string logcomm;
-        static enum Prot { Hasq, HttpGet, HttpPost } protocol;
+        string logfile;
+        string webpath;
+        string database;
+        string logcomm;
+        enum Prot { Hasq, HttpGet, HttpPost } protocol;
 
-        static bool islogc(char x)
+        bool islogc(char x) const
         {
             const string & m = logcomm;
             return ( !m.empty() && ( m[0] == 'a' || m[0] == x ) );
@@ -32,8 +34,8 @@ class Agent
 
         void print(const string & s, bool cmd = false) const;
         void setshow(string & k, const string & v) const;
-        void setshow_prot(const string & v) const;
-        static void translateDate(string & v);
+        void setshow_prot(const string & v);
+        void translateDate(string & v) const;
 
         void config(const string & s);
         void filesys(const string & s);
@@ -54,10 +56,10 @@ class Agent
         Agent(const Agent &);
 
     public:
-        Agent(GlobalSpace * g): gs(g) {}
+        Agent(GlobalSpace * g): gs(g), logcomm("no"), protocol(Hasq) {}
 
         void run(string cmd1, string cmd2, string cmd3,
-              const vecstr & args);
+                 const vecstr & args);
 
         static bool validCmd(string c);
         static bool sub2Cmd(string c);

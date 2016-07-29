@@ -785,7 +785,7 @@ string Worker2::proxy()
 
 string Worker2::proxy(GlobalSpace * gx, const string & ipport, const string & cmd)
 {
-    sgl::Client c(gx->config->netLimits, ipport);
+    sgl::Client c(gx->clntProtocol, gx->config->netLimits, ipport);
     if ( !c.isok() )
         return er::Code(er::REQ_PRX_DEAD);
 

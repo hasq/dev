@@ -78,6 +78,11 @@ class Config
         int cpuLoadCycle;
 
         gl::NetworkLimits netLimits;
+        static gl::ProtHq   clntHq;
+        static gl::HttpGet  clntHttpGet;
+        static gl::HttpPost clntHttpPost;
+        gl::Protocol * clntProt;
+
         int wkrAreaLimSize;
         int wkrAreaJobSize;
         int cedAreaSize;
