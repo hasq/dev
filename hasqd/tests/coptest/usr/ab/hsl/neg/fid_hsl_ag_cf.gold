@@ -1,0 +1,22 @@
+Offensive command (parse): agent config
+Error: Servant parser - not enough args: 2
+<agt> > cf a
+<agt> : Error: Agent bad command: a
+Offensive command (exec): agent cf a
+Error: Agent bad command: a
+<agt> > cf database a b
+<agt> : Error: Agent too many arguments
+Offensive command (exec): agent cf database "a" "b"
+Error: Agent too many arguments
+<agt> > cf logfile a b
+<agt> : Error: Agent too many arguments
+Offensive command (exec): agent cf logfile "a" "b"
+Error: Agent too many arguments
+<agt> > cf logcomm a b
+<agt> : Error: Agent too many arguments
+Offensive command (exec): agent cf logcomm "a" "b"
+Error: Agent too many arguments
+<agt> > cf wp a b
+<agt> : Error: Agent too many arguments
+Offensive command (exec): agent cf wp "a" "b"
+Error: Agent too many arguments

@@ -1,0 +1,8 @@
+agent config
+agent cf a
+agent cf database "a" "b"
+agent cf logfile "a" "b"
+agent cf logcomm "a" "b"
+agent cf wp "a" "b"
+
+quit
