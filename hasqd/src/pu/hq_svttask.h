@@ -134,6 +134,13 @@ class SvtTaskTcp : public SvtTask
         string process() { return proc(gl::ProtHq(gl::Protocol::Client)); }
 };
 
+class SvtTaskQuery : public SvtTaskTcp
+{
+    public:
+        SvtTaskQuery(GlobalSpace * g, const vs & cmd, size_t & i): SvtTaskTcp(g, cmd, i) {}
+        string process();
+};
+
 class SvtTaskHttpGet : public SvtTaskTcp
 {
     public:
