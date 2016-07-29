@@ -1,65 +1,83 @@
 
 TEST 1
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 <html>hello</html>
 
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 <html>hello</html>
 
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 <html>hello</html>
 
 <svt> quit
 
 TEST 2 - does not work because no '/' in the path
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 REQ_MSG_HEAD
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 REQ_MSG_HEAD
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 REQ_MSG_HEAD
 <svt> quit
 
 TEST 3
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 <html>hello</html>
 
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 <html>hello</html>
 
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 <html>hello</html>
 
 <svt> quit
 
 TEST 4
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 <html>hello</html>
 
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 <html>hello</html>
 
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 <html>hello</html>
 
 <svt> quit
 
 TEST 5 - does not work because, 'home' is not defined as directory
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 REQ_MSG_HEAD
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 REQ_MSG_HEAD
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 REQ_MSG_HEAD
 <svt> quit
 
 TEST 6 - outputs directory
-<svt> print http_get self [ ]
+<svt> net protocol "http_get"
+<svt> print tcp self [ ]
 <li><a href="index.html">index.html</a></li>
 </ul></body></html>
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 <li><a href="index.html">index.html</a></li>
 </ul></body></html>
+<svt> net protocol "hasq"
 <svt> print tcp self [ ]
 <li><a href="index.html">index.html</a></li>
 </ul></body></html>

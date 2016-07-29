@@ -1,7 +1,7 @@
-
-print http_post self [ ]
-print http_post self [ a ]
-print http_post self [ / ]
+net protocol "http_post"
+print tcp self [ ]
+print tcp self [ a ]
+print tcp self [ / ]
 
 quit
 

@@ -4,27 +4,28 @@ Database on disk erased successfully
 <zdb> load
 <zdb> addpwd _md5 0:1 rdn pass
 Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
-HOST: name=LOD-DSTO11711613131 ip=131.185.78.34 port=13131
+HOST: name=EDNPZAA6886313131 ip=131.185.78.7 port=13131
 Database: OK
 Starting with threads: all
-<svt> print http_post self [ ]
+<svt> net protocol "http_post"
+<svt> print tcp self [ ]
 REQ_MSG_HEAD
-<svt> print http_post self [ a ]
+<svt> print tcp self [ a ]
 REQ_HASHTYPE_BAD
-<svt> print http_post self [ / ]
+<svt> print tcp self [ / ]
 <html><head><title>Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016</title></head><body><h2>Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016</h2><ul>
 <li><a href="_md5/">_md5/</a></li>
 </ul></body></html>
 <svt> quit
 Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
-HOST: name=LOD-DSTO11711613131 ip=131.185.78.34 port=13131
+HOST: name=EDNPZAA6886313131 ip=131.185.78.7 port=13131
 Database: OK
 Starting with threads: all
 <wkr> (127.0.0.1)[] -> [REQ_MSG_HEAD]
 <wkr> (127.0.0.1)[a] -> [REQ_HASHTYPE_BAD]
 <wkr> (127.0.0.1)[/] -> [<html><head><title>Hasq server 0.4.2 ...]
 Hasq server 0.4.2 (Win_x86) Hasq Technology Pty Ltd (C) 2013-2016
-HOST: name=LOD-DSTO11711613131 ip=131.185.78.34 port=13131
+HOST: name=EDNPZAA6886313131 ip=131.185.78.7 port=13131
 Database: OK
 Starting with threads: all
 <sec> Received [POST / HTTP/1.0\nContent-Length: 8\n\ncommand=]

@@ -122,7 +122,6 @@ class SvtTaskRecpwd : public SvtTask
         string process();
 };
 
-
 class SvtTaskTcp : public SvtTask
 {
         string saddr;
@@ -131,30 +130,9 @@ class SvtTaskTcp : public SvtTask
         string proc(const gl::Protocol & p);
     public:
         SvtTaskTcp(GlobalSpace * g, const vs & cmd, size_t & i);
-        string process() { return proc(gl::ProtHq(gl::Protocol::Client)); }
-};
-
-class SvtTaskQuery : public SvtTaskTcp
-{
-    public:
-        SvtTaskQuery(GlobalSpace * g, const vs & cmd, size_t & i): SvtTaskTcp(g, cmd, i) {}
         string process();
+        ///string process() { return proc(gl::ProtHq(gl::Protocol::Client)); }
 };
-
-class SvtTaskHttpGet : public SvtTaskTcp
-{
-    public:
-        SvtTaskHttpGet(GlobalSpace * g, const vs & cmd, size_t & i): SvtTaskTcp(g, cmd, i) {}
-        string process() { return proc(gl::HttpGet(gl::Protocol::Client)); }
-};
-
-class SvtTaskHttpPost : public SvtTaskTcp
-{
-    public:
-        SvtTaskHttpPost(GlobalSpace * g, const vs & cmd, size_t & i): SvtTaskTcp(g, cmd, i) {}
-        string process() { return proc(gl::HttpPost(gl::Protocol::Client)); }
-};
-
 
 class SvtTaskHash : public SvtTask
 {

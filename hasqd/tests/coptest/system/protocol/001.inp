@@ -1,7 +1,7 @@
-
-print http_get self [ ]
-print http_get self [ a ]
-print http_get self [ / ]
+net protocol "http_get"
+print tcp self [ ]
+print tcp self [ a ]
+print tcp self [ / ]
 
 quit
 

@@ -1,4 +1,7 @@
-print http_get self [ ]
-print http_post self [ ]
+net protocol "http_get"
+print tcp self [ ]
+net protocol "http_post"
+print tcp self [ ]
+net protocol "hasq"
 print tcp self [ ]
 quit

@@ -1,12 +1,18 @@
-print expect 0 <html>hello</html> 100 http_get self [ home/index.html ]
-print expect 0 <html>hello</html> 100 http_get self [ ]
+net protocol "http_get"
+print expect 0 <html>hello</html> 100 tcp self [ home/index.html ]
 print expect 0 <html>hello</html> 100 tcp self [ ]
-print expect 0 <html>hello</html> 100 http_post self [ ]
 
-print http_get self [ home/ ]
-print http_get self [ home/otherdir/ ]
-print http_get self [ home/otherdir/otherfile.txt ]
+net protocol "hasq"
+print expect 0 <html>hello</html> 100 tcp self [ ]
+net protocol "http_post"
+print expect 0 <html>hello</html> 100 tcp self [ ]
 
+net protocol "http_get"
+print tcp self [ home/ ]
+print tcp self [ home/otherdir/ ]
+print tcp self [ home/otherdir/otherfile.txt ]
+
+net protocol "hasq"
 print tcp self [ home/ ]
 print tcp self [ home/otherdir/ ]
 print tcp self [ home/otherdir/otherfile.txt ]

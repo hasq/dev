@@ -55,15 +55,6 @@ SvtTask * SvtTask::parse(GlobalSpace * gs, const vs & cmd, size_t & i)
     if ( f == "tcp" )
         return new SvtTaskTcp(gs, cmd, i);
 
-    if ( f == "query" )
-        return new SvtTaskQuery(gs, cmd, i);
-
-    if ( f == "http_get" )
-        return new SvtTaskHttpGet(gs, cmd, i);
-
-    if ( f == "http_post" )
-        return new SvtTaskHttpPost(gs, cmd, i);
-
     if ( f == "hash" )
         return new SvtTaskHash(gs, cmd, i);
 
@@ -741,7 +732,7 @@ string SvtTaskAgent::process()
     return "";
 }
 
-string SvtTaskQuery::process() { return proc(*(gs->clntProtocol)); }
+string SvtTaskTcp::process() { return proc(*(gs->clntProtocol)); }
 
 SvtTaskNet::SvtTaskNet(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
 {
