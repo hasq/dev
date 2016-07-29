@@ -12,6 +12,7 @@
 #include "os_timer.h"
 #include "os_exec.h"
 #include "sg_cout.h"
+#include "sg_client.h"
 
 #include "hq_logger.h"
 
@@ -192,25 +193,31 @@ void Agent::filesys(const string & s)
 
 string Agent::fetch(const string & srv, const string & cmd)
 {
-    gl::ProtHq prot_0(gl::Protocol::Client);
-    gl::HttpGet prot_1(gl::Protocol::Client);
-    gl::HttpPost prot_2(gl::Protocol::Client);
+    /*///
+        gl::ProtHq prot_0(gl::Protocol::Client);
+        gl::HttpGet prot_1(gl::Protocol::Client);
+        gl::HttpPost prot_2(gl::Protocol::Client);
 
-    gl::Protocol * prot = 0;
+        gl::Protocol * prot = 0;
 
-    switch (protocol)
-    {
-        case Hasq:     prot = &prot_0; break;
-        case HttpGet:  prot = &prot_1; break;
-        case HttpPost: prot = &prot_2; break;
-    }
+        switch (protocol)
+        {
+            case Hasq:     prot = &prot_0; break;
+            case HttpGet:  prot = &prot_1; break;
+            case HttpPost: prot = &prot_2; break;
+        }
 
-    bool ok = false;
-    os::net::TcpClient c(prot, os::IpAddr(srv, ok), gs->config->netLimits);
-    if ( !ok ) throw gl::Never("Creating IpAddr failed: $1", srv);
+        bool ok = false;
+        os::net::TcpClient c(prot, os::IpAddr(srv, ok), gs->config->netLimits);
+        if ( !ok ) throw gl::Never("Creating IpAddr failed: $1", srv);
 
-    c.send_msg(cmd);
-    string r = c.recvMsgOrEmpty();
+        c.send_msg(cmd);
+        string r = c.recvMsgOrEmpty();
+    */
+
+    sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    ///if ( !x.isok() ) throw gl::Never("Creating IpAddr failed: $1", srv);
+    string r = x.ask(cmd);
 
     if ( islogc('c') )
         print("[" + cmd + "] -> {"

@@ -1,5 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+///#include <cstdio>
 
 typedef struct in_addr TypeIpa;
 
@@ -45,6 +46,7 @@ bool os::IpAddr::initip(const char * s) throw()
     else if ( 0 ==::name2tcpip( s, &native(ip) ) ) {}
     else
         return false;
+
     return true;
 }
 
