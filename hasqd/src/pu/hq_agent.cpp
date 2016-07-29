@@ -53,7 +53,7 @@ void Agent::print(const string & s, bool cmd) const
 
     if ( !logfile.empty() )
     {
-        std::ofstream of(logfile.c_str(), std::ios::app);
+        std::ofstream of(logfile.c_str(), std::ios::app | std::ios::binary);
         of << ts << '\n';
     }
 
