@@ -106,6 +106,9 @@ SvtTask * SvtTask::parse(GlobalSpace * gs, const vs & cmd, size_t & i)
     if ( f == "agent" || f == "ag" )
         return new SvtTaskAgent(gs, cmd, i);
 
+    if ( f == "net" )
+        return new SvtTaskNet(gs, cmd, i);
+
     else if ( cmd.size() > i && at(cmd, i) == "=" )
         return new SvtTaskAssign(gs, cmd, ++i, f);
 
@@ -755,3 +758,48 @@ string SvtTaskAgent::process()
 }
 
 string SvtTaskQuery::process() { return proc(*(gs->clntProtocol)); }
+
+SvtTaskNet::SvtTaskNet(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
+{
+    sub = at(cmd, i++);
+    while ( i < cmd.size() ) tasks.push_back( parse(g, cmd, i) );
+}
+
+string SvtTaskNet::process()
+{
+    std::vector<string> args;
+
+    for ( size_t i = 0; i < tasks.size(); i++ )
+        args.push_back( tasks[i]->process() );
+
+    if ( args.size() != 1 )
+        throw gl::ex("Too many args for 'net'");
+
+    if ( sub == "protocol" ) return set_prot(args[0]);
+
+    throw gl::ex("Unknown subcommand " + sub);
+}
+
+string SvtTaskNet::show_prot(const string & v)
+{
+    const gl::Protocol * p = gs->clntProtocol;
+
+    if ( dynamic_cast<const gl::ProtHq *>(p) ) return "hasq";
+    if ( dynamic_cast<const gl::HttpGet *>(p) ) return "http_get";
+    if ( dynamic_cast<const gl::HttpPost *>(p) ) return "http_post";
+    throw gl::Never("Bad protocol class");
+}
+
+string SvtTaskNet::set_prot(const string & v)
+{
+    string was = show_prot(v);
+    if ( v.empty() ) return was;
+
+    if (false);
+    else if ( v == "hasq" )      gs->clntProtocol = &gs->config->clntHq;
+    else if ( v == "http_get" )  gs->clntProtocol = &gs->config->clntHttpGet;
+    else if ( v == "http_post" ) gs->clntProtocol = &gs->config->clntHttpPost;
+    else throw gl::ex("Invalid value $1, use (hasq|http_get|http_post)", v);
+
+    return was + " -> " + v;
+}
