@@ -19,12 +19,6 @@
 #include "hq_agent.h"
 #include "hq_globalspace.h"
 
-///string Agent::logfile;
-///string Agent::webpath;
-///string Agent::database;
-///string Agent::logcomm = "no";
-///Agent::Prot Agent::protocol = Agent::Hasq;
-
 bool Agent::validCmd(string c)
 {
     if ( c == "config" || c == "cf" ) return true;
@@ -123,28 +117,6 @@ void Agent::setshow(string & k, const string & v) const
     if ( v.empty() ) print(k);
     else k = v;
 }
-
-/*///
-void Agent::setshow_prot(const string & v)
-{
-    if ( v.empty() )
-    {
-        switch (protocol)
-        {
-            case Hasq: print("hasq"); return;
-            case HttpGet: print("http_get"); return;
-            case HttpPost: print("http_post"); return;
-        }
-        throw gl::Never("Bad prot enum");
-    }
-
-    if (false);
-    else if ( v == "hasq" ) protocol = Hasq;
-    else if ( v == "http_get" ) protocol = HttpGet;
-    else if ( v == "http_post" ) protocol = HttpPost;
-    else throw gl::ex("Invalid value $1, use (hasq|http_get|http_post)", v);
-}
-*/
 
 void Agent::filesys(const string & s)
 {

@@ -138,8 +138,7 @@ string SvtTaskQuit::process()
     if ( !gs->config->noSecretary )
     {
         gl::ProtHq prot(gl::ProtHq::Client);
-        os::IpAddr link = gs->config->seIpLink;
-        os::net::TcpClient c(&prot, link, gs->config->netLimits);
+        os::net::TcpClient c(&prot, gs->config->seIpLink, gs->config->netLimits);
         if ( c.isConnected() ) c.send_msg("bye");
     }
     return "";
@@ -392,21 +391,6 @@ os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
 {
     string s = x;
     translateIpAddr(s);
-
-    /*///
-    if ( s == "self" )
-        return gs->config->seIpLink;
-
-    gs->svtArea.translateVar(s);
-
-    string::size_type i = s.find(":");
-
-    if ( i == string::npos )
-        throw gl::ex("Bad tcp address $1, expecting ip:port", s);
-
-    unsigned short port = static_cast<unsigned short>(gl::toi( s.substr(i + 1) ));
-    return os::IpAddr( s.substr(0, i).c_str(), port );
-    */
 
     bool ok = false;
     os::IpAddr r(s, ok);
