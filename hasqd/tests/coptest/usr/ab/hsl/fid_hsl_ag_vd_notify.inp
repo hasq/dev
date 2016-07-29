@@ -1,6 +1,6 @@
 ag fs mk "slcs"
 ag fs mk "idxs"
-ag cf db "md5.db"
+ag cf db "wrd.db"
 ag dl self 160101:160103 "slcs"
 ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13133 127.0.0.1:13134 ]
 ag fs cat "tokenlist.bd"
@@ -11,23 +11,23 @@ ag fs cat "tokenlist.chk"
 
 print ex 0 OK 100 tcp 127.0.0.1:13133 [ info nbs ]
 
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag cf lc "a"
 
 agent vd notify "tokenlist.chk" "tokenlist.ntf"
 agent fs cat "tokenlist.ntf"
 
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag cf lc "n"
 
-ex 0 OK 100 tcp 127.0.0.1:13132 { [ connect 127.0.0.1:13131 ] sleep 50 }
-ex 0 OK 100 tcp 127.0.0.1:13133 { [ connect 127.0.0.1:13131 ] sleep 50 }
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ info nbs ]
-print ex 0 OK 100 tcp 127.0.0.1:13133 [ info nbs ]
+ex 0 OK 100 tcp 127.0.0.1:13132 { [ connect 127.0.0.1:13131 ] sleep 100 }
+ex 0 OK 100 tcp 127.0.0.1:13133 { [ connect 127.0.0.1:13131 ] sleep 100 }
+print ex 1 127.0.0.1:13131 500 tcp 127.0.0.1:13132 [ info nbs ]
+print ex 1 127.0.0.1:13131 500 tcp 127.0.0.1:13133 [ info nbs ]
 
 ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 ]
 agent vd check "tokenlist.bd" "tokenlist.chk"
@@ -37,9 +37,9 @@ ag fs cat "tokenlist.chk"
 agent vd notify "tokenlist.chk" "tokenlist.ntf"
 agent fs cat "tokenlist.ntf"
 
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
-print ex 0 OK 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+print ex 0 OK 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag fs rm "tokenlist.chk"
 ag fs rm "tokenlist.ntf"

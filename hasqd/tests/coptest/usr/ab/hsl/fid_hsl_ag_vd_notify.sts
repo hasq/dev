@@ -11,10 +11,10 @@ d1="set date 20160101"
 d2="set date 20160102"
 d3="set date 20160103"
 er="erasedisk"
-cr="create md5.db md5 MD5 1 [] 1 0"
-a1="addurf md5.db 0 [rdn]0:3 [pwd]"
-a2="addurf md5.db 0 [rdn]0:1 [pwd]"
-a3="addurf md5.db 0 [rdn]1:3 [pwd]"
+cr="create wrd.db wrd WORD 1 [] 1 0"
+a1="addurf wrd.db 0 [rdn]0:3 [pwd]"
+a2="addurf wrd.db 0 [rdn]0:1 [pwd]"
+a3="addurf wrd.db 0 [rdn]1:3 [pwd]"
 
 mkdir -p db3
 $1/zdb "set base db3" "$er" "$cr" >/dev/null
