@@ -39,9 +39,6 @@ struct NetInitialiser
     static void findip();
     static int findpid();
     static string list_ips(bool all);
-
-    static string httpget_proxy_server;
-    static string httpget_proxy_auth64;
 };
 
 class Selector;
@@ -138,7 +135,7 @@ class TcpClient : public TcpSocket
         ///struct ProxyData { string remote, auth64; };
 
         TcpClient(const gl::Protocol * p, IpAddr il,
-                  gl::NetworkLimits nl, gl::ProxyData * px);
+                  gl::NetworkLimits nl, const gl::ProxyData * px);
 
         bool isConnected() const { return state == Connected; }
 };

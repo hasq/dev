@@ -130,7 +130,7 @@ void cmd_open(std::vector<string> cmd)
 
     os::IpAddr ipaddr(mysip.c_str(), myport);
 
-    conns.push_back( new os::net::TcpClient(&prot, ipaddr, nl) );
+    conns.push_back( new os::net::TcpClient(&prot, ipaddr, nl, nullptr) );
 }
 
 void cmd_recv(std::vector<string> cmd)

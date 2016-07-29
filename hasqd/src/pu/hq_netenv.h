@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "sg_client.h"
+
 using std::string;
 
 class GlobalSpace;
@@ -12,8 +14,16 @@ class GlobalSpace;
 class NetEnv
 {
         GlobalSpace * gs;
+
     public:
-        NetEnv(GlobalSpace * g) : gs(g) {}
+        gl::Protocol * clntProtocol;
+        gl::ProxyData proxy;
+
+    public:
+        NetEnv(GlobalSpace * g, gl::Protocol * p, gl::ProxyData x) :
+            gs(g), clntProtocol(p), proxy(x) {}
+
+        sgl::Link link(const string & addr) const;
 };
 
 

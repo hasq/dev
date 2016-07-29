@@ -497,11 +497,11 @@ void Config::setHttpGetProxy(const string & s)
 
     if ( i == string::npos )
     {
-        os::net::NetInitialiser::httpget_proxy_server = s;
+        pxData.remote = s;
         return;
     }
 
-    os::net::NetInitialiser::httpget_proxy_server = s.substr(i + 1);
-    os::net::NetInitialiser::httpget_proxy_auth64 = ma::b64enc(s.substr(0, i));
+    pxData.remote = s.substr(i + 1);
+    pxData.auth64 = ma::b64enc(s.substr(0, i));
 }
 

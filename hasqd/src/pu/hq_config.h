@@ -82,6 +82,7 @@ class Config
         static gl::HttpGet  clntHttpGet;
         static gl::HttpPost clntHttpPost;
         gl::Protocol * clntProt;
+        gl::ProxyData pxData;
 
         int wkrAreaLimSize;
         int wkrAreaJobSize;

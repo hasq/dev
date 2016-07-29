@@ -12,8 +12,6 @@ int    os::net::NetInitialiser::pid_ = -1;
 char os::net::NetInitialiser::hostname_[100];
 char os::net::NetInitialiser::ips_[16][16];
 int os::net::NetInitialiser::ips_size_ = 0;
-string os::net::NetInitialiser::httpget_proxy_server;
-string os::net::NetInitialiser::httpget_proxy_auth64;
 
 os::net::NetInitialiser::NetInitialiser()
 {
@@ -194,7 +192,7 @@ os::net::TcpClient::X os::net::TcpClient::proxy(const gl::Protocol * p, IpAddr i
 */
 
 os::net::TcpClient::TcpClient(const gl::Protocol * p, IpAddr il,
-                              gl::NetworkLimits nl, gl::ProxyData * px) :
+                              gl::NetworkLimits nl, const gl::ProxyData * px) :
     TcpSocket(p, il, nl)
 {
     init(nl.maxConnTime);

@@ -40,7 +40,8 @@ GlobalSpace::GlobalSpace(const Config * c) :
     , cpu_load(0)
     , netdisabled(false)
     , agent(this)
-    , clntProtocol(c->clntProt)
+    ///, clntProtocol(c->clntProt)
+    , netenv(this, c->clntProt, c->pxData)
 {}
 
 

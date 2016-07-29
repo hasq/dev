@@ -127,7 +127,7 @@ class SvtTaskTcp : public SvtTask
         string saddr;
         ///os::IpAddr makeIpAddr(const string & ip);
     protected:
-        string proc(const gl::Protocol & p);
+        ///string proc(const gl::Protocol & p);
     public:
         SvtTaskTcp(GlobalSpace * g, const vs & cmd, size_t & i);
         string process();

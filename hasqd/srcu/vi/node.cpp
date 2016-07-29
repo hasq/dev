@@ -90,8 +90,9 @@ string Node::send(const string & cm)
 {
     for ( int i = 0; i < 10; i++ )
     {
-        sgl::Client c(gs->config->clntProt,
-                      gs->config->netLimits, gs->config->seIpLink.str());
+        ///sgl::Client c(gs->config->clntProt,
+        ///              gs->config->netLimits, gs->config->seIpLink.str());
+        sgl::Client c(gs->netenv.link(gs->config->seIpLink.str()));
 
         if ( !c.isok() )
         {
@@ -114,8 +115,9 @@ string Node::send(const string & cm)
 
 bool Node::refreshConn()
 {
-    sgl::Client c(gs->config->clntProt,
-                  gs->config->netLimits, gs->config->seIpLink.str());
+    ///sgl::Client c(gs->config->clntProt,
+    ///              gs->config->netLimits, gs->config->seIpLink.str());
+    sgl::Client c(gs->netenv.link(gs->config->seIpLink.str()));
 
     c.send("info nbs");
 

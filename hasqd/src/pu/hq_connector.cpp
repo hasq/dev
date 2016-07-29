@@ -18,7 +18,8 @@ void Connector::update_neighbours()
 
 Connector::TalkStatus Connector::talk_ip(const string & ipport, const string & cmd, string & r)
 {
-    sgl::Client c(gs->clntProtocol, gs->config->netLimits, ipport);
+    ///sgl::Client c(gs->clntProtocol, gs->config->netLimits, ipport);
+    sgl::Client c(gs->netenv.link(ipport));
     if ( !c.isok() )
         return Dead;
 

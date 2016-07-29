@@ -8,6 +8,7 @@
 #include "hq_config.h"
 #include "hq_logger.h"
 #include "hq_agent.h"
+#include "hq_netenv.h"
 
 #include "hq_db.h"
 
@@ -50,7 +51,8 @@ class GlobalSpace
         bool netdisabled;
 
         Agent agent;
-        gl::Protocol * clntProtocol;
+        ///gl::Protocol * clntProtocol;
+        NetEnv netenv;
 
     public:
         GlobalSpace(const Config * c);

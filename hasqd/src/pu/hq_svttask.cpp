@@ -393,7 +393,7 @@ os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
 }
 */
 
-string SvtTaskTcp::proc(const gl::Protocol & prot)
+string SvtTaskTcp::process()
 {
     if ( tasks.size() != 1 ) throw gl::Never("Internal error: bad tcp statement");
     ///os::net::TcpClient c(&prot, makeIpAddr(saddr), gs->config->netLimits);
@@ -405,7 +405,8 @@ string SvtTaskTcp::proc(const gl::Protocol & prot)
     string srv = saddr;
     translateIpAddr(srv);
 
-    sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    ///sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    sgl::Client x(gs->netenv.link(srv));
     if ( !x.isok() ) return "unreachable";
     string r = x.ask(text);
 
@@ -743,7 +744,7 @@ string SvtTaskAgent::process()
     return "";
 }
 
-string SvtTaskTcp::process() { return proc(*(gs->clntProtocol)); }
+///string SvtTaskTcp::process() { return proc(*(gs->clntProtocol)); }
 
 SvtTaskNet::SvtTaskNet(GlobalSpace * g, const vs & cmd, size_t & i): SvtTask(g)
 {
@@ -773,7 +774,7 @@ string SvtTaskNet::process()
 
 string SvtTaskNet::show_prot()
 {
-    const gl::Protocol * p = gs->clntProtocol;
+    const gl::Protocol * p = gs->netenv.clntProtocol;
 
     if ( dynamic_cast<const gl::ProtHq *>(p) ) return "hasq";
     if ( dynamic_cast<const gl::HttpGet *>(p) ) return "http_get";
@@ -786,10 +787,12 @@ string SvtTaskNet::set_prot(const string & v)
     string was = show_prot();
     if ( v.empty() ) return was;
 
+    auto & cp = gs->netenv.clntProtocol;
+
     if (false);
-    else if ( v == "hasq" )      gs->clntProtocol = &gs->config->clntHq;
-    else if ( v == "http_get" )  gs->clntProtocol = &gs->config->clntHttpGet;
-    else if ( v == "http_post" ) gs->clntProtocol = &gs->config->clntHttpPost;
+    else if ( v == "hasq" )      cp = &gs->config->clntHq;
+    else if ( v == "http_get" )  cp = &gs->config->clntHttpGet;
+    else if ( v == "http_post" ) cp = &gs->config->clntHttpPost;
     else throw gl::ex("Invalid value $1, use (hasq|http_get|http_post)", v);
 
     return was + " -> " + v;

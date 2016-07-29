@@ -190,7 +190,8 @@ string Agent::fetch(const string & srv, const string & cmd)
     */
 
 // FIXME handle bad connection - print and log
-    sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    ///sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    sgl::Client x(gs->netenv.link(srv) );
     ///if ( !x.isok() ) throw gl::Never("Creating IpAddr failed: $1", srv);
     string r = x.ask(cmd);
 

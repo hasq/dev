@@ -10,6 +10,14 @@
 namespace sgl
 {
 
+struct Link
+{
+    gl::Protocol * prot;
+    gl::NetworkLimits nl;
+    string tcpto;
+    gl::ProxyData px;
+};
+
 class Client
 {
         bool ok;
@@ -18,7 +26,8 @@ class Client
         os::net::TcpClient tcpClient;
 
     public:
-        Client(gl::Protocol * prot, gl::NetworkLimits nl, const string & link) throw ();
+        ///Client(gl::Protocol * prot, gl::NetworkLimits nl, const string & link) throw ();
+        Client(const Link & link) throw ();
 
         bool isok() const { return ok; }
 
