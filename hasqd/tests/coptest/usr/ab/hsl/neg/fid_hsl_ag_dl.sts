@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# HSL: agent download
+
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -lqnxc db="db1" dprn=1 dsvt=0 dagt=1 tcp_port=13131 s=$in.inp
+
+

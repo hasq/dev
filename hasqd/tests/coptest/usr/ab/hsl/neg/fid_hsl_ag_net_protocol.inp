@@ -1,0 +1,4 @@
+print net protocol [ http ]
+print net pr
+
+quit

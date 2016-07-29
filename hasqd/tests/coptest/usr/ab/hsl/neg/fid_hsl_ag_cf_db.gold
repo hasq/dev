@@ -1,0 +1,4 @@
+<agt> > config database a b
+<agt> : Error: Agent too many arguments
+Offensive command (exec): agent config database "a" "b"
+Error: Agent too many arguments

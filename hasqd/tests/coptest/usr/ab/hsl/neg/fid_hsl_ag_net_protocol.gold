@@ -1,0 +1,7 @@
+<svt> print net protocol [ http ]
+Offensive command (exec): print net protocol [ http ]
+Error: Invalid value http, use (hasq|http_get|http_post)
+<svt> print net pr
+Offensive command (exec): print net pr
+Error: Unknown subcommand pr
+<svt> quit

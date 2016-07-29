@@ -1,0 +1,4 @@
+Offensive command (parse): ag download
+Error: Servant parser - not enough args: 2
+Offensive command (parse): ag dl self
+Error: Servant parser - not enough args: 3

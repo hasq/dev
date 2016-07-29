@@ -1,0 +1,6 @@
+ag build
+ag build "a" 
+ag build "a" "b"
+ag build "a" "b" "c"
+ag build "a" "b" "c" [ d ] "e"
+quit
