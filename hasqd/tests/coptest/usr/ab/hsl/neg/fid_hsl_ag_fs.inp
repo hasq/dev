@@ -1,0 +1,11 @@
+ag filesys mk
+ag fs mk "a" "b"
+ag fs cat
+ag fs cat "a" "b"
+ag fs cp
+ag fs cp "a" 
+ag fs rm
+ag fs rm "a" "b"
+ag fs mv
+ag fs mv "a"
+quit
