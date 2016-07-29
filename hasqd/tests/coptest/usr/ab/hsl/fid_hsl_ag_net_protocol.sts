@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# HSL: agent config protocol
+# HSL: agent net protocol
 
 in=$(basename $0)
 in=${in%.*} 

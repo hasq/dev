@@ -8,11 +8,6 @@ http_get
 http_get -> http_post
 <svt> print net protocol
 http_post
-<svt> print net  protocol "hasq"
+<svt> print net protocol "hasq"
 http_post -> hasq
-<svt> print net  protocol
-hasq
-<svt> print net  protocol [ tcp ]
-Offensive command (exec): print net  protocol [ tcp ]
-Error: Invalid value tcp, use (hasq|http_get|http_post)
 <svt> quit
