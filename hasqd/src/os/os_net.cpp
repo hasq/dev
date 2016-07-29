@@ -171,16 +171,20 @@ string os::net::NetInitialiser::list_ips(bool all)
 os::net::TcpClient::X os::net::TcpClient::proxy(const gl::Protocol * p, IpAddr ia)
 {
     X r(ia);
-    const gl::HttpGet * g = dynamic_cast<const gl::HttpGet *>(p);
-    if ( !g ) return r;
 
     const string & s = NetInitialiser::httpget_proxy_server;
     if ( s.empty() ) return r;
 
+    const gl::HttpGet * g = dynamic_cast<const gl::HttpGet *>(p);
+
+    if ( !g ) 
+	throw gl::ex("Cannot use client proxy with protocol other than HttpGet");
+
     bool ok = false;
     IpAddr xsrv( s, ok );
 
-    if ( !ok ) { r.err = "bad proxy name"; return r; }
+    if ( !ok )
+	throw gl::ex("Cannot resolve proxy server");
 
     r.addr = xsrv;
     r.proxy = true;
@@ -197,7 +201,7 @@ os::net::TcpClient::TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimi
 	auto & pmd = request.accessPmd();
         pmd.proxy = true;
         pmd.proxy_auth = NetInitialiser::httpget_proxy_auth64;
-        pmd.proxy_serv = il.str();
+        pmd.proxy_serv = il.str(); // FIXME
     }
 }
 

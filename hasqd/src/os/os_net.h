@@ -126,7 +126,6 @@ class TcpClient : public TcpSocket
         {
             IpAddr addr;
             bool proxy;
-            string err;
             X(IpAddr a): addr(a), proxy(false) {}
         };
 
