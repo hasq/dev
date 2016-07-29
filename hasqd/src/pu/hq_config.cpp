@@ -370,7 +370,7 @@ void Config::processOptionKeyVal(const string & k, const string & v)
             publicNetCmd.set(v, false);
     }
 
-    else if ( k == "http_get_proxy" )
+    else if ( k == "httpget_proxy" )
         setHttpGetProxy(v);
 
     else
@@ -503,5 +503,8 @@ void Config::setHttpGetProxy(const string & s)
 
     pxData.remote = s.substr(i + 1);
     pxData.auth64 = ma::b64enc(s.substr(0, i));
+
+    // reset default protocol to HttpGet
+    clntProt = &clntHttpGet;
 }
 
