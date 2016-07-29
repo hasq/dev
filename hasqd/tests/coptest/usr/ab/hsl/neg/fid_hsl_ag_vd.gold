@@ -1,0 +1,41 @@
+<svt> agent validate check
+<agt> > validate check
+<agt> : Error: Agent check requires 2 arguments
+Offensive command (exec): agent validate check
+Error: Agent check requires 2 arguments
+<svt> agent validate check "a"
+<agt> > validate check a
+<agt> : Error: Agent check requires 2 arguments
+Offensive command (exec): agent validate check "a"
+Error: Agent check requires 2 arguments
+<svt> agent validate notify
+<agt> > validate notify
+<agt> : Error: Agent notify requires 2 arguments
+Offensive command (exec): agent validate notify
+Error: Agent notify requires 2 arguments
+<svt> agent validate notify "a"
+<agt> > validate notify a
+<agt> : Error: Agent notify requires 2 arguments
+Offensive command (exec): agent validate notify "a"
+Error: Agent notify requires 2 arguments
+<svt> agent validate push
+<agt> > validate push
+<agt> : Error: Agent push requires 3 arguments
+Offensive command (exec): agent validate push
+Error: Agent push requires 3 arguments
+<svt> agent validate push ""
+<agt> > validate push 
+<agt> : Error: Agent push requires 3 arguments
+Offensive command (exec): agent validate push ""
+Error: Agent push requires 3 arguments
+<svt> agent validate push "a"
+<agt> > validate push a
+<agt> : Error: Agent push requires 3 arguments
+Offensive command (exec): agent validate push "a"
+Error: Agent push requires 3 arguments
+<svt> agent validate push "a" "b"
+<agt> > validate push a b
+<agt> : Error: Agent push requires 3 arguments
+Offensive command (exec): agent validate push "a" "b"
+Error: Agent push requires 3 arguments
+<svt> quit

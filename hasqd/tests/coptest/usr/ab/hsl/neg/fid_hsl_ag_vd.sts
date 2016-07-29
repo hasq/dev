@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# HSL: agent validate check
+
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -lqnxc dprn=1 dsvt=1 dagt=1 tcp_port=13131 s=$in.inp net_conntime=800 net_readtime=800 | grep -v "noterecv\|conupdate"

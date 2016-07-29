@@ -1,0 +1,10 @@
+agent validate check
+agent validate check "a"
+agent validate notify
+agent validate notify "a"
+agent validate push
+agent validate push ""
+agent validate push "a"
+agent validate push "a" "b"
+
+quit
