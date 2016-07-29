@@ -14,6 +14,8 @@ class GlobalSpace;
 
 class Agent
 {
+        GlobalSpace * gs;
+
         typedef std::vector<string> vecstr;
 
         string logfile;
@@ -29,7 +31,6 @@ class Agent
         }
 
 
-        GlobalSpace * gs;
         vecstr as;
 
         void print(const string & s, bool cmd = false) const;
