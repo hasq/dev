@@ -9,6 +9,7 @@
 
 #include "ma_utils.h"
 #include "sg_cout.h"
+#include "sg_client.h"
 
 #include "hq_globalspace.h"
 #include "hq_svttask.h"
@@ -378,6 +379,7 @@ void SvtTask::translateIpAddr(string & s)
         throw gl::ex("Bad tcp address $1, expecting ip:port", s);
 }
 
+/*///
 os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
 {
     string s = x;
@@ -388,15 +390,23 @@ os::IpAddr SvtTaskTcp::makeIpAddr(const string & x)
     if ( !ok ) throw gl::ex("Bad address $1", s);
     return r;
 }
+*/
 
 string SvtTaskTcp::proc(const gl::Protocol & prot)
 {
     if ( tasks.size() != 1 ) throw gl::Never("Internal error: bad tcp statement");
-    os::net::TcpClient c(&prot, makeIpAddr(saddr), gs->config->netLimits);
+    ///os::net::TcpClient c(&prot, makeIpAddr(saddr), gs->config->netLimits);
     string text = tasks[0]->process();
 
-    c.send_msg(text);
-    string r = c.recvMsgOrEmpty();
+    ///c.send_msg(text);
+    ///string r = c.recvMsgOrEmpty();
+
+    string srv = saddr;
+    translateIpAddr(srv);
+
+    sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
+    if ( !x.isok() ) return "unreachable";
+    string r = x.ask(text);
 
     return r;
 }

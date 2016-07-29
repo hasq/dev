@@ -125,7 +125,7 @@ class SvtTaskRecpwd : public SvtTask
 class SvtTaskTcp : public SvtTask
 {
         string saddr;
-        os::IpAddr makeIpAddr(const string & ip);
+        ///os::IpAddr makeIpAddr(const string & ip);
     protected:
         string proc(const gl::Protocol & p);
     public:
