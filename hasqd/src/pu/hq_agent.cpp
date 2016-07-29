@@ -112,7 +112,7 @@ void Agent::config(const string & s)
     if (false);
     else if ( s == "logfile"  || s == "lf" ) setshow(logfile, val);
     else if ( s == "webpath"  || s == "wp" ) setshow(webpath, val);
-    else if ( s == "protocol" || s == "pr" ) setshow_prot(val);
+    ///else if ( s == "protocol" || s == "pr" ) setshow_prot(val);
     else if ( s == "database" || s == "db" ) setshow(database, val);
     else if ( s == "logcomm"  || s == "lc" ) setshow(logcomm, val);
     else throw gl::ex("Agent bad command: " + s);
@@ -124,6 +124,7 @@ void Agent::setshow(string & k, const string & v) const
     else k = v;
 }
 
+/*///
 void Agent::setshow_prot(const string & v)
 {
     if ( v.empty() )
@@ -143,6 +144,7 @@ void Agent::setshow_prot(const string & v)
     else if ( v == "http_post" ) protocol = HttpPost;
     else throw gl::ex("Invalid value $1, use (hasq|http_get|http_post)", v);
 }
+*/
 
 void Agent::filesys(const string & s)
 {

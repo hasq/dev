@@ -1,10 +1,10 @@
-agent config protocol
-ag cf protocol [ http_get ]
-ag cf protocol
-ag cf protocol [ http_post ]
-ag cf protocol
-ag cf pr "hasq"
-ag cf pr
-ag cf pr [ tcp ]
+print net protocol
+print net protocol [ http_get ]
+print net protocol
+print net protocol [ http_post ]
+print net protocol
+print net  protocol "hasq"
+print net  protocol
+print net  protocol [ tcp ]
 
 quit

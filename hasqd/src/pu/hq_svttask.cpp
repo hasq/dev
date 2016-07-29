@@ -772,15 +772,20 @@ string SvtTaskNet::process()
     for ( size_t i = 0; i < tasks.size(); i++ )
         args.push_back( tasks[i]->process() );
 
-    if ( args.size() != 1 )
-        throw gl::ex("Too many args for 'net'");
+    if ( sub == "protocol" )
+    {
+        if ( args.empty() ) return show_prot();
 
-    if ( sub == "protocol" ) return set_prot(args[0]);
+        if ( args.size() != 1 )
+            throw gl::ex("Too many args for 'net'");
+
+        return set_prot(args[0]);
+    }
 
     throw gl::ex("Unknown subcommand " + sub);
 }
 
-string SvtTaskNet::show_prot(const string & v)
+string SvtTaskNet::show_prot()
 {
     const gl::Protocol * p = gs->clntProtocol;
 
@@ -792,7 +797,7 @@ string SvtTaskNet::show_prot(const string & v)
 
 string SvtTaskNet::set_prot(const string & v)
 {
-    string was = show_prot(v);
+    string was = show_prot();
     if ( v.empty() ) return was;
 
     if (false);

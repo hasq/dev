@@ -1,5 +1,5 @@
 #!/bin/sh
-$1/hasqd -nlqc s=agt1.inp dprn=1 dagt=1 p=0
+$1/hasqd -nlqc s=agt1.inp dprn=1 dagt=1 p=0 dsvt=1
 #echo "=============="
 #cat agt1.log
 #echo "=============="

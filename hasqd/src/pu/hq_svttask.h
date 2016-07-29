@@ -294,7 +294,7 @@ class SvtTaskNet : public SvtTask
 {
         string sub;
         string set_prot(const string & v);
-        string show_prot(const string & v);
+        string show_prot();
 
     public:
         SvtTaskNet(GlobalSpace * g, const vs & cmd, size_t & i);

@@ -20,7 +20,7 @@ class Agent
         string webpath;
         string database;
         string logcomm;
-        enum Prot { Hasq, HttpGet, HttpPost } protocol;
+        ///enum Prot { Hasq, HttpGet, HttpPost } protocol;
 
         bool islogc(char x) const
         {
@@ -34,7 +34,7 @@ class Agent
 
         void print(const string & s, bool cmd = false) const;
         void setshow(string & k, const string & v) const;
-        void setshow_prot(const string & v);
+        ///void setshow_prot(const string & v);
         void translateDate(string & v) const;
 
         void config(const string & s);
@@ -56,7 +56,7 @@ class Agent
         Agent(const Agent &);
 
     public:
-        Agent(GlobalSpace * g): gs(g), logcomm("no"), protocol(Hasq) {}
+        Agent(GlobalSpace * g): gs(g), logcomm("no") {}
 
         void run(string cmd1, string cmd2, string cmd3,
                  const vecstr & args);

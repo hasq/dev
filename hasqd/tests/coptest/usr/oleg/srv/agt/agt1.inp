@@ -9,9 +9,9 @@ agent config logfile "agt1.log"
 #agent config webpath [ webpath ]
 agent config logfile
 #agent config protocol "aaa"
-agent config protocol
-agent config protocol "http_post"
-agent config protocol
+print net protocol
+print net protocol "http_post"
+print net protocol
 #agent config html
 #agent config hasq
 #agent filesys mk "agt1"

@@ -1,15 +1,18 @@
-<agt> > config protocol
-<agt> : hasq
-<agt> > cf protocol http_get
-<agt> > cf protocol
-<agt> : http_get
-<agt> > cf protocol http_post
-<agt> > cf protocol
-<agt> : http_post
-<agt> > cf pr hasq
-<agt> > cf pr
-<agt> : hasq
-<agt> > cf pr tcp
-<agt> : Error: Invalid value tcp, use (hasq|http_get|http_post)
-Offensive command (exec): ag cf pr [ tcp ]
+<svt> print net protocol
+hasq
+<svt> print net protocol [ http_get ]
+hasq -> http_get
+<svt> print net protocol
+http_get
+<svt> print net protocol [ http_post ]
+http_get -> http_post
+<svt> print net protocol
+http_post
+<svt> print net  protocol "hasq"
+http_post -> hasq
+<svt> print net  protocol
+hasq
+<svt> print net  protocol [ tcp ]
+Offensive command (exec): print net  protocol [ tcp ]
 Error: Invalid value tcp, use (hasq|http_get|http_post)
+<svt> quit
