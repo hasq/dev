@@ -36,7 +36,7 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
 
     , dbcfg()
     , servantFile()
-    , proxyIpport()
+    , tunnelIpport()
     , noSecretary(false)
 
     , quiet(false)
@@ -247,8 +247,8 @@ void Config::processOptionKeyVal(const string & k, const string & v)
     else if ( k == "nodename" || k == "nn" )
         nodename = v;
 
-    else if ( k == "proxy" )
-        proxyIpport = v;
+    else if ( k == "tunnel" )
+        tunnelIpport = v;
 
     else if ( k == "iplock" )
         ipp_locks.push_back(v);
@@ -380,7 +380,7 @@ void Config::processOptionKeyVal(const string & k, const string & v)
             publicNetCmd.set(v, false);
     }
 
-    else if ( k == "httpget_proxy" )
+    else if ( k == "http_proxy" )
         setHttpGetProxy(v);
 
     else
@@ -442,7 +442,7 @@ void cfg::PublicNetCmd::all(bool v)
 {
     admin = quit = conflict = add = connect = unlink = pleb = v;
     file = data = first = html = info = job = last = v;
-    lastdata = list = note = range = record = zero = ping = proxy = v;
+    lastdata = list = note = range = record = zero = ping = tunnel = v;
 }
 
 void cfg::PublicNetCmd::set(string s, bool v)
@@ -469,7 +469,7 @@ void cfg::PublicNetCmd::set(string s, bool v)
     else if ( s == "record" )   record = v;
     else if ( s == "zero" )     zero = v;
     else if ( s == "ping" )     ping = v;
-    else if ( s == "proxy" )    proxy = v;
+    else if ( s == "tunnel" )   tunnel = v;
 
     else
         throw gl::ex("");
@@ -497,7 +497,7 @@ cfg::PublicNetCmd::PublicNetCmd()
     , record(true)
     , zero(true)
     , ping(true)
-    , proxy(true)
+    , tunnel(true)
 {}
 
 void Config::setHttpGetProxy(const string & s)

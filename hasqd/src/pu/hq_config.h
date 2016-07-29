@@ -62,7 +62,7 @@ struct PublicNetCmd
     bool record;
     bool zero;
     bool ping;
-    bool proxy;
+    bool tunnel;
 };
 
 } // cfg
@@ -93,7 +93,7 @@ class Config
 
         db::DbCfg dbcfg;
         string servantFile;
-        string proxyIpport;
+        string tunnelIpport;
         bool noSecretary;
 
         cfg::Dbg dbg;

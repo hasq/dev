@@ -1,4 +1,4 @@
-print tcp 127.0.0.1:13001 [ proxy 127.0.0.1:13001 ping ]
+print tcp 127.0.0.1:13001 [ tunnel 127.0.0.1:13001 ping ]
 sleep 100
 quit
 

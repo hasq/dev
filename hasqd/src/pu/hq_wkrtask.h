@@ -41,7 +41,7 @@ struct Worker2
         string note();
         string conflict();
         string quit();
-        string proxy();
+        string tunnel();
         string pleb();
         string admin();
         string slice();
@@ -57,7 +57,7 @@ struct Worker2
             : gs(g), tok(s), mime(m), encrypted(e), sock(t) {}
 
         string process(bool *);
-        static string proxy(GlobalSpace * gs, const string & ipport, const string & cmd);
+        static string tunnel(GlobalSpace * gs, const string & ipport, const string & cmd);
 
     private:
         // forbid

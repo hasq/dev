@@ -18,7 +18,7 @@ Secretary::Secretary(GlobalSpace * g) : Blockable(&g->stopPublisher)
 
     if ( gs->config->quiet ) return;
 
-    const string & prx = gs->config->proxyIpport;
+    const string & prx = gs->config->tunnelIpport;
 
     os::Cout out;
     out << "HOST: name=" << gs->config->nodename;

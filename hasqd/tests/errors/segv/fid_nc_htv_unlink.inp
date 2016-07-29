@@ -1,0 +1,60 @@
+# 00(F) 10(N) 20(F)
+# 01(N) 11(0) 21(N)
+#       12(N)
+
+new canvas db 3 3
+new pub 0 0 hint
+new pub 1 0 hint
+new pub 2 0 hint
+new pub 0 1 hint
+new pub 1 1 hint
+new pub 2 1 hint
+new pub 1 2 hint
+
+show
+
+send 1 1 connect ${1:0}
+nextsleep 50
+send 1 1 connect ${0:1}
+nextsleep 50
+send 1 1 connect ${2:1}
+nextsleep 50
+send 1 1 connect ${1:2}
+nextsleep 50
+
+send 1 1 connect ${0:0}
+nextsleep 50
+send 1 1 connect ${2:0}
+nextsleep 50
+
+send 1 1 info fam
+
+send 1 1 unlink ${0:1}
+nextsleep 50
+send 1 1 unlink ${2:1}
+nextsleep 50
+send 1 1 unlink ${2:0}
+nextsleep 50
+
+send 1 1 info fam
+
+shut 0 0
+shut 1 0
+
+show
+
+send 1 1 unlink ${1:0}
+nextsleep 50
+
+send 1 1 info fam
+
+shut 0 0
+shut 1 0
+shut 2 0
+shut 0 1
+shut 1 2
+
+nextsleep 50
+
+erase db
+q

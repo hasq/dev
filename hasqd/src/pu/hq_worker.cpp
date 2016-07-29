@@ -28,7 +28,7 @@ void Worker::runOnceUnconditionally()
     {
         const int SZ = 40;
 
-        const string & prx = gs->config->proxyIpport;
+        const string & prx = gs->config->tunnelIpport;
         gl::replaceAll(reply, "\r", "");
         gl::replaceAll(reply, "\n", "\\n");
 
@@ -80,10 +80,10 @@ string WorkerCore::process(const string & message,
 string WorkerCore::process(const string & message, const char ** mime,
                            bool enc, const os::net::Socket * sock)
 {
-    const string & prx = gs->config->proxyIpport;
+    const string & prx = gs->config->tunnelIpport;
 
     if ( !prx.empty() )
-        return Worker2::proxy(gs, prx, message);
+        return Worker2::tunnel(gs, prx, message);
 
     if ( message.empty() && !gs->config->webhome.empty() )
         return process(gs->config->webhome, mime, sock);

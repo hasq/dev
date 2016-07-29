@@ -105,8 +105,8 @@ string Worker2::process(bool * recog)
     else if ( tok.is("quit")  && (en || pn.quit) )
         return quit();
 
-    else if ( tok.is("proxy")  && (en || pn.proxy) )
-        return proxy();
+    else if ( tok.is("tunnel")  && (en || pn.tunnel) )
+        return tunnel();
 
     else if ( tok.is("pleb")  && (en || pn.pleb) )
         return pleb();
@@ -762,7 +762,7 @@ string Worker2::conflict()
     return er::Code(er::OK);
 }
 
-string Worker2::proxy()
+string Worker2::tunnel()
 {
     string cmd, ipport;
 
@@ -779,11 +779,11 @@ string Worker2::proxy()
     while ( tok.next() )
         cmd += " " + tok.sub();
 
-    return er::Code(er::OK).str() + " " + proxy(gs, ipport, cmd);
+    return er::Code(er::OK).str() + " " + tunnel(gs, ipport, cmd);
 
 }
 
-string Worker2::proxy(GlobalSpace * gx, const string & ipport, const string & cmd)
+string Worker2::tunnel(GlobalSpace * gx, const string & ipport, const string & cmd)
 {
     ///sgl::Client c(gx->clntProtocol, gx->config->netLimits, ipport);
     sgl::Client c(gx->netenv.link(ipport));
