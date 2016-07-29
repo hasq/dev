@@ -1,5 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+#include <cstdio>
+
 #include "gl_protocol.h"
 #include "gl_utils.h"
 #include "gl_except.h"
@@ -8,7 +10,7 @@ const char * gl::Http_base::logo = "";
 
 string gl::Http_base::httpHeaderHead(const char * mime)
 {
-    string r = HTTP_HEADER_OK; r += CRLF;
+    string r = HTTP_HEADER_OK10; r += CRLF;
     r += "Server: "; r += logo; r += CRLF;
     r += "Access-Control-Allow-Origin: *"; r += CRLF;
     r += "Content-Type: "; r += mime; r += CRLF;
@@ -16,17 +18,18 @@ string gl::Http_base::httpHeaderHead(const char * mime)
     return r;
 }
 
-string gl::HttpGet::httpProxyHead(const string & s, const Pmd * p) const
+string gl::HttpGet::httpProxyHead(string s, const Pmd * p) const
 {
     string srv = p->proxy.remote;
     string cre = p->proxy.auth64;
+
+    replaceAll(s," ","%20");
 
     string r = "GET http://" + srv + "/" + s + " HTTP/1.1"; r += CRLF;
     r += "Proxy-Authorization: Basic " + cre; r += CRLF;
     r += "User-Agent: "; r += logo; r += CRLF;
     r += "Host: " + srv; r += CRLF;
-    r += "Accept: */*"; r += CRLF;
-    r += "Proxy-Connection: Keep-Alive"; r += CRLF2;
+    r += "Accept: */*"; r += CRLF2;
     return r;
 }
 
@@ -43,7 +46,7 @@ gl::ProtocolPacketStatus gl::Http_base::extrMsgClient(string & msg, const string
     if ( raw.length() == 0 )
         return PRT_PKT_NO_INFO;
 
-    if ( raw.find(HTTP_HEADER_OK) != 0 )
+    if ( raw.find(HTTP_HEADER_OK10) != 0 && raw.find(HTTP_HEADER_OK11) )
         return PRT_PKT_BAD_PROTOCOL;
 
     pos = raw.find(CRLF2);
@@ -232,7 +235,7 @@ string gl::HttpPost::msg2raw(const string & s, const Pmd * p) const
     string ret = POST;
     string cmd = HQCOMMAND + s;
 
-    return ret + " " + HTTP_HEADER_VERSION + CRLF + CONTENT_LENGTH + gl::tos(cmd.length()) + CRLF2 + cmd;
+    return ret + " " + HTTP_HEADER_VER10 + CRLF + CONTENT_LENGTH + gl::tos(cmd.length()) + CRLF2 + cmd;
 }
 
 gl::ProtocolPacketStatus gl::HttpPost::extractMsg(string & msg, const string & raw, Pmd * p) const

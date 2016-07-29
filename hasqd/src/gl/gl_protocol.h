@@ -60,8 +60,10 @@ const char POST[]                = "POST /";
 const char HTTP[]                = " HTTP";
 const char DIGITS[]              = "0123456789";
 const char CONTENT_LENGTH[]      = "Content-Length: ";
-const char HTTP_HEADER_VERSION[] = "HTTP/1.0";
-const char HTTP_HEADER_OK[]      = "HTTP/1.0 200 OK";
+const char HTTP_HEADER_VER10[]   = "HTTP/1.0";
+const char HTTP_HEADER_OK10[]    = "HTTP/1.0 200 OK";
+const char HTTP_HEADER_VER11[]   = "HTTP/1.1";
+const char HTTP_HEADER_OK11[]    = "HTTP/1.1 200 OK";
 const char XFWD[]                = "X-Forwarded-For: ";
 
 const char HQCOMMAND[]           = "command=";                 // reserved word
@@ -155,7 +157,7 @@ class Http_base : virtual public Protocol
 class HttpGet : public Http_base
 {
         ProtocolPacketStatus extrMsgServer(string & msg, const string & raw, Pmd * p) const;
-        string httpProxyHead(const string & s, const Pmd * p) const;
+        string httpProxyHead(string s, const Pmd * p) const;
 
     public:
         HttpGet(Side s): Protocol(s), Http_base(s) {}
