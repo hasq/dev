@@ -253,9 +253,6 @@ void Config::processOptionKeyVal(const string & k, const string & v)
     else if ( k == "iplock" )
         ipp_locks.push_back(v);
 
-    else if ( k == "tcp_port" || k == "p" )
-        seIpLink.reset_port( gl::i2us(gl::toi(v)) );
-
     else if ( k == "id" )
     {
         if ( v == "port" )
@@ -329,6 +326,19 @@ void Config::processOptionKeyVal(const string & k, const string & v)
 
     else if ( k == "workDelay" )
         workerDelay = gl::toi(v);
+
+    else if ( k == "tcp_port" || k == "p" )
+    {
+        auto n = gl::i2us(gl::toi(v));
+
+        if ( !n )
+        {
+            createThreads = SVT_ONLY;
+            noSecretary = true;
+        }
+
+        seIpLink.reset_port( n );
+    }
 
     else if ( k == "webdir" )
     {
