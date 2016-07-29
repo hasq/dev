@@ -1,0 +1,4 @@
+ag report
+ag report "a" "b"
+
+quit
