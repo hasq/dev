@@ -130,7 +130,7 @@ string SvtTaskQuit::process()
     if ( !gs->config->noSecretary )
     {
         ///gl::ProtHq prot(gl::ProtHq::Client);
-	auto f = gs->config;
+        auto f = gs->config;
         os::net::TcpClient c(&f->clntHq, f->seIpLink, f->netLimits, nullptr);
         if ( c.isConnected() ) c.send_msg("bye");
     }

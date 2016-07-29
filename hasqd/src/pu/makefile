@@ -34,7 +34,8 @@ src =   hq_conflict.cpp \
 	hq_secretary.cpp hq_chiefeditor.cpp hq_automachine.cpp hq_worker.cpp \
 	hq_globalspace.cpp hq_console.cpp hq_alarms.cpp hq_svtjob.cpp \
 	hq_gl_bin.cpp hq_gl_ced.cpp hq_gl_con.cpp hq_gl_key.cpp \
-	hq_gl_svt.cpp hq_gl_wkr.cpp hq_plebfile.cpp hq_agent.cpp
+	hq_gl_svt.cpp hq_gl_wkr.cpp hq_plebfile.cpp hq_agent.cpp \
+	hq_netenv.cpp
 	
 obj := $(src:%.cpp=$O/%$(OEXT))
 
