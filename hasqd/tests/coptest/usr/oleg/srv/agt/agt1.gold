@@ -16,7 +16,7 @@ http_post
 <svt> b = "agt1_2.log"
 <svt> ag fs cp a b
 <agt> > fs cp agt1.log agt1_2.log
-<agt> : OK 80
+<agt> : OK 77
 <svt> ag fs rm b
 <agt> > fs rm agt1_2.log
 <agt> : OK
