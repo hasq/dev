@@ -168,6 +168,7 @@ string os::net::NetInitialiser::list_ips(bool all)
     return allips;
 }
 
+/*///
 os::net::TcpClient::X os::net::TcpClient::proxy(const gl::Protocol * p, IpAddr ia)
 {
     X r(ia);
@@ -177,31 +178,31 @@ os::net::TcpClient::X os::net::TcpClient::proxy(const gl::Protocol * p, IpAddr i
 
     const gl::HttpGet * g = dynamic_cast<const gl::HttpGet *>(p);
 
-    if ( !g ) 
-	throw gl::ex("Cannot use client proxy with protocol other than HttpGet");
+    if ( !g )
+        throw gl::ex("Cannot use client proxy with protocol other than HttpGet");
 
     bool ok = false;
     IpAddr xsrv( s, ok );
 
     if ( !ok )
-	throw gl::ex("Cannot resolve proxy server");
+        throw gl::ex("Cannot resolve proxy server");
 
     r.addr = xsrv;
     r.proxy = true;
     return r;
 }
+*/
 
-os::net::TcpClient::TcpClient(const gl::Protocol * p, IpAddr il, gl::NetworkLimits nl) :
-    TcpSocket(p, proxy(p, il).addr, nl), x(proxy(p, il))
+os::net::TcpClient::TcpClient(const gl::Protocol * p, IpAddr il,
+                              gl::NetworkLimits nl, gl::ProxyData * px) :
+    TcpSocket(p, il, nl)
 {
     init(nl.maxConnTime);
 
-    if ( x.proxy )
+    if ( px && !px->remote.empty() )
     {
-	auto & pmd = request.accessPmd();
-        pmd.proxy = true;
-        pmd.proxy_auth = NetInitialiser::httpget_proxy_auth64;
-        pmd.proxy_serv = il.str(); // FIXME
+        auto & pmd = request.accessPmd();
+        pmd.proxy = *px;
     }
 }
 

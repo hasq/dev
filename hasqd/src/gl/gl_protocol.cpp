@@ -18,8 +18,8 @@ string gl::Http_base::httpHeaderHead(const char * mime)
 
 string gl::HttpGet::httpProxyHead(const string & s, const Pmd * p) const
 {
-    string srv = p->proxy_serv;
-    string cre = p->proxy_auth;
+    string srv = p->proxy.remote;
+    string cre = p->proxy.auth64;
 
     string r = "GET http://" + srv + "/" + s + " HTTP/1.1"; r += CRLF;
     r += "Proxy-Authorization: Basic " + cre; r += CRLF;
@@ -138,7 +138,7 @@ string gl::HttpGet::msg2raw(const string & s, const Pmd * p) const
         return Http_base::httpHeader(s.size(), m) + s + CRLF2;
     }
 
-    if ( !p->proxy ) // simple httpget
+    if ( !p->proxy.is() ) // simple httpget
         return GET + s + CRLF2;
 
     return httpProxyHead(s, p);

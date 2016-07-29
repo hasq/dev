@@ -8,7 +8,7 @@ sgl::Client::Client(gl::Protocol * prot,
     ok(false)
     ///, prot(gl::ProtHq::Client)
     , addr(link, ok)
-    , tcpClient(prot, addr, netLimits)
+    , tcpClient(prot, addr, netLimits, 0)
 {
     if (ok) ok = tcpClient.isConnected();
 }

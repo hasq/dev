@@ -98,17 +98,22 @@ enum PacketStatus
     PKT_COMPLETE = 1
 };
 
+struct ProxyData
+{
+    string remote;
+    string auth64;
+    bool is() const { return !remote.empty(); }
+};
+
 struct PacketMetaData
 {
     enum Format { Hq, HttpGet, HttpPost } format;
     const char * mime;
     string ip;
-    bool proxy;
-    string proxy_auth;
-    string proxy_serv;
+    ProxyData proxy;
 
     PacketMetaData( Format f = Hq ):
-        format(f), mime("text/plain"), proxy(false) {}
+        format(f), mime("text/plain"), proxy() {}
 
     void resolveMime(const string & filename);
 };
