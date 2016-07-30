@@ -3,7 +3,7 @@ skckey+
 ................
 <svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
 OK
-<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }
 REQ_MSG_HEAD
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
@@ -16,7 +16,7 @@ skckey+ let+
 ................
 <svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
 OK
-<svt> print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }
+<svt> print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }
 OK
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
@@ -30,7 +30,7 @@ skckey+ let=all
 ................
 <svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
 OK
-<svt> print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }
+<svt> print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }
 OK
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
@@ -44,7 +44,7 @@ skckey+ ban+
 ................
 <svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
 OK
-<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }
 REQ_MSG_HEAD
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK
@@ -57,7 +57,7 @@ skckey+ ban=all
 ................
 <svt> print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]
 OK
-<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }
 REQ_MSG_HEAD
 <svt> print ex 0 OK 100 tcp self [ info nbs ]
 OK

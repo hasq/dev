@@ -4,8 +4,8 @@
 # NC: connect
 
 ping="print ex 0 OK 100 tcp 127.0.0.1:14001 [ ping ]"
-connectOK="print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }"
-connectFAIL="print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 30 }"
+connectOK="print ex 0 OK 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }"
+connectFAIL="print ex 0 REQ_MSG_HEAD 100 tcp self { [ connect 127.0.0.1:14001 ] sleep 100 }"
 infonbs="print ex 0 OK 100 tcp self [ info nbs ]"
 quit="print ex 0 OK 100 tcp 127.0.0.1:14001 [ quit ]"
 inp0="$ping;$connectOK;$infonbs;$quit;quit"
