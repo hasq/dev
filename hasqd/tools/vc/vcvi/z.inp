@@ -1,0 +1,4 @@
+new canvas db 3 3
+show
+erase db
+q

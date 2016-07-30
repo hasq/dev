@@ -682,6 +682,8 @@ void cmd_inject(vs cmd)
 
 void var_func(string & s)
 {
+    if (!canvas) return;
+
     string b = s.substr(2, s.size() - 3);
     size_t i = b.find(":");
     if ( i == string::npos )
