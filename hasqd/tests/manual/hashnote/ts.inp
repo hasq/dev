@@ -2,6 +2,7 @@ ag cf db "smd.db"
 ag cf lf "ag.log"
 ag cf lc "all"
 
+ag fs rm "ts"
 ag fs mk "ts"
 
 ag dl tokenswap.com:80 160301:today "ts"
