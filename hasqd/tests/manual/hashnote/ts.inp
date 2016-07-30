@@ -4,6 +4,6 @@ ag cf lc "all"
 
 ag fs mk "ts"
 
-ag dl aaa.com:80 "ts"
+ag dl tokenswap.com:80 160301:today "ts"
 
 quit
