@@ -1,17 +1,8 @@
 print net protocol
-ex 0 OK 100 tcp self [ ping ]
-ag fs cat "tcp.log"
-ag fs rm "tcp.log"
 print net protocol [ http_get ]
 print net protocol
-ex 0 OK 100 tcp self [ ping ]
-ag fs cat "tcp.log"
-ag fs rm "tcp.log"
 print net protocol [ http_post ]
 print net protocol
-ex 0 OK 100 tcp self [ ping ]
-ag fs cat "tcp.log"
-ag fs rm "tcp.log"
 print net protocol "hasq"
 print net protocol
 
