@@ -4,11 +4,22 @@
 # NC: add
 
 in=$(basename $0)
-in=${in%.*} 
-inp0="print ex 0 OK 100 tcp self [ add * wrd.db 1 0cc1 3217 345d 64e1 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
-inp1="print ex 0 OK 100 tcp self [ add * wrd.db 2 0cc1 1433 8eb1 3782 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
-inp2="print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ];print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ];quit"
-inp3="print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ];print ex 0 REQ_MSG_HEAD 100 tcp self [ last wrd.db 0cc1 ];quit"
+in=${in%.*}
+
+JID_ADD_1="JID = print ex 0 OK 100 tcp self [ add * wrd.db 1 0cc1 3217 345d 64e1 ]"
+JID_ADD_2="JID = print ex 0 OK 100 tcp self [ add * wrd.db 2 0cc1 1433 8eb1 3782 ]"
+JID_ADD_3="JID = print ex 0 OK 100 tcp self [ add * wrd.db 3 0cc1 1f61 9873 2d75 ]"
+JID="JID = arg 1 JID"
+JOB_STATE="print ex 0 OK 100 tcp self { [ job ] JID }"
+ADD_4="print ex 0 REQ_MSG_HEAD 100 tcp self [ add * wrd.db 4 0cc1 b466 f26a 2d9c ]"
+LAST="print ex 0 OK 100 tcp self [ last wrd.db 0cc1 ]"
+QUIT="quit"
+
+inp1="$JID_ADD_1;$JID;$JOB_STATE;$LAST;$QUIT"
+inp2="$JID_ADD_2;$JID;$JOB_STATE;$LAST;$QUIT"
+inp3="$JID_ADD_3;$JID;$JOB_STATE;$LAST;$QUIT"
+inp4="$ADD_4;$LAST;$QUIT"
+
 
 rm -fr dbs
 mkdir dbs
@@ -20,26 +31,26 @@ cd ..
 echo ................
 echo "skckey+"
 echo ................
-$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp0" | grep -v "<svt> sendnote\|OK 1000"
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" | grep -v "<svt> sendnote\|OK 1000"
 
 echo ................
 echo "skckey+ let+"
 echo ................
-$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" let="add" | grep -v "<svt> sendnote\|OK 1000"
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp2" let="add" | grep -v "<svt> sendnote\|OK 1000"
 
 echo ................
 echo "skckey+ let=all"
 echo ................
-$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp1" let="all" | grep -v "<svt> sendnote\|OK 1000"
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp3" let="all" | grep -v "<svt> sendnote\|OK 1000"
 
 echo ................
 echo "skckey+ ban+"
 echo ................
-$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp2" ban="add" | grep -v "<svt> sendnote\|OK 1000"
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp4" ban="add" | grep -v "<svt> sendnote\|OK 1000"
 
 echo ................
 echo "skckey+ ban=all"
 echo ................
-$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp3" ban="all" | grep -v "<svt> sendnote\|OK 1000"
+$1/hasqd -clqnx db="dbs" dprn=1 dsvt=1 skckey="abc" s=@"$inp4" ban="all" let="last"| grep -v "<svt> sendnote\|OK 1000"
 
 rm -rf dbs
