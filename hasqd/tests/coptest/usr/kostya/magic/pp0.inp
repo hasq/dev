@@ -61,6 +61,7 @@ send 0 1 last _wrd 3421
 send 1 1 last _wrd 3421
 send 2 1 last _wrd 3421
 #send 1 1 info log connect
+sleep 50
 shut all
 erase dbp
 q

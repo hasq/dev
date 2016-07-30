@@ -89,6 +89,7 @@ Reply: OK 0 3421 0000 96f0 0c01
 Reply: OK 0 3421 0000 96f0 0c01
 <htv> send 2 1 last _wrd 3421
 Reply: OK 0 3421 0000 96f0 0c01
+<htv> sleep 50
 <htv> shut all
 stopping all: [0x0][1x0][2x0][0x1][1x1][2x1][0x2][1x2][2x2] done
 <htv> erase dbp
