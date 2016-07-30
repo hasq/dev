@@ -116,11 +116,11 @@ OK
 0 8e69 127.0.0.1:13132
 0 dd20 127.0.0.1:13133
 
-<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+<svt> print ex 0 OK 300 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
 OK 0 1fe1 0379 238d d734
-<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+<svt> print ex 0 OK 300 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
 OK 0 8e69 bc7e 59b2 476b
-<svt> print ex 0 OK 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
+<svt> print ex 0 OK 300 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 OK 0 dd20 be33 6599 7049
 <svt> ag fs rm "tokenlist.chk"
 <agt> > fs rm tokenlist.chk

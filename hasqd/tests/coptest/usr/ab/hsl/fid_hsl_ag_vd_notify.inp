@@ -37,9 +37,9 @@ ag fs cat "tokenlist.chk"
 agent vd notify "tokenlist.chk" "tokenlist.ntf"
 agent fs cat "tokenlist.ntf"
 
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
-print ex 0 OK 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
+print ex 0 OK 300 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+print ex 0 OK 300 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+print ex 0 OK 300 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag fs rm "tokenlist.chk"
 ag fs rm "tokenlist.ntf"
