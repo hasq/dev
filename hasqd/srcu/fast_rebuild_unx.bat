@@ -1,7 +1,4 @@
-set PL=PLAT=unx
-
-echo %PL%
-exit
+set PL=PLAT=msc
 
 make %PL% clean
 cd ../src && make %PL% clean && cd ../srcu

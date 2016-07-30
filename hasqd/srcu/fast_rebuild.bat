@@ -1,8 +1,5 @@
 set PL=PLAT=msc
 
-echo %PL%
-exit
-
 make %PL% clean
 cd ../src && make %PL% clean && cd ../srcu
 
