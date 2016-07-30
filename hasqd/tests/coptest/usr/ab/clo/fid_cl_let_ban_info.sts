@@ -13,7 +13,7 @@ echo ................
 for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical" "info log agent"
 do
     inp="""print ex 0 OK 100 tcp self [ "$i" ];quit"""
-    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" skcseed="a" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" nn="hasqnode" skckey="key" skcseed="a" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
 done
 
 echo ................
@@ -23,7 +23,7 @@ echo ................
 for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical" "info log agent"
 do
     inp="""print ex 0 OK 100 tcp self [ "$i" ];quit"""
-    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" skcseed="a" let="info" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" nn="hasqnode" skckey="key" skcseed="a" let="info" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
 done
 
 echo ................
@@ -33,7 +33,7 @@ echo ................
 for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical" "info log agent"
 do
     inp="""print ex 0 OK 100 tcp self [ "$i" ];quit"""
-    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" skcseed="a" let="all" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" nn="hasqnode" skckey="key" skcseed="a" let="all" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
 done
 
 echo ................
@@ -43,7 +43,7 @@ echo ................
 for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical" "info log agent"
 do
     inp="""print ex 0 REQ_MSG_HEAD 100 tcp self [ "$i" ];quit"""
-    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" skcseed="a" ban="info" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" nn="hasqnode" skckey="key" skcseed="a" ban="info" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
 done
 echo ................
 echo "skckey+ ban=all"
@@ -52,5 +52,5 @@ echo ................
 for i in "info db" "info fam" "info id" "info nbs" "info sys" "info log conflict" "info log connect" "info log critical" "info log agent"
 do
     inp="""print ex 0 REQ_MSG_HEAD 100 tcp self [ "$i" ];quit"""
-    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" skckey="key" skcseed="a" ban="all" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
+    $1/hasqd -clqnx dprn=1 dsvt=1 s=@"$inp" nn="hasqnode" skckey="key" skcseed="a" ban="all" | grep -v "<svt> quit\|Dsk usg\|Mem usg\|Cpu load"
 done
