@@ -21,8 +21,6 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk tot: 305240 M
-Mem tot: 8051 M
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
@@ -59,8 +57,6 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk tot: 305240 M
-Mem tot: 8051 M
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
@@ -97,8 +93,6 @@ OK
 
 <svt> print ex 0 OK 100 tcp self [ info sys ]
 OK
-Dsk tot: 305240 M
-Mem tot: 8051 M
 
 <svt> print ex 0 OK 100 tcp self [ info log conflict ]
 OK
