@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Testing NC slice
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -nlqcp s=$tn.inp dprn=1 dagt=1 dsvt=0 nn=a@a
+
+
+
+
+

@@ -237,6 +237,9 @@ void Agent::download(const string & srv, const string & date)
     if ( database.empty() )
         return print("Database is not set - try 'agent config database'");
 
+	if( as.size()<1 || as[0].empty() )
+	    return print("Too few arguments");
+
     os::Path dir(as[0]);
     if ( !dir.isdir() )
         return print("Directory does not exist [" + dir.str() + "]");
