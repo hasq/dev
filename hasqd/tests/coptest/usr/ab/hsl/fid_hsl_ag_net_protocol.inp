@@ -1,9 +1,0 @@
-print net protocol
-print net protocol [ http_get ]
-print net protocol
-print net protocol [ http_post ]
-print net protocol
-print net protocol "hasq"
-
-
-quit

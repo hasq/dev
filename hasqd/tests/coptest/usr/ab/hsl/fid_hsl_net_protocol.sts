@@ -5,5 +5,4 @@
 in=$(basename $0)
 in=${in%.*} 
 
-$1/hasqd -lqnc dprn=1 dsvt=1 dagt=1 p=0 s=$in.inp
-
+$1/hasqd -lqnc dprn=1 dsvt=1 dagt=1 dtcp="tcp.log" p=14000 s=$in.inp
