@@ -1,3 +1,9 @@
+CLO dtcp - test [DONE]- doc [DONE]
+httpget_proxy - test - doc
+HSL tcp - test[DONE] - doc[] - use default protocol
+HSL net protocol - [test done] - doc[DONE]
+HSL agent - doc
+
 [B] compile code with tdm-gcc 5.1 
 [A] run PVS again
 [A] hashnote title
@@ -6,7 +12,7 @@
 [B] (om) bank gui
 [B] (om) bank mobile
 [A] (om) zakonchit proxy
-[A!] tests
+DONE [A!] tests
 [C] make new release 4.2
 
 [AB] hsl doc (tutorial po hsl)
