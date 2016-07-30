@@ -1,4 +1,4 @@
-ag cf db "smb.db"
+ag cf db "smd.db"
 ag cf lf "ag.log"
 ag cf lc "all"
 
