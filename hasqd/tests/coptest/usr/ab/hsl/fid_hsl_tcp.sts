@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# HSL: tcp with different protocols
+
+in=$(basename $0)
+in=${in%.*} 
+
+$1/hasqd -lqnc dprn=1 dsvt=1 dagt=1 dtcp="tcp.log" p=14000 s=$in.inp
