@@ -1,0 +1,2 @@
+split -b 5M file
+cat x* > file

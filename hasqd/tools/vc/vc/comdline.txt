@@ -1,0 +1,2 @@
+-cl s=../../../tests/coptest/usr/oleg/vc.inp dsvt=1 dwkr=1 dprn=1 dced=1 skcseed=a nn=mach webdir=home
+

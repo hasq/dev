@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugStatic|Win32">
+      <Configuration>DebugStatic</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{04080106-DF68-4FE3-AA93-0E2DFFD63EFB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>vc</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\..\..\src\db;..\..\..\src\ma;..\..\..\src\gl;..\..\..\src\os;..\..\..\src\sg;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\..\..\src\db;..\..\..\src\math;..\..\..\src\gl;..\..\..\src\os;..\..\..\src\sgl;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\db\hq_db.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_dbindex.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_dbslice.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_hash.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_record.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_single.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_sl_file.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_sl_hdt.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_sl_meta.cpp" />
+    <ClCompile Include="..\..\..\src\db\hq_traits.cpp" />
+    <ClCompile Include="..\..\..\src\gl\gl_err.cpp" />
+    <ClCompile Include="..\..\..\src\gl\gl_except.cpp" />
+    <ClCompile Include="..\..\..\src\gl\gl_protocol.cpp" />
+    <ClCompile Include="..\..\..\src\gl\gl_token.cpp" />
+    <ClCompile Include="..\..\..\src\gl\gl_utils.cpp" />
+    <ClCompile Include="..\..\..\src\ma\base64.cpp" />
+    <ClCompile Include="..\..\..\src\ma\cunmber_4096.c" />
+    <ClCompile Include="..\..\..\src\ma\ma_dag.cpp" />
+    <ClCompile Include="..\..\..\src\ma\ma_hash.cpp" />
+    <ClCompile Include="..\..\..\src\ma\ma_invert.cpp" />
+    <ClCompile Include="..\..\..\src\ma\ma_pkc.cpp" />
+    <ClCompile Include="..\..\..\src\ma\ma_skc.cpp" />
+    <ClCompile Include="..\..\..\src\ma\ma_utils.cpp" />
+    <ClCompile Include="..\..\..\src\ma\md5.cpp" />
+    <ClCompile Include="..\..\..\src\ma\rmd160.cpp" />
+    <ClCompile Include="..\..\..\src\ma\sha2.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_exec.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_file2.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_ipaddr.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_net2.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_sem.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_sysinfo.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_thread.cpp" />
+    <ClCompile Include="..\..\..\src\os\msc\os_timer2.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_block.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_filesys.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_ipaddrc.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_net.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_place.cpp" />
+    <ClCompile Include="..\..\..\src\os\os_threadc.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hasqd.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_alarms.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_automachine.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_chiefeditor.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_config.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_conflict.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_connector.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_console.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_globalspace.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_bin.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_ced.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_con.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_key.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_svt.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_gl_wkr.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_logger.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_plebfile.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_publisher.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_reorgan.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_secretary.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_servant.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_svtjob.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_svttask.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_wkrtask.cpp" />
+    <ClCompile Include="..\..\..\src\pu\hq_worker.cpp" />
+    <ClCompile Include="..\..\..\src\sg\sg_client.cpp" />
+    <ClCompile Include="..\..\..\src\sg\sg_cout.cpp" />
+    <ClCompile Include="..\..\..\src\sg\sg_mem.cpp" />
+    <ClCompile Include="..\..\..\src\sg\sg_testing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\db\hq_access.h" />
+    <ClInclude Include="..\..\..\src\db\hq_db.h" />
+    <ClInclude Include="..\..\..\src\db\hq_dbcfg.h" />
+    <ClInclude Include="..\..\..\src\db\hq_dbindex.h" />
+    <ClInclude Include="..\..\..\src\db\hq_dbslice.h" />
+    <ClInclude Include="..\..\..\src\db\hq_hash.h" />
+    <ClInclude Include="..\..\..\src\db\hq_record.h" />
+    <ClInclude Include="..\..\..\src\db\hq_single.h" />
+    <ClInclude Include="..\..\..\src\db\hq_sl_file.h" />
+    <ClInclude Include="..\..\..\src\db\hq_sl_hdt.h" />
+    <ClInclude Include="..\..\..\src\db\hq_sl_meta.h" />
+    <ClInclude Include="..\..\..\src\db\hq_traits.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_defs.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_err.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_except.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_protocol.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_token.h" />
+    <ClInclude Include="..\..\..\src\gl\gl_utils.h" />
+    <ClInclude Include="..\..\..\src\ma\md5.h" />
+    <ClInclude Include="..\..\..\src\ma\number.h" />
+    <ClInclude Include="..\..\..\src\ma\rmd160.h" />
+    <ClInclude Include="..\..\..\src\ma\sha2.h" />
+    <ClInclude Include="..\..\..\src\ma\ulam.h" />
+    <ClInclude Include="..\..\..\src\os\os_block.h" />
+    <ClInclude Include="..\..\..\src\os\os_filesys.h" />
+    <ClInclude Include="..\..\..\src\os\os_ipaddr.h" />
+    <ClInclude Include="..\..\..\src\os\os_mutex.h" />
+    <ClInclude Include="..\..\..\src\os\os_net.h" />
+    <ClInclude Include="..\..\..\src\os\os_netalias.h" />
+    <ClInclude Include="..\..\..\src\os\os_place.h" />
+    <ClInclude Include="..\..\..\src\os\os_sem.h" />
+    <ClInclude Include="..\..\..\src\os\os_thread.h" />
+    <ClInclude Include="..\..\..\src\os\os_timer.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_alarms.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_automachine.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_chiefeditor.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_config.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_conflict.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_connector.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_console.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_globalspace.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_logger.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_publisher.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_secretary.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_servant.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_svttask.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_wkrtask.h" />
+    <ClInclude Include="..\..\..\src\pu\hq_worker.h" />
+    <ClInclude Include="..\..\..\src\sg\sg_client.h" />
+    <ClInclude Include="..\..\..\src\sg\sg_cout.h" />
+    <ClInclude Include="..\..\..\src\sg\sg_mem.h" />
+    <ClInclude Include="..\..\..\src\sg\sg_testing.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\db\hq_db.inc" />
+    <None Include="..\..\..\src\db\hq_record.inc" />
+    <None Include="..\..\..\src\os\os_ipaddr.inc" />
+    <None Include="..\..\..\src\os\os_net.inc" />
+    <None Include="..\..\..\src\os\os_timer.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

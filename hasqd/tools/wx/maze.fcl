@@ -1,0 +1,2317 @@
+0
+1
+maze
+7
+buildwx.mak
+952
+WXNAME=wxw2812m
+WX=./$(WXNAME)
+
+INC=-I $(WX)/include/msvc -I $(WX)/include
+LIBPATH=$(WX)/lib/vc_lib
+
+LIBS="comctl32.lib" "Rpcrt4.lib" "kernel32.lib" "user32.lib" "gdi32.lib" \
+	"winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" \
+	"oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib"
+
+# USE STATIC OR DYNAMIC LIBS
+#STATICLIB=-MT
+DYNAMICLIB=-MD
+#NOSTATICLIB=/NODEFAULTLIB:LIBCMT
+
+# USE UNICODE
+#UNICODE=-D_UNICODE=1
+
+OPT=-EHsc -Ox
+
+all: $(WX)/lib/vc_lib/wxbase28.lib
+
+clean:
+	rm -rf *.exe.manifest *.exe *.obj *.tmp $(WXNAME) $(WXNAME).*
+
+$(WX)/lib/vc_lib/wxbase28.lib: $(WX)
+	cd $(WX)/build/msw && nmake -f makefile.vc BUILD=release
+
+$(WX):  $(WXNAME).fcl
+	fcl3 extr $(WXNAME).fcl
+	touch $(WX)
+
+$(WXNAME).fcl: $(WXNAME).fcl.bz2
+	bzip2 -d -k $(WXNAME).fcl.bz2
+	chmod 0777 $(WXNAME).fcl
+	touch $(WXNAME).fcl
+
+$(WXNAME).fcl.bz2: ../../../third/wx/$(WXNAME).fcl.bz2
+	cp $< $@
+	chmod 0777 $@
+
+
+
+draw.cpp
+5632
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include "mazew.h"
+
+struct Drawer
+{
+	wxDC* mDc;
+	double mXpos, mYpos;
+	double mW, mH;
+	Maze * mMaze;
+
+	double mCellSize;
+	double mXoff, mYoff;
+
+	void init();
+
+	void cell(int i, int j);
+	void exit();
+	DrawPane::Square thes();
+	void mino();
+};
+
+
+void DrawPane::drawMaze(wxDC& dc, double xpos, double ypos, double w, double h)
+{
+	int szx = mMaze->size().x();
+	int szy = mMaze->size().y();
+	if( szx<1 || szy<1 ) return;
+
+	Drawer drawer;
+	drawer.mDc = &dc;
+	drawer.mXpos = xpos;
+	drawer.mYpos = ypos;
+	drawer.mW = w;
+	drawer.mH = h;
+	drawer.mMaze = mMaze;
+
+	drawer.init();
+
+	for( int j=0; j<szy; j++ )
+		for( int i=0; i<szx; i++ )
+			drawer.cell(i,j);
+
+	drawer.exit();
+	mSq = drawer.thes();
+	drawer.mino();
+}
+
+void Drawer::init()
+{
+	mCellSize = mW*0.9/mMaze->size().x();
+
+	mXoff = (mW - mMaze->size().x()*mCellSize)/2;
+	mXoff += mCellSize/2;
+
+	mYoff = (mH - mMaze->size().y()*mCellSize)/2;
+	mYoff += mCellSize/2;
+}
+
+void Drawer::cell(int i, int j)
+{
+	double cx = mXoff+mCellSize*i;
+	double cy = mYoff+mCellSize*j;
+
+	double le = cx-mCellSize/2;
+	double ri = cx+mCellSize/2;
+	double to = cy-mCellSize/2;
+	double bo = cy+mCellSize/2;
+
+	int borderSize = mCellSize/30+1;
+	int wallSize = mCellSize/40+1;
+
+
+	mDc->SetPen( wxPen( wxColor(180,180,180), 1 ) );
+	mDc->DrawLine( mXpos+le, mYpos+bo, mXpos+ri, mYpos+bo );
+	mDc->DrawLine( mXpos+ri, mYpos+to, mXpos+ri, mYpos+bo );
+
+
+	// left wall
+	if( i==0 )
+	{
+		mDc->SetPen( wxPen( wxColor(0,0,0), borderSize ) );
+		if( i==mMaze->exit().x() && j==mMaze->exit().y() )
+		{
+			mDc->DrawLine( mXpos+le, mYpos+to, 
+				mXpos+le-mCellSize/8, mYpos+to );
+			mDc->DrawLine( mXpos+le, mYpos+bo, 
+				mXpos+le-mCellSize/8, mYpos+bo );
+		}
+		else
+		{
+			mDc->DrawLine( mXpos+le, mYpos+to, mXpos+le, mYpos+bo );
+		}
+	}
+
+	// top wall
+	if( j==0 )
+	{
+		mDc->SetPen( wxPen( wxColor(0,0,0), borderSize ) );
+		if( i==mMaze->exit().x() && j==mMaze->exit().y() )
+		{
+			mDc->DrawLine( mXpos+le, mYpos+to, 
+				mXpos+le, mYpos+to-mCellSize/8 );
+			mDc->DrawLine( mXpos+ri, mYpos+to, 
+				mXpos+ri, mYpos+to-mCellSize/8 );
+		}
+		else
+		{
+			mDc->DrawLine( mXpos+le, mYpos+to, mXpos+ri, mYpos+to );
+		}
+	}
+
+	// right
+	if( i==mMaze->size().x()-1 )
+	{
+		mDc->SetPen( wxPen( wxColor(0,0,0), borderSize ) );
+		if( i==mMaze->exit().x() && j==mMaze->exit().y() )
+		{
+			mDc->DrawLine( mXpos+ri, mYpos+to, 
+				mXpos+ri+mCellSize/8, mYpos+to );
+			mDc->DrawLine( mXpos+ri, mYpos+bo, 
+				mXpos+ri+mCellSize/8, mYpos+bo );
+		}
+		else
+		{
+			mDc->DrawLine( mXpos+ri, mYpos+to, mXpos+ri, mYpos+bo );
+		}
+	}
+	else
+	{
+		if( mMaze->hasRight(i,j) )
+		{
+			mDc->SetPen( wxPen( wxColor(0,0,0), wallSize ) );
+			mDc->DrawLine( mXpos+ri, mYpos+to, mXpos+ri, mYpos+bo );
+		}
+	}
+
+	// bottom
+	if( j==mMaze->size().y()-1 )
+	{
+		mDc->SetPen( wxPen( wxColor(0,0,0), borderSize ) );
+		if( i==mMaze->exit().x() && j==mMaze->exit().y() )
+		{
+			mDc->DrawLine( mXpos+le, mYpos+bo, 
+				mXpos+le, mYpos+bo+mCellSize/8 );
+			mDc->DrawLine( mXpos+ri, mYpos+bo, 
+				mXpos+ri, mYpos+bo+mCellSize/8 );
+		}
+		else
+		{
+			mDc->DrawLine( mXpos+le, mYpos+bo, mXpos+ri, mYpos+bo );
+		}
+	}
+	else
+	{
+		if( mMaze->hasBottom(i,j) )
+		{
+			mDc->SetPen( wxPen( wxColor(0,0,0), wallSize ) );
+			mDc->DrawLine( mXpos+le, mYpos+bo, mXpos+ri, mYpos+bo );
+		}
+	}
+}
+
+void Drawer::exit()
+{
+	int i = mMaze->exit().x();
+	int j = mMaze->exit().y();
+	if( i!=0 && i!=mMaze->size().x()-1 && j!=0 && j!=mMaze->size().y()-1 )
+
+	{
+		double cx = mXoff+mCellSize*i;
+		double cy = mYoff+mCellSize*j;
+
+		double le = cx-mCellSize/3;
+		double ri = cx+mCellSize/3;
+		double to = cy-mCellSize/3;
+		double bo = cy+mCellSize/3;
+
+		int size = mCellSize/20+1;
+
+		mDc->SetPen( wxPen( wxColor(80,180,80), size ) );
+		mDc->DrawLine( mXpos+le, mYpos+to, mXpos+ri, mYpos+to );
+		mDc->DrawLine( mXpos+le, mYpos+to, mXpos+le, mYpos+bo );
+		mDc->DrawLine( mXpos+le, mYpos+bo, mXpos+ri, mYpos+bo );
+		mDc->DrawLine( mXpos+ri, mYpos+to, mXpos+ri, mYpos+bo );
+	}
+}
+
+DrawPane::Square Drawer::thes()
+{
+	int ei = mMaze->exit().x();
+	int ej = mMaze->exit().y();
+
+	int i = mMaze->thes().x();
+	int j = mMaze->thes().y();
+
+	double cx = mXoff+mCellSize*i;
+	double cy = mYoff+mCellSize*j;
+
+	double le = cx-mCellSize/2;
+	double ri = cx+mCellSize/2;
+	double to = cy-mCellSize/2;
+	double bo = cy+mCellSize/2;
+
+	int size = mCellSize/10+1;
+
+	if( ei==i && ej==j ) mDc->SetBrush(*wxGREEN_BRUSH);
+	mDc->SetPen( wxPen( wxColor(0,0,0), size/3 ) );
+	mDc->DrawCircle( wxPoint(mXpos+cx,mYpos+cy), 3*size );
+
+	DrawPane::Square r;
+	r.le = mXpos+le;
+	r.ri = mXpos+ri;
+	r.to = mYpos+to;
+	r.bo = mYpos+bo;
+	return r;
+}
+
+void Drawer::mino()
+{
+	int ti = mMaze->thes().x();
+	int tj = mMaze->thes().y();
+
+	int i = mMaze->mino().x();
+	int j = mMaze->mino().y();
+
+	double cx = mXoff+mCellSize*i;
+	double cy = mYoff+mCellSize*j;
+
+	double le = cx-mCellSize/3;
+	double ri = cx+mCellSize/3;
+	double to = cy-mCellSize/3;
+	double bo = cy+mCellSize/3;
+
+	int size = mCellSize/8+1;
+
+	if( i==ti && j==tj ) 
+		mDc->SetBrush(*wxRED_BRUSH);
+
+	mDc->SetPen( wxPen( wxColor(0,0,0), size/3 ) );
+	mDc->DrawCircle( wxPoint(mXpos+cx,mYpos+cy), 2*size );
+
+	mDc->DrawLine( mXpos+le, mYpos+to, mXpos+le+size, mYpos+to+size );
+	mDc->DrawLine( mXpos+ri, mYpos+to, mXpos+ri-size, mYpos+to+size );
+	mDc->DrawLine( mXpos+le, mYpos+bo, mXpos+le+size, mYpos+bo-size );
+	mDc->DrawLine( mXpos+ri, mYpos+bo, mXpos+ri-size, mYpos+bo-size );
+}
+
+
+makefile
+1371
+WXNAME=wxw2812m
+WX=./$(WXNAME)
+
+INC=-I $(WX)/include/msvc -I $(WX)/include
+LIBPATH=$(WX)/lib/vc_lib
+
+LIBS="comctl32.lib" "Rpcrt4.lib" "kernel32.lib" "user32.lib" "gdi32.lib" \
+	"winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" \
+	"oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib"
+
+# USE STATIC OR DYNAMIC LIBS
+#STATICLIB=-MT
+DYNAMICLIB=-MD
+#NOSTATICLIB=/NODEFAULTLIB:LIBCMT
+
+# USE UNICODE
+#UNICODE=-D_UNICODE=1
+
+OPT=-EHsc -Ox
+
+all: mazew.exe
+
+mazew.exe: $(WX)/lib/vc_lib/wxbase28.lib mazew.obj maze.obj draw.obj solver.obj generate.obj \
+	common/*.h common/*.cpp
+	link $(NOSTATICLIB) mazew.obj maze.obj draw.obj solver.obj \
+	generate.obj /LIBPATH:$(LIBPATH) $(LIBS)
+
+mazew.obj: mazew.cpp mazew.h common/*.h
+	cl -c $(OPT) -I common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+maze.obj: common/maze.cpp common/maze.h
+	cl -c $(OPT) -I common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+draw.obj: draw.cpp
+	cl -c $(OPT) -I common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+solver.obj: common/solver.cpp common/*.h
+	cl -c $(OPT) -I common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+generate.obj: common/generate.cpp common/*.h
+	cl -c $(OPT) -I common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+clean:
+	rm -rf mazew.exe.manifest mazew.exe *.obj *.tmp $(WXNAME) $(WXNAME).*
+
+
+
+
+makefile.unx
+866
+
+OPT=`wx-config --cppflags` `wx-config --libs` -O2
+
+all: mazew
+
+mazew: mazew.o maze.o draw.o solver.o generate.o \
+	../common/*.h ../common/*.cpp
+	g++ $(OPT) mazew.o maze.o draw.o solver.o generate.o -o mazew
+
+mazew.o: mazew.cpp mazew.h ../common/*.h
+	g++ -c $(OPT) -I ../common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+maze.o: ../common/maze.cpp ../common/maze.h
+	g++ -c $(OPT) -I ../common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+draw.o: draw.cpp
+	g++ -c $(OPT) -I ../common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+solver.o: ../common/solver.cpp ../common/*.h
+	g++ -c $(OPT) -I ../common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+generate.o: ../common/generate.cpp ../common/*.h
+	g++ -c $(OPT) -I ../common $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+
+clean:
+	rm -f mazew.exe.manifest mazew *.o *.tmp
+
+mazew.cpp
+15801
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <time.h>
+#include <algorithm>
+
+#include "wx/wx.h"
+#include "wx/sizer.h"
+#include "wx/dcbuffer.h"
+#include "wx/dir.h"
+
+#include "mazew.h"
+#include "solver.h"
+#include "generate.h"
+
+const bool DBLBUFF=true;
+
+
+BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+	EVT_MENU(ID_Quit,  MyFrame::OnQuit)
+	EVT_MENU(ID_About, MyFrame::OnAbout)
+	EVT_MENU(ID_Keyboard, MyFrame::OnKeyboard)
+	EVT_MENU(ID_Solve, MyFrame::OnSolve)
+	EVT_MENU(ID_Ponder, MyFrame::OnPonder)
+	EVT_MENU(ID_Save, MyFrame::OnSave)
+	EVT_MENU(ID_Next, MyFrame::OnNext)
+	EVT_MENU(ID_Prev, MyFrame::OnPrev)
+	EVT_MENU(ID_Back, MyFrame::OnBack)
+	EVT_MENU(ID_Forward, MyFrame::OnForward)
+	EVT_MENU(ID_Reset, MyFrame::OnReset)
+	EVT_MENU(ID_Gener, MyFrame::OnGener)
+	EVT_MENU(ID_Options, MyFrame::OnOptions)
+	END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(DrawPane, wxPanel)
+	EVT_LEFT_DOWN(DrawPane::mouseDown)
+	EVT_KEY_DOWN(DrawPane::keyPressed)
+	EVT_PAINT(DrawPane::paintEvent)
+	EVT_SIZE(DrawPane::OnSize)
+
+	END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(BasicDialog, wxDialog)
+
+	END_EVENT_TABLE()
+
+
+
+	IMPLEMENT_APP(MyApp)
+
+
+	bool MyApp::OnInit()
+{
+	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+	mFrame = new MyFrame( wxT("Theseus and Minotaur"), wxPoint(50,50), wxSize(800,600));
+
+	mPane = new DrawPane( (wxFrame*) mFrame );
+	mFrame->setPane(mPane);
+
+	mFrame->loadMaze("",true);
+
+	mPane->SetDoubleBuffered(DBLBUFF);
+
+	sizer->Add(mPane, 1, wxEXPAND);
+
+	mFrame->SetSizer(sizer);
+	mFrame->SetAutoLayout(true);
+
+	mFrame->Show(true);
+	SetTopWindow(mFrame);
+
+	mTimer = new RenderTimer(mPane);
+	mTimer->start();
+
+	return true;
+}
+
+
+MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
+	: wxFrame(NULL, -1, title, pos, size)
+{
+	wxMenu *menuFile = new wxMenu;
+
+	menuFile->Append( ID_Next, _("&Next maze\tCtrl-N") );
+	menuFile->Append( ID_Prev, _("&Previous maze\tCtrl-P") );
+	menuFile->AppendSeparator();
+	menuFile->Append( ID_Save, _("&Save maze and solution") );
+	menuFile->AppendSeparator();
+	menuFile->Append( ID_Quit, _("E&xit\tCtrl-Q") );
+
+	wxMenu *menuMaze = new wxMenu;
+
+	menuMaze->Append( ID_Back,    _("&Back\tB") );
+	menuMaze->Append( ID_Forward, _("&Forward\tF") );
+	menuMaze->Append( ID_Reset,   _("&Try again\tR") );
+	menuMaze->AppendSeparator();
+
+	menuMaze->Append( ID_Ponder, _("&Ponder") );
+	menuMaze->Append( ID_Solve, _("&Solve") );
+	{
+		std::ifstream in("nohelp");
+		if( !!in )
+		{
+			menuMaze->Enable(ID_Ponder,false);
+			menuMaze->Enable(ID_Solve,false);
+		}
+	}
+
+	menuMaze->AppendSeparator();
+	menuMaze->Append( ID_Options, _("&Generation options ...") );
+	menuMaze->Append( ID_Gener, _("&Generate\tCtrl-G") );
+
+	wxMenu *menuHelp = new wxMenu;
+
+	menuHelp->Append( ID_Keyboard, _("&Keyboard") );
+	menuHelp->AppendSeparator();
+	menuHelp->Append( ID_About, _("&About...") );
+
+	wxMenuBar *menuBar = new wxMenuBar;
+	menuBar->Append( menuFile, _("&File") );
+	menuBar->Append( menuMaze, _("&Maze") );
+	menuBar->Append( menuHelp, _("&Help") );
+
+	SetMenuBar( menuBar );
+
+	CreateStatusBar();
+	SetStatusText( wxString("Welcome to Theseus and Minotaur game; "
+		"Try Help->Keyboard for keyboard commands",wxConvUTF8) );
+
+}
+
+
+void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
+{
+	Close(true);
+}
+
+void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
+{
+	wxMessageBox( towx("This is the Theseus and Minotaur Game.\n"
+		"Written on 23 Sept 2010\n"
+		"http://mazonka.com/maze/"
+		),
+		_("Oleg Mazonka"), 
+		wxOK | wxICON_INFORMATION, this );
+}
+
+void MyFrame::OnKeyboard(wxCommandEvent& WXUNUSED(event))
+{
+	wxMessageBox( towx("Arrows or mouse click - left/right/up/dpwn\n"
+		"Space - wait for one move\n"
+		"b - return back one move\n"
+		"f - forward one move (if exists)\n"
+		"r - reset - back all moves"),
+		_("Game keyboard commands"), 
+		wxOK | wxICON_INFORMATION, this );
+}
+
+
+DrawPane::DrawPane(wxFrame* parent) :
+wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE),
+	mMaze(0)
+{
+	mAnim=0;
+	mFrame=parent;
+}
+
+
+void DrawPane::paintEvent(wxPaintEvent & evt)
+{
+	wxPaintDC dc(this);
+	render(dc);
+}
+
+void DrawPane::paintNow()
+{
+	wxClientDC dc(this);
+	render(dc);
+}
+
+void DrawPane::OnSize(wxSizeEvent &e)
+{
+	Refresh();
+}
+
+
+void DrawPane::render(wxDC&  dc)
+{
+	dc.Clear();
+
+	int w=0,h=0;
+	dc.GetSize(&w,&h);
+	dc.SetBrush(*wxMEDIUM_GREY_BRUSH);
+	dc.SetPen( wxPen( wxColor(25,25,25), 1 ) );
+	dc.DrawRectangle( 0, 0, w, h );
+
+	if( !mMaze ) return;
+
+	double xpos=0, ypos=0;
+	double xsz = mMaze->size().x();
+	double ysz = mMaze->size().y();
+
+	if( w<10 || h<10 ) return;
+
+	double xscale = xsz/w;
+	double yscale = ysz/h;
+	double scale = ( xscale > yscale ? xscale : yscale );
+	scale /= 0.95;
+
+	ysz /= scale;
+	xsz /= scale;
+
+	xpos = (w - xsz)/2;
+	ypos = (h - ysz)/2;
+
+	dc.SetBrush(*wxLIGHT_GREY_BRUSH);
+	dc.SetPen( wxPen( wxColor(55,55,75), 1 ) );
+	dc.DrawRectangle( xpos, ypos, xsz, ysz );
+
+	drawMaze(dc,xpos,ypos,xsz,ysz);
+
+}
+
+
+
+void DrawPane::makeMove(int side)
+{
+	if( mAnim ) return;
+
+	mSide = side;
+	mAnim = 1;
+	processAnim();
+}
+
+void DrawPane::processAnim()
+{
+	if( mAnim==0 ) return;
+
+	if(mAnim==1)
+	{
+		mAnim=0;
+		if( mMaze->moveThes(mSide) )
+		{
+			mAnim=2;
+			Refresh();
+		}
+	}
+
+	else if(mAnim==2)
+	{
+		mAnim=0;
+		if( mMaze->moveMino() )
+		{
+			mAnim=3;
+			Refresh();
+		}
+	}
+
+	else if(mAnim==3)
+	{
+		mAnim=0;
+		mMaze->moveMino();
+		Refresh();
+	}
+
+	else if( mAnim==10 && mSolver)
+	{
+		mSolver->solve1();
+		Refresh();
+		if( mSolver->state() > 0 ) mAnim=12;
+	}
+
+	else if( mAnim==11 && mSolver)
+	{
+		mSolver->solveT(100);
+		Refresh();
+		if( mSolver->state() > 1 ) mAnim=12;
+	}
+
+	else if( mAnim==12 && mSolver)
+	{
+		mSolver->apply();
+		if( mSolver->state() == 0 ) status( _("Solution not found") );
+		if( mSolver->state() == 1 ) status( _("Some solution is found (use f)") );
+		if( mSolver->state() == 2 ) status( _("Solution does not exist") );
+		if( mSolver->state() == 3 ) statusSolution();
+		delete mSolver;
+		mAnim=0;
+		Refresh();
+		return;
+	}
+
+	else if( mAnim==20 && mGen )
+	{
+		mGen->generate(100);
+		delete mMaze;
+		mMaze = new Maze(mGen->getCurrentMaze());
+		if( mGen->isDone() ) mAnim=21;
+		int sol = mGen->getSolutionSize()-1;
+		status( towx( "Generating "+tos(mGen->getCurrent())+" / "
+			+tos(mGen->getTotal()) + " so far best " 
+			+tos(sol) + " ("
+			+tos(sol-mMaze->size().xy()) +")" ) );
+
+		Refresh();
+		return;
+	}
+
+	else if( mAnim==21 && mGen )
+	{
+		mAnim=0;
+		delete mMaze;
+		mMaze = new Maze(mGen->getBestMaze());
+		int sol = mGen->getSolutionSize()-1;
+		int diff = sol - mMaze->size().xy();
+		if( sol < -1 )
+		  status( towx("No solution for this maze!") );
+		else
+		  status( towx("Solution: "+tos(sol)+"  Difficulty: "+tos(diff)) );
+		delete mGen;
+		Refresh();
+		return;
+	}
+
+
+	if( mAnim==0 )
+	{
+		if( mMaze->isLost() ) status( _("You lost!") );
+		else if( mMaze->isWin() ) 
+			status( towx("You win in "
+			+tos(mMaze->getNumStates()-1)+" steps" ) );
+
+		else statusCurrent();
+	}
+}
+
+void DrawPane::keyPressed(wxKeyEvent& event)
+{
+	if( !mMaze ) return;
+
+	if( mAnim==10 || mAnim==11 )
+	{
+		mAnim=12;
+		return;
+	}
+
+	if( mAnim==20 )
+	{
+		mAnim=21;
+		return;
+	}
+
+	std::ostringstream os;
+	int code = event.GetKeyCode();
+	os<<code;
+	std::string s = "Code: "+os.str();
+
+	if( WXK_SPACE==code ) makeMove(0);
+	else if( WXK_RIGHT==code ) makeMove(1);
+	else if( WXK_LEFT==code ) makeMove(2);
+	else if( WXK_UP==code ) makeMove(3);
+	else if( WXK_DOWN==code ) makeMove(4);
+
+	statusCurrent();
+	paintNow();
+}
+
+void DrawPane::loadMaze(std::istream &is)
+{
+	delete mMaze;
+	mMaze = new Maze(is);
+}
+
+
+
+RenderTimer::RenderTimer(DrawPane* pane) : wxTimer()
+{
+	RenderTimer::pane = pane;
+}
+
+void RenderTimer::Notify()
+{
+	static bool in = false;
+	if( in ) return;
+	in = true;
+	pane->processAnim();
+	in = false;
+}
+
+void RenderTimer::start()
+{
+	wxTimer::Start(200);
+}
+
+void DrawPane::mouseDown(wxMouseEvent& e)
+{
+	std::ostringstream os;
+	double x = e.GetX();
+	double y = e.GetY();
+	os<<x<<' '<<y;
+	std::string s = "Mouse "+os.str();
+
+	if( x>mSq.le && x<mSq.ri && y>mSq.to && y<mSq.bo ) makeMove(0);
+	else if( x>mSq.le && x<mSq.ri+(mSq.ri-mSq.le) && y>mSq.to && y<mSq.bo ) makeMove(1);
+	else if( x<mSq.le && x>mSq.le-(mSq.ri-mSq.le) && y>mSq.to && y<mSq.bo ) makeMove(2);
+	else if( x>mSq.le && x<mSq.ri && y<mSq.to && y>mSq.to-(mSq.bo-mSq.to) ) makeMove(3);
+	else if( x>mSq.le && x<mSq.ri && y>mSq.bo && y<mSq.bo+(mSq.bo-mSq.to) ) makeMove(4);
+}
+
+
+void MyFrame::OnSolve(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	mPane->solve(11);
+}
+
+void MyFrame::OnPonder(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	mPane->solve(10);
+}
+
+void DrawPane::status(wxString s)
+{
+	mFrame->SetStatusText( s );
+}
+
+void DrawPane::solve(int id)
+{
+	mSolver = new ShortSolver(mMaze);
+	mAnim = id;
+}
+
+wxString towx(std::string s)
+{
+	wxString r(s.c_str(),wxConvUTF8);
+	return r;
+}
+
+std::string wxto(wxString s)
+{
+	return (std::string)s.mb_str(wxConvUTF8);
+}
+
+wxString towx(int x)
+{
+	return towx(tos(x));
+}
+
+std::string tos(int x)
+{
+	std::ostringstream os;
+	os<<x;
+	return os.str();
+}
+
+int sto(std::string s)
+{
+	int x=-1;
+	std::istringstream is(s);
+	is>>x;
+	return x;
+}
+
+int sto(wxString s)
+{
+	return sto( wxto(s) );
+}
+
+void DrawPane::statusSolution()
+{
+	wxString s1 = _("Found solution in ");
+	wxString s2 = _(" steps (use f)");
+	wxString s = s1+ towx(mMaze->getNumStates()-1) +s2;
+
+	status( s );
+}
+
+void DrawPane::statusCurrent()
+{
+	status( towx(mMaze->getIndex()) + _(" / ") + towx(mMaze->getNumStates()-1) );
+}
+
+void MyFrame::loadMaze(const std::string &s, bool next)
+{
+	std::vector<std::string> files = getListOfFiles();
+	if( files.empty() )
+	{
+		wxMessageBox( 
+			_("No maze files found\nTry Maze->Generate menu item"), 
+			_("Warning"), wxOK | wxICON_INFORMATION, NULL );
+		return;
+	}
+
+	int i=0;
+	int sz = files.size();
+	for(  ; i<sz; i++ )
+		if( files[i] == s ) break;
+
+	if( i==sz )
+		mFile = files[0];
+
+	else if( next && i+1 < sz )
+		mFile = files[i+1];
+
+	else if( !next && i-1 >= 0 )
+		mFile = files[i-1];
+
+	std::ifstream fmaze(mFile.c_str());
+	mPane->loadMaze(fmaze);
+
+	if( !mPane->getMaze()->validate() )
+	{
+		wxMessageBox( towx("File "+mFile+" is corrupted"), _("ERROR"), wxOK | wxICON_INFORMATION, NULL );
+		return;
+	}
+
+	SetStatusText( towx("Loaded " + mFile) );
+}
+
+std::vector<std::string> getListOfFiles()
+{
+	std::vector<std::string> r;
+
+	wxDir dir(wxGetCwd());
+
+	if ( !dir.IsOpened() )
+		return r;
+
+	wxString filename;
+
+	bool cont = dir.GetFirst(&filename);
+	while ( cont )
+	{
+		std::string s = wxto(filename);
+		int sz = s.size();
+		if( sz>5 && s.substr(sz-5)==".maze" )
+			r.push_back(s);
+
+		cont = dir.GetNext(&filename);
+	}
+
+	std::sort(r.begin(),r.end());
+
+	return r;
+}
+
+
+void MyFrame::OnNext(wxCommandEvent& WXUNUSED(event))
+{
+	loadMaze(mFile,true);
+	Refresh();
+}
+
+void MyFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
+{
+	loadMaze(mFile,false);
+	Refresh();
+}
+
+void MyFrame::OnSave(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	std::ofstream of(mFile.c_str());
+	mPane->getMaze()->save(of);
+}
+
+
+void MyFrame::OnBack(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	mPane->getMaze()->back();
+	Refresh();
+}
+
+void MyFrame::OnForward(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	mPane->getMaze()->forward();
+	Refresh();
+}
+
+void MyFrame::OnReset(wxCommandEvent& WXUNUSED(event))
+{
+	if( !mPane->getMaze() ) return;
+	mPane->getMaze()->reset();
+	Refresh();
+}
+
+
+BasicDialog::BasicDialog ( wxWindow * parent, wxWindowID id, const wxString & title,
+                           const wxPoint & position, const wxSize & size, long style )
+: wxDialog( parent, id, title, position, size, style)
+{
+
+	SetSize(size);
+	wxPoint p;
+
+	int NL = 10;
+ 
+	p.x = NL; p.y = 20;
+
+	new wxStaticText( this, -1, _("Maze name"), p );
+	p.x += 70;
+	mName = new wxTextCtrl ( this, -1, towx("o")+towx(time(0)), p );
+
+	p.x += 130;
+	new wxStaticText( this, -1, _("Size"), p );
+	p.x += 30;
+	mX = new wxTextCtrl ( this, -1, towx("1"), p, wxSize(40,-1) );
+	p.x += 45;
+	new wxStaticText( this, -1, _("X"), p );
+	p.x += 15;
+	mY = new wxTextCtrl ( this, -1, towx("1"), p, wxSize(40,-1) );
+
+	p.x = NL;
+	p.y += 35;
+	new wxStaticText( this, -1, _("Wall filling"), p );
+	p.x += 70;
+	new wxStaticText( this, -1, _("Sparse"), p );
+	p.x += 35;
+	mFill = new wxSlider( this, -1, 200, 0, 1000, p, wxSize(200,-1) );
+	p.x += 200;
+	new wxStaticText( this, -1, _("Dense"), p );
+
+	p.x = NL;
+	p.y += 30;
+	new wxStaticText( this, -1, _("Isolation"), p );
+	p.x += 70;
+	new wxStaticText( this, -1, _("Small"), p );
+	p.x += 35;
+	mIsol = new wxSlider( this, -1, 200, 0, 1000, p, wxSize(200,-1) );
+	p.x += 200;
+	new wxStaticText( this, -1, _("Big"), p );
+
+	p.x = NL;
+	p.y += 30;
+	new wxStaticText( this, -1, _("Border exit"), p );
+	p.x += 70;
+	new wxStaticText( this, -1, _("   No"), p );
+	p.x += 35;
+	mExit = new wxSlider( this, -1, 200, 0, 1000, p, wxSize(200,-1) );
+	p.x += 200;
+	new wxStaticText( this, -1, _("Yes"), p );
+
+	p.x = NL;
+	p.y += 30;
+	new wxStaticText( this, -1, _("Use walls"), p );
+	p.x += 70;
+	new wxStaticText( this, -1, _("  New"), p );
+	p.x += 35;
+	mVary = new wxSlider( this, -1, 200, 0, 1000, p, wxSize(200,-1) );
+	p.x += 200;
+	new wxStaticText( this, -1, _("Keep"), p );
+
+	p.x = NL;
+	p.y += 40;
+	new wxStaticText( this, -1, _("Generate"), p );
+	p.x += 70;
+	mNum = new wxTextCtrl ( this, -1, towx("0"), p, wxSize(60,-1) );
+	p.x += 70;
+	new wxStaticText( this, -1, _(" mazes and select the most difficult"), p );
+
+	p.y = size.GetHeight() - 60;
+	p.x = size.GetWidth() - 100;
+	wxButton * b = new wxButton( this, wxID_OK, _("OK"), p, wxDefaultSize );
+	p.x -= 100;
+	wxButton * c = new wxButton( this, wxID_CANCEL, _("Cancel"), p, wxDefaultSize );
+}
+
+
+void DrawPane::setGenerator(const Generator &g)
+{
+	if( mMaze ) mGen = new Generator(g,*mMaze);
+	else mGen = new Generator(g);
+	mAnim = 20;
+}
+
+
+void MyFrame::OnOptions(wxCommandEvent& WXUNUSED(event))
+{
+	BasicDialog dia ( this, -1, _("Generate options"),
+		wxDefaultPosition, wxSize(400, 300) );
+
+	dia.mX->SetValue( towx(mGen.getSizeX()) );
+	dia.mY->SetValue( towx(mGen.getSizeY()) );
+
+	dia.mFill->SetValue( int(1000*mGen.getFilling()) );
+	dia.mIsol->SetValue( int(1000*mGen.getIsolation()) );
+	dia.mExit->SetValue( int(1000*mGen.getBorderExit()) );
+	dia.mVary->SetValue( int(1000*mGen.getVariator()) );
+	dia.mNum->SetValue( towx(mGen.getTotal()) );
+
+	if ( dia.ShowModal() != wxID_OK ) return;
+
+	mGen.name = wxto(dia.mName->GetValue());
+
+	int sizex = sto( dia.mX->GetValue() );
+	if( sizex<3 || sizex>10000 ) sizex=3;
+	int sizey = sto( dia.mY->GetValue() );
+	if( sizey<3 || sizey>10000 ) sizey=3;
+
+	int num = sto( dia.mNum->GetValue() );
+	if( num < 1 ) num=1;
+
+	double fil = dia.mFill->GetValue()/1000.0;
+	double iso = dia.mIsol->GetValue()/1000.0;
+	double exi = dia.mExit->GetValue()/1000.0;
+	double var = dia.mVary->GetValue()/1000.0;
+
+	mGen.set( XY(sizex,sizey), num, fil, iso, exi, var );
+
+	mFile = mGen.name+".maze";
+}
+
+void MyFrame::OnGener(wxCommandEvent& WXUNUSED(event))
+{
+	if( mGen.name=="" ) mGen.name = "o"+tos(time(0));
+	mPane->setGenerator(mGen);
+	mFile = mGen.name+".maze";
+
+	SetStatusText( towx("New maze "+mFile+" being generated (not saved)"));
+}
+
+
+
+mazew.h
+3362
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include <sstream>
+#include <fstream>
+#include <string>
+
+#include "wx/wx.h"
+#include "wx/sizer.h"
+
+#include "maze.h"
+#include "generate.h"
+
+class DrawPane;
+class Solver;
+class Generator;
+
+class MyFrame: public wxFrame
+{
+    DrawPane *mPane;
+    std::string mFile;
+    Generator mGen;
+
+public:
+
+    MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+    void setPane(DrawPane *p){ mPane=p; }
+
+    void OnQuit(wxCommandEvent& event);
+    void OnAbout(wxCommandEvent& event);
+    void OnKeyboard(wxCommandEvent& event);
+    void OnSolve(wxCommandEvent& event);
+    void OnPonder(wxCommandEvent& event);
+    void OnSave(wxCommandEvent& event);
+    void OnNext(wxCommandEvent& event);
+    void OnPrev(wxCommandEvent& event);
+    void OnBack(wxCommandEvent& event);
+    void OnForward(wxCommandEvent& event);
+    void OnReset(wxCommandEvent& event);
+    void OnGener(wxCommandEvent& event);
+    void OnOptions(wxCommandEvent& event);
+
+    void loadMaze(const std::string& file, bool next);
+    void saveMaze();
+
+    DECLARE_EVENT_TABLE()
+};
+
+class DrawPane : public wxPanel
+{
+    Maze * mMaze;
+    wxFrame* mFrame;
+
+    int mSide, mAnim;
+    Solver *mSolver;
+    Generator *mGen;
+
+public:
+    struct Square{ double le,ri,to,bo; };
+
+private:
+    Square mSq;
+
+public:
+    DrawPane(wxFrame* parent);
+    void loadMaze(std::istream &is);
+
+    void status(wxString s);
+    void statusSolution();
+    void statusCurrent();
+    void paintEvent(wxPaintEvent & evt);
+    void paintNow();
+    
+    void render(wxDC& dc);
+    void drawMaze(wxDC& dc, double xpos, double ypos, double w, double h);
+    void makeMove(int side);
+    Maze * getMaze() const { return mMaze; }
+    void solve(int id);
+    void setGenerator(const Generator &g);
+    
+     void mouseDown(wxMouseEvent& event);
+
+     void keyPressed(wxKeyEvent& event);
+     void processAnim();
+
+     void OnSize(wxSizeEvent &e);
+    
+    DECLARE_EVENT_TABLE()
+};
+
+class RenderTimer : public wxTimer
+{
+    DrawPane* pane;
+public:
+    RenderTimer(DrawPane* pane);
+    void Notify();
+    void start();
+};
+
+
+class MyApp: public wxApp
+{
+    virtual bool OnInit();
+
+    MyFrame *mFrame;
+    DrawPane *mPane;
+    RenderTimer* mTimer;
+};
+
+
+class BasicDialog: public wxDialog
+{
+public:
+ 
+	BasicDialog ( wxWindow * parent, wxWindowID id, const wxString & title,
+	              const wxPoint & pos = wxDefaultPosition,
+	              const wxSize & size = wxDefaultSize,
+	              long style = wxDEFAULT_DIALOG_STYLE );
+ 
+	wxTextCtrl * mName;
+	wxTextCtrl * mX , * mY;
+	wxTextCtrl * mNum;
+
+	wxSlider * mFill;
+	wxSlider * mIsol;
+	wxSlider * mExit;
+	wxSlider * mVary;
+	
+	wxString GetText();
+ 
+private:
+ 
+	void OnOk( wxCommandEvent & event );
+ 
+	DECLARE_EVENT_TABLE()
+};
+
+enum
+{
+    ID_Quit = 100,
+    ID_About,
+    ID_Keyboard,
+    ID_Back,
+    ID_Forward,
+    ID_Reset,
+    ID_Ponder,
+    ID_Solve,
+    ID_Save,
+    ID_Next,
+    ID_Prev,
+    ID_Options,
+    ID_Gener
+};
+
+wxString towx(int x);
+wxString towx(std::string s);
+std::string wxto(wxString s);
+std::string tos(int x);
+int sto(std::string s);
+int sto(wxString s);
+
+std::vector<std::string> getListOfFiles();
+
+o1386913142.maze
+1158
+11 8
+0 5
+1 0 3 1 0 0 1 0 0 3 0
+0 0 2 1 1 2 2 3 0 2 0
+0 2 2 0 0 2 3 2 2 3 0
+0 0 2 0 2 1 0 0 0 2 2
+0 2 1 0 0 3 0 2 3 0 0
+0 2 0 0 2 2 0 0 2 0 0
+0 3 1 0 0 2 1 0 0 0 0
+0 0 0 0 1 0 1 0 1 0 0
+0
+94
+10 0  3 4
+10 1  5 4
+9 1  5 3
+8 1  5 3
+8 0  5 3
+7 0  5 3
+7 1  5 3
+6 1  5 3
+5 1  5 3
+5 0  5 3
+4 0  4 2
+5 0  5 2
+6 0  6 2
+6 1  6 2
+7 1  6 2
+7 0  6 2
+8 0  6 2
+8 1  6 2
+9 1  6 2
+10 1  6 2
+10 2  6 2
+10 3  6 2
+9 3  6 2
+8 3  6 2
+7 3  6 2
+7 4  6 2
+6 4  6 2
+6 5  6 2
+6 6  6 2
+5 6  5 2
+4 6  4 3
+4 7  4 3
+3 7  3 4
+2 7  2 5
+1 7  1 5
+0 7  0 6
+1 7  1 6
+2 7  1 6
+2 6  1 6
+2 5  1 6
+2 4  1 6
+1 4  1 6
+1 3  1 6
+0 3  0 5
+1 3  1 5
+2 3  2 4
+3 3  2 4
+3 2  2 4
+4 2  2 4
+4 1  2 4
+4 0  2 4
+5 0  2 4
+5 1  2 4
+6 1  2 4
+7 1  2 4
+7 0  2 4
+8 0  2 4
+8 1  2 4
+9 1  2 4
+10 1  2 4
+10 2  2 4
+10 3  2 4
+9 3  2 4
+8 3  2 4
+8 4  2 4
+7 4  2 4
+6 4  2 4
+6 5  3 5
+6 4  5 5
+7 4  7 5
+7 3  7 5
+8 3  8 5
+9 3  9 4
+10 3  10 4
+10 2  10 4
+10 1  10 4
+9 1  9 4
+8 1  9 4
+8 0  9 4
+7 0  9 4
+7 1  9 4
+6 1  9 4
+6 0  9 4
+5 0  9 4
+4 0  9 4
+4 1  9 4
+4 2  9 4
+4 3  9 4
+3 3  9 4
+3 4  9 4
+3 5  8 5
+2 5  6 5
+1 5  4 5
+0 5  2 5
+
+
+1
+common
+6
+generate.cpp
+2965
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include <time.h>
+#include <stdlib.h>
+
+#include "generate.h"
+#include "solver.h"
+
+void initrand()
+{
+	static bool init = false;
+	if(init) return;
+
+	init = true;
+	srand( (unsigned)time(0) );
+	//srand( (unsigned)(0) );
+}
+
+double drnd()
+{
+	return (rand()%10001)/10000.0;
+}
+
+int irnd(int max)
+{
+	return rand()%max;
+}
+
+Generator::Generator(): 
+	mCurrentSet(false),
+	mSize(5,4), mDifficulty(-1), mTotal(1000), mCurrent(0),
+	mFilling(0.3), mIsolation(0.5), mBorderExit(1), mVariator(0.5) 
+{
+}
+
+Generator::Generator(const Generator& g, const Maze &m)
+{
+	*this = g;
+
+	mCurrentSet = false;
+	if( m.size() != mSize ) return;
+
+	mCurrentMaze = m;
+	mCurrentSet = true;
+}
+
+void Generator::generate(int n)
+{
+	initrand();
+
+	double start = clock();
+	while(1)
+	{
+		generate1();
+		mCurrent++;
+		if( isDone() ) break;
+
+		double passed = clock();
+		if( (passed-start)*1000/CLOCKS_PER_SEC > n ) break;
+	}
+}
+
+void Generator::generate1()
+{
+	double r = drnd();
+	if( !mCurrentSet || r>mVariator )
+	{
+		generateWalls();
+		mCurrentSet = true;
+	}
+
+	variate();
+
+	ShortSolver solver(&mCurrentMaze);
+	solver.solveT(-1);
+	solver.apply();
+
+	int difficulty = mCurrentMaze.getNumStates();
+	int st = solver.state();
+	if( st!=3 && st!=1 ) difficulty=-1;
+
+	if( mCurrent==0 || difficulty > mDifficulty )
+	{
+		mBestMaze = mCurrentMaze;
+		mDifficulty = difficulty;
+		mBestMaze.reset();
+	}
+}
+
+void Generator::variate()
+{
+	double r = drnd();
+
+	int x = irnd( mSize.x() );
+	int y = irnd( mSize.y() );
+
+	if( x<1 || x==mSize.x()-1 || y<1 || y==mSize.y()-1 ){}
+	else if( r<mBorderExit )
+	{
+		if( r<0.25 ) x = 0;
+		else if( r<0.5 ) x = mSize.x()-1;
+		else if( r<0.75 ) y = 0;
+		else y = mSize.y()-1;
+	}
+
+	mCurrentMaze.mExit.x() = x;
+	mCurrentMaze.mExit.y() = y;
+
+	mCurrentMaze.mStates.clear();
+
+	State s;
+	do{
+		s.t.x() = irnd( mSize.x() );
+		s.t.y() = irnd( mSize.y() );
+	}while( s.t==mCurrentMaze.mExit );
+
+	do{
+		s.m.x() = irnd( mSize.x() );
+		s.m.y() = irnd( mSize.y() );
+	}while( s.t==s.m || s.m==mCurrentMaze.mExit );
+
+
+	mCurrentMaze.mStates.push_back(s);
+	mCurrentMaze.mIndex = 0;
+}
+
+
+void Generator::generateWalls()
+{
+	mCurrentMaze.mSize = mSize;
+	mCurrentMaze.mWalls.clear();
+	mCurrentMaze.mWalls.resize( mSize.xy(), Maze::Wall(0) );
+
+	int sz = mSize.xy();
+	for( int i=0; i<10*sz; i++ )
+	{
+		XY p;
+		p.x() = irnd( mSize.x() );
+		p.y() = irnd( mSize.y() );
+
+	tryn:
+		int side = irnd(4)+1;
+		if( !mCurrentMaze.addWall(p,side) ) continue;
+		int nwalls = mCurrentMaze.calcNumWalls();
+		int mwalls = 2*mSize.xy()-mSize.x()-mSize.y();
+		if( 1.0*nwalls/mwalls >= mFilling ) break;
+
+		if( drnd() < mIsolation ) continue; // next wall
+
+		double r = drnd();
+		if( r < 0.25 ) --p.x();
+		else if( r < 0.5 ) ++p.x();
+		else if( r < 0.75 ) ++p.y();
+		else --p.y();
+		goto tryn;
+	}
+}
+
+
+generate.h
+1359
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#ifndef GENERATE_H
+#define GENERATE_H
+
+#include <string>
+
+#include "maze.h"
+
+
+class Generator
+{
+	XY mSize;
+
+	Maze mCurrentMaze;
+	bool mCurrentSet;
+	Maze mBestMaze;
+	int mDifficulty;
+	int mTotal, mCurrent;
+
+	double mFilling;
+	double mIsolation;
+	double mBorderExit;
+	double mVariator;
+
+	void generate1();
+	void generateWalls();
+	void variate();
+
+public:
+	std::string name;
+
+public:
+	Generator();
+	Generator(const Generator& g, const Maze &m);
+
+	void generate(int n);
+	Maze getCurrentMaze(){ return mCurrentMaze; }
+	Maze getBestMaze(){ return mBestMaze; }
+	bool isDone() const{ return mCurrent>=mTotal; }
+
+	void set(XY s, int n, double f, double i, double b, double v)
+	{
+		mSize = s;
+		mTotal = n;
+		mFilling = f;
+		mIsolation = i;
+		mBorderExit = b;
+		mVariator = v;
+	}
+
+	int getSizeX() const { return mSize.x(); }
+	int getSizeY() const { return mSize.y(); }
+	double getFilling() const { return mFilling; }
+	double getIsolation() const { return mIsolation; }
+	double getBorderExit() const { return mBorderExit; }
+	double getVariator() const { return mVariator; }
+	int getSolutionSize() const { return mDifficulty; }
+	int getTotal() const { return mTotal; }
+	int getCurrent() const { return mCurrent; }
+};
+
+
+#endif
+
+maze.cpp
+3927
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include "maze.h"
+
+Maze::Maze(std::istream &is)
+{
+	is>>mSize;
+	is>>mExit;
+
+	int sz = mSize.xy();
+	for( int i=0; i<sz; i++ )
+	{
+		int w=-1;
+		is>>w;
+		mWalls.push_back( Wall(w) );
+	}
+
+	int solved=0;
+	is>>solved;
+	mSolved = Solved(solved);
+
+	mIndex = 0;
+
+	int histSz=0;
+	is>>histSz;
+
+	for( int i=0; i<histSz; i++ )
+	{
+		State s;
+		is>>s;
+		mStates.push_back(s);
+	}
+}
+
+
+void Maze::save(std::ostream &of)
+{
+	of<<mSize<<'\n';
+	of<<mExit<<'\n';
+
+	for( int j=0; j<mSize.y(); j++ )
+	{
+	for( int i=0; i<mSize.x(); i++ )
+	  {
+		i && of<<' ';
+		of<<int( wall(i,j) );
+	  }
+	  of<<'\n';
+	}
+
+	of<<int(mSolved)<<'\n';
+
+	of<<mStates.size()<<'\n';
+
+	for( int i=0; i<(int)mStates.size(); i++ )
+	{
+		of<<mStates[i]<<'\n';
+	}
+
+	of<<'\n';
+}
+
+bool Box::canmove(int i, int j, int side)
+{
+	if( i==0 && side==2 ) return false;
+	if( i==mSize.x()-1 && side==1 ) return false;
+	if( j==0 && side==3 ) return false;
+	if( j==mSize.y()-1 && side==4 ) return false;
+
+	if( side==1 && hasRight(i,j) ) return false;
+	if( side==2 && hasRight(i-1,j) ) return false;
+	if( side==4 && hasBottom(i,j) ) return false;
+	if( side==3 && hasBottom(i,j-1) ) return false;
+
+	return true;
+}
+
+
+bool Maze::moveThes(int side)
+{
+	int i = mStates[mIndex].t.x();
+	int j = mStates[mIndex].t.y();
+
+	if( !canmove(i,j,side) ) return false;
+
+	mSolved = notsolved;
+	mStates.resize(++mIndex);
+
+	mStates.push_back( mStates.back() );
+
+	if( side==1 ) mStates.back().t.x()++;
+	if( side==2 ) mStates.back().t.x()--;
+	if( side==3 ) mStates.back().t.y()--;
+	if( side==4 ) mStates.back().t.y()++;
+
+	return true;
+}
+
+
+bool Maze::moveMino()
+{
+	int ti = mStates[mIndex].t.x();
+	int tj = mStates[mIndex].t.y();
+	int mi = mStates[mIndex].m.x();
+	int mj = mStates[mIndex].m.y();
+
+	if( ti<mi && canmove(mi,mj,2) ) mStates.back().m.x()--;
+	else if( ti>mi && canmove(mi,mj,1) ) mStates.back().m.x()++;
+	else if( tj<mj && canmove(mi,mj,3) ) mStates.back().m.y()--;
+	else if( tj>mj && canmove(mi,mj,4) ) mStates.back().m.y()++;
+	else return false;
+
+	return true;
+}
+
+bool Maze::moveTo(State s)
+{
+	mSolved = notsolved;
+	mStates.resize(++mIndex);
+
+	mStates.push_back( s );
+	return true;
+}
+
+bool Maze::validate()
+{
+	if( mStates.empty() ) goto bad;
+	if( mSize.x() < 2 || mSize.y() < 2 ) goto bad;
+
+	return true;
+
+bad:
+	mSize.x() = -1;
+	mSize.y() = -1;
+	return false;
+}
+
+void Maze::cut()
+{
+	mStates.resize(mIndex+1);
+}
+
+int Box::calcNumWalls() const
+{
+	int sum=0;
+
+	for( int i=0; i<(int)mWalls.size(); i++ )
+	{
+		if( mWalls[i]==3 ) sum+=2;
+		else if( mWalls[i] ) ++sum;
+	}
+
+	return sum;
+}
+
+bool Box::addWall(XY p, int side)
+{
+	if( p.x()<0 || p.x()>=mSize.x() ) return false;
+	if( p.y()<0 || p.y()>=mSize.y() ) return false;
+
+	if( side==2 ) return addWall( XY(p.x()-1,p.y()), 1);
+	if( side==3 ) return addWall( XY(p.x(),p.y()-1), 4);
+
+	Wall &w = mWalls[p.y()*mSize.x()+p.x()];
+
+	if( side==1 && p.x()==mSize.x()-1 ) return false;
+	if( side==4 && p.y()==mSize.y()-1 ) return false;
+
+	int bit = side;
+	if( side==4 ) bit = 2;
+
+	w = Wall( w|bit );
+
+	XY n = p;
+	++n.x();
+	if( side==4 ){ --n.x(); ++n.y(); }
+
+	if( !checkTopology(p) || !checkTopology(n) )
+	{
+		w = Wall( w&~bit );
+		return false;
+	}
+
+	return true;
+}
+
+bool Box::checkTopology(XY p)
+{
+	std::vector<int> v(mSize.xy(),0);
+
+	toporec(v,p);
+
+	for( int i=0; i<(int)v.size(); i++ ) if( v[i]==0 ) return false;
+
+	return true;
+}
+
+void Box::toporec(std::vector<int> &v, XY p)
+{
+	v[ idx(p) ] = 1;
+
+	XY n;
+
+	if( canmove(p,1) ){ n=p; ++n.x(); if( !v[idx(n)] ) toporec(v,n); }
+	if( canmove(p,2) ){ n=p; --n.x(); if( !v[idx(n)] ) toporec(v,n); }
+	if( canmove(p,3) ){ n=p; --n.y(); if( !v[idx(n)] ) toporec(v,n); }
+	if( canmove(p,4) ){ n=p; ++n.y(); if( !v[idx(n)] ) toporec(v,n); }
+}
+
+
+maze.h
+2984
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#ifndef MAZE_H
+#define MAZE_H
+
+#include <istream>
+#include <ostream>
+#include <vector>
+
+class Generator;
+
+class XY
+{
+	int mX,mY;
+public:
+	XY(): mX(-1), mY(-1) {}
+	XY(int x, int y): mX(x), mY(y) {}
+
+	int x() const { return mX; }
+	int y() const { return mY; }
+	int& y() { return mY; }
+	int& x() { return mX; }
+	int xy() const { return mX*mY; }
+
+	bool operator==(const XY& a) const { return mX==a.mX && mY==a.mY; }
+	bool operator!=(const XY& a) const { return !(a==*this); }
+	bool operator<(const XY &s) const { return mX<s.mX?true:s.mX<mX?false:mY<s.mY; }
+
+	friend std::istream & operator>>(std::istream &is, XY& xy)
+	{ return is>>xy.mX>>xy.mY; }
+
+	friend std::ostream & operator<<(std::ostream &os, const XY& xy)
+	{ return os<<xy.mX<<' '<<xy.mY; }
+};
+
+struct State
+{
+	XY t,m;
+	State(){}
+	State(XY a, XY b): t(a), m(b) {}
+	bool operator<(const State &s) const { return t<s.t?true:s.t<t?false:m<s.m; }
+	bool operator==(const State& a) const { return t==a.t && m==a.m; }
+
+	friend std::istream & operator>>(std::istream &is, State& s)
+	{ return is>>s.t>>s.m; }
+
+	friend std::ostream & operator<<(std::ostream &os, const State& s)
+	{ return os<<s.t<<"  "<<s.m; }
+};
+
+class Box
+{
+protected:
+	enum Wall { none=0, right=1, bottom=2, both=3 };
+	XY mSize;
+	std::vector<Wall> mWalls;
+
+	Box(){}
+
+private:
+	bool checkTopology(XY p);
+	void toporec(std::vector<int> &v, XY p);
+
+public:
+	XY size() const { return mSize; }
+
+	int idx(int i, int j) const { return j*mSize.x()+i; }
+	int idx(XY p) const { return idx(p.x(),p.y()); }
+	Wall wall(int i, int j) const { return mWalls[idx(i,j)]; }
+	bool canmove(int i, int j, int side);
+	bool canmove(XY p, int side){ return canmove(p.x(), p.y(), side); }
+
+	bool hasRight(int i, int j) const { return 0!=(wall(i,j)&right); }
+	bool hasBottom(int i, int j) const { return 0!=(wall(i,j)&bottom); }
+
+	int calcNumWalls() const;
+	bool addWall(XY p, int side);
+};
+
+class Maze : public Box
+{
+	enum Solved { notsolved=0, user=1, comp=2 };
+
+	XY mExit;
+	std::vector<State> mStates;
+	int mIndex;
+	Solved mSolved;
+
+
+public:
+	Maze(){}
+	Maze(std::istream &is);
+	void save(std::ostream &of);
+
+	XY exit() const { return mExit; }
+	XY thes() const { return mStates[mIndex].t; }
+	XY mino() const { return mStates[mIndex].m; }
+	State getState() const { return mStates[mIndex]; }
+	int getIndex() const { return mIndex; }
+	void setIndex(int i){ mIndex = i; }
+	int getNumStates() const { return mStates.size(); }
+
+	bool moveTo(State s);
+	bool moveThes(int side);
+	bool moveMino();
+
+	void reset(){ mIndex=0; cut(); }
+	void back(){ if(--mIndex<0) mIndex=0; }
+	void forward(){ if(++mIndex==getNumStates()) back(); }
+
+	bool isLost() const { return thes() == mino(); }
+	bool isWin() const { return thes() == exit(); }
+
+	bool validate();
+	void cut();
+
+	friend class Generator;
+};
+
+
+#endif
+
+solver.cpp
+4473
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#include <time.h>
+
+#include "solver.h"
+
+const bool VAL=false;
+
+int Solver::state() const
+{
+	if( mMaze->size().x()<1 ) return 0;
+
+	if( !mBest.empty() )
+	{
+		if( mExhausted ) return 3;
+		return 1;
+	}
+	if( mExhausted ) return 2;
+	return 0;
+}
+
+void Solver::solveT(int n)
+{
+	double start = clock();
+	while(1)
+	{
+		solve1();
+		if( mExhausted ) break;
+
+		double passed = clock();
+
+		if( n>=0 && (passed-start)*1000/CLOCKS_PER_SEC > n ) break;
+	}
+}
+
+
+void Solver::solve1()
+{
+	if( mMaze->size().x()<1 ) return;
+
+	mVisited.insert(mMaze->getState());
+
+	int m=0;
+
+trym:
+	for( ; m<5; m++ )
+	{
+		if( !mMaze->moveThes(m) ) continue;
+		mMaze->moveMino();
+		mMaze->moveMino();
+
+		if( mVisited.find( mMaze->getState() ) != mVisited.end() 
+			|| mMaze->isLost() )
+		{
+			mMaze->back(); 
+			continue;
+		}
+
+		if( mMaze->isWin() )
+		{
+			if( mBest.empty() || mBest.size()-1 > mMoves.size() )
+			{
+				mBest = mMoves;
+				mBest.push_back(m);
+			}
+
+			mMaze->back(); 
+			continue;
+		}
+
+		mMoves.push_back(m);
+		break;
+	}
+
+	if( m==5 )
+	{
+		if( mMoves.empty() )
+		{
+			mExhausted = true;
+			return;
+		}
+		m = mMoves.back()+1;
+		mMoves.pop_back();
+		mMaze->back();
+		goto trym;
+	}
+}
+
+void Solver::apply()
+{
+	if( mMaze->size().x()<1 ) return;
+
+	while( !mMoves.empty() )
+	{
+		mMaze->back();
+		mMoves.pop_back();
+	}
+
+	int index = mMaze->getIndex();
+
+	for( int i=0; i<(int)mBest.size(); i++ )
+	{
+		mMaze->moveThes(mBest[i]);
+		mMaze->moveMino();
+		mMaze->moveMino();
+	}       
+
+	mMaze->setIndex(index);
+}
+
+
+// SHORTSOLVER ******************
+
+void ShortSolver::solve1()
+{
+	if( mMaze->size().x()<1 ) return;
+
+	State thisState = mMaze->getState();
+	mGraph[thisState] = value();
+	if(VAL) validate();
+
+	int m=4;
+
+trym:
+	for( ; m>=0; m-- )
+	{
+		if( !mMaze->moveThes(m) ) continue;
+		mMaze->moveMino();
+		mMaze->moveMino();
+		State newState = mMaze->getState();
+
+		if( mMaze->isLost() )
+		{
+			mMaze->back(); 
+			continue;
+		}
+
+		int cdepth = mMoves.size()+1; // extra for m
+
+		GraphType::iterator gi = mGraph.find( newState );
+		if( gi != mGraph.end() )
+		{
+			int gdepth = gi->second.depth;
+			if( cdepth < gdepth )
+			{
+				gi->second.state = thisState;
+				gi->second.depth = cdepth;
+				if(VAL) validate();
+			}
+			else
+			{
+				mMaze->back(); 
+				continue;
+			}
+		}
+
+		if( mMaze->isWin() )
+		{
+			mFinal.insert(newState);
+			mGraph[newState].state = thisState;
+			mGraph[newState].depth = cdepth;
+			if(VAL) validate();
+
+			mMaze->back(); 
+			continue;
+		}
+
+		mPrev = thisState;
+		mMoves.push_back(m);
+		break;
+	}
+
+	if( m<0 )
+	{
+		if( mMoves.empty() )
+		{
+			mExhausted = true;
+			return;
+		}
+		m = mMoves.back()-1;
+		mMoves.pop_back();
+		mMaze->back();
+		thisState = mMaze->getState();
+		goto trym;
+	}
+}
+
+void ShortSolver::apply()
+{
+	if( mFinal.empty() ){ mMaze->cut(); return; }
+
+	if( mMaze->size().x()<1 ) return;
+
+	while( !mMoves.empty() )
+	{
+		mMaze->back();
+		mMoves.pop_back();
+	}
+
+	int index = mMaze->getIndex();
+
+	// find shortest path
+	State shortest;
+	int depth=-1;
+
+	for( std::set<State>::const_iterator j=mFinal.begin(); j!=mFinal.end(); ++j )
+	{
+		State s = *j;
+
+		int i=0;
+		for( ; i<(int)mGraph.size(); i++)
+		{
+			s = mGraph[s].state;
+			if( s == State() ) break;
+		}
+
+		if( depth==-1 || i<depth )
+		{
+			shortest = *j;
+			depth = i;
+		}
+	}
+
+
+	State current = shortest;
+
+
+	State mazeState = mMaze->getState();
+	std::vector<State> vs;
+
+	for( int i=0; i<(int)mGraph.size(); i++)
+	{
+		vs.push_back(current);
+		current = mGraph[current].state;
+		if( current == mazeState ) break;
+		if( current == State() )
+		{
+			break; // error
+		}
+	}
+
+	for( int i=vs.size()-1; i>=0; i-- )
+	{
+		mMaze->moveTo(vs[i]);
+	}       
+
+	mMaze->setIndex(index);
+}
+
+void ShortSolver::validate()
+{
+	for( GraphType::iterator i = mGraph.begin(); i!=mGraph.end(); ++i )
+	{
+		State k = i->first;
+		State v = i->second.state;
+		if( v==State() ) return;
+		int s = 0, a;
+		a = k.t.x()-v.t.x(); s += a*a;
+		a = k.t.y()-v.t.y(); s += a*a;
+
+		if( s>1 )
+		{
+			break; //error
+		}
+	}
+}
+
+int ShortSolver::state() const
+{
+	if( mMaze->size().x()<1 ) return 0;
+
+	if( !mFinal.empty() )
+	{
+		if( mExhausted ) return 3;
+		return 1;
+	}
+	if( mExhausted ) return 2;
+	return 0;
+}
+
+solver.h
+1038
+// Theseus and Minotaur Game
+// Oleg Mazonka 2010
+// http://mazonka.com/maze/
+
+#ifndef SOLVER_H
+#define SOLVER_H
+
+#include <vector>
+#include <set>
+#include <map>
+
+#include "maze.h"
+
+class Solver
+{
+protected:
+	Maze * mMaze;
+
+private:
+	std::vector<int> mBest;
+
+protected:
+	std::vector<int> mMoves;
+	std::set<State> mVisited;
+
+	bool mExhausted;
+
+public:
+	Solver(Maze *m) : mMaze(m), mExhausted(false) {}
+	virtual void solve1();
+	void solveT(int n);
+	virtual int state() const;
+	virtual void apply();
+
+};
+
+class ShortSolver : public Solver
+{
+	struct Value { int depth; State state; };
+	typedef std::map<State,Value> GraphType;
+	GraphType mGraph;
+	State mPrev;
+	std::set<State> mFinal;
+
+	inline Value value();
+
+public:
+	ShortSolver(Maze *m): Solver(m) {}
+	virtual void solve1();
+	virtual void apply();
+	virtual int state() const;
+
+	void validate();
+};
+
+inline ShortSolver::Value ShortSolver::value()
+{
+	Value v;
+	v.depth = mMoves.size();
+	v.state = mPrev;
+	return v;
+}
+
+
+#endif
+
+0
