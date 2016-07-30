@@ -1,13 +1,22 @@
-cd ../src/gl && make -j 10 && cd ../../srcu
-cd ../src/os && make -j 10 && cd ../../srcu
-cd ../src/sg && make -j 10 && cd ../../srcu
-cd ../src/ma && make -j 10 && cd ../../srcu
-cd ../src/db && make -j 10 && cd ../../srcu
-cd ../src/pu && make -j 10 && cd ../../srcu
+set PL=PLAT=msc
 
-cd ../src && make && cd ../srcu
+echo %PL%
+exit
 
-cd vi && make -j 10 && cd ..
-make
-make
+make %PL% clean
+cd ../src && make %PL% clean && cd ../srcu
+
+cd ../src/gl && make %PL% -j 10 && cd ../../srcu
+cd ../src/os && make %PL% -j 10 && cd ../../srcu
+cd ../src/sg && make %PL% -j 10 && cd ../../srcu
+cd ../src/ma && make %PL% -j 10 && cd ../../srcu
+cd ../src/db && make %PL% -j 10 && cd ../../srcu
+cd ../src/pu && make %PL% -j 10 && cd ../../srcu
+
+cd ../src && make %PL% && cd ../srcu
+
+cd vi && make %PL% -j 10 && cd ..
+make %PL%
+make %PL%
+
 
