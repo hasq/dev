@@ -58,5 +58,7 @@ clean:
 	cd db && make clean
 	cd sg && make clean
 	cd vi && make clean
-	cd ../src && make clean
+
+#	breaks ongoing test build
+#	cd ../src && make clean
 
