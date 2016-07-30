@@ -3,13 +3,13 @@
 #       12(N)
 
 new canvas db 3 3
-new pub 0 0 hint
-new pub 1 0 hint
-new pub 2 0 hint
-new pub 0 1 hint
-new pub 1 1 hint
-new pub 2 1 hint
-new pub 1 2 hint
+new pub 0 0 hint nn="node13131"
+new pub 1 0 hint nn="node13132"
+new pub 2 0 hint nn="node13133"
+new pub 0 1 hint nn="node13134"
+new pub 1 1 hint nn="node13135"
+new pub 2 1 hint nn="node13136"
+new pub 1 2 hint nn="node13138"
 
 show
 
