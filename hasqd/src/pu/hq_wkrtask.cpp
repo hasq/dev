@@ -901,14 +901,8 @@ string Worker2::slice()
 
 string Worker2::drop()
 {
-    string cmd;
-
     if ( !tok.next() )
         return er::Code(er::REQ_MSG_BAD);
 
-    cmd = tok.sub();
-
-    cmd += " [" + tok.rest() + "]";
-
-    return er::Code(er::OK).str() + " " + cmd;
+    return Drop(gs).process(tok.sub(), tok.rest());
 }

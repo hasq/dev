@@ -5,6 +5,8 @@
 #include "gl_err.h"
 #include "gl_defs.h"
 
+#include "os_filesys.h"
+
 #include "sg_mutex.h"
 #include "sg_cout.h"
 
@@ -40,8 +42,12 @@ GlobalSpace::GlobalSpace(const Config * c) :
     , cpu_load(0)
     , netdisabled(false)
     , agent(this)
-    ///, clntProtocol(c->clntProt)
     , netenv(this, c->clntProt, c->pxData)
-{}
+{
+    os::Path d(c->dropDir);
+    if( !d.isdir() ) d.mkdir();
+    d.erase();
+}
+
 
 

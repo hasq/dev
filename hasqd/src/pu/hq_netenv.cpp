@@ -1,5 +1,9 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+#include <cctype>
+
+#include "os_filesys.h"
+
 #include "hq_globalspace.h"
 
 #include "hq_netenv.h"
@@ -25,16 +29,64 @@ sgl::Link NetEnv::link(const string & addr) const
     return r;
 }
 
-string Drop::process(const string & cmd, const string & data)
+string Drop::process(const string & c, const string & data)
 {
-    //const string & dropdir = gs->config->dropDir;
+    os::Path f(gs->config->dropDir);
 
-    if ( cmd == "get" || cmd == "GET" )
+    if( !f.isdir() ) 
+	os::FileSys::trymkdir(f);
+
+    if ( c == "get" || c == "GET" )
     {
-        //cleandir();
-        //gl::file2str(data);
+        cleandir();
+
+        f += data;
+        string r = gl::file2str(f.str());
+
+	if( r.empty() )
+		return er::Code(er::OK).str();
+
+	f.erase();
+
+        return er::Code(er::OK).str() + " " + r;
     }
 
-    return "";
+    // check file name
+    for ( size_t i = 0; i < c.size(); i++ )
+    {
+        if ( std::isalnum(c[i]) ) continue;
+        if ( c[i] == '.' || c[i] == '-' || c[i] == '_' ) continue;
+        return er::Code(er::REQ_MSG_BAD).str();
+    }
+
+    cleandir();
+
+    // dir is created by globalspace
+    f += c;
+
+    {
+        std::ofstream of(f.str().c_str(), std::ios::binary);
+        of << data;
+    }
+
+    if ( !f.isfile() )
+        return er::Code(er::REQ_BUSY).str();
+
+    return er::Code(er::OK).str();
+}
+
+void Drop::cleandir()
+{
+    os::Path dd(gs->config->dropDir);
+
+	os::Dir dir = os::FileSys::readDir(dd);
+
+	for ( size_t i = 0; i < dir.files.size(); i++ )
+	{
+	    os::Path file = dd + dir.files[i].first;
+
+	    if( file.howold() > gs->config->dropTimeout )
+		file.erase();
+	}
 }
 

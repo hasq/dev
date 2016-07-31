@@ -51,7 +51,6 @@ class GlobalSpace
         bool netdisabled;
 
         Agent agent;
-        ///gl::Protocol * clntProtocol;
         NetEnv netenv;
 
     public:

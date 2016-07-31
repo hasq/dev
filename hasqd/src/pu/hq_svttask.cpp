@@ -127,6 +127,9 @@ string SvtTaskQuit::process()
 {
     gs->stopPublisher = true;
 
+    os::Path d(gs->config->dropDir);
+    if( d.isdir() ) d.erase();
+
     if ( !gs->config->noSecretary )
     {
         ///gl::ProtHq prot(gl::ProtHq::Client);
