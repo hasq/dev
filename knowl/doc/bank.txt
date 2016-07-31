@@ -1,0 +1,4 @@
+
+Minting
+	basename - issuing organ - challanged by simple passwords
+	basename.nominal.serial
