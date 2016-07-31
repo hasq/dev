@@ -26,7 +26,7 @@ void test01()
 
     std::cout << "Tmp file : " << pfile.howold() << " sec\n";
 
-    double secs = os::Path("0/makefile").howold();
+    double secs = os::Path("makefile").howold();
     std::cout << "makefile : " << secs << " sec\n";
     std::cout << "makefile : " << secs/60 << " min\n";
     std::cout << "makefile : " << secs/60/60 << " hours\n";
