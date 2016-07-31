@@ -1,3 +1,5 @@
+// testing random8 from sysinfo
+
 #include <iostream>
 #include <sstream>
 //#include <cstring>

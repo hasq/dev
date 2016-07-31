@@ -1,5 +1,5 @@
 
-all: ma_sysinfo_ sysinfo_
+all: ma_sysinfo_ sysinfo_ filesys_
 
 clean:
 	echo clean
@@ -9,3 +9,6 @@ ma_sysinfo_:
 
 sysinfo_:
 	cd sysinfo && make PLAT=$(PLAT)
+
+filesys_:
+	cd filesys && make PLAT=$(PLAT)
