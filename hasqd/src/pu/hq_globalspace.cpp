@@ -45,7 +45,7 @@ GlobalSpace::GlobalSpace(const Config * c) :
     , netenv(this, c->clntProt, c->pxData)
 {
     os::Path d(c->dropDir);
-    if( !d.isdir() ) d.mkdir();
+    if ( !d.isdir() ) d.mkdir();
     d.erase();
 }
 

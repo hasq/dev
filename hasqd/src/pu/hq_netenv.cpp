@@ -33,8 +33,8 @@ string Drop::process(const string & c, const string & data)
 {
     os::Path f(gs->config->dropDir);
 
-    if( !f.isdir() ) 
-	os::FileSys::trymkdir(f);
+    if ( !f.isdir() )
+        os::FileSys::trymkdir(f);
 
     if ( c == "get" || c == "GET" )
     {
@@ -43,10 +43,10 @@ string Drop::process(const string & c, const string & data)
         f += data;
         string r = gl::file2str(f.str());
 
-	if( r.empty() )
-		return er::Code(er::OK).str();
+        if ( r.empty() )
+            return er::Code(er::OK).str();
 
-	f.erase();
+        f.erase();
 
         return er::Code(er::OK).str() + " " + r;
     }
@@ -79,14 +79,14 @@ void Drop::cleandir()
 {
     os::Path dd(gs->config->dropDir);
 
-	os::Dir dir = os::FileSys::readDir(dd);
+    os::Dir dir = os::FileSys::readDir(dd);
 
-	for ( size_t i = 0; i < dir.files.size(); i++ )
-	{
-	    os::Path file = dd + dir.files[i].first;
+    for ( size_t i = 0; i < dir.files.size(); i++ )
+    {
+        os::Path file = dd + dir.files[i].first;
 
-	    if( file.howold() > gs->config->dropTimeout )
-		file.erase();
-	}
+        if ( file.howold() > gs->config->dropTimeout )
+            file.erase();
+    }
 }
 
