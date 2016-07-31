@@ -63,6 +63,7 @@ struct PublicNetCmd
     bool zero;
     bool ping;
     bool tunnel;
+    bool drop;
 };
 
 } // cfg
@@ -95,6 +96,8 @@ class Config
         string servantFile;
         string tunnelIpport;
         bool noSecretary;
+	string dropDir;
+	gl::intint dropTimeout;
 
         cfg::Dbg dbg;
         cfg::PublicNetCmd publicNetCmd;

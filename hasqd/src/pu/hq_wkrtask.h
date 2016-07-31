@@ -45,6 +45,7 @@ struct Worker2
         string pleb();
         string admin();
         string slice();
+        string drop();
 
         er::Code fetchRecord(int dbIndex, db::Dn * dn,
                              gl::intint n, bool first, db::Record * record);

@@ -111,6 +111,9 @@ string Worker2::process(bool * recog)
     else if ( tok.is("pleb")  && (en || pn.pleb) )
         return pleb();
 
+    else if ( tok.is("drop")  && (en || pn.drop) )
+        return drop();
+
     else if ( ( tok.c_str()[0] == '/' )  && (en || pn.file) )
         return file(true, false);
 
@@ -895,3 +898,17 @@ string Worker2::slice()
     return er::Code(er::REQ_SLICE_BAD);
 }
 
+string Worker2::drop()
+{
+    string cmd;
+
+    if ( !tok.next() )
+        return er::Code(er::REQ_PRX_CMD_BAD);
+
+    cmd = tok.sub();
+
+    while ( tok.next() )
+        cmd += " " + tok.sub();
+
+    return er::Code(er::OK).str() + " " + cmd;
+}

@@ -38,6 +38,8 @@ Config::Config(int ac, const char * av[], const char * cfgfile)
     , servantFile()
     , tunnelIpport()
     , noSecretary(false)
+    , dropDir("drop")
+    , dropTimeout(10000)
 
     , quiet(false)
     , listDir(true)
@@ -250,6 +252,12 @@ void Config::processOptionKeyVal(const string & k, const string & v)
     else if ( k == "tunnel" )
         tunnelIpport = v;
 
+    else if ( k == "drop_dir" || k == "dd" )
+        dropDir = v;
+
+    else if ( k == "drop_timeout" || k == "dt" )
+        dropTimeout = gl::toii(v);
+
     else if ( k == "iplock" )
         ipp_locks.push_back(v);
 
@@ -441,7 +449,7 @@ void Config::oneOption(const string & s)
 void cfg::PublicNetCmd::all(bool v)
 {
     admin = quit = conflict = add = connect = unlink = pleb = v;
-    file = data = first = html = info = job = last = v;
+    file = data = first = html = info = job = last = drop = v;
     lastdata = list = note = range = record = zero = ping = tunnel = v;
 }
 
@@ -470,6 +478,7 @@ void cfg::PublicNetCmd::set(string s, bool v)
     else if ( s == "zero" )     zero = v;
     else if ( s == "ping" )     ping = v;
     else if ( s == "tunnel" )   tunnel = v;
+    else if ( s == "drop" )   drop = v;
 
     else
         throw gl::ex("");
@@ -498,6 +507,7 @@ cfg::PublicNetCmd::PublicNetCmd()
     , zero(true)
     , ping(true)
     , tunnel(true)
+    , drop(true)
 {}
 
 void Config::setHttpGetProxy(const string & s)
