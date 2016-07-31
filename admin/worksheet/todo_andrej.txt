@@ -3,13 +3,13 @@
 [A] HSL http_get http_post - removed - doc
 [A] HSL tcp - test[DONE] - doc[] - use default protocol
 [A] HSL agent - doc
-[A] NC drop name data - OK/ERR - test - doc
+[A] NC drop name data - "OK/ERR" - test - doc
 	name - a-z A-Z 0-9 '.' '-' '_' max length 128
 	data - textual printable '!'-'~' ASCII 33-126 plus space 32, max 10k
 
-[A] NC drop get name - OK/EMPTY - test - doc
+[A] NC drop get name - "OK data" - test - doc
 [A] CLO drop_dir=name (short dd, default 'drop')
-[A] CLO drop_timeout=n[s/m/h/d/y] (default 10000 seconds, short 'dt')
+[A] CLO drop_timeout=n (seconds, short 'dt', default 10000)
 
 [A] run PVS again
 [A] hashnote title
