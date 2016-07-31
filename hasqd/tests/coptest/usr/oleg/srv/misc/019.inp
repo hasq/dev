@@ -1,0 +1,6 @@
+
+print tcp self [ drop aaa bbb ]
+print tcp self [ drop get aaa ]
+
+quit
+

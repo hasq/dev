@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Testing drop
+#exit
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+$1/hasqd -nlqc s=$tn.inp dprn=1 dsvt=1

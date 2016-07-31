@@ -1,0 +1,5 @@
+<svt> print tcp self [ drop aaa bbb ]
+REQ_MSG_HEAD
+<svt> print tcp self [ drop get aaa ]
+REQ_MSG_HEAD
+<svt> quit
