@@ -1,6 +1,0 @@
-CLO dtcp - test - doc
-http_proxy - test - doc
-HSL tcp - test - doc - use default protocol
-HSL http_get http_post - removed - [tests done] - doc
-HSL net protocol - [test done] - doc
-HSL agent - doc
