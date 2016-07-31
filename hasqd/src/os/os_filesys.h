@@ -45,6 +45,7 @@ Dir readDirEx(Path d, bool dsort, bool fsort);
 void move(Path o, Path n);
 bool erase(Path x);
 bool truncate(const string & s, gl::intint size);
+double howold(const string & s);
 };
 
 class Path
@@ -79,7 +80,7 @@ class Path
         void mkdir() { FileSys::mkdir(s); }
         void erase() { FileSys::erase(*this); }
 
-	double howold() const { return -1; }
+	double howold() const { return FileSys::howold(s); }
 };
 
 

@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <iostream>
 
+#include <time.h>
 
 #include "os_filesys.h"
 
@@ -110,6 +111,15 @@ bool os::FileSys::truncate(const string & s, gl::intint size)
     }
     return ret;
 }
+
+double os::FileSys::howold(const string & s)
+{
+    struct _stat64 buf;
+    int r = _stat64( s.c_str(), &buf );
+    if (r) return -1;
+    return difftime(time(0),buf.st_mtime);
+}
+
 
 //#ifdef _O_BINARY
 struct Setmode2binary

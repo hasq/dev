@@ -24,8 +24,17 @@ void test01()
 
     os::Path pfile(file);
 
-    std::cout << "Tmp file : " << pfile.howold() << '\n';
-    std::cout << "makefile : " << os::Path("makefile").howold() << '\n';
+    std::cout << "Tmp file : " << pfile.howold() << " sec\n";
+
+    double secs = os::Path("0/makefile").howold();
+    std::cout << "makefile : " << secs << " sec\n";
+    std::cout << "makefile : " << secs/60 << " min\n";
+    std::cout << "makefile : " << secs/60/60 << " hours\n";
+    std::cout << "makefile : " << secs/60/60/24 << " days\n";
+    std::cout << "makefile : " << secs/60/60/24/30 << " months\n";
+    std::cout << "makefile : " << secs/60/60/24/365 << " years\n";
+
+    pfile.erase();
 }
 
 

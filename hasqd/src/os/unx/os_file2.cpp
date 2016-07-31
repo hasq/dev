@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <cstdio>
 
+#include <time.h>
+
 #include "os_filesys.h"
 
 const char * os::getCwd(char * buf, int sz)
@@ -83,3 +85,12 @@ bool os::FileSys::truncate(const string & s, gl::intint size)
 {
     return ::truncate(s.c_str(), size) == 0;
 }
+
+double os::FileSys::howold(const string & s)
+{
+    struct stat buf;
+    int r = stat( s.c_str(), &buf );
+    if (r) return -1;
+    return difftime(time(0),buf.st_mtime);
+}
+
