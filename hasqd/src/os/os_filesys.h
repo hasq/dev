@@ -78,6 +78,8 @@ class Path
 
         void mkdir() { FileSys::mkdir(s); }
         void erase() { FileSys::erase(*this); }
+
+	double howold() const { return -1; }
 };
 
 

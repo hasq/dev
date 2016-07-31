@@ -1,7 +1,7 @@
 // testing random8 from sysinfo
 
 #include <iostream>
-#include <sstream>
+#include <fstream>
 //#include <cstring>
 
 #include "gl_except.h"
@@ -9,13 +9,23 @@
 
 ///#include "ma_skc.h"
 ///#include "ma_utils.h"
-///#include "os_sysinfo.h"
+#include "os_filesys.h"
 
 void test01();
 
 void test01()
 {
+    const char file[] = "old.tmp";
 
+    {
+        std::ofstream of(file);
+        of << "hello\n";
+    }
+
+    os::Path pfile(file);
+
+    std::cout << "Tmp file : " << pfile.howold() << '\n';
+    std::cout << "makefile : " << os::Path("makefile").howold() << '\n';
 }
 
 
