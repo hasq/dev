@@ -12,7 +12,7 @@ bool gl::Token::next()
 
     head = tail;
 
-    while ( head < s.size() && std::isspace(s[head]) ) { head = ++tail; }
+    while ( head < s.size() && std::isspace(s[head]) ) head = ++tail;
 
     if ( head >= s.size() ) return false;
 
@@ -20,6 +20,15 @@ bool gl::Token::next()
 
     return true;
 }
+
+string gl::Token::rest() const
+{
+    const string & s = *mstr;
+    auto t = tail;
+    while ( t < s.size() && std::isspace(s[t]) ) ++t;
+    return t == s.size() ? "" : s.substr(t);
+}
+
 
 bool gl::Token::is(const char * x) const
 {

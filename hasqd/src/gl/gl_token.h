@@ -24,7 +24,8 @@ class Token
         bool next(int i);
         bool is(const char *) const;
         string sub() const { return mstr->substr(head, tail - head); }
-        string end() const { return tail == mstr->size() ? "" : mstr->substr(tail); }
+        string end_del_FIXME() const { return tail == mstr->size() ? "" : mstr->substr(tail); }
+        string rest() const;
         const string & c_str() const { return *mstr; }
 };
 

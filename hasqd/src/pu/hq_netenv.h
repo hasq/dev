@@ -26,5 +26,13 @@ class NetEnv
         sgl::Link link(const string & addr) const;
 };
 
+class Drop
+{
+        GlobalSpace * gs;
+    public:
+        Drop(GlobalSpace * g): gs(g) {}
+        string process(const string & cmd, const string & data);
+        void cleandir();
+};
 
 #endif

@@ -4,21 +4,9 @@
 
 #include "hq_netenv.h"
 
-
-/*///
-struct Link
-{
-    gl::Protocol * prot;
-    gl::NetworkLimits nl;
-    string tcpto;
-    gl::ProxyData px;
-};
-*/
-
 sgl::Link NetEnv::link(const string & addr) const
 {
     sgl::Link r;
-    ///sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
     r.prot = clntProtocol;
     r.nl = gs->config->netLimits;
 
@@ -35,5 +23,18 @@ sgl::Link NetEnv::link(const string & addr) const
     r.px.auth64 = proxy.auth64;
 
     return r;
+}
+
+string Drop::process(const string & cmd, const string & data)
+{
+    //const string & dropdir = gs->config->dropDir;
+
+    if ( cmd == "get" || cmd == "GET" )
+    {
+        //cleandir();
+        //gl::file2str(data);
+    }
+
+    return "";
 }
 

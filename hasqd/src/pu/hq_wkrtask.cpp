@@ -17,6 +17,7 @@
 #include "hq_wkrtask.h"
 #include "hq_plebfile.h"
 #include "hq_connector.h"
+#include "hq_netenv.h"
 
 
 string Worker2::process(bool * recog)
@@ -342,7 +343,7 @@ string Worker2::add(bool zr)
     if ( !record )
         return er::Code(er::REQ_HASHTYPE_BAD);
 
-    er::Code rec_init = record->init(tok.end(), traits->nG(), traits->mag());
+    er::Code rec_init = record->init(tok.rest(), traits->nG(), traits->mag());
 
     if ( rec_init )
     {
@@ -903,12 +904,11 @@ string Worker2::drop()
     string cmd;
 
     if ( !tok.next() )
-        return er::Code(er::REQ_PRX_CMD_BAD);
+        return er::Code(er::REQ_MSG_BAD);
 
     cmd = tok.sub();
 
-    while ( tok.next() )
-        cmd += " " + tok.sub();
+    cmd += " [" + tok.rest() + "]";
 
     return er::Code(er::OK).str() + " " + cmd;
 }

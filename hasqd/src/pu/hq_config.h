@@ -96,8 +96,8 @@ class Config
         string servantFile;
         string tunnelIpport;
         bool noSecretary;
-	string dropDir;
-	gl::intint dropTimeout;
+        string dropDir;
+        gl::intint dropTimeout;
 
         cfg::Dbg dbg;
         cfg::PublicNetCmd publicNetCmd;

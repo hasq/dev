@@ -23,7 +23,7 @@ string gl::HttpGet::httpProxyHead(string s, const Pmd * p) const
     string srv = p->proxy.remote;
     string cre = p->proxy.auth64;
 
-    replaceAll(s," ","%20");
+    replaceAll(s, " ", "%20");
 
     string r = "GET http://" + srv + "/" + s + " HTTP/1.1"; r += CRLF;
     r += "Proxy-Authorization: Basic " + cre; r += CRLF;

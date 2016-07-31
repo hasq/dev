@@ -1,5 +1,5 @@
 <svt> print tcp self [ drop aaa bbb ]
-OK aaa bbb
+OK aaa [bbb]
 <svt> print tcp self [ drop get aaa ]
-OK get aaa
+OK get [aaa]
 <svt> quit

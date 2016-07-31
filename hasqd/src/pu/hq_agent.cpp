@@ -180,7 +180,7 @@ string Agent::fetch(const string & srv, const string & cmd)
     else
     {
         string e = "Server failed: " + srv;
-	print("[" + cmd + "] "+ e);
+        print("[" + cmd + "] " + e);
     }
 
     return r;
