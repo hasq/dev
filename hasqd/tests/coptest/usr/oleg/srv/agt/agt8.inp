@@ -2,7 +2,7 @@ ag cf db "smb.db"
 ag cf lf "ag.log"
 ag cf lc "all"
 
-ag fs mk "ts"
+#ag fs mk "ts"
 
 ag dl aaa.com:80 "ts"
 

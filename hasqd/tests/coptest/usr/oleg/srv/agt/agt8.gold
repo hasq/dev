@@ -1,7 +1,5 @@
-<agt> > cf db smb.db
-<agt> > cf lf ag.log
-<agt> > cf lc all
-<agt> > fs mk ts
-<agt> : OK
-<agt> > dl aaa.com:80 "ts"
-<agt> : Too few arguments
+<agt> # cf db smb.db
+<agt> # cf lf ag.log
+<agt> # cf lc all
+<agt> # dl aaa.com:80 "ts"
+<agt> Too few arguments

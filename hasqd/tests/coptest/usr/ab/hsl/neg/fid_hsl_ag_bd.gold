@@ -1,20 +1,20 @@
-<agt> > build
-<agt> : Error: Agent build requires 4 arguments
+<agt> # build
+<agt> Error: Agent build requires 4 arguments
 Offensive command (exec): ag build
 Error: Agent build requires 4 arguments
-<agt> > build a
-<agt> : Error: Agent build requires 4 arguments
+<agt> # build a
+<agt> Error: Agent build requires 4 arguments
 Offensive command (exec): ag build "a" 
 Error: Agent build requires 4 arguments
-<agt> > build a b
-<agt> : Error: Agent build requires 4 arguments
+<agt> # build a b
+<agt> Error: Agent build requires 4 arguments
 Offensive command (exec): ag build "a" "b"
 Error: Agent build requires 4 arguments
-<agt> > build a b c
-<agt> : Error: Agent build requires 4 arguments
+<agt> # build a b c
+<agt> Error: Agent build requires 4 arguments
 Offensive command (exec): ag build "a" "b" "c"
 Error: Agent build requires 4 arguments
-<agt> > build a b c d e
-<agt> : Error: Agent build requires 4 arguments
+<agt> # build a b c d e
+<agt> Error: Agent build requires 4 arguments
 Offensive command (exec): ag build "a" "b" "c" [ d ] "e"
 Error: Agent build requires 4 arguments

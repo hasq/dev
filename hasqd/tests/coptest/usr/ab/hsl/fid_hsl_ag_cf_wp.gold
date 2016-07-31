@@ -1,8 +1,8 @@
-<agt> > config webpath
-<agt> : 
-<agt> > config webpath /
-<agt> > config webpath
-<agt> : /
-<agt> > cf wp /
-<agt> > cf wp
-<agt> : /
+<agt> # config webpath
+<agt> 
+<agt> # config webpath /
+<agt> # config webpath
+<agt> /
+<agt> # cf wp /
+<agt> # cf wp
+<agt> /

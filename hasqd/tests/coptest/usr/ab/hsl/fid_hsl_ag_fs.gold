@@ -1,165 +1,165 @@
 >>> Test "mk" <<<
 
-<agt> > filesys mk aaa
-<agt> : OK
-<agt> > filesys mk aaa
-<agt> : OK
+<agt> # filesys mk aaa
+<agt> OK
+<agt> # filesys mk aaa
+<agt> OK
 
 >>> Test "cat" <<<
 
-<agt> > fs cat aaa
-<agt> : aaa
+<agt> # fs cat aaa
+<agt> aaa
 
-<agt> > fs cat file.log
-<agt> : file.log
+<agt> # fs cat file.log
+<agt> file.log
 
-<agt> > cf lf aaa/file.log
-<agt> > fs cat aaa/file.log
-<agt> : aaa/file.log
-101035 > fs cat aaa/file.log
+<agt> # cf lf aaa/file.log
+<agt> # fs cat aaa/file.log
+<agt> aaa/file.log
+101035 # fs cat aaa/file.log
 
 
 >>> Test "cp" <<<
 
-<agt> > fs cp aaa/file.log bbb/file.log
-<agt> : Cannot open file bbb/file.log
-<agt> : OK 122
-<agt> > fs cp bbb/file.log ccc/file.log
-<agt> : REQ_PATH_BAD
-<agt> > fs mk bbb
-<agt> : OK
-<agt> > fs cp aaa/file.log bbb/file.log
-<agt> : OK 312
-<agt> > fs cat bbb/file.log
-<agt> : bbb/file.log
-101035 > fs cat aaa/file.log
-101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+<agt> # fs cp aaa/file.log bbb/file.log
+<agt> Cannot open file bbb/file.log
+<agt> OK 120
+<agt> # fs cp bbb/file.log ccc/file.log
+<agt> REQ_PATH_BAD
+<agt> # fs mk bbb
+<agt> OK
+<agt> # fs cp aaa/file.log bbb/file.log
+<agt> OK 302
+<agt> # fs cat bbb/file.log
+<agt> bbb/file.log
+101035 # fs cat aaa/file.log
+101035 aaa/file.log
+101035 # fs cat aaa/file.log
 
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : Cannot open file bbb/file.log
-101035 : OK 122
-101035 > fs cp bbb/file.log ccc/file.log
-101035 : REQ_PATH_BAD
-101035 > fs mk bbb
-101035 : OK
-101035 > fs cp aaa/file.log bbb/file.log
+101035 # fs cp aaa/file.log bbb/file.log
+101035 Cannot open file bbb/file.log
+101035 OK 120
+101035 # fs cp bbb/file.log ccc/file.log
+101035 REQ_PATH_BAD
+101035 # fs mk bbb
+101035 OK
+101035 # fs cp aaa/file.log bbb/file.log
 
 
 >>> Test "rm" <<<
 
-<agt> > fs rm ccc
-<agt> : REQ_PATH_BAD
-<agt> > fs cp bbb/file.log bbb/file2.log
-<agt> : OK 312
-<agt> > fs cat bbb/file2.log
-<agt> : bbb/file2.log
-101035 > fs cat aaa/file.log
-101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+<agt> # fs rm ccc
+<agt> REQ_PATH_BAD
+<agt> # fs cp bbb/file.log bbb/file2.log
+<agt> OK 302
+<agt> # fs cat bbb/file2.log
+<agt> bbb/file2.log
+101035 # fs cat aaa/file.log
+101035 aaa/file.log
+101035 # fs cat aaa/file.log
 
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : Cannot open file bbb/file.log
-101035 : OK 122
-101035 > fs cp bbb/file.log ccc/file.log
-101035 : REQ_PATH_BAD
-101035 > fs mk bbb
-101035 : OK
-101035 > fs cp aaa/file.log bbb/file.log
+101035 # fs cp aaa/file.log bbb/file.log
+101035 Cannot open file bbb/file.log
+101035 OK 120
+101035 # fs cp bbb/file.log ccc/file.log
+101035 REQ_PATH_BAD
+101035 # fs mk bbb
+101035 OK
+101035 # fs cp aaa/file.log bbb/file.log
 
-<agt> > fs rm bbb/file2.log
-<agt> : OK
-<agt> > fs cat bbb/file2.log
-<agt> : bbb/file2.log
+<agt> # fs rm bbb/file2.log
+<agt> OK
+<agt> # fs cat bbb/file2.log
+<agt> bbb/file2.log
 
-<agt> > fs rm bbb
-<agt> : OK
-<agt> > fs cat bbb/file.log
-<agt> : bbb/file.log
+<agt> # fs rm bbb
+<agt> OK
+<agt> # fs cat bbb/file.log
+<agt> bbb/file.log
 
 
 >>> Test "mv" <<<
 
-<agt> > fs mv bbb ccc
-<agt> : FILE_CANT_CREATE
-<agt> > fs mk bbb
-<agt> : OK
-<agt> > fs mv bbb aaa
-<agt> : FILE_CANT_CREATE
-<agt> > fs mv bbb ccc
-<agt> : OK
-<agt> > fs mv aaa/file.log ccc/file.log
-<agt> : OK
-<agt> > fs cat ccc/file.log
-<agt> : ccc/file.log
-101035 > fs cat aaa/file.log
-101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+<agt> # fs mv bbb ccc
+<agt> FILE_CANT_CREATE
+<agt> # fs mk bbb
+<agt> OK
+<agt> # fs mv bbb aaa
+<agt> FILE_CANT_CREATE
+<agt> # fs mv bbb ccc
+<agt> OK
+<agt> # fs mv aaa/file.log ccc/file.log
+<agt> OK
+<agt> # fs cat ccc/file.log
+<agt> ccc/file.log
+101035 # fs cat aaa/file.log
+101035 aaa/file.log
+101035 # fs cat aaa/file.log
 
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : Cannot open file bbb/file.log
-101035 : OK 122
-101035 > fs cp bbb/file.log ccc/file.log
-101035 : REQ_PATH_BAD
-101035 > fs mk bbb
-101035 : OK
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : OK 312
-101035 > fs cat bbb/file.log
-101035 : bbb/file.log
-101035 > fs cat aaa/file.log
-101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+101035 # fs cp aaa/file.log bbb/file.log
+101035 Cannot open file bbb/file.log
+101035 OK 120
+101035 # fs cp bbb/file.log ccc/file.log
+101035 REQ_PATH_BAD
+101035 # fs mk bbb
+101035 OK
+101035 # fs cp aaa/file.log bbb/file.log
+101035 OK 302
+101035 # fs cat bbb/file.log
+101035 bbb/file.log
+101035 # fs cat aaa/file.log
+101035 aaa/file.log
+101035 # fs cat aaa/file.log
 
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : Cannot open file bbb/file.log
-101035 : OK 122
-101035 > fs cp bbb/file.log ccc/file.log
-101035 : REQ_PATH_BAD
-101035 > fs mk bbb
-101035 : OK
-101035 > fs cp aaa/file.log bbb/file.log
+101035 # fs cp aaa/file.log bbb/file.log
+101035 Cannot open file bbb/file.log
+101035 OK 120
+101035 # fs cp bbb/file.log ccc/file.log
+101035 REQ_PATH_BAD
+101035 # fs mk bbb
+101035 OK
+101035 # fs cp aaa/file.log bbb/file.log
 
-101035 > fs rm ccc
-101035 : REQ_PATH_BAD
-101035 > fs cp bbb/file.log bbb/file2.log
-101035 : OK 312
-101035 > fs cat bbb/file2.log
-101035 : bbb/file2.log
-101035 > fs cat aaa/file.log
-101035 : aaa/file.log
-101035 > fs cat aaa/file.log
+101035 # fs rm ccc
+101035 REQ_PATH_BAD
+101035 # fs cp bbb/file.log bbb/file2.log
+101035 OK 302
+101035 # fs cat bbb/file2.log
+101035 bbb/file2.log
+101035 # fs cat aaa/file.log
+101035 aaa/file.log
+101035 # fs cat aaa/file.log
 
-101035 > fs cp aaa/file.log bbb/file.log
-101035 : Cannot open file bbb/file.log
-101035 : OK 122
-101035 > fs cp bbb/file.log ccc/file.log
-101035 : REQ_PATH_BAD
-101035 > fs mk bbb
-101035 : OK
-101035 > fs cp aaa/file.log bbb/file.log
+101035 # fs cp aaa/file.log bbb/file.log
+101035 Cannot open file bbb/file.log
+101035 OK 120
+101035 # fs cp bbb/file.log ccc/file.log
+101035 REQ_PATH_BAD
+101035 # fs mk bbb
+101035 OK
+101035 # fs cp aaa/file.log bbb/file.log
 
-101035 > fs rm bbb/file2.log
-101035 : OK
-101035 > fs cat bbb/file2.log
-101035 : bbb/file2.log
+101035 # fs rm bbb/file2.log
+101035 OK
+101035 # fs cat bbb/file2.log
+101035 bbb/file2.log
 
-101035 > fs rm bbb
-101035 : OK
-101035 > fs cat bbb/file.log
-101035 : bbb/file.log
+101035 # fs rm bbb
+101035 OK
+101035 # fs cat bbb/file.log
+101035 bbb/file.log
 
-101035 > fs mv bbb ccc
-101035 : FILE_CANT_CREATE
-101035 > fs mk bbb
-101035 : OK
-101035 > fs mv bbb aaa
-101035 : FILE_CANT_CREATE
-101035 > fs mv bbb ccc
-101035 : OK
-101035 > fs mv aaa/file.log ccc/file.log
+101035 # fs mv bbb ccc
+101035 FILE_CANT_CREATE
+101035 # fs mk bbb
+101035 OK
+101035 # fs mv bbb aaa
+101035 FILE_CANT_CREATE
+101035 # fs mv bbb ccc
+101035 OK
+101035 # fs mv aaa/file.log ccc/file.log
 
-<agt> > fs rm aaa
-<agt> : OK
-<agt> > fs rm ccc
-<agt> : OK
+<agt> # fs rm aaa
+<agt> OK
+<agt> # fs rm ccc
+<agt> OK

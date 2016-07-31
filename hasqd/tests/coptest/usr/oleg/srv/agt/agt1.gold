@@ -1,11 +1,11 @@
 <svt> agent config logfile
-<agt> > config logfile
-<agt> : 
+<agt> # config logfile
+<agt> 
 <svt> agent config logfile "agt1.log"
-<agt> > config logfile agt1.log
+<agt> # config logfile agt1.log
 <svt> agent config logfile
-<agt> > config logfile
-<agt> : agt1.log
+<agt> # config logfile
+<agt> agt1.log
 <svt> print net protocol
 hasq
 <svt> print net protocol "http_post"
@@ -15,10 +15,10 @@ http_post
 <svt> a = "agt1.log"
 <svt> b = "agt1_2.log"
 <svt> ag fs cp a b
-<agt> > fs cp agt1.log agt1_2.log
-<agt> : OK 77
+<agt> # fs cp agt1.log agt1_2.log
+<agt> OK 75
 <svt> ag fs rm b
-<agt> > fs rm agt1_2.log
-<agt> : OK
+<agt> # fs rm agt1_2.log
+<agt> OK
 <svt> sleep 10
 <svt> quit

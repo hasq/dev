@@ -1,12 +1,12 @@
-<agt> > sort
-<agt> : Error: Agent sort requires 1 argument
+<agt> # sort
+<agt> Error: Agent sort requires 1 argument
 Offensive command (exec): ag sort
 Error: Agent sort requires 1 argument
-<agt> > sort a
-<agt> : Error: Directory a is not accessible
+<agt> # sort a
+<agt> Error: Directory a is not accessible
 Offensive command (exec): ag sort "a" 
 Error: Directory a is not accessible
-<agt> > sort a b
-<agt> : Error: Agent sort requires 1 argument
+<agt> # sort a b
+<agt> Error: Agent sort requires 1 argument
 Offensive command (exec): ag sort "a" "b"
 Error: Agent sort requires 1 argument

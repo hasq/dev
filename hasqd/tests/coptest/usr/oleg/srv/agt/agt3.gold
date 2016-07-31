@@ -1,30 +1,30 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-<agt> > cf database _wrd
-<agt> > cf database
-<agt> : _wrd
-<agt> > cf logcomm all
-<agt> > fs mk agt3S
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 101230:110103 agt3S
-<agt> : [slice _wrd] -> {OK 20110101-1}
-<agt> : [slice _wrd check 20101230-1] -> {REQ_FILE_BAD}
-<agt> : [slice _wrd check 20101231-1] -> {REQ_FILE_BAD}
-<agt> : [slice _wrd check 20110101-1] -> {OK}
-<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
-<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
-<agt> : [slice _wrd check 20110102-1] -> {REQ_FILE_BAD}
-<agt> : [slice _wrd check 20110103-1] -> {REQ_FILE_BAD}
-<agt> > dl 127.0.0.1:13131 today agt3S
-<agt> : [slice _wrd] -> {OK 20110101-1}
-<agt> : [slice _wrd check 20110101-1] -> {OK}
-<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
-<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
-<agt> > dl 127.0.0.1:13131 2 agt3S
-<agt> : [slice _wrd] -> {OK 20110101-1}
-<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
-<agt> > fs rm agt3S
-<agt> : OK
+<agt> # cf database _wrd
+<agt> # cf database
+<agt> _wrd
+<agt> # cf logcomm all
+<agt> # fs mk agt3S
+<agt> OK
+<agt> # dl 127.0.0.1:13131 101230:110103 agt3S
+<agt> [slice _wrd] -> {OK 20110101-1}
+<agt> [slice _wrd check 20101230-1] -> {REQ_FILE_BAD}
+<agt> [slice _wrd check 20101231-1] -> {REQ_FILE_BAD}
+<agt> [slice _wrd check 20110101-1] -> {OK}
+<agt> [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
+<agt> [slice _wrd check 20110102-1] -> {REQ_FILE_BAD}
+<agt> [slice _wrd check 20110103-1] -> {REQ_FILE_BAD}
+<agt> # dl 127.0.0.1:13131 today agt3S
+<agt> [slice _wrd] -> {OK 20110101-1}
+<agt> [slice _wrd check 20110101-1] -> {OK}
+<agt> [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
+<agt> # dl 127.0.0.1:13131 2 agt3S
+<agt> [slice _wrd] -> {OK 20110101-1}
+<agt> [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> # fs rm agt3S
+<agt> OK
 <zdb> erasedisk
 Database on disk erased successfully

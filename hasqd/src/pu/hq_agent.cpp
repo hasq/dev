@@ -40,8 +40,8 @@ bool Agent::sub2Cmd(string c)
 
 void Agent::print(const string & s, bool cmd) const
 {
-    string pf = ": ";
-    if ( cmd ) pf = "> ";
+    string pf;
+    if ( cmd ) pf = "# ";
 
     if ( gs->config->dbg.agt )
     {
@@ -167,37 +167,21 @@ void Agent::filesys(const string & s)
 
 string Agent::fetch(const string & srv, const string & cmd)
 {
-    /*///
-        gl::ProtHq prot_0(gl::Protocol::Client);
-        gl::HttpGet prot_1(gl::Protocol::Client);
-        gl::HttpPost prot_2(gl::Protocol::Client);
-
-        gl::Protocol * prot = 0;
-
-        switch (protocol)
-        {
-            case Hasq:     prot = &prot_0; break;
-            case HttpGet:  prot = &prot_1; break;
-            case HttpPost: prot = &prot_2; break;
-        }
-
-        bool ok = false;
-        os::net::TcpClient c(prot, os::IpAddr(srv, ok), gs->config->netLimits);
-        if ( !ok ) throw gl::Never("Creating IpAddr failed: $1", srv);
-
-        c.send_msg(cmd);
-        string r = c.recvMsgOrEmpty();
-    */
-
-// FIXME handle bad connection - print and log
-    ///sgl::Client x(gs->clntProtocol, gs->config->netLimits, srv );
     sgl::Client x(gs->netenv.link(srv) );
-    ///if ( !x.isok() ) throw gl::Never("Creating IpAddr failed: $1", srv);
-    string r = x.ask(cmd);
 
-    if ( islogc('c') )
-        print("[" + cmd + "] -> {"
-              + (r.size() < 20 ? r : (r.substr(0, 15) + "...")) + "}");
+    string r;
+    if ( x.isok() )
+    {
+        r = x.ask(cmd);
+        if ( islogc('c') )
+            print("[" + cmd + "] -> {"
+                  + (r.size() < 20 ? r : (r.substr(0, 15) + "...")) + "}");
+    }
+    else
+    {
+        string e = "Server failed: " + srv;
+	print("[" + cmd + "] "+ e);
+    }
 
     return r;
 }
@@ -237,8 +221,8 @@ void Agent::download(const string & srv, const string & date)
     if ( database.empty() )
         return print("Database is not set - try 'agent config database'");
 
-	if( as.size()<1 || as[0].empty() )
-	    return print("Too few arguments");
+    if ( as.size() < 1 || as[0].empty() )
+        return print("Too few arguments");
 
     os::Path dir(as[0]);
     if ( !dir.isdir() )

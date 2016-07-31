@@ -2,14 +2,14 @@
 Database on disk erased successfully
 <zdb> create wrd.db wrd WRD 1 [] 1 0
 <zdb> create md5.db md5 MD5 1 [] 1 0
-<agt> > config database
-<agt> : 
-<agt> > config database wrd.db
-<agt> > config database
-<agt> : wrd.db
-<agt> > cf db md5.db
-<agt> > cf db
-<agt> : md5.db
-<agt> > cf db sh2.db
-<agt> > cf db
-<agt> : sh2.db
+<agt> # config database
+<agt> 
+<agt> # config database wrd.db
+<agt> # config database
+<agt> wrd.db
+<agt> # cf db md5.db
+<agt> # cf db
+<agt> md5.db
+<agt> # cf db sh2.db
+<agt> # cf db
+<agt> sh2.db

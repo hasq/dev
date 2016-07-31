@@ -1,13 +1,13 @@
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > cf db wrd.db
-<agt> > dl 127.0.0.1:13131 160101 slcs
-<agt> > bd slcs idxs tokenlist.out 127.0.0.1:13131
+<agt> # fs mk slcs
+<agt> OK
+<agt> # fs mk idxs
+<agt> OK
+<agt> # cf db wrd.db
+<agt> # dl 127.0.0.1:13131 160101 slcs
+<agt> # bd slcs idxs tokenlist.out 127.0.0.1:13131
 >>> unsorted file:
-<agt> > fs cat idxs/a7c4
-<agt> : idxs/a7c4
+<agt> # fs cat idxs/a7c4
+<agt> idxs/a7c4
 9 a7c4 4f2b a0ea 3f6d
 8 a7c4 7fd1 0baf cc1b
 2 a7c4 8195 a7e2 546b
@@ -19,9 +19,9 @@
 6 a7c4 fd3d 5c03 d3df
 4 a7c4 fea6 8169 0ef3
 
-<agt> > sort idxs
-<agt> > fs cat idxs/a7c4
-<agt> : idxs/a7c4
+<agt> # sort idxs
+<agt> # fs cat idxs/a7c4
+<agt> idxs/a7c4
 0 a7c4 f858 76d5 5ea7
 1 a7c4 8233 7d9e 11c3
 2 a7c4 8195 a7e2 546b

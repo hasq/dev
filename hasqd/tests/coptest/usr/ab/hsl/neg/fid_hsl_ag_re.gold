@@ -1,8 +1,8 @@
-<agt> > report
-<agt> : Error: Agent report requires 1 argument
+<agt> # report
+<agt> Error: Agent report requires 1 argument
 Offensive command (exec): ag report
 Error: Agent report requires 1 argument
-<agt> > report a b
-<agt> : Error: Agent report requires 1 argument
+<agt> # report a b
+<agt> Error: Agent report requires 1 argument
 Offensive command (exec): ag report "a" "b"
 Error: Agent report requires 1 argument

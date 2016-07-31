@@ -10,108 +10,108 @@
 <zdb> set date 20160101
 <zdb> load
 <zdb> addurf md5.db 2 [rdn]0:3 [pwd]
-<agt> > config logcomm
-<agt> : no
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
-<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132
-<agt> > vd check tokenlist.in tokenlist.out
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs rm idxs
-<agt> : OK
-<agt> > fs rm tokenlist.in
-<agt> : OK
-<agt> > cf lc a
-<agt> > cf lc
-<agt> : a
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
-<agt> : [slice md5.db] -> {OK 20160101-2}
-<agt> : [slice md5.db check 20160101-1] -> {OK}
-<agt> : [slice md5.db get 20160101-1] -> {0 dd20be44d1d8d...}
-<agt> : [slice md5.db check 20160101-2] -> {OK}
-<agt> : [slice md5.db get 20160101-2] -> {2 dd20be44d1d8d...}
-<agt> : [slice md5.db check 20160101-3] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160102-1] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
-<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132
-<agt> > vd check tokenlist.in tokenlist.out
-<agt> : [last md5.db 1fae9fb8104184ffa074fa8b24bb10f7] -> {OK 0 1fae9fb810...}
-<agt> : Server 127.0.0.1:13132 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with 0, needs 2
-<agt> : [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] -> {IDX_NODN}
-<agt> : Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 2
-<agt> : [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] -> {IDX_NODN}
-<agt> : Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 2
-<agt> : [last md5.db dd20be44d1d8dcfcf63a69622390ef88] -> {OK 0 dd20be44d1...}
-<agt> : Server 127.0.0.1:13132 drags on dd20be44d1d8dcfcf63a69622390ef88 with 0, needs 2
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs rm idxs
-<agt> : OK
-<agt> > fs rm tokenlist.in
-<agt> : OK
-<agt> > fs rm tokenlist.out
-<agt> : OK
-<agt> > cf lc d
-<agt> > cf lc
-<agt> : d
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
-<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132
-<agt> > vd check tokenlist.in tokenlist.out
-<agt> : Server 127.0.0.1:13132 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with 0, needs 2
-<agt> : Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 2
-<agt> : Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 2
-<agt> : Server 127.0.0.1:13132 drags on dd20be44d1d8dcfcf63a69622390ef88 with 0, needs 2
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs rm idxs
-<agt> : OK
-<agt> > fs rm tokenlist.in
-<agt> : OK
-<agt> > fs rm tokenlist.out
-<agt> : OK
-<agt> > cf lc c
-<agt> > cf lc
-<agt> : c
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
-<agt> : [slice md5.db] -> {OK 20160101-2}
-<agt> : [slice md5.db check 20160101-1] -> {OK}
-<agt> : [slice md5.db get 20160101-1] -> {0 dd20be44d1d8d...}
-<agt> : [slice md5.db check 20160101-2] -> {OK}
-<agt> : [slice md5.db get 20160101-2] -> {2 dd20be44d1d8d...}
-<agt> : [slice md5.db check 20160101-3] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160102-1] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
-<agt> > bd slcs idxs tokenlist.in 127.0.0.1:13132
-<agt> > vd check tokenlist.in tokenlist.out
-<agt> : [last md5.db 1fae9fb8104184ffa074fa8b24bb10f7] -> {OK 0 1fae9fb810...}
-<agt> : [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] -> {IDX_NODN}
-<agt> : [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] -> {IDX_NODN}
-<agt> : [last md5.db dd20be44d1d8dcfcf63a69622390ef88] -> {OK 0 dd20be44d1...}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs rm idxs
-<agt> : OK
-<agt> > fs rm tokenlist.in
-<agt> : OK
-<agt> > fs rm tokenlist.out
-<agt> : OK
+<agt> # config logcomm
+<agt> no
+<agt> # fs mk slcs
+<agt> OK
+<agt> # fs mk idxs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
+<agt> # bd slcs idxs tokenlist.in 127.0.0.1:13132
+<agt> # vd check tokenlist.in tokenlist.out
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs rm idxs
+<agt> OK
+<agt> # fs rm tokenlist.in
+<agt> OK
+<agt> # cf lc a
+<agt> # cf lc
+<agt> a
+<agt> # fs mk slcs
+<agt> OK
+<agt> # fs mk idxs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
+<agt> [slice md5.db] -> {OK 20160101-2}
+<agt> [slice md5.db check 20160101-1] -> {OK}
+<agt> [slice md5.db get 20160101-1] -> {0 dd20be44d1d8d...}
+<agt> [slice md5.db check 20160101-2] -> {OK}
+<agt> [slice md5.db get 20160101-2] -> {2 dd20be44d1d8d...}
+<agt> [slice md5.db check 20160101-3] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160102-1] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
+<agt> # bd slcs idxs tokenlist.in 127.0.0.1:13132
+<agt> # vd check tokenlist.in tokenlist.out
+<agt> [last md5.db 1fae9fb8104184ffa074fa8b24bb10f7] -> {OK 0 1fae9fb810...}
+<agt> Server 127.0.0.1:13132 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with 0, needs 2
+<agt> [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] -> {IDX_NODN}
+<agt> Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 2
+<agt> [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] -> {IDX_NODN}
+<agt> Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 2
+<agt> [last md5.db dd20be44d1d8dcfcf63a69622390ef88] -> {OK 0 dd20be44d1...}
+<agt> Server 127.0.0.1:13132 drags on dd20be44d1d8dcfcf63a69622390ef88 with 0, needs 2
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs rm idxs
+<agt> OK
+<agt> # fs rm tokenlist.in
+<agt> OK
+<agt> # fs rm tokenlist.out
+<agt> OK
+<agt> # cf lc d
+<agt> # cf lc
+<agt> d
+<agt> # fs mk slcs
+<agt> OK
+<agt> # fs mk idxs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
+<agt> # bd slcs idxs tokenlist.in 127.0.0.1:13132
+<agt> # vd check tokenlist.in tokenlist.out
+<agt> Server 127.0.0.1:13132 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with 0, needs 2
+<agt> Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 2
+<agt> Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 2
+<agt> Server 127.0.0.1:13132 drags on dd20be44d1d8dcfcf63a69622390ef88 with 0, needs 2
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs rm idxs
+<agt> OK
+<agt> # fs rm tokenlist.in
+<agt> OK
+<agt> # fs rm tokenlist.out
+<agt> OK
+<agt> # cf lc c
+<agt> # cf lc
+<agt> c
+<agt> # fs mk slcs
+<agt> OK
+<agt> # fs mk idxs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
+<agt> [slice md5.db] -> {OK 20160101-2}
+<agt> [slice md5.db check 20160101-1] -> {OK}
+<agt> [slice md5.db get 20160101-1] -> {0 dd20be44d1d8d...}
+<agt> [slice md5.db check 20160101-2] -> {OK}
+<agt> [slice md5.db get 20160101-2] -> {2 dd20be44d1d8d...}
+<agt> [slice md5.db check 20160101-3] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160102-1] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
+<agt> # bd slcs idxs tokenlist.in 127.0.0.1:13132
+<agt> # vd check tokenlist.in tokenlist.out
+<agt> [last md5.db 1fae9fb8104184ffa074fa8b24bb10f7] -> {OK 0 1fae9fb810...}
+<agt> [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] -> {IDX_NODN}
+<agt> [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] -> {IDX_NODN}
+<agt> [last md5.db dd20be44d1d8dcfcf63a69622390ef88] -> {OK 0 dd20be44d1...}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs rm idxs
+<agt> OK
+<agt> # fs rm tokenlist.in
+<agt> OK
+<agt> # fs rm tokenlist.out
+<agt> OK

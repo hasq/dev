@@ -1,28 +1,28 @@
-<agt> > build slcs idxs tokenlist.txt localhost:13131
-<agt> : Directory idxs not accessible
-<agt> > fs mk idxs
-<agt> : OK
-<agt> > build slcs idxs tokenlist.txt localhost:13131
-<agt> : Directory slcs not accessible
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > build slcs idxs tokenlist.txt localhost:13131
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
+<agt> # build slcs idxs tokenlist.txt localhost:13131
+<agt> Directory idxs not accessible
+<agt> # fs mk idxs
+<agt> OK
+<agt> # build slcs idxs tokenlist.txt localhost:13131
+<agt> Directory slcs not accessible
+<agt> # fs mk slcs
+<agt> OK
+<agt> # build slcs idxs tokenlist.txt localhost:13131
+<agt> # fs cat tokenlist.txt
+<agt> tokenlist.txt
 
-<agt> > cf db wrd.db
-<agt> > dl 127.0.0.1:13131 160101:today slcs
-<agt> > build slcs idxs tokenlist.txt localhost:13131 127.0.0.1:13132
-<agt> > fs cat tokenlist.txt
-<agt> : tokenlist.txt
+<agt> # cf db wrd.db
+<agt> # dl 127.0.0.1:13131 160101:today slcs
+<agt> # build slcs idxs tokenlist.txt localhost:13131 127.0.0.1:13132
+<agt> # fs cat tokenlist.txt
+<agt> tokenlist.txt
 0 1fae localhost:13131 127.0.0.1:13132
 0 1fe1 localhost:13131 127.0.0.1:13132
 0 8e69 localhost:13131 127.0.0.1:13132
 0 dd20 localhost:13131 127.0.0.1:13132
 
-<agt> > fs rm tokenlist.txt
-<agt> : OK
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs rm idxs
-<agt> : OK
+<agt> # fs rm tokenlist.txt
+<agt> OK
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs rm idxs
+<agt> OK

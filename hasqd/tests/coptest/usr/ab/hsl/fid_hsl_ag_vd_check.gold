@@ -1,89 +1,93 @@
 <svt> ag fs mk "slcs"
-<agt> > fs mk slcs
-<agt> : OK
+<agt> # fs mk slcs
+<agt> OK
 <svt> ag fs mk "idxs"
-<agt> > fs mk idxs
-<agt> : OK
+<agt> # fs mk idxs
+<agt> OK
 <svt> ag cf db "md5.db"
-<agt> > cf db md5.db
+<agt> # cf db md5.db
 <svt> ag dl self 160101:160103 "slcs"
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
 <svt> ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134 ]
-<agt> > bd slcs idxs tokenlist.bd 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
+<agt> # bd slcs idxs tokenlist.bd 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
 <svt> ag fs cat "tokenlist.bd"
-<agt> > fs cat tokenlist.bd
-<agt> : tokenlist.bd
+<agt> # fs cat tokenlist.bd
+<agt> tokenlist.bd
 0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
 0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
 0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
 0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13132 127.0.0.1:13133 127.0.0.1:13134
 
 <svt> ag cf lc "d"
-<agt> > cf lc d
+<agt> # cf lc d
 <svt> agent validate check "tokenlist.bd" "tokenlist.chk"
-<agt> > validate check tokenlist.bd tokenlist.chk
-<agt> : Server 127.0.0.1:13134 returned unexpected data []
-<agt> : Server 127.0.0.1:13134 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with -1, needs 0
-<agt> : Server 127.0.0.1:13134 returned unexpected data []
-<agt> : Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
-<agt> : Server 127.0.0.1:13134 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
-<agt> : Server 127.0.0.1:13134 returned unexpected data []
-<agt> : Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
-<agt> : Server 127.0.0.1:13134 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
-<agt> : Server 127.0.0.1:13134 returned unexpected data []
-<agt> : Server 127.0.0.1:13133 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
-<agt> : Server 127.0.0.1:13134 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
+<agt> # validate check tokenlist.bd tokenlist.chk
+<agt> [last md5.db 1fae9fb8104184ffa074fa8b24bb10f7] Server failed: 127.0.0.1:13134
+<agt> Server 127.0.0.1:13134 returned unexpected data []
+<agt> Server 127.0.0.1:13134 drags on 1fae9fb8104184ffa074fa8b24bb10f7 with -1, needs 0
+<agt> [last md5.db 1fe1f6d2b098d0117afc89e03a64dec3] Server failed: 127.0.0.1:13134
+<agt> Server 127.0.0.1:13134 returned unexpected data []
+<agt> Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
+<agt> Server 127.0.0.1:13134 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
+<agt> [last md5.db 8e692b8ce018d1a58146bd2ca8908b3b] Server failed: 127.0.0.1:13134
+<agt> Server 127.0.0.1:13134 returned unexpected data []
+<agt> Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
+<agt> Server 127.0.0.1:13134 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
+<agt> [last md5.db dd20be44d1d8dcfcf63a69622390ef88] Server failed: 127.0.0.1:13134
+<agt> Server 127.0.0.1:13134 returned unexpected data []
+<agt> Server 127.0.0.1:13133 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
+<agt> Server 127.0.0.1:13134 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
 <svt> ag fs cat "tokenlist.chk"
-<agt> > fs cat tokenlist.chk
-<agt> : tokenlist.chk
+<agt> # fs cat tokenlist.chk
+<agt> tokenlist.chk
 0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13134
 0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132 127.0.0.1:13134
 0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132 127.0.0.1:13134
 0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13133 127.0.0.1:13134
 
 <svt> ag fs rm "tokenlist.chk"
-<agt> > fs rm tokenlist.chk
-<agt> : OK
+<agt> # fs rm tokenlist.chk
+<agt> OK
 <svt> ag fs rm "idxs"
-<agt> > fs rm idxs
-<agt> : OK
+<agt> # fs rm idxs
+<agt> OK
 <svt> ag fs mk "idxs"
-<agt> > fs mk idxs
-<agt> : OK
+<agt> # fs mk idxs
+<agt> OK
 <svt> ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 ]
-<agt> > bd slcs idxs tokenlist.bd 127.0.0.1:13132 127.0.0.1:13133
+<agt> # bd slcs idxs tokenlist.bd 127.0.0.1:13132 127.0.0.1:13133
 <svt> ag fs cat "tokenlist.bd"
-<agt> > fs cat tokenlist.bd
-<agt> : tokenlist.bd
+<agt> # fs cat tokenlist.bd
+<agt> tokenlist.bd
 0 1fae9fb8104184ffa074fa8b24bb10f7 127.0.0.1:13132 127.0.0.1:13133
 0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132 127.0.0.1:13133
 0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132 127.0.0.1:13133
 0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13132 127.0.0.1:13133
 
 <svt> agent vd check "tokenlist.bd" "tokenlist.chk"
-<agt> > vd check tokenlist.bd tokenlist.chk
-<agt> : Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
-<agt> : Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
-<agt> : Server 127.0.0.1:13133 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
+<agt> # vd check tokenlist.bd tokenlist.chk
+<agt> Server 127.0.0.1:13132 drags on 1fe1f6d2b098d0117afc89e03a64dec3 with -1, needs 0
+<agt> Server 127.0.0.1:13132 drags on 8e692b8ce018d1a58146bd2ca8908b3b with -1, needs 0
+<agt> Server 127.0.0.1:13133 drags on dd20be44d1d8dcfcf63a69622390ef88 with -1, needs 0
 <svt> ag fs cat "tokenlist.chk"
-<agt> > fs cat tokenlist.chk
-<agt> : tokenlist.chk
+<agt> # fs cat tokenlist.chk
+<agt> tokenlist.chk
 0 1fe1f6d2b098d0117afc89e03a64dec3 127.0.0.1:13132
 0 8e692b8ce018d1a58146bd2ca8908b3b 127.0.0.1:13132
 0 dd20be44d1d8dcfcf63a69622390ef88 127.0.0.1:13133
 
 <svt> ag fs rm "tokenlist.chk"
-<agt> > fs rm tokenlist.chk
-<agt> : OK
+<agt> # fs rm tokenlist.chk
+<agt> OK
 <svt> ag fs rm "tokenlist.bd"
-<agt> > fs rm tokenlist.bd
-<agt> : OK
+<agt> # fs rm tokenlist.bd
+<agt> OK
 <svt> ag fs rm "slcs"
-<agt> > fs rm slcs
-<agt> : OK
+<agt> # fs rm slcs
+<agt> OK
 <svt> ag fs rm "idxs"
-<agt> > fs rm idxs
-<agt> : OK
+<agt> # fs rm idxs
+<agt> OK
 <svt> ex 0 OK 100 tcp 127.0.0.1:13132 [ quit ]
 <svt> ex 0 OK 100 tcp 127.0.0.1:13133 [ quit ]
 <svt> quit

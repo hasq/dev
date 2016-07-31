@@ -1,18 +1,18 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-<agt> > cf database _wrd
-<agt> > cf logcomm all
-<agt> > fs mk agt4S
-<agt> : OK
-<agt> > fs mk agt4I
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 today agt4S
-<agt> : [slice _wrd] -> {OK 20110101-1}
-<agt> : [slice _wrd check 20110101-1] -> {OK}
-<agt> : [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
-<agt> : [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
-<agt> > bd agt4S agt4I agt4_list.txt self localhost:13131
+<agt> # cf database _wrd
+<agt> # cf logcomm all
+<agt> # fs mk agt4S
+<agt> OK
+<agt> # fs mk agt4I
+<agt> OK
+<agt> # dl 127.0.0.1:13131 today agt4S
+<agt> [slice _wrd] -> {OK 20110101-1}
+<agt> [slice _wrd check 20110101-1] -> {OK}
+<agt> [slice _wrd get 20110101-1] -> {0 a7c4 0000 d9e...}
+<agt> [slice _wrd check 20110101-2] -> {REQ_FILE_BAD}
+<agt> # bd agt4S agt4I agt4_list.txt self localhost:13131
 <zdb> erasedisk
 Database on disk erased successfully
 ==============

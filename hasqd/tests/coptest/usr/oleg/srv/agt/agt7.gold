@@ -1,51 +1,51 @@
 <zdb> erasedisk
 Database on disk erased successfully
 <zdb> create _wrd wrd Word 1 [abc] 1 0
-<agt> > cf lc all
-<agt> > cf db _wrd
+<agt> # cf lc all
+<agt> # cf db _wrd
 a/7/a
 a/7/a7c4
-<agt> > fs cp a/7/a7c4 a/7/a
-<agt> : OK 44
-<agt> > fs cat a/7/a7c4
-<agt> : a/7/a7c4
+<agt> # fs cp a/7/a7c4 a/7/a
+<agt> OK 44
+<agt> # fs cat a/7/a7c4
+<agt> a/7/a7c4
 1 a7c4 7ccf 811f 2159
 0 a7c4 0000 d9e6 fbfc
 
-<agt> > fs cat a/7/a
-<agt> : a/7/a
+<agt> # fs cat a/7/a
+<agt> a/7/a
 1 a7c4 7ccf 811f 2159
 0 a7c4 0000 d9e6 fbfc
 
-<agt> > sort a/7
-<agt> > fs cat a/7/a7c4
-<agt> : a/7/a7c4
+<agt> # sort a/7
+<agt> # fs cat a/7/a7c4
+<agt> a/7/a7c4
 0 a7c4 0000 d9e6 fbfc
 1 a7c4 7ccf 811f 2159
 
-<agt> > fs cat a/7/a
-<agt> : a/7/a
+<agt> # fs cat a/7/a
+<agt> a/7/a
 1 a7c4 7ccf 811f 2159
 0 a7c4 0000 d9e6 fbfc
 
-<agt> > vd push agt6.txt agt7_2.txt a/7
-<agt> : [last _wrd a7c4] -> {IDX_NODN}
-<agt> : Server localhost:13131 drags on a7c4 with -1, needs 1
-<agt> : [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> {OK 1000}
-<agt> : [add * _wrd 1 a7c4 7ccf 811f 2159] -> {OK 1001}
+<agt> # vd push agt6.txt agt7_2.txt a/7
+<agt> [last _wrd a7c4] -> {IDX_NODN}
+<agt> Server localhost:13131 drags on a7c4 with -1, needs 1
+<agt> [zero * _wrd 0 a7c4 0000 d9e6 fbfc] -> {OK 1000}
+<agt> [add * _wrd 1 a7c4 7ccf 811f 2159] -> {OK 1001}
 OK 1 a7c4 7ccf 811f 2159
-<agt> > vd check agt6.txt agt7_2.txt
-<agt> : [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
-<agt> > fs rm a/7/a7c4
-<agt> : OK
-<agt> > fs mv a/7/a a/7/a7c4
-<agt> : OK
-<agt> > re agt7_2.txt
-<agt> : OK
-<agt> > fs cat agt7_2.txt
-<agt> : agt7_2.txt
+<agt> # vd check agt6.txt agt7_2.txt
+<agt> [last _wrd a7c4] -> {OK 1 a7c4 7ccf ...}
+<agt> # fs rm a/7/a7c4
+<agt> OK
+<agt> # fs mv a/7/a a/7/a7c4
+<agt> OK
+<agt> # re agt7_2.txt
+<agt> OK
+<agt> # fs cat agt7_2.txt
+<agt> agt7_2.txt
 
-<agt> > fs rm agt7_2.txt
-<agt> : OK
+<agt> # fs rm agt7_2.txt
+<agt> OK
 <zdb> erasedisk
 Database on disk erased successfully

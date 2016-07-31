@@ -1,40 +1,40 @@
-<agt> > filesys mk
-<agt> : Error: Agent mk needs 1 argument
+<agt> # filesys mk
+<agt> Error: Agent mk needs 1 argument
 Offensive command (exec): ag filesys mk
 Error: Agent mk needs 1 argument
-<agt> > fs mk a b
-<agt> : Error: Agent mk needs 1 argument
+<agt> # fs mk a b
+<agt> Error: Agent mk needs 1 argument
 Offensive command (exec): ag fs mk "a" "b"
 Error: Agent mk needs 1 argument
-<agt> > fs cat
-<agt> : Error: Agent cat needs 1 argument
+<agt> # fs cat
+<agt> Error: Agent cat needs 1 argument
 Offensive command (exec): ag fs cat
 Error: Agent cat needs 1 argument
-<agt> > fs cat a b
-<agt> : Error: Agent cat needs 1 argument
+<agt> # fs cat a b
+<agt> Error: Agent cat needs 1 argument
 Offensive command (exec): ag fs cat "a" "b"
 Error: Agent cat needs 1 argument
-<agt> > fs cp
-<agt> : Error: Agent cp needs 2 arguments
+<agt> # fs cp
+<agt> Error: Agent cp needs 2 arguments
 Offensive command (exec): ag fs cp
 Error: Agent cp needs 2 arguments
-<agt> > fs cp a
-<agt> : Error: Agent cp needs 2 arguments
+<agt> # fs cp a
+<agt> Error: Agent cp needs 2 arguments
 Offensive command (exec): ag fs cp "a" 
 Error: Agent cp needs 2 arguments
-<agt> > fs rm
-<agt> : Error: Agent rm needs 1 argument
+<agt> # fs rm
+<agt> Error: Agent rm needs 1 argument
 Offensive command (exec): ag fs rm
 Error: Agent rm needs 1 argument
-<agt> > fs rm a b
-<agt> : Error: Agent rm needs 1 argument
+<agt> # fs rm a b
+<agt> Error: Agent rm needs 1 argument
 Offensive command (exec): ag fs rm "a" "b"
 Error: Agent rm needs 1 argument
-<agt> > fs mv
-<agt> : Error: Agent mv needs 2 arguments
+<agt> # fs mv
+<agt> Error: Agent mv needs 2 arguments
 Offensive command (exec): ag fs mv
 Error: Agent mv needs 2 arguments
-<agt> > fs mv a
-<agt> : Error: Agent mv needs 2 arguments
+<agt> # fs mv a
+<agt> Error: Agent mv needs 2 arguments
 Offensive command (exec): ag fs mv "a"
 Error: Agent mv needs 2 arguments

@@ -1,41 +1,41 @@
-<agt> > download 127.0.0.1:13131 160101:160103 slcs
-<agt> : Database is not set - try 'agent config database'
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160101:160103 slcs
-<agt> : Directory does not exist [slcs]
-<agt> > cf lc a
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13131 160102:160103 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 20160102-1] -> {OK}
-<agt> : [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
-<agt> : [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160103-1] -> {OK}
-<agt> : [slice md5.db get 20160103-1] -> {0 cca247210529c...}
-<agt> : [slice md5.db check 20160103-2] -> {OK}
-<agt> : [slice md5.db get 20160103-2] -> {0 c99994163db98...}
-<agt> : [slice md5.db check 20160103-3] -> {REQ_FILE_BAD}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > cf db md5.db
-<agt> > dl 127.0.0.1:13132 160102:160103 slcs
-<agt> : [slice md5.db] -> {OK 20160102-1}
-<agt> : [slice md5.db check 20160102-1] -> {OK}
-<agt> : [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
-<agt> : [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > cf lc n
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 20160103:today slcs
-<agt> > fs cat slcs/20160103-1
-<agt> : slcs/20160103-1
+<agt> # download 127.0.0.1:13131 160101:160103 slcs
+<agt> Database is not set - try 'agent config database'
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160101:160103 slcs
+<agt> Directory does not exist [slcs]
+<agt> # cf lc a
+<agt> # fs mk slcs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13131 160102:160103 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db check 20160102-1] -> {OK}
+<agt> [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
+<agt> [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160103-1] -> {OK}
+<agt> [slice md5.db get 20160103-1] -> {0 cca247210529c...}
+<agt> [slice md5.db check 20160103-2] -> {OK}
+<agt> [slice md5.db get 20160103-2] -> {0 c99994163db98...}
+<agt> [slice md5.db check 20160103-3] -> {REQ_FILE_BAD}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs mk slcs
+<agt> OK
+<agt> # cf db md5.db
+<agt> # dl 127.0.0.1:13132 160102:160103 slcs
+<agt> [slice md5.db] -> {OK 20160102-1}
+<agt> [slice md5.db check 20160102-1] -> {OK}
+<agt> [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
+<agt> [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 20160103-1] -> {REQ_FILE_BAD}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # cf lc n
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 20160103:today slcs
+<agt> # fs cat slcs/20160103-1
+<agt> slcs/20160103-1
 0 cca247210529c34bc22a52eb0027af68 a738f0d472e27337d87e9b67d6964cf0 5ac633508ab93cb53c465dbc5647f076 bda4f122f6ff7fe2ee51f3cfd19afbf8
 0 b180041a31fd33a76bcbf660f3b87be3 3d544e07360fcde87b0d9de41055fcf9 ac95b2bcb540e733bab9ed526b18685e 6501f57f0d59660517c12cc8b8ee5104
 0 1fd233bf5fde1c8d8c8a4762239214b0 a5bd828d6ecb9b040d473a31190310bc ecc916961ea98e6d7403c8c675ea8568 10f73e2c069ef747bad8d056ec64ddd6
@@ -45,8 +45,8 @@
 0 daaf14a22e47caf0c5df1c320bd6ae6e ec8da4c60c53ba89617b37be779ed146 f7657593fa4849bde66b9eac6c2087db d2c4c3f29c36f053fd8c94fb8b4c78fa
 0 3e811d6952d97b41065a3c364476e50b 7273752dd4bc5fe7ea7ccf86b25d3dcb 3d610b1f39f667d38e1a4efbf15b5248 38a68b90cbc5737a9b6318d897f5ac9e
 
-<agt> > fs cat slcs/20160103-2
-<agt> : slcs/20160103-2
+<agt> # fs cat slcs/20160103-2
+<agt> slcs/20160103-2
 0 c99994163db98e5e10783de2b5c3c6f7 6bb5a0f7b317d0990d1fff856fd3db72 3864f63779f77dafd45b945d133a79b4 79314022bd32c95dc426c1d653634e86
 0 fb6259c751d5b08dc819c42a928fdada 8e50d580e79dd9b94b487eca8b162f5f 292497dfe2cc3b200dba31787c97ff2d d52640e62970d08691cc16848fdb523e
 0 17d96d2b66869a5b0d7db2160adaaf40 3fd6da1bbb6e00fc08260104c4a9acb0 4820cb4d8228d06173380618c04471cb a8d6ffc7d91e254eb03b4e79c9bb45bc
@@ -56,52 +56,52 @@
 0 cb9d2b2948d9e4f1b169f0b52dfdddbf a3361220592c64860c803124e6e902f3 7a0d345113e8625f4463723e4300b18a 58ec5a72981e704c8e113a07d1c1476d
 0 9570536ba5535ceba95317d88c9267b0 7605ad2abe768a9deeac6a698b5e879e 9b94240c7a44314cb51d1e39ae4ffcfd 71d8340f09ad27649d5255f54c7136a5
 
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > cf lc a
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 160102 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 20160102-1] -> {OK}
-<agt> : [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
-<agt> : [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > cf lc n
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 today slcs
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > cf lc a
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 1 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db get 20160103-2] -> {0 c99994163db98...}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 3 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db get 20160103-1] -> {0 cca247210529c...}
-<agt> : [slice md5.db get 20160103-2] -> {0 c99994163db98...}
-<agt> > fs rm slcs
-<agt> : OK
-<agt> > fs mk slcs
-<agt> : OK
-<agt> > dl 127.0.0.1:13131 000000 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 20000000-1] -> {REQ_FILE_BAD}
-<agt> > dl 127.0.0.1:13131 000000:000000 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 20000000-1] -> {REQ_FILE_BAD}
-<agt> > dl 127.0.0.1:13131 2016010101:2016010102 slcs
-<agt> : [slice md5.db] -> {OK 20160103-2}
-<agt> : [slice md5.db check 2016010101-1] -> {REQ_FILE_BAD}
-<agt> : [slice md5.db check 2016010102-1] -> {REQ_FILE_BAD}
-<agt> > fs rm slcs
-<agt> : OK
+<agt> # fs rm slcs
+<agt> OK
+<agt> # cf lc a
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 160102 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db check 20160102-1] -> {OK}
+<agt> [slice md5.db get 20160102-1] -> {0 14fc21b590b4d...}
+<agt> [slice md5.db check 20160102-2] -> {REQ_FILE_BAD}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # cf lc n
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 today slcs
+<agt> # fs rm slcs
+<agt> OK
+<agt> # cf lc a
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 1 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db get 20160103-2] -> {0 c99994163db98...}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 3 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db get 20160103-1] -> {0 cca247210529c...}
+<agt> [slice md5.db get 20160103-2] -> {0 c99994163db98...}
+<agt> # fs rm slcs
+<agt> OK
+<agt> # fs mk slcs
+<agt> OK
+<agt> # dl 127.0.0.1:13131 000000 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db check 20000000-1] -> {REQ_FILE_BAD}
+<agt> # dl 127.0.0.1:13131 000000:000000 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db check 20000000-1] -> {REQ_FILE_BAD}
+<agt> # dl 127.0.0.1:13131 2016010101:2016010102 slcs
+<agt> [slice md5.db] -> {OK 20160103-2}
+<agt> [slice md5.db check 2016010101-1] -> {REQ_FILE_BAD}
+<agt> [slice md5.db check 2016010102-1] -> {REQ_FILE_BAD}
+<agt> # fs rm slcs
+<agt> OK
 OK
