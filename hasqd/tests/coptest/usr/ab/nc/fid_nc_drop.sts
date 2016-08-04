@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Testing NC drop
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+dd if=/dev/zero of=inpfile.txt bs=1 count=0 seek=12K  >/dev/null 2>&1
+
+echo "======================="
+wc -c inpfile.txt
+echo "======================="
+
+$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1
+
+echo "======================="
+wc -c outfile.txt
+echo "======================="
+
+rm -rf outfile.txt
