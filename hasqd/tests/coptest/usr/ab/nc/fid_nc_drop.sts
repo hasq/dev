@@ -17,4 +17,5 @@ echo "======================="
 wc -c outfile.txt
 echo "======================="
 
+rm -rf inpfile.txt
 rm -rf outfile.txt

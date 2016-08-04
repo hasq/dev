@@ -9,7 +9,7 @@ REQ_MSG_BAD
 REQ_MSG_BAD
 <svt> print ex 0 OK 100 tcp self [ drop x ]
 OK
-<svt> print ex 0 OK 100 tcp self [ drop get x ] 
+<svt> print ex 0 OK 100 tcp self [ drop get x]
 OK
 <svt> print ex 0 OK 100 tcp self [ drop get x y ]
 OK
@@ -36,14 +36,8 @@ OK
 <svt> f = file inpfile.txt
 <svt> print ex 0 OK 100 tcp self { [ drop x ] f }
 OK
-<svt> ag fs rm "inpfile.txt"
-<agt> # fs rm inpfile.txt
-<agt> OK
 <svt> f = file drop/x
 <svt> save outfile.txt f
-<svt> ag fs rm "drop"
-<agt> # fs rm drop
-<agt> OK
 <svt> quit
 =======================
 12288 outfile.txt
