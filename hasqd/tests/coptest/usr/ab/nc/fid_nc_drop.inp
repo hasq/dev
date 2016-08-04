@@ -1,3 +1,9 @@
+# Misuse
+print ex 0 REQ_MSG_BAD 100 tcp self [ drop ]
+print ex 0 REQ_MSG_BAD 100 tcp self [ drop x@! ]
+print ex 0 REQ_MSG_BAD 100 tcp self [ drop x@! data ]
+#
+print ex 0 OK 100 tcp self [ drop x ]
 print ex 0 OK 100 tcp self [ drop get x ] 
 print ex 0 OK 100 tcp self [ drop get x y ]
 
@@ -6,11 +12,6 @@ ag fs cat "drop/x"
 print ex 1 DATA 100 tcp self [ drop get x ] 
 print ex 0 OK 100 tcp self [ drop get x ] 
 ag fs cat "drop/x"
-
-print ex 0 REQ_MSG_BAD 100 tcp self [ drop ]
-print ex 0 OK 100 tcp self [ drop x ]
-print ex 0 REQ_MSG_BAD 100 tcp self [ drop x@! ]
-print ex 0 REQ_MSG_BAD 100 tcp self [ drop x@! data ]
 
 print ex 0 OK 100 tcp self [ drop abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789_ABC DATA ]
 print ex 0 OK 100 tcp self [ drop get abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789_ABC ]
@@ -21,6 +22,6 @@ print ex 0 OK 100 tcp self { [ drop x ] f }
 ag fs rm "inpfile.txt"
 f = file drop/x
 save outfile.txt f
-print ex 0 OK 100 tcp self [ drop get x ] 
+ag fs rm "drop"
 
 quit
