@@ -1,15 +1,17 @@
+[A] om NC drop - var name limit 128 byte 
+               - var value limit 10K (esli bol'shoe, naprimer fail 10M, to ochen' dolgo delaetsja [ drop x file ] )
 
-[A] httpget_proxy - test - doc
-[A] HSL http_get http_post - removed - doc
-[A] HSL tcp - test[DONE] - doc[] - use default protocol
+[A] http_proxy - test - doc (CLO)
+?[A] HSL http_get http_post - removed - doc
+?[A] HSL tcp - test[DONE] - doc[?] - use default protocol
 [A] HSL agent - doc
-[A] NC drop name data - "OK/ERR" - test - doc
+[DONE][A] NC drop name data - "OK/ERR" - test - doc
 	name - a-z A-Z 0-9 '.' '-' '_' max length 128
 	data - textual printable '!'-'~' ASCII 33-126 plus space 32, max 10k
 
-[A] NC drop get name - "OK data" - test - doc
-[A] CLO drop_dir=name (short dd, default 'drop')
-[A] CLO drop_timeout=n (seconds, short 'dt', default 10000)
+[DONE][A] NC drop get name - "OK data" - test - doc
+[DONE][A] CLO drop_dir=name (short dd, default 'drop')
+[DONE][A] CLO drop_timeout=n (seconds, short 'dt', default 10000)
 
 [A] run PVS again
 [A] hashnote title
