@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Testing CLO DROP_DIR
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/hasqd -cqlnx dprn=1 dsvt=1 drop_dir="storage" s=$in.inp
