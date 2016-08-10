@@ -1,5 +1,7 @@
-[A] om NC drop - var name limit 128 byte 
-               - var value limit 10K (esli bol'shoe, naprimer fail 10M, to ochen' dolgo delaetsja [ drop x file ] )
+[A] (om) NC drop 
+    - var name limit 128 byte ne rabotaet
+    - var value limit 10K ne rabotaet
+      (esli bol'shoe, naprimer fail 10M, to ochen' dolgo delaetsja [ drop x file ] )
 
 [A] http_proxy - test - doc (CLO)
 ?[A] HSL http_get http_post - removed - doc
