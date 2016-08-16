@@ -1,7 +1,0 @@
-print ex 0 OK 100 tcp self [ drop X DATA ]
-print ex 0 OK 100 tcp self [ drop get X ]
-
-print ex 0 OK 100 tcp self [ drop X DATA ]
-sleep 2000
-print ex 0 OK 100 tcp self [ drop get X ]
-quit
