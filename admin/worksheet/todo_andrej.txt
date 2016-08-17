@@ -3,10 +3,12 @@
     - var value limit 10K ne rabotaet
       (esli bol'shoe, naprimer fail 10M, to ochen' dolgo delaetsja [ drop x file ] )
 
-[A] http_proxy - test - doc (CLO)
+[A] http_proxy - test[ DONE] - doc (CLO)
+    doljen ustanavlivatsja protocol http_get
 ?[A] HSL http_get http_post - removed - doc
 ?[A] HSL tcp - test[DONE] - doc[?] - use default protocol
 [A] HSL agent - doc
+
 [DONE][A] NC drop name data - "OK/ERR" - test - doc
 	name - a-z A-Z 0-9 '.' '-' '_' max length 128
 	data - textual printable '!'-'~' ASCII 33-126 plus space 32, max 10k
