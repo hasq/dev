@@ -1,0 +1,32 @@
+<svt> print net protocol
+hasq
+<svt> print net protocol "http_get"
+hasq -> http_get
+<svt> print tcp 127.0.0.1:13132 [ ping ]
+
+<svt> print tcp 127.0.0.1:13131 [ quit ]
+OK
+<svt> print tcp 127.0.0.1:13132 [ quit ]
+
+<svt> quit
+tcp.log
+
+=== Received ===
+GET http://127.0.0.1:13132/ping HTTP/1.1
+Proxy-Authorization: Basic 
+User-Agent: Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016
+Host: 127.0.0.1:13132
+Accept: */*
+
+
+=== Payload  ===
+GET http://127.0.0.1:13132/ping HTTP/1.1
+================
+
+=== Received ===
+GET /quit
+
+
+=== Payload  ===
+quit
+================

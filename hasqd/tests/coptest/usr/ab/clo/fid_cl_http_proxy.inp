@@ -1,0 +1,8 @@
+print net protocol
+print net protocol "http_get"
+
+print tcp 127.0.0.1:13132 [ ping ]
+
+print tcp 127.0.0.1:13131 [ quit ]
+print tcp 127.0.0.1:13132 [ quit ]
+quit

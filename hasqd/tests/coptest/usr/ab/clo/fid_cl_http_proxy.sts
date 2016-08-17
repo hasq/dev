@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Testing CLO HTTP_PROXY
+
+in=$(basename $0)
+in=${in%.*}
+
+rm -f tcp.log
+$1/hasqd -cqlnx dprn=0 dsvt=0 p=13131 dtcp="tcp.log" &
+$1/hasqd -cqlnx dprn=0 dsvt=0 p=13132 &
+$1/hasqd -cqlnx dprn=1 dsvt=1 p=13133 http_proxy="127.0.0.1:13131" s=$in.inp
+echo tcp.log
+cat tcp.log
+rm -f tcp.log
