@@ -81,7 +81,7 @@ struct NetworkLimits
     gl::intint maxReadTime;
     gl::intint maxConnTime;
     static const int bufferSize = 1024; // for socket reading
-    static const size_t maxMsgSize = 1024 * 1024 * 10; // 10Mb
+    static const size_t maxMsgSize = 1024 * 1024; // 1Mb
     NetworkLimits(): maxReadGap(1000), maxReadTime(30000), maxConnTime(10000) {}
 };
 
