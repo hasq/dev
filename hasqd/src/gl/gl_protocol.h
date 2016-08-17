@@ -56,6 +56,7 @@ const char CRLF[]                = "\r\n";
 const char LF2[]                 = "\n\n";
 const char CRLF2[]               = "\r\n\r\n";
 const char GET[]                 = "GET /";
+const char GETH[]                = "GET http";
 const char POST[]                = "POST /";
 const char HTTP[]                = " HTTP";
 const char DIGITS[]              = "0123456789";

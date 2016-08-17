@@ -73,6 +73,7 @@ gl::ProtocolPacketStatus gl::Http_base::extrMsgClient(string & msg, const string
 
 // "GET /" + packet + " HTTP" + ... + CRLF2
 // "GET /" + packet + CRLF2
+// "GET http*//*/" + packet + " HTTP" + ... + CRLF2
 gl::ProtocolPacketStatus gl::HttpGet::extrMsgServer(string & msg, const string & raw, Pmd * p) const
 {
     size_t pos_crlf2, pos_http, pos_xfwd, pos_crlf, pos;
@@ -81,7 +82,10 @@ gl::ProtocolPacketStatus gl::HttpGet::extrMsgServer(string & msg, const string &
     if (raw.length() == 0)
         return PRT_PKT_NO_INFO;
 
-    if (raw.find(GET) == 0)
+    bool bget1 = (raw.find(GET) == 0);
+    bool bget2 = (raw.find(GETH) == 0);
+
+    if ( bget1 || bget2 )
     {
         // CRLF2 must be present at the end
         pos_crlf2 = raw.find(CRLF2);
@@ -107,6 +111,17 @@ gl::ProtocolPacketStatus gl::HttpGet::extrMsgServer(string & msg, const string &
         // request from user must contain HTTP
         else
         {
+            if ( bget2 )
+            {
+                pos = raw.find("//", pos);
+                if ( pos == raw.npos ) return PRT_PKT_ERROR;
+
+                pos = raw.find("/", pos + 3);
+                if ( pos == raw.npos ) return PRT_PKT_ERROR;
+
+                if ( ++pos > pos_http ) return PRT_PKT_ERROR;
+            }
+
             msg = raw.substr(pos, pos_http - pos);
 
             pos_xfwd = raw.find(XFWD, pos_http);
