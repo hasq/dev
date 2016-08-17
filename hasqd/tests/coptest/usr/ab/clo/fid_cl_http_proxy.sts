@@ -6,8 +6,8 @@ in=$(basename $0)
 in=${in%.*}
 
 rm -f tcp.log
-$1/hasqd -cqlnx dprn=0 dsvt=0 p=13131 dtcp="tcp.log" &
-$1/hasqd -cqlnx dprn=1 dsvt=1 p=13132 http_proxy=user:password@127.0.0.1:13131 s=$in.inp
+$1/hasqd -cqlnx dprn=0 dsvt=0 dwkr=1 p=13131 id=13131 dtcp="tcp.log" &
+$1/hasqd -cqlnx dprn=1 dsvt=1 p=13132 id=13132 http_proxy=user:password@127.0.0.1:13131 s=$in.inp
 echo tcp.log
 cat tcp.log
 rm -f tcp.log
