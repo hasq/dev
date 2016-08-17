@@ -18,7 +18,7 @@
 [A] run PVS again
 [A] hashnote title
 [B] bank console test
-[C] make new release 4.2
+[A] make new release 4.2
 
 [A] (om) bank console
 [B] (ab) bank gui
