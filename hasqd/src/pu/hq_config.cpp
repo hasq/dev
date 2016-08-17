@@ -513,6 +513,10 @@ cfg::PublicNetCmd::PublicNetCmd()
 void Config::setHttpGetProxy(const string & s)
 {
     if ( s.empty() ) return;
+
+    // reset default protocol to HttpGet
+    clntProt = &clntHttpGet;
+
     size_t i = s.find('@');
 
     if ( i == string::npos )
@@ -523,8 +527,5 @@ void Config::setHttpGetProxy(const string & s)
 
     pxData.remote = s.substr(i + 1);
     pxData.auth64 = ma::b64enc(s.substr(0, i));
-
-    // reset default protocol to HttpGet
-    clntProt = &clntHttpGet;
 }
 
