@@ -56,12 +56,17 @@ string Drop::process(const string & c, const string & data)
     {
         if ( std::isalnum(c[i]) ) continue;
         if ( c[i] == '.' || c[i] == '-' || c[i] == '_' ) continue;
-        return er::Code(er::REQ_MSG_BAD).str();
+        return er::Code(er::REQ_FILE_BAD).str();
     }
+
+    if ( c.size()    > DROP_MAX_FILENAME )
+        return er::Code(er::REQ_FILE_BAD).str();
+
+    if ( data.size() > DROP_MAX_FILESIZE )
+        return er::Code(er::REQ_FILE_RAW).str();
 
     cleandir();
 
-    // dir is created by globalspace
     f += c;
 
     {

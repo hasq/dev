@@ -28,7 +28,11 @@ class NetEnv
 
 class Drop
 {
+        static const size_t DROP_MAX_FILENAME  = 128;
+        static const size_t DROP_MAX_FILESIZE  = 1024 * 10;
+
         GlobalSpace * gs;
+
     public:
         Drop(GlobalSpace * g): gs(g) {}
         string process(const string & cmd, const string & data);
