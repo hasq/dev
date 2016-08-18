@@ -1,29 +1,35 @@
+========================
+127.0.0.1:13132 out
+========================
 <svt:13132> print net protocol
 http_get
 <svt:13132> print tcp xxx.yyy:80 [ ping ]
-<wkr:13131> (127.0.0.1)[GET http://xxx.yyy:80/ping HTTP/1.1] -> [REQ_MSG_HEAD]
-
+OK
 <svt:13132> print ex 0 OK 100 tcp 127.0.0.1:13131 [ quit ]
-<wkr:13131> (127.0.0.1)[quit] -> [OK]
 OK
 <svt:13132> quit
-tcp.log
+========================
+127.0.0.1:13131 out
+========================
+<wkr:13131> (127.0.0.1)[ping] -> [OK]
+<wkr:13131> (127.0.0.1)[quit] -> [OK]
+========================
+127.0.0.1:13131 tcp.log
 
 === Received ===
-GET http://xxx.yyy:80/ping HTTP/1.1
-Proxy-Authorization: Basic dXNlcjpwYXNzd29yZA==
-User-Agent: Hasq server 0.4.2 (Win_x64) Hasq Technology Pty Ltd (C) 2013-2016
-Host: xxx.yyy:80
-Accept: */*
-
+GET http://xxx.yyy:80/ping HTTP/1.1
+Proxy-Authorization: Basic dXNlcjpwYXNzd29yZA==
+Host: xxx.yyy:80
+Accept: */*
+
 
 === Payload  ===
-GET http://xxx.yyy:80/ping HTTP/1.1
+ping
 ================
 
 === Received ===
-GET /quit
-
+GET /quit
+
 
 === Payload  ===
 quit

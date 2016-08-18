@@ -6,10 +6,20 @@ in=$(basename $0)
 in=${in%.*}
 
 rm -f tcp.log
-$1/hasqd -cqlnx dprn=0 dsvt=0 dwkr=1 p=13131 id=13131 dtcp="tcp.log" &
-$1/hasqd -cqlnx dprn=1 dsvt=1 p=13132 id=13132 http_proxy=user:password@127.0.0.1:13131 s=$in.inp
-echo tcp.log
-cat tcp.log
-rm -f tcp.log
+$1/hasqd -cqlnx dprn=0 dsvt=0 dwkr=1 p=13131 id=13131 dtcp="tcp.log" > 13131.out &
+$1/hasqd -cqlnx dprn=1 dsvt=1 p=13132 id=13132 http_proxy=user:password@127.0.0.1:13131 s=$in.inp > 13132.out
+echo "========================"
+echo 127.0.0.1:13132 out
+echo "========================"
+cat 13132.out
+echo "========================"
+echo 127.0.0.1:13131 out
+echo "========================"
+cat 13131.out
+echo "========================"
+echo 127.0.0.1:13131 tcp.log
+cat tcp.log | grep -v "User-Agent"
+
+rm -fr tcp.log 13131.out 13132.out
 
 # NEED to split output from 1 and 2 because the order is not the same
