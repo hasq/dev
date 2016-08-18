@@ -1,13 +1,9 @@
-[A] (om) NC drop 
-    - var name limit 128 byte ne rabotaet
-    - var value limit 10K ne rabotaet
-      (esli bol'shoe, naprimer fail 10M, to ochen' dolgo delaetsja [ drop x file ] )
+[A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
 
-[A] http_proxy - test[ DONE] - doc (CLO)
-    doljen ustanavlivatsja protocol http_get
-?[A] HSL http_get http_post - removed - doc
-?[A] HSL tcp - test[DONE] - doc[?] - use default protocol
-[A] HSL agent - doc
+[A] http_proxy - test[DONE] - doc (CLO)
+[DONE] [A] HSL http_get http_post - removed - doc
+?[A] HSL tcp - test [DONE] - doc[?] - use default protocol
+[B] HSL agent - doc
 
 [DONE][A] NC drop name data - "OK/ERR" - test - doc
 	name - a-z A-Z 0-9 '.' '-' '_' max length 128
@@ -19,13 +15,13 @@
 
 [A] run PVS again
 [A] hashnote title
+[A] hashnote i tokenswap - sravnit bazi
 [B] bank console test
 [A] make new release 4.2
 
 [A] (om) bank console
 [B] (ab) bank gui
 [B] (om) bank mobile
-DONE [A] (om) zakonchit proxy
 
 [B] compile code with tdm-gcc 5.1 
 
