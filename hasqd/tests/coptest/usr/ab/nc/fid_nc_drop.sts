@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Testing NC drop
+
+tn=$(basename $0)
+tn=${tn%.*}
+
+dd if=/dev/zero of=drop.inp bs=1 count=0 seek=10K >/dev/null 2>&1
+dd if=/dev/zero of=drop.err bs=1 count=0 seek=11K >/dev/null 2>&1
+
+echo "======================="
+wc -c drop.inp
+echo "======================="
+
+$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1
+
+echo "======================="
+wc -c drop.out
+echo "======================="
+
+diff drop.inp drop.out
+rm -rf drop.inp
+rm -rf drop.out
+rm -rf drop.err

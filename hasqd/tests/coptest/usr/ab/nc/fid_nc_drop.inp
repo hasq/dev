@@ -1,0 +1,25 @@
+print ex 0 REQ_MSG_BAD 100 tcp self [ drop ]
+print ex 0 REQ_FILE_BAD 100 tcp self [ drop x@! ]
+print ex 0 REQ_FILE_BAD 100 tcp self [ drop x@! data ]
+print ex 0 OK 100 tcp self [ drop x ]
+print ex 0 OK 100 tcp self [ drop get x]
+print ex 0 OK 100 tcp self [ drop get x y ]
+
+print ex 0 OK 100 tcp self [ drop x DATA ]
+ag fs cat "drop/x"
+print ex 1 DATA 100 tcp self [ drop get x ] 
+print ex 0 OK 100 tcp self [ drop get x ] 
+ag fs cat "drop/x"
+
+print ex 0 REQ_FILE_BAD 100 tcp self [ drop abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789_ABC DATA ]
+print ex 0 OK 100 tcp self [ drop get abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789_ABC ]
+print ex 0 OK 100 tcp self [ drop get abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 ]
+
+f = file drop.err
+print ex 0 REQ_FILE_RAW 100 tcp self { [ drop x ] f }
+f = file drop.inp
+print ex 0 OK 100 tcp self { [ drop x ] f }
+f = file drop/x
+save drop.out f
+
+quit
