@@ -12,7 +12,7 @@ echo "======================="
 wc -c drop.inp
 echo "======================="
 
-$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1
+$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1 net_readtime=800 net_conntime=800
 
 echo "======================="
 wc -c drop.out
