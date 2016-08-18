@@ -4,19 +4,30 @@
 
 tn=$(basename $0)
 tn=${tn%.*}
+rm -rf drop.inp drop.out drop.err
+
+# for (( i=0; i<1024; i++ ))
+# do
+    # echo -n "0123456789">>drop.inp
+# done
+
+# for (( i=0; i<1048576; i++ ))
+# do
+    # echo -n "0">>drop.err
+# done
 
 dd if=/dev/zero of=drop.inp bs=1 count=0 seek=10K >/dev/null 2>&1
 dd if=/dev/zero of=drop.err bs=1 count=0 seek=11K >/dev/null 2>&1
 
-echo "======================="
+$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1 dwkr=0 net_readtime=800 net_conntime=800
+
+echo "================"
+wc -c drop.err
+echo "================"
 wc -c drop.inp
-echo "======================="
-
-$1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1 net_readtime=800 net_conntime=800
-
-echo "======================="
+echo "================"
 wc -c drop.out
-echo "======================="
+echo "================"
 
 diff drop.inp drop.out
 rm -rf drop.inp

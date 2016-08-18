@@ -1,6 +1,3 @@
-=======================
-10240 drop.inp
-=======================
 <svt> print ex 0 REQ_MSG_BAD 100 tcp self [ drop ]
 REQ_MSG_BAD
 <svt> print ex 0 REQ_FILE_BAD 100 tcp self [ drop x@! ]
@@ -42,6 +39,10 @@ OK
 <svt> f = file drop/x
 <svt> save drop.out f
 <svt> quit
-=======================
+================
+11264 drop.err
+================
+10240 drop.inp
+================
 10240 drop.out
-=======================
+================
