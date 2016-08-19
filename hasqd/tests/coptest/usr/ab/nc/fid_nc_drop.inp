@@ -15,8 +15,12 @@ print ex 0 REQ_FILE_BAD 100 tcp self [ drop abcdefghijklmnopqrstuvwxyz_ABCDEFGHI
 print ex 0 OK 100 tcp self [ drop get abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789_ABC ]
 print ex 0 OK 100 tcp self [ drop get abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789.abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789 ]
 
-f = file drop.err
+f = file drop.er1
 print ex 0 REQ_FILE_RAW 100 tcp self { [ drop x ] f }
+
+f = file drop.er2
+print ex 0 REQ_FILE_RAW 0 tcp self { [ drop x ] f }
+
 f = file drop.inp
 print ex 0 OK 100 tcp self { [ drop x ] f }
 f = file drop/x

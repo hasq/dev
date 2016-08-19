@@ -4,7 +4,7 @@
 
 tn=$(basename $0)
 tn=${tn%.*}
-rm -rf drop.inp drop.out drop.err
+rm -rf drop.inp drop.out drop.er*
 
 # for (( i=0; i<1024; i++ ))
 # do
@@ -17,12 +17,14 @@ rm -rf drop.inp drop.out drop.err
 # done
 
 dd if=/dev/zero of=drop.inp bs=1 count=0 seek=10K >/dev/null 2>&1
-dd if=/dev/zero of=drop.err bs=1 count=0 seek=11K >/dev/null 2>&1
+dd if=/dev/zero of=drop.er1 bs=1 count=0 seek=11K >/dev/null 2>&1
+dd if=/dev/zero of=drop.er2 bs=1 count=0 seek=1001K >/dev/null 2>&1
 
 $1/hasqd -cq lock=0 s=$tn.inp dprn=1 dsvt=1 dagt=1 dwkr=0 net_readtime=800 net_conntime=800
 
 echo "================"
-wc -c drop.err
+wc -c drop.er1
+wc -c drop.er2
 echo "================"
 wc -c drop.inp
 echo "================"
@@ -32,4 +34,4 @@ echo "================"
 diff drop.inp drop.out
 rm -rf drop.inp
 rm -rf drop.out
-rm -rf drop.err
+rm -rf drop.er*
