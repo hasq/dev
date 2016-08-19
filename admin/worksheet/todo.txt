@@ -3,6 +3,8 @@ DONE [A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
 [A] http_proxy - doc (CLO)
 [A] HSL tcp - doc - use default protocol
 
+[A] prepare to remove repo "release" - check that all files are in bin and
+	all website references are in place
 [A] run PVS again
 [A] hashnote title
 [A] hashnote i tokenswap - sravnit bazi
