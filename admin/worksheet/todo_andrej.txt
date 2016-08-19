@@ -1,36 +1,27 @@
-[A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
+DONE [A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
 
-[A] http_proxy - test[DONE] - doc (CLO)
-[DONE] [A] HSL http_get http_post - removed - doc
-?[A] HSL tcp - test [DONE] - doc[?] - use default protocol
-[B] HSL agent - doc
-
-[DONE][A] NC drop name data - "OK/ERR" - test - doc
-	name - a-z A-Z 0-9 '.' '-' '_' max length 128
-	data - textual printable '!'-'~' ASCII 33-126 plus space 32, max 10k
-
-[DONE][A] NC drop get name - "OK data" - test - doc
-[DONE][A] CLO drop_dir=name (short dd, default 'drop')
-[DONE][A] CLO drop_timeout=n (seconds, short 'dt', default 10000)
+[A] http_proxy - doc (CLO)
+[A] HSL tcp - doc - use default protocol
 
 [A] run PVS again
 [A] hashnote title
 [A] hashnote i tokenswap - sravnit bazi
-[B] bank console test
 [A] make new release 4.2
+[A] HSL agent - doc
+[AB] start hsl doc (tutorial po hsl)
 
-[A] (om) bank console
 [B] (ab) bank gui
+[A] (om) bank console
 [B] (om) bank mobile
 
 [B] compile code with tdm-gcc 5.1 
 
-[AB] hsl doc (tutorial po hsl)
+[B] bank console test
 [B] Klientskie skripty na Python
 [B] (om) udp 
 [C] Klientskie skripty na Ruby, Java, C++, node.js
 [BC] (om) 4 HqClient soobshenija proverit
-[BC] (om) email
+[BC] (om) email (???)
 
 [C] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [C] 8 (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
