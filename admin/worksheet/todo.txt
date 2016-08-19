@@ -41,12 +41,6 @@ hashnote.org config (203.213.20.212) DNS A
 Internet ---->  80:Router:80 ---->  TC-nginx ----> 13131:hasqd
 Internet ----> 443:Router:443 ----> TC-nginx ----> 13131:hasqd
 
-
-Additional info
----------------
-example with sprites http://jsfiddle.net/necolas/fpfzb/
-http://learn.shayhowe.com/advanced-html-css/feature-support-polyfills/
-
 TODO:
 Adding no password command to update client
 --------------------------------------------
