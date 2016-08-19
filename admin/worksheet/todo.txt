@@ -1,5 +1,3 @@
-DONE [A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
-
 [A] http_proxy - doc (CLO)
 [A] HSL tcp - doc - use default protocol
 
@@ -23,7 +21,7 @@ DONE [A] (om) NC drop [ slishkom dolgoe ozhidanie esli fajl bolshe 1M ]
 [B] (om) udp 
 [C] Klientskie skripty na Ruby, Java, C++, node.js
 [BC] (om) 4 HqClient soobshenija proverit
-[BC] (om) email (???)
+[BC] (om) email smtp protocol for hasqd
 
 [C] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [C] 8 (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
