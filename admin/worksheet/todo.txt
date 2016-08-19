@@ -1,5 +1,5 @@
-[A] http_proxy - doc (CLO)
-[A] HSL tcp - doc - use default protocol
+[DONE][A] http_proxy - doc (CLO)
+[DONE] [A] HSL tcp - doc - use default protocol
 
 [A] prepare to remove repo "release" - check that all files are in bin and
 	all website references are in place
