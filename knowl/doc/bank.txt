@@ -2,3 +2,20 @@
 Minting
 	basename - issuing organ - challanged by simple passwords
 	basename.nominal.serial
+
+Token Manager (tokmgr)
+======================
+User enters interactively password. TM finds suffix, so the
+password becomes strengthened: pwd+sx
+
+TM can be used as a Wallet - when internal generated hidden
+password is used to control tokens instead of pwd+sx.
+
+TM has a name and associated token (Manager's Token).
+
+TM polls its name in drop area for any messages
+(Question: how to organize queue of messages? - maybe append)
+
+TM uses PKC for communication
+
+TM uses an encrypted file to store its PKC and the List of TOkens (LOT)
