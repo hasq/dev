@@ -4,8 +4,8 @@
 [A] prepare to remove repo "release" - check that all files are in bin and
 	all website references are in place
 [A] run PVS again
-[A] hashnote title
-[A] hashnote i tokenswap - sravnit bazi
+[A] (om) hashnote title
+[A] (om) hashnote i tokenswap - sravnit bazi
 [A] make new release 4.2
 [A] HSL agent - doc
 [AB] start hsl doc (tutorial po hsl)
