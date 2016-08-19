@@ -1,6 +1,6 @@
 ag fs mk "slcs"
 ag fs mk "idxs"
-ag cf db "md5.db"
+ag cf db "wrd.db"
 ag dl self 160101:160103 "slcs"
 ag bd "slcs" "idxs" "tokenlist.bd" [ 127.0.0.1:13132 127.0.0.1:13133 ]
 ag fs cat "tokenlist.bd"
@@ -9,9 +9,9 @@ agent vd check "tokenlist.bd" "tokenlist.chk"
 ag fs rm "tokenlist.bd"
 ag fs cat "tokenlist.chk"
 
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
-print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+print ex 0 IDX_NODN 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag cf lc "a"
 
@@ -19,9 +19,9 @@ ag cf lc "a"
 agent vd push "tokenlist.chk" "tokenlist.psh" "idxs"
 agent fs cat "tokenlist.psh"
 
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 1fe1f6d2b098d0117afc89e03a64dec3 ]
-print ex 0 OK 100 tcp 127.0.0.1:13132 [ last md5.db 8e692b8ce018d1a58146bd2ca8908b3b ]
-print ex 0 OK 100 tcp 127.0.0.1:13133 [ last md5.db dd20be44d1d8dcfcf63a69622390ef88 ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 1fe1 ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ last wrd.db 8e69 ]
+print ex 0 OK 100 tcp 127.0.0.1:13133 [ last wrd.db dd20 ]
 
 ag fs rm "tokenlist.psh"
 ag fs rm "tokenlist.chk"
