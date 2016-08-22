@@ -1,19 +1,18 @@
-[DONE][A] http_proxy - doc (CLO)
-[DONE] [A] HSL tcp - doc - use default protocol
 
 [A] prepare to remove repo "release" - check that all files are in bin and
 	all website references are in place
 [A] run PVS again
-[A] (om) hashnote title
-[A] (om) hashnote i tokenswap - sravnit bazi
 [A] make new release 4.2
 [A] HSL agent - doc
 [AB] start hsl doc (tutorial po hsl)
 
-[B] (ab) bank gui
+[A] (om) hashnote title
+[A] (om) restart tokenswap with newer version
+[A] (om) hashnote i tokenswap - sravnit bazi
 [A] (om) bank console
 [B] (om) bank mobile
 
+[B] (ab) bank gui
 [B] compile code with tdm-gcc 5.1 
 
 [B] bank console test
