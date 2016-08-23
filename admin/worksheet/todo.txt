@@ -1,6 +1,6 @@
 
-[A] prepare to remove repo "release" - check that all files are in bin and
-	all website references are in place
+[DONE] [A] prepare to remove repo "release" - check that all files are in bin and
+[DONE]	all website references are in place
 [...] run PVS again
 [A] make new release 4.2
 [DONE - check] HSL agent - doc
