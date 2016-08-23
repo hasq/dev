@@ -1,0 +1,20 @@
+<svt> skc addkey [ abc ]
+<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 [ admin skc add abc ]
+OK
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp self [ ping ]
+REQ_MSG_HEAD
+<svt> print ex 0 REQ_MSG_HEAD 100 tcp 127.0.0.1:13132 [ ping ]
+REQ_MSG_HEAD
+<svt> CMD = < [ # ] skc enc hex [ ping ] >
+<svt> print { CMD }
+#54668f8668becf8b40864ef67357c5882bda03e285cd1f8a55251fa481a6414e14bb42ac723f0215f39cdd263258068d5e392b1bc8ba33335fea81d91e666f634419646a5322444e96704ce9191108dbad2640973d9b33eed66984a03bf93956
+<svt> print ex 0 OK 100 tcp self { CMD }
+OK
+<svt> print ex 0 OK 100 tcp 127.0.0.1:13132 { CMD }
+OK
+<svt> CMD = < [ # ] skc enc hex [ quit ] >
+<svt> print { CMD }
+#a937f5ce34cd7889abb7ce3e83ac6ce589402151bfabb6dbe5af0161cfbd5339b95a2af77c3a53b41880b4614fda43dbdd092269e39ffaae4a89ee26b50ce6693f59b3d4c210ea5eac2b6143191bfc52b3d77648cd3f75f059db21401277f6f9
+<svt> print tcp 127.0.0.1:13132 { CMD }
+OK
+<svt> quit

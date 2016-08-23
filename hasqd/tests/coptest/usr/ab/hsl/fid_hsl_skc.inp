@@ -1,0 +1,20 @@
+skc addkey [ abc ]
+print ex 0 OK 100 tcp 127.0.0.1:13132 [ admin skc add abc ]
+
+print ex 0 REQ_MSG_HEAD 100 tcp self [ ping ]
+print ex 0 REQ_MSG_HEAD 100 tcp 127.0.0.1:13132 [ ping ]
+
+#CMD = [ ping ] 
+#CMD = skc enc hex CMD
+#CMD = < [ # ] CMD >
+
+CMD = < [ # ] skc enc hex [ ping ] >
+print { CMD }
+print ex 0 OK 100 tcp self { CMD }
+print ex 0 OK 100 tcp 127.0.0.1:13132 { CMD }
+
+CMD = < [ # ] skc enc hex [ quit ] >
+print { CMD }
+
+print tcp 127.0.0.1:13132 { CMD }
+quit

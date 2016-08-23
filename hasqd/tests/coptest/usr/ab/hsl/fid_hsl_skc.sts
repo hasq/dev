@@ -1,0 +1,9 @@
+#!/bin/sh
+
+
+in=$(basename $0)
+in=${in%.*}
+
+$1/hasqd -clqnx dprn=0 dwkr=0 dsvt=0 skcseed="xxx" ban=ping p=13132 & 
+
+$1/hasqd -clqnx dprn=1 dsvt=1 skcseed="xxx" p=13131 ban=ping s="$in.inp"
