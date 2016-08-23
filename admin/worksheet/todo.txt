@@ -1,9 +1,9 @@
 
 [A] prepare to remove repo "release" - check that all files are in bin and
 	all website references are in place
-[A] run PVS again
+[...] run PVS again
 [A] make new release 4.2
-[A] HSL agent - doc
+[DONE - check] HSL agent - doc
 [AB] start hsl doc (tutorial po hsl)
 
 [A] (om) hashnote title
@@ -22,7 +22,7 @@
 [BC] (om) 4 HqClient soobshenija proverit
 [BC] (om) email smtp protocol for hasqd
 
-[C] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
+[DONE][C] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [C] 8 (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 
 [C] 8 Firefox: css Warnings
