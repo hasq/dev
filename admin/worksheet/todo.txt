@@ -1,20 +1,23 @@
 
+[A!] restart hashnote with 4.2 - need to make iso 4.2
+[A] make new release 4.2
+
 [DONE] [A] prepare to remove repo "release" - check that all files are in bin and
 [DONE]	all website references are in place
+[A] Still to fix "other tools" "release" repo on our web site
+
 [...] run PVS again
-[A] make new release 4.2
-[DONE - check] HSL agent - doc
-[AB] start hsl doc (tutorial po hsl)
 
 [A] (om) hashnote title
-[A] (om) restart tokenswap with newer version
+DONE [A] (om) restart tokenswap with 4.2
 [A] (om) hashnote i tokenswap - sravnit bazi
 [A] (om) bank console
 [B] (om) bank mobile
 
-[B] (ab) bank gui
+[AB] (ab) bank gui
 [B] compile code with tdm-gcc 5.1 
 
+[B] start hsl doc (tutorial po hsl)
 [B] bank console test
 [B] Klientskie skripty na Python
 [B] (om) udp 
