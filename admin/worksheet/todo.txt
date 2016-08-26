@@ -6,7 +6,7 @@
 [DONE]	all website references are in place
 [A] Still to fix "other tools" "release" repo on our web site
 
-[...] run PVS again
+[DONE] run PVS again
 
 [A] (om) hashnote title
 DONE [A] (om) restart tokenswap with 4.2
