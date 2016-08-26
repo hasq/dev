@@ -20,7 +20,26 @@ How to build
     or 'make PLAT=msc' if you compile in ap14 environment
   - hasqd executable will be located in '_bin_unx'
     or '_bin_msc' respectively
+    
+    
+Release 0.4.2, build XXX (github)
+-------------------------
 
+   - Hasq server:
+     - added "dagt" command line option
+     - added "dtcp" command line option
+     - added "drop_dir" command line option
+     - added "drop_timeout" command line option
+     - added "http_proxy" command line option
+     - added "agent" HSL command
+     - added "net protocol" HSL command
+     - added "drop" network command
+     - added "info log agent" network command
+     - added "unlink" network command
+     - removed "http_get" network command
+     - removed "http_post" network command
+     - renamed "proxy" network command to "tunnel" 
+     
 
 Release 0.4.1, build 727 (github)
 -------------------------
