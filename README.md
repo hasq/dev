@@ -30,8 +30,8 @@ Release 0.4.2, build XXX (github)
      - added "dtcp" command line option
      - added "drop_dir" command line option
      - added "drop_timeout" command line option
-     - renamed "http_getproxy" command line option to "http_proxy"
-     - renamed "proxy" comman line option to "tunnel"
+     - added "http_proxy" command line option
+     - renamed "proxy" command line option to "tunnel"
      - added "agent" HSL command
      - added "net protocol" HSL command
      - added "drop" network command
