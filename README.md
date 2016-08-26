@@ -30,15 +30,16 @@ Release 0.4.2, build XXX (github)
      - added "dtcp" command line option
      - added "drop_dir" command line option
      - added "drop_timeout" command line option
-     - added "http_proxy" command line option
+     - renamed "http_getproxy" command line option to "http_proxy"
+     - renamed "proxy" comman line option to "tunnel"
      - added "agent" HSL command
      - added "net protocol" HSL command
      - added "drop" network command
      - added "info log agent" network command
      - added "unlink" network command
+     - renamed "proxy" network command to "tunnel"
      - removed "http_get" network command
      - removed "http_post" network command
-     - renamed "proxy" network command to "tunnel" 
      
 
 Release 0.4.1, build 727 (github)
@@ -76,4 +77,3 @@ Release 0.3.1, build 1463 (hasq)
 
    - DB Wizard utility added (wizdb)
    - minor changes to Hasq_CLO.pdf
-
