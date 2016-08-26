@@ -1,6 +1,6 @@
 
-[A!] restart hashnote with 4.2 - need to make iso 4.2
-[A] make new release 4.2
+[DONE] restart hashnote with 4.2 - need to make iso 4.2
+...[A] make new release 4.2
 
 [DONE] [A] prepare to remove repo "release" - check that all files are in bin and
 [DONE]	all website references are in place
