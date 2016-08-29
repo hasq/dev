@@ -22,7 +22,7 @@ How to build
     or '_bin_msc' respectively
     
     
-Release 0.4.2, build XXX (github)
+Release 0.4.2, build 1220 (github)
 -------------------------
 
    - Hasq server:
