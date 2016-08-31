@@ -55,7 +55,8 @@ src_pu = $(HSRC)/pu/hq_config.cpp $(HSRC)/pu/hq_globalspace.cpp $(HSRC)/pu/hq_lo
 	$(HSRC)/pu/hq_connector.cpp $(HSRC)/pu/hq_alarms.cpp $(HSRC)/pu/hq_conflict.cpp	\
 	$(HSRC)/pu/hq_reorgan.cpp $(HSRC)/pu/hq_gl_bin.cpp  $(HSRC)/pu/hq_gl_ced.cpp \
 	$(HSRC)/pu/hq_gl_con.cpp $(HSRC)/pu/hq_gl_key.cpp $(HSRC)/pu/hq_gl_svt.cpp \
-	$(HSRC)/pu/hq_gl_wkr.cpp $(HSRC)/pu/hq_plebfile.cpp $(HSRC)/pu/hq_agent.cpp
+	$(HSRC)/pu/hq_gl_wkr.cpp $(HSRC)/pu/hq_plebfile.cpp $(HSRC)/pu/hq_agent.cpp \
+	$(HSRC)/pu/hq_netenv.cpp
 
 obj_pu := $(src_pu:$(HSRC)/pu/%.cpp=$O/%.obj)
 
