@@ -1,5 +1,5 @@
-
-WX=C:/app/wxWidgets-2.8.11
+WXNAME=wxw2812m
+WX=./$(WXNAME)
 
 INC=-I $(WX)/include/msvc -I $(WX)/include
 LIBPATH=$(WX)/lib/vc_lib
@@ -18,12 +18,14 @@ UNICODE=-D_UNICODE=1
 
 all: hwx.exe
 
-hwx.exe: hwx.obj
+hwx.exe: $(WX)/lib/vc_lib/wxbase28.lib hwx.obj
 	link /NOLOGO $(NOSTATICLIB) $< /LIBPATH:$(LIBPATH) $(LIBS)
+
+$(WX)/lib/vc_lib/wxbase28.lib:
+	make -f buildwx.mak
 
 hwx.obj: hwx.cpp
 	cl -c -EHsc $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
 
-
 clean:
-	rm -f hwx.exe.manifest hwx.exe hwx.obj
+	rm -rf hwx.exe.manifest hwx.exe hwx.obj $(WXNAME).*
