@@ -14,18 +14,19 @@ DYNAMICLIB=-MD
 NOSTATICLIB=/NODEFAULTLIB:LIBCMT
 
 # USE UNICODE
-UNICODE=-D_UNICODE=1
+#UNICODE=-D_UNICODE=1
 
 all: hwx.exe
 
 hwx.exe: $(WX)/lib/vc_lib/wxbase28.lib hwx.obj
-	link /NOLOGO $(NOSTATICLIB) $< /LIBPATH:$(LIBPATH) $(LIBS)
+	link /NOLOGO $(NOSTATICLIB) $(WX)/lib/vc_lib/wxbase28.lib hwx.obj /LIBPATH:$(LIBPATH) $(LIBS)
+#	link $(NOSTATICLIB) $O/hwx.obj /LIBPATH:$(LIBPATH) $(LIBS)
 
 $(WX)/lib/vc_lib/wxbase28.lib:
 	make -f buildwx.mak
 
 hwx.obj: hwx.cpp
-	cl -c -EHsc $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
+	cl -c -EHsc -wd4005 $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $<
 
 clean:
 	rm -rf hwx.exe.manifest hwx.exe hwx.obj $(WXNAME).*
