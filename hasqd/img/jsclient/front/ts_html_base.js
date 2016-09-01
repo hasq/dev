@@ -76,7 +76,7 @@ function widGetHTMLTitleArea()
             r += '<tr>\n';
             {
                 r += '<td/>';
-                r += '<a href="http://tokenswap.com">' + gClientTitle + '</a>';
+                r += '<a href="' + getHostName().link + '">' + gClientTitle + '</a>';
                 r += '<td/>\n';
                 r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
@@ -605,12 +605,12 @@ function widGetHTMLLogArea()
     r += '<tr>\n';
     {
             r += '<td />\n';
-            r += '<table style="width: 100%" border="0">\n'; //style="border: 1px solid #DDDDDD;">\n';
+            r += '<table style="width: 100%">\n';
         {
             r += '<tr>\n';
             {
-                    r += '<td class="td-subscribe" style="text-align: left; width: 160px;"/>\n';
-                    r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>\n';
+                    r += '<td class="td-subscribe" style="text-align: left; width: 80px;"/>\n';
+                    r += '<a href="hqclnt.html">HqClnt</a>\n';
                     r += '<td class="td-log" />\n';
                 {
                     r += '<table style="width: 100%">\n';
@@ -622,10 +622,8 @@ function widGetHTMLLogArea()
                     }
                      r += '</table>\n';
                 }
-                    r += '<td class="td-subscribe" style="width: 40px;" />\n';
-                    r += '<a href="hqclnt.html">HqClnt</a>\n';
-                    r += '<td class="td-subscribe" style="width: 80px;"/>\n';
-                r += 'TokenSwap&nbsp;\u00A9&nbsp;2016\n';
+                    r += '<td class="td-subscribe" style="width: 160px;"/>\n';
+                r += '<a href="http://hasq.org">Hasq Technology&nbsp;\u00A9&nbsp;2016</a>\n';
             }
                 r += '</tr>\n';
         }

@@ -2,7 +2,7 @@
 
 var gMaxFileSize = 10000000;
 
-var gClientTitle = 'TokenSwap';
+var gClientTitle = getHostName().name;
 var gRequiredDbHash = 'smd';
 var gPassword = '';
 var gNonASCII = false;

@@ -224,3 +224,22 @@ function askToContinue(b)
     var r = 'Version ' + b.verShort + ' of "' + b.name + '" browser has not been tested.\nProceed?';
     return r;
 }
+
+function getHostName()
+{
+    var dName = window.location.hostname;
+    var port = (location.port == '80') ? '' : location.port;
+    var r = {};
+    
+    r.link = 'http://' + dName + ':' + port;
+    
+    switch (dName)
+    {
+        case ('tokenswap.com'): r.name = 'TokenSwap'; break;
+        case ('hashnote.org'): r.name = 'HashNote'; break;
+        case ('127.0.0.1'): r.name = 'localhost'; break;
+        default: var n = dName.indexOf('.'); r.name = dName.substring(0, n);
+    }
+    console.log(r);
+    return r;
+}

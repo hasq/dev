@@ -1,6 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-var gClientTitle = '&nbspHasq Client';
+var gClientTitle = getHostName().name;
 var glDataBase = {};
 var gCurrentDB = {}; //The object which contains selected database properties
 var glHashCalcHash = ''; // Current calc hash-function

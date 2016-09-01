@@ -64,25 +64,17 @@ function widGetHTMLMainBody(tabs)
 {
     var r = '';
 
-    r += '<table id="table_body" border="0">\n';
+    r += '<table id="table_body">\n';
     r += '<tr>\n';
     r += '<td>\n' + widGetHTMLTitle(gClientTitle);
- r += '<td style="text-align:right;"/>&nbsp;\n';
+    r += '<td style="text-align:right;"/>&nbsp;\n';
     r += widGetHTMLSpanLed('span_logo') + '\n';
- r += '</tr>\n';
+    r += '</tr>\n';
     r += '<tr>\n';
- r += '<td colspan="2"/>\n' + widGetHTMLTabsDivs(tabs, 'div_main_tab');
- r += '</tr>\n';
-    r += '<tr>\n';
-    {
-     r += '<td class="td-subscribe" width="160" style="text-align: left;"/>\n';
-     r += 'Powered by ' + '<a href="http://hasq.org">Hasq Technology</a>\n';
-     r += '<td class="td-subscribe" width="40" style="text-align: right;"/>\n';
-     r += '<a href="tsclnt.html">TokenSwap</a>\n';
-    }
-
- r += '</tr>\n';
- r += '</table>\n';
+    r += '<td colspan="2"/>\n' + widGetHTMLTabsDivs(tabs, 'div_main_tab');
+    r += '</tr>\n';
+    r += widGetHTMLLogArea();
+    r += '</table>\n';
 
     return r;
 }
@@ -131,6 +123,40 @@ function widGetHTMLTabsDivs(items, id)
             return r;
 }
 
+function widGetHTMLLogArea()
+{
+    var r = '';
+    r += '<tr>\n';
+    {
+            r += '<td colspan="2"/>\n';
+            r += '<table style="width: 100%">\n';
+        {
+            r += '<tr>\n';
+            {
+                    r += '<td class="td-subscribe" style="text-align: left; width: 80px;"/>\n';
+                    r += '<a href="tsclnt.html">TsClnt</a>\n';
+                    r += '<td class="td-log" />\n';
+                {
+                    r += '<table style="width: 100%">\n';
+                    {
+                        r += '<tr>\n';
+                         r += '<td class="td-info" />\n';
+                         r += '<div id="div_log_area" >&nbsp</div>\n';
+                         r += '</tr>\n';
+                    }
+                     r += '</table>\n';
+                }
+                    r += '<td class="td-subscribe" style="width: 160px;"/>\n';
+                r += '<a href="http://hasq.org">Hasq Technology&nbsp;\u00A9&nbsp;2016</a>\n';
+            }
+                r += '</tr>\n';
+        }
+            r += '</table>\n';
+    }
+        r += '</tr>\n';
+
+    return r;
+}
 function widGetHTMLServerTab()
 {
     var r = '';
