@@ -66,7 +66,7 @@ function widGetHTMLMainBody(tabs)
 
     r += '<table id="table_body">\n';
     r += '<tr>\n';
-    r += '<td>\n' + widGetHTMLTitle(gClientTitle);
+    r += '<td>\n' + widGetHTMLTitle(gClientTitle, gClientLink);
     r += '<td style="text-align:right;"/>&nbsp;\n';
     r += widGetHTMLSpanLed('span_logo') + '\n';
     r += '</tr>\n';
@@ -79,15 +79,16 @@ function widGetHTMLMainBody(tabs)
     return r;
 }
 
-function widGetHTMLTitle(text)
+function widGetHTMLTitle(text, link)
 {
     var r = '';
 
     r += '<table border="0">\n';
     r += '<tr>\n';
- r += '<td id="td_client_title"/>' + text + '\n';
- r += '</tr>\n';
- r += '</table>\n';
+    r += '<td id="td_client_title"/>\n';
+    r += '<a href="' + gClientLink + '">' + gClientTitle + '</a>';
+    r += '</tr>\n';
+    r += '</table>\n';
 
     return r;
 }

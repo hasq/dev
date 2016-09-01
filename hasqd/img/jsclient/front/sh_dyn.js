@@ -235,11 +235,19 @@ function getHostName()
     
     switch (dName)
     {
-        case ('tokenswap.com'): r.name = 'TokenSwap'; break;
-        case ('hashnote.org'): r.name = 'HashNote'; break;
-        case ('127.0.0.1'): r.name = 'localhost'; break;
-        default: var n = dName.indexOf('.'); r.name = dName.substring(0, n);
+        case ('tokenswap.com'): 
+            r.name = 'TokenSwap'; break;
+        case ('hashnote.org'): 
+            r.name = 'HashNote'; break;
+        case ('127.0.0.1'): 
+            r.name = 'localhost'; break;
+        default:
+            var n = dName.indexOf('.');
+            r.name = (parseInt(dName.replace(/\./g,''))) 
+                ? dName 
+                : (n > 0) 
+                    ? dName.substring(0, n)
+                    : dName;
     }
-    console.log(r);
     return r;
 }

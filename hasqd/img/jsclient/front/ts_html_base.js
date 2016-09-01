@@ -76,7 +76,7 @@ function widGetHTMLTitleArea()
             r += '<tr>\n';
             {
                 r += '<td/>';
-                r += '<a href="' + getHostName().link + '">' + gClientTitle + '</a>';
+                r += '<a href="' + gClientLink + '">' + gClientTitle + '</a>';
                 r += '<td/>\n';
                 r += '<td/>\n';
                 r += widGetHTMLMessageBox(widGetHTMLSpanImg('span_info'));
