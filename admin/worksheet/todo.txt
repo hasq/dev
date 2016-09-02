@@ -7,10 +7,10 @@
 
 (?)[AB] (ab) bank gui
 [A] compile code with tdm-gcc 5.1 
+[AB] Klientskie skripty na Python
 
 [B] start hsl doc (tutorial po hsl)
 [B] bank console test
-[B] Klientskie skripty na Python
 [B] (om) udp 
 [C] Klientskie skripty na Ruby, Java, C++, node.js
 [BC] (om) 4 HqClient soobshenija proverit
