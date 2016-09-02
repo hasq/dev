@@ -1,3 +1,14 @@
+skcKey = [ ]
+
+print ex 0 OK 100 tcp self { [ admin skc add ] skcKey }
+cntTs = < [ # ] skc enc hex [ connect tokenswap.com:13131 ] >
+cntHn = < [ # ] skc enc hex [ connect hashnote.org:13131 ] >
+
+print ex 0 OK 100 tcp tokenswap.com:13131 { cntHn }
+print ex 0 OK 100 tcp hashnote.org:13131 { cntTs }
+print ex 0 OK 100 tcp self { cntTs }
+print ex 0 OK 100 tcp self { cntHn }
+
 ag cf lc "a"
 ag fs mk "ts_slcs"
 ag fs mk "ts_idxs"
@@ -6,10 +17,25 @@ ag dl tokenswap.com:13131 160101:today "ts_slcs"
 ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:13131 ]
 ag fs cat "ts_list.bd"
 
-ag cf lc "d"
-
 agent vd check "ts_list.bd" "ts_list.chk"
 ag fs cat "ts_list.chk"
 ag re "ts_list.chk"
+
+agent vd notify "ts_list.chk" "ts_list.ntf"
+ag fs cat "ts_list.ntf"
+
+ag fs mk "hn_slcs"
+ag fs mk "hn_idxs"
+ag cf db "smd.db"
+ag dl hashnote.org:13131 160101:today "hn_slcs"
+ag bd "hn_slcs" "hn_idxs" "hn_list.bd" [ 127.0.0.1:14000 tokenswap.com:13131 ]
+ag fs cat "ts_list.bd"
+
+agent vd check "hn_list.bd" "hn_list.chk"
+ag fs cat "hn_list.chk"
+ag re "hn_list.chk"
+
+agent vd notify "hn_list.chk" "hn_list.ntf"
+ag fs cat "hn_list.ntf"
 
 quit
