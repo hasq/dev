@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# HSL: agent validate check
+
+INP=$(basename $0)
+INP=${INP%.*} 
+
+SDB="set base $DBS"
+ERS="erasedisk"
+CRT="create smd.db smd SMD 1 [] 1 0"
+
+rm -rf ts_list.* ts_slcs ts_idxs
+
+$1/zdb "$ERS" "$CRT" >/dev/null
+$1/hasqd -lqnxc dprn=1 dsvt=1 dagt=1 tcp_port=14000 s="$INP".inp | grep -v "noterecv\|conupdate"
+

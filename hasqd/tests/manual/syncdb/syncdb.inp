@@ -1,0 +1,15 @@
+ag cf lc "a"
+ag fs mk "ts_slcs"
+ag fs mk "ts_idxs"
+ag cf db "smd.db"
+ag dl tokenswap.com:13131 160101:today "ts_slcs"
+ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:13131 ]
+ag fs cat "ts_list.bd"
+
+ag cf lc "d"
+
+agent vd check "ts_list.bd" "ts_list.chk"
+ag fs cat "ts_list.chk"
+ag re "ts_list.chk"
+
+quit
