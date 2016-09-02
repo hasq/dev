@@ -1,7 +1,7 @@
 
 [DONE] hashnote title
-[...] hashnote i tokenswap - svjazat i ustanovit SKC kljuch 'ts16'
-[...] hashnote i tokenswap - sravnit bazi
+[DONE] hashnote i tokenswap - svjazat i ustanovit SKC kljuch 'ts16'
+[DONE] hashnote i tokenswap - sravnit bazi
 [A] (om) bank console
 [B] (om) bank mobile
 
