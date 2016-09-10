@@ -1,18 +1,19 @@
 
-[DONE] hashnote title
-[DONE] hashnote i tokenswap - svjazat i ustanovit SKC kljuch 'ts16'
-[DONE] hashnote i tokenswap - sravnit bazi
 [A] (om) bank console
+[A] napisat specifikacii protokola bank
 [B] (om) bank mobile
 
-(?)[AB] (ab) bank gui
-[DONE] compile code with tdm-gcc 5.1 
-[...AB] Klientskie skripty na Python
+[A] (ab) bank gui - javascript 
+	library of useful tools
+	maket - prototype
+[A] Klientskie skripty na Python
+[AB] Bitcoin pogonjat
+[AB] Klientskie skripty na Ruby (posle pythona)
 
 [B] start hsl doc (tutorial po hsl)
 [B] bank console test
 [B] (om) udp 
-[C] Klientskie skripty na Ruby, Java, C++, node.js
+[C] Klientskie skripty na Java, C++, node.js
 [BC] (om) 4 HqClient soobshenija proverit
 [BC] (om) email smtp protocol for hasqd
 
