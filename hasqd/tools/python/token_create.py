@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+
+# token_create (name|@file) [password]
  
 import sys
 import urllib2
