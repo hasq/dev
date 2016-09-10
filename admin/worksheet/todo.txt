@@ -9,7 +9,9 @@
 [A] Klientskie skripty na Python
 [AB] Bitcoin pogonjat
 [AB] Klientskie skripty na Ruby (posle pythona)
+[A] anons dobavlenija scriptov na Python
 
+[B] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [B] start hsl doc (tutorial po hsl)
 [B] bank console test
 [B] (om) udp 
@@ -17,7 +19,6 @@
 [BC] (om) 4 HqClient soobshenija proverit
 [BC] (om) email smtp protocol for hasqd
 
-[DONE][C] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [C] 8 (ab) Lookup resize - njuans! - resize ostavit, no s mob versiej razobratsja
 
 [C] 8 Firefox: css Warnings
