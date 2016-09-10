@@ -41,7 +41,7 @@ print("Master key: {}".format(master_key))
 r = hasq.get_record(0, hasq.get_tok_hash(token_name, HASH_NAME), master_key, MAGIC, HASH_NAME)
 d = token_name if token_name != hasq.get_tok_hash(token_name, HASH_NAME) else ""
 
-http_rqst = hasq.get_spaced_conc(CMD, DB, str(r.get("n")), r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
+http_rqst = hasq.get_spaced_conc(CMD, "*", DB, str(r.get("n")), r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
 
 print(http_rqst)
 
