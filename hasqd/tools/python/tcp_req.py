@@ -3,19 +3,20 @@
 import sys
 import socket
 
-if ( len(sys.argv) < 3 ) or ( sys.argv[1].lower() == "-h"):
+if len(sys.argv) < 3 or sys.argv[1].lower() == "-h":
     print("Syntax: host:port command")
     quit()
 
 host_port = sys.argv[1]
 host = host_port[:host_port.find(":")]
 port = int(host_port[host_port.find(":") + 1:])
-crlf_crlf = chr(13) + chr(10) + chr(13) + chr(10)
-buffer_size = 1024
-cmd = sys.argv[2] + crlf_crlf
-
+cr = chr(13)
+lf = chr(10)
+cmd = sys.argv[2] + 2 * (cr + lf)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+buffer_size = 1024
+
 try:
     s.connect((host, port))
     s.send(cmd)
@@ -24,4 +25,4 @@ try:
 except:
     print("Error: Unreachable server " + host_port)    
 else:
-    print "received data:", resp
+    print "Received data:", resp
