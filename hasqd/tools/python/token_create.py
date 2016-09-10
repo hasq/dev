@@ -3,7 +3,7 @@
 import sys
 import urllib2
 import getpass
-import hasq
+import ts_lib
 
 HOST_PORT = "TOKENSWAP.COM:80"
 HOST = "tokenswap.com"
@@ -35,13 +35,13 @@ master_key = getpass.getpass(ask_pass)
 if master_key.lower() == "":
     quit()
 
-print("Token hash: {}".format(hasq.get_tok_hash(token_name, HASH_NAME)))
+print("Token hash: {}".format(ts_lib.get_tok_hash(token_name, HASH_NAME)))
 print("Master key: {}".format(master_key))
 
-r = hasq.get_record(0, hasq.get_tok_hash(token_name, HASH_NAME), master_key, MAGIC, HASH_NAME)
-d = token_name if token_name != hasq.get_tok_hash(token_name, HASH_NAME) else ""
+r = ts_lib.get_record(0, ts_lib.get_tok_hash(token_name, HASH_NAME), master_key, MAGIC, HASH_NAME)
+d = token_name if token_name != ts_lib.get_tok_hash(token_name, HASH_NAME) else ""
 
-http_rqst = hasq.get_spaced_conc(CMD, "*", DB, str(r.get("n")), r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
+http_rqst = ts_lib.get_spaced_conc(CMD, "*", DB, str(r.get("n")), r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
 
 print(http_rqst)
 
