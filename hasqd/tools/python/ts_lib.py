@@ -138,7 +138,7 @@ def get_data_from_rec(data):
     bs = 0;
 
     for i in range(len(data)):
-        bs = bs + 1 if (data[i] === '\u005c') else 0
+        bs = bs + 1 if (data[i] == '\u005c') else 0
 
         if data[i] == r"\\" and data[i + 1] == "n"):
             if bs > 0 and bs % 2 == 1:
