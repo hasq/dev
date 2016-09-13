@@ -3,7 +3,7 @@
 import sys
 import urllib2
 
-if len(sys.argv) < 2:
+if len(sys.argv) != 2:
     print("Usage: python raw_cmd_tcp.py COMMAND")
     quit()
 
@@ -18,4 +18,4 @@ try:
 except:
     print("Error: Unreachable server " + HOST + ":" + PORT)
 else:
-     print("Server reply: " + resp)
+    print("Server reply: " + resp)

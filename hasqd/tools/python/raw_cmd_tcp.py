@@ -3,7 +3,7 @@
 import sys
 import socket
 
-if len(sys.argv) < 2:
+if len(sys.argv) != 2:
     print("Usage: python raw_cmd_tcp.py COMMAND")
     quit()
 
