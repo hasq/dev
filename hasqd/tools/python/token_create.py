@@ -56,13 +56,14 @@ d = (token_name
         if token_name != ts_lib.get_tok_hash(token_name, ts_cnf.HASH_NAME)
         else "")
 
-http_rqst = ts_lib.get_spaced_conc(CMD, "*", ts_cnf.DB, str(r.get("n")),
-                        r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
+http_rqst = ts_lib.get_spaced_conc(CMD, "*", ts_cnf.DB, str(r.get("n")), 
+        r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
 
 print(http_rqst)
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
+                                        ts_cnf.PORT, http_rqst)).read()
 except:
     print ("{} {} {}:{}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("fil_mng"), ts_cnf.HOST, ts_cnf.PORT))
 else:
