@@ -12,7 +12,8 @@ import ts_msg
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 2 or argv_len == len(sys.argv) > 3:
-    print("Usage: python token_create.py (token name|@file) [password|-]")
+    print("{} {} {} {}". format(ts_msg.get_msg("hlp_usg"), sys.argv[0],
+        ts_msg.get_msg("hlp_tkn"), ts_msg.get_msg("hlp_pwd")))
     quit()
 
 CMD = "z"
@@ -23,13 +24,13 @@ else:
     file_name=sys.argv[1][1:]
 
     if not ts_lib.is_file(file_name):
-        print("ERROR: file \"{}\" is missing or empty.".format(file_name))
+        print("{} {}: {}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("fil_mng"), file_name))
         quit()
   
     try:
         f = open(file_name, 'rb')
     except:
-        print("Incorrect file \"{}\"".format(file_name))
+        print("{} {}: {}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("fil_err"), file_name))
         quit()
     else:
         token_name = ts_lib.get_tok_hash(f.read(), ts_cnf.HASH_NAME)
@@ -38,10 +39,7 @@ else:
         
 quit()
     
-    
-ask_pass = "Enter master key: "
-
-master_key = getpass.getpass(ask_pass)
+master_key = getpass.getpass("{}:".format(ts_msg.get_msg("key_etr")))
 
 if master_key.lower() == "":
     quit()
@@ -59,6 +57,6 @@ print(http_rqst)
 try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)).read()
 except:
-    print("Error: Unreachable server {}:{}".format(ts_cnf.HOST, ts_cnf.PORT))
+    print ("{} {} {}:{}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("fil_mng"), ts_cnf.HOST, ts_cnf.PORT))
 else:
-    print("Server reply: {}".format(http_resp))
+    print("{} {}".format(ts_msg.get_msg("srv_rpl"), http_resp))
