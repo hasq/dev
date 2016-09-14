@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def get_msg(data):
     msg = {
         "err_msg" : "ERROR:",
