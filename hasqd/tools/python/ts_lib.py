@@ -103,30 +103,28 @@ def is_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
     
 def get_clear_data(data):
+    # Replaces all tabs by spaces
+    # Removes all whitespaces from the end of each line
+    # Removes all linefeeds(LF) from the beginning and from the end of token
+    
     data = data or "";
-    data = re.sub("\t", " ", data)
-    data = re.sub("(?m) +$", "", data)
-    data = re.sub("^\n+|\n+$", "", data)
-
+    data = data.replace("\t", u"\u0020")
+    data = re.sub(u"(?m)\u0020+$|^\n+|\n+$", "", data)
+    
     return data
     
 def get_data_to_rec(data):
-    #\u000a is LF;
-    #\u0020 is space;
-    #\u005c is backslash;
-    #\u006e is n
-    #
-    #.replace(/\u005c/mg, '\u005c\u005c')
-    #.replace(/(\u0020(?=\u0020))/g, '\u0020\u005c')
-    #.replace(/\u000a/g, '\u005c\u006e');
-
+    # Replaces all backslashes (\u005c) by two backslashes
+    # Replaces all double spaces (\u0020) by " \ " (\u0020\u005c\u0020)
+    # Replaces all linefeeds (\u000a) by "\n" (\u005c\u006e)
+    
     data = data or "";
     data = get_clear_data(data)
-    data = re.sub(r"(?m)\\", r"\\\\", data)
-    data = re.sub("( (?= ))", r" \\", data)
-    data = re.sub("\n", r"\\n", data)
-
-    return data;
+    data = data.replace(u"\u005c", u"\u005c\u005c")
+    data = re.sub(u"(\u0020(?=\u0020))", ur"\u0020\\", data)
+    data = data.replace(u"\u000a", u"\u005c\u006e")
+    
+    return data
     
 def get_data_from_rec(data):
     # returns parsed data for displaying
@@ -136,19 +134,24 @@ def get_data_from_rec(data):
     # \u006e is n
     data = data or "";
     bs = 0;
-
-    for i in range(len(data)):
-        bs = bs + 1 if (data[i] == '\u005c') else 0
-
-        if data[i] == r"\\" and data[i + 1] == "n"):
-            if bs > 0 and bs % 2 == 1:
-                bs = 0
-                data = data[:i] + r"\\" + data[:i + 2:]
-
-    #data = re.sub("(\u0020\u005c)(?=\u0020)", " ", data)
-    #data = re.sub("(\u005c\u005c)", "\u005c", data)
+    ln = len(data)
+    i = 0
     
-    #.replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020')
-    #.replace(/(\u005c\u005c)/g, '\u005c');
+    while i < ln:
+        bs = bs + 1 if (data[i] == u"\u005c") else 0
 
-    return data;
+        if (data[i] == u"\u005c" 
+                and data[i + 1] == u"\u006e"
+                and bs > 0
+                and bs % 2 == 1):
+            data = data[:i] + u"\u000a" + data[i + 2:]
+            bs = 0
+            ln -= 1
+         
+        i += 1
+                
+    #data = re.sub(r" \\(?= )", " ", data)
+    data = re.sub(ur"(\u0020\\)(?=\u0020)", u"\u0020", data)
+    data = data.replace(u"\u005c\u005c", u"\u005c")
+    
+    return data
