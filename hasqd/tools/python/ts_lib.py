@@ -48,7 +48,7 @@ def get_tok_hash(data, hash_name):
     f = is_hash(data, hash_name)
     
     if f is None:
-        r = "Error: Wrong hash function"
+        r = None
     elif f:
         r = data
     else:
@@ -132,8 +132,8 @@ def get_data_from_rec(data):
     # \u0020 is space;
     # \u005c is backslash;
     # \u006e is n
-    data = data or "";
-    bs = 0;
+    data = data or ""
+    bs = 0
     ln = len(data)
     i = 0
     
