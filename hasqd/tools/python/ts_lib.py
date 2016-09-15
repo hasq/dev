@@ -157,3 +157,19 @@ def get_data_from_rec(data):
     data = data.replace(u"\u005c\u005c", u"\u005c")
     
     return data
+
+def is_ASCII_or_LF(data):
+    if len(data) == "":
+        return False
+
+    for i in range(len(data)):
+        ch = ord(data[i])
+
+        if (ch >= 32 and ch <= 127) or ch == 10:
+            continue
+        else:
+            return False
+    
+    return True
+
+    

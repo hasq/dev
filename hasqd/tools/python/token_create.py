@@ -12,27 +12,31 @@ import ts_msg
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 3:
-    print("{} {} {} {}". format(ts_msg.get_msg("hlp_usg"), sys.argv[0],
-        ts_msg.get_msg("hlp_tkn"), ts_msg.get_msg("hlp_pwd")))
+    msg = ts_msg.get_msg("hlp_usg", sys.argv[0], "hlp_tkn", "hlp_pwd")
+    print(msg)
     quit()
 
 CMD = "z"
     
 if sys.argv[1][0] != "@":
     token_name = sys.argv[1]
+    
+    if ts_lib.is_ASCII_or_LF(token_name) != True:
+        msg = ts_msg.get_msg("err_msg", "tok_err")
+        print(msg)
 else:
     file_name=sys.argv[1][1:]
 
     if not ts_lib.is_file(file_name):
-        print("{} {}: {}".format(ts_msg.get_msg("err_msg"),
-            ts_msg.get_msg("fil_mng"), file_name))
+        msg = ts_msg.get_msg("err_msg", "fil_mng", file_name)
+        print(msg)
         quit()
   
     try:
         f = open(file_name, 'rb')
     except:
-        print("{} {}: {}".format(ts_msg.get_msg("err_msg"),
-            ts_msg.get_msg("fil_err"), file_name))
+        msg = ts_msg.get_msg("err_msg", "fil_err", file_name)
+        print(msg)
         quit()
     else:
         token_name = ts_lib.get_tok_hash(f.read(), ts_cnf.HASH_NAME)
@@ -41,10 +45,11 @@ else:
         
 master_key = (sys.argv[2] 
         if sys.argv[2] != "-" 
-        else getpass.getpass("{}:".format(ts_msg.get_msg("key_etr"))))
+        else getpass.getpass(ts_msg.get_msg("key_etr")))
 
-if master_key.lower() == "":
-    print("{} {}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("key_err")))
+if master_key == "":
+    msg = ts_msg.get_msg("err_msg", "key_err")
+    print(msg)
     quit()
 
 #print("Token hash: {}".format(ts_lib.get_tok_hash(token_name, ts_cnf.HASH_NAME)))
@@ -52,6 +57,7 @@ if master_key.lower() == "":
 
 r = ts_lib.get_record(0, ts_lib.get_tok_hash(token_name, ts_cnf.HASH_NAME),
         master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
+        
 d = (token_name 
         if token_name != ts_lib.get_tok_hash(token_name, ts_cnf.HASH_NAME)
         else "")
@@ -65,6 +71,6 @@ try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
                                         ts_cnf.PORT, http_rqst)).read()
 except:
-    print ("{} {} {}:{}".format(ts_msg.get_msg("err_msg"), ts_msg.get_msg("fil_mng"), ts_cnf.HOST, ts_cnf.PORT))
+    print (ts_msg.get_msg("err_msg", "fil_mng", ts_cnf.HOST, ts_cnf.PORT))
 else:
-    print("{}: {}".format(ts_msg.get_msg("srv_rpl"), http_resp))
+    print(ts_msg.get_msg("srv_rpl", http_resp))
