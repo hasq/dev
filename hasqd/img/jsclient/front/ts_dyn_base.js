@@ -38,11 +38,9 @@ function widSelectAndCopy($Obj)
     {
         var successful = document.execCommand('copy');
         var msg = successful ? 'successful' : 'unsuccessful';
-        //console.log('Copying text command was ' + msg);
     }
     catch (err)
     {
-        //console.log('Unable to copy');
     }
 }
 
@@ -481,7 +479,7 @@ function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
 
     delay = +delay || 0;
     var tok = engGetTokenObj(engGetClearData(dnOrRaw));
-    console.log(tok);
+    
     if (1) textArea().clearExcept($Obj);
 
     widReloadTokenInfo(tok, delay);
@@ -520,7 +518,7 @@ function widLoadFiles(files)
                 ? engGetTokenObj(data.raw)
                 : engGetTokenObj(engGetClearData(data.raw));
 
-        console.log(tok);
+        
         gNonASCII = false;
         widTokenTextRO(true);
         widReloadTokenInfo(tok, 0, true);
