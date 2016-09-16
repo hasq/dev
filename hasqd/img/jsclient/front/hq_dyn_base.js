@@ -152,7 +152,7 @@ function widAddSkc()
 
     gSkc = prompt('Enter SKC key:', gSkc || '') || null;
 
-    if (gSkc && !engIsAsciiOrLF(gSkc))
+    if (gSkc && !engIsAsciiOrTabOrLf(gSkc))
         gSkc = null;
 
     if (gSkc)
@@ -181,7 +181,7 @@ function widCommandSendButtonClick()
 
     var cmd = $CmdInput.val();
     if (!cmd) return;
-    if (!engIsAsciiOrLF(cmd)) return $CmdOutput.val('');
+    if (!engIsAsciiOrTabOrLf(cmd)) return $CmdOutput.val('');
 
     if (gSkc)
         cmd = '#' + engGetCipher(cmd);

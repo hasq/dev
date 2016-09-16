@@ -27,7 +27,7 @@ function engGetTokenObj(data)
     tok.s = (data) ? engGetTokenHash(data, gCurrentDB.hash) : '';
     tok.raw = (data === tok.s)
               ? ''
-              : (engIsAsciiOrLF(data))
+              : (engIsAsciiOrTabOrLf(data))
               ? data
               : '';
     return tok;
@@ -190,12 +190,12 @@ function engLoadFiles(files, hash, cb, progressCb)
 
     reader.onloadstart = function ()
     {
-        console.log('start');
+        //console.log('start');
     };
 
     reader.onloadend = function ()
     {
-        console.log('done');
+        //console.log('done');
     };
 
 
