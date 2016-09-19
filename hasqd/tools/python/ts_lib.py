@@ -104,15 +104,22 @@ def get_record(n, s, p, m, hash_name):
 def is_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
     
+def is_binary_file(filename):
+    textchars = bytearray({7,8,9,10,12,13,27} | set(range(0x20, 0x100)) - {0x7f})
+    is_binary_string = lambda bytes: bool(bytes.translate(None, textchars))
+    return is_binary_string
+    
 def get_clear_data(data):
     # Replaces all tabs by spaces
     # Removes all whitespaces from the end of each line
-    # Removes all linefeeds(LF) from the beginning and from the end of token
+    # Removes all LF, CR and CRLF from the beginning and from the end of token
     
     data = data or "";
     data = data.replace("\t", u"\u0020")
+    data = data.replace("\r\n", "\n")
+    data = data.replace("\r", "\n")    
     data = re.sub(u"(?m)\u0020+$|^\n+|\n+$", "", data)
-    
+
     return data
     
 def get_data_to_rec(data):
@@ -158,14 +165,15 @@ def get_data_from_rec(data):
     
     return data
 
-def is_ASCII_or_LF(data):
+def is_allowed_data(data):
     if len(data) == "":
         return False
 
     for i in range(len(data)):
         ch = ord(data[i])
 
-        if (ch >= 32 and ch <= 127) or ch == 10:
+        #if (ch >= 32 and ch <= 127) or ch in [7, 8, 9, 10, 12, 13, 27]:
+        if ch in range(32, 128) or ch in [7, 8, 9, 10, 12, 13, 27]:
             continue
         else:
             return False
