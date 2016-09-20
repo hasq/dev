@@ -108,31 +108,68 @@ def is_binary_file(filename):
     textchars = bytearray({7,8,9,10,12,13,27} | set(range(0x20, 0x100)) - {0x7f})
     is_binary_string = lambda bytes: bool(bytes.translate(None, textchars))
     return is_binary_string
+
+def get_token_obj(data, hash_name):
+    tok = {"s" : "", "r" : ""};
+
+    tok["s"] = get_tok_hash(data, hash_name) if bool(data) else ""
+    
+    if data != tok["s"] and is_allowed_data(data):
+        tok["r"] = data
+
+    return tok
+
+def is_allowed_data(data):
+    if len(data) == "":
+        return False
+
+    for i in range(len(data)):
+        ch = ord(data[i])
+
+        if ch in range(32, 128) or ch == 9 or ch == 10 or ch == 13:
+            continue
+        else:
+            return False
+    
+    return True
     
 def get_clear_data(data):
     # Replaces all tabs by spaces
     # Removes all whitespaces from the end of each line
     # Removes all LF, CR and CRLF from the beginning and from the end of token
-    
-    data = data or "";
+    data = data if bool(data) else ""
     data = data.replace("\t", u"\u0020")
     data = data.replace("\r\n", "\n")
     data = data.replace("\r", "\n")    
     data = re.sub(u"(?m)\u0020+$|^\n+|\n+$", "", data)
-
+        
     return data
     
+def get_data_to_rec_error_level(data, lim):
+    if data == "": return 0;
+    if not is_allowed_data(data): return 3
+    
+    data = get_clear_data(data);
+    if len(data) > lim: return 2
+
+    fmd = get_data_to_rec(data)
+
+    if len(fmd) > lim: return 4
+    if data != get_data_from_rec(fmd): return 5
+
+    return 0
+
 def get_data_to_rec(data):
     # Replaces all backslashes (\u005c) by two backslashes
     # Replaces all double spaces (\u0020) by " \ " (\u0020\u005c\u0020)
     # Replaces all linefeeds (\u000a) by "\n" (\u005c\u006e)
     
-    data = data or "";
+    data = data if bool(data) else ""
     data = get_clear_data(data)
     data = data.replace(u"\u005c", u"\u005c\u005c")
     data = re.sub(u"(\u0020(?=\u0020))", ur"\u0020\\", data)
     data = data.replace(u"\u000a", u"\u005c\u006e")
-    
+            
     return data
     
 def get_data_from_rec(data):
@@ -141,7 +178,7 @@ def get_data_from_rec(data):
     # \u0020 is space;
     # \u005c is backslash;
     # \u006e is n
-    data = data or ""
+    data = data if bool(data) else ""
     bs = 0
     ln = len(data)
     i = 0
@@ -164,20 +201,3 @@ def get_data_from_rec(data):
     data = data.replace(u"\u005c\u005c", u"\u005c")
     
     return data
-
-def is_allowed_data(data):
-    if len(data) == "":
-        return False
-
-    for i in range(len(data)):
-        ch = ord(data[i])
-
-        #if (ch >= 32 and ch <= 127) or ch in [7, 8, 9, 10, 12, 13, 27]:
-        if ch in range(32, 128) or ch in [7, 8, 9, 10, 12, 13, 27]:
-            continue
-        else:
-            return False
-    
-    return True
-
-    

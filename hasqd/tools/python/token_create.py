@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 # token_create (name|@file) [password|-]
- 
+
 import sys
 import urllib2
 import getpass
@@ -9,86 +9,83 @@ import ts_lib
 import ts_cnf
 import ts_msg
 
+CMD = 'z'
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 3:
-    msg = ts_msg.get_msg("hlp_usg", sys.argv[0], "hlp_tkn", "hlp_pwd")
-    print(msg)
+    msg = ts_msg.get_msg('hlp_usg', sys.argv[0], 'hlp_tkn', 'hlp_pwd')
+    print msg
     quit()
 
-CMD = "z"
-
-token = {"s": "", "r": ""}
-
-if sys.argv[1][0] != "@":
-    if ts_lib.is_allowed_data(sys.argv[1]) != True:
-        msg = ts_msg.get_msg("err_msg", "tkn_err")
-        print(msg)
-        quit()
-        
-    dn_or_raw = ts_lib.get_clear_data(sys.argv[1])
-else:
-    file_name=sys.argv[1][1:]
+if sys.argv[1][0] == '@':
+    file_name = (sys.argv[1])[1:]
 
     if not ts_lib.is_file(file_name):
-        msg = ts_msg.get_msg("err_msg", "fil_mng", file_name)
-        print(msg)
+        msg = ts_msg.get_msg('err_msg', 'fil_mng', file_name)
+        print msg
         quit()
+
     try:
         f = open(file_name, 'rb')
     except:
-        msg = ts_msg.get_msg("err_msg", "fil_err", file_name)
-        print(msg)
+        msg = ts_msg.get_msg('err_msg', 'fil_err', file_name)
+        print msg
         quit()
     else:
         dn_or_raw = f.read()
+
+        if ts_lib.is_allowed_data(dn_or_raw):
+            msg = ts_msg.get_msg('atn_msg', 'fil_txt', file_name)
+            print msg
+            dn_or_raw = ts_lib.get_clear_data(dn_or_raw)
+
         f.close()
+else:
+    dn_or_raw = sys.argv[1]
 
-if ts_lib.is_allowed_data(dn_or_raw):
-    dn_or_raw = ts_lib.get_clear_data(dn_or_raw)
-    msg = ts_msg.get_msg("fil_txt", "fil_txt", file_name)
-    print(msg)
+    if ts_lib.is_allowed_data(dn_or_raw):
+        dn_or_raw = ts_lib.get_clear_data(dn_or_raw)
+    else:
+        msg = ts_msg.get_msg('err_msg', 'tkn_err')
+        print msg
+        quit()
 
-token["s"] = ts_lib.get_tok_hash(dn_or_raw, ts_cnf.HASH_NAME)
+token = ts_lib.get_token_obj(dn_or_raw, ts_cnf.HASH_NAME)
 
-token["r"] = (dn_or_raw 
-        if not ts_lib.get_tok_hash(token["r"], ts_cnf.HASH_NAME) == token["s"]
-        else "")
-    
-print(token["r"])
-print(token["s"])
+master_key = (sys.argv[2] if sys.argv[2] != '-'
+               else getpass.getpass(ts_msg.get_msg('key_etr')))
 
-quit()
-
-master_key = (sys.argv[2] 
-        if sys.argv[2] != "-" 
-        else getpass.getpass(ts_msg.get_msg("key_etr")))
-
-if master_key == "":
-    msg = ts_msg.get_msg("err_msg", "key_err")
-    print(msg)
+if master_key == '':
+    msg = ts_msg.get_msg('err_msg', 'key_err')
+    print msg
     quit()
 
-#print("Token hash: {}".format(ts_lib.get_tok_hash(dn_or_raw, ts_cnf.HASH_NAME)))
-#print("Master key: {}".format(master_key))
+rec = ts_lib.get_record(0, ts_lib.get_tok_hash(dn_or_raw,
+                        ts_cnf.HASH_NAME), master_key, ts_cnf.MAGIC,
+                        ts_cnf.HASH_NAME)
 
-r = ts_lib.get_record(0, ts_lib.get_tok_hash(dn_or_raw, ts_cnf.HASH_NAME),
-        master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
-        
-d = (dn_or_raw 
-        if dn_or_raw != ts_lib.get_tok_hash(dn_or_raw, ts_cnf.HASH_NAME)
-        else "")
+rec_data = (ts_lib.get_data_to_rec(token['r'])
+            if ts_lib.get_data_to_rec_error_level(token['r'],
+            ts_cnf.DATALIM) == 0 else '')
 
-http_rqst = ts_lib.get_spaced_conc(CMD, "*", ts_cnf.DB, str(r.get("n")), 
-        r.get("s"), r.get("k"), r.get("g"), r.get("o"), d)
+http_rqst = ts_lib.get_spaced_conc(
+    CMD,
+    '*',
+    ts_cnf.DB,
+    str(rec.get('n')),
+    rec.get('s'),
+    rec.get('k'),
+    rec.get('g'),
+    rec.get('o'),
+    rec_data,
+    )
 
-print(http_rqst)
+#print http_rqst
 
-quit
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                        ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen('http://{}:{}/{}'.format(ts_cnf.HOST,
+                                ts_cnf.PORT, http_rqst)).read()
 except:
-    print (ts_msg.get_msg("err_msg", "fil_mng", ts_cnf.HOST, ts_cnf.PORT))
+    print ts_msg.get_msg('err_msg', 'fil_mng', ts_cnf.HOST, ts_cnf.PORT)
 else:
-    print(ts_msg.get_msg("srv_rpl", http_resp))
+    print ts_msg.get_msg('srv_rpl', http_resp)

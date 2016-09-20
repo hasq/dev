@@ -16,7 +16,7 @@ def get_msg(*data):
         "hlp_usg" : "Usage: python",
         "hlp_tkn" : "(token name|@file)",
         "hlp_pwd" : "[password|-]",
-        "tkn_err" : "Token name have a non-ASCII symbols - use file."
+        "tkn_err" : "Token name seems binary; please use file instead"
     }
     
     for i in range(len(data)):
