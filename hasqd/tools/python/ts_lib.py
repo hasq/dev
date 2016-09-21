@@ -58,7 +58,7 @@ def get_tok_hash(data, hash_name):
     
     return r
 
-def get_spaced_conc(*args):
+def get_spaced_concat(*args):
     r = ""
     l = len(args)
     
@@ -72,7 +72,7 @@ def get_spaced_conc(*args):
 
 def get_key(n, s, p, m, hash_name):
     n = str(n)
-    raw_key = get_spaced_conc(n, s, p, m) if m else get_spaced_conc(n, s, p)
+    raw_key = get_spaced_concat(n, s, p, m) if m else get_spaced_concat(n, s, p)
     
     return get_hash(raw_key, hash_name)
 
@@ -201,3 +201,55 @@ def get_data_from_rec(data):
     data = data.replace(u"\u005c\u005c", u"\u005c")
     
     return data
+
+def get_data_from_file(file_name):
+    r = {
+        "data" : "",
+        "exitcode" : 0
+    }
+    
+    try:
+        f = open(file_name, 'rb')
+    except:
+        r["exitcode"] = 4
+    else:
+        if not is_file(file_name):
+            r["exitcode"] = 3
+        else:
+            r["data"] = f.read()
+            
+            if (is_allowed_data(r["data"]) and
+                    r["data"] != get_clear_data(r["data"])):
+                
+                r["data"] = get_clear_data(r["data"])     
+                r["exitcode"] = 1 if len(r["data"]) != 0 else 2
+            
+    f.close()
+    return r
+
+def get_tok_from_cmdline(data):
+    r = {
+        "data" : "",
+        "exitcode" : 0
+        }
+
+    if is_allowed_data(data):
+        r["data"] = get_clear_data(data)
+    else:
+        r["exitcode"] = 1
+
+    return r
+    
+def get_data_from_cmd_line(*cmd_line):
+    r = {
+        "s" : "",
+        "raw" : "",
+        "pwd" : "",
+        "keys" : "",
+        "hold" : "",
+        "job" : "",
+        "data" : "",
+        "exitcode" : 0
+    }
+    
+   

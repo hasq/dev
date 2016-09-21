@@ -2,25 +2,26 @@
 import ts_lib
 
 def get_msg(*data):
-    r = ""
     msg = {
-        "err_msg" : "ERROR:",
-        "atn_msg" : "ATTENTION:",
-        "srv_err" : "Server unreachable.",
-        "srv_rpl" : "Server reply",
-        "fil_err" : "File read error",
-        "fil_txt" : "Text content!",
-        "fil_mng" : "File is empty or missing",
-        "key_etr" : "Enter master key:",
-        "key_err" : "Master key is empty.",
-        "hlp_usg" : "Usage: python",
-        "hlp_tkn" : "(token name|@file)",
-        "hlp_pwd" : "[password|-]",
-        "tkn_err" : "Token name seems binary; please use file instead"
+        "m_err" : "ERROR:",
+        "m_wrn" : "ATTENTION:",
+        "s_err" : "Server unreachable.",
+        "s_rep" : "Server reply",
+        "f_err" : "Couldn't read file: ",
+        "f_mis" : "File is empty or missing: ",
+        "f_emp" : "File contains nothing: ",
+        "f_chd" : "Text content has been cleared in file",
+        "k_ent" : "Enter master key:",
+        "k_emp" : "Master key is empty.",
+        "h_usg" : "Usage: python",
+        "h_tok" : "(token name|@file)",
+        "h_pwd" : "[password|-]",
+        "t_bin" : "Token name seems binary; please use file instead"
     }
     
+    r = ""    
     for i in range(len(data)):
         p = str(data[i]) if msg.get(data[i]) == None else msg[data[i]]
-        r = ts_lib.get_spaced_conc(r, p)
+        r = ts_lib.get_spaced_concat(r, p)
         
     return r

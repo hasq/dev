@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 # token_check (name|@file) [password|-]
 # - ask for password
 # reply
@@ -12,4 +15,9 @@
 # my data
 # ===========
 
-
+import sys
+import urllib2
+import getpass
+import ts_lib
+import ts_cnf
+import ts_msg
