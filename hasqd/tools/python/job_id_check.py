@@ -30,6 +30,6 @@ try:
     http_resp = urllib2.urlopen('http://{}:{}/{}'.format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    print ts_msg.get_msg('m_err', 'f_mis', ts_cnf.HOST, ts_cnf.PORT)
+    print ts_msg.get_msg('m_err', 's_err', ts_cnf.HOST, ts_cnf.PORT)
 else:
     print ts_msg.get_msg('s_rep', http_resp)

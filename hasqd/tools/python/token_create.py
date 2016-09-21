@@ -17,10 +17,10 @@ if argv_len == len(sys.argv) < 3:
     print msg
     quit()
 
+msg = ""
 if sys.argv[1][0] == '@':
     file_name = sys.argv[1][1:]
     dn_or_raw = ts_lib.get_data_from_file(file_name)
-    msg = ""
     
     if dn_or_raw["exitcode"] == 4: 
         msg = ts_msg.get_msg('m_err', 'f_err', file_name)
@@ -76,6 +76,6 @@ try:
     http_resp = urllib2.urlopen('http://{}:{}/{}'.format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    print ts_msg.get_msg('m_err', 'f_mis', ts_cnf.HOST, ts_cnf.PORT)
+    print ts_msg.get_msg('m_err', 's_err', ts_cnf.HOST, ts_cnf.PORT)
 else:
     print ts_msg.get_msg('s_rep', http_resp)
