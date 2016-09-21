@@ -240,16 +240,4 @@ def get_tok_from_cmdline(data):
 
     return r
     
-def get_data_from_cmd_line(*cmd_line):
-    r = {
-        "s" : "",
-        "raw" : "",
-        "pwd" : "",
-        "keys" : "",
-        "hold" : "",
-        "job" : "",
-        "data" : "",
-        "exitcode" : 0
-    }
-    
    
