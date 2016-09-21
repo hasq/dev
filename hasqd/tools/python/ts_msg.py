@@ -16,7 +16,9 @@ def get_msg(*data):
         "h_usg" : "Usage: python",
         "h_tok" : "(token name|@file)",
         "h_pwd" : "[password|-]",
-        "t_bin" : "Token name seems binary; please use file instead"
+        "t_bin" : "Token name seems binary; please use file instead",
+        "j_jid" : "(Job id)",
+        "j_err" : "Incorrect job id"
     }
     
     r = ""    
