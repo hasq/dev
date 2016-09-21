@@ -13,14 +13,14 @@ CMD = "job"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 2:
-    msg = ts_msg.get_msg('h_usg', sys.argv[0], 'j_jid')
+    msg = ts_msg.get_msg('m_usg', sys.argv[0], 'j_jid')
     print msg
     quit()
 
 if int(sys.argv[1]) >= 1000:
     jid = sys.argv[1]
 else:
-    msg = ts_msg.get_msg('e_msg', sys.argv[0], 'j_err')
+    msg = ts_msg.get_msg('m_err', 'j_err')
     print msg
     quit()
     

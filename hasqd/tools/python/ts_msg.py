@@ -13,7 +13,7 @@ def get_msg(*data):
         "f_chd" : "Text content has been cleared in file",
         "k_ent" : "Enter master key:",
         "k_emp" : "Master key is empty.",
-        "h_usg" : "Usage: python",
+        "m_usg" : "Usage: python",
         "h_tok" : "(token name|@file)",
         "h_pwd" : "[password|-]",
         "t_bin" : "Token name seems binary; please use file instead",

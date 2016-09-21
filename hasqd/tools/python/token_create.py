@@ -13,7 +13,7 @@ CMD = 'z'
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 3:
-    msg = ts_msg.get_msg('h_usg', sys.argv[0], 'h_tok', 'h_pwd')
+    msg = ts_msg.get_msg('m_usg', sys.argv[0], 'h_tok', 'h_pwd')
     print msg
     quit()
 
