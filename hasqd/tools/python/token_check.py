@@ -101,8 +101,8 @@ else:
         if lr["d"] == "":
             print(ts_msg.get_msg("d_no"))
         else:
-            print("=======")
+            print(ts_msg.get_msg("m_dlr"))
             print(lr["d"])
-            print("=======")
+            print(ts_msg.get_msg("m_dlr"))
 
 quit()

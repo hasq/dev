@@ -7,6 +7,7 @@ JOB_QUEUED = "JOB_QUEUED"
 
 def get_msg(*data):
     msg = {
+        "d_no" : "No data",
         "f_chd" : "Text content has been cleared in file",
         "f_emp" : "File contains nothing: ",
         "f_err" : "Couldn't read file: ",
@@ -16,6 +17,7 @@ def get_msg(*data):
         "h_tok" : "(token name|@file)",
         "k_emp" : "Master key is empty.",
         "k_ent" : "Enter master key:",
+        "m_dlr" : "--------",
         "m_err" : "ERROR:",
         "m_usg" : "Usage: python",
         "m_wrn" : "WARNING:",
@@ -29,7 +31,6 @@ def get_msg(*data):
         "p_ok" : "Password Ok",
         "p_snd" : "Onhold sending",
         "p_rcv" : "Onhold receiving",
-        "d_no" : "No data",
     }
     
     r = ""    
