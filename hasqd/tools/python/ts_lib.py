@@ -240,4 +240,28 @@ def get_tok_from_cmdline(data):
 
     return r
     
-   
+def get_response_header(data):
+    r = None
+    msg = re.sub("^\s+|\r|\s+$", "", data)
+    bl = msg.split()
+    ln = msg.split("\n")
+    
+    if ln[0] == "OK":
+        r = ln[0]
+    elif (bl[0] == "OK" or
+            bl[0] == "IDX_NODN" or
+            bl[0] == "JOB_QUEUED"):
+        r = bl[0]
+    else:
+        r = data
+        
+    return r
+    
+def get_job_id(data):
+    if not bool(data): return None
+
+    bl = re.sub("^\s+|\r|\s+$", "", data).split()
+    return (int(bl[1]) if len(bl) == 2 and bl[0] == 'OK' 
+            and int(bl[1]) >= 1000 else None)
+
+    

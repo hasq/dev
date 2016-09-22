@@ -69,6 +69,14 @@ try:
     http_resp = urllib2.urlopen('http://{}:{}/{}'.format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    print ts_msg.get_msg('m_err', 's_err', ts_cnf.HOST, ts_cnf.PORT)
+    msg = ts_msg.get_msg('m_err', 's_err', ts_cnf.HOST, ts_cnf.PORT)
+    print msg
+    quit()
 else:
-    print ts_msg.get_msg('s_rep', http_resp)
+    r = ts_lib.get_response_header(http_resp)
+    if r == "IDX_NODN":
+        print ts_msg.get_msg('s_dn0')
+        quit()
+    elif r == "OK":
+        print ts_msg.get_msg('s_dn1')
+        
