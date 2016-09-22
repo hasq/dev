@@ -5,6 +5,7 @@ import os
 import re
 import sys
 import urllib2
+import ts_msg
 
 
 def get_rmd160(data):
@@ -76,7 +77,7 @@ def get_key(n, s, p, m, hash_name):
     
     return get_hash(raw_key, hash_name)
 
-def get_record(n, s, p, m, hash_name):
+def get_rec(n, s, p, m, hash_name):
     n0 = int(n)
     n1 = int(n) + 1
     n2 = int(n) + 2
@@ -110,7 +111,7 @@ def is_binary_file(filename):
     return is_binary_string
 
 def get_token_obj(data, hash_name):
-    tok = {"s" : "", "r" : ""};
+    tok = {"s" : "", "r" : ""}
 
     tok["s"] = get_tok_hash(data, hash_name) if bool(data) else ""
     
@@ -146,10 +147,10 @@ def get_clear_data(data):
     return data
     
 def get_data_to_rec_error_level(data, lim):
-    if data == "": return 0;
+    if data == "": return 0
     if not is_allowed_data(data): return 3
     
-    data = get_clear_data(data);
+    data = get_clear_data(data)
     if len(data) > lim: return 2
 
     fmd = get_data_to_rec(data)
@@ -174,9 +175,9 @@ def get_data_to_rec(data):
     
 def get_data_from_rec(data):
     # returns parsed data for displaying
-    # \u000a is LF;
-    # \u0020 is space;
-    # \u005c is backslash;
+    # \u000a is LF
+    # \u0020 is space
+    # \u005c is backslash
     # \u006e is n
     data = data if bool(data) else ""
     bs = 0
@@ -206,7 +207,7 @@ def get_data_from_file(file_name):
     r = {
         "data" : "",
         "exitcode" : 0
-    }
+        }
     
     try:
         f = open(file_name, 'rb')
@@ -246,11 +247,11 @@ def get_response_header(data):
     bl = msg.split()
     ln = msg.split("\n")
     
-    if ln[0] == "OK":
+    if ln[0] == ts_msg.OK:
         r = ln[0]
-    elif (bl[0] == "OK" or
-            bl[0] == "IDX_NODN" or
-            bl[0] == "JOB_QUEUED"):
+    elif (bl[0] == ts_msg.OK or
+            bl[0] == ts_msg.IDX_NODN or
+            bl[0] == ts_msg.JOB_QUEUED):
         r = bl[0]
     else:
         r = data
@@ -261,7 +262,37 @@ def get_job_id(data):
     if not bool(data): return None
 
     bl = re.sub("^\s+|\r|\s+$", "", data).split()
+
     return (int(bl[1]) if len(bl) == 2 and bl[0] == 'OK' 
             and int(bl[1]) >= 1000 else None)
 
+def get_parsed_rec(data):
+    if not bool(data): return None
+
+    r = {}
+    bl = re.sub("^OK|^\s|\r|\s+$", "", data).split()
+    if len(bl) < 5: return None
+
+    r["n"] = int(bl[0])
+    r["s"] = bl[1]
+    r["k"] = bl[2]
+    r["g"] = bl[3]
+    r["o"] = bl[4]
+    r["d"] = ""
+    
+    if len(bl) > 5:
+        d = []
+        
+        for i in range(5, len(bl)): d.append(bl[i])
+            
+        r["d"] = " ".join(d)
+
+    return r
+
+def get_tok_status(lr, nr):
+    if lr["g"] == nr["g"] and lr["o"] == nr["o"]: return 0 #'OK'
+    if lr["g"] == nr["g"]: return 1 #'PWD_SNDNG'
+    if lr["o"] == nr["o"]: return 2 #'PWD_RCVNG'
+
+    return 3 #'PWD_WRONG'
     

@@ -74,9 +74,35 @@ except:
     quit()
 else:
     r = ts_lib.get_response_header(http_resp)
-    if r == "IDX_NODN":
+    if r == ts_msg.IDX_NODN:
         print ts_msg.get_msg('s_dn0')
         quit()
-    elif r == "OK":
+    elif r == ts_msg.OK:
         print ts_msg.get_msg('s_dn1')
         
+        lr = ts_lib.get_parsed_rec(http_resp)
+        nr = ts_lib.get_rec(
+                lr["n"],
+                token["s"],
+                master_key,
+                ts_cnf.MAGIC,
+                ts_cnf.HASH_NAME
+                )
+        
+        if ts_lib.get_tok_status(lr, nr) == 0:
+            print(ts_msg.get_msg("p_ok"))
+        elif ts_lib.get_tok_status(lr, nr) == 1:
+            print(ts_msg.get_msg("p_snd"))
+        elif ts_lib.get_tok_status(lr, nr) == 2:
+            print(ts_msg.get_msg("p_rcv"))
+        else:
+            print(ts_msg.get_msg("p_bad"))
+        
+        if lr["d"] == "":
+            print(ts_msg.get_msg("d_no"))
+        else:
+            print("=======")
+            print(lr["d"])
+            print("=======")
+
+quit()

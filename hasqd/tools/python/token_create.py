@@ -43,20 +43,19 @@ else:
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[2] if sys.argv[2] != '-'
-               else getpass.getpass(ts_msg.get_msg('k_ent')))
+        else getpass.getpass(ts_msg.get_msg('k_ent')))
 
 if master_key == '':
     msg = ts_msg.get_msg('m_err', 'k_emp')
     print msg
     quit()
 
-rec = ts_lib.get_record(0, ts_lib.get_tok_hash(dn_or_raw["data"],
-                        ts_cnf.HASH_NAME), master_key, ts_cnf.MAGIC,
-                        ts_cnf.HASH_NAME)
+rec = ts_lib.get_rec(0, ts_lib.get_tok_hash(token["s"], ts_cnf.HASH_NAME),
+        master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
 
 rec_data = ("[" + ts_lib.get_data_to_rec(token['r']) + "]"
-            if ts_lib.get_data_to_rec_error_level(token['r'],
-            ts_cnf.DATALIM) == 0 else '')
+        if ts_lib.get_data_to_rec_error_level(token['r'],
+                ts_cnf.DATALIM) == 0 else '')
 
 http_rqst = ts_lib.get_spaced_concat(
     CMD,
