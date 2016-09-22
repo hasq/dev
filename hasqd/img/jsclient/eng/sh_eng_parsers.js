@@ -106,10 +106,9 @@ function engGetParsedRecord(data)
     rec.k = parts[2];
     rec.g = parts[3];
     rec.o = parts[4];
+    rec.d = '';
     
-    if (parts.length == 5)
-        rec.d = '';
-    else
+    if (parts.length > 5)
     {
         var d = [];
 
