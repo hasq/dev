@@ -94,7 +94,6 @@ function engGetParsedRecord(data)
     if (!data) return null;
 
     var rec = {};
-    var err = {};
     var parts = data
             .replace(/^OK/g, '')
             .replace(/^\s|\r|\s+$/g, '')
