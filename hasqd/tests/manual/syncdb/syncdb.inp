@@ -1,6 +1,8 @@
-skcKey = [ ]
+KEY = file skc.key
 
-print ex 0 OK 100 tcp self { [ admin skc add ] skcKey }
+print { KEY }
+
+print ex 0 OK 100 tcp self { [ admin skc add ] KEY }
 cntTs = < [ # ] skc enc hex [ connect tokenswap.com:13131 ] >
 cntHn = < [ # ] skc enc hex [ connect hashnote.org:13131 ] >
 
@@ -13,7 +15,7 @@ ag cf lc "a"
 ag fs mk "ts_slcs"
 ag fs mk "ts_idxs"
 ag cf db "smd.db"
-ag dl tokenswap.com:13131 160101:today "ts_slcs"
+ag dl tokenswap.com:13131 160501:today "ts_slcs"
 ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:13131 ]
 ag fs cat "ts_list.bd"
 
@@ -27,7 +29,7 @@ ag fs cat "ts_list.ntf"
 ag fs mk "hn_slcs"
 ag fs mk "hn_idxs"
 ag cf db "smd.db"
-ag dl hashnote.org:13131 160101:today "hn_slcs"
+ag dl hashnote.org:13131 160501:today "hn_slcs"
 ag bd "hn_slcs" "hn_idxs" "hn_list.bd" [ 127.0.0.1:14000 tokenswap.com:13131 ]
 ag fs cat "ts_list.bd"
 
