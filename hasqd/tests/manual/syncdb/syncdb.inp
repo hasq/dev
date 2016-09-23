@@ -1,8 +1,3 @@
-KEY = file skc.key
-
-print { KEY }
-
-print ex 0 OK 100 tcp self { [ admin skc add ] KEY }
 cntTs = < [ # ] skc enc hex [ connect tokenswap.com:13131 ] >
 cntHn = < [ # ] skc enc hex [ connect hashnote.org:13131 ] >
 
