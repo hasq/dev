@@ -13,7 +13,7 @@ CMD = "job"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 2:
-    msg = ts_msg.get_msg('m_usg', sys.argv[0], 'j_id')
+    msg = ts_msg.get_msg('m_usg', sys.argv[0], 'h_jid')
     print msg
     quit()
 
