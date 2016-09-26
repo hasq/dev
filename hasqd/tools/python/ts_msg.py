@@ -18,7 +18,7 @@ def get_msg(*data):
         "h_tok" : "<token name|@file>",
         "k_emp" : "Master key is empty.",
         "k_ent" : "Enter master key:",
-        "m_dlr" : "--------",
+        "m_dlm" : "--------",
         "m_err" : "ERROR:",
         "m_usg" : "Usage: python",
         "m_wrn" : "WARNING:",

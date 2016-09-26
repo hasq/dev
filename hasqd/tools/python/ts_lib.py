@@ -9,7 +9,7 @@ import ts_msg
 
 
 def get_rmd160(data):
-    r = hashlib.new('ripemd160')
+    r = hashlib.new("ripemd160")
     r.update(data)
     return r.hexdigest()
     
@@ -38,7 +38,7 @@ def is_hash(data, hash_name):
         "smd": lambda x: len(x) == 32,
     }
       
-    is_not_hex = lambda x: re.search('[^0-9a-f]', x)
+    is_not_hex = lambda x: re.search("[^0-9a-f]", x)
     
     try:
         r = (hash_dict[hash_name](data) and not is_not_hex(data))
@@ -210,7 +210,7 @@ def get_data_from_file(file_name):
         }
     
     try:
-        f = open(file_name, 'rb')
+        f = open(file_name, "rb")
     except:
         r["exitcode"] = 4
     else:
@@ -263,7 +263,7 @@ def get_job_id(data):
 
     bl = re.sub("^\s+|\r|\s+$", "", data).split()
 
-    return (int(bl[1]) if len(bl) == 2 and bl[0] == 'OK' 
+    return (int(bl[1]) if len(bl) == 2 and bl[0] == "OK" 
             and int(bl[1]) >= 1000 else None)
 
 def get_parsed_rec(data):
@@ -290,9 +290,9 @@ def get_parsed_rec(data):
     return r
 
 def get_tok_status(lr, nr):
-    if lr["g"] == nr["g"] and lr["o"] == nr["o"]: return 0 #'OK'
-    if lr["g"] == nr["g"]: return 1 #'PWD_SNDNG'
-    if lr["o"] == nr["o"]: return 2 #'PWD_RCVNG'
+    if lr["g"] == nr["g"] and lr["o"] == nr["o"]: return 0 #"OK"
+    if lr["g"] == nr["g"]: return 1 #"PWD_SNDNG"
+    if lr["o"] == nr["o"]: return 2 #"PWD_RCVNG"
 
-    return 3 #'PWD_WRONG'
+    return 3 #"PWD_WRONG"
     
