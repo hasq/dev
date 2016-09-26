@@ -18,8 +18,8 @@ ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:80 ]
 ag fs cat "ts_list.bd"
 
 agent vd check "ts_list.bd" "ts_list.chk"
-#agent vd notify "ts_list.chk" "ts_list.ntf"
-agent vd push "ts_list.chk" "ts_list.ntf"
+agent vd notify "ts_list.chk" "ts_list.ntf"
+#agent vd push "ts_list.chk" "ts_list.psh" "ts_idxs"
 
 ag fs mk "hn_slcs"
 ag fs mk "hn_idxs"
@@ -27,8 +27,8 @@ ag cf db "smd.db"
 ag dl hashnote.org:80 160525:today "hn_slcs"
 ag bd "hn_slcs" "hn_idxs" "hn_list.bd" [ 127.0.0.1:14000 tokenswap.com:80 ]
 
-agent vd check "hn_list.bd" "hn_list.chk"
-#agent vd notify "hn_list.chk" "hn_list.ntf"
-agent vd push "hn_list.chk" "hn_list.ntf"
+agent vd check "hn_list.bd" "hn_list.chk" 
+agent vd notify "hn_list.chk" "hn_list.ntf"
+#agent vd push "hn_list.chk" "hn_list.psh" "hn_idxs"
 
 quit
