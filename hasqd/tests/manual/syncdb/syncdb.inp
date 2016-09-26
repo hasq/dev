@@ -1,38 +1,34 @@
-cntTs = < [ # ] skc enc hex [ connect tokenswap.com:13131 ] >
-cntHn = < [ # ] skc enc hex [ connect hashnote.org:13131 ] >
+CONN_TS = < [ # ] skc enc hex [ connect tokenswap.com:80 ] >
+CONN_HN = < [ # ] skc enc hex [ connect hashnote.org:80 ] >
 
-print ex 0 OK 100 tcp tokenswap.com:13131 { cntHn }
-print ex 0 OK 100 tcp hashnote.org:13131 { cntTs }
-print ex 0 OK 100 tcp self { cntTs }
-print ex 0 OK 100 tcp self { cntHn }
-
+print ag cf lf "syncdb.log"
 ag cf lc "a"
+print net protocol [ http_post ]
+
+print ex 0 OK 100 tcp tokenswap.com:80 { CONN_HN }
+print ex 0 OK 100 tcp hashnote.org:80 { CONN_TS }
+print ex 0 OK 100 tcp self { CONN_TS }
+print ex 0 OK 100 tcp self { CONN_HN }
+
 ag fs mk "ts_slcs"
 ag fs mk "ts_idxs"
 ag cf db "smd.db"
-ag dl tokenswap.com:13131 160501:today "ts_slcs"
-ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:13131 ]
+ag dl tokenswap.com:80 160525:today "ts_slcs"
+ag bd "ts_slcs" "ts_idxs" "ts_list.bd" [ 127.0.0.1:14000 hashnote.org:80 ]
 ag fs cat "ts_list.bd"
 
 agent vd check "ts_list.bd" "ts_list.chk"
-ag fs cat "ts_list.chk"
-ag re "ts_list.chk"
-
-agent vd notify "ts_list.chk" "ts_list.ntf"
-ag fs cat "ts_list.ntf"
+#agent vd notify "ts_list.chk" "ts_list.ntf"
+agent vd push "ts_list.chk" "ts_list.ntf"
 
 ag fs mk "hn_slcs"
 ag fs mk "hn_idxs"
 ag cf db "smd.db"
-ag dl hashnote.org:13131 160501:today "hn_slcs"
-ag bd "hn_slcs" "hn_idxs" "hn_list.bd" [ 127.0.0.1:14000 tokenswap.com:13131 ]
-ag fs cat "ts_list.bd"
+ag dl hashnote.org:80 160525:today "hn_slcs"
+ag bd "hn_slcs" "hn_idxs" "hn_list.bd" [ 127.0.0.1:14000 tokenswap.com:80 ]
 
 agent vd check "hn_list.bd" "hn_list.chk"
-ag fs cat "hn_list.chk"
-ag re "hn_list.chk"
-
-agent vd notify "hn_list.chk" "hn_list.ntf"
-ag fs cat "hn_list.ntf"
+#agent vd notify "hn_list.chk" "hn_list.ntf"
+agent vd push "hn_list.chk" "hn_list.ntf"
 
 quit

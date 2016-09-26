@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# HSL: agent validate check
-
-rm -rf ts_list.* ts_slcs ts_idxs hn_list.* hn_slcs hn_idxs
+rm -rf ts_list.* ts_slcs ts_idxs hn_list.* syncdb.log hn_slcs hn_idxs
 
 INP=$(basename $0)
 INP=${INP%.*} 
@@ -10,8 +8,14 @@ PLAT=msc
 HIDEE="../../../../admin/tools/hidee.exe"
 P="../../../src/_bin_$PLAT"
 
-[ ! -f myname ] && "$HIDEE" && exit 0
-[ -f skc.key.e -a -f "$HIDEE" ] && "$HIDEE" skc.key.e || exit 1
+error() {
+	[ -z "$1" ] || printf "ERROR: $1"
+	exit 1
+}
+
+[ ! -f "$HIDEE" ] && error "Please compile hidee.cpp first!"
+[ ! -f "myname" ] && "$HIDEE"
+[ -f skc.key.e -a -f "$HIDEE" ] && "$HIDEE" skc.key.e || error "SKC-key file is missing!"
 
 SKCKEY="$(cat skc.key)"
 
