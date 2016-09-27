@@ -59,4 +59,45 @@ else:
     msg = ts_msg.get_msg("m_err", "m_unk", sys.argv[2])
     print msg
     quit()    
-        
+
+http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
+
+try:
+    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
+                                ts_cnf.PORT, http_rqst)).read()
+except:
+    print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
+    quit()
+
+if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
+    msg = ts_msg.get_msg("m_err", "t_dn0")
+    print msg
+    quit()   
+elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
+    msg = ts_msg.get_msg("m_err", http_resp)
+    print msg
+    quit()
+    
+last_rec = ts_lib.get_parsed_rec(http_resp)
+
+print(ts_msg.get_msg(http_resp))    
+
+if keys_v == "instant":
+    line = ts_lib.get_instant_keys(
+            last_rec,
+            master_key,
+            ts_cnf.MAGIC,
+            ts_cnf.HASH_NAME,
+            ts_cnf.ALT_NAME,
+            ts_cnf.INSTANT_CODE            
+            )
+# elif keys_v == "onhold":
+    # line = ts_lib.get_onhold_keys(last_rec, master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
+# elif keys_v == "release":
+    # line = ts_lib.get_release_keys(last_rec, master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
+    
+print(line)
+    
+
+
+

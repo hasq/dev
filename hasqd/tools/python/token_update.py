@@ -79,7 +79,7 @@ except:
     quit()
 
 if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
-    msg = ts_msg.get_msg("m_err", "s_dn0")
+    msg = ts_msg.get_msg("m_err", "t_dn0")
     print msg
     quit()   
 elif ts_lib.get_response_header(http_resp) != ts_msg.OK:

@@ -75,10 +75,10 @@ except:
 else:
     r = ts_lib.get_response_header(http_resp)
     if r == ts_msg.IDX_NODN:
-        print ts_msg.get_msg("s_dn0")
+        print ts_msg.get_msg("t_dn0")
         quit()
     elif r == ts_msg.OK:
-        print ts_msg.get_msg("s_dn1")
+        print ts_msg.get_msg("t_dn1")
         
         lr = ts_lib.get_parsed_rec(http_resp)
         nr = ts_lib.get_rec(
