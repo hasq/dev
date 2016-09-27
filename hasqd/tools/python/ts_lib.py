@@ -305,8 +305,15 @@ def get_instant_keys(r, p, m, h, a, c):
     
     return line
 
-def get_onhold_keys():
-    return None
+def get_onhold_keys(r, p, m, h, a, c):
+    k1 = get_key(r["n"] + 1, r["s"], p, m, h)
+    k2 = get_key(r["n"] + 2, r["s"], p, m, h)
+    g1 = get_key(r["n"] + 2, r["s"], k2, m, h)
+    line = get_spaced_concat(r["s"], k1, g1)
+    crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
+    line = get_spaced_concat(line, crc, a, c)
+
+    return line
     
 def get_release_keys():
     return None

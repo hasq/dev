@@ -93,8 +93,15 @@ if keys_v == "instant":
             ts_cnf.ALT_NAME,
             ts_cnf.INSTANT_CODE            
             )
-# elif keys_v == "onhold":
-    # line = ts_lib.get_onhold_keys(last_rec, master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
+elif keys_v == "onhold":
+    line = ts_lib.get_onhold_keys(
+            last_rec,
+            master_key,
+            ts_cnf.MAGIC,
+            ts_cnf.HASH_NAME,
+            ts_cnf.ALT_NAME,
+            ts_cnf.ONHOLD_CODE            
+            )
 # elif keys_v == "release":
     # line = ts_lib.get_release_keys(last_rec, master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
     
