@@ -63,8 +63,10 @@ else:
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen("http://{}:{}/{}".format(
+            ts_cnf.HOST,
+            ts_cnf.PORT,
+            http_rqst)).read()
 except:
     print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
