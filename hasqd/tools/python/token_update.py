@@ -51,14 +51,24 @@ if master_key == "":
     print msg
     quit()
 
-rec_data = (ts_lib.get_data_to_rec(sys.argv[2])
-        if ts_lib.get_data_to_rec_error_level(sys.argv[2],
-                ts_cnf.DATALIM) == 0 else "")
+err_lvl = ts_lib.get_data_to_rec_error_level(sys.argv[2], ts_cnf.DATALIM)
 
-if rec_data == "":
-    print ts_msg.get_msg("m_err", "d_err")
+if err_lvl == 1:
+    msg = ts_msg.get_msg("m_err", "d_er1")
+elif err_lvl == 2:
+    msg = ts_msg.get_msg("m_err", "d_er2")
+elif err_lvl == 3:
+    msg = ts_msg.get_msg("m_err", "d_er3")
+elif err_lvl == 4:
+    msg = ts_msg.get_msg("m_err", "d_er4")
+elif err_lvl == 5:
+    msg = ts_msg.get_msg("m_err", "d_er5")
+
+if err_lvl != 0:
+    print(msg)
     quit()
     
+new_data = ts_lib.get_data_to_rec(sys.argv[2])
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
 try:
@@ -79,8 +89,16 @@ elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
     
 last_rec = ts_lib.get_parsed_rec(http_resp)
 
-new_rec = ts_lib.get_rec(last_rec["n"] + 1, ts_lib.get_tok_hash(token["s"], ts_cnf.HASH_NAME),
-        master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
+if last_rec["d"] == new_data:
+    print ts_msg.get_msg("m_wrn", "d_er0")
+    quit()
+        
+new_rec = ts_lib.get_rec(last_rec["n"] + 1, 
+        ts_lib.get_tok_hash(token["s"], 
+        ts_cnf.HASH_NAME), 
+        master_key, 
+        ts_cnf.MAGIC,
+        ts_cnf.HASH_NAME)
     
 http_rqst = ts_lib.get_spaced_concat(
     CMD_ADD,
@@ -91,7 +109,7 @@ http_rqst = ts_lib.get_spaced_concat(
     new_rec.get("k"),
     new_rec.get("g"),
     new_rec.get("o"),
-    rec_data,
+    new_data,
     )
 
 try:

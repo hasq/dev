@@ -99,7 +99,7 @@ else:
             print(ts_msg.get_msg("p_bad"))
         
         if lr["d"] == "":
-            print(ts_msg.get_msg("d_no"))
+            print(ts_msg.get_msg("d_zer"))
         else:
             print(ts_msg.get_msg("m_dlm"))
             print(lr["d"])
