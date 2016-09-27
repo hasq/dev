@@ -50,6 +50,14 @@ if master_key == "":
     msg = ts_msg.get_msg("m_err", "k_emp")
     print msg
     quit()
+
+rec_data = (ts_lib.get_data_to_rec(sys.argv[2])
+        if ts_lib.get_data_to_rec_error_level(sys.argv[2],
+                ts_cnf.DATALIM) == 0 else "")
+
+if rec_data == "":
+    print ts_msg.get_msg("m_err", "d_err")
+    quit()
     
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
@@ -59,8 +67,6 @@ try:
 except:
     print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
-else:
-    print ts_msg.get_msg("s_rep", http_resp)
 
 if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
     msg = ts_msg.get_msg("m_err", "s_dn0")
@@ -75,11 +81,7 @@ last_rec = ts_lib.get_parsed_rec(http_resp)
 
 new_rec = ts_lib.get_rec(last_rec["n"] + 1, ts_lib.get_tok_hash(token["s"], ts_cnf.HASH_NAME),
         master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
-
-rec_data = (ts_lib.get_data_to_rec(sys.argv[2])
-        if ts_lib.get_data_to_rec_error_level(sys.argv[2],
-                ts_cnf.DATALIM) == 0 else "")
-
+    
 http_rqst = ts_lib.get_spaced_concat(
     CMD_ADD,
     "*",

@@ -147,7 +147,7 @@ def get_clear_data(data):
     return data
     
 def get_data_to_rec_error_level(data, lim):
-    if data == "": return 0
+    if data == "": return 1
     if not is_allowed_data(data): return 3
     
     data = get_clear_data(data)

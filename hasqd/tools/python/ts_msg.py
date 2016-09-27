@@ -8,6 +8,7 @@ JOB_QUEUED = "JOB_QUEUED"
 def get_msg(*data):
     msg = {
         "d_no" : "No data",
+        "d_err" : "Incorrect data.",
         "f_chd" : "Text content has been cleared in file",
         "f_emp" : "File contains nothing: ",
         "f_err" : "Couldn't read file: ",
