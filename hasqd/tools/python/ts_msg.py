@@ -37,14 +37,15 @@ def get_msg(*data):
         "t_dn0" : "No such token",
         "t_dn1" : "Token exists",
         "p_bad" : "Password Bad",
+        "p_inc" : "Incorrect password",
         "p_ok" : "Password Ok",
         "p_snd" : "Onhold sending",
         "p_rcv" : "Onhold receiving",
     }
-    
-    r = ""    
+
+    r = ""
     for i in range(len(data)):
         p = str(data[i]) if msg.get(data[i]) == None else msg[data[i]]
         r = ts_lib.get_spaced_concat(r, p)
-        
+
     return r

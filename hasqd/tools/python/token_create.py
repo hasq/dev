@@ -21,22 +21,22 @@ if sys.argv[1][0] == "@":
     file_name = sys.argv[1][1:]
     dn_or_raw = ts_lib.get_data_from_file(file_name)
     msg = ""
-    
-    if dn_or_raw["exitcode"] == 4: 
+
+    if dn_or_raw["exitcode"] == 4:
         msg = ts_msg.get_msg("m_err", "f_err", file_name)
-    if dn_or_raw["exitcode"] == 3: 
+    if dn_or_raw["exitcode"] == 3:
         msg = ts_msg.get_msg("m_err", "f_mis", file_name)
     if dn_or_raw["exitcode"] == 2:
         msg = ts_msg.get_msg("m_err", "f_emp", file_name)
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
-    
+
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
-    
-    if dn_or_raw["exitcode"] != 0: 
+
+    if dn_or_raw["exitcode"] != 0:
         msg = ts_msg.get_msg("m_err", "t_bin")
         print msg
         quit()

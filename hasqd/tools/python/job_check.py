@@ -23,7 +23,7 @@ else:
     msg = ts_msg.get_msg("m_err", "j_err")
     print msg
     quit()
-    
+
 http_rqst = ts_lib.get_spaced_concat(CMD, jid)
 
 try:

@@ -22,22 +22,22 @@ if sys.argv[1][0] == "@":
     file_name = sys.argv[1][1:]
     dn_or_raw = ts_lib.get_data_from_file(file_name)
     msg = ""
-    
-    if dn_or_raw["exitcode"] == 4: 
+
+    if dn_or_raw["exitcode"] == 4:
         msg = ts_msg.get_msg("m_err", "f_err", file_name)
-    if dn_or_raw["exitcode"] == 3: 
+    if dn_or_raw["exitcode"] == 3:
         msg = ts_msg.get_msg("m_err", "f_mis", file_name)
     if dn_or_raw["exitcode"] == 2:
         msg = ts_msg.get_msg("m_err", "f_emp", file_name)
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
-    
+
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
-    
-    if dn_or_raw["exitcode"] != 0: 
+
+    if dn_or_raw["exitcode"] != 0:
         msg = ts_msg.get_msg("m_err", "t_bin")
         print msg
         quit()
@@ -67,7 +67,7 @@ elif err_lvl == 5:
 if err_lvl != 0:
     print(msg)
     quit()
-    
+
 new_data = ts_lib.get_data_to_rec(sys.argv[2])
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
@@ -81,36 +81,38 @@ except:
 if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
     msg = ts_msg.get_msg("m_err", "t_dn0")
     print msg
-    quit()   
+    quit()
 elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
     msg = ts_msg.get_msg("m_err", http_resp)
     print msg
     quit()
-    
+
 last_rec = ts_lib.get_parsed_rec(http_resp)
 
 if last_rec["d"] == new_data:
     print ts_msg.get_msg("m_wrn", "d_er0")
     quit()
-        
-new_rec = ts_lib.get_rec(last_rec["n"] + 1, 
-        ts_lib.get_tok_hash(token["s"], 
-        ts_cnf.HASH_NAME), 
-        master_key, 
+
+new_rec = ts_lib.get_rec(
+        last_rec["n"] + 1,
+        ts_lib.get_tok_hash(token["s"],
+        ts_cnf.HASH_NAME),
+        master_key,
         ts_cnf.MAGIC,
-        ts_cnf.HASH_NAME)
-    
+        ts_cnf.HASH_NAME
+        )
+
 http_rqst = ts_lib.get_spaced_concat(
-    CMD_ADD,
-    "*",
-    ts_cnf.DB,
-    str(new_rec.get("n")),
-    new_rec.get("s"),
-    new_rec.get("k"),
-    new_rec.get("g"),
-    new_rec.get("o"),
-    new_data,
-    )
+        CMD_ADD,
+        "*",
+        ts_cnf.DB,
+        str(new_rec.get("n")),
+        new_rec.get("s"),
+        new_rec.get("k"),
+        new_rec.get("g"),
+        new_rec.get("o"),
+        new_data,
+        )
 
 try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,

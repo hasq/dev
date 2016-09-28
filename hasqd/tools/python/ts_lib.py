@@ -12,7 +12,7 @@ def get_rmd160(data):
     r = hashlib.new("ripemd160")
     r.update(data)
     return r.hexdigest()
-    
+
 def get_hash(data, hash_name):
     hash_dict = {
         "wrd": lambda x: hashlib.md5(x).hexdigest()[:4],
@@ -22,7 +22,7 @@ def get_hash(data, hash_name):
         "s25": lambda x: hashlib.sha512(x).hexdigest(),
         "smd": lambda x: hashlib.md5(hashlib.sha256(x).hexdigest()).hexdigest(),
     }
-    
+
     try:
         return hash_dict[hash_name](data)
     except:
@@ -37,51 +37,51 @@ def is_hash(data, hash_name):
         "s25": lambda x: len(x) == 128,
         "smd": lambda x: len(x) == 32,
     }
-      
+
     is_not_hex = lambda x: re.search("[^0-9a-f]", x)
-    
+
     try:
         r = (hash_dict[hash_name](data) and not is_not_hex(data))
     except:
         r = None
-        
+
     return r
-    
+
 def get_tok_hash(data, hash_name):
     f = is_hash(data, hash_name)
-    
+
     if f is None:
         r = None
     elif f:
         r = data
     else:
         r = get_hash(data, hash_name)
-    
+
     return r
 
 def get_spaced_concat(*args):
     r = ""
     l = len(args)
-    
+
     for i in range(l):
         if not str(args[i]):
             continue
-            
+
         r = r + " " + str(args[i]) if len(r) > 0 else r + str(args[i])
-        
+
     return r
 
 def get_key(n, s, p, m, hash_name):
     n = str(n)
     raw_key = get_spaced_concat(n, s, p, m) if m else get_spaced_concat(n, s, p)
-    
+
     return get_hash(raw_key, hash_name)
 
 def get_rec(n, s, p, m, hash_name):
     n0 = int(n)
     n1 = int(n) + 1
     n2 = int(n) + 2
-    
+
     try:
         k0 = get_key(n0, s, p, m, hash_name)
         k1 = get_key(n1, s, p, m, hash_name)
@@ -89,7 +89,7 @@ def get_rec(n, s, p, m, hash_name):
         g0 = get_key(n1, s, k1, m, hash_name)
         g1 = get_key(n2, s, k2, m, hash_name)
         o0 = get_key(n1, s, g1, m, hash_name)
-    
+
         r = {
             "n": n0,
             "s": s,
@@ -99,12 +99,12 @@ def get_rec(n, s, p, m, hash_name):
         }
     except:
         r = None
-        
+
     return r
 
 def is_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
-    
+
 def is_binary_file(filename):
     textchars = bytearray({7,8,9,10,12,13,27} | set(range(0x20, 0x100)) - {0x7f})
     is_binary_string = lambda bytes: bool(bytes.translate(None, textchars))
@@ -114,7 +114,7 @@ def get_token_obj(data, hash_name):
     tok = {"s" : "", "r" : ""}
 
     tok["s"] = get_tok_hash(data, hash_name) if bool(data) else ""
-    
+
     if data != tok["s"] and is_allowed_data(data):
         tok["r"] = data
 
@@ -131,9 +131,9 @@ def is_allowed_data(data):
             continue
         else:
             return False
-    
+
     return True
-    
+
 def get_clear_data(data):
     # Replaces all tabs by spaces
     # Removes all whitespaces from the end of each line
@@ -141,15 +141,15 @@ def get_clear_data(data):
     data = data if bool(data) else ""
     data = data.replace("\t", u"\u0020")
     data = data.replace("\r\n", "\n")
-    data = data.replace("\r", "\n")    
+    data = data.replace("\r", "\n")
     data = re.sub(u"(?m)\u0020+$|^\n+|\n+$", "", data)
-        
+
     return data
-    
+
 def get_data_to_rec_error_level(data, lim):
     if data == "": return 1
     if not is_allowed_data(data): return 3
-    
+
     data = get_clear_data(data)
     if len(data) > lim: return 2
 
@@ -164,15 +164,15 @@ def get_data_to_rec(data):
     # Replaces all backslashes (\u005c) by two backslashes
     # Replaces all double spaces (\u0020) by " \ " (\u0020\u005c\u0020)
     # Replaces all linefeeds (\u000a) by "\n" (\u005c\u006e)
-    
+
     data = data if bool(data) else ""
     data = get_clear_data(data)
     data = data.replace(u"\u005c", u"\u005c\u005c")
     data = re.sub(u"(\u0020(?=\u0020))", ur"\u0020\\", data)
     data = data.replace(u"\u000a", u"\u005c\u006e")
-            
+
     return data
-    
+
 def get_data_from_rec(data):
     # returns parsed data for displaying
     # \u000a is LF
@@ -183,24 +183,24 @@ def get_data_from_rec(data):
     bs = 0
     ln = len(data)
     i = 0
-    
+
     while i < ln:
         bs = bs + 1 if (data[i] == u"\u005c") else 0
 
-        if (data[i] == u"\u005c" 
+        if (data[i] == u"\u005c"
                 and data[i + 1] == u"\u006e"
                 and bs > 0
                 and bs % 2 == 1):
             data = data[:i] + u"\u000a" + data[i + 2:]
             bs = 0
             ln -= 1
-         
+
         i += 1
-                
+
     #data = re.sub(r" \\(?= )", " ", data)
     data = re.sub(ur"(\u0020\\)(?=\u0020)", u"\u0020", data)
     data = data.replace(u"\u005c\u005c", u"\u005c")
-    
+
     return data
 
 def get_data_from_file(file_name):
@@ -208,7 +208,7 @@ def get_data_from_file(file_name):
         "data" : "",
         "exitcode" : 0
         }
-    
+
     try:
         f = open(file_name, "rb")
     except:
@@ -218,13 +218,13 @@ def get_data_from_file(file_name):
             r["exitcode"] = 3
         else:
             r["data"] = f.read()
-            
+
             if (is_allowed_data(r["data"]) and
                     r["data"] != get_clear_data(r["data"])):
-                
-                r["data"] = get_clear_data(r["data"])     
+
+                r["data"] = get_clear_data(r["data"])
                 r["exitcode"] = 1 if len(r["data"]) != 0 else 2
-            
+
     f.close()
     return r
 
@@ -240,13 +240,13 @@ def get_tok_from_cmdline(data):
         r["exitcode"] = 1
 
     return r
-    
+
 def get_response_header(data):
     r = None
     msg = re.sub("^\s+|\r|\s+$", "", data)
     bl = msg.split()
     ln = msg.split("\n")
-    
+
     if ln[0] == ts_msg.OK:
         r = ln[0]
     elif (bl[0] == ts_msg.OK or
@@ -255,15 +255,15 @@ def get_response_header(data):
         r = bl[0]
     else:
         r = data
-        
+
     return r
-    
+
 def get_job_id(data):
     if not bool(data): return None
 
     bl = re.sub("^\s+|\r|\s+$", "", data).split()
 
-    return (int(bl[1]) if len(bl) == 2 and bl[0] == "OK" 
+    return (int(bl[1]) if len(bl) == 2 and bl[0] == "OK"
             and int(bl[1]) >= 1000 else None)
 
 def get_parsed_rec(data):
@@ -279,12 +279,12 @@ def get_parsed_rec(data):
     r["g"] = bl[3]
     r["o"] = bl[4]
     r["d"] = ""
-    
+
     if len(bl) > 5:
         d = []
-        
+
         for i in range(5, len(bl)): d.append(bl[i])
-            
+
         r["d"] = " ".join(d)
 
     return r
@@ -302,7 +302,7 @@ def get_instant_keys(r, p, m, h, a, c):
     line = get_spaced_concat(r["s"], k1, k2)
     crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
     line = get_spaced_concat(line, crc, a, c)
-    
+
     return line
 
 def get_onhold_keys(r, p, m, h, a, c):
@@ -314,8 +314,13 @@ def get_onhold_keys(r, p, m, h, a, c):
     line = get_spaced_concat(line, crc, a, c)
 
     return line
-    
-def get_release_keys():
-    return None
-    
-    
+
+def get_release_keys(r, p, m, h, a, c, v):
+    n = r["n"] + 1 if v == 1 else r["n"] + 2
+    k = get_key(n, r["s"], p, m, h)
+    line = get_spaced_concat(r["s"], k)
+    crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
+    line = get_spaced_concat(line, crc, a, c)
+
+    return line
+
