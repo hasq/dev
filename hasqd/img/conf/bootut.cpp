@@ -190,8 +190,8 @@ void set_other_network(string namesrv, string hname, std::vector<string> hosts)
     os::Path root(mnt::root_path);
 
     {
-        std::ofstream of( (root + "etc/resolve.conf").str().c_str() );
-        if (!of) throw "Cannot open /etc/resolve.conf for writing";
+        std::ofstream of( (root + "etc/resolv.conf").str().c_str() );
+        if (!of) throw "Cannot open /etc/resolv.conf for writing";
         of << "nameserver " << namesrv << '\n';
     }
 
