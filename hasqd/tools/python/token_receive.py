@@ -13,7 +13,7 @@ CMD_LAST = "last"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 4:
-    msg = ts_msg.get_msg("m_usg", sys.argv[0], "h_tok", "h_met", "h_pwd")
+    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_meth", "help_pwd")
     print msg
     quit()
 
@@ -23,13 +23,13 @@ if sys.argv[1][0] == "@":
     msg = ""
 
     if dn_or_raw["exitcode"] == 4:
-        msg = ts_msg.get_msg("m_err", "f_err", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
     if dn_or_raw["exitcode"] == 3:
-        msg = ts_msg.get_msg("m_err", "f_mis", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
     if dn_or_raw["exitcode"] == 2:
-        msg = ts_msg.get_msg("m_err", "f_emp", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
-        msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
@@ -37,16 +37,16 @@ else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
     if dn_or_raw["exitcode"] != 0:
-        msg = ts_msg.get_msg("m_err", "t_bin")
+        msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[3] if sys.argv[3] != "-" else
-        getpass.getpass(ts_msg.get_msg("k_ent")))
+        getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
-    msg = ts_msg.get_msg("m_err", "k_emp")
+    msg = ts_msg.get_msg("msg_err", "mkey_empt")
     print msg
     quit()
 
@@ -56,24 +56,26 @@ if sys.argv[2][0] == "@":
     msg = ""
 
     if tmp_keys["exitcode"] == 4:
-        msg = ts_msg.get_msg("m_err", "f_err", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
     if tmp_keys["exitcode"] == 3:
-        msg = ts_msg.get_msg("m_err", "f_mis", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
     if tmp_keys["exitcode"] == 2:
-        msg = ts_msg.get_msg("m_err", "f_emp", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if tmp_keys["exitcode"] == 1:
-        msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
     if tmp_keys["exitcode"] > 1: quit()
         
     raw_key = tmp_keys["data"]
-else:
+elif sys.argv[2] != "-":
     raw_key = ts_lib.get_clear_data(sys.argv[2])
+else:
+    raw_key = raw_input(ts_msg.get_msg("akey_ent"))
 
-if not ts_lib.is_acc_keys(raw_key):
-    msg = ts_msg.get_msg("m_err", "a_err")
+if not ts_lib.is_asgmt_key(raw_key):
+    msg = ts_msg.get_msg("msg_err", "akey_err")
     print(msg)
     quit()
 
-acc_key = ts_lib.get_acc_key(raw_key)
+asgmt_key = ts_lib.get_asgmt_key(raw_key)

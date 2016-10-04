@@ -14,7 +14,12 @@ CMD_LAST = "last"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 4:
-    msg = ts_msg.get_msg("m_usg", sys.argv[0], "h_tok", "h_met", "h_pwd")
+    msg = ts_msg.get_msg(
+            "msg_usg",
+            sys.argv[0],
+            "help_tok",
+            "help_meth",
+            "help_pwd")
     print msg
     quit()
 
@@ -24,13 +29,13 @@ if sys.argv[1][0] == "@":
     msg = ""
 
     if dn_or_raw["exitcode"] == 4:
-        msg = ts_msg.get_msg("m_err", "f_err", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
     if dn_or_raw["exitcode"] == 3:
-        msg = ts_msg.get_msg("m_err", "f_mis", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
     if dn_or_raw["exitcode"] == 2:
-        msg = ts_msg.get_msg("m_err", "f_emp", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
-        msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
@@ -38,16 +43,16 @@ else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
     if dn_or_raw["exitcode"] != 0:
-        msg = ts_msg.get_msg("m_err", "t_bin")
+        msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[3] if sys.argv[3] != "-" else
-        getpass.getpass(ts_msg.get_msg("k_ent")))
+        getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
-    msg = ts_msg.get_msg("m_err", "k_emp")
+    msg = ts_msg.get_msg("msg_err", "mkey_empt")
     print msg
     quit()
 
@@ -56,7 +61,7 @@ if (sys.argv[2].lower() == "instant" or
         sys.argv[2].lower() == "release"):
     keys_v = sys.argv[2].lower()
 else:
-    msg = ts_msg.get_msg("m_err", "m_unk", sys.argv[2])
+    msg = ts_msg.get_msg("msg_err", "msg_unk", sys.argv[2])
     print msg
     quit()
 
@@ -68,15 +73,15 @@ try:
             ts_cnf.PORT,
             http_rqst)).read()
 except:
-    print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
+    print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
 
 if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
-    msg = ts_msg.get_msg("m_err", "t_dn0")
+    msg = ts_msg.get_msg("msg_err", "tok_dn0")
     print msg
     quit()
 elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
-    msg = ts_msg.get_msg("m_err", http_resp)
+    msg = ts_msg.get_msg("msg_err", http_resp)
     print msg
     quit()
 
@@ -94,10 +99,10 @@ st = ts_lib.get_tok_status(lr, nr)
 
 if keys_v == "instant":
     if st != 0:
-        print(ts_msg.get_msg("p_inc"))
+        print(ts_msg.get_msg("mkey_inc"))
         quit()
 
-    line = ts_lib.get_instant_keys(
+    line = ts_lib.get_instant_key(
             lr,
             master_key,
             ts_cnf.MAGIC,
@@ -106,10 +111,10 @@ if keys_v == "instant":
             )
 elif keys_v == "onhold":
     if st != 0:
-        print(ts_msg.get_msg("p_inc"))
+        print(ts_msg.get_msg("mkey_inc"))
         quit()
 
-    line = ts_lib.get_onhold_keys(
+    line = ts_lib.get_onhold_key(
             lr,
             master_key,
             ts_cnf.MAGIC,
@@ -119,10 +124,10 @@ elif keys_v == "onhold":
 
 elif keys_v == "release":
     if st != 1 and st != 2:
-        print(ts_msg.get_msg("p_inc"))
+        print(ts_msg.get_msg("mkey_inc"))
         quit()
 
-    line = ts_lib.get_release_keys(
+    line = ts_lib.get_release_key(
             lr,
             master_key,
             ts_cnf.MAGIC,

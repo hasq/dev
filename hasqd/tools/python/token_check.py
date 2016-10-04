@@ -26,7 +26,7 @@ CMD = "last"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 3:
-    msg = ts_msg.get_msg("m_usg", sys.argv[0], "h_tok", "h_pwd")
+    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_pwd")
     print msg
     quit()
 
@@ -36,13 +36,13 @@ if sys.argv[1][0] == "@":
     msg = ""
 
     if dn_or_raw["exitcode"] == 4:
-        msg = ts_msg.get_msg("m_err", "f_err", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
     if dn_or_raw["exitcode"] == 3:
-        msg = ts_msg.get_msg("m_err", "f_mis", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
     if dn_or_raw["exitcode"] == 2:
-        msg = ts_msg.get_msg("m_err", "f_emp", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
-        msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
@@ -50,16 +50,16 @@ else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
     if dn_or_raw["exitcode"] != 0:
-        msg = ts_msg.get_msg("m_err", "t_bin")
+        msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[2] if sys.argv[2] != "-"
-               else getpass.getpass(ts_msg.get_msg("k_ent")))
+               else getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
-    msg = ts_msg.get_msg("m_err", "k_emp")
+    msg = ts_msg.get_msg("msg_err", "mkey_empt")
     print msg
     quit()
 
@@ -69,16 +69,16 @@ try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    msg = ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
+    msg = ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     print msg
     quit()
 else:
     r = ts_lib.get_response_header(http_resp)
     if r == ts_msg.IDX_NODN:
-        print ts_msg.get_msg("t_dn0")
+        print ts_msg.get_msg("tok_dn0")
         quit()
     elif r == ts_msg.OK:
-        print ts_msg.get_msg("t_dn1")
+        print ts_msg.get_msg("tok_dn1")
 
         lr = ts_lib.get_parsed_rec(http_resp)
         nr = ts_lib.get_rec(
@@ -90,19 +90,19 @@ else:
                 )
 
         if ts_lib.get_tok_status(lr, nr) == 0:
-            print(ts_msg.get_msg("p_ok"))
+            print(ts_msg.get_msg("mkey_ok"))
         elif ts_lib.get_tok_status(lr, nr) == 1:
-            print(ts_msg.get_msg("p_snd"))
+            print(ts_msg.get_msg("mkey_snd"))
         elif ts_lib.get_tok_status(lr, nr) == 2:
-            print(ts_msg.get_msg("p_rcv"))
+            print(ts_msg.get_msg("mkey_rcv"))
         else:
-            print(ts_msg.get_msg("p_bad"))
+            print(ts_msg.get_msg("mkey_bad"))
 
         if lr["d"] == "":
-            print(ts_msg.get_msg("d_zer"))
+            print(ts_msg.get_msg("data_empt"))
         else:
-            print(ts_msg.get_msg("m_dlm"))
+            print(ts_msg.get_msg("msg_dlm"))
             print(lr["d"])
-            print(ts_msg.get_msg("m_dlm"))
+            print(ts_msg.get_msg("msg_dlm"))
 
 quit()

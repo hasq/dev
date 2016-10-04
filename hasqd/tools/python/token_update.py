@@ -14,7 +14,7 @@ CMD_LAST = "last"
 argv_len = len(sys.argv)
 
 if argv_len == len(sys.argv) < 4:
-    msg = ts_msg.get_msg("m_usg", sys.argv[0], "h_tok", "h_dat", "h_pwd")
+    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_data", "help_pwd")
     print msg
     quit()
 
@@ -24,13 +24,13 @@ if sys.argv[1][0] == "@":
     msg = ""
 
     if dn_or_raw["exitcode"] == 4:
-        msg = ts_msg.get_msg("m_err", "f_err", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
     if dn_or_raw["exitcode"] == 3:
-        msg = ts_msg.get_msg("m_err", "f_mis", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
     if dn_or_raw["exitcode"] == 2:
-        msg = ts_msg.get_msg("m_err", "f_emp", file_name)
+        msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
-        msg = ts_msg.get_msg("m_wrn", "f_chd", file_name)
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
     if dn_or_raw["exitcode"] > 1: quit()
@@ -38,31 +38,31 @@ else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
     if dn_or_raw["exitcode"] != 0:
-        msg = ts_msg.get_msg("m_err", "t_bin")
+        msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[3] if sys.argv[3] != "-"
-        else getpass.getpass(ts_msg.get_msg("k_ent")))
+        else getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
-    msg = ts_msg.get_msg("m_err", "k_emp")
+    msg = ts_msg.get_msg("msg_err", "mkey_empt")
     print msg
     quit()
 
 err_lvl = ts_lib.get_data_to_rec_error_level(sys.argv[2], ts_cnf.DATALIM)
 
 if err_lvl == 1:
-    msg = ts_msg.get_msg("m_err", "d_er1")
+    msg = ts_msg.get_msg("msg_err", "data_err1")
 elif err_lvl == 2:
-    msg = ts_msg.get_msg("m_err", "d_er2")
+    msg = ts_msg.get_msg("msg_err", "data_err2")
 elif err_lvl == 3:
-    msg = ts_msg.get_msg("m_err", "d_er3")
+    msg = ts_msg.get_msg("msg_err", "data_err3")
 elif err_lvl == 4:
-    msg = ts_msg.get_msg("m_err", "d_er4")
+    msg = ts_msg.get_msg("msg_err", "data_err4")
 elif err_lvl == 5:
-    msg = ts_msg.get_msg("m_err", "d_er5")
+    msg = ts_msg.get_msg("msg_err", "data_err5")
 
 if err_lvl != 0:
     print(msg)
@@ -75,22 +75,22 @@ try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
+    print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
 
 if ts_lib.get_response_header(http_resp) == ts_msg.IDX_NODN:
-    msg = ts_msg.get_msg("m_err", "t_dn0")
+    msg = ts_msg.get_msg("msg_err", "tok_dn0")
     print msg
     quit()
 elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
-    msg = ts_msg.get_msg("m_err", http_resp)
+    msg = ts_msg.get_msg("msg_err", http_resp)
     print msg
     quit()
 
 last_rec = ts_lib.get_parsed_rec(http_resp)
 
 if last_rec["d"] == new_data:
-    print ts_msg.get_msg("m_wrn", "d_er0")
+    print ts_msg.get_msg("msg_wrn", "data_err0")
     quit()
 
 new_rec = ts_lib.get_rec(
@@ -118,7 +118,7 @@ try:
     http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
                                 ts_cnf.PORT, http_rqst)).read()
 except:
-    print ts_msg.get_msg("m_err", "s_err", ts_cnf.HOST, ts_cnf.PORT)
+    print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
 else:
-    print ts_msg.get_msg("s_rep", http_resp)
+    print ts_msg.get_msg("srv_rep", http_resp)

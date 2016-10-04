@@ -304,7 +304,7 @@ def get_tok_status(lr, nr):
 
     return 3 #"PWD_WRONG"
 
-def get_instant_keys(r, p, m, h, a):
+def get_instant_key(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
     k2 = get_key(r["n"] + 2, r["s"], p, m, h)
     line = get_spaced_concat(r["s"], k1, k2)
@@ -313,7 +313,7 @@ def get_instant_keys(r, p, m, h, a):
 
     return line
 
-def get_onhold_keys(r, p, m, h, a):
+def get_onhold_key(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
     k2 = get_key(r["n"] + 2, r["s"], p, m, h)
     g1 = get_key(r["n"] + 2, r["s"], k2, m, h)
@@ -323,7 +323,7 @@ def get_onhold_keys(r, p, m, h, a):
 
     return line
 
-def get_release_keys(r, p, m, h, a, v):
+def get_release_key(r, p, m, h, a, v):
     n = r["n"] + 1 if v == 1 else r["n"] + 2
     c = RELEASE_S_CODE if v == 1 else RELEASE_S_CODE
     k = get_key(n, r["s"], p, m, h)
@@ -333,63 +333,163 @@ def get_release_keys(r, p, m, h, a, v):
 
     return line
     
-def is_acc_keys(keys):
-    if not bool(keys): return False
-    if not is_hex(keys.replace(u"\u0020", "")): return False
+def is_asgmt_key(key):
+    if not bool(key): return False
+    if not is_hex(key.replace(u"\u0020", "")): return False
 
-    keys = re.sub(u"\u0020{2,}", u"\u0020", keys)
-    keys = re.sub("^\s+|\s+$", "", keys).split()
-    pr_code = keys.pop(len(keys) - 1)
-    pr_code_ch0 = pr_code[0]
+    key = re.sub(u"\u0020{2,}", u"\u0020", key)
+    key = re.sub("^\s+|\s+$", "", key).split()
+    prc = key.pop(-1)
+    prc_ch0 = prc[0]
 
-    if pr_code_ch0 != "1" and pr_code_ch0 != "2": return False
+    if prc_ch0 != "1" and prc_ch0 != "2": return False
 
-    is_num_rec = True if pr_code_ch0 == "1" else False
-    pr_code_len = len(pr_code)
+    is_num_rec = True if prc_ch0 == "1" else False
+    prc_len = len(prc)
 
-    if pr_code_len < 3 or pr_code_len > 6: return False
-    if pr_code_len == 3 or pr_code_len == 4: keys_qty = 3 if is_num_rec else 2
-    if pr_code_len == 5 or pr_code_len == 6: keys_qty = 4 if is_num_rec else 3
-    if (pr_code != INSTANT_CODE and
-            pr_code != ONHOLD_CODE and
-            pr_code != RELEASE_S_CODE and
-            pr_code != RELEASE_R_CODE):
+    if prc_len < 3 or prc_len > 6: return False
+    if prc_len == 3 or prc_len == 4: key_qty = 3 if is_num_rec else 2
+    if prc_len == 5 or prc_len == 6: key_qty = 4 if is_num_rec else 3
+    if (prc != INSTANT_CODE and
+            prc != ONHOLD_CODE and
+            prc != RELEASE_S_CODE and
+            prc != RELEASE_R_CODE):
         return False
     
-    keys_crc = ""
+    key_crc = ""
     crc = ""
-    keys_len = 0
+    key_len = 0
     
-    if len(keys[len(keys) - 1]) == 4:
-        keys_crc = keys.pop(len(keys) - 1)
-        crc = get_hash("".join(keys), "s22")[:4]
-    elif len(keys[len(keys) - 2]) == 4:
-        keys_crc = keys.pop(len(keys) - 2)
-        keys_len = len(keys.pop(len(keys) - 1))
-        crc = get_hash("".join(keys), "s22")[:4]
+    if len(key[-1]) == 4:
+        key_crc = key.pop(-1)
+        crc = get_hash("".join(key), "s22")[:4]
+    elif len(key[-2]) == 4:
+        key_crc = key.pop(-2)
+        key_len = len(key.pop(-1))
+        crc = get_hash("".join(key), "s22")[:4]
     
-    ln = len(keys)
+    ln = len(key)
     
-    if keys_crc != crc: return False
-    if len(keys) < keys_qty: return False
-    if keys_len == 0:
-        mod = len(keys) % keys_qty
+    if key_crc != crc: return False
+    if ln < key_qty: return False
+    if key_len == 0:
+        mod = ln % key_qty
 
         if mod != 0 and mod != 1: return False
 
-        keys_len = len(keys[ln - 1]) if mod == 0 else len(keys.pop(ln - 1))
+        key_len = len(key[-1]) if mod == 0 else len(key.pop(-1))
 
     if is_num_rec:
-        for i in range(0, len(keys), keys_qty):
-            if not keys[i].isdigit(): return False
+        for i in range(0, len(key), key_qty):
+            if not key[i].isdigit(): return False
                 
-            keys.pop(i)
+            key.pop(i)
             i -= 1
 
-    if keys_len <= 0: keys_len == len(keys[0])
+    if key_len <= 0: key_len == len(key[0])
 
-    for i in range(len(keys)):
-        if keys_len != len(keys[i]):
+    for i in range(len(key)):
+        if key_len != len(key[i]):
             return False;
-    
+
     return True
+
+def get_asgmt_key(key):
+    
+    # prK1K2 = '23132';
+    # prG2O2 = '24252';
+    # prG1O1 = '24151';
+    # prK1G1 = '23141';
+    # prK1 = '231';
+    # prO1 = '251';
+    # prK2 = '232';
+
+    key = re.sub(u"\u0020{2,}", u"\u0020", key)
+    key = re.sub("^\s+|\s+$", "", key).split()
+
+    prc = key.pop(-1)
+    prc_ch0 = prc[0]
+
+    is_num_rec = True if prc_ch0 == "1" else False    
+    prc_len = len(prc)
+    raw_key_qty = len(key)
+    
+    print("raw_key_qty:", raw_key_qty )
+
+    if prc_len == 3 or prc_len == 4: exp_key_qty = 3 if is_num_rec else 2
+    if prc_len == 5 or prc_len == 6: exp_key_qty =  4 if is_num_rec else 3
+    
+    print("exp_key_qty:", exp_key_qty )
+    
+    if len(key[-1]) == 4:
+        key.pop(-1)
+    elif len(key[-2]) == 4:
+        key.pop(-2)
+        #key.pop(-1)
+    print("len(key):",len(key))
+    key_qty = len(key) / exp_key_qty
+    print("key_qty:", key_qty )
+    asgmt_key = {}
+
+    if raw_key_qty % key_qty == 1: key.pop(-1)
+    
+    print(key)
+        
+    key = key.pop(exp_key_qty - 1);
+    asgmt_key["prc"] = prc;
+    asgmt_key["n"] = int(key[0]) if is_num_rec else -1
+    asgmt_key["s"] = key[1] if is_num_rec else key[0]
+
+    # switch (prc)
+    # {
+        # case (prK1K2):
+            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
+            # asgmt_key[i].k2 = (isRecNum) ? key[3] : key[2];
+
+            # break;
+        # case (prG2O2):
+            # asgmt_key[i].g2 = (isRecNum) ? key[2] : key[1];
+            # asgmt_key[i].o2 = (isRecNum) ? key[3] : key[2];
+
+            # break;
+        # case (prG1O1):
+            # asgmt_key[i].g1 = (isRecNum) ? key[2] : key[1];
+            # asgmt_key[i].o1 = (isRecNum) ? key[3] : key[2];
+
+            # break;
+        # case (prK1G1):
+            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
+            # asgmt_key[i].g1 = (isRecNum) ? key[3] : key[2];
+
+            # break;
+        # case (prK1):
+            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
+
+            # break;
+        # case (prO1):
+            # asgmt_key[i].o1 = (isRecNum) ? key[2] : key[1];
+
+            # break;
+        # case (prK2):
+            # asgmt_key[i].k2 = (isRecNum) ? key[2] : key[1];
+
+            # break;
+        # default:
+                # return null;
+    # }
+
+# }
+
+    # asgmt_key.sort(engSortByProperties('s'));
+
+    # // if presents keys for same token;
+    # for (var i = 0; i < asgmt_key.length - 1; i++) 
+    # {
+        # if (asgmt_key[i].s == asgmt_key[i + 1].s)
+        # {
+            # asgmt_key.splice(i + 1, 1);
+            # i--;
+        # }
+    # }
+
+    return asgmt_key;
