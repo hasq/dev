@@ -412,34 +412,32 @@ def get_asgmt_key(key):
 
     is_num_rec = True if prc_ch0 == "1" else False    
     prc_len = len(prc)
-    raw_key_qty = len(key)
-    
-    print("raw_key_qty:", raw_key_qty )
 
     if prc_len == 3 or prc_len == 4: exp_key_qty = 3 if is_num_rec else 2
     if prc_len == 5 or prc_len == 6: exp_key_qty =  4 if is_num_rec else 3
-    
-    print("exp_key_qty:", exp_key_qty )
     
     if len(key[-1]) == 4:
         key.pop(-1)
     elif len(key[-2]) == 4:
         key.pop(-2)
-        #key.pop(-1)
-    print("len(key):",len(key))
-    key_qty = len(key) / exp_key_qty
-    print("key_qty:", key_qty )
-    asgmt_key = {}
-
-    if raw_key_qty % key_qty == 1: key.pop(-1)
     
+    asgmt_key = {}
+    
+    if len(key) % exp_key_qty == 1: key.pop(-1)
     print(key)
-        
-    key = key.pop(exp_key_qty - 1);
+    
     asgmt_key["prc"] = prc;
     asgmt_key["n"] = int(key[0]) if is_num_rec else -1
     asgmt_key["s"] = key[1] if is_num_rec else key[0]
-
+    if prc == INSTANT_CODE:
+        print(INSTANT_CODE)
+    elif prc == ONHOLD_CODE:
+        print(ONHOLD_CODE)
+    elif prc == RELEASE_S_CODE:
+        print(RELEASE_S_CODE)
+    elif prc == RELEASE_R_CODE:
+        print(RELEASE_R_CODE)
+        
     # switch (prc)
     # {
         # case (prK1K2):
