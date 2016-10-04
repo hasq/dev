@@ -7,6 +7,7 @@ JOB_QUEUED = "JOB_QUEUED"
 
 def get_msg(*data):
     msg = {
+        "a_err" : "Incorrect keys!",
         "d_zer" : "No data",
         "d_er0" : "Data not changed!",
         "d_er1" : "Empty data.",
@@ -15,8 +16,8 @@ def get_msg(*data):
         "d_er4" : "Parsed data length is bigger than data field limit:",
         "d_er5" : "Data parsing error (!)",
         "f_chd" : "Text content has been cleared in file",
-        "f_emp" : "File contains nothing: ",
-        "f_err" : "Couldn't read file: ",
+        "f_emp" : "File contains nothing:",
+        "f_err" : "Couldn't read file:",
         "j_err" : "Incorrect job id",
         "h_dat" : "<data>",
         "h_jid" : "<Job id>",

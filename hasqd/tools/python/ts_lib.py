@@ -8,11 +8,19 @@ import urllib2
 import ts_msg
 
 
+INSTANT_CODE = "23132"
+ONHOLD_CODE = "23141"
+RELEASE_S_CODE = "231"
+RELEASE_R_CODE = "232"
+
 def get_rmd160(data):
     r = hashlib.new("ripemd160")
     r.update(data)
     return r.hexdigest()
 
+def is_hex(data):
+    return not re.search("[^0-9a-f]", data)
+        
 def get_hash(data, hash_name):
     hash_dict = {
         "wrd": lambda x: hashlib.md5(x).hexdigest()[:4],
@@ -218,14 +226,14 @@ def get_data_from_file(file_name):
             r["exitcode"] = 3
         else:
             r["data"] = f.read()
+            f.close()
 
             if (is_allowed_data(r["data"]) and
                     r["data"] != get_clear_data(r["data"])):
 
                 r["data"] = get_clear_data(r["data"])
                 r["exitcode"] = 1 if len(r["data"]) != 0 else 2
-
-    f.close()
+            
     return r
 
 def get_tok_from_cmdline(data):
@@ -296,31 +304,92 @@ def get_tok_status(lr, nr):
 
     return 3 #"PWD_WRONG"
 
-def get_instant_keys(r, p, m, h, a, c):
+def get_instant_keys(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
     k2 = get_key(r["n"] + 2, r["s"], p, m, h)
     line = get_spaced_concat(r["s"], k1, k2)
     crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
-    line = get_spaced_concat(line, crc, a, c)
+    line = get_spaced_concat(line, crc, a, INSTANT_CODE)
 
     return line
 
-def get_onhold_keys(r, p, m, h, a, c):
+def get_onhold_keys(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
     k2 = get_key(r["n"] + 2, r["s"], p, m, h)
     g1 = get_key(r["n"] + 2, r["s"], k2, m, h)
     line = get_spaced_concat(r["s"], k1, g1)
     crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
-    line = get_spaced_concat(line, crc, a, c)
+    line = get_spaced_concat(line, crc, a, ONHOLD_CODE)
 
     return line
 
-def get_release_keys(r, p, m, h, a, c, v):
+def get_release_keys(r, p, m, h, a, v):
     n = r["n"] + 1 if v == 1 else r["n"] + 2
+    c = RELEASE_S_CODE if v == 1 else RELEASE_S_CODE
     k = get_key(n, r["s"], p, m, h)
     line = get_spaced_concat(r["s"], k)
     crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
     line = get_spaced_concat(line, crc, a, c)
 
     return line
+    
+def is_acc_keys(keys):
+    if not bool(keys): return False
+    if not is_hex(keys.replace(u"\u0020", "")): return False
 
+    keys = re.sub(u"\u0020{2,}", u"\u0020", keys)
+    keys = re.sub("^\s+|\s+$", "", keys).split()
+    pr_code = keys.pop(len(keys) - 1)
+    pr_code_ch0 = pr_code[0]
+
+    if pr_code_ch0 != "1" and pr_code_ch0 != "2": return False
+
+    is_num_rec = True if pr_code_ch0 == "1" else False
+    pr_code_len = len(pr_code)
+
+    if pr_code_len < 3 or pr_code_len > 6: return False
+    if pr_code_len == 3 or pr_code_len == 4: keys_qty = 3 if is_num_rec else 2
+    if pr_code_len == 5 or pr_code_len == 6: keys_qty = 4 if is_num_rec else 3
+    if (pr_code != INSTANT_CODE and
+            pr_code != ONHOLD_CODE and
+            pr_code != RELEASE_S_CODE and
+            pr_code != RELEASE_R_CODE):
+        return False
+    
+    keys_crc = ""
+    crc = ""
+    keys_len = 0
+    
+    if len(keys[len(keys) - 1]) == 4:
+        keys_crc = keys.pop(len(keys) - 1)
+        crc = get_hash("".join(keys), "s22")[:4]
+    elif len(keys[len(keys) - 2]) == 4:
+        keys_crc = keys.pop(len(keys) - 2)
+        keys_len = len(keys.pop(len(keys) - 1))
+        crc = get_hash("".join(keys), "s22")[:4]
+    
+    ln = len(keys)
+    
+    if keys_crc != crc: return False
+    if len(keys) < keys_qty: return False
+    if keys_len == 0:
+        mod = len(keys) % keys_qty
+
+        if mod != 0 and mod != 1: return False
+
+        keys_len = len(keys[ln - 1]) if mod == 0 else len(keys.pop(ln - 1))
+
+    if is_num_rec:
+        for i in range(0, len(keys), keys_qty):
+            if not keys[i].isdigit(): return False
+                
+            keys.pop(i)
+            i -= 1
+
+    if keys_len <= 0: keys_len == len(keys[0])
+
+    for i in range(len(keys)):
+        if keys_len != len(keys[i]):
+            return False;
+    
+    return True

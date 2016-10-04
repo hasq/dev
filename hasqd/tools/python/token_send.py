@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# token_send (name|@file) (instant|onhold|release) [password]
+# token_send (name|@file) (instant|onhold|release) [password|-]
 # output: keys
 
 import sys
@@ -103,7 +103,6 @@ if keys_v == "instant":
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
             ts_cnf.ALT_NAME,
-            ts_cnf.INSTANT_CODE,
             )
 elif keys_v == "onhold":
     if st != 0:
@@ -115,16 +114,11 @@ elif keys_v == "onhold":
             master_key,
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
-            ts_cnf.ALT_NAME,
-            ts_cnf.ONHOLD_CODE,
+            ts_cnf.ALT_NAME
             )
 
 elif keys_v == "release":
-    if st == 1:
-        op_code = RELEASE_S_CODE
-    elif st == 2:
-        op_code = RELEASE_R_CODE
-    else:
+    if st != 1 and st != 2:
         print(ts_msg.get_msg("p_inc"))
         quit()
 
@@ -134,7 +128,6 @@ elif keys_v == "release":
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
             ts_cnf.ALT_NAME,
-            op_code,
             st
             )
 
