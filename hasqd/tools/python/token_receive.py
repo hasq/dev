@@ -104,12 +104,7 @@ elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
 
 lr = ts_lib.get_parsed_rec(http_resp)
 nr = ts_lib.get_rec(
-        lr["n"],
-        token["s"],
-        master_key,
-        ts_cnf.MAGIC,
-        ts_cnf.HASH_NAME
-        )
+        lr["n"], token["s"], master_key, ts_cnf.MAGIC, ts_cnf.HASH_NAME)
 st = ts_lib.get_tok_status(lr, nr)
 asgmt_key = ts_lib.get_asgmt_key(raw_key)
 
@@ -124,17 +119,16 @@ if st == 0:
     print ts_msg.get_msg("msg_err", "rcv_err0", token["s"])
     quit()
 elif st == 3:
-    if not prc in [ts_lib.INSTANT_CODE,
-            ts_lib.INSTANT_CODE_N,
-            ts_lib.ONHOLD_CODE,
-            ts_lib.ONHOLD_CODE]:
+    if not prc in [ts_lib.INSTANT_CODE, ts_lib.INSTANT_CODE_N,
+            ts_lib.ONHOLD_CODE, ts_lib.ONHOLD_CODE]:
         print ts_msg.get_msg("msg_err", "rcv_err1", token["s"])
         quit()
-elif not prc in [ts_lib.RELEASE_S_CODE,
-        ts_lib.RELEASE_S_CODE_N,
-        ts_lib.RELEASE_R_CODE,
-        ts_lib.RELEASE_R_CODE_N]:
-    print ts_msg.get_msg("msg_err", "rcv_err2", token["s"])
+elif st == 2:
+    if not prc in [ts_lib.RELEASE_S_CODE, ts_lib.RELEASE_S_CODE_N]:
+        print ts_msg.get_msg("msg_err", "rcv_err2", prc, token["s"])
+        quit()
+elif not prc in [ts_lib.RELEASE_R_CODE, ts_lib.RELEASE_R_CODE_N]:
+    print ts_msg.get_msg("msg_err", "rcv_err2", prc, token["s"])
     quit()
 
 
@@ -152,16 +146,12 @@ http_rqst1 = ts_lib.get_spaced_concat(
         title_rec.get("s"),
         title_rec.get("k1"),
         title_rec.get("g1"),
-        title_rec.get("o1"),
-        )
-        
-print(http_rqst1)
+        title_rec.get("o1"))
         
 if prc in ([ts_lib.INSTANT_CODE,
         ts_lib.INSTANT_CODE_N,
         ts_lib.RELEASE_R_CODE,
         ts_lib.RELEASE_R_CODE_N]):
-
     http_rqst2 = ts_lib.get_spaced_concat(
             CMD_ADD,
             "*",
@@ -170,14 +160,11 @@ if prc in ([ts_lib.INSTANT_CODE,
             title_rec.get("s"),
             title_rec.get("k2"),
             title_rec.get("g2"),
-            title_rec.get("o2"),
-            )
-            
-
+            title_rec.get("o2"))
 else:
     http_rqst2 = ""
 
-print(http_rqst2)   
+ 
 # elif prc == ts_lib.ONHOLD_CODE or prc == ts_lib.ONHOLD_CODE_N:
 # elif prc == ts_lib.RELEASE_S_CODE or prc == ts_lib.RELEASE_S_CODE_N:
 # elif prc == ts_lib.RELEASE_R_CODE_N or prc == ts_lib.RELEASE_R_CODE_N:

@@ -483,5 +483,4 @@ def get_title_rec(asgmt_key, p, m, h):
         k4 = get_key(n4, s, p, m, h)
         g3 = get_key(n4, s, k4, m, h)
         title_rec["o2"] = get_key(n3, s, g3, m, h)
-
     return title_rec

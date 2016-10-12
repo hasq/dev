@@ -41,7 +41,7 @@ def get_msg(*data):
         "msg_wrn" : "WARNING:",
         "rcv_err0" : "You already own token",
         "rcv_err1" : "Wrong receiving method for not hold token",
-        "rcv_err2" : "Wrong receiving method for hold token",
+        "rcv_err2" : "Wrong assignment key for for hold token",
         "snd_err0" : "Wrong sending method for hold token",
         "snd_err1" : "Can't release not hold token",
         "srv_err" : "Server is unreachable:",
