@@ -11,15 +11,11 @@ import ts_cnf
 import ts_msg
 
 CMD_LAST = "last"
-argv_len = len(sys.argv)
 
-if argv_len == len(sys.argv) < 4:
-    msg = ts_msg.get_msg(
-            "msg_usg",
-            sys.argv[0],
-            "help_tok",
-            "help_meth",
+if len(sys.argv) < 4:
+    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_meth",
             "help_pwd")
+            
     print msg
     quit()
 
@@ -85,8 +81,6 @@ elif ts_lib.get_response_header(http_resp) != ts_msg.OK:
     print msg
     quit()
 
-print(ts_msg.get_msg(http_resp))
-
 lr = ts_lib.get_parsed_rec(http_resp)
 nr = ts_lib.get_rec(
         lr["n"],
@@ -97,9 +91,13 @@ nr = ts_lib.get_rec(
         )
 st = ts_lib.get_tok_status(lr, nr)
 
+if st == 3:
+    print(ts_msg.get_msg("msg_err", "mkey_wng", token["s"]))
+    quit()
+    
 if keys_v == "instant":
     if st != 0:
-        print(ts_msg.get_msg("mkey_inc"))
+        print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))
         quit()
 
     line = ts_lib.get_instant_key(
@@ -111,7 +109,7 @@ if keys_v == "instant":
             )
 elif keys_v == "onhold":
     if st != 0:
-        print(ts_msg.get_msg("mkey_inc"))
+        print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))
         quit()
 
     line = ts_lib.get_onhold_key(
@@ -123,8 +121,8 @@ elif keys_v == "onhold":
             )
 
 elif keys_v == "release":
-    if st != 1 and st != 2:
-        print(ts_msg.get_msg("mkey_inc"))
+    if st == 0:
+        print(ts_msg.get_msg("msg_err", "snd_err1", token["s"]))
         quit()
 
     line = ts_lib.get_release_key(

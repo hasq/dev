@@ -11,10 +11,11 @@ import ts_msg
 
 CMD_ADD = "add"
 CMD_LAST = "last"
-argv_len = len(sys.argv)
 
-if argv_len == len(sys.argv) < 4:
-    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_data", "help_pwd")
+if len(sys.argv) < 4:
+    msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_data",
+            "help_pwd")
+            
     print msg
     quit()
 
@@ -37,7 +38,10 @@ if sys.argv[1][0] == "@":
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
-    if dn_or_raw["exitcode"] != 0:
+    if dn_or_raw["exitcode"] == 1:
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
+        print msg
+    elif dn_or_raw["exitcode"] == 2:
         msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()

@@ -9,9 +9,13 @@ import ts_msg
 
 
 INSTANT_CODE = "23132"
+INSTANT_CODE_N = "123132"
 ONHOLD_CODE = "23141"
+ONHOLD_CODE_N = "123141"
 RELEASE_S_CODE = "231"
+RELEASE_S_CODE_N = "1231"
 RELEASE_R_CODE = "232"
+RELEASE_R_CODE_N = "1232"
 
 def get_rmd160(data):
     r = hashlib.new("ripemd160")
@@ -245,7 +249,7 @@ def get_tok_from_cmdline(data):
     if is_allowed_data(data):
         r["data"] = get_clear_data(data)
     else:
-        r["exitcode"] = 1
+        r["exitcode"] = 2
 
     return r
 
@@ -325,7 +329,7 @@ def get_onhold_key(r, p, m, h, a):
 
 def get_release_key(r, p, m, h, a, v):
     n = r["n"] + 1 if v == 1 else r["n"] + 2
-    c = RELEASE_S_CODE if v == 1 else RELEASE_S_CODE
+    c = RELEASE_S_CODE if v == 1 else RELEASE_R_CODE
     k = get_key(n, r["s"], p, m, h)
     line = get_spaced_concat(r["s"], k)
     crc = get_hash(line.replace(u"\u0020", ""), "s22")[:4]
@@ -346,20 +350,25 @@ def is_asgmt_key(key):
 
     is_num_rec = True if prc_ch0 == "1" else False
     prc_len = len(prc)
-
     if prc_len < 3 or prc_len > 6: return False
     if prc_len == 3 or prc_len == 4: key_qty = 3 if is_num_rec else 2
     if prc_len == 5 or prc_len == 6: key_qty = 4 if is_num_rec else 3
-    if (prc != INSTANT_CODE and
+    if (
+            prc != INSTANT_CODE and
+            prc != INSTANT_CODE_N and
             prc != ONHOLD_CODE and
+            prc != ONHOLD_CODE_N and
             prc != RELEASE_S_CODE and
-            prc != RELEASE_R_CODE):
+            prc != RELEASE_S_CODE_N and
+            prc != RELEASE_R_CODE and
+            prc != RELEASE_R_CODE_N
+            ):
         return False
     
     key_crc = ""
     crc = ""
     key_len = 0
-    
+        
     if len(key[-1]) == 4:
         key_crc = key.pop(-1)
         crc = get_hash("".join(key), "s22")[:4]
@@ -395,15 +404,6 @@ def is_asgmt_key(key):
     return True
 
 def get_asgmt_key(key):
-    
-    # prK1K2 = '23132';
-    # prG2O2 = '24252';
-    # prG1O1 = '24151';
-    # prK1G1 = '23141';
-    # prK1 = '231';
-    # prO1 = '251';
-    # prK2 = '232';
-
     key = re.sub(u"\u0020{2,}", u"\u0020", key)
     key = re.sub("^\s+|\s+$", "", key).split()
 
@@ -424,70 +424,64 @@ def get_asgmt_key(key):
     asgmt_key = {}
     
     if len(key) % exp_key_qty == 1: key.pop(-1)
-    print(key)
     
     asgmt_key["prc"] = prc;
     asgmt_key["n"] = int(key[0]) if is_num_rec else -1
     asgmt_key["s"] = key[1] if is_num_rec else key[0]
-    if prc == INSTANT_CODE:
-        print(INSTANT_CODE)
-    elif prc == ONHOLD_CODE:
-        print(ONHOLD_CODE)
-    elif prc == RELEASE_S_CODE:
-        print(RELEASE_S_CODE)
-    elif prc == RELEASE_R_CODE:
-        print(RELEASE_R_CODE)
+    
+    if prc == INSTANT_CODE or prc == INSTANT_CODE_N:
+        asgmt_key["k1"] = key[2] if is_num_rec else key[1]
+        asgmt_key["k2"] = key[3] if is_num_rec else key[2]
+    elif prc == ONHOLD_CODE or prc == ONHOLD_CODE_N:
+        asgmt_key["k1"] = key[2] if is_num_rec else key[1]
+        asgmt_key["g1"] = key[3] if is_num_rec else key[2]
+    elif prc == RELEASE_S_CODE or prc == RELEASE_S_CODE_N:
+        asgmt_key["k1"] = key[2] if is_num_rec else key[1]
+    elif prc == RELEASE_R_CODE or prc == RELEASE_R_CODE_N:
+        asgmt_key["k2"] = key[2] if is_num_rec else key[1]
         
-    # switch (prc)
-    # {
-        # case (prK1K2):
-            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
-            # asgmt_key[i].k2 = (isRecNum) ? key[3] : key[2];
+    return asgmt_key
 
-            # break;
-        # case (prG2O2):
-            # asgmt_key[i].g2 = (isRecNum) ? key[2] : key[1];
-            # asgmt_key[i].o2 = (isRecNum) ? key[3] : key[2];
+def get_title_rec(asgmt_key, p, m, h):
+    title_rec = asgmt_key
+    title_rec["n1"] = n1 = title_rec.pop("n") + 1
+    n2 = n1 + 1
+    n3 = n1 + 2
+    n4 = n1 + 3
+    s = title_rec["s"]
+    prc = title_rec.pop("prc")
+    prc_ch0 = prc[0]
+    is_rec_num = True if prc_ch0 == 1 else False
 
-            # break;
-        # case (prG1O1):
-            # asgmt_key[i].g1 = (isRecNum) ? key[2] : key[1];
-            # asgmt_key[i].o1 = (isRecNum) ? key[3] : key[2];
+    if prc == INSTANT_CODE or prc == INSTANT_CODE_N:
+        title_rec["n2"] = n2
+        k2 = asgmt_key["k2"]
+        title_rec["g1"] = get_key(n2, s, k2, m, h)
+        k3 = get_key(n3, s, p, m, h)
+        g2 = title_rec["g2"] = get_key(n3, s, k3, m, h)
+        title_rec["o1"] = get_key(n2, s, g2, m, h)
+        k4 = get_key(n4, s, p, m, h)
+        g3 = get_key(n4, s, k4, m, h)
+        title_rec["o2"] = get_key(n3, s, g3, m, h)
+    elif prc == ONHOLD_CODE or prc == ONHOLD_CODE_N:
+        k3 = get_key(n3, s, p, m, h)
+        g2 = get_key(n3, s, k3, m, h)
+        title_rec["o1"] = get_key(n2, s, g2, m, h)
+    elif prc == RELEASE_S_CODE or prc == RELEASE_S_CODE_N:
+        k2 = get_key(n2, s, p, m, h)
+        k3 = get_key(n3, s, p, m, h)
+        g2 = get_key(n3, s, k3, m, h)
+        title_rec["g1"] = get_key(n2, s, k2, m, h)
+        title_rec["o1"] = get_key(n2, s, g2, m, h)
+    elif prc == RELEASE_R_CODE or prc == RELEASE_R_CODE_N:
+        title_rec["n2"] = n2
+        title_rec["k1"] = get_key(n1, s, p, m, h)
+        title_rec["g1"] = get_key(n2, s, title_rec["k2"], m, h)
+        k3 = get_key(n3, s, p, m, h)
+        title_rec["g2"] = get_key(n3, s, k3, m, h)
+        title_rec["o1"] = get_key(n2, s, title_rec["g2"], m, h)
+        k4 = get_key(n4, s, p, m, h)
+        g3 = get_key(n4, s, k4, m, h)
+        title_rec["o2"] = get_key(n3, s, g3, m, h)
 
-            # break;
-        # case (prK1G1):
-            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
-            # asgmt_key[i].g1 = (isRecNum) ? key[3] : key[2];
-
-            # break;
-        # case (prK1):
-            # asgmt_key[i].k1 = (isRecNum) ? key[2] : key[1];
-
-            # break;
-        # case (prO1):
-            # asgmt_key[i].o1 = (isRecNum) ? key[2] : key[1];
-
-            # break;
-        # case (prK2):
-            # asgmt_key[i].k2 = (isRecNum) ? key[2] : key[1];
-
-            # break;
-        # default:
-                # return null;
-    # }
-
-# }
-
-    # asgmt_key.sort(engSortByProperties('s'));
-
-    # // if presents keys for same token;
-    # for (var i = 0; i < asgmt_key.length - 1; i++) 
-    # {
-        # if (asgmt_key[i].s == asgmt_key[i + 1].s)
-        # {
-            # asgmt_key.splice(i + 1, 1);
-            # i--;
-        # }
-    # }
-
-    return asgmt_key;
+    return title_rec

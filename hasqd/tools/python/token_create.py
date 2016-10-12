@@ -10,10 +10,10 @@ import ts_cnf
 import ts_msg
 
 CMD = "z"
-argv_len = len(sys.argv)
 
-if argv_len == len(sys.argv) < 3:
+if len(sys.argv) < 3:
     msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_pwd")
+    
     print msg
     quit()
 
@@ -21,25 +21,31 @@ if sys.argv[1][0] == "@":
     file_name = sys.argv[1][1:]
     dn_or_raw = ts_lib.get_data_from_file(file_name)
     msg = ""
-
-    if dn_or_raw["exitcode"] == 4:
+    e = dn_or_raw["exitcode"]
+    
+    if e == 4:
         msg = ts_msg.get_msg("msg_err", "file_rerr", file_name)
-    if dn_or_raw["exitcode"] == 3:
+    if e == 3:
         msg = ts_msg.get_msg("msg_err", "file_miss", file_name)
-    if dn_or_raw["exitcode"] == 2:
+    if e == 2:
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
-    if dn_or_raw["exitcode"] == 1:
+    if e == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
     if msg != "" : print(msg)
-    if dn_or_raw["exitcode"] > 1: quit()
+    if e > 1: quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
-
-    if dn_or_raw["exitcode"] != 0:
+    e = dn_or_raw["exitcode"]
+    
+    if e == 1:
+        msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
+        print msg
+    elif e == 2:
         msg = ts_msg.get_msg("msg_err", "tok_bin")
         print msg
         quit()
+del e
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[2] if sys.argv[2] != "-"

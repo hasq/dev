@@ -10,9 +10,8 @@ import ts_cnf
 import ts_msg
 
 CMD = "job"
-argv_len = len(sys.argv)
 
-if argv_len == len(sys.argv) < 2:
+if len(sys.argv) < 2:
     msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_jid")
     print msg
     quit()
