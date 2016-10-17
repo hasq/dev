@@ -14,8 +14,8 @@ CMD_LAST = "last"
 
 if len(sys.argv) < 4:
     msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_meth",
-            "help_pwd")
-            
+                         "help_pwd")
+
     print msg
     quit()
 
@@ -33,8 +33,10 @@ if sys.argv[1][0] == "@":
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
 
-    if msg != "" : print(msg)
-    if dn_or_raw["exitcode"] > 1: quit()
+    if msg != "":
+        print(msg)
+    if dn_or_raw["exitcode"] > 1:
+        quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
@@ -45,7 +47,7 @@ else:
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[3] if sys.argv[3] != "-" else
-        getpass.getpass(ts_msg.get_msg("mkey_ent")))
+              getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
     msg = ts_msg.get_msg("msg_err", "mkey_empt")
@@ -94,7 +96,7 @@ st = ts_lib.get_tok_status(lr, nr)
 if st == 3:
     print(ts_msg.get_msg("msg_err", "mkey_wng", token["s"]))
     quit()
-    
+
 if keys_v == "instant":
     if st != 0:
         print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))

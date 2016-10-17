@@ -14,7 +14,7 @@ CMD_LAST = "last"
 
 if len(sys.argv) < 4:
     msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_keys",
-            "help_pwd")
+                         "help_pwd")
     print msg
     quit()
 
@@ -31,9 +31,10 @@ if sys.argv[1][0] == "@":
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
-
-    if msg != "" : print(msg)
-    if dn_or_raw["exitcode"] > 1: quit()
+    if msg != "":
+        print(msg)
+    if dn_or_raw["exitcode"] > 1:
+        quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
@@ -47,7 +48,7 @@ else:
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
 master_key = (sys.argv[3] if sys.argv[3] != "-" else
-        getpass.getpass(ts_msg.get_msg("mkey_ent")))
+              getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
     msg = ts_msg.get_msg("msg_err", "mkey_empt")
@@ -67,10 +68,11 @@ if sys.argv[2][0] == "@":
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if tmp_keys["exitcode"] == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
+    if msg != "":
+        print(msg)
+    if tmp_keys["exitcode"] > 1:
+        quit()
 
-    if msg != "" : print(msg)
-    if tmp_keys["exitcode"] > 1: quit()
-        
     raw_key = tmp_keys["data"]
 elif sys.argv[2] != "-":
     raw_key = ts_lib.get_clear_data(sys.argv[2])
@@ -108,7 +110,8 @@ nr = ts_lib.get_rec(
 st = ts_lib.get_tok_status(lr, nr)
 asgmt_key = ts_lib.get_asgmt_key(raw_key)
 
-if asgmt_key["n"] == -1: asgmt_key["n"] = lr["n"] 
+if asgmt_key["n"] == -1:
+    asgmt_key["n"] = lr["n"]
 
 prc = asgmt_key.get("prc")
 
@@ -119,15 +122,15 @@ if st == 0:
     print ts_msg.get_msg("msg_err", "rcv_err0", token["s"])
     quit()
 elif st == 3:
-    if not prc in [ts_lib.INSTANT_CODE, ts_lib.INSTANT_CODE_N,
-            ts_lib.ONHOLD_CODE, ts_lib.ONHOLD_CODE]:
+    if prc not in [ts_lib.INSTANT_CODE, ts_lib.INSTANT_CODE_N,
+                   ts_lib.ONHOLD_CODE, ts_lib.ONHOLD_CODE]:
         print ts_msg.get_msg("msg_err", "rcv_err1", token["s"])
         quit()
 elif st == 2:
-    if not prc in [ts_lib.RELEASE_S_CODE, ts_lib.RELEASE_S_CODE_N]:
+    if prc not in [ts_lib.RELEASE_S_CODE, ts_lib.RELEASE_S_CODE_N]:
         print ts_msg.get_msg("msg_err", "rcv_err2", prc, token["s"])
         quit()
-elif not prc in [ts_lib.RELEASE_R_CODE, ts_lib.RELEASE_R_CODE_N]:
+elif prc not in [ts_lib.RELEASE_R_CODE, ts_lib.RELEASE_R_CODE_N]:
     print ts_msg.get_msg("msg_err", "rcv_err2", prc, token["s"])
     quit()
 
@@ -147,11 +150,9 @@ http_rqst1 = ts_lib.get_spaced_concat(
         title_rec.get("k1"),
         title_rec.get("g1"),
         title_rec.get("o1"))
-        
-if prc in ([ts_lib.INSTANT_CODE,
-        ts_lib.INSTANT_CODE_N,
-        ts_lib.RELEASE_R_CODE,
-        ts_lib.RELEASE_R_CODE_N]):
+
+if prc in ([ts_lib.INSTANT_CODE, ts_lib.INSTANT_CODE_N, ts_lib.RELEASE_R_CODE,
+           ts_lib.RELEASE_R_CODE_N]):
     http_rqst2 = ts_lib.get_spaced_concat(
             CMD_ADD,
             "*",
@@ -164,7 +165,7 @@ if prc in ([ts_lib.INSTANT_CODE,
 else:
     http_rqst2 = ""
 
- 
+
 # elif prc == ts_lib.ONHOLD_CODE or prc == ts_lib.ONHOLD_CODE_N:
 # elif prc == ts_lib.RELEASE_S_CODE or prc == ts_lib.RELEASE_S_CODE_N:
 # elif prc == ts_lib.RELEASE_R_CODE_N or prc == ts_lib.RELEASE_R_CODE_N:
@@ -187,5 +188,5 @@ if bool(http_rqst2):
         quit()
     else:
         print ts_msg.get_msg("srv_rep", http_resp)
-        
+
 quit()

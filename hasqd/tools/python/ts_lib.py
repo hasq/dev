@@ -7,7 +7,6 @@ import sys
 import urllib2
 import ts_msg
 
-
 INSTANT_CODE = "23132"
 INSTANT_CODE_N = "123132"
 ONHOLD_CODE = "23141"
@@ -17,14 +16,17 @@ RELEASE_S_CODE_N = "1231"
 RELEASE_R_CODE = "232"
 RELEASE_R_CODE_N = "1232"
 
+
 def get_rmd160(data):
     r = hashlib.new("ripemd160")
     r.update(data)
     return r.hexdigest()
 
+
 def is_hex(data):
     return not re.search("[^0-9a-f]", data)
-        
+
+
 def get_hash(data, hash_name):
     hash_dict = {
         "wrd": lambda x: hashlib.md5(x).hexdigest()[:4],
@@ -32,13 +34,15 @@ def get_hash(data, hash_name):
         "r16": lambda x: get_rmd160(x),
         "s22": lambda x: hashlib.sha256(x).hexdigest(),
         "s25": lambda x: hashlib.sha512(x).hexdigest(),
-        "smd": lambda x: hashlib.md5(hashlib.sha256(x).hexdigest()).hexdigest(),
+        "smd": lambda x: (hashlib.md5(
+                          hashlib.sha256(x).hexdigest()).hexdigest())
     }
 
     try:
         return hash_dict[hash_name](data)
     except:
         return None
+
 
 def is_hash(data, hash_name):
     hash_dict = {
@@ -53,11 +57,12 @@ def is_hash(data, hash_name):
     is_not_hex = lambda x: re.search("[^0-9a-f]", x)
 
     try:
-        r = (hash_dict[hash_name](data) and not is_not_hex(data))
+        r = hash_dict[hash_name](data) and not is_not_hex(data)
     except:
         r = None
 
     return r
+
 
 def get_tok_hash(data, hash_name):
     f = is_hash(data, hash_name)
@@ -71,6 +76,7 @@ def get_tok_hash(data, hash_name):
 
     return r
 
+
 def get_spaced_concat(*args):
     r = ""
     l = len(args)
@@ -83,11 +89,14 @@ def get_spaced_concat(*args):
 
     return r
 
+
 def get_key(n, s, p, m, hash_name):
     n = str(n)
-    raw_key = get_spaced_concat(n, s, p, m) if m else get_spaced_concat(n, s, p)
+    raw_key = (get_spaced_concat(n, s, p, m)
+               if m else get_spaced_concat(n, s, p))
 
     return get_hash(raw_key, hash_name)
+
 
 def get_rec(n, s, p, m, hash_name):
     n0 = int(n)
@@ -114,16 +123,22 @@ def get_rec(n, s, p, m, hash_name):
 
     return r
 
+
 def is_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
 
+
 def is_binary_file(filename):
-    textchars = bytearray({7,8,9,10,12,13,27} | set(range(0x20, 0x100)) - {0x7f})
+    textchars = bytearray(
+            {7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)) - {0x7f}
+    )
     is_binary_string = lambda bytes: bool(bytes.translate(None, textchars))
+
     return is_binary_string
 
+
 def get_token_obj(data, hash_name):
-    tok = {"s" : "", "r" : ""}
+    tok = {"s": "", "r": ""}
 
     tok["s"] = get_tok_hash(data, hash_name) if bool(data) else ""
 
@@ -131,6 +146,7 @@ def get_token_obj(data, hash_name):
         tok["r"] = data
 
     return tok
+
 
 def is_allowed_data(data):
     if len(data) == "":
@@ -146,6 +162,7 @@ def is_allowed_data(data):
 
     return True
 
+
 def get_clear_data(data):
     # Replaces all tabs by spaces
     # Removes all whitespaces from the end of each line
@@ -158,19 +175,28 @@ def get_clear_data(data):
 
     return data
 
+
 def get_data_to_rec_error_level(data, lim):
-    if data == "": return 1
-    if not is_allowed_data(data): return 3
+    if data == "":
+        return 1
+    if not is_allowed_data(data):
+        return 3
 
     data = get_clear_data(data)
-    if len(data) > lim: return 2
+
+    if len(data) > lim:
+        return 2
 
     fmd = get_data_to_rec(data)
 
-    if len(fmd) > lim: return 4
-    if data != get_data_from_rec(fmd): return 5
+    if len(fmd) > lim:
+        return 4
+
+    if data != get_data_from_rec(fmd):
+        return 5
 
     return 0
+
 
 def get_data_to_rec(data):
     # Replaces all backslashes (\u005c) by two backslashes
@@ -185,12 +211,14 @@ def get_data_to_rec(data):
 
     return data
 
+
 def get_data_from_rec(data):
     # returns parsed data for displaying
     # \u000a is LF
     # \u0020 is space
     # \u005c is backslash
     # \u006e is n
+
     data = data if bool(data) else ""
     bs = 0
     ln = len(data)
@@ -199,27 +227,26 @@ def get_data_from_rec(data):
     while i < ln:
         bs = bs + 1 if (data[i] == u"\u005c") else 0
 
-        if (data[i] == u"\u005c"
-                and data[i + 1] == u"\u006e"
-                and bs > 0
-                and bs % 2 == 1):
+        if (data[i] == u"\u005c" and
+                data[i + 1] == u"\u006e" and bs > 0 and bs % 2 == 1):
             data = data[:i] + u"\u000a" + data[i + 2:]
             bs = 0
             ln -= 1
 
         i += 1
 
-    #data = re.sub(r" \\(?= )", " ", data)
+    # data = re.sub(r" \\(?= )", " ", data)
     data = re.sub(ur"(\u0020\\)(?=\u0020)", u"\u0020", data)
     data = data.replace(u"\u005c\u005c", u"\u005c")
 
     return data
 
+
 def get_data_from_file(file_name):
     r = {
-        "data" : "",
-        "exitcode" : 0
-        }
+        "data": "",
+        "exitcode": 0
+    }
 
     try:
         f = open(file_name, "rb")
@@ -234,17 +261,17 @@ def get_data_from_file(file_name):
 
             if (is_allowed_data(r["data"]) and
                     r["data"] != get_clear_data(r["data"])):
-
                 r["data"] = get_clear_data(r["data"])
                 r["exitcode"] = 1 if len(r["data"]) != 0 else 2
-            
+
     return r
+
 
 def get_tok_from_cmdline(data):
     r = {
-        "data" : "",
-        "exitcode" : 0
-        }
+        "data": "",
+        "exitcode": 0
+    }
 
     if is_allowed_data(data):
         r["data"] = get_clear_data(data)
@@ -252,6 +279,7 @@ def get_tok_from_cmdline(data):
         r["exitcode"] = 2
 
     return r
+
 
 def get_response_header(data):
     r = None
@@ -270,20 +298,26 @@ def get_response_header(data):
 
     return r
 
+
 def get_job_id(data):
-    if not bool(data): return None
+    if not bool(data):
+        return None
 
     bl = re.sub("^\s+|\r|\s+$", "", data).split()
 
-    return (int(bl[1]) if len(bl) == 2 and bl[0] == "OK"
-            and int(bl[1]) >= 1000 else None)
+    return (int(bl[1]) if len(bl) == 2 and bl[0] == "OK" and
+            int(bl[1]) >= 1000 else None)
+
 
 def get_parsed_rec(data):
-    if not bool(data): return None
+    if not bool(data):
+        return None
 
     r = {}
     bl = re.sub("^OK|^\s|\r|\s+$", "", data).split()
-    if len(bl) < 5: return None
+
+    if len(bl) < 5:
+        return None
 
     r["n"] = int(bl[0])
     r["s"] = bl[1]
@@ -295,18 +329,31 @@ def get_parsed_rec(data):
     if len(bl) > 5:
         d = []
 
-        for i in range(5, len(bl)): d.append(bl[i])
+        for i in range(5, len(bl)):
+            d.append(bl[i])
 
         r["d"] = " ".join(d)
 
     return r
 
-def get_tok_status(lr, nr):
-    if lr["g"] == nr["g"] and lr["o"] == nr["o"]: return 0 #"OK"
-    if lr["g"] == nr["g"]: return 1 #"PWD_SNDNG"
-    if lr["o"] == nr["o"]: return 2 #"PWD_RCVNG"
 
-    return 3 #"PWD_WRONG"
+def get_tok_status(lr, nr):
+    # OK
+    if lr["g"] == nr["g"] and lr["o"] == nr["o"]:
+        return 0
+
+    # PWD_SNDNG
+    if lr["g"] == nr["g"]:
+
+        return 1
+
+    # PWD_RCVNG
+    if lr["o"] == nr["o"]:
+        return 2
+
+    # PWD_WRONG
+    return 3
+
 
 def get_instant_key(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
@@ -316,6 +363,7 @@ def get_instant_key(r, p, m, h, a):
     line = get_spaced_concat(line, crc, a, INSTANT_CODE)
 
     return line
+
 
 def get_onhold_key(r, p, m, h, a):
     k1 = get_key(r["n"] + 1, r["s"], p, m, h)
@@ -327,6 +375,7 @@ def get_onhold_key(r, p, m, h, a):
 
     return line
 
+
 def get_release_key(r, p, m, h, a, v):
     n = r["n"] + 1 if v == 1 else r["n"] + 2
     c = RELEASE_S_CODE if v == 1 else RELEASE_R_CODE
@@ -336,23 +385,35 @@ def get_release_key(r, p, m, h, a, v):
     line = get_spaced_concat(line, crc, a, c)
 
     return line
-    
+
+
 def is_asgmt_key(key):
-    if not bool(key): return False
-    if not is_hex(key.replace(u"\u0020", "")): return False
+    if not bool(key):
+        return False
+
+    if not is_hex(key.replace(u"\u0020", "")):
+        return False
 
     key = re.sub(u"\u0020{2,}", u"\u0020", key)
     key = re.sub("^\s+|\s+$", "", key).split()
     prc = key.pop(-1)
     prc_ch0 = prc[0]
 
-    if prc_ch0 != "1" and prc_ch0 != "2": return False
+    if prc_ch0 != "1" and prc_ch0 != "2":
+        return False
 
     is_num_rec = True if prc_ch0 == "1" else False
     prc_len = len(prc)
-    if prc_len < 3 or prc_len > 6: return False
-    if prc_len == 3 or prc_len == 4: key_qty = 3 if is_num_rec else 2
-    if prc_len == 5 or prc_len == 6: key_qty = 4 if is_num_rec else 3
+
+    if prc_len < 3 or prc_len > 6:
+        return False
+
+    if prc_len == 3 or prc_len == 4:
+        key_qty = 3 if is_num_rec else 2
+
+    if prc_len == 5 or prc_len == 6:
+        key_qty = 4 if is_num_rec else 3
+
     if (
             prc != INSTANT_CODE and
             prc != INSTANT_CODE_N and
@@ -361,14 +422,13 @@ def is_asgmt_key(key):
             prc != RELEASE_S_CODE and
             prc != RELEASE_S_CODE_N and
             prc != RELEASE_R_CODE and
-            prc != RELEASE_R_CODE_N
-            ):
+            prc != RELEASE_R_CODE_N):
         return False
-    
+
     key_crc = ""
     crc = ""
     key_len = 0
-        
+
     if len(key[-1]) == 4:
         key_crc = key.pop(-1)
         crc = get_hash("".join(key), "s22")[:4]
@@ -376,32 +436,40 @@ def is_asgmt_key(key):
         key_crc = key.pop(-2)
         key_len = len(key.pop(-1))
         crc = get_hash("".join(key), "s22")[:4]
-    
+
     ln = len(key)
-    
-    if key_crc != crc: return False
-    if ln < key_qty: return False
+
+    if key_crc != crc:
+        return False
+
+    if ln < key_qty:
+        return False
+
     if key_len == 0:
         mod = ln % key_qty
 
-        if mod != 0 and mod != 1: return False
+        if mod != 0 and mod != 1:
+            return False
 
         key_len = len(key[-1]) if mod == 0 else len(key.pop(-1))
 
     if is_num_rec:
         for i in range(0, len(key), key_qty):
-            if not key[i].isdigit(): return False
-                
+            if not key[i].isdigit():
+                return False
+
             key.pop(i)
             i -= 1
 
-    if key_len <= 0: key_len == len(key[0])
+    if key_len <= 0:
+        key_len == len(key[0])
 
     for i in range(len(key)):
         if key_len != len(key[i]):
-            return False;
+            return False
 
     return True
+
 
 def get_asgmt_key(key):
     key = re.sub(u"\u0020{2,}", u"\u0020", key)
@@ -410,25 +478,29 @@ def get_asgmt_key(key):
     prc = key.pop(-1)
     prc_ch0 = prc[0]
 
-    is_num_rec = True if prc_ch0 == "1" else False    
+    is_num_rec = True if prc_ch0 == "1" else False
     prc_len = len(prc)
 
-    if prc_len == 3 or prc_len == 4: exp_key_qty = 3 if is_num_rec else 2
-    if prc_len == 5 or prc_len == 6: exp_key_qty =  4 if is_num_rec else 3
-    
+    if prc_len == 3 or prc_len == 4:
+        exp_key_qty = 3 if is_num_rec else 2
+
+    if prc_len == 5 or prc_len == 6:
+        exp_key_qty = 4 if is_num_rec else 3
+
     if len(key[-1]) == 4:
         key.pop(-1)
     elif len(key[-2]) == 4:
         key.pop(-2)
-    
+
     asgmt_key = {}
-    
-    if len(key) % exp_key_qty == 1: key.pop(-1)
-    
-    asgmt_key["prc"] = prc;
+
+    if len(key) % exp_key_qty == 1:
+        key.pop(-1)
+
+    asgmt_key["prc"] = prc
     asgmt_key["n"] = int(key[0]) if is_num_rec else -1
     asgmt_key["s"] = key[1] if is_num_rec else key[0]
-    
+
     if prc == INSTANT_CODE or prc == INSTANT_CODE_N:
         asgmt_key["k1"] = key[2] if is_num_rec else key[1]
         asgmt_key["k2"] = key[3] if is_num_rec else key[2]
@@ -439,8 +511,9 @@ def get_asgmt_key(key):
         asgmt_key["k1"] = key[2] if is_num_rec else key[1]
     elif prc == RELEASE_R_CODE or prc == RELEASE_R_CODE_N:
         asgmt_key["k2"] = key[2] if is_num_rec else key[1]
-        
+
     return asgmt_key
+
 
 def get_title_rec(asgmt_key, p, m, h):
     title_rec = asgmt_key
