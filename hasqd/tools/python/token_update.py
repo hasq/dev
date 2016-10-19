@@ -14,8 +14,8 @@ CMD_LAST = "last"
 
 if len(sys.argv) < 4:
     msg = ts_msg.get_msg("msg_usg", sys.argv[0], "help_tok", "help_data",
-            "help_pwd")
-            
+                         "help_pwd")
+
     print msg
     quit()
 
@@ -32,9 +32,10 @@ if sys.argv[1][0] == "@":
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
-
-    if msg != "" : print(msg)
-    if dn_or_raw["exitcode"] > 1: quit()
+    if msg != "":
+        print(msg)
+    if dn_or_raw["exitcode"] > 1:
+        quit()
 else:
     dn_or_raw = ts_lib.get_tok_from_cmdline(sys.argv[1])
 
@@ -47,8 +48,8 @@ else:
         quit()
 
 token = ts_lib.get_token_obj(dn_or_raw["data"], ts_cnf.HASH_NAME)
-master_key = (sys.argv[3] if sys.argv[3] != "-"
-        else getpass.getpass(ts_msg.get_msg("mkey_ent")))
+master_key = (sys.argv[3] if sys.argv[3] != "-" else
+              getpass.getpass(ts_msg.get_msg("mkey_ent")))
 
 if master_key == "":
     msg = ts_msg.get_msg("msg_err", "mkey_empt")
@@ -76,8 +77,9 @@ new_data = ts_lib.get_data_to_rec(sys.argv[2])
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
@@ -99,12 +101,10 @@ if last_rec["d"] == new_data:
 
 new_rec = ts_lib.get_rec(
         last_rec["n"] + 1,
-        ts_lib.get_tok_hash(token["s"],
-        ts_cnf.HASH_NAME),
+        ts_lib.get_tok_hash(token["s"], ts_cnf.HASH_NAME),
         master_key,
         ts_cnf.MAGIC,
-        ts_cnf.HASH_NAME
-        )
+        ts_cnf.HASH_NAME)
 
 http_rqst = ts_lib.get_spaced_concat(
         CMD_ADD,
@@ -115,12 +115,12 @@ http_rqst = ts_lib.get_spaced_concat(
         new_rec.get("k"),
         new_rec.get("g"),
         new_rec.get("o"),
-        new_data,
-        )
+        new_data)
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()

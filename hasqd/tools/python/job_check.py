@@ -26,8 +26,9 @@ else:
 http_rqst = ts_lib.get_spaced_concat(CMD, jid)
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
 else:

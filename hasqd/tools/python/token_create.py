@@ -31,7 +31,6 @@ if sys.argv[1][0] == "@":
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if e == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
-
     if msg != "":
         print(msg)
     if e > 1:
@@ -66,22 +65,20 @@ rec_data = ("[" + ts_lib.get_data_to_rec(token["r"]) + "]"
             ts_cnf.DATALIM) == 0 else "")
 
 http_rqst = ts_lib.get_spaced_concat(
-    CMD,
-    "*",
-    ts_cnf.DB,
-    str(rec.get("n")),
-    rec.get("s"),
-    rec.get("k"),
-    rec.get("g"),
-    rec.get("o"),
-    rec_data,
-    )
-
-# print http_rqst
+        CMD,
+        "*",
+        ts_cnf.DB,
+        str(rec.get("n")),
+        rec.get("s"),
+        rec.get("k"),
+        rec.get("g"),
+        rec.get("o"),
+        rec_data)
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
 else:

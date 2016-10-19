@@ -51,7 +51,7 @@ def is_hash(data, hash_name):
         "r16": lambda x: len(x) == 40,
         "s22": lambda x: len(x) == 64,
         "s25": lambda x: len(x) == 128,
-        "smd": lambda x: len(x) == 32,
+        "smd": lambda x: len(x) == 32
     }
 
     is_not_hex = lambda x: re.search("[^0-9a-f]", x)
@@ -414,8 +414,7 @@ def is_asgmt_key(key):
     if prc_len == 5 or prc_len == 6:
         key_qty = 4 if is_num_rec else 3
 
-    if (
-            prc != INSTANT_CODE and
+    if (prc != INSTANT_CODE and
             prc != INSTANT_CODE_N and
             prc != ONHOLD_CODE and
             prc != ONHOLD_CODE_N and

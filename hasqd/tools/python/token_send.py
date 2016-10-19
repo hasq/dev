@@ -32,7 +32,6 @@ if sys.argv[1][0] == "@":
         msg = ts_msg.get_msg("msg_err", "file_empt", file_name)
     if dn_or_raw["exitcode"] == 1:
         msg = ts_msg.get_msg("msg_wrn", "file_clrd", file_name)
-
     if msg != "":
         print(msg)
     if dn_or_raw["exitcode"] > 1:
@@ -66,10 +65,9 @@ else:
 http_rqst = ts_lib.get_spaced_concat(CMD_LAST, ts_cnf.DB, token["s"])
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(
-            ts_cnf.HOST,
-            ts_cnf.PORT,
-            http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
@@ -89,8 +87,7 @@ nr = ts_lib.get_rec(
         token["s"],
         master_key,
         ts_cnf.MAGIC,
-        ts_cnf.HASH_NAME
-        )
+        ts_cnf.HASH_NAME)
 st = ts_lib.get_tok_status(lr, nr)
 
 if st == 3:
@@ -107,8 +104,7 @@ if keys_v == "instant":
             master_key,
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
-            ts_cnf.ALT_NAME,
-            )
+            ts_cnf.ALT_NAME)
 elif keys_v == "onhold":
     if st != 0:
         print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))
@@ -119,8 +115,7 @@ elif keys_v == "onhold":
             master_key,
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
-            ts_cnf.ALT_NAME
-            )
+            ts_cnf.ALT_NAME)
 
 elif keys_v == "release":
     if st == 0:
@@ -133,7 +128,6 @@ elif keys_v == "release":
             ts_cnf.MAGIC,
             ts_cnf.HASH_NAME,
             ts_cnf.ALT_NAME,
-            st
-            )
+            st)
 
 print(line)

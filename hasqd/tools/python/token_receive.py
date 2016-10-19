@@ -171,8 +171,9 @@ else:
 # elif prc == ts_lib.RELEASE_R_CODE_N or prc == ts_lib.RELEASE_R_CODE_N:
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst1)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst1)
+            ).read()
 except:
     print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     quit()
@@ -181,8 +182,9 @@ else:
 
 if bool(http_rqst2):
     try:
-        http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                    ts_cnf.PORT, http_rqst2)).read()
+        http_resp = urllib2.urlopen(
+                "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst2)
+                ).read()
     except:
         print ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
         quit()

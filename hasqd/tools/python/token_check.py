@@ -70,8 +70,9 @@ if master_key == "":
 http_rqst = ts_lib.get_spaced_concat(CMD, ts_cnf.DB, token["s"])
 
 try:
-    http_resp = urllib2.urlopen("http://{}:{}/{}".format(ts_cnf.HOST,
-                                ts_cnf.PORT, http_rqst)).read()
+    http_resp = urllib2.urlopen(
+            "http://{}:{}/{}".format(ts_cnf.HOST, ts_cnf.PORT, http_rqst)
+            ).read()
 except:
     msg = ts_msg.get_msg("msg_err", "srv_err", ts_cnf.HOST, ts_cnf.PORT)
     print msg
@@ -90,8 +91,7 @@ else:
                 token["s"],
                 master_key,
                 ts_cnf.MAGIC,
-                ts_cnf.HASH_NAME
-                )
+                ts_cnf.HASH_NAME)
 
         if ts_lib.get_tok_status(lr, nr) == 0:
             print(ts_msg.get_msg("mkey_ok"))
