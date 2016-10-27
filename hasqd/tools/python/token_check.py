@@ -93,11 +93,11 @@ else:
                 ts_cnf.MAGIC,
                 ts_cnf.HASH_NAME)
 
-        if ts_lib.get_tok_status(lr, nr) == 0:
+        if ts_lib.get_tok_status(lr, nr) == 1:
             print(ts_msg.get_msg("mkey_ok"))
-        elif ts_lib.get_tok_status(lr, nr) == 1:
-            print(ts_msg.get_msg("mkey_snd"))
         elif ts_lib.get_tok_status(lr, nr) == 2:
+            print(ts_msg.get_msg("mkey_snd"))
+        elif ts_lib.get_tok_status(lr, nr) == 3:
             print(ts_msg.get_msg("mkey_rcv"))
         else:
             print(ts_msg.get_msg("mkey_bad"))

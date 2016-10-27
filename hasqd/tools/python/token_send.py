@@ -90,12 +90,12 @@ nr = ts_lib.get_rec(
         ts_cnf.HASH_NAME)
 st = ts_lib.get_tok_status(lr, nr)
 
-if st == 3:
+if st == 4:
     print(ts_msg.get_msg("msg_err", "mkey_wng", token["s"]))
     quit()
 
 if keys_v == "instant":
-    if st != 0:
+    if st != 1:
         print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))
         quit()
 
@@ -106,7 +106,7 @@ if keys_v == "instant":
             ts_cnf.HASH_NAME,
             ts_cnf.ALT_NAME)
 elif keys_v == "onhold":
-    if st != 0:
+    if st != 1:
         print(ts_msg.get_msg("msg_err", "snd_err0", token["s"]))
         quit()
 
@@ -118,7 +118,7 @@ elif keys_v == "onhold":
             ts_cnf.ALT_NAME)
 
 elif keys_v == "release":
-    if st == 0:
+    if st == 1:
         print(ts_msg.get_msg("msg_err", "snd_err1", token["s"]))
         quit()
 

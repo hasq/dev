@@ -340,19 +340,18 @@ def get_parsed_rec(data):
 def get_tok_status(lr, nr):
     # OK
     if lr["g"] == nr["g"] and lr["o"] == nr["o"]:
-        return 0
+        return 1
 
     # PWD_SNDNG
     if lr["g"] == nr["g"]:
-
-        return 1
+        return 2
 
     # PWD_RCVNG
     if lr["o"] == nr["o"]:
-        return 2
+        return 3
 
     # PWD_WRONG
-    return 3
+    return 4
 
 
 def get_instant_key(r, p, m, h, a):

@@ -118,15 +118,15 @@ prc = asgmt_key.get("prc")
 # 0 - "OK"
 # 1 - "PWD_SNDNG"
 # 2 - "PWD_RCVNG"
-if st == 0:
+if st == 1:
     print ts_msg.get_msg("msg_err", "rcv_err0", token["s"])
     quit()
-elif st == 3:
+elif st == 4:
     if prc not in [ts_lib.INSTANT_CODE, ts_lib.INSTANT_CODE_N,
                    ts_lib.ONHOLD_CODE, ts_lib.ONHOLD_CODE]:
         print ts_msg.get_msg("msg_err", "rcv_err1", token["s"])
         quit()
-elif st == 2:
+elif st == 3:
     if prc not in [ts_lib.RELEASE_S_CODE, ts_lib.RELEASE_S_CODE_N]:
         print ts_msg.get_msg("msg_err", "rcv_err2", prc, token["s"])
         quit()
