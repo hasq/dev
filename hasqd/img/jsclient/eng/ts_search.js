@@ -1,5 +1,7 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+'use strict';
+
 function engSearchClick(fromDate, toDate, progr)
 {
 
@@ -35,7 +37,7 @@ function engSearchStart(fromDate, toDate, progr)
         for (var i in w)
         {
             var x = w[i];
-            if ( x.state == 0 )
+            if ( x.status == 0 )
                 searchValidate1(x.s);
         }
     };
@@ -150,7 +152,7 @@ function processDates()
 
 function searchSliceBad(data)
 {
-    return data.length < 12 || data.substr(0, 12) == gResponse.REQ_PATH_BAD;
+    return data.length < 12 || data.substr(0, 12) == HASQD_RESP.REQ_PATH_BAD;
 }
 
 function searchCacheCall(name)
@@ -255,17 +257,17 @@ function searchProcessRec(srec)
 
     var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
 
-    var st = engGetTokensStatus(lr, nr);
+    var st = engGetTokStatus(lr, nr);
 
     ///console.log("searchProcessRec [" + srec + "] -> " + st);
 
-    if ( st == "PWD_WRONG" ) return;
+    if ( st == 4 ) return;
 
     var r = {};
     r.s = nr.s;
     r.n = lr.n;
     r.raw = "";
-    r.state = 0;
+    r.status = 0;
 
     var v = gWallet;
 
@@ -294,25 +296,17 @@ function searchValidate2(dn, data)
 
     var lr = engGetParsedRecord(data);
     var nr = engGetRecord(lr.n, lr.s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
-    var st = engGetTokensStatus(lr, nr);
+    var st = engGetTokStatus(lr, nr);
 
     var res = gWallet[dn];
     res.n = lr.n;
-
-    switch (st)
-    {
-        case 'OK':        res.state = 1; break;
-        case 'PWD_SNDNG': res.state = 2; break;
-        case 'PWD_RCVNG': res.state = 3; break;
-        case 'PWD_WRONG': res.state = 4; break;
-    }
-
+    res.status = st;
     gSearch.o.progr.refresh();
 
     var cb = function (resp, record)
     {
-        if (resp !== 'OK' && resp !== gResponse.NO_RECS)
-            widModalWindow(gResponse[resp]);
+        if (resp !== 'OK' && resp !== HASQD_RESP.NO_RECS)
+            widModalWindow(HASQD_RESP[resp]);
 
         else if (resp === 'OK' && record !== null)
         {

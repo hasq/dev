@@ -577,32 +577,32 @@ function widCreateTokens($obj, tokens)
 function widAddVerifyTR(rec, statePic)
 {
     var $Table = $('#table_verify');
-    var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>' + '&nbsp;' + rec.state;
+    var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>' + '&nbsp;' + rec.status;
     var tr = widGetHTMLTr(widGetHTMLTd(pic) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
 
     $Table.append(tr);
 }
 
-function widGetTokenStateImg(status)
+function widGetTokenStatusImg(status)
 {
     // Returns an image source and title displaying tokens/password state
     var r = {};
     console.log(status)
     switch (status)
     {
-        case 'OK':
+        case 1:
             r.img = imgPwdOk;
             r.title = gTokStateMsg.ok;
             break;
-        case 'PWD_SNDNG':
+        case 2:
             r.img = imgPwdSndng;
             r.title = gTokStateMsg.sending;
             break;
-        case 'PWD_RCVNG':
+        case 3:
             r.img = imgPwdRcvng;
             r.title = gTokStateMsg.receiving;
             break;
-        case 'PWD_WRONG':
+        case 4:
             r.img = imgPwdWrong;
             r.title = gTokStateMsg.wrong;
             break;
@@ -668,7 +668,7 @@ function widVerifyTokens($obj, tokens)
         if (glTokList.unfit)
             widWarningLed($obj, imgMsgWarning, gMsg.someUnavailable);
 
-        var lineLed = widGetTokenStateImg(glTokList.items[idx].state);
+        var lineLed = widGetTokenStatusImg(glTokList.items[idx].status);
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
         if (!(cmdIdx + 1 < glCmdList.items.length))
@@ -784,7 +784,7 @@ function widPreUpdate($obj, click)
     var d = $obj.closest('.wrap').find('input').val();
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             led($obj).set(imgMsgBlink, msg);
@@ -827,7 +827,7 @@ function widUpdateTokens($obj, data, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state == 'OK' && items[i].d != data)
+        if (items[i].status == 'OK' && items[i].d != data)
         {
             var n = +items[i].n + 1;
             var s = items[i].s;
@@ -865,30 +865,30 @@ function widUpdateTokens($obj, data, items)
     engRunCmdList(glCmdList, cb);
 }
 
-function widUpgradeAcceptKeys($obj, acceptKeys, func)
+function widUpgradeAsgmtKeys($obj, asgmtKeys, func)
 {
-    //if acceptKeys not contains numbers of records , makes 'last' and update acceptKeys records numbers;
+    //if asgmtKeys not contains numbers of records , makes 'last' and update asgmtKeys records numbers;
     glCmdList.clear();
-    var prCode = acceptKeys[0].prcode;
+    var prCode = asgmtKeys[0].prcode;
 
     if (prCode.charAt(0) === '2' && glTokList.items.length === 0)
     {
         var extCb = function ()
         {
-            widUpgradeAcceptKeys($obj, acceptKeys, func);
+            widUpgradeAsgmtKeys($obj, asgmtKeys, func);
         }
 
-        return widFillOutTokList($obj, acceptKeys, extCb);
+        return widFillOutTokList($obj, asgmtKeys, extCb);
     }
     else if (prCode.charAt(0) === '2' && glTokList.items.length > 0)
     {
-        if (acceptKeys.length !== glTokList.items.length)
+        if (AsgmtKeys.length !== glTokList.items.length)
             return widDone($obj, gMsg.keysError);
 
-        acceptKeys = engGetNumberedAcceptKeys(acceptKeys, glTokList.items);
+        asgmtKeys = engGetNumberedAsgmtKeys(AsgmtKeys, glTokList.items);
     }
 
-    var titleRecord = engGetTitleRecord(acceptKeys, gPassword, gCurrentDB.hash, gCurrentDB.magic);
+    var titleRecord = engGetTitleRecord(AsgmtKeys, gPassword, gCurrentDB.hash, gCurrentDB.magic);
     var f = function ()
     {
         func($obj, titleRecord);
@@ -902,7 +902,7 @@ function widPreSimpleSend($obj)
     widCleanUI($obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
 
@@ -959,7 +959,7 @@ function widSimpleSend($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state == 'OK')
+        if (items[i].status == 'OK')
         {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -990,9 +990,9 @@ function widSimpleSend($obj, items)
 function widPreSimpleReceive($obj, click)
 {
     led($obj).clear();
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
@@ -1005,10 +1005,10 @@ function widPreSimpleReceive($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widSimpleReceive);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widSimpleReceive);
 }
 
 function widSimpleReceive($obj, titleRecord)
@@ -1065,7 +1065,7 @@ function widPreSimpleRequest($obj)
     widCleanUI($obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             msg = gMsg.allAvailable;
@@ -1111,7 +1111,7 @@ function widSimpleRequest($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state === 'PWD_WRONG')
+        if (items[i].status === 4)
         {
             k3 = engGetKey(items[i].n + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k4 = engGetKey(items[i].n + 4, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1155,9 +1155,9 @@ function widPreSimpleAccept($obj, click)
 {
     led($obj).clear();
 
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
@@ -1170,11 +1170,11 @@ function widPreSimpleAccept($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
 
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widSimpleAccept);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widSimpleAccept);
 }
 
 function widSimpleAccept($obj, titleRecord)
@@ -1244,7 +1244,7 @@ function widPreBlockingSendStep1($obj)
 
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             led($obj).set(imgMsgBlink, msg);
@@ -1302,7 +1302,7 @@ function widBlockingSendStep1($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state === 'OK')
+        if (items[i].status === 'OK')
         {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1337,7 +1337,7 @@ function widPreBlockingSendStep2($obj)
     widCleanUI($obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             msg = gMsg.allAvailable;
@@ -1389,7 +1389,7 @@ function widBlockingSendStep2($obj, items)
 {
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state === 'PWD_SNDNG')
+        if (items[i].status === 2)
         {
             //include only tokens in sending state;
             var n0 = items[i].n;
@@ -1435,9 +1435,9 @@ function widBlockingSendStep2($obj, items)
 function widPreBlockingReceiveStep1($obj, click)
 {
     led($obj).clear();
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
@@ -1450,23 +1450,18 @@ function widPreBlockingReceiveStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep1);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingReceiveStep1);
 }
 
 function widBlockingReceiveStep1($obj, titleRecord)
 {
-    var n1,
-        s,
-        k1,
-        g1,
-        o1,
-        addCmd;
     var enc = $('#input_tokens_encrypt').prop('checked');
+    var n1, s, k1, g1, o1, addCmd;
 
-    for (var i = 0; i < titleRecord.length; i++)
+    for (let i = 0; i < titleRecord.length; i++)
     {
         n1 = titleRecord[i].n1;
         s = titleRecord[i].s;
@@ -1497,9 +1492,9 @@ function widPreBlockingReceiveStep2($obj, click)
 {
     led($obj).clear();
 
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword)
@@ -1512,11 +1507,11 @@ function widPreBlockingReceiveStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
 
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingReceiveStep2);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingReceiveStep2);
 }
 
 function widBlockingReceiveStep2($obj, titleRecord)
@@ -1563,7 +1558,7 @@ function widPreBlockingRequestStep1($obj)
 
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             msg = gMsg.allAvailable;
@@ -1615,7 +1610,7 @@ function widBlockingRequestStep1($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state === 'PWD_WRONG')
+        if (items[i].status === 4)
         {
             n0 = items[i].n;
             k3 = engGetKey(n0 + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1638,11 +1633,11 @@ function widBlockingRequestStep1($obj, items)
 
     if (closestTextArea($obj).val().length > 0)
     {
-        var rawAcceptKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
-        line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1251';
+        var rawAsgmtKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
+        line = engGetHash(rawAsgmtKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1251';
 
         if (0)
-            line = engGetHash(rawAcceptKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '251';
+            line = engGetHash(rawAsgmtKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '251';
 
         closestTextArea($obj).add(line);
         msg = gMsg.ok;
@@ -1660,7 +1655,7 @@ function widPreBlockingRequestStep2($obj)
 
     var msg = gMsg.wait;
 
-    switch (glTokList.state())
+    switch (glTokList.status())
     {
         case true:
             msg = gMsg.allAvailable;
@@ -1715,10 +1710,10 @@ function widBlockingRequestStep2($obj, items)
 
     for (var i = 0; i < items.length; i++)
     {
-        if (items[i].state === 'PWD_RCVNG')
+        if (items[i].status === 3)
         {
-            s = items[i].s
-                n0 = items[i].n;
+            s = items[i].s;
+            n0 = items[i].n;
             k2 = engGetKey(n0 + 2, s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             g1 = engGetKey(n0 + 2, s, k2, gCurrentDB.magic, gCurrentDB.hash);
             k3 = engGetKey(n0 + 3, s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1763,9 +1758,9 @@ function widPreBlockingAcceptStep1($obj, click)
 {
     led($obj).clear();
 
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
@@ -1778,11 +1773,11 @@ function widPreBlockingAcceptStep1($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep1);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingAcceptStep1);
 }
 
 function widBlockingAcceptStep1($obj, titleRecord)
@@ -1827,9 +1822,9 @@ function widPreBlockingAcceptStep2($obj, click)
 {
     led($obj).clear();
 
-    var rawAcceptKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
 
-    if (!engIsAcceptKeys(rawAcceptKeys))
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
         return widDone($obj, gMsg.badKeys);
 
     if (!widIsPassword())
@@ -1842,11 +1837,11 @@ function widPreBlockingAcceptStep2($obj, click)
     glTokList.clear();
 
     var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var acceptKeys = engGetParsedAcceptKeys(rawAcceptKeys);
-    tok = engGetDnOrRawList(engGetDnList(acceptKeys), engGetRawList(tok), gCurrentDB.hash);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeAcceptKeys($obj, acceptKeys, widBlockingAcceptStep2);
+    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingAcceptStep2);
 }
 
 function widBlockingAcceptStep2($obj, titleRecord)

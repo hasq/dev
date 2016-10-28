@@ -1,143 +1,124 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function textArea($textarea)
-{
-    var Obj =
-    {
-        add : function (data)
-        {
-            return this.val(this.val() + data);
+function textArea($textarea) {
+    return {
+        add: function (data) {
+            var _this = this;
+
+            return _this.val(_this.val() + data);
         },
-        clear : function ()
-        {
-            return this.val('');
+        clear: function () {
+            var _this = this;
+
+            return _this.val('');
         },
-        clearExcept : function ($exceptTextarea)
-        {
-            return $('textarea').not($exceptTextarea).val('');
+        clearExcept: function ($exceptTextarea) {
+            return $('textarea')
+                .not($exceptTextarea)
+                .val('');
         },
-        val : function (data)
-        {
-            if (typeof(data) !== 'undefined' && typeof(data) !== 'null')
-                $textarea.val(data);
-            else
-                return $textarea.val();
+        val: function (data) {
+            return (['undefined', 'null'].indexOf(typeof(data)) === -1)
+                ? $textarea.val(data)
+                : $textarea.val();
         }
     }
-
-    return Obj;
 }
 
+function widSelectAndCopy($Obj) {
+    var selectedText;
 
-function widSelectAndCopy($Obj)
-{
     $Obj.select();
-    var selectedText = window.getSelection().toString();
 
-    try
-    {
-        var successful = document.execCommand('copy');
-        var msg = successful ? 'successful' : 'unsuccessful';
-    }
-    catch (err)
-    {
-    }
+    selectedText = window.getSelection().toString();
+
+    try {
+        let successful = document.execCommand('copy');
+        let msg = successful ? 'successful' : 'unsuccessful';
+    } catch (err) {}
 }
 
-function widDatePickerInit()
-{
-    $('#input_from_datepicker').datepicker(
-    {
-        dateFormat : 'yy/mm/dd',
-        minDate : new Date(2016, 0, 1),
-        maxDate : new Date(),
-        showMonthAfterYear : true,
-        showOtherMonths : true,
-        selectOtherMonths : true,
-        changeMonth : true,
-        changeYear : true,
-        onClose : function (selectedDate)
-        {
+function widDatePickerInit() {
+    $('#input_from_datepicker').datepicker({
+        dateFormat: 'yy/mm/dd',
+        minDate: new Date(2016, 0, 1),
+        maxDate: new Date(),
+        showMonthAfterYear: true,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        onClose: function (selectedDate) {
             $('#input_to_datepicker')
-            .datepicker('option', 'minDate', selectedDate);
+                .datepicker('option', 'minDate', selectedDate);
         }
-    }
-    );
+    });
 
-    $('#input_to_datepicker').datepicker(
-    {
-        dateFormat : 'yy/mm/dd',
-        minDate : new Date(2016, 0, 1),
-        maxDate : new Date(),
-        showMonthAfterYear : true,
-        showOtherMonths : true,
-        selectOtherMonths : true,
-        changeMonth : true,
-        changeYear : true,
-        onClose : function (selectedDate)
-        {
+    $('#input_to_datepicker').datepicker({
+        dateFormat: 'yy/mm/dd',
+        minDate: new Date(2016, 0, 1),
+        maxDate: new Date(),
+        showMonthAfterYear: true,
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        onClose: function (selectedDate) {
             $('#input_from_datepicker')
-            .datepicker('option', 'maxDate', selectedDate);
+                .datepicker('option', 'maxDate', selectedDate);
         }
-    }
-    );
+    });
 
     $('#input_from_datepicker')
         .attr('maxlength', '10')
         .datepicker('setDate', new Date());
 
-    $('#input_to_datepicker')
-        .attr('maxlength', '10')
+    $('#input_to_datepicker').attr('maxlength', '10')
         .datepicker('setDate', new Date());
 }
 
-function widShowHidePassword()
-{
-    $('#input_show_hide_checkbox').click(function ()
-    {
+function widShowHidePassword() {
+    $('#input_show_hide_checkbox').click(function () {
         (this.checked)
             ? $('.password').attr('type', 'text')
             : $('.password').attr('type', 'password');
     });
 }
 
-function widModalWindow(msg, func)
-{
- //var $Window = $('#div_modal_window_content');
+function widModalWindow(msg, func) {
     var $Window = $('#div_modal_window');
     var $Content = $('#div_modal_window_content');
     var width = $('body').outerWidth();
+    var click, esc;
+
     $Content.width(width);
-    var click = function()
-    {
+
+    click = function () {
         $Window.find('p').empty();
         $Window.css('display', 'none');
 
-        if (func) func();
+        if (Boolean(func)) {
+            func();
+        }
 
         $Window.off('click');
         $(document).off('keyup');
         $(window).off('beforeunload');
     };
 
-    var esc = function(e)
-    {
-        if (e.keyCode == 27)
-            click();
+    esc = function (e) {
+        e.keyCode == 27 && click();
     }
 
-    $Window.click(function()
-    {
+    $Window.click(function () {
         click();
     });
 
-    $(document).keyup(function(event)
-    {
+    $(document).keyup(function (event) {
         esc(event);
     });
 
-    $(window).on('beforeunload', function()
-    {
+    $(window).on('beforeunload', function () {
         return 'Do you realy wont to leave this page?'
     });
 
@@ -145,106 +126,106 @@ function widModalWindow(msg, func)
     $Window.find('p').html(msg);
 }
 
-function widHelpMessageBox ($Obj)
-{
+function widHelpMessageBox($Obj) {
     var str = $Obj.html();
 
-    if (str[0] !== '<')
+    if (str[0] !== '<') {
         str = str
-                .replace(/\s/g, '_')
-                .replace(/[^A-Za-z09_]/g, '')
-                .toLowerCase();
-        else
-            str = $Obj.find('span').attr('id');
+            .replace(/\s/g, '_')
+            .replace(/[^A-Za-z09_]/g, '')
+            .toLowerCase();
+    } else {
+        str = $Obj.find('span').attr('id');
+    }
 
     return widModalWindow(gHelp(str));
 }
 
-function widSetDefaultDb(hash)
-{
-    // Searching for database and save it in variable.
-    var cb = function (resp, db)
-    {
-        if (resp === gResponse.OK && db.length !== 0)
-            gCurrentDB = engGetDbByHash (db, hash);
-        else
+// Searching for database and save it in variable.
+function widSetDefaultDb(hash) {
+    var cb = function (resp, db) {
+        if (resp === HASQD_RESP.OK && db.length !== 0) {
+            gCurrentDB = engGetDbByHash(db, hash);
+        } else {
             widModalWindow(gMsg.badDataBase);
+        }
     }
 
     engNcInfoDb(cb);
 }
 
-function widShowPwdGuessTime(d)
-{
-    // Shows password guess time
+// Shows password guess time
+function widShowPwdGuessTime(d) {
     var $Zxcvbn = $('#span_password_zxcvbn');
+
     return (d) ? $Zxcvbn.html(d) : $Zxcvbn.empty();
 }
 
-function widShowTokenName(tok)
-{
-    // Shows token raw name (if the value is not a default hash)
+function widShowTokName(tok) {
+// Shows token raw name (if the value is not a default hash)
     var $TokName = $('#textarea_token_name');
     var possibleRaw = engGetClearData($TokName.val());
 
-    if (arguments.length === 0) return $TokName.empty();
-    if (tok.s === engGetHash(possibleRaw, gCurrentDB.hash)) return;
+    if (arguments.length === 0) {
+        return $TokName.empty();
+    }
+
+    if (tok.s === engGetHash(possibleRaw, gCurrentDB.hash)) {
+        return;
+    }
 
     return (tok.s === engGetHash(tok.raw, gCurrentDB.hash))
-            ? $TokName.val(tok.raw)
-            : $TokName.val(tok.s);
+        ? $TokName.val(tok.raw)
+        : $TokName.val(tok.s);
 }
 
-function widShowTokenHash(dn)
-{
-    // Shows hashed value of token (if the value is not a default hash)
+// Shows hashed value of token (if the value is not a default hash)
+function widShowTokHash(dn) {
     var $TokHash = $('#td_token_hash');
 
-    if (arguments.length == 0)
+    if (arguments.length == 0) {
         return $TokHash.empty();
-    else if (dn === null)
+    } else if (dn === null) {
         return $TokHash.html(gMsg.badTokenName);
+    }
 
     $TokHash.html(engGetTokenHash(dn, gCurrentDB.hash));
 }
 
-
-function widShowTokenState() // Shows message or image about tokens existense.
+function widShowTokStatus() // Shows message or image about tokens existense.
 {
     var $Pic = $('#span_token_lock img');
+
     $Pic
         .removeAttr('src')
         .removeProp('title')
         .hide();
 
-    var Obj =
-    {
-        show : function (d)
-        {
-            if (d === gResponse.IDX_NODN)
+    return {
+        show: function (d) {
+            if (d === HASQD_RESP.IDX_NODN) {
                 return $Pic
-                        .attr('src', imgLockOpen)
-                        .prop('title', 'No such token')
-                        .show();
+                    .attr('src', imgLockOpen)
+                    .prop('title', 'No such token')
+                    .show();
+            }
 
-            if (d === gResponse.OK)
+            if (d === HASQD_RESP.OK) {
                 return $Pic
-                        .attr('src', imgLockClosed)
-                        .prop('title', 'Token exists')
-                        .show();
+                    .attr('src', imgLockClosed)
+                    .prop('title', 'Token exists')
+                    .show();
+            }
 
             return $Pic
-                    .attr('src', imgMsgWait)
-                    .prop('title', 'Searching for token...')
-                    .show();
+                .attr('src', imgMsgWait)
+                .prop('title', 'Searching for token...')
+                .show();
         }
     }
-
-    return Obj;
 }
 
-function widShowLog(text)
-{
+function widShowLog(text) {
     // Shows messages in log
     var $Log = $('#' + 'div_log_area');
 
@@ -252,168 +233,160 @@ function widShowLog(text)
     $Log.html(text);
 }
 
-function widIsPassword()
-{
+function widIsPassword() {
     return ($('#input_password').val().length > 0);
 }
 
-function widIsTokenText()
-{
+function widIsTokenText() {
     return ($('#textarea_token_name').val().length > 0);
 }
 
-function engGetTokenHash(data, hash)
-{
-    //Returns hash of raw tokens value;
+//Returns hash of raw tokens value;
+function engGetTokenHash(data, hash) {
     return (engIsHash(data, hash)) ? data : engGetHash(data, hash);
 }
 
-function widGetTokenStateImg(status)
-{
-    // Returns an image displaying the password match
+// Returns an image displaying the password match
+function widGetImgOfTokStatus(status) {
     var r = {};
 
-    switch (status)
-    {
-        case 'OK':
+    switch (status) {
+        case 1:
             r.img = imgPwdOk;
             r.title = 'OK';
             break;
-        case 'PWD_SNDNG':
+        case 2:
             r.img = imgPwdSndng;
             r.title = 'Token is locked (sending)';
             break;
-        case 'PWD_RCVNG':
+        case 3:
             r.img = imgPwdRcvng;
             r.title = 'Token is locked (receiving)';
             break;
-        case 'PWD_WRONG':
+        case 4:
             r.img = imgPwdWrong;
             r.title = 'Token is locked (wrong password)';
             break;
         default:
-                r.img = imgPwdDummy;
+            r.img = imgPwdDummy;
             r.title = '';
             break;
     }
+
     return r;
 }
 
-function widShowPwdInfo(status)
-{
-    // Shows an image displaying the password match
+// Shows an image displaying the password match
+function widShowPwdInfo(status) {
     var $Span = $('#span_password_pic');
-    var r = widGetTokenStateImg(status);
+    var r = widGetImgOfTokStatus(status);
 
     $Span.find('img').attr('src', r.img).prop('title', r.title);
 }
 
-function widGetPwdGuessTime(pwd)
-{
+function widGetPwdGuessTime(pwd) {
     // Returns guess time of specified password
     return (pwd)
-        ? ('Guess time: ' + zxcvbn(pwd).
-            crack_times_display.offline_slow_hashing_1e4_per_second)
+        ? 'Guess time: ' + zxcvbn(pwd)
+            .crack_times_display
+            .offline_slow_hashing_1e4_per_second
         : undefined;
 }
 
-function widToggleUI(lr, pwd)
-{
-    var tokState = lr.state;
-    var tokData = lr.d;
-
+function widBlockUI() {
     widCreateTab().disable(true);
     widSetDataTab().disable(true);
     widSetDataTab().readonly(true);
     widReceiveTab().disable(true);
     widShowKeysTab().disable(true);
+    widSearchTab().disable(true);
+}
 
-    (pwd) ? widSearchTab().disable(false) : widSearchTab().disable(true);
+function widToggleUI(tok, pwd) {
+    var status = tok.status;
 
-    if (typeof tokState === 'undefined')
-    {
-        widSetDataTab().val('');
+    widBlockUI();
+    (pwd && !gNonValid)
+        ? widSearchTab().disable(false)
+        : widSearchTab().disable(true);
 
-        if (widReceiveTab().isKeys() && pwd)
-            widReceiveTab().disable(false);
+    switch (tok.status) {
+        case -1:
+            if (pwd) widCreateTab().disable(false);
+            widSetDataTab().val('');
 
-        return;
-    }
+            break;
+        case 0:
+            if (widSetDataTab().isOn() || widCreateTab().isOn()) {
+                widEmptyTab().show();
+            }
+            if (widReceiveTab().isKeys() && pwd) {
+                widReceiveTab().disable(false);
+            }
 
-    if (tokState === gResponse.IDX_NODN)
-    {
-        if (pwd)
-            widCreateTab().disable(false);
+            widSetDataTab().val('');
 
-        widSetDataTab().val('');
+            break;
+        case 1:
+            let d = widSetDataTab().val();
+            let e = engDataToRecErrorLevel(d, +gCurrentDB.datalim);
 
-        return;
-    }
+            if (widReceiveTab().isKeys()) {
+                widReceiveTab().disable(false);
+            }
 
-    if (tokState === 'OK')
-    {
-        if (widReceiveTab().isKeys())
-            widReceiveTab().disable(false);
+            widSetDataTab().readonly(false);
 
-        widSetDataTab().readonly(false);
+            if (e === 0 && tok.d !== engGetDataToRec(d)) {
+                widSetDataTab().disable(false);
+            }
 
-        var d = widSetDataTab().val();
-        var e = engDataToRecErrorLevel(d, +gCurrentDB.datalim);
+            widShowKeysTab().disable(false);
+            widShowKeysTab().release(false);
 
-        if (e === 0 && tokData !== engGetDataToRec(d))
-            widSetDataTab().disable(false);
+            break;
+        case 2:
+            widShowKeysTab().release(true);
 
-        widShowKeysTab().disable(false);
-        widShowKeysTab().release(false);
+            if (widReceiveTab().isKeys()) {
+                widReceiveTab().disable(false);
+            }
 
-        return;
-    }
+            break;
+        case 3:
+            widShowKeysTab().release(true);
 
-    if (tokState === 'PWD_WRONG')
-    {
-        if (widReceiveTab().isKeys())
-            widReceiveTab().disable(false);
+            if (widReceiveTab().isKeys()) {
+                widReceiveTab().disable(false);
+            }
 
-        return;
-    }
+            break;
+        default:
+            if (widReceiveTab().isKeys()) {
+                widReceiveTab().disable(false);
+            }
 
-    if (tokState === 'PWD_SNDNG')
-    {
-        widShowKeysTab().release(true);
-
-        if (widReceiveTab().isKeys())
-            widReceiveTab().disable(false);
-
-        return;
-    }
-
-    if (tokState === 'PWD_RCVNG')
-    {
-        widShowKeysTab().release(true);
-
-        if (widReceiveTab().isKeys())
-            widReceiveTab().disable(false);
+            break;
     }
 }
 
-function widTurnOnFileButton(data)
-{
+function widTurnOnFileButton(data) {
     var $Input = $('#input_file_upload');
     var $Label = $('#label_file_upload');
+
     $Input.attr('type', 'text');
     $Label.css('background', '#FF0000');
-    $Label.hover(function()
-    {
-        $(this).css('background', '#FF0000')
-    },
-    function()
-    {
-        $(this).css('background', '#FF0000')
-    });
+    $Label.hover(
+        function () {
+            $(this).css('background', '#FF0000')
+        },
+        function () {
+            $(this).css('background', '#FF0000')
+        }
+    );
 }
 
-function widTurnOffFileButton()
-{
+function widTurnOffFileButton() {
     var $Input = $('#input_file_upload');
     var $Label = $('#label_file_upload');
 
@@ -421,53 +394,54 @@ function widTurnOffFileButton()
     $Input.val('');
     $Input.off('click');
     $Label.css('background', '#FCFCFC');
-    $Label.hover(function()
-    {
-        $(this).css('background', '#87CEEB')
-    },
-    function()
-    {
-        $(this).css('background', '#FCFCFC')
-    });
+    $Label.hover(
+        function () {
+            $(this).css('background', '#87CEEB')
+        },
+        function () {
+            $(this).css('background', '#FCFCFC')
+        }
+    );
+
     return false;
 }
 
-function wrapWaitForToken(tok)
-{
-    if (!widShowKeysTab().isOn() && !widReceiveTab().isOn() && !widSearchTab().isOn())
+function wrapWaitForTok(tok) {
+    if (!widShowKeysTab().isOn() &&
+            !widReceiveTab().isOn() &&
+            !widSearchTab().isOn()) {
         widEmptyTab().show();
+    }
 
-    widShowTokenName(tok);
-    widShowTokenHash(tok.s);
-    widShowTokenState().show();
-    return;
+    widShowTokName(tok);
+    widShowTokHash(tok.s);
+    widShowTokStatus().show();
 }
 
-function widTokenTextRO(state)
-{
+function widTokenTextRO(state) {
     $('#textarea_token_name').prop('disabled', state);
 }
 
-function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
-{
+function widTokTextOninput($Obj, delay) {
+    var dnOrRaw, tok;
 
-    if (gCurrentDB === null) return;
+    widSetClearTokInfo();
+    widBlockUI();
+
+    if (gCurrentDB === null) {
+        return;
+    }
 
     $Obj.val($Obj.val().replace(/\t/g, '\u0020'));
-    var dnOrRaw = $Obj.val();
+    dnOrRaw = $Obj.val();
 
-    if (!engIsAsciiOrTabOrLf(dnOrRaw))
-    {
-        gTokInfo = {};
-
-        if (!gNonASCII)
-        {
-            gNonASCII = true;
+    if (!engIsValidString(dnOrRaw)) {
+        if (!gNonValid) {
+            gNonValid = true;
             $Obj.blur();
 
-            return widModalWindow(gMsg.nonASCII, function()
-            {
-                widReloadTokenInfo();
+            return widModalWindow(gMsg.nonASCII, function () {
+                widReloadTokInfo();
                 $Obj.focus();
             });
         }
@@ -475,903 +449,911 @@ function widTokenTextOninput($Obj, delay) // Events when tokens value changed.
         return;
     }
 
-    gNonASCII = false;
-
+    gNonValid = false;
     delay = +delay || 0;
-    var tok = engGetTokenObj(engGetClearData(dnOrRaw));
-    
+    tok = engGetTokObj(engGetClearData(dnOrRaw));
+    gTokInfo.s = tok.s;
+    gTokInfo.raw = tok.raw;
+
     if (1) textArea().clearExcept($Obj);
 
-    widReloadTokenInfo(tok, delay);
+    widReloadTokInfo(gTokInfo, delay);
 }
 
-function widLoadFiles(files)
-{
+function widLoadFiles(files) {
     var $TokName = $('#textarea_token_name');
     var $FileInp = $('#input_file_upload');
 
-    if (1) textArea().clearExcept($TokName);
-    if (!files[0]) return widShowTokenState();
+    if (1) {
+        textArea().clearExcept($TokName);
+    }
 
-    var cb = function (data)
-    {
-        if (data.error === null) return;
-        if (typeof(data.error) === 'string' || !data.size)
-        {
+    if (!Boolean(files[0])) {
+        return widShowTokStatus();
+    }
+
+    var cb = function (data) {
+        var tok;
+
+        if (data.error === null) {
+            return;
+        }
+
+        if (typeof(data.error) === 'string' || !data.size) {
             widTokenTextRO(false);
             widTurnOffFileButton();
+
             return widModalWindow(data.error);
         }
 
         widTurnOnFileButton();
-        $FileInp.click (function ()
-        {
-            var tok = engGetTokenObj('');
+        $FileInp.click(function () {
+            var tok = engGetTokObj('');
 
-            widReloadTokenInfo(tok);
+            widReloadTokInfo(tok);
             return widTurnOffFileButton();
         });
 
         $TokName.val('File: ' + data.name + '\nSize: ' + data.size);
 
-        var tok = (!engIsAsciiOrTabOrLf(data.raw))
-                ? engGetTokenObj(data.raw)
-                : engGetTokenObj(engGetClearData(data.raw));
+        tok = (!engIsValidString(data.raw))
+            ? engGetTokObj(data.raw)
+            : engGetTokObj(engGetClearData(data.raw));
 
-        
-        gNonASCII = false;
+        gNonValid = false;
         widTokenTextRO(true);
-        widReloadTokenInfo(tok, 0, true);
+        widReloadTokInfo(tok, 0, true);
     }
 
-    var progress = function (data)
-    {
+    var progress = function (data) {
         console.log(data + '%');
     };
 
     engLoadFiles(files, gCurrentDB.hash, cb, progress);
 }
 
-function widReloadButtonOnclick($Obj)
-{
+function widReloadButtonOnclick($Obj) {
     var id = $Obj.prop('id');
     var text = $('#textarea_token_name').val();
 
-    if (!gTokInfo.s && !text) return widModalWindow(gHelp(id));
+    if (gTokInfo.s === '' && text === '') {
+        return widModalWindow(gHelp(id));
+    }
 
-    widReloadTokenInfo(null, 0, true);
+    widReloadTokInfo(gTokInfo, 0, true);
 }
 
-function widReloadTokenInfo(tok, delay, noRefresh)
-{
+function widSetClearTokInfo() {
+    gTokInfo = {
+        status: 0,
+        raw: '',
+        s: ''
+    };
+}
+
+function widReloadTokInfo(tok, delay, noRefresh) {
     delay = +delay || 0;
 
     clearTimeout(gTimerId);
 
-    widShowTokenState();
+    widShowTokStatus();
     widShowPwdInfo();
-    widShowTokenHash();
+    widShowTokHash();
     widShowTokenDataLength();
 
-    if (gNonASCII) return widShowTokenHash(null);
-    if (tok === null && !gTokInfo.s) return;
-    if (gCurrentDB === null) return;
-    if (tok && !tok.s)
-    {
-        gTokInfo = {};
-        widShowTokenName(tok);
+    if (gNonValid) {
+        return widShowTokHash(null);
+    }
+
+    if (gCurrentDB === null) {
+        return;
+    }
+
+    if (tok && tok.s == '') {
+        widShowTokName(tok);
         widTokenTextRO(false);
-        widEmptyTab().show();
-        return ;
+        widPasswordOninput();
+
+        return;
     }
 
-    if ( tok === null && gTokInfo.s )
-    {
-        var tok = {};
-        tok.s = gTokInfo.s;
-        tok.raw = gTokInfo.raw;
-        gTokInfo = {};
-    }
+    widShowTokStatus().show();
 
-    gTokInfo = {};
-    widShowTokenState().show();
-
-    if (!noRefresh)
-    {
-        widShowTokenName(tok);
+    if (!noRefresh) {
+        widShowTokName(tok);
         widTokenTextRO(false);
         widTurnOffFileButton();
     }
 
-    widShowTokenHash(tok.s);
+    widShowTokHash(tok.s);
     widGetLastRecord(tok, delay);
 }
 
-function widGetLastRecord(tok, delay)
-{
-    var cb = function (resp, record)
-    {
-        if (resp !== gResponse.OK && resp !== gResponse.IDX_NODN)
-        {
-            widShowTokenState();
+function widGetLastRecord(tok, delay) {
+    var cb = function (resp, record) {
+        if (resp !== HASQD_RESP.OK && resp !== HASQD_RESP.IDX_NODN) {
+            widShowTokStatus();
+
             return widModalWindow(resp);
         }
 
-        if (resp === gResponse.IDX_NODN)
-        {
+        if (resp === HASQD_RESP.IDX_NODN) {
             gTokInfo.s = tok.s;
-            gTokInfo.state = resp;
+            gTokInfo.status = -1;
 
-            if (!widShowKeysTab().isOn()
-                    && !widReceiveTab().isOn()
-                    && !widSearchTab().isOn())
+            if (!widShowKeysTab().isOn() &&
+                    !widReceiveTab().isOn() &&
+                    !widSearchTab().isOn())
                 widCreateTab().show();
-        }
-        else
-        {
+        } else {
             gTokInfo = record;
-            gTokInfo.state = 'PWD_WRONG';
+            gTokInfo.status = 4;
             widSetDataTab().val(engGetDataFromRec(gTokInfo.d));
 
-            if (!widShowKeysTab().isOn()
-                    && !widReceiveTab().isOn() && !widSearchTab().isOn())
+            if (!widShowKeysTab().isOn() && !widReceiveTab().isOn()
+                    && !widSearchTab().isOn()) {
                 widSetDataTab().show();
+            }
         }
 
-        widShowTokenState().show(resp);
-        gTokInfo.raw = (engDataToRecErrorLevel(tok.raw, +gCurrentDB.datalim) === 0)
+        widShowTokStatus().show(resp);
+
+        gTokInfo.raw =
+            (engDataToRecErrorLevel(tok.raw, +gCurrentDB.datalim) === 0)
                 ? tok.raw
                 : '';
+
         widPasswordOninput();
     }
 
     return widRequestLast(cb, tok.s, delay);
 }
 
-function widPasswordOninput()
-{
-    // Events when passwords value changed.
-    var $PwdInp = $('#input_password');
-    gPassword = $PwdInp.val() || '';
+function widPasswordOninput() {
+    var rec;
+    gPassword = $('#input_password').val() || '';
 
     // set current wallet
-    if ( !gAllWallets[gPassword] ) gAllWallets[gPassword] = {};
+    if (!gAllWallets[gPassword])
+        gAllWallets[gPassword] = {};
+
     gWallet = gAllWallets[gPassword];
     widSearchProgress.refresh();
 
     widShowPwdGuessTime(widGetPwdGuessTime(gPassword));
 
-    if (gTokInfo.state === gResponse.IDX_NODN
-            || typeof gTokInfo.state === 'undefined')
+    ///NEW
+    if (gTokInfo.status <= 0) {
         return widToggleUI(gTokInfo, gPassword);
+    }
 
-    var rec = engGetRecord(gTokInfo.n, gTokInfo.s, gPassword, null, null,
-            gCurrentDB.magic, gCurrentDB.hash);
-
-    gTokInfo.state = (gPassword)
-            ? engGetTokensStatus(gTokInfo, rec)
-            : gTokInfo.state = 'PWD_WRONG';
-
-    if (gPassword)
-        widShowPwdInfo(gTokInfo.state);
-    else
-        widShowPwdInfo();
+    rec = engGetRecord(gTokInfo.n, gTokInfo.s, gPassword,
+            null, null, gCurrentDB.magic, gCurrentDB.hash);
+    gTokInfo.status = (gPassword)
+        ? engGetTokStatus(gTokInfo, rec)
+        : gTokInfo.status = 4; // TODO: may be 0
+    (gPassword) ? widShowPwdInfo(gTokInfo.status) : widShowPwdInfo();
 
     widToggleUI(gTokInfo, gPassword);
 }
 
-function widPasswordEyeClick($Obj)
-{
-    //shows/hides passwords by click;
+function widPasswordEyeClick($Obj) {
     var $PwdInp = $('#input_password');
     var $Eye = $Obj.find('img');
 
-    if ($PwdInp.attr('type') == 'text')
-    {
+    if ($PwdInp.attr('type') == 'text') {
         $PwdInp.attr('type', 'password');
         $Eye.attr('src', imgEyeOpen);
         $Eye.attr('title', gTooltip.password_eye);
-    }
-    else
-    {
+    } else {
         $PwdInp.attr('type', 'text');
         $Eye.attr('src', imgEyeClosed);
         $Eye.attr('title', gTooltip.password_eye);
     }
 }
 
-
-function widButtonsTable()
-{
-    var $Buttons = $('.tab-buttons-table');
-
-    var retObj =
-    {
-        toggleOff : function ()
-        {
-            $Buttons.find('.tab-button-on')
-                .toggleClass('tab-button-on tab-button-off');
+function widButtonsTable() {
+    return {
+        toggleOff: function () {
+            $('.tab-buttons-table')
+                .find('.tab-btn-down')
+                .toggleClass('tab-btn-down tab-btn-up');
         }
     }
-
-    return retObj;
 }
 
-function widEmptyTab()
-{
+function widEmptyTab() {
     var $Tabs = $('#div_tabs');
-    //widPasswordOninput();
 
-    var retObj =
-    {
-        show : function ()
-        {
+    return {
+        show: function () {
             $Tabs.tabs('option', 'active', 0);
-            widShowTokenState();
+            widShowTokStatus();
             widShowPwdInfo();
-            widShowTokenHash();
+            widShowTokHash();
             widShowTokenDataLength();
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 0) ? true : false;
         }
     }
-
-    return retObj;
 }
 
-function widCreateTab()
-{
+function widCreateTab() {
     var $Table = $('#table_create_tab');
     var $Button = $Table.find('button');
     var $Tabs = $('#div_tabs');
 
-    var retObj =
-    {
-        disable : function (comm)
-        {
+    return {
+        disable: function (comm) {
+            (comm)
+                ? $Button
+                    .addClass('button-disabled')
+                    .removeClass('button-enabled')
+                : $Button
+                    .addClass('button-enabled')
+                    .removeClass('button-disabled');
+        },
+        show: function () {
+            $('.tab-btn-down').toggleClass('tab-btn-down tab-btn-up');
+            $Tabs.tabs('option', 'active', 1);
+        },
+        isOn: function () {
+            return ($Tabs.tabs('option', 'active') === 1) ? true : false;
+        }
+    }
+}
+
+function widCreateButtonClick() {
+    // Creates a new token record
+    var $PwdInp = $('#input_password');
+    var tok = {};
+    var rec0, rec1, addCb0, addCb1, fmd;
+    tok.s = gTokInfo.s;
+    tok.raw = gTokInfo.raw;
+
+    if (!widIsPassword())
+        return widModalWindow(gMsg.enterMasterKey, function () {
+                $PwdInp.focus()
+            });
+
+    wrapWaitForTok(tok);
+
+    rec0 = engGetRecord(0, tok.s, gPassword, null, null, gCurrentDB.magic,
+        gCurrentDB.hash);
+    rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic,
+        gCurrentDB.hash);
+
+    addCb1 = function (resp) {
+        if (resp !== HASQD_RESP.OK) {
+            widModalWindow(HASQD_RESP[resp]);
+        }
+
+        widReloadTokInfo(tok);
+    }
+
+    addCb0 = function (resp) {
+        if (resp === HASQD_RESP.OK)
+            return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
+
+        /// FIX 'FAIL'
+        if (resp === 'FAIL') {
+            widModalWindow(gMsg.fail);
+        }
+        else {
+            widModalWindow(gMsg.unexpected + HASQD_RESP[resp]);
+        }
+
+        widReloadTokInfo(tok);
+    }
+
+    fmd = engGetDataToRec(tok.raw);
+
+    engNcZ(addCb0, gCurrentDB.name, rec0, fmd);
+}
+
+function widSetDataTab() {
+    var $Tabs = $('#div_tabs');
+    var $Button = $('#button_set_data');
+    var $Textarea = $('#textarea_set_data');
+
+    return {
+        readonly: function (comm) {
+            $Textarea.prop('readonly', comm);
+        },
+        disable: function (comm) {
             (comm)
                 ? $Button.addClass('button-disabled')
                     .removeClass('button-enabled')
                 : $Button.addClass('button-enabled')
                     .removeClass('button-disabled');
         },
-        show : function ()
-        {
-            $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
-            $Tabs.tabs('option', 'active', 1);
-        },
-        isOn : function ()
-        {
-            return ($Tabs.tabs('option', 'active') === 1) ? true : false;
-        }
-    }
-
-    return retObj;
-}
-
-function widCreateButtonClick()
-{
-    // Creates a new token record
-    var $PwdInp = $('#input_password');
-
-    var tok = {};
-    tok.s = gTokInfo.s;
-    tok.raw = gTokInfo.raw;
-
-    if (!widIsPassword())
-        return widModalWindow(gMsg.enterMasterKey,
-                function () { $PwdInp.focus() });
-
-    wrapWaitForToken(tok);
-    //widTokenTextRO(true);
-
-    var rec0 = engGetRecord(0, tok.s, gPassword, null, null,
-            gCurrentDB.magic, gCurrentDB.hash);
-    var rec1 = engGetRecord(1, tok.s, gPassword, null, null,
-            gCurrentDB.magic, gCurrentDB.hash);
-
-    var addCb1 = function (resp)
-    {
-        if (resp !== gResponse.OK) widModalWindow(gResponse[resp]);
-
-        widReloadTokenInfo(tok);
-    }
-
-    var addCb0 = function (resp)
-    {
-        if (resp === gResponse.OK)
-            return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
-
-        if ( resp === 'FAIL' )
-            widModalWindow(gMsg.fail);
-        else
-            widModalWindow(gMsg.unexpected + gResponse[resp]);
-
-        widReloadTokenInfo(tok);
-    }
-
-    var fmd = engGetDataToRec(tok.raw);
-
-    engNcZ(addCb0, gCurrentDB.name, rec0, fmd);
-}
-
-function widSetDataTab()
-{
-    var $Tabs = $('#div_tabs');
-    var $Button = $('#button_set_data');
-    var $Textarea = $('#textarea_set_data');
-
-    var retObj =
-    {
-        readonly : function (comm)
-        {
-            $Textarea.prop('readonly', comm);
-        },
-        disable : function (comm)
-        {
-            (comm)
-                ? $Button.addClass('button-disabled')
-                    .removeClass('button-enabled')
-                : $Button.addClass('button-enabled')
-                .removeClass('button-disabled');
-        },
-        show : function ()
-        {
-            $('.tab-button-on').toggleClass('tab-button-on tab-button-off');
+        show: function () {
+            $('.tab-btn-down').toggleClass('tab-btn-down tab-btn-up');
             $Tabs.tabs('option', 'active', 2);
         },
-        val : function (data)
-        {
-            if (typeof(data) !== 'undefined' && typeof(data) !== 'null')
-            {
+        val: function (data) {
+            if (typeof(data) !== 'undefined' && typeof(data) !== 'null') {
                 widShowTokenDataLength(data);
+
                 return $Textarea.val(data);
-            }
-            else
+            } else {
                 return $Textarea.val();
+            }
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 2) ? true : false;
         }
     }
-
-    return retObj;
 }
 
-function widSetDataTextareaOninput($Obj)
-{
- var data = $Obj.val().replace(/\t/g, '\u0020');
+function widSetDataTextareaOninput($Obj) {
+    var data = $Obj.val().replace(/\t/g, '\u0020');
 
     $Obj.val(data);
-
     widShowTokenDataLength(data);
     widToggleUI(gTokInfo, gPassword);
 }
 
-function widSetDataButtonClick()
-{
+function widSetDataButtonClick() {
     // Adds a new record with a specified data
     var $PwdInp = $('#input_password');
-    var $Data = $('#textarea_set_data');
+    var $Data, dt, err, rec, tok;
 
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey,
-                function () { $PwdInp.focus() });
+            function () {
+                $PwdInp.focus()
+        });
 
-    if (gTokInfo.state !== 'OK')
+    if (gTokInfo.status !== 1) {
         return widModalWindow(gMsg.changeMasterKey,
-                function () { $PwdInp.focus() });
+            function () {
+                $PwdInp.focus()
+        });
+    }
 
-    var data = $Data.val();
-    var err = engDataToRecErrorLevel(data, +gCurrentDB.datalim);
+    $Data = $('#textarea_set_data');
+    dt = $Data.val();
+    err = engDataToRecErrorLevel(dt, +gCurrentDB.datalim);
 
-    if (err !== 0)
+    if (err !== 0) {
         return widModalWindow(gDataErrorMsg[err],
-                function () { $Data.focus() });
+            function () {
+            $Data.focus()
+        });
+    }
 
-    var data = engGetDataToRec(data);
+    dt = engGetDataToRec(dt);
 
-    if (data === gTokInfo.d)
+    if (dt === gTokInfo.d) {
         return widModalWindow(gMsg.dataNotChanged,
-                function () { $Data.focus() });
+            function () {
+            $Data.focus()
+        });
+    }
 
     widSetDataTab().disable(true);
 
-    var rec = engGetRecord(gTokInfo.n + 1, gTokInfo.s, gPassword, null, null,
+    rec = engGetRecord(gTokInfo.n + 1, gTokInfo.s, gPassword, null, null,
             gCurrentDB.magic, gCurrentDB.hash);
-    var tok = {};
+    tok = {};
     tok.s = gTokInfo.s;
     tok.raw = gTokInfo.raw;
 
-    wrapWaitForToken(tok);
-    //widTokenTextRO(true);
+    wrapWaitForTok(tok);
 
-    var cb = function (resp, jobId)
-    {
-        if (resp !== gResponse.OK) widModalWindow(gResponse[resp]);
-
-        widReloadTokenInfo(tok);
+    var cb = function (resp, jobId) {
+        resp !== HASQD_RESP.OK && widModalWindow(HASQD_RESP[resp]);
+        widReloadTokInfo(tok);
     }
 
-    engNcAdd(cb, gCurrentDB.name, rec, data);
+    engNcAdd(cb, gCurrentDB.name, rec, dt);
 }
 
-function widShowTokenDataLength(data)
-{
+function widShowTokenDataLength(data) {
     var $DataLength = $('#span_data_length');
+    var l;
+
     $DataLength.empty();
 
-    if (!data) return;
+    if (!data) {
+        return;
+    }
 
-    var l = engGetDataToRec(data).length;
+    l = engGetDataToRec(data).length;
 
     (l) ? $DataLength.html(l) : $DataLength.empty();
 }
 
-function widShowKeysTab()
-{
+function widShowKeysTab() {
     var $Table = $('#table_show_keys_tab');
     var $Tabs = $('#div_tabs');
     var $AllButton = $Table.find('button');
     var $OnHoldButton = $('#button_show_on_hold');
     var $ReleaseButton = $('#button_show_release');
+    var $Keys = $('#textarea_show_keys');
 
-    var retObj =
-    {
-        disable : function (comm)
-        {
+    return {
+        disable: function (comm) {
+            comm && textArea($Keys).clear();
             (comm)
                 ? $AllButton
-                    .addClass('button-disabled').removeClass('button-enabled')
+                    .addClass('button-disabled')
+                    .removeClass('button-enabled')
                 : $AllButton
-                    .addClass('button-enabled').removeClass('button-disabled');
+                    .addClass('button-enabled')
+                    .removeClass('button-disabled');
 
-            $('.show-keys-button-on')
-            .toggleClass('show-keys-button-on show-keys-button-off');
+            $('.show-keys-btn-down')
+                .toggleClass('show-keys-btn-down show-keys-btn-up');
         },
-        onhold : function (comm)
-        {
+        onhold: function (comm) {
             (comm)
                 ? $OnHoldButton
-                    .addClass('button-enabled').removeClass('button-disabled')
+                    .addClass('button-enabled')
+                    .removeClass('button-disabled')
                 : $OnHoldButton
-                    .addClass('button-disabled').removeClass('button-enabled');
+                    .addClass('button-disabled')
+                    .removeClass('button-enabled');
         },
-        release : function (comm)
-        {
+        release: function (comm) {
             (comm)
                 ? $ReleaseButton
-                    .addClass('button-enabled').removeClass('button-disabled')
+                    .addClass('button-enabled')
+                    .removeClass('button-disabled')
                 : $ReleaseButton
-                    .addClass('button-disabled').removeClass('button-enabled');
+                    .addClass('button-disabled')
+                    .removeClass('button-enabled');
         },
-        show : function ()
-        {
+        show: function () {
             $Tabs.tabs('option', 'active', 3);
-            $('.show-keys-button-on')
-                .toggleClass('show-keys-button-on show-keys-button-off');
+            $('.show-keys-btn-down')
+                .toggleClass('show-keys-btn-down show-keys-btn-up');
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 3) ? true : false;
         }
 
     }
-
-    return retObj;
 }
 
-function widTabButtonClick($Obj, tabId)
-{
+function widTabButtonClick($Obj, tabId) {
+    var f;
+
     widPasswordOninput();
-    $Obj.toggleClass('tab-button-on tab-button-off');
-    $('.tab-button-on').not($Obj).toggleClass('tab-button-on tab-button-off');
+    $Obj.toggleClass('tab-btn-down tab-btn-up');
+    $('.tab-btn-down')
+        .not($Obj)
+        .toggleClass('tab-btn-down tab-btn-up');
     textArea($('#textarea_show_keys')).clear();
 
-    var f;
-    switch (+tabId)
-    {
-        case 0 : f = function() { return widShowKeysTab().show() }; break;
-        case 1 : f = function() { return widReceiveTab().show() }; break;
-        case 2 : f = function() { return widSearchTab().show() }; break;
-        default : return;
+    switch (+tabId) {
+        case 0:
+            f = function () {
+                return widShowKeysTab().show()
+            };
+            break;
+        case 1:
+            f = function () {
+                return widReceiveTab().show()
+            };
+            break;
+        default:
+            f = function () {
+                return widSearchTab().show()
+            };
+            break;
     }
 
-    if (typeof gTokInfo.state === 'undefined')
-        return ($Obj.hasClass('tab-button-on')) ? f() : widEmptyTab().show();
-
-    if (gTokInfo.state === gResponse.IDX_NODN)
-        return ($Obj.hasClass('tab-button-on')) ? f() : widCreateTab().show();
-
-    return ($Obj.hasClass('tab-button-on')) ? f() : widSetDataTab().show();
+    switch (gTokInfo.status) {
+        case -1:
+            return ($Obj.hasClass('tab-btn-down'))
+                ? f()
+                : widCreateTab().show();
+        case 0:
+            return ($Obj.hasClass('tab-btn-down'))
+                ? f()
+                : widEmptyTab().show();
+        default:
+            return ($Obj.hasClass('tab-btn-down'))
+                ? f()
+                : widSetDataTab().show();
+    }
 }
 
-function widShowInstantButtonClick($Obj)
-{
+function widShowInstantButtonClick($Obj) {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
+    var cl = 'show-keys-btn-down show-keys-btn-up';
 
     textArea($Keys).clear();
-    $('.show-keys-button-on')
+    $('.show-keys-btn-down')
         .not($Obj)
-        .toggleClass('show-keys-button-on show-keys-button-off');
+        .toggleClass(cl);
 
-    if ($Obj.hasClass('button-disabled'))
-    {
-        if ($Obj.hasClass('show-keys-button-on'))
-            return $Obj.toggleClass('show-keys-button-on show-keys-button-off');
-
-        if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName,
-                    function () { $TokName.focus() });
-
-        if (gTokInfo.state === gResponse.IDX_NODN)
-            return widModalWindow(gMsg.createToken);
-
-        if (!widIsPassword())
-            return widModalWindow(gMsg.enterMasterKey,
-                    function () { $PwdInp.focus() });
-
-        if (gTokInfo.state === 'PWD_SNDNG' || gTokInfo.state === 'PWD_RCVNG')
-        {
-            $('.show-keys-button-on')
-                .toggleClass('show-keys-button-on show-keys-button-off');
-            return widModalWindow(gMsg.tokenLocked);
+    if ($Obj.hasClass('button-disabled')) {
+        switch (true) {
+            case ($Obj.hasClass('show-keys-btn-down')):
+                console('#######');
+                return $Obj.toggleClass(cl);
+            case (gTokInfo.status === -1):
+                return widModalWindow(gMsg.createToken);
+            case (gTokInfo.status === 0):
+                return widModalWindow(gMsg.enterTokenName, function () {
+                    $TokName.focus()
+                });
+            case ([2,3].includes(gTokInfo.status)):
+                $('.show-keys-btn-down').toggleClass(cl);
+                return widModalWindow(gMsg.tokenIsHeld);
+            case (gTokInfo.status === 4):
+                return widModalWindow(gMsg.changeMasterKey, function () {
+                        $PwdInp.focus()
+                });
+            //case (!widIsPassword()):
+            case (!widIsPassword()):
+                return widModalWindow(gMsg.enterMasterKey, function () {
+                    $PwdInp.focus()
+                });
+            default:
+                return widModalWindow(gMsg.unknownError);
         }
-
-        if (gTokInfo.state !== 'OK')
-            return widModalWindow(gMsg.changeMasterKey,
-                    function () { $PwdInp.focus() });
     }
 
-    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass(cl);
 
-    if ($Obj.hasClass('show-keys-button-on'))
-    {
-        var k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword, gCurrentDB.magic,
-                gCurrentDB.hash);
-        var k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword, gCurrentDB.magic,
-                gCurrentDB.hash);
-        var line = gTokInfo.s + '\u0020' + k1 + '\u0020' + k2 + '\u0020';
-        textArea($Keys).add(line);
-        var mergedKeys = $Keys.val().replace(/\s+/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020'
-                + gCurrentDB.altname + '\u0020' + '23132';
-        textArea($Keys).add(line);
+    if ($Obj.hasClass('show-keys-btn-down')) {
+        let k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword, gCurrentDB.magic,
+            gCurrentDB.hash);
+        let k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword, gCurrentDB.magic,
+            gCurrentDB.hash);
+        let kk = [gTokInfo.s, k1, k2]
+        let pl = [engGetHash(kk.join(''), 's22').substring(0, 4),
+            gCurrentDB.altname, '23132'].join(' ')
+
+        textArea($Keys).add(kk.join(' ') + ' ' + pl);
         widSelectAndCopy($Keys);
     }
 }
 
-function widShowOnHoldButtonClick($Obj)
-{
+function widShowOnHoldButtonClick($Obj) {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
+    var cl = 'show-keys-btn-down show-keys-btn-up';
+
     textArea($Keys).clear();
-    $('.show-keys-button-on').not($Obj)
-        .toggleClass('show-keys-button-on show-keys-button-off');
+    $('.show-keys-btn-down')
+        .not($Obj)
+        .toggleClass(cl);
 
-    if ($Obj.hasClass('button-disabled'))
-    {
-        if ($Obj.hasClass('show-keys-button-on'))
-            return $Obj
-                    .toggleClass('show-keys-button-on show-keys-button-off');
-
-        if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName,
-                    function () { $TokName.focus() });
-
-        if (gTokInfo.state === gResponse.IDX_NODN)
-            return widModalWindow(gMsg.createToken);
-
-        if (!widIsPassword())
-            return widModalWindow(gMsg.enterMasterKey,
-                    function () { $PwdInp.focus() });
-
-        if (gTokInfo.state !== 'OK' && gTokInfo.state !== 'PWD_SNDNG')
-            return widModalWindow(gMsg.changeMasterKey,
-                    function () { $PwdInp.focus() });
+    if ($Obj.hasClass('button-disabled')) {
+        switch (true) {
+            case ($Obj.hasClass('show-keys-btn-down')):
+                console('#######');
+                return $Obj.toggleClass(cl);
+            case (gTokInfo.status === -1):
+                return widModalWindow(gMsg.createToken);
+            case (gTokInfo.status === 0):
+                return widModalWindow(gMsg.enterTokenName, function () {
+                    $TokName.focus()
+                });
+            case ([2,3].includes(gTokInfo.status)):
+                $('.show-keys-btn-down').toggleClass(cl);
+                return widModalWindow(gMsg.tokenIsHeld);
+            case (gTokInfo.status === 4):
+                return widModalWindow(gMsg.changeMasterKey, function () {
+                    $PwdInp.focus()
+                });
+            case (!widIsPassword()):
+                return widModalWindow(gMsg.enterMasterKey, function () {
+                    $PwdInp.focus()
+                });
+            default:
+                return widModalWindow(gMsg.unknownError);
+        }
     }
 
-    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass(cl);
 
-    if ($Obj.hasClass('show-keys-button-on'))
-    {
-        if (gTokInfo.state === 'OK')
-        {
-            var k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword,
-                    gCurrentDB.magic, gCurrentDB.hash);
-            var k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword,
-                    gCurrentDB.magic, gCurrentDB.hash);
-            var g1 = engGetKey(gTokInfo.n + 2, gTokInfo.s, k2,
-                    gCurrentDB.magic, gCurrentDB.hash);
-            var line = gTokInfo.s + '\u0020' + k1 + '\u0020' + g1 + '\u0020';
-            textArea($Keys).add(line);
-            var mergedKeys = $Keys.val().replace(/\s+/g, '');
-            line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' +
-                    gCurrentDB.altname + '\u0020' + '23141';
-            textArea($Keys).add(line);
+    if ($Obj.hasClass('show-keys-btn-down')) {
+        if (gTokInfo.status === 1) {
+            let k1 = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword,
+                gCurrentDB.magic, gCurrentDB.hash);
+            let k2 = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword,
+                gCurrentDB.magic, gCurrentDB.hash);
+            let g1 = engGetKey(gTokInfo.n + 2, gTokInfo.s, k2,
+                gCurrentDB.magic, gCurrentDB.hash);
+            let kk = [gTokInfo.s, k1, g1]
+            let pl = [engGetHash(kk.join(''), 's22').substring(0, 4),
+                gCurrentDB.altname, '23141'].join(' ')
+
+            textArea($Keys).add(kk.join(' ') + ' ' + pl);
             widSelectAndCopy($Keys);
         }
     }
 }
 
-function widShowReleaseButtonClick($Obj)
-{
+function widShowReleaseButtonClick($Obj) {
     var $PwdInp = $('#input_password');
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_show_keys');
+    var cl = 'show-keys-btn-down show-keys-btn-up';
 
     textArea($Keys).clear();
-    $('.show-keys-button-on').not($Obj)
-        .toggleClass('show-keys-button-on show-keys-button-off');
+    $('.show-keys-btn-down')
+        .not($Obj)
+        .toggleClass(cl);
 
-    if ($Obj.hasClass('button-disabled'))
-    {
-        if ($Obj.hasClass('show-keys-button-on'))
-            return $Obj
-                    .toggleClass('show-keys-button-on show-keys-button-off');
-
-        if (typeof gTokInfo.state === 'undefined')
-            return widModalWindow(gMsg.enterTokenName,
-                    function () { $TokName.focus() });
-
-        if (gTokInfo.state === gResponse.IDX_NODN)
-            return widModalWindow(gMsg.createToken);
-
-        if (!widIsPassword())
-            return widModalWindow(gMsg.enterMasterKey,
-                    function () { $PwdInp.focus() });
-
-        if (gTokInfo.state === 'PWD_WRONG')
-            return widModalWindow(gMsg.changeMasterKey,
-                    function () { $PwdInp.focus() });
-
-        if (gTokInfo.state === 'OK')
-            return widModalWindow(gMsg.changeTokenName);
+    if ($Obj.hasClass('button-disabled')) {
+        switch (true) {
+            case ($Obj.hasClass('show-keys-btn-down')):
+                console('#######');
+                return $Obj.toggleClass(cl);
+            case (gTokInfo.status === -1):
+                return widModalWindow(gMsg.createToken);
+            case (gTokInfo.status === 0):
+                return widModalWindow(gMsg.enterTokenName, function () {
+                    $TokName.focus()
+                });
+            case (gTokInfo.status === 1):
+                return widModalWindow(gMsg.tokenIsAvailable, function () {
+                    $TokName.focus()
+                });
+            case (gTokInfo.status === 4):
+                return widModalWindow(gMsg.changeMasterKey, function () {
+                    $PwdInp.focus()
+                });
+            case (!widIsPassword()):
+                return widModalWindow(gMsg.enterMasterKey, function () {
+                    $PwdInp.focus()
+                });
+            default:
+                return widModalWindow(gMsg.unknownError);
+        }
     }
 
-    $Obj.toggleClass('show-keys-button-on show-keys-button-off');
+    $Obj.toggleClass(cl);
 
-    if ($Obj.hasClass('show-keys-button-on'))
-    {
-        var k;
-        var prCode;
+    if ($Obj.hasClass('show-keys-btn-down')) {
+        let k, code, kk, pl;
 
-        if (gTokInfo.state === 'PWD_RCVNG')
-        {
-            k = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword,
+        switch (true) {
+            case (gTokInfo.status === 2):
+                k = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword,
+                        gCurrentDB.magic, gCurrentDB.hash);
+                code = '231';
+
+                break;
+            case (gTokInfo.status === 3):
+                k = engGetKey(gTokInfo.n + 2, gTokInfo.s, gPassword,
                     gCurrentDB.magic, gCurrentDB.hash);
-            prCode = '232';
+                code = '232';
+
+                break;
+            default:
+                return widModalWindow(gMsg.unknownError);
         }
 
-        if (gTokInfo.state === 'PWD_SNDNG')
-        {
-            var k = engGetKey(gTokInfo.n + 1, gTokInfo.s, gPassword,
-                    gCurrentDB.magic, gCurrentDB.hash);
-            prCode = '231';
-        }
+        kk = [gTokInfo.s, k];
+        pl = [engGetHash(kk.join(''), 's22').substring(0, 4),
+            gCurrentDB.altname, code].join(' ');
 
-        var line = gTokInfo.s + '\u0020' + k + '\u0020';
-        textArea($Keys).add(line);
-
-        var mergedKeys = $Keys.val().replace(/\s+/g, '');
-        line = engGetHash(mergedKeys, 's22').substring(0, 4) + '\u0020' +
-                gCurrentDB.altname + '\u0020' + prCode;
-
-        textArea($Keys).add(line);
-
+        textArea($Keys).add(kk.join(' ') + ' ' + pl);
         widSelectAndCopy($Keys);
     }
 }
 
-function widReceiveTab()
-{
+function widReceiveTab() {
     var $Tabs = $('#div_tabs');
     var $Table = $('#table_receive_tab');
     var $Keys = $('#textarea_receive_keys');
     var $Button = $('#button_receive');
 
-    var retObj =
-    {
-        disable : function (comm)
-        {
+    return {
+        disable: function (comm) {
             (comm)
                 ? $Button.addClass('button-disabled')
                     .removeClass('button-enabled')
                 : $Button.addClass('button-enabled')
                     .removeClass('button-disabled');
         },
-        show : function ()
-        {
+        show: function () {
             $Tabs.tabs('option', 'active', 4);
             $Keys.val('');
         },
-        isKeys : function ()
-        {
-            return engIsAcceptKeys($Keys.val());
+        isKeys: function () {
+            return engIsAsgmtKeys($Keys.val());
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 4) ? true : false;
         }
 
     }
-
-    return retObj;
 }
 
-function widReceiveTextareaOninput($Obj)
-{
-    var rawAccKeys = $Obj.val();
+function widReceiveTextareaOninput($Obj) {
+    var keys = $Obj.val();
 
-    if (engIsAcceptKeys(rawAccKeys))
-    {
-        var dn = engGetParsedAcceptKeys(rawAccKeys)[0].s;
+    if (engIsAsgmtKeys(keys)) {
+        var dn = engGetParsedAsgmtKeys(keys)[0].s;
 
-        if (!gTokInfo.raw || dn !== engGetHash(gTokInfo.raw, gCurrentDB.hash))
-            return widSearchTokenRaw(dn);
-        else
-        {
+        if (!Boolean(gTokInfo.raw) || dn !== engGetHash(gTokInfo.raw, gCurrentDB.hash)){
+            return widSearchRawTok(dn);
+        } else {
             var tok = {};
             tok.s = dn;
             tok.raw = gTokInfo.raw || '';
-            widReloadTokenInfo(tok, 0);
+            widReloadTokInfo(tok, 0);
         }
     }
 
     widToggleUI(gTokInfo, gPassword);
 }
 
-function widSearchTokenRaw(dn)
-{
+function widSearchRawTok(dn) {
     var $TokName = $('#textarea_token_name');
-    var tok = engGetTokenObj(dn);
+    var tok = engGetTokObj(dn);
 
-    wrapWaitForToken(tok);
-    //widTokenTextRO(true);
+    wrapWaitForTok(tok);
 
-    var cb = function (resp, rec)
-    {
+    var cb = function (resp, rec) {
 
-        if (resp !== gResponse.OK && resp !== gResponse.NO_RECS)
-            widModalWindow(gResponse[resp]);
+        if (resp !== HASQD_RESP.OK && resp !== HASQD_RESP.NO_RECS)
+            widModalWindow(HASQD_RESP[resp]);
 
-        var accKeysTok = {};
-        accKeysTok.s = (rec === null) ? tok.s: rec.s;
+        var asgmtKeysTok = {};
+        asgmtKeysTok.s = (rec === null) ? tok.s : rec.s;
         var sOrD = (rec === null) ? tok.s : rec.d;
-        accKeysTok.raw = engGetTokNameFromZ(accKeysTok.s, sOrD, gCurrentDB.hash);
+        asgmtKeysTok.raw = engGetTokNameFromZ(AsgmtKeysTok.s, sOrD, gCurrentDB.hash);
 
-        return widReloadTokenInfo(accKeysTok, 0, false);
+        return widReloadTokInfo(AsgmtKeysTok, 0, false);
     }
 
     engNcRecordZero(cb, tok.s);
 }
 
-function widReceiveButtonClick()
-{
+function widReceiveButtonClick() {
     var $TokName = $('#textarea_token_name');
     var $Keys = $('#textarea_receive_keys');
     var $PwdInp = $('#input_password');
+    var keys, asgmtKeys, tokName;
 
-    if (!gTokInfo.state || gTokInfo.state === 'IDX_NODN')
+    if ([0, -1].includes(gTokInfo.status)) {
         return widModalWindow(gMsg.noDn, function () { $TokName.focus() });
+    }
 
-    if (!widIsPassword())
+    if (!widIsPassword()) {
         return widModalWindow(gMsg.enterMasterKey,
-                function () { $PwdInp.focus() });
-
-    var rawAccKeys = $Keys.val();
-
-    if (!engIsAcceptKeys(rawAccKeys))
-        return widModalWindow(gMsg.badAcceptKeys,
-                function () { $Keys.focus() });
-
-    var accKeys = engGetParsedAcceptKeys($Keys.val());
-    accKeys[0].raw = (gTokInfo.raw
-            && accKeys[0].s === engGetHash(gTokInfo.raw, gCurrentDB.hash))
+            function () {
+                $PwdInp.focus()
+        });
+    }
+    
+    keys = $Keys.val();
+    
+    if (!engIsAsgmtKeys(keys)) {
+        return widModalWindow(gMsg.badAsgmtKeys, function () {
+            $Keys.focus()
+        });
+    }
+    
+    asgmtKeys = engGetParsedAsgmtKeys(keys);
+    tokName = $TokName.val();
+    asgmtKeys[0].raw = (Boolean(gTokInfo.raw) && asgmtKeys[0].s ===
+            engGetHash(gTokInfo.raw, gCurrentDB.hash))
         ? gTokInfo.raw
-        : (accKeys[0].s === engGetHash($TokName.val(), gCurrentDB.hash))
-            ? $TokName.val()
+        : (asgmtKeys[0].s === engGetHash(tokName, gCurrentDB.hash))
+            ? tokName
             : '';
 
-    wrapWaitForToken(accKeys[0]);
+    wrapWaitForTok(asgmtKeys[0]);
     widReceiveTab().disable(true);
-    widReceiveKey(accKeys);
+    widReceiveKey(asgmtKeys);
 }
 
-function widReceiveKey(keys)
-{
-    var cb = function (resp, record)
-    {
-        if (resp !== gResponse.OK) return widModalWindow(gResponse[resp]);
-        if (record === null) return widModalWindow(gMsg.recordParseError);
+function widReceiveKey(keys) {
+    var cb = function (resp, record) {
+        if (resp !== HASQD_RESP.OK){
+            return widModalWindow(HASQD_RESP[resp]);
+        }
+        if (record === null) {
+            return widModalWindow(gMsg.recordParseError);
+        }
 
-        widTokensTakeover(engGetNumberedAcceptKeys(keys, [record]));
+        widTokensTakeover(engGetNumberedAsgmtKeys(keys, [record]));
     }
 
     widRequestLast(cb, keys[0].s, 0);
 }
 
-function widTokensTakeover(keys)
-{
+function widTokensTakeover(keys) {
     keys = engGetTitleRecord(keys, gPassword, gCurrentDB.hash,
             gCurrentDB.magic);
 
-    switch (keys[0].prcode)
-    {
-        case '23132': widInstantReceive(keys[0]); break;
-        case '23141': widBlockingReceive(keys[0]); break;
-        case '231': widBlockingReceive(keys[0]); break;
-        case '232': widInstantReceive(keys[0]); break;
-        default: widModalWindow(gMsg.badAcceptKeys);
+    switch (keys[0].prcode) {
+            //FIX make const for code
+        case '23132':
+            widInstantReceive(keys[0]);
+            break; //INSTANT_CODE
+        case '123132':
+            widInstantReceive(keys[0]);
+            break; //INSTANT_CODE_N
+        case '23141':
+            widBlockingReceive(keys[0]);
+            break; //ONHOLD_CODE
+        case '123141':
+            widBlockingReceive(keys[0]);
+            break; //ONHOLD_CODE_N
+        case '231':
+            widBlockingReceive(keys[0]);
+            break; //RELEASE_S_CODE
+        case '1231':
+            widBlockingReceive(keys[0]);
+            break; //RELEASE_S_CODE_N
+        case '232':
+            widInstantReceive(keys[0]);
+            break; //RELEASE_R_CODE
+        case '1232':
+            widInstantReceive(keys[0]);
+            break; //RELEASE_R_CODE_N
+        default:
+            widModalWindow(gMsg.badAsgmtKeys);
     }
 }
 
-function widInstantReceive(keys)
-{
-    var addCb1 = function (resp)
-    {
-        if (resp !== gResponse.OK) widModalWindow(gResponse[resp]);
+function widInstantReceive(keys) {
+    var addCb1 = function (resp) {
+        if (resp !== HASQD_RESP.OK)
+            widModalWindow(HASQD_RESP[resp]);
 
         $('#textarea_receive_keys').val('');
 
-        widReloadTokenInfo(keys);
+        widReloadTokInfo(keys);
     }
 
-    var addCb0 = function (resp, keys)
-    {
-        if (resp === gResponse.OK)
+    var addCb0 = function (resp, keys) {
+        if (resp === HASQD_RESP.OK)
             return engNcAdd(addCb1, gCurrentDB.name, keys, null);
 
-        widModalWindow(gResponse[resp]);
-        widReloadTokenInfo(keys);
+        widModalWindow(HASQD_RESP[resp]);
+        widReloadTokInfo(keys);
     }
 
     engNcAdd(addCb0, gCurrentDB.name, keys, null);
 }
 
-function widBlockingReceive(keys)
-{
-    var cb = function (resp)
-    {
-        if (resp !== gResponse.OK)
-            widModalWindow(gResponse[resp]);
+function widBlockingReceive(keys) {
+    var cb = function (resp) {
+        if (resp !== HASQD_RESP.OK)
+            widModalWindow(HASQD_RESP[resp]);
 
         $('#textarea_receive_keys').val('');
 
-        widReloadTokenInfo(keys);
+        widReloadTokInfo(keys);
     }
 
     engNcAdd(cb, gCurrentDB.name, keys, null);
 }
 
-function widSearchTab()
-{
+function widSearchTab() {
     var $Table = $('#table_search_tab');
     var $Button = $('#button_search');
     var $Tabs = $('#div_tabs');
-    var retObj =
-    {
-        disable : function (comm)
-        {
+    var retObj = {
+        disable: function (comm) {
             (comm)
                 ? $Button.addClass('button-disabled')
                     .removeClass('button-enabled')
                 : $Button.addClass('button-enabled')
                     .removeClass('button-disabled');
         },
-        show : function ()
-        {
+        show: function () {
             $Tabs.tabs('option', 'active', 5);
             widSetDivOverflowSize();
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 5) ? true : false;
         }
     }
@@ -1379,32 +1361,23 @@ function widSearchTab()
     return retObj;
 }
 
-function widWelcomeTab()
-{
+function widWelcomeTab() {
     var $Tabs = $('#div_tabs');
-    //widPasswordOninput();
-
-    var retObj =
-    {
-        show : function ()
-        {
+    return {
+        show: function () {
             $Tabs.tabs('option', 'active', 6);
-            widShowTokenState();
+            widShowTokStatus();
             widShowPwdInfo();
-            widShowTokenHash();
+            widShowTokHash();
             widShowTokenDataLength();
         },
-        isOn : function ()
-        {
+        isOn: function () {
             return ($Tabs.tabs('option', 'active') === 0) ? true : false;
         }
     }
-
-    return retObj;
 }
 
-function widSearchButtonClick()
-{
+function widSearchButtonClick() {
     var $PwdInp = $('#input_password');
     var $From = $('#input_from_datepicker');
     var $To = $('#input_to_datepicker');
@@ -1414,7 +1387,9 @@ function widSearchButtonClick()
 
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey,
-                function () { $PwdInp.focus() });
+            function () {
+            $PwdInp.focus()
+        });
 
     if (fromDate > toDate)
         return widModalWindow(gMsg.enterDate);
@@ -1422,25 +1397,22 @@ function widSearchButtonClick()
     engSearchClick(fromDate, toDate, widSearchProgress);
 }
 
-function widSearchResultsTabsClick($Obj, tabId)
-{
+function widSearchResultsTabsClick($Obj, tabId) {
     var $Tabs = $('#div_search_result_tabs');
     var $AllButtons = $('#td_search_tabs_buttons button');
 
-    if ( $Obj.hasClass('search-tabs-buttons-active') )
+    if ($Obj.hasClass('search-tabs-buttons-active'))
         widHideOnclick();
 
     $Tabs.tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tabs-buttons')
-        .removeClass('search-tabs-buttons-active');
+    .removeClass('search-tabs-buttons-active');
     $Obj.addClass('search-tabs-buttons-active')
-        .removeClass('search-tabs-buttons');
+    .removeClass('search-tabs-buttons');
 
 }
 
-
-function widSetDivOverflowSize()
-{
+function widSetDivOverflowSize() {
     var $Results = $('#td_search_results');
     var $Div = $('.div-overflow');
     var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
@@ -1450,8 +1422,7 @@ function widSetDivOverflowSize()
     $Div.css('max-width', tdWidth + 'px');
 }
 
-function widHideOnclick()
-{
+function widHideOnclick() {
     $Obj = $('.td-visible, .td-hidden');
     $Obj.toggleClass('td-visible td-hidden');
     var $Inits = $('#td_search_inits');
@@ -1462,15 +1433,12 @@ function widHideOnclick()
     var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
     var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
-    if ( $Obj.hasClass('td-visible') )
-    {
+    if ($Obj.hasClass('td-visible')) {
         $Inits.css('display', 'inline-block');
         var decW = tdWidth - initsWidth - pdnLeft - pdnRight;
         $Div.innerWidth(decW);
         $Obj.html('>');
-    }
-    else
-    {
+    } else {
         $Inits.css('display', 'none');
         var incW = tdWidth + initsWidth;
         $Div.innerWidth('100%');
@@ -1482,15 +1450,12 @@ function widHideOnclick()
     return false;
 }
 
-
 //  1   Set button according to g_searchOn
 //  2   Show current file
 //  3   Update results
 var widSearchProgress = {};
 
-
-widSearchProgress.button = function(on)
-{
+widSearchProgress.button = function (on) {
     if (on)
         $('#button_search').html(imgBtnStop);
     else
@@ -1499,102 +1464,94 @@ widSearchProgress.button = function(on)
     return;
 }
 
-widSearchProgress.block = function(txt, lnk)
-{
+widSearchProgress.block = function (txt, lnk) {
     var n = lnk.match(/\d+(?=\.)/g);
     var x = 'Block <a href="/file ' + lnk + '" target="_blank">' +
-            txt.substr(2) + '-' +n+ '</a>';
+        txt.substr(2) + '-' + n + '</a>';
     $('#span_current_slice').html(x);
     return;
 }
 
-widSearchProgress.refresh = function()
-{
+widSearchProgress.refresh = function () {
     widWalletRefresh();
 }
 
-function widWalletRefresh()
-{
+function widWalletRefresh() {
     var str = widSearchUpdate();
 
     // update widgit only if required
-    function update(o, newstr)
-    {
+    function update(o, newstr) {
         var oldstr = o.html();
 
-        if (newstr.length != oldstr.length || newstr != oldstr) o.html(newstr);
+        if (newstr.length != oldstr.length || newstr != oldstr)
+            o.html(newstr);
     }
 
-    update( $('#div_mine_search_results'), str.text[1] );
-    update( $('#div_onhold_search_results'), str.text[2] );
-    update( $('#div_expected_search_results'), str.text[3] );
+    update($('#div_mine_search_results'), str.text[1]);
+    update($('#div_onhold_search_results'), str.text[2]);
+    update($('#div_expected_search_results'), str.text[3]);
 
-    update( $('#span_search_mine'), '(' +
-        engGetNumberLevel(str.number[1]) + ')' );
+    update($('#span_search_mine'), '(' +
+        engGetNumberLevel(str.number[1]) + ')');
 
     var $Onhold = $('#span_search_onhold');
 
     if (str.number[2] > 0)
-        update( $Onhold, '(' + str.number[2] + ')' );
+        update($Onhold, '(' + str.number[2] + ')');
     else
-        update( $Onhold, '');
+        update($Onhold, '');
 
     var $Expected = $('#span_search_expected');
 
     if (str.number[3] > 0)
-        update( $Expected, '(' + str.number[3] + ')' );
+        update($Expected, '(' + str.number[3] + ')');
     else
-        update( $Expected, '' );
+        update($Expected, '');
 
     return;
 }
 
-function widSearchUpdate()
-{
+function widSearchUpdate() {
     var w = gWallet;
 
     var t = ["", "", "", "", ""];
     var n = [0, 0, 0, 0, 0];
 
-    for (var i in w)
-    {
+    for (var i in w) {
         var x = w[i];
         var xs = x.s;
-        if ( x.raw != "" ) xs = engGetDataToRec(x.raw);
+        if (x.raw != "")
+            xs = engGetDataToRec(x.raw);
 
         xs = '<button class="search-dn" onclick="widDnSelect(\''
-                + window.btoa(xs) + '\')">' + xs + '</button>';
+             + window.btoa(xs) + '\')">' + xs + '</button>';
 
         var xn = '' + x.n + ' ';
         ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
-        if ( x.state > 0 && x.state < 4 )
-            t[x.state] += xs + ' <span class="span-search-dn">' + xn +
-                    '</span>' + '\n';
-            n[x.state]++;
+        if (x.status > 0 && x.status < 4)
+            t[x.status] += xs + ' <span class="span-search-dn">' + xn +
+            '</span>' + '\n';
+        n[x.status]++;
     }
 
-    return { text:t, number:n };
+    return {
+        text: t,
+        number: n
+    };
 }
 
-function widDnSelect(b64)
-{
+function widDnSelect(b64) {
     var fmd = window.atob(b64);
     var raw = engGetDataFromRec(fmd);
-    widReloadTokenInfo(engGetTokenObj(raw));
+    widReloadTokInfo(engGetTokObj(raw));
 }
 
-function widRequestLast(extCb, tok, delay)
-{
+function widRequestLast(extCb, tok, delay) {
     var possible_raw = $('#textarea_token_name').val();
 
-    var cb = function (resp, record)
-    {
-        ///var resp = engGetResponseHeader(data);
-        ///var record = null;
-
-        if (resp === gResponse.OK)
-        {
+    var cb = function (resp, record) {
+        if (resp === HASQD_RESP.OK) {
             updateGWalletOnLast(record, possible_raw);
             widWalletRefresh();
         }

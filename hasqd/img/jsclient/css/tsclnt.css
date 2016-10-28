@@ -1,75 +1,63 @@
 /* Hasq Technology Pty Ltd (C) 2013-2016 */
 
-html
-{
-  /* overflow-y: scroll; */
+html {
+    /* overflow-y: scroll; */
 }
 
-body
-{
-	font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace;
-	background: #FEFEFA /*url("../img/bgfon.png")*/;
-	color: black;
-	width: 60%;
-	height: 100%;
-	min-width: 360px;
-	text-align: justify;
-	margin: auto;
+body {
+    font: normal 1em Arial, Verdana, Consolas, "Courier New", monospace;
+    background: #FEFEFA;
+    color: black;
+    width: 60%;
+    height: 100%;
+    min-width: 360px;
+    text-align: justify;
+    margin: auto;
 }
-	
-*:focus
-{
+
+*:focus {
     outline: none;
 }
 
-*::-moz-focus-inner 
-{
-	border: 0;
+*::-moz-focus-inner {
+    border: 0;
 }
 
-*
-{
+* {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;	
+    -webkit-box-sizing: border-box;
 }
 
 a:link,
-a:visited
-{
+a:visited {
     color: #1957A1;
 }
 
-button
-{
+button {
     font: bold 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     border: 0;
     margin: 0;
     padding: 0;
-    border-radius: 4px; 
-    -moz-border-radius: 4px; 
-    -webkit-border-radius: 4px; 
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 
-button.tab-button-off,
-button.show-keys-button-off,
-button.button-enabled
-{
+button.tab-btn-up,
+button.show-keys-btn-up,
+button.button-enabled {
     width: 70px;
     height: 70px;
     background: #FFFFFF;
     border: 1px solid #1336BC;
     opacity: 1;
-    /* -webkit-transition: background 0.20s;
-    -moz-transition: background 0.20s;
-    -o-transition: background 0.20s; */
     transition: background 0.2s, border-radius 0.2s;
 }
 
-button.tab-button-on,
-button.show-keys-button-on
-{
+button.tab-btn-down,
+button.show-keys-btn-down {
     width: 70px;
     height: 70px;
     background: #00CED1;
@@ -78,106 +66,85 @@ button.show-keys-button-on
     transition: background 0.2s, border-radius 0.2s;
 }
 
-button.tab-button-on:hover
-{
-    /* background: #90FEF1; */
+button.tab-btn-down:hover {
     cursor: pointer;
 }
 
 @keyframes flash {
-    0% {}
-    50%  
-    {
-        /* background:#EEEEFE; */
-        background: rgba(100,100,255,0.2);
+    0% {} 50% {
+        background: rgba(100, 100, 255, 0.2);
         border-radius: 6px;
     }
     100% {}
 }
 
 button:hover,
-button.tab-button-off:hover,
-button.show-keys-button-off:hover,
-button.show-keys-button-on:hover,
-button.button-enabled:hover
-{
-    /* background: #EEEEFE; */
+button.tab-btn-up:hover,
+button.show-keys-btn-up:hover,
+button.show-keys-btn-down:hover,
+button.button-enabled:hover {
     cursor: pointer;
     animation: flash 500ms
 }
 
-button.tab-button-off:active:hover,
-button.tab-button-on:active:hover,
-button.show-keys-button-off:active:hover,
-button.show-keys-button-on:active:hover
-{
-    /* background: #20B2AA; */
+button.tab-btn-up:active:hover,
+button.tab-btn-down:active:hover,
+button.show-keys-btn-up:active:hover,
+button.show-keys-btn-down:active:hover {
     border-radius: 8px;
 }
 
-button.button-disabled
-{
+button.button-disabled {
     background: #ccc;
     color: #000;
     opacity: 0.8;
     width: 70px;
-    height: 70px;    
+    height: 70px;
     border: 1px solid #1336BC;
     transition: background 0.2s, border-radius 0.2s;
 }
 
-button.button-disabled:active:hover
-{
-    /* background: #2F4F4F; */
+button.button-disabled:active:hover {
     color: #000;
     border-radius: 8px;
-    /* opacity: 0.4; */
 }
 
-button.button-disabled:hover
-{
-    /* background: #ddf; */
+button.button-disabled:hover {
     color: #000;
-    /* opacity: 0.4; */
 }
 
-#button_create
-{
-    margin-top : 48px;
+#button_create {
+    margin-top: 48px;
 }
 
-#div_tabs
-{
+#div_tabs {
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
     background: #FEFEFA;
 }
 
-#div_tabs ul li
-{
+#div_tabs ul li {
     display: inline-block;
     float: none;
     vertical-align: bottom;
 }
 
-#div_modal_window  /* modal window */
-{
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+#div_modal_window {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-#div_modal_window_content  /* modal window content box */
-{
+#div_modal_window_content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -195,63 +162,52 @@ button.button-disabled:hover
     font: 16px Consolas;
 }
 
-
 #div_modal_window_content:hover,
-#div_modal_window_content:focus
-{
+#div_modal_window_content:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-#div_modal_window_content_header
-{
+#div_modal_window_content_header {
     padding: 1px 1px;
-   /*  background-color: #FF0000; */
+
     color: white;
 }
 
-#div_modal_window_content_body
-{
+#div_modal_window_content_body {
     padding: 10px 10px;
     background-color: #FCFCFC;
 }
 
-#div_modal_window_content_footer
-{
+#div_modal_window_content_footer {
     padding: 1px 1px;
-    /* background-color: #FF0000; */
     color: white;
 }
 
-led
-{
+led {
     text-align: center;
     vertical-align: middle;
 }
 
-p
-{
+p {
     word-wrap: break-word;
     white-space: normal;
     margin: 0;
 }
 
-table
-{
-    border-collapse:collapse;
+table {
+    border-collapse: collapse;
     box-sizing: border-box;
 }
 
 /* Title area */
 
-#table_title_area
-{
+#table_title_area {
     width: 100%;
 }
 
-#table_title_area td:first-child
-{
+#table_title_area td:first-child {
     text-align: left;
     vertical-align: middle;
     font: bold 1.9em Verdana !important;
@@ -259,98 +215,82 @@ table
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #1376BC;
 }
 
-#table_title_area td:first-child a
-{
-	text-decoration: none;
+#table_title_area td:first-child a {
+    text-decoration: none;
 }
 
-#table_title_area td:not(:first-child)
-{
-    width: 1.5em; 
-	height: auto; 
-	text-align: center;
-	padding: 0;
+#table_title_area td:not(:first-child) {
+    width: 1.5em;
+    height: auto;
+    text-align: center;
+    padding: 0;
 }
 
 #span_logo img,
 #span_info img,
-#span_shield img
-{
-	width: 1.5em;
+#span_shield img {
+    width: 1.5em;
     height: auto;
 }
 
 /* Init data area*/
 
-#table_initial_data_area
-{
+#table_initial_data_area {
     width: 100%;
 }
 
-#table_initial_data_area td
-{
+#table_initial_data_area td {
     padding: 0 0 3px 0;
 }
 
-#textarea_token_name
-{
-	height: 2.5em;
+#textarea_token_name {
+    height: 2.5em;
 }
 
-#span_reload img
-{
+#span_reload img {
     width: 1em;
-	height: auto;
+    height: auto;
 }
 
-#span_reload:hover
-{
-    cursor: pointer;    
+#span_reload:hover {
+    cursor: pointer;
 }
 
-#span_reload:active
-{
-    opacity: 0.7;    
+#span_reload:active {
+    opacity: 0.7;
 }
 
-#td_reload_button
-{
-	width: 1.5em;
-	height: auto;
-	vertical-align: middle;
+#td_reload_button {
+    width: 1.5em;
+    height: auto;
+    vertical-align: middle;
 }
 
-#td_token_hash_label
-{
-	width: 6.3em;
+#td_token_hash_label {
+    width: 6.3em;
 }
 
-#td_token_hash
-{
-	width: 18em;
+#td_token_hash {
+    width: 18em;
 }
 
-#td_token_lock
-{
-	width: 1em;
-	text-align: right;
-	vertical-align: middle;
+#td_token_lock {
+    width: 1em;
+    text-align: right;
+    vertical-align: middle;
 }
 
-#td_token_lock img
-{
-	width: 1em;
-	height: auto;
+#td_token_lock img {
+    width: 1em;
+    height: auto;
 }
 
-#td_file_upload
-{
-	text-align: right;
-	vertical-align:top;
-}  
-     
-#label_file_upload
-{
+#td_file_upload {
+    text-align: right;
+    vertical-align: top;
+}
+
+#label_file_upload {
     vertical-align: top;
     font: bold italic 0.65em Consolas, "Lucida Console", monospace !important;
     text-align: center;
@@ -363,120 +303,102 @@ table
     opacity: 1;
 }
 
-#label_file_upload:hover
-{
+#label_file_upload:hover {
     background-color: #87CEEB;
     cursor: pointer;
 }
 
-#input_file_upload
-{
+#input_file_upload {
     display: none;
-}	
+}
 
 /* Master key area*/
 
-#table_master_key
-{
-	margin: auto;
-	width: 80%;
-	border: 0;
+#table_master_key {
+    margin: auto;
+    width: 80%;
+    border: 0;
 }
 
-#table_master_key  tr:first-child  td
-{
-	max-width: 22em;
-	text-align: center;
-	vertical-align: middle;
+#table_master_key tr:first-child td {
+    max-width: 22em;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #table_master_key tr:first-child td:first-child,
-#table_master_key tr:first-child td:last-child
-{
-	width: 2em;
-	vertical-align: middle;
-} 
+#table_master_key tr:first-child td:last-child {
+    width: 2em;
+    vertical-align: middle;
+}
 
-#span_password_eye:hover
-{
+#span_password_eye:hover {
     cursor: pointer;
 }
-#span_password_eye img
-{
+
+#span_password_eye img {
     width: 1em;
-	height: auto;
+    height: auto;
 }
 
-#input_password
-{
+#input_password {
     font: normal 1em Consolas, "Courier New", monospace !important;
     width: 99%;
     margin: 0;
     border: 1px solid #DDDDDD;
     border-radius: 0;
-     box-sizing: border-box;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
-#input_password:focus
-{
+#input_password:focus {
     border: 1px solid #DDDDDD;
 }
 
-#span_password_zxcvbn
-{
-	text-align: left;
-	vertical-align: top;
+#span_password_zxcvbn {
+    text-align: left;
+    vertical-align: top;
 }
 
-input:required:valid
-{
+input:required:valid {
     border: 1px solid #DDDDDD;
 }
 
-input:invalid
-{
+input:invalid {
     border: 1px solid #DDDDDD;
     box-shadow: none;
 }
 
-input:focus:invalid
-{
+input:focus:invalid {
     border-color: red;
 }
 
-
-input[placeholder]
-{
+input[placeholder] {
     font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-input::-webkit-input-placeholder
-{
+input::-webkit-input-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-input:-ms-input-placeholder
-{
+input:-ms-input-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-input:-moz-placeholder
-{
+input:-moz-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-input::-moz-placeholder
-{
+input::-moz-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
@@ -486,120 +408,103 @@ input::-moz-placeholder
 /********** Tabs area ***********/
 /********************************/
 
-#table_main_area
-{
+#table_main_area {
     width: 100%;
 }
 
-#ul_tabs
-{
+#ul_tabs {
     display: none;
 }
 
-#td_main_tabs_content
-{
+#td_main_tabs_content {
     vertical-align: top;
     padding: 3px 0 3px 3px;
-	/* width: 100%; */
 }
 
-#td_main_tabs_buttons
-{
+#td_main_tabs_buttons {
     width: 1%;
     text-align: right;
-    vertical-align: top;   
+    vertical-align: top;
     padding: 3px 3px 3px 0;
 }
 
-#td_main_tabs_buttons table
-{
+#td_main_tabs_buttons table {
     border: 0 solid #DDDDDD;
 }
 
-#td_main_tabs_buttons table td
-{
+#td_main_tabs_buttons table td {
     padding: 3px;
 }
 
 /********************************/
 /********** Create tab **********/
 /********************************/
-#table_create_tab
-{
+
+#table_create_tab {
     width: 100%;
     border: 0;
 }
 
-#table_create_tab td
-{
+#table_create_tab td {
     padding: 3px 3px 3px 3px;
 }
+
 /********************************/
 /*********** Data tab ***********/
 /********************************/
-#table_set_data_tab
-{
+
+#table_set_data_tab {
     width: 100%;
     border: 0;
 }
 
-#table_set_data_tab td
-{
+#table_set_data_tab td {
     padding: 3px 3px 3px 3px;
 }
 
-#table_set_data_button
-{
-	width: 100%;
+#table_set_data_button {
+    width: 100%;
 }
-
 
 #table_set_data_button td:first-child,
-#table_set_data_button td:last-child
-{
-	text-align:left;
-	vertical-align:top;
-	width: 2em;
+#table_set_data_button td:last-child {
+    text-align: left;
+    vertical-align: top;
+    width: 2em;
 }
 
-#table_set_data_button td
-{
-	padding: 0;
+#table_set_data_button td {
+    padding: 0;
 }
 
-#span_data_length
-{
-	font: italic 0.7em Consolas, "Courier New", monospace !important;
-	text-align:left;
-	vertical-align:top;	
+#span_data_length {
+    font: italic 0.7em Consolas, "Courier New", monospace !important;
+    text-align: left;
+    vertical-align: top;
 }
 
-#span_data_length:hover
-{
-	cursor: pointer;
+#span_data_length:hover {
+    cursor: pointer;
 }
 
 /********************************/
 /********* Show keys tab ********/
 /********************************/
-#table_show_keys_tab
-{
+
+#table_show_keys_tab {
     width: 100%;
     border: 0;
 }
 
-#table_show_keys_tab td
-{
+#table_show_keys_tab td {
     padding: 3px 3px 3px 3px;
 }
 
-#td_show_keys_button table
-{
+#td_show_keys_button table {
     margin: auto;
 }
 
-#td_show_keys_button table td
-{
+#td_show_keys_button table td {
     padding: 0 3px 0 3px;
 }
 
@@ -607,194 +512,164 @@ input::-moz-placeholder
 /******* Receive keys tab *******/
 /********************************/
 
-#table_receive_tab
-{
+#table_receive_tab {
     width: 100%;
     border: 0;
 }
 
-#table_receive_tab td
-{
+#table_receive_tab td {
     padding: 3px 3px 3px 3px;
 }
+
 /********************************/
 /********** Search tab **********/
 /********************************/
-#table_search_tab
-{
+
+#table_search_tab {
     width: 100%;
-	/* table-layout:fixed; */
     border: 0;
 }
 
-#table_search_tab td
-{
+#table_search_tab td {
     padding: 3px 3px 3px 3px;
 }
 
-#table_search_tab #td_search_tabs_buttons
-{
+#table_search_tab #td_search_tabs_buttons {
     vertical-align: top;
     padding: 0;
-    /* width: 76px; */
-	width: 1%;
+    width: 1%;
 }
 
-#td_search_tabs_buttons table td
-{
+#td_search_tabs_buttons table td {
     padding: 3px;
 }
-
-#td_search_results
-{
+#td_search_results {
     vertical-align: top;
-	padding: 3px;
+    padding: 3px;
     height: 12.5em;
-	min-width: 1px;
+    min-width: 1px;
 }
 
-#div_search_result_tabs
-{
-	vertical-align: top;
+#div_search_result_tabs {
+    vertical-align: top;
 }
 
-#div_search_result_tabs div
-{
+#div_search_result_tabs div {
     border: 0 solid #DDDDDD;
     background-color: white;
-	height: 12em;
+    height: 12em;
     max-height: 100%;
-	max-width:100%;
-	padding: 0;
+    max-width: 100%;
+    padding: 0;
 }
 
-.div-overflow
-{
+.div-overflow {
     border-radius: 0px;
     text-align: left;
-	padding: 0;
-	height: 100%; /*12.5em;*/
-	
-	white-space: pre;
-	overflow: auto;
-	max-width:100%;
+    padding: 0;
+    height: 100%;
+    white-space: pre;
+    overflow: auto;
+    max-width: 100%;
 }
 
-#td_search_inits
-{
+#td_search_inits {
     vertical-align: top;
-	text-align: right;
+    text-align: right;
     padding: 3px 3px 3px 0;
-	height: 100%; /*12.5em;*/
-	width: 9.625em;
-	min-width: 9.625em;
-	max-width: 9.625em;
-	
+    height: 100%;
+    width: 9.625em;
+    min-width: 9.625em;
+    max-width: 9.625em;
     border: 0;
     overflow: hidden;
     position: relative;
-	
-	transition-property: all;
-	transition-duration: 1s;
-	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);	
+    transition-property: all;
+    transition-duration: 1s;
+    transition-timing-HASQD_RESP: cubic-bezier(0, 1, 0.5, 1);
 }
 
-
-#td_search_inits table
-{
+#td_search_inits table {
     table-layout: fixed;
-	text-align: center;
-	width: 100%;
+    text-align: center;
+    width: 100%;
     border: 0;
-	padding: 3px 0 3px 0;
+    padding: 3px 0 3px 0;
 }
 
-#td_search_inits table td
-{
-	padding: 3px 0 3px 0;
+#td_search_inits table td {
+    padding: 3px 0 3px 0;
 }
 
 .td-visible,
-.td-hidden
-{
-	font: normal 1em Consolas, "Courier New", monospace !important;
-	width: 1em;
-	min-width: 1em;
-	vertical-align: middle;
-	padding: 3px;
-	border: 0px solid #eef;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;  
+.td-hidden {
+    font: normal 1em Consolas, "Courier New", monospace !important;
+    width: 1em;
+    min-width: 1em;
+    vertical-align: middle;
+    padding: 3px;
+    border: 0px solid #eef;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
-
 
 .td-visible:hover,
-.td-hidden:hover
-{
-	background-color: #eef;
-	background-position: right bottom;
-	cursor: pointer;
-	
+.td-hidden:hover {
+    background-color: #eef;
+    background-position: right bottom;
+    cursor: pointer;
 }
 
-
 #td_label_from_datepicker,
-#td_label_to_datepicker
-{
+#td_label_to_datepicker {
     font: normal 1em Consolas, "Courier New", monospace !important;
-	text-align: left;
-	width: 3em; 
+    text-align: left;
+    width: 3em;
 }
 
 #td_input_from_datepicker,
-#td_input_to_datepicker
-{
-	text-align: center;
-	width: 6.4em;
+#td_input_to_datepicker {
+    text-align: center;
+    width: 6.4em;
 }
 
 #td_input_from_datepicker input,
-#td_input_to_datepicker input
-{
+#td_input_to_datepicker input {
     font: 1em Consolas, "Courier New", monospace !important;
-	border: 1px solid #DDDDDD; /*#aaa;*/
-	border-radius: 0;
-	text-align: left;
-	width: 98%;
-	margin: 0px;
- 	box-sizing: border-box;
+    border: 1px solid #DDDDDD;
+    border-radius: 0;
+    text-align: left;
+    width: 98%;
+    margin: 0px;
+    box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-#td_search_button
-{
-	height: 6.5em; 
-	vertical-align: bottom;
+#td_search_button {
+    height: 6.5em;
+    vertical-align: bottom;
 }
 
-#td_search_slice
-{
-	font: normal 1em Consolas, "Courier New", monospace !important;
-	height: 1.875em; 
-	text-align: left;
-	vertical-align: bottom;
-	white-space: nowrap;
-	overflow: hidden;
+#td_search_slice {
+    font: normal 1em Consolas, "Courier New", monospace !important;
+    height: 1.875em;
+    text-align: left;
+    vertical-align: bottom;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-#span_current_slice
-{
+#span_current_slice {
     font: normal 1em Consolas, "Courier New", monospace !important;
 }
 
-.span-search-dn
-{
-	font: 0.75em Consolas, "Courier New", monospace !important;	
+.span-search-dn {
+    font: 0.75em Consolas, "Courier New", monospace !important;
 }
-button.search-dn
-{
+
+button.search-dn {
     font: 0.75em Consolas, "Courier New", monospace !important;
     text-align: left;
     width: unset;
@@ -806,13 +681,12 @@ button.search-dn
     padding: 0;
     opacity: 1;
 }
-button.search-dn:hover
-{
-     background: #EEEEFE;
+
+button.search-dn:hover {
+    background: #EEEEFE;
 }
 
-button.search-tabs-buttons
-{
+button.search-tabs-buttons {
     font: bold 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     width: 70px;
@@ -824,8 +698,7 @@ button.search-tabs-buttons
     opacity: 1;
 }
 
-button.search-tabs-buttons-active
-{
+button.search-tabs-buttons-active {
     font: bold 0.75em Consolas, "Courier New", monospace !important;
     text-align: center;
     width: 70px;
@@ -838,32 +711,25 @@ button.search-tabs-buttons-active
 }
 
 button.search-tabs-buttons:active:hover,
-button.search-tabs-buttons-active:active:hover
-{
-    /* background: #20B2AA; */
+button.search-tabs-buttons-active:active:hover {
     border-radius: 8px;
 }
 
-#ui-datepicker-div
-{
+#ui-datepicker-div {
     display: none;
 }
-
 
 /********************************/
 /************ Other *************/
 /********************************/
 
-td
-{
-/*     vertical-align: bottom; */
+td {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;	
+    -webkit-box-sizing: border-box;
 }
 
-textarea[type='text']
-{
+textarea[type='text'] {
     width: 100%;
     font: normal 1em Consolas, "Courier New", monospace !important;
     border: 1px solid #DDDDDD;
@@ -873,51 +739,43 @@ textarea[type='text']
     margin-bottom: 0;
 }
 
-textarea:focus
-{
+textarea:focus {
     border: 1px solid #DDDDDD;
 }
 
-textarea:focus:invalid
-{
+textarea:focus:invalid {
     border: 1px solid red;
     box-shadow: none;
 }
 
-textarea:invalid
-{
+textarea:invalid {
     border: 1px solid #DDDDDD;
     box-shadow: none;
 }
 
-textarea:required:valid
-{
+textarea:required:valid {
     border: 1px solid #DDDDDD;
 }
 
-textarea::-webkit-input-placeholder
-{
+textarea::-webkit-input-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-textarea:-ms-input-placeholder
-{
+textarea:-ms-input-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-textarea:-moz-placeholder
-{
+textarea:-moz-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
 }
 
-textarea::-moz-placeholder
-{
+textarea::-moz-placeholder {
     font: italic 1em Consolas, "Courier New", monospace !important;
     text-align: left;
     text-overflow: ellipsis;
@@ -925,97 +783,85 @@ textarea::-moz-placeholder
 
 #textarea_set_data,
 #textarea_show_keys,
-#textarea_receive_keys
-{
+#textarea_receive_keys {
     height: 118px;
 }
 
-.ui-tabs-nav
-{
+.ui-tabs-nav {
     display: none;
 }
 
-.span-message-box:hover
-{
+.span-message-box:hover {
     cursor: pointer;
     text-shadow: 1px 1px 2px #DDDDDD, 0 0 2px #1376BC;
 }
 
-.td-button
-{
+.td-button {
     border: 0px solid;
     padding: 0;
     text-align: center;
 }
 
-.td-nostretch
-{
-	width: 1%;
-	white-space: nowrap;
+.td-nostretch {
+    width: 1%;
+    white-space: nowrap;
 }
 
-.td-info
-{
+.td-info {
     font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     vertical-align: middle;
     border-radius: 0px;
-	height: 1.7em;
+    height: 1.7em;
 }
 
-.td-log
-{
+.td-log {
     font: italic 0.9em Consolas, "Courier New", monospace !important;
     text-align: left;
     border-radius: 0px;
     visibility: hidden;
 }
 
-.td-subtitle
-{
+.td-subtitle {
     text-align: center;
     font: bold 1.25em Verdana !important;
     color: #1957A1;
 }
 
-.td-tab-subtitle
-{
+.td-tab-subtitle {
     text-align: center;
     vertical-align: top;
     font: bold 1.1em Verdana !important;
     color: #009070;
 }
 
-.td-subscribe
-{
+.td-subscribe {
     font: italic 0.6em Consolas, "Courier New", monospace !important;
     border-radius: 0px;
     text-align: right;
     vertical-align: top;
 }
 
-.text-align-right
-{
+.text-align-right {
     text-align: right;
 }
 
-.text-align-left
-{
+.text-align-left {
     text-align: left;
 }
 
-.text-align-center
-{
+.text-align-center {
     text-align: center;
 }
 
 /*   cutted from jquery ui custom */
-
 /* Layout helpers
 ----------------------------------*/
+
 .ui-helper-hidden {
     display: none;
 }
+
 .ui-helper-hidden-accessible {
     border: 0;
     clip: rect(0 0 0 0);
@@ -1026,6 +872,7 @@ textarea::-moz-placeholder
     position: absolute;
     width: 1px;
 }
+
 .ui-helper-reset {
     margin: 0;
     padding: 0;
@@ -1036,18 +883,23 @@ textarea::-moz-placeholder
     font-size: 100%;
     list-style: none;
 }
+
 .ui-helper-clearfix:before,
 .ui-helper-clearfix:after {
     content: "";
     display: table;
     border-collapse: collapse;
 }
+
 .ui-helper-clearfix:after {
     clear: both;
 }
+
 .ui-helper-clearfix {
-    min-height: 0; /* support: IE7 */
+    min-height: 0;
+    /* support: IE7 */
 }
+
 .ui-helper-zfix {
     width: 100%;
     height: 100%;
@@ -1055,57 +907,55 @@ textarea::-moz-placeholder
     left: 0;
     position: absolute;
     opacity: 0;
-    filter:Alpha(Opacity=0); /* support: IE8 */
+    filter: Alpha(Opacity=0);
+    /* support: IE8 */
 }
 
 .ui-front {
     z-index: 100;
 }
 
-
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-disabled 
-{
+
+.ui-state-disabled {
     cursor: default !important;
 }
 
-
 /* Icons
 ----------------------------------*/
-
 /* states and images */
-.ui-icon 
-{
+
+.ui-icon {
     display: block;
     text-indent: -99999px;
     overflow: hidden;
     background-repeat: no-repeat;
 }
 
-
 /* Misc visuals
 ----------------------------------*/
-
 /* Overlays */
-.ui-widget-overlay
-{
+
+.ui-widget-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
-.ui-datepicker 
-{
+
+.ui-datepicker {
     width: 16em;
     padding: .2em .2em 0;
     display: none;
 }
+
 .ui-datepicker .ui-datepicker-header {
     position: relative;
     padding: .1em .1em;
 }
+
 .ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next {
     position: absolute;
@@ -1113,22 +963,28 @@ textarea::-moz-placeholder
     width: 1.8em;
     height: 1.8em;
 }
+
 .ui-datepicker .ui-datepicker-prev-hover,
 .ui-datepicker .ui-datepicker-next-hover {
     top: 1px;
 }
+
 .ui-datepicker .ui-datepicker-prev {
     left: 2px;
 }
+
 .ui-datepicker .ui-datepicker-next {
     right: 2px;
 }
+
 .ui-datepicker .ui-datepicker-prev-hover {
     left: 1px;
 }
+
 .ui-datepicker .ui-datepicker-next-hover {
     right: 1px;
 }
+
 .ui-datepicker .ui-datepicker-prev span,
 .ui-datepicker .ui-datepicker-next span {
     display: block;
@@ -1138,36 +994,43 @@ textarea::-moz-placeholder
     top: 50%;
     margin-top: -8px;
 }
+
 .ui-datepicker .ui-datepicker-title {
     margin: 0 2.3em;
     line-height: 1.8em;
     text-align: center;
 }
+
 .ui-datepicker .ui-datepicker-title select {
     font-size: 10px;
     margin: 1px 0;
 }
+
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
     font: 1em Consolas, monospace;
     width: 50%;
 }
+
 .ui-datepicker table {
     width: 100%;
     font-size: .9em;
     border-collapse: collapse;
-    margin: 0 0 0;/* margin: 0 0 .4em; */
+    margin: 0 0 0;
 }
+
 .ui-datepicker th {
     padding: .1em .1em;
     text-align: center;
     font-weight: bold;
     border: 0;
 }
+
 .ui-datepicker td {
     border: 0;
     padding: 1px;
 }
+
 .ui-datepicker td span,
 .ui-datepicker td a {
     display: block;
@@ -1175,6 +1038,7 @@ textarea::-moz-placeholder
     text-align: right;
     text-decoration: none;
 }
+
 .ui-datepicker .ui-datepicker-buttonpane {
     background-image: none;
     margin: .7em 0 0 0;
@@ -1183,45 +1047,55 @@ textarea::-moz-placeholder
     border-right: 0;
     border-bottom: 0;
 }
+
 .ui-datepicker .ui-datepicker-buttonpane button {
     float: right;
-    /* margin: .5em .2em .4em; */
     cursor: pointer;
     padding: .2em .6em .3em .6em;
     width: auto;
     overflow: visible;
 }
+
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
     float: left;
 }
 
 /* with multiple calendars */
+
 .ui-datepicker.ui-datepicker-multi {
     width: auto;
 }
+
 .ui-datepicker-multi .ui-datepicker-group {
     float: left;
 }
+
 .ui-datepicker-multi .ui-datepicker-group table {
     width: 95%;
     margin: 0 auto .4em;
 }
+
 .ui-datepicker-multi-2 .ui-datepicker-group {
     width: 50%;
 }
+
 .ui-datepicker-multi-3 .ui-datepicker-group {
     width: 33.3%;
 }
+
 .ui-datepicker-multi-4 .ui-datepicker-group {
     width: 25%;
 }
+
 .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
 .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
     border-left-width: 0;
 }
+
 .ui-datepicker-multi .ui-datepicker-buttonpane {
     clear: left;
 }
+
 .ui-datepicker-row-break {
     clear: both;
     width: 100%;
@@ -1229,31 +1103,39 @@ textarea::-moz-placeholder
 }
 
 /* RTL support */
+
 .ui-datepicker-rtl {
     direction: rtl;
 }
+
 .ui-datepicker-rtl .ui-datepicker-prev {
     right: 2px;
     left: auto;
 }
+
 .ui-datepicker-rtl .ui-datepicker-next {
     left: 2px;
     right: auto;
 }
+
 .ui-datepicker-rtl .ui-datepicker-prev:hover {
     right: 1px;
     left: auto;
 }
+
 .ui-datepicker-rtl .ui-datepicker-next:hover {
     left: 1px;
     right: auto;
 }
+
 .ui-datepicker-rtl .ui-datepicker-buttonpane {
     clear: right;
 }
+
 .ui-datepicker-rtl .ui-datepicker-buttonpane button {
     float: left;
 }
+
 .ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,
 .ui-datepicker-rtl .ui-datepicker-group {
     float: right;
@@ -1266,15 +1148,14 @@ textarea::-moz-placeholder
 
 /* Component containers
 ----------------------------------*/
-.ui-datepicker
-{
+
+.ui-datepicker {
     border: 1px solid #dddddd;
     background: #ffffff;
     color: #333333;
 }
 
-.ui-datepicker-header
-{
+.ui-datepicker-header {
     border: 1px solid #dddddd;
     background: #e9e9e9;
     color: #333333;
@@ -1289,9 +1170,9 @@ textarea::-moz-placeholder
     color: #333333;
 }
 */
-
 /* Interaction states
 ----------------------------------*/
+
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
@@ -1301,12 +1182,14 @@ textarea::-moz-placeholder
     font: normal 1em Consolas, monospace;
     padding: 0.1em;
 }
+
 .ui-state-default a,
 .ui-state-default a:link,
 .ui-state-default a:visited {
     color: #454545;
     text-decoration: none;
 }
+
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
 .ui-widget-header .ui-state-hover,
@@ -1318,6 +1201,7 @@ textarea::-moz-placeholder
     font-weight: normal;
     color: #2b2b2b;
 }
+
 .ui-state-hover a,
 .ui-state-hover a:hover,
 .ui-state-hover a:link,
@@ -1329,6 +1213,7 @@ textarea::-moz-placeholder
     color: #2b2b2b;
     text-decoration: none;
 }
+
 .ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
@@ -1337,6 +1222,7 @@ textarea::-moz-placeholder
     font-weight: normal;
     color: #ffffff;
 }
+
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
@@ -1354,11 +1240,13 @@ textarea::-moz-placeholder
     background: #fffa90;
     color: #777620;
 }
+
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,
 .ui-widget-header .ui-state-highlight a {
     color: #777620;
 }
+
 .ui-state-error,
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
@@ -1366,42 +1254,47 @@ textarea::-moz-placeholder
     background: #fddfdf;
     color: #5f3f3f;
 }
+
 .ui-state-error a,
 .ui-widget-content .ui-state-error a,
 .ui-widget-header .ui-state-error a {
     color: #5f3f3f;
 }
+
 .ui-state-error-text,
 .ui-widget-content .ui-state-error-text,
 .ui-widget-header .ui-state-error-text {
     color: #5f3f3f;
 }
+
 .ui-priority-primary,
 .ui-widget-content .ui-priority-primary,
 .ui-widget-header .ui-priority-primary {
     font-weight: bold;
 }
+
 .ui-priority-secondary,
 .ui-widget-content .ui-priority-secondary,
 .ui-widget-header .ui-priority-secondary {
     opacity: .7;
-    filter:Alpha(Opacity=70);
+    filter: Alpha(Opacity=70);
     font-weight: normal;
 }
+
 .ui-state-disabled,
 .ui-widget-content .ui-state-disabled,
 .ui-widget-header .ui-state-disabled {
     opacity: .35;
-    filter:Alpha(Opacity=35);
+    filter: Alpha(Opacity=35);
     background-image: none;
 }
+
 .ui-state-disabled .ui-icon {
-    filter:Alpha(Opacity=35);
+    filter: Alpha(Opacity=35);
 }
 
 /* Icons
 ----------------------------------*/
-
 /* states and images */
 
 .ui-icon {
@@ -1413,35 +1306,43 @@ textarea::-moz-placeholder
 .ui-widget-content .ui-icon {
     background-image: url("../lib/images/ui-icons_ff0084_256x240.png");
 }
+
 .ui-widget-header .ui-icon {
     background-image: url("../lib/images/ui-icons_0073ea_256x240.png");
 }
+
 .ui-state-default .ui-icon {
     background-image: url("../lib/images/ui-icons_666666_256x240.png");
 }
+
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon {
     background-image: url("../lib/images/ui-icons_ffffff_256x240.png");
 }
+
 .ui-state-active .ui-icon {
     background-image: url("../lib/images/ui-icons_454545_256x240.png");
 }
+
 .ui-state-highlight .ui-icon {
     background-image: url("../lib/images/ui-icons_0073ea_256x240.png");
 }
+
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
     background-image: url("../lib/images/ui-icons_ff0084_256x240.png");
 }
+
 /* Misc visuals
 ----------------------------------*/
-
 /* Overlays */
+
 .ui-widget-overlay {
     background: #aaaaaa;
     opacity: .3;
     filter: Alpha(Opacity=30);
 }
+
 .ui-widget-shadow {
     margin: 0px 0 0 0px;
     padding: 5px;
@@ -1451,106 +1352,94 @@ textarea::-moz-placeholder
     border-radius: 8px;
 }
 
-
 /* Mobile version
 ----------------------------------*/
-@media all and (min-resolution: 121dpi), (max-width: 900px)
-{
-	body
-	{
-		width: 95%;
-		background: #FEFEFA /*url("../img/bgfon.png")*/;
-	}
 
-	/* Title area */
-	#table_title_area td:not(:first-child)
-	{
-		width: 60px; 
-		height: 60px; 
-		text-align: center;
-	}	
+@media all and (min-resolution: 121dpi),
+(max-width: 900px) {
+    body {
+        width: 95%;
+        background: #FEFEFA
+        /*url("../img/bgfon.png")*/
 
-	#table_title_area td:first-child
-	{
-	    text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
-	}
-	
-	#table_title_area td:not(:first-child)
-	{
-		width: 3em; 
-		height: auto; 
-	}
-	
-	#span_logo img,
-	#span_info img,
-	#span_shield img
-	{
-		width: 2em;
-		height: auto;
-	}
-	
-	/* Initial data area */
-	#textarea_token_name
-	{
-		font: normal 1.2em Consolas, "Courier New", monospace !important;
-		height: 2.6em;
-	}
+        ;
+    }
 
-	@media all and (max-width: 480px)
-	{
-		/* .td-info */
-		#td_token_hash,
-		#td_token_hash_label
-		{
-			font: italic 0.65em Consolas, "Courier New", monospace !important;
-		}
-		#table_master_key 
-		{
-			width: 95%;
-		}		
-	}
-	
-	#input_password
-	{
-		font: normal 1.2em Consolas, "Courier New", monospace !important;
-	}
-	
-	
-	#span_reload img
-	{
-		width: 1.2em;
-		height: auto;
-	}
+    /* Title area */
 
-	#span_password_eye,	
-	#span_password_pic
-	{
-		width: 2em;
-	}
-	
-	#span_password_eye img,	
-	#span_password_pic img
-	{
-		width: 1.5em;
-		height: auto;
-	}
-	
-	/* */
-    #table_welcome
-	{
-		font: normal 0.9em Arial, Verdana, Consolas, "Courier New", monospace;
-	}
-    
-	#textarea_set_data,
-	#textarea_show_keys,
-	#textarea_receive_keys
-	{
-		font: normal 0.8em Consolas, "Courier New", monospace !important;
-	}
-	
-    .td-log
-	{
-		font: italic 0.8em Consolas, "Courier New", monospace !important;
-	}
-	
+    #table_title_area td:not(:first-child) {
+        width: 60px;
+        height: 60px;
+        text-align: center;
+    }
+
+    #table_title_area td:first-child {
+        text-shadow: 1px 1px 2px #DDDDDD, 0 0 5px #A0A080;
+    }
+
+    #table_title_area td:not(:first-child) {
+        width: 3em;
+        height: auto;
+    }
+
+    #span_logo img,
+    #span_info img,
+    #span_shield img {
+        width: 2em;
+        height: auto;
+    }
+
+    /* Initial data area */
+
+    #textarea_token_name {
+        font: normal 1.2em Consolas, "Courier New", monospace !important;
+        height: 2.6em;
+    }
+
+    @media all and (max-width: 480px) {
+        /* .td-info */
+
+        #td_token_hash, #td_token_hash_label {
+            font: italic 0.65em Consolas, "Courier New", monospace !important;
+        }
+        #table_master_key {
+            width: 95%;
+        }
+    }
+
+    #input_password {
+        font: normal 1.2em Consolas, "Courier New", monospace !important;
+    }
+
+    #span_reload img {
+        width: 1.2em;
+        height: auto;
+    }
+
+    #span_password_eye,
+    #span_password_pic {
+        width: 2em;
+    }
+
+    #span_password_eye img,
+    #span_password_pic img {
+        width: 1.5em;
+        height: auto;
+    }
+
+    /* */
+
+    #table_welcome {
+        font: normal 0.9em Arial, Verdana, Consolas, "Courier New", monospace;
+    }
+
+    #textarea_set_data,
+    #textarea_show_keys,
+    #textarea_receive_keys {
+        font: normal 0.8em Consolas, "Courier New", monospace !important;
+    }
+
+    .td-log {
+        font: italic 0.8em Consolas, "Courier New", monospace !important;
+    }
 }

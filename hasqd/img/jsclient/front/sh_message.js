@@ -1,4 +1,4 @@
-var gResponse =
+const HASQD_RESP =
 {
     OK : 'OK',
     IDX_NODN : 'IDX_NODN',

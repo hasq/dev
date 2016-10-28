@@ -16,26 +16,27 @@ function engGetTokenInfo(data, r, s)
         item.d = lr.d;
         item.fit = false;
         item.unfit = false;
-        item.state = engGetTokensStatus(lr, nr);
-        switch (item.state)
+        item.status = engGetTokStatus(lr, nr);
+        
+        switch (item.status)
         {
-            case 'OK':
+            case 1:
                 item.fit = true;
                 break;
-            case 'PWD_SNDNG':
+            case 2:
                 item.unfit = true;
                 break;
-            case 'PWD_RCVNG':
+            case 3:
                 item.unfit = true;
                 break;
-            case 'PWD_WRONG':
+            case 4:
                 item.unfit = true;
                 break;
         }
     }
     else
     {
-        item.state = 'IDX_NODN';
+        item.status = -1;
         item.unfit = true;
         item.n = -1;
         item.d = '';

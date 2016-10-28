@@ -223,14 +223,18 @@ function engGetHash(data, h)
     }
 }
 
-function engGetTokensStatus(lr, nr)
+function engGetTokStatus(lr, nr)
 {
-    if (!lr) return false;
-    if (lr.g === nr.g && lr.o === nr.o) return 'OK';
-    if (lr.g === nr.g) return 'PWD_SNDNG';
-    if (lr.o === nr.o) return 'PWD_RCVNG';
-
-    return 'PWD_WRONG';
+    switch (true) {
+        case (lr.g === nr.g && lr.o === nr.o):
+            return 1;
+        case (lr.g === nr.g):
+            return 2;
+        case (lr.o === nr.o):
+            return 3;
+        default:
+            return 4;
+    }
 }
 
 function engGetClearData(data)
@@ -244,7 +248,7 @@ function engGetClearData(data)
             .replace(/^\n+|\n+$/g, '');
 }
 
-function engIsAsciiOrTabOrLf(data)
+function engIsValidString(data)
 {
     data = data || "";
     
@@ -252,6 +256,7 @@ function engIsAsciiOrTabOrLf(data)
     {
         ch = data.charCodeAt(i);
         
+        //FIX
         if ((ch >= 32 && ch <= 127) || ch === 9 || ch === 10 || ch === 13) 
             continue;
 
@@ -271,7 +276,7 @@ function engDataToRecErrorLevel(data, lim)
     data = engGetClearData(data);
 
     if ((data.length) > lim ) return r = 2;
-    if (!engIsAsciiOrTabOrLf(data)) return r = 3;
+    if (!engIsValidString(data)) return r = 3;
 
     var fmd = engGetDataToRec(data);
 
@@ -323,15 +328,14 @@ function engGetDataFromRec(data)
         }
     }
 
-    data = data
-            .replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020')
-            .replace(/(\u005c\u005c)/g, '\u005c');
 
-    return data;
+    return data
+        .replace(/(\u0020\u005c)(?=\u0020)/g, '\u0020')
+        .replace(/(\u005c\u005c)/g, '\u005c');
 
 }
 
-function engIsAcceptKeys(keys)
+function engIsAsgmtKeys(keys)
 {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
@@ -343,6 +347,7 @@ function engIsAcceptKeys(keys)
 
     if (!keys) return false;
 
+//FIX
     if (keys.replace(/\s/g, '') !== engGetOnlyHex(keys.replace(/\s/g, '')))
         return false;
 
@@ -362,6 +367,7 @@ function engIsAcceptKeys(keys)
     if (prCodeLen == 3 || prCodeLen == 4) keysLen = (isRecNum) ? 3 : 2;
     if (prCodeLen == 5 || prCodeLen == 6) keysLen = (isRecNum) ? 4 : 3;
 
+//FIX
     prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
     prG1O1 = (isRecNum) ? prCode0Ch + prG1O1 : prG1O1;
@@ -381,10 +387,11 @@ function engIsAcceptKeys(keys)
 
     var prCRC = '';
     var tkCRC = '';
-    var tmpl = '';
+    var tmpl = ''; //FIX ? = 0
 
     if (keys[keys.length - 1].length == 4)
     {
+        //FIX
         prCRC = keys.splice(keys.length - 1, 1)[0];
         tkCRC = engGetHash(keys.join('')
                 .replace(/\s/g, ''), 's22').substring(0, 4);
@@ -428,7 +435,7 @@ function engIsAcceptKeys(keys)
     return true;
 }
 
-function engGetParsedAcceptKeys(keys)
+function engGetParsedAsgmtKeys(keys)
 {
     var prK1K2 = '23132';
     var prG2O2 = '24252';
@@ -455,15 +462,15 @@ function engGetParsedAcceptKeys(keys)
         keysLen = (isRecNum) ? 4 : 3;
 
     if (keys[keys.length - 1].length == 4)
-        keys.splice(keys.length - 1, 1)[0];
+        keys.splice(keys.length - 1, 1)[0]; ///FIX
     else if (keys[keys.length - 2].length == 4)
     {
-        keys.splice(keys.length - 2, 1)[0];
-        keys.splice(keys.length - 1, 1)[0].length;
+        keys.splice(keys.length - 2, 1)[0]; ///FIX
+        keys.splice(keys.length - 1, 1)[0].length;///FIX
     }
 
     if (keys.length % keysLen == 1)
-        keys.splice(keys.length - 1, 1)[0].length;
+        keys.splice(keys.length - 1, 1)[0].length;///FIX
 
     prK1K2 = (isRecNum) ? prCode0Ch + prK1K2 : prK1K2;
     prG2O2 = (isRecNum) ? prCode0Ch + prG2O2 : prG2O2;
@@ -474,54 +481,54 @@ function engGetParsedAcceptKeys(keys)
     prK2 = (isRecNum) ? prCode0Ch + prK2 : prK2;
 
     var keysQty = keys.length / keysLen;
-    var acceptKeys = [];
+    var asgmtKeys = [];
 
     for (var i = 0; i < keysQty; i++)
     {
 
         var tmpKeys = keys.splice(0, keysLen);
-        acceptKeys[i] = {};
-        acceptKeys[i].prcode = prCode;
-        acceptKeys[i].n = (isRecNum) 
-                ? acceptKeys[i].n = +tmpKeys[0] 
-                : acceptKeys[i].n = -1;
+        asgmtKeys[i] = {};
+        asgmtKeys[i].prcode = prCode;
+        asgmtKeys[i].n = (isRecNum) 
+                ? asgmtKeys[i].n = +tmpKeys[0] //FIX
+                : asgmtKeys[i].n = -1;//FIX
                 
-        acceptKeys[i].s = (isRecNum) 
+        asgmtKeys[i].s = (isRecNum) 
                 ? tmpKeys[1] 
                 : tmpKeys[0];
 
         switch (prCode)
         {
             case (prK1K2):
-                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                acceptKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                asgmtKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].k2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prG2O2):
-                acceptKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                acceptKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                asgmtKeys[i].g2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].o2 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prG1O1):
-                acceptKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                acceptKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                asgmtKeys[i].g1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].o1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prK1G1):
-                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
-                acceptKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
+                asgmtKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].g1 = (isRecNum) ? tmpKeys[3] : tmpKeys[2];
 
                 break;
             case (prK1):
-                acceptKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].k1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             case (prO1):
-                acceptKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].o1 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             case (prK2):
-                acceptKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
+                asgmtKeys[i].k2 = (isRecNum) ? tmpKeys[2] : tmpKeys[1];
 
                 break;
             default:
@@ -530,24 +537,24 @@ function engGetParsedAcceptKeys(keys)
 
     }
 
-    acceptKeys.sort(engSortByProperties('s'));
+    asgmtKeys.sort(engSortByProperties('s'));
 
     // if presents keys for same token;
-    for (var i = 0; i < acceptKeys.length - 1; i++) 
+    for (var i = 0; i < asgmtKeys.length - 1; i++) 
     {
-        if (acceptKeys[i].s == acceptKeys[i + 1].s)
+        if (asgmtKeys[i].s == asgmtKeys[i + 1].s)
         {
-            acceptKeys.splice(i + 1, 1);
+            asgmtKeys.splice(i + 1, 1);
             i--;
         }
     }
 
-    return acceptKeys;
+    return asgmtKeys;
 }
 
-function engGetTitleRecord(acceptKeys, p, h, m)
+function engGetTitleRecord(asgmtKeys, p, h, m)
 {
-    var titleRecord = acceptKeys;
+    var titleRecord = asgmtKeys;
     var prK1K2 = '23132'; //simple send;
     var prG2O2 = '24252'; // simple request;
     var prK1G1 = '23141'; // blocking send, st1;
@@ -665,7 +672,7 @@ function engGetTitleRecord(acceptKeys, p, h, m)
 
 function engGetDnOrRawList(dnList, rawList, hash)
 {
-    // returns merged names from both lists acceptKeys and tokens;
+    // returns merged names from both lists asgmtKeys and tokens;
     for (var k = 0; k < dnList.length; k++)
     {
         for (var t = 0; t < rawList.length; t++)
@@ -690,7 +697,7 @@ function engGetDnOrRawList(dnList, rawList, hash)
     return dnList;
 }
 
-function engGetNumberedAcceptKeys(keys, list)
+function engGetNumberedAsgmtKeys(keys, list)
 {
     for (var i = 0; i < keys.length; i++)
         keys[i].n = list[i].n;

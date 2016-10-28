@@ -81,7 +81,7 @@ function widRefreshButtonClick()
     {
         var $Id = $('#server_id');
 
-        if (resp === gResponse.OK && id)
+        if (resp === HASQD_RESP.OK && id)
             $Id.html('<pre>' + id + '</pre>');
             else
                 return;
@@ -91,7 +91,7 @@ function widRefreshButtonClick()
     {
         var $Sys = $('#server_sys');
 
-        if (resp === gResponse.OK && sys)
+        if (resp === HASQD_RESP.OK && sys)
             $Sys.html('<pre>' + sys + '</pre>');
             else
                 return;
@@ -101,7 +101,7 @@ function widRefreshButtonClick()
     {
         var $Fam = $('#server_fam');
 
-        if (resp === gResponse.OK && fam && fam.length > 0)
+        if (resp === HASQD_RESP.OK && fam && fam.length > 0)
         {
             var table = widGetHTMLFamilyTable(fam);
             $Fam.html('<pre>' + table + '</pre>');
@@ -113,7 +113,7 @@ function widRefreshButtonClick()
     var cb4 = function (resp, db)
     {
         glDataBase = db;
-        if (resp === gResponse.OK && glDataBase.length !== 0)
+        if (resp === HASQD_RESP.OK && glDataBase.length !== 0)
         {
             var $Db = $('#database_select');
 
@@ -152,7 +152,7 @@ function widAddSkc()
 
     gSkc = prompt('Enter SKC key:', gSkc || '') || null;
 
-    if (gSkc && !engIsAsciiOrTabOrLf(gSkc))
+    if (gSkc && !engIsValidString(gSkc))
         gSkc = null;
 
     if (gSkc)
@@ -181,7 +181,7 @@ function widCommandSendButtonClick()
 
     var cmd = $CmdInput.val();
     if (!cmd) return;
-    if (!engIsAsciiOrTabOrLf(cmd)) return $CmdOutput.val('');
+    if (!engIsValidString(cmd)) return $CmdOutput.val('');
 
     if (gSkc)
         cmd = '#' + engGetCipher(cmd);
@@ -301,7 +301,7 @@ function widGetLastRecordButtonClick()
 
     var cb = function (resp, rec)
     {
-        if ( resp === gResponse.OK && rec )
+        if ( resp === HASQD_RESP.OK && rec )
             widShowLastRecord(rec);
         else
             return widShowRecordsTabLog(resp);
@@ -481,7 +481,7 @@ function widTokensHistorySelect(range)
     var tok = $('#input_dn').val();
     var cb = function (resp, out)
     {
-        if (resp === gResponse.OK && out)
+        if (resp === HASQD_RESP.OK && out)
             $HistorySelect.val(out.substr(out.indexOf('\n') + 1));
         else
             widShowRecordsTabLog(resp);
@@ -524,7 +524,7 @@ function widSubmitButtonClick()
     var cb = function (out)
     {
         widShowRecordsTabLog(engGetResponseHeader(out));
-        if (out !== gResponse.OK) return;
+        if (out !== HASQD_RESP.OK) return;
         var $HistorySelect = $('#select_records_history');
         var i = $HistorySelect.get(0).selectedIndex;
         var d = +$HistorySelect.get(0).options[i].text;
