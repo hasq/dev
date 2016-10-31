@@ -1,15 +1,16 @@
 
 [A] (om) bank console
-[A] napisat specifikacii protokola bank
+[A] (om) napisat specifikacii protokola bank
 [B] (om) bank mobile
 
-[A] (ab) bank gui - javascript 
+[A] bank gui - javascript 
 	library of useful tools
 	maket - prototype
-[A] Klientskie skripty na Python
+DONE [A] Klientskie skripty na Python
+DONE [A] (om) skripty na Python proverit'
 [AB] Bitcoin pogonjat
 [AB] Klientskie skripty na Ruby (posle pythona)
-[A] anons dobavlenija scriptov na Python
+[A] (ab) anons dobavlenija scriptov na Python
 
 [B] 6 proverit kak obschajutsja nodes s SKC - sdelat korotkij test
 [B] start hsl doc (tutorial po hsl)
