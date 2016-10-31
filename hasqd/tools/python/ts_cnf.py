@@ -1,10 +1,11 @@
 #!/usr/bin/python
 
-HOST = 'localhost'
-PORT = '13161'
+# HOST = 'localhost'
+# PORT = '13161'
 
-# HOST = "tokenswap.com"
-# PORT = "80"
+HOST = "tokenswap.com"
+PORT = "80"
+TCP_PORT = 13131
 
 HASH_NAME = 'smd'
 MAGIC = ''
