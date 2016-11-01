@@ -1,6 +1,6 @@
 
-|**job_check.py**    | Check job; job ID is issued on adding a new record       |
 |--------------------|----------------------------------------------------------|
+|**job_check.py**    | Check job; job ID is issued on adding a new record       |
 |**raw_cmd_http.py** | Send any command using HTTP protocol                     |
 |**raw_cmd_tcp.py**  | Send any command using Hasq protocol                     |
 |**token_check.py**  | Tests if token exists, master key matches and prints token data |
