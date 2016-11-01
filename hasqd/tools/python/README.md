@@ -10,4 +10,4 @@
 |**token_update.py** | Sets data field (by adding a new record with specified data)     |
 |**ts_cnf.py**       | Shared module with configuration parameters                      |
 |**ts_lib.py**       | Library module with helping functions                            |
-|**ts_msg.py**       | Modulle with user messages                                       |
+|**ts_msg.py**       | Module with user messages                                        |
