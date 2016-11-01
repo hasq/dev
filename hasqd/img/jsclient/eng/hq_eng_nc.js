@@ -72,15 +72,16 @@ function engNcInfoFam(extCb)
 
 function engNcLast(tok, db, extCb)
 {
-    var cmd = engGetSplitted('last', db, tok);
+    var cmd = ['last', db, tok].join(' ');
 
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
         var record = null;
 
-        if (resp === gResponse.OK)
+        if (resp === HASQD_RESP.OK) {
             record = engGetParsedRecord(data);
+        }
 
         extCb(resp, record);
     }
@@ -90,14 +91,14 @@ function engNcLast(tok, db, extCb)
 
 function engNcRange(range, tok, db, extCb)
 {
-    var cmd = engGetSplitted('range', db, -range, -1, tok);
+    var cmd = ['range', db, -range, -1, tok].join(' ');
 
     var intCb = function (data)
     {
         var resp = engGetResponseHeader(data);
         var range = null;
 
-        if (resp === gResponse.OK)
+        if (resp === HASQD_RESP.OK)
             range = engGetParsedRange(data);
 
         extCb(resp, range);

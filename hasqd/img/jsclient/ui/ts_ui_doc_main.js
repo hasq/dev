@@ -1,5 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+'use strict';
+
+
 const G_MAX_FILE_SIZE = 10000000;
 const G_DB_HASH = 'smd';
 
@@ -129,7 +132,8 @@ function docInit() {
 }
 
 function docMain(state, browser) {
-    var tabs, items;
+    var tabs = [];
+    var item = {};
 
     if (!state) {
         let r;
@@ -151,8 +155,6 @@ function docMain(state, browser) {
         return r;
     }
 
-    tabs = [];
-    item = {};
     item.title = 'Empty';
     item.data = widGetHTMLEmptyTab();
     tabs[tabs.length] = item;

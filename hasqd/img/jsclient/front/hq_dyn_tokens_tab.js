@@ -1,32 +1,26 @@
 // Hasq Technology Pty Ltd (C) 2013-2015
 
-function closestTextArea($obj)
-{
+function closestTextArea($Obj) {
     var $textarea = undefined;
 
-    if ($obj)
-        $textarea = $obj.closest('.wrap').find('textarea');
+    if ($Obj)
+        $textarea = $Obj.closest('.wrap').find('textarea');
 
-    var retObj =
-    {
-        add : function (data)
-        {
+    var retObj = {
+        add: function (data) {
             $textarea.val($textarea.val() + data);
         },
-        clear : function (data)
-        {
+        clear: function (data) {
             if (typeof data == 'undefined')
                 return $textarea.val('');
 
             $textarea.val('');
             $textarea.val(data);
         },
-        clearExcept : function ($obj)
-        {
+        clearExcept: function ($Obj) {
             (arguments.length == 0) ? $textarea.val('') : $('textarea .wrap').not($textarea).val('');
         },
-        val : function ()
-        {
+        val: function () {
             return $textarea.val();
         }
     }
@@ -34,19 +28,16 @@ function closestTextArea($obj)
     return retObj;
 }
 
-function led($obj)
-{
+function led($Obj) {
     var $led = undefined;
 
-    if ($obj)
-        $led = $obj.closest('.wrap').find('img:first');
+    if ($Obj)
+        $led = $Obj.closest('.wrap').find('img:first');
 
-    var retObj =
-    {
-        set : function (img, title)
-        {
+    var retObj = {
+        set: function (img, title) {
             if (typeof img == 'undefined')
-                return this.clear($obj);
+                return this.clear($Obj);
 
             if ($led.attr('src') != img)
                 $led.attr('src', img);
@@ -57,16 +48,14 @@ function led($obj)
                 $led.prop('title', title);
 
         },
-        clear : function ()
-        {
+        clear: function () {
             if (typeof $led == 'undefined')
                 return $('.led-span')
                 .find($('img')).removeAttr('src').removeAttr('title');
 
             $led.removeAttr('src').removeAttr('title');
         },
-        source : function ()
-        {
+        source: function () {
             if (typeof $led !== 'undefined')
                 return $led.attr('src');
         }
@@ -75,34 +64,29 @@ function led($obj)
     return retObj;
 }
 
-function widWarningLed($obj, image, text)
-{
-    var source = led($obj).source();
+function widWarningLed($Obj, image, text) {
+    var source = led($Obj).source();
 
     if (source == imgMsgError || source == imgMsgWarning || source == image)
         return;
 
-    led($obj).set(image, text);
+    led($Obj).set(image, text);
 }
 
-function widShowProgressbar(val)
-{
+function widShowProgressbar(val) {
     var $Progressbar = $('#div_progressbar_main');
     val = Math.ceil(val) || 0;
     $Progressbar.progressbar('value', val);
 }
 
-function widShowTokensLog(text)
-{
+function widShowTokensLog(text) {
     var $Log = $('#div_tokens_log');
     text = text || '&nbsp';
     $Log.html(text);
 }
 
-function widShowOrderedTokensNames(arr)
-{
-    for (var i = 0; i < arr.length; i++)
-    {
+function widShowOrderedTokensNames(arr) {
+    for (var i = 0; i < arr.length; i++) {
         if (i == 0)
             widGetRawTokens(arr[i]);
         else
@@ -110,89 +94,76 @@ function widShowOrderedTokensNames(arr)
     }
 }
 
-function widCleanUI($obj)
-{
+function widCleanUI($Obj) {
     widShowProgressbar();
     widShowTokensLog();
 
-    var retObj =
-    {
-        full : function ()
-        {
+    var retObj = {
+        full: function () {
             led().clear();
             $('textarea .wrap').val('');
             widCleanVerifyTab();
         },
-        near : function ()
-        {
-            led($obj).clear();
-            closestTextArea($obj).clear();
+        near: function () {
+            led($Obj).clear();
+            closestTextArea($Obj).clear();
         }
     }
 
     return retObj;
 }
 
-function widCleanVerifyTab()
-{
+function widCleanVerifyTab() {
     $('#table_verify').find('tr:gt(0)').remove();
     led($('#button_verify')).clear();
     $('#div_table_verify').hide();
 }
 
-function widGetClosestMainButton($obj)
-{
-    return $obj.closest('.wrap').find($('.shared-button'));
+function widGetClosestMainButton($Obj) {
+    return $Obj.closest('.wrap').find($('.shared-button'));
 }
 
-function widGetClosestContinueButton($obj)
-{
-    return $obj.closest('.wrap').find($('.continue-button'));
+function widGetClosestContinueButton($Obj) {
+    return $Obj.closest('.wrap').find($('.continue-button'));
 }
 
-function widGetClosestWarningTd($obj)
-{
-    return $obj.closest('.wrap').find($('td .td-warning'));
+function widGetClosestWarningTd($Obj) {
+    return $Obj.closest('.wrap').find($('td .td-warning'));
 }
 
-function widGetClosestLed($obj)
-{
-    return $obj.closest('.wrap').find($('.led-span'));
+function widGetClosestLed($Obj) {
+    return $Obj.closest('.wrap').find($('.led-span'));
 }
 
-function widGetClosestTextarea($obj)
-{
-    return $obj.closest('.wrap').find($('textarea'));
+function widGetClosestTextarea($Obj) {
+    return $Obj.closest('.wrap').find($('textarea'));
 }
 
-function widDisableTokensInput()
-{
-    var $obj = $('#div_tokens_tabs');
-    $obj.tabs('option', 'disabled', true);
-    $obj
+function widDisableTokensInput() {
+    var $Obj = $('#div_tokens_tabs');
+    $Obj.tabs('option', 'disabled', true);
+    $Obj
     .closest('div[id^="tabs"]')
     .find('button, input, textarea')
     .prop('disabled', true);
 
-    $obj
+    $Obj
     .closest('div[id^="tabs"]')
     .find('textarea:first')
     .prop('disabled', false);
 }
 
-function widEnableTokensInput()
-{
-    var $obj = $('#div_tokens_tabs');
-    $obj.tabs('enable');
+function widEnableTokensInput() {
+    var $Obj = $('#div_tokens_tabs');
+    $Obj.tabs('enable');
 
-    $obj
+    $Obj
     .closest('div[id^="tabs"]')
     .find('button, input, textarea')
     .prop('disabled', false);
 }
 
-function widDisableAllTokensUI($obj)
-{
+function widDisableAllTokensUI($Obj) {
     var $Tabs = $('#div_tokens_tabs');
     $Tabs.tabs('option', 'disabled', true);
 
@@ -201,41 +172,37 @@ function widDisableAllTokensUI($obj)
     .find('button, input, textarea')
     .prop('disabled', true);
 
-    $(widGetClosestContinueButton($obj)).prop('disabled', false);
-    $(widGetClosestMainButton($obj)).prop('disabled', false);
+    $(widGetClosestContinueButton($Obj)).prop('disabled', false);
+    $(widGetClosestMainButton($Obj)).prop('disabled', false);
 }
 
-function widEnableAllTokensUI()
-{
-    var $obj = $('#div_tokens_tabs');
-    $obj.tabs('enable');
+function widEnableAllTokensUI() {
+    var $Obj = $('#div_tokens_tabs');
+    $Obj.tabs('enable');
 
-    $obj.closest('div[id^="tabs"]')
+    $Obj.closest('div[id^="tabs"]')
     .find('button, input, textarea')
     .prop('disabled', false);
 }
 
-function widSwitchShowHide($obj)
-{
-    if ($obj.css('display') === 'none')
-        $obj.fadeIn();
+function widSwitchShowHide($Obj) {
+    if ($Obj.css('display') === 'none')
+        $Obj.fadeIn();
     else
-        $obj.hide();
+        $Obj.hide();
 }
 
-function widGetWarningsMode($obj)
-{
-    return ($obj.button('option', 'label') == gButton.continueBtn) ? true : false;
+function widGetWarningsMode($Obj) {
+    return ($Obj.button('option', 'label') == gButton.continueBtn) ? true : false;
 }
 
-function widGetButtonsMode($obj)
-{
-    var label = $obj.button('option', 'label');
-    var title = $obj.attr('data-title');
-    var objC = widGetClosestContinueButton($obj);
+function widGetButtonsMode($Obj) {
+    var label = $Obj.button('option', 'label');
+    var title = $Obj.attr('data-title');
+    var objC = widGetClosestContinueButton($Obj);
     var cMode = widGetWarningsMode(objC);
 
-    if ($obj == objC && cMode)
+    if ($Obj == objC && cMode)
         return true;
 
     if (label == title)
@@ -244,122 +211,104 @@ function widGetButtonsMode($obj)
     return false;
 }
 
-function widGetFunctionById($obj, click)
-{
+function widGetFunctionById($Obj, click) {
     glCmdList.clear();
-    var fName = $obj.attr('data-function');
+    var fName = $Obj.attr('data-function');
 
-    fName = (arguments.length > 1) ? fName + '($obj, click)' : fName + '($obj)';
+    fName = (arguments.length > 1) ? fName + '($Obj, click)' : fName + '($Obj)';
 
-    return function ()
-    {
+    return function () {
         eval(fName);
     }
 }
 
-function widSwitchButtonsMode($obj)
-{
-    var title = $obj.attr('data-title');
-    var label = $obj.button('option', 'label');
-    var objWarning = widGetClosestWarningTd($obj);
-    var objContinue = widGetClosestContinueButton($obj);
+function widSwitchButtonsMode($Obj) {
+    var title = $Obj.attr('data-title');
+    var label = $Obj.button('option', 'label');
+    var objWarning = widGetClosestWarningTd($Obj);
+    var objContinue = widGetClosestContinueButton($Obj);
 
-    if (label === title && title === gButton.continueBtn)
-    {
-        widSwitchShowHide($obj);
+    if (label === title && title === gButton.continueBtn) {
+        widSwitchShowHide($Obj);
         widSwitchShowHide(objWarning);
-        $obj.button('option', 'label', gButton.hiddenBtn);
+        $Obj.button('option', 'label', gButton.hiddenBtn);
         return;
     }
 
-    if (label !== title && title === gButton.continueBtn)
-    {
-        widSwitchShowHide($obj);
+    if (label !== title && title === gButton.continueBtn) {
+        widSwitchShowHide($Obj);
         widSwitchShowHide(objWarning);
-        $obj.button('option', 'label', title);
+        $Obj.button('option', 'label', title);
         return;
     }
 
     if (label === title)
-        return $obj.button('option', 'label', 'Cancel');
+        return $Obj.button('option', 'label', 'Cancel');
 
-    $obj.button('option', 'label', title);
+    $Obj.button('option', 'label', title);
 
-    if (widGetWarningsMode(objContinue))
-    {
+    if (widGetWarningsMode(objContinue)) {
         widSwitchShowHide(objContinue);
         widSwitchShowHide(objWarning);
         $(objContinue).button('option', 'label', gButton.hiddenBtn);
     }
 }
 
-function widMainButtonClick($obj, text)
-{
+function widMainButtonClick($Obj, text) {
     var f;
 
-    if (widGetButtonsMode($obj))
-    {
-        widDisableAllTokensUI($obj);
-        f = widGetFunctionById($obj);
-    }
-    else
-    {
-        f = function ()
-        {
-            widCancel($obj, text);
+    if (widGetButtonsMode($Obj)) {
+        widDisableAllTokensUI($Obj);
+        f = widGetFunctionById($Obj);
+    } else {
+        f = function () {
+            widCancel($Obj, text);
         }
     }
 
-    widSwitchButtonsMode($obj);
+    widSwitchButtonsMode($Obj);
     setTimeout(f);
 }
 
-function widDone($obj, text)
-{
-    widMainButtonClick($obj, text);
+function widDone($Obj, text) {
+    widMainButtonClick($Obj, text);
 }
 
-function widCancel($obj, text)
-{
+function widCancel($Obj, text) {
     glCmdList.clear();
 
-    if (!text)
-    {
+    if (!text) {
         text = gMsg.cancel;
         glTokList.clear();
-        widWarningLed($obj, imgMsgError, text);
+        widWarningLed($Obj, imgMsgError, text);
     };
 
     widShowTokensLog(text);
     widEnableAllTokensUI();
 }
 
-function widContinueButtonClick($obj, click)
-{
-    var label = $obj.button('option', 'label');
-    widSwitchButtonsMode($obj);
+function widContinueButtonClick($Obj, click) {
+    var label = $Obj.button('option', 'label');
+    widSwitchButtonsMode($Obj);
 
     (click)
-    ? setTimeout(widGetFunctionById(widGetClosestMainButton($obj), click))
-    : widShowTokensLog(gMsg.userWait);
+     ? setTimeout(widGetFunctionById(widGetClosestMainButton($Obj), click))
+     : widShowTokensLog(gMsg.userWait);
 
 }
 
-function widTokensIdxOninput($obj)
-{
-    $obj.val(engGetOnlyNumber($obj.val()));
+function widTokensIdxOninput($Obj) {
+    $Obj.val(engGetOnlyNumber($Obj.val()));
 }
 
-function widTokensPasswordOninput(data)
-{
+function widTokensPasswordOninput(data) {
     gPassword = data;
     glTokList.clear();
     led().clear();
     widCleanVerifyTab();
 }
 
-function widGetRawTokens(data)
-{
+function widGetRawTokens(data) {
     $Text = $('#textarea_tokens_names');
 
     if (data)
@@ -368,18 +317,15 @@ function widGetRawTokens(data)
     return $Text.val();
 }
 
-function widIsPassword()
-{
+function widIsPassword() {
     return ($('#input_tokens_password').val().length > 0);
 }
 
-function widIsRawTokens()
-{
+function widIsRawTokens() {
     return (widGetRawTokens().length > 0 && engIsRawTokens(widGetRawTokens(), gCurrentDB.hash));
 }
 
-function widGetRangeDataState()
-{
+function widGetRangeDataState() {
     var baseName = $('#input_tokens_basename').val();
     var idx0 = +$('#input_fst_idx').val();
     var idx1 = +$('#input_lst_idx').val();
@@ -388,7 +334,7 @@ function widGetRangeDataState()
     if (baseName == '')
         r = gMsg.emptyName;
     else if (/[\s]/g.test(baseName))
-    r = gMsg.incorrectName;
+        r = gMsg.incorrectName;
     else if (idx0 > idx1)
         r = gMsg.incorrectIdx;
     else if (idx1 - idx0 > 127)
@@ -397,45 +343,38 @@ function widGetRangeDataState()
     return r;
 }
 
-function widTokensNamesOninput($obj)
-{
+function widTokensNamesOninput($Obj) {
     glTokList.clear();
     widCleanUI().full();
-    widShowBordersColor($obj);
+    widShowBordersColor($Obj);
 
-    var tokens = $obj.val();
+    var tokens = $Obj.val();
 
-    if (!engIsRawTokens(tokens, gCurrentDB.hash))
-    {
+    if (!engIsRawTokens(tokens, gCurrentDB.hash)) {
         widDisableTokensInput();
-        widShowBordersColor($obj, '#FF0000'); //RED BORDER
+        widShowBordersColor($Obj, '#FF0000'); //RED BORDER
         widShowTokensLog(gMsg.namePlaceholder);
-    }
-    else if (tokens.length >= 15479)
-    {
+    } else if (tokens.length >= 15479) {
         widEnableTokensInput();
-        widShowBordersColor($obj, '#FFFF00'); //YELLOW BORDER
+        widShowBordersColor($Obj, '#FFFF00'); //YELLOW BORDER
         var l = 16511 - tokens.length;
-        $obj.prop('title', gMsg.charsLeft + l );
+        $Obj.prop('title', gMsg.charsLeft + l);
         widShowTokensLog();
-    }
-    else
-    {
+    } else {
         widEnableTokensInput();
-        widShowBordersColor($obj);
+        widShowBordersColor($Obj);
         widShowTokensLog();
     }
 }
 
-function widAddTokens($obj, data)
-{
+function widAddTokens($Obj, data) {
     var $Basename = $('#input_tokens_basename');
     var $FirstIdx = $('#input_fst_idx');
     var $LastIdx = $('#input_lst_idx');
     var chk = widGetRangeDataState();
 
     if (chk !== gMsg.ok)
-        return widDone($obj, chk);
+        return widDone($Obj, chk);
 
     var baseName = $Basename.val();
     var idx0 = $FirstIdx.val();
@@ -444,82 +383,73 @@ function widAddTokens($obj, data)
     var l = rawTok.length;
     var lastChar = rawTok.charAt(l - 1);
     var newTokens = (
-                        l == 0 ||
-                        lastChar == '\u0020' ||
-                        lastChar == '\u0009' ||
-                        lastChar == '\u000A' ||
-                        lastChar == '\u000B' ||
-                        lastChar == '\u000D')
-                    ? ''
-                    : '\u0020';
+        l == 0 ||
+        lastChar == '\u0020' ||
+        lastChar == '\u0009' ||
+        lastChar == '\u000A' ||
+        lastChar == '\u000B' ||
+        lastChar == '\u000D')
+     ? ''
+     : '\u0020';
 
     if (idx0 == '' && idx1 == '')
         newTokens += '[' + baseName + ']';
-    else if (idx0 != '' && idx1 != '')
-    {
+    else if (idx0 != '' && idx1 != '') {
         var idx0 = +idx0;
         var idx1 = +idx1;
 
         for (var i = idx0; i <= idx1; i++)
             newTokens =
                 (i == idx1)
-                ? newTokens + '[' + baseName + i + ']'
-                : newTokens + '[' + baseName + i + ']' + '\u0020';
-    }
-    else
-    {
+             ? newTokens + '[' + baseName + i + ']'
+             : newTokens + '[' + baseName + i + ']' + '\u0020';
+    } else {
         newTokens += '[' + baseName + ']' + '\u0020';
         var idx0 = +idx0;
         var idx1 = +idx1;
 
-        for (var i = idx0; i <= idx1; i++)
-        {
+        for (var i = idx0; i <= idx1; i++) {
             newTokens =
                 (i == idx1)
-                ? newTokens + '[' + baseName + i + ']'
-                : newTokens + '[' + baseName + i + ']' + '\u0020';
+             ? newTokens + '[' + baseName + i + ']'
+             : newTokens + '[' + baseName + i + ']' + '\u0020';
         }
     }
 
     rawTok += newTokens;
 
-    if (rawTok.length <= 16511)
-    {
+    if (rawTok.length <= 16511) {
         widGetRawTokens(rawTok);
         widGetRawTokens();
         //objNames[0].oninput();
         $Basename.val('');
         $FirstIdx.val('');
         $LastIdx.val('');
-        widDone($obj, gMsg.ok);
-    }
-    else
-        widDone($obj, gMsg.manyTokens);
+        widDone($Obj, gMsg.ok);
+    } else
+        widDone($Obj, gMsg.manyTokens);
 }
 
-function widPreCreate($obj)
-{
+function widPreCreate($Obj) {
     glCmdList.clear();
     glTokList.clear();
 
     if (!widIsRawTokens())
-        return widDone($obj, gMsg.badTokens);
+        return widDone($Obj, gMsg.badTokens);
 
     if (!widIsPassword())
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
-    led($obj).set(imgMsgBlink, gMsg.wait);
+    led($Obj).set(imgMsgBlink, gMsg.wait);
 
     var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    widCreateTokens($obj, tokens);
+    widCreateTokens($Obj, tokens);
 }
 
-function widCreateTokens($obj, tokens)
-{
+function widCreateTokens($Obj, tokens) {
     var enc = $('#input_tokens_encrypt').prop('checked');
 
-    var cbFunc = function (cbData, cmdIdx, progress)
-    {
+    var cbFunc = function (cbData, cmdIdx, progress) {
         if (glCmdList.items.length === 0)
             return;
 
@@ -528,31 +458,26 @@ function widCreateTokens($obj, tokens)
 
         var resp = engGetResponseHeader(cbData);
 
-
-        if ( resp === 'REQ_ZERO_POLICY' || resp === 'REQ_BAD_CRYPT')
-        {
-            widWarningLed($obj, imgMsgError, gMsg.error + resp);
-            return widDone($obj, resp);
+        if (resp === 'REQ_ZERO_POLICY' || resp === 'REQ_BAD_CRYPT') {
+            widWarningLed($Obj, imgMsgError, gMsg.error + resp);
+            return widDone($Obj, resp);
         }
 
-        if ( resp !== 'OK' )
-            widWarningLed($obj, imgMsgWarning, gMsg.error + resp);
+        if (resp !== 'OK')
+            widWarningLed($Obj, imgMsgWarning, gMsg.error + resp);
 
-        if ( !(cmdIdx + 1 < glCmdList.items.length) )
-        {
-            widWarningLed($obj, imgMsgOk, resp);
-            widDone($obj, resp);
+        if (!(cmdIdx + 1 < glCmdList.items.length)) {
+            widWarningLed($Obj, imgMsgOk, resp);
+            widDone($Obj, resp);
         }
     }
 
-    for (var i = 0; i < tokens.length; i++)
-    {
+    for (var i = 0; i < tokens.length; i++) {
         var r = engGetRecord(0, tokens[i].s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
         var zCmd = 'z * ' + gCurrentDB.name + ' 0 ' + tokens[i].s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ';
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
 
-        if ( enc )
-        {
+        if (enc) {
             zCmd = '#' + engGetCipher(zCmd);
             lastCmd = '#' + engGetCipher(lastCmd);
         }
@@ -574,8 +499,7 @@ function widCreateTokens($obj, tokens)
     engRunCmdList(glCmdList, cbFunc);
 }
 
-function widAddVerifyTR(rec, statePic)
-{
+function widAddVerifyTR(rec, statePic) {
     var $Table = $('#table_verify');
     var pic = '<img src="' + statePic.img + '" title="' + statePic.title + '"></img>' + '&nbsp;' + rec.status;
     var tr = widGetHTMLTr(widGetHTMLTd(pic) + widGetHTMLTd(rec.raw) + widGetHTMLTd(rec.s) + widGetHTMLTd(rec.n) + widGetHTMLTd(rec.d));
@@ -583,78 +507,72 @@ function widAddVerifyTR(rec, statePic)
     $Table.append(tr);
 }
 
-function widGetTokenStatusImg(status)
-{
+function widGetTokenStatusImg(status) {
     // Returns an image source and title displaying tokens/password state
     var r = {};
     console.log(status)
-    switch (status)
-    {
-        case 1:
-            r.img = imgPwdOk;
-            r.title = gTokStateMsg.ok;
-            break;
-        case 2:
-            r.img = imgPwdSndng;
-            r.title = gTokStateMsg.sending;
-            break;
-        case 3:
-            r.img = imgPwdRcvng;
-            r.title = gTokStateMsg.receiving;
-            break;
-        case 4:
-            r.img = imgPwdWrong;
-            r.title = gTokStateMsg.wrong;
-            break;
-        default:
-                r.img = imgTknNodn;
-            r.title = gTokStateMsg.nodn;
-            break;
+    switch (status) {
+    case 1:
+        r.img = imgPwdOk;
+        r.title = gTokStateMsg.ok;
+        break;
+    case 2:
+        r.img = imgPwdSndng;
+        r.title = gTokStateMsg.sending;
+        break;
+    case 3:
+        r.img = imgPwdRcvng;
+        r.title = gTokStateMsg.receiving;
+        break;
+    case 4:
+        r.img = imgPwdWrong;
+        r.title = gTokStateMsg.wrong;
+        break;
+    default:
+        r.img = imgTknNodn;
+        r.title = gTokStateMsg.nodn;
+        break;
     }
     return r;
 }
 
-function widPreVerify($obj)
-{
+function widPreVerify($Obj) {
     glCmdList.clear();
     glTokList.clear();
     widCleanVerifyTab();
 
     if (!widIsRawTokens())
-        return widDone($obj, gMsg.badTokens);
+        return widDone($Obj, gMsg.badTokens);
 
     if (!widIsPassword())
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     var $TableArea = $('#div_table_verify');
-    var width = $obj.closest('.wrap').outerWidth() - 6;
+    var width = $Obj.closest('.wrap').outerWidth() - 6;
     var maxHeight =
         (($(window).height() - $('body').height()) > 200)
-         ? ($(window).height() - $('body').height()) / 2
-        : 100;
+     ? ($(window).height() - $('body').height()) / 2
+     : 100;
 
     $TableArea.outerWidth(width);
     $TableArea.css('max-height', maxHeight + 'px');
     $TableArea.show();
 
     var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    widVerifyTokens($obj, tokens);
+    widVerifyTokens($Obj, tokens);
 }
 
-function widVerifyTokens($obj, tokens)
-{
+function widVerifyTokens($Obj, tokens) {
     var enc = $('#input_tokens_encrypt').prop('checked');
-    var cbFunc = function (ajxData, cmdIdx, progress)
-    {
+    var cbFunc = function (ajxData, cmdIdx, progress) {
         if (glCmdList.items.length == 0)
             return;
 
         var resp = engGetResponseHeader(ajxData);
 
-        if (resp !== 'OK' && resp !== 'IDX_NODN')
-        {
-            widWarningLed($obj, imgMsgError, gMsg.error + resp);
-            return widDone($obj, resp);
+        if (resp !== 'OK' && resp !== 'IDX_NODN') {
+            widWarningLed($Obj, imgMsgError, gMsg.error + resp);
+            return widDone($Obj, resp);
         }
 
         widShowProgressbar(progress);
@@ -666,23 +584,21 @@ function widVerifyTokens($obj, tokens)
         var idx = glTokList.items.length - 1;
 
         if (glTokList.unfit)
-            widWarningLed($obj, imgMsgWarning, gMsg.someUnavailable);
+            widWarningLed($Obj, imgMsgWarning, gMsg.someUnavailable);
 
         var lineLed = widGetTokenStatusImg(glTokList.items[idx].status);
         widAddVerifyTR(glTokList.items[idx], lineLed);
 
-        if (!(cmdIdx + 1 < glCmdList.items.length))
-        {
-            widWarningLed($obj, imgMsgOk, gMsg.ok);
-            widDone($obj, gMsg.ok);
+        if (!(cmdIdx + 1 < glCmdList.items.length)) {
+            widWarningLed($Obj, imgMsgOk, gMsg.ok);
+            widDone($Obj, gMsg.ok);
         }
     }
 
-    for (var i = 0; i < tokens.length; i++)
-    {
+    for (var i = 0; i < tokens.length; i++) {
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
 
-        if ( enc )
+        if (enc)
             lastCmd = '#' + engGetCipher(lastCmd);
 
         glCmdList.items[i] = {};
@@ -691,27 +607,24 @@ function widVerifyTokens($obj, tokens)
         glCmdList.items[i].s = tokens[i].s;
     }
 
-    led($obj).set(imgMsgBlink, gMsg.wait);
+    led($Obj).set(imgMsgBlink, gMsg.wait);
     engRunCmdList(glCmdList, cbFunc);
 }
 
-function widFillOutTokList($obj, tokens, extCb)
-{
+function widFillOutTokList($Obj, tokens, extCb) {
     glTokList.clear();
     glCmdList.clear();
 
     var enc = $('#input_tokens_encrypt').prop('checked');
-    var cbFunc = function (cbData, cmdIdx, progress)
-    {
+    var cbFunc = function (cbData, cmdIdx, progress) {
         if (glCmdList.items.length == 0)
             return led().clear();
 
         var resp = engGetResponseHeader(cbData);
 
-        if (resp !== 'OK' && resp !== 'IDX_NODN')
-        {
-            widWarningLed($obj, imgMsgError, gMsg.error + resp)
-            return widDone($obj, resp);
+        if (resp !== 'OK' && resp !== 'IDX_NODN') {
+            widWarningLed($Obj, imgMsgError, gMsg.error + resp)
+            return widDone($Obj, resp);
         }
 
         widShowProgressbar(progress);
@@ -723,15 +636,14 @@ function widFillOutTokList($obj, tokens, extCb)
         var idx = glTokList.items.length - 1;
 
         (cmdIdx + 1 < glCmdList.items.length)
-        ? widShowTokensLog(gMsg.makelist)
-        : setTimeout(extCb);
+         ? widShowTokensLog(gMsg.makelist)
+         : setTimeout(extCb);
     }
 
-    for (var i = 0; i < tokens.length; i++)
-    {
+    for (var i = 0; i < tokens.length; i++) {
         var lastCmd = 'last ' + gCurrentDB.name + ' ' + tokens[i].s;
 
-        if ( enc )
+        if (enc)
             lastCmd = '#' + engGetCipher(lastCmd);
 
         glCmdList.items[i] = {};
@@ -743,100 +655,89 @@ function widFillOutTokList($obj, tokens, extCb)
     engRunCmdList(glCmdList, cbFunc);
 }
 
-function cbTokensUpdate(cbData, cmdIdx, progress, $obj)
-{
+function cbTokensUpdate(cbData, cmdIdx, progress, $Obj) {
     // callback function for all functions which update tokens;
     var msg = gMsg.noTokensOrKeys;
     var resp = engGetResponseHeader(cbData);
 
-    if (glCmdList.items.length == 0)
-    {
-        widWarningLed($obj, imgMsgWarning, msg);
-        return widDone($obj, msg);
+    if (glCmdList.items.length == 0) {
+        widWarningLed($Obj, imgMsgWarning, msg);
+        return widDone($Obj, msg);
     }
 
     msg = gMsg.processing;
     widShowProgressbar(progress);
     widShowTokensLog(msg);
 
-    if ( resp === 'REQ_BAD_CRYPT')
-    {
-        widWarningLed($obj, imgMsgError, gMsg.error + resp);
-        return widDone($obj, resp);
+    if (resp === 'REQ_BAD_CRYPT') {
+        widWarningLed($Obj, imgMsgError, gMsg.error + resp);
+        return widDone($Obj, resp);
     }
 
     (resp !== 'OK' && resp !== 'IDX_NODN')
-    ? widWarningLed($obj, imgMsgWarning, gMsg.error + resp)
-    : widWarningLed($obj, imgMsgBlink, msg)
+     ? widWarningLed($Obj, imgMsgWarning, gMsg.error + resp)
+     : widWarningLed($Obj, imgMsgBlink, msg)
 
-    if (!(cmdIdx + 1 < glCmdList.items.length))
-    {
-        widWarningLed($obj, imgMsgOk, gMsg.ok);
-        return widDone($obj, gMsg.done);
+    if (!(cmdIdx + 1 < glCmdList.items.length)) {
+        widWarningLed($Obj, imgMsgOk, gMsg.ok);
+        return widDone($Obj, gMsg.done);
     }
 }
 
-function widPreUpdate($obj, click)
-{
+function widPreUpdate($Obj, click) {
     glCmdList.clear();
     widCleanUI().full();
 
-    var d = $obj.closest('.wrap').find('input').val();
+    var d = $Obj.closest('.wrap').find('input').val();
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            led($obj).set(imgMsgBlink, msg);
-            widUpdateTokens($obj, d, glTokList.items);
-            break;
-        case false:
-            msg = gMsg.unknown;
-            led($obj).set(imgMsgError, msg);
-            widDone($obj, msg);
-            break;
-        case undefined:
-            (typeof click == 'undefined')
-            ? widContinueButtonClick(widGetClosestContinueButton($obj))
-            : widUpdateTokens($obj, d, glTokList.items);
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+    switch (glTokList.status()) {
+    case true:
+        led($Obj).set(imgMsgBlink, msg);
+        widUpdateTokens($Obj, d, glTokList.items);
+        break;
+    case false:
+        msg = gMsg.unknown;
+        led($Obj).set(imgMsgError, msg);
+        widDone($Obj, msg);
+        break;
+    case undefined:
+        (typeof click == 'undefined')
+         ? widContinueButtonClick(widGetClosestContinueButton($Obj))
+         : widUpdateTokens($Obj, d, glTokList.items);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            led($obj).set(imgMsgBlink, msg);
+        led($Obj).set(imgMsgBlink, msg);
 
-            var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreUpdate($obj, click);
-            }
+        var tokens = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreUpdate($Obj, click);
+        }
 
-            widFillOutTokList($obj, tokens, extCb);
-            break;
+        widFillOutTokList($Obj, tokens, extCb);
+        break;
     }
 }
 
-function widUpdateTokens($obj, data, items)
-{
+function widUpdateTokens($Obj, data, items) {
     var enc = $('#input_tokens_encrypt').prop('checked');
 
     glTokList.clear();
 
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status == 'OK' && items[i].d != data)
-        {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 1 && items[i].d !== data) {
             var n = +items[i].n + 1;
             var s = items[i].s;
             var r = engGetRecord(n, s, gPassword, null, null, gCurrentDB.magic, gCurrentDB.hash);
             var addCmd = 'add *' + ' ' + gCurrentDB.name + ' ' + n + ' ' + s + ' ' + r.k + ' ' + r.g + ' ' + r.o + ' ' + data;
             var lastCmd = 'last' + ' ' + gCurrentDB.name + ' ' + s;
 
-            if ( enc )
-            {
+            if (enc) {
                 addCmd = '#' + engGetCipher(addCmd);
                 lastCmd = '#' + engGetCipher(lastCmd);
             }
@@ -857,110 +758,97 @@ function widUpdateTokens($obj, data, items)
         }
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);
 }
 
-function widUpgradeAsgmtKeys($obj, asgmtKeys, func)
-{
+function widUpgradeAsgmtKeys($Obj, asgmtKeys, func) {
     //if asgmtKeys not contains numbers of records , makes 'last' and update asgmtKeys records numbers;
     glCmdList.clear();
     var prCode = asgmtKeys[0].prcode;
 
-    if (prCode.charAt(0) === '2' && glTokList.items.length === 0)
-    {
-        var extCb = function ()
-        {
-            widUpgradeAsgmtKeys($obj, asgmtKeys, func);
+    if (prCode.charAt(0) === '2' && glTokList.items.length === 0) {
+        var extCb = function () {
+            widUpgradeAsgmtKeys($Obj, asgmtKeys, func);
         }
 
-        return widFillOutTokList($obj, asgmtKeys, extCb);
-    }
-    else if (prCode.charAt(0) === '2' && glTokList.items.length > 0)
-    {
+        return widFillOutTokList($Obj, asgmtKeys, extCb);
+    } else if (prCode.charAt(0) === '2' && glTokList.items.length > 0) {
         if (AsgmtKeys.length !== glTokList.items.length)
-            return widDone($obj, gMsg.keysError);
+            return widDone($Obj, gMsg.keysError);
 
         asgmtKeys = engGetNumberedAsgmtKeys(AsgmtKeys, glTokList.items);
     }
 
     var titleRecord = engGetTitleRecord(AsgmtKeys, gPassword, gCurrentDB.hash, gCurrentDB.magic);
-    var f = function ()
-    {
-        func($obj, titleRecord);
+    var f = function () {
+        func($Obj, titleRecord);
     }
     setTimeout(f);
 }
 
-function widPreSimpleSend($obj)
-{
+function widPreSimpleSend($Obj) {
     glCmdList.clear();
-    widCleanUI($obj).near();
+    widCleanUI($Obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
+    switch (glTokList.status()) {
+    case true:
 
-            led($obj).set(imgMsgBlink, msg);
-            widSimpleSend($obj, glTokList.items);
+        led($Obj).set(imgMsgBlink, msg);
+        widSimpleSend($Obj, glTokList.items);
 
-            break;
-        case false:
-            msg = gMsg.allUnavailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case false:
+        msg = gMsg.allUnavailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        case undefined:
-            msg = gMsg.someUnavailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case undefined:
+        msg = gMsg.someUnavailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            led($obj).set(imgMsgBlink, msg);
+        led($Obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreSimpleSend($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreSimpleSend($Obj);
+        }
 
-            widFillOutTokList($obj, tok, extCb);
+        widFillOutTokList($Obj, tok, extCb);
 
-            break;
+        break;
     }
 }
 
-function widSimpleSend($obj, items)
-{
-    var k1,
-        k2,
-        line;
-
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status == 'OK')
-        {
+function widSimpleSend($Obj, items) {
+    var k1;
+    var k2;
+    var line;
+    console.log(items);
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].status === 1) {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             line = items[i].n + ' ' + items[i].s + ' ' + k1 + ' ' + k2 + '\n';
@@ -968,38 +856,37 @@ function widSimpleSend($obj, items)
             if (0)
                 line = items[i].s + ' ' + k1 + ' ' + k2 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
         widShowTokensLog(gMsg.generation);
     }
 
-    var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
+    var mergedKeys = widGetClosestTextarea($Obj).val().replace(/\s/g, '');
     line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '123132';
 
     if (0)
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23132';
 
-    closestTextArea($obj).add(line);
-    led($obj).set(imgMsgOk, gMsg.ok);
+    closestTextArea($Obj).add(line);
+    led($Obj).set(imgMsgOk, gMsg.ok);
 
-    widDone($obj, gMsg.ok);
+    widDone($Obj, gMsg.ok);
 }
 
-function widPreSimpleReceive($obj, click)
-{
-    led($obj).clear();
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
+function widPreSimpleReceive($Obj, click) {
+    led($Obj).clear();
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
 
     if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
+        return widDone($Obj, gMsg.badKeys);
 
     if (!widIsPassword)
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
 
     glCmdList.clear();
     glTokList.clear();
@@ -1008,15 +895,13 @@ function widPreSimpleReceive($obj, click)
     var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
     tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widSimpleReceive);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widSimpleReceive);
 }
 
-function widSimpleReceive($obj, titleRecord)
-{
+function widSimpleReceive($Obj, titleRecord) {
     var enc = $('#input_tokens_encrypt').prop('checked');
 
-    for (var i = 0; i < titleRecord.length; i++)
-    {
+    for (var i = 0; i < titleRecord.length; i++) {
         var n1 = titleRecord[i].n1;
         var n2 = titleRecord[i].n2;
         var s = titleRecord[i].s;
@@ -1030,8 +915,7 @@ function widSimpleReceive($obj, titleRecord)
         var addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         var addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-        if ( enc )
-        {
+        if (enc) {
             addCmd1 = '#' + engGetCipher(addCmd1);
             addCmd2 = '#' + engGetCipher(addCmd2);
         }
@@ -1051,68 +935,61 @@ function widSimpleReceive($obj, titleRecord)
         glCmdList.items[idx].raw = '';
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);
 }
 
-function widPreSimpleRequest($obj)
-{
+function widPreSimpleRequest($Obj) {
     glCmdList.clear();
-    widCleanUI($obj).near();
+    widCleanUI($Obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            msg = gMsg.allAvailable;
-            led($obj).set(imgMsgError, msg);
-            widDone($obj, msg);
-            break;
-        case false:
-            led($obj).set(imgMsgBlink, msg);
-            widSimpleRequest($obj, glTokList.items);
-            break;
-        case undefined:
-            msg = gMsg.someAvailable;
-            led($obj).set(imgMsgError, msg);
-            widDone($obj, msg);
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+    switch (glTokList.status()) {
+    case true:
+        msg = gMsg.allAvailable;
+        led($Obj).set(imgMsgError, msg);
+        widDone($Obj, msg);
+        break;
+    case false:
+        led($Obj).set(imgMsgBlink, msg);
+        widSimpleRequest($Obj, glTokList.items);
+        break;
+    case undefined:
+        msg = gMsg.someAvailable;
+        led($Obj).set(imgMsgError, msg);
+        widDone($Obj, msg);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreSimpleRequest($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreSimpleRequest($Obj);
+        }
 
-            led($obj).set(imgMsgBlink, msg);
-            widFillOutTokList($obj, tok, extCb);
-            break;
+        led($Obj).set(imgMsgBlink, msg);
+        widFillOutTokList($Obj, tok, extCb);
+        break;
     }
 }
 
-function widSimpleRequest($obj, items)
-{
+function widSimpleRequest($Obj, items) {
     var k3,
-        k4,
-        g2,
-        g3,
-        o2,
-        line;
+    k4,
+    g2,
+    g3,
+    o2,
+    line;
 
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status === 4)
-        {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 4) {
             k3 = engGetKey(items[i].n + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k4 = engGetKey(items[i].n + 4, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             g2 = engGetKey(items[i].n + 3, items[i].s, k3, gCurrentDB.magic, gCurrentDB.hash);
@@ -1123,7 +1000,7 @@ function widSimpleRequest($obj, items)
             if (0)
                 line = items[i].s + ' ' + g2 + ' ' + o2 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1133,38 +1010,36 @@ function widSimpleRequest($obj, items)
     var msg = gMsg.nonexistentTokens;
     var img = imgMsgError;
 
-    if (closestTextArea($obj).val().length > 0)
-    {
-        var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
+    if (closestTextArea($Obj).val().length > 0) {
+        var mergedKeys = $(widGetClosestTextarea($Obj)).val().replace(/\s/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '124252';
 
         if (0)
             line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '24252';
 
-        closestTextArea($obj).add(line);
+        closestTextArea($Obj).add(line);
 
         msg = gMsg.ok;
         img = imgMsgOk;
     }
 
-    led($obj).set(img, msg);
-    widDone($obj, msg);
+    led($Obj).set(img, msg);
+    widDone($Obj, msg);
 }
 
-function widPreSimpleAccept($obj, click)
-{
-    led($obj).clear();
+function widPreSimpleAccept($Obj, click) {
+    led($Obj).clear();
 
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
 
     if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
+        return widDone($Obj, gMsg.badKeys);
 
     if (!widIsPassword())
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
 
     glCmdList.clear();
     glTokList.clear();
@@ -1174,28 +1049,26 @@ function widPreSimpleAccept($obj, click)
 
     tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widSimpleAccept);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widSimpleAccept);
 }
 
-function widSimpleAccept($obj, titleRecord)
-{
+function widSimpleAccept($Obj, titleRecord) {
     var n1,
-        n2,
-        s,
-        k1,
-        g1,
-        o1,
-        k2,
-        g2,
-        o2,
-        addCmd1,
-        addCmd2,
-        idx;
+    n2,
+    s,
+    k1,
+    g1,
+    o1,
+    k2,
+    g2,
+    o2,
+    addCmd1,
+    addCmd2,
+    idx;
 
     var enc = $('#input_tokens_encrypt').prop('checked');
 
-    for (var i = 0; i < titleRecord.length; i++)
-    {
+    for (var i = 0; i < titleRecord.length; i++) {
         n1 = titleRecord[i].n1;
         n2 = titleRecord[i].n2;
         s = titleRecord[i].s;
@@ -1208,8 +1081,7 @@ function widSimpleAccept($obj, titleRecord)
         addCmd1 = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
         addCmd2 = 'add * ' + gCurrentDB.name + ' ' + n2 + ' ' + s + ' ' + k2 + ' ' + g2 + ' ' + o2;
 
-        if ( enc )
-        {
+        if (enc) {
             addCmd1 = '#' + engGetCipher(addCmd1);
             addCmd2 = '#' + engGetCipher(addCmd2);
         }
@@ -1229,81 +1101,74 @@ function widSimpleAccept($obj, titleRecord)
         glCmdList.items[idx].raw = '';
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);
 }
 
-function widPreBlockingSendStep1($obj)
-{
+function widPreBlockingSendStep1($Obj) {
     glCmdList.clear();
-    widCleanUI($obj).near();
+    widCleanUI($Obj).near();
 
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            led($obj).set(imgMsgBlink, msg);
-            widBlockingSendStep1($obj, glTokList.items);
+    switch (glTokList.status()) {
+    case true:
+        led($Obj).set(imgMsgBlink, msg);
+        widBlockingSendStep1($Obj, glTokList.items);
 
-            break;
-        case false:
-            msg = gMsg.allUnavailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case false:
+        msg = gMsg.allUnavailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        case undefined:
-            msg = gMsg.someUnavailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case undefined:
+        msg = gMsg.someUnavailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            led($obj).set(imgMsgBlink, msg);
+        led($Obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreBlockingSendStep1($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreBlockingSendStep1($Obj);
+        }
 
-            widFillOutTokList($obj, tok, extCb);
+        widFillOutTokList($Obj, tok, extCb);
 
-            break;
+        break;
     }
 }
 
-function widBlockingSendStep1($obj, items)
-{
+function widBlockingSendStep1($Obj, items) {
     var n0,
-        k1,
-        k2,
-        g1,
-        line;
+    k1,
+    k2,
+    g1,
+    line;
 
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status === 'OK')
-        {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 1) {
             k1 = engGetKey(items[i].n + 1, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             k2 = engGetKey(items[i].n + 2, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             g1 = engGetKey(items[i].n + 2, items[i].s, k2, gCurrentDB.magic, gCurrentDB.hash);
@@ -1312,85 +1177,79 @@ function widBlockingSendStep1($obj, items)
             if (0)
                 line = items[i].s + ' ' + k1 + ' ' + g1 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
         widShowTokensLog(gMsg.generation);
     }
 
-    var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
+    var mergedKeys = widGetClosestTextarea($Obj).val().replace(/\s/g, '');
     line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '123141';
 
     if (0)
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '23141';
 
-    closestTextArea($obj).add(line);
-    led($obj).set(imgMsgOk, gMsg.ok);
+    closestTextArea($Obj).add(line);
+    led($Obj).set(imgMsgOk, gMsg.ok);
 
-    widDone($obj, gMsg.ok);
+    widDone($Obj, gMsg.ok);
 }
 
-function widPreBlockingSendStep2($obj)
-{
+function widPreBlockingSendStep2($Obj) {
     glCmdList.clear();
-    widCleanUI($obj).near();
+    widCleanUI($Obj).near();
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            msg = gMsg.allAvailable;
-            led($obj).set(imgMsgError, msg);
+    switch (glTokList.status()) {
+    case true:
+        msg = gMsg.allAvailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        case false:
-            led($obj).set(imgMsgBlink, msg);
-            widBlockingSendStep2($obj, glTokList.items);
+        break;
+    case false:
+        led($Obj).set(imgMsgBlink, msg);
+        widBlockingSendStep2($Obj, glTokList.items);
 
-            break;
-        case undefined:
-            msg = gMsg.someAvailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case undefined:
+        msg = gMsg.someAvailable;
+        led($Obj).set(imgMsgError, msg);
 
-            if (closestTextArea($obj).val().length > 0)
-                closestTextArea($obj).clear();
+        if (closestTextArea($Obj).val().length > 0)
+            closestTextArea($Obj).clear();
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            led($obj).set(imgMsgBlink, msg);
+        led($Obj).set(imgMsgBlink, msg);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreBlockingSendStep2($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreBlockingSendStep2($Obj);
+        }
 
-            widFillOutTokList($obj, tok, extCb);
+        widFillOutTokList($Obj, tok, extCb);
 
-            break;
+        break;
     }
 }
 
-function widBlockingSendStep2($obj, items)
-{
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status === 2)
-        {
+function widBlockingSendStep2($Obj, items) {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 2) {
             //include only tokens in sending state;
             var n0 = items[i].n;
             var n1 = items[i].n + 1;
@@ -1400,7 +1259,7 @@ function widBlockingSendStep2($obj, items)
             if (0)
                 line = items[i].s + ' ' + k1 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1408,43 +1267,39 @@ function widBlockingSendStep2($obj, items)
     }
 
     var msg,
-        img;
+    img;
 
-    if (closestTextArea($obj).val().length == 0)
-    {
+    if (closestTextArea($Obj).val().length == 0) {
         msg = gMsg.nonexistentTokens;
         img = imgMsgError;
-    }
-    else
-    {
-        var mergedKeys = widGetClosestTextarea($obj).val().replace(/\s/g, '');
+    } else {
+        var mergedKeys = widGetClosestTextarea($Obj).val().replace(/\s/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1231';
 
         if (0)
             var line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '231';
 
-        closestTextArea($obj).add(line);
+        closestTextArea($Obj).add(line);
         msg = gMsg.ok;
         img = imgMsgOk;
     }
 
-    led($obj).set(img, msg);
-    widDone($obj, msg);
+    led($Obj).set(img, msg);
+    widDone($Obj, msg);
 }
 
-function widPreBlockingReceiveStep1($obj, click)
-{
-    led($obj).clear();
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
+function widPreBlockingReceiveStep1($Obj, click) {
+    led($Obj).clear();
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
 
     if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
+        return widDone($Obj, gMsg.badKeys);
 
     if (!widIsPassword)
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
 
     glCmdList.clear();
     glTokList.clear();
@@ -1453,79 +1308,19 @@ function widPreBlockingReceiveStep1($obj, click)
     var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
     tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
     widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingReceiveStep1);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widBlockingReceiveStep1);
 }
 
-function widBlockingReceiveStep1($obj, titleRecord)
-{
+function widBlockingReceiveStep1($Obj, titleRecord) {
     var enc = $('#input_tokens_encrypt').prop('checked');
-    var n1, s, k1, g1, o1, addCmd;
-
-    for (let i = 0; i < titleRecord.length; i++)
-    {
-        n1 = titleRecord[i].n1;
-        s = titleRecord[i].s;
-        k1 = titleRecord[i].k1;
-        g1 = titleRecord[i].g1;
-        o1 = titleRecord[i].o1;
-
-        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
-
-        if ( enc )
-            addCmd = '#' + engGetCipher(addCmd);
-
-        glCmdList.items[i] = {};
-        glCmdList.items[i].cmd = addCmd;
-        glCmdList.items[i].s = s;
-        glCmdList.items[i].raw = '';
-    }
-
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
-    }
-
-    engRunCmdList(glCmdList, cb);
-}
-
-function widPreBlockingReceiveStep2($obj, click)
-{
-    led($obj).clear();
-
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
-
-    if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
-
-    if (!widIsPassword)
-        return widDone($obj, gMsg.emptyPassword);
-
-    if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
-
-    glCmdList.clear();
-    glTokList.clear();
-
-    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
-
-    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
-    widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingReceiveStep2);
-}
-
-function widBlockingReceiveStep2($obj, titleRecord)
-{
     var n1,
-        s,
-        k1,
-        g1,
-        o1,
-        addCmd;
-    var enc = $('#input_tokens_encrypt').prop('checked');
+    s,
+    k1,
+    g1,
+    o1,
+    addCmd;
 
-    for (var i = 0; i < titleRecord.length; i++)
-    {
+    for (let i = 0; i < titleRecord.length; i++) {
         n1 = titleRecord[i].n1;
         s = titleRecord[i].s;
         k1 = titleRecord[i].k1;
@@ -1534,7 +1329,7 @@ function widBlockingReceiveStep2($obj, titleRecord)
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
-        if ( enc )
+        if (enc)
             addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
@@ -1543,75 +1338,127 @@ function widBlockingReceiveStep2($obj, titleRecord)
         glCmdList.items[i].raw = '';
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);
 }
 
-function widPreBlockingRequestStep1($obj)
-{
+function widPreBlockingReceiveStep2($Obj, click) {
+    led($Obj).clear();
+
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
+
+    if (!engIsAsgmtKeys(rawAsgmtKeys))
+        return widDone($Obj, gMsg.badKeys);
+
+    if (!widIsPassword)
+        return widDone($Obj, gMsg.emptyPassword);
+
+    if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
+
     glCmdList.clear();
-    widCleanUI($obj).near();
+    glTokList.clear();
+
+    var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+    var asgmtKeys = engGetParsedAsgmtKeys(rawAsgmtKeys);
+
+    tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
+    widShowOrderedTokensNames(tok);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widBlockingReceiveStep2);
+}
+
+function widBlockingReceiveStep2($Obj, titleRecord) {
+    var n1,
+    s,
+    k1,
+    g1,
+    o1,
+    addCmd;
+    var enc = $('#input_tokens_encrypt').prop('checked');
+
+    for (var i = 0; i < titleRecord.length; i++) {
+        n1 = titleRecord[i].n1;
+        s = titleRecord[i].s;
+        k1 = titleRecord[i].k1;
+        g1 = titleRecord[i].g1;
+        o1 = titleRecord[i].o1;
+
+        addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
+
+        if (enc)
+            addCmd = '#' + engGetCipher(addCmd);
+
+        glCmdList.items[i] = {};
+        glCmdList.items[i].cmd = addCmd;
+        glCmdList.items[i].s = s;
+        glCmdList.items[i].raw = '';
+    }
+
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
+    }
+
+    engRunCmdList(glCmdList, cb);
+}
+
+function widPreBlockingRequestStep1($Obj) {
+    glCmdList.clear();
+    widCleanUI($Obj).near();
 
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            msg = gMsg.allAvailable;
-            led($obj).set(imgMsgError, msg);
+    switch (glTokList.status()) {
+    case true:
+        msg = gMsg.allAvailable;
+        led($Obj).set(imgMsgError, msg);
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        case false:
-            led($obj).set(imgMsgBlink, msg);
-            widBlockingRequestStep1($obj, glTokList.items);
+        break;
+    case false:
+        led($Obj).set(imgMsgBlink, msg);
+        widBlockingRequestStep1($Obj, glTokList.items);
 
-            break;
-        case undefined:
-            msg = gMsg.someAvailable;
-            led($obj).set(imgMsgError, msg);
+        break;
+    case undefined:
+        msg = gMsg.someAvailable;
+        led($Obj).set(imgMsgError, msg);
 
-            widDone($obj, msg);
+        widDone($Obj, msg);
 
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreBlockingRequestStep1($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreBlockingRequestStep1($Obj);
+        }
 
-            led($obj).set(imgMsgBlink, msg);
+        led($Obj).set(imgMsgBlink, msg);
 
-            widFillOutTokList($obj, tok, extCb);
+        widFillOutTokList($Obj, tok, extCb);
 
-            break;
+        break;
     }
 }
 
-function widBlockingRequestStep1($obj, items)
-{
+function widBlockingRequestStep1($Obj, items) {
     var n0,
-        k3,
-        g2,
-        o1,
-        line;
+    k3,
+    g2,
+    o1,
+    line;
 
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status === 4)
-        {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 4) {
             n0 = items[i].n;
             k3 = engGetKey(n0 + 3, items[i].s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
             g2 = engGetKey(n0 + 3, items[i].s, k3, gCurrentDB.magic, gCurrentDB.hash);
@@ -1621,7 +1468,7 @@ function widBlockingRequestStep1($obj, items)
             if (0)
                 line = items[i].s + ' ' + o1 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
         }
 
         widShowProgressbar(100 * (i + 1) / items.length);
@@ -1629,89 +1476,82 @@ function widBlockingRequestStep1($obj, items)
     }
 
     var msg = gMsg.nonexistentTokens
-              var img = imgMsgError;
+        var img = imgMsgError;
 
-    if (closestTextArea($obj).val().length > 0)
-    {
-        var rawAsgmtKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
+    if (closestTextArea($Obj).val().length > 0) {
+        var rawAsgmtKeys = $(widGetClosestTextarea($Obj)).val().replace(/\s/g, '');
         line = engGetHash(rawAsgmtKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '1251';
 
         if (0)
             line = engGetHash(rawAsgmtKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '251';
 
-        closestTextArea($obj).add(line);
+        closestTextArea($Obj).add(line);
         msg = gMsg.ok;
         img = imgMsgOk;
     }
 
-    led($obj).set(img, msg);
-    widDone($obj, msg);
+    led($Obj).set(img, msg);
+    widDone($Obj, msg);
 }
 
-function widPreBlockingRequestStep2($obj)
-{
+function widPreBlockingRequestStep2($Obj) {
     glCmdList.clear();
-    widCleanUI($obj).near();
+    widCleanUI($Obj).near();
 
     var msg = gMsg.wait;
 
-    switch (glTokList.status())
-    {
-        case true:
-            msg = gMsg.allAvailable;
+    switch (glTokList.status()) {
+    case true:
+        msg = gMsg.allAvailable;
 
-            led($obj).set(imgMsgError, msg);
-            widDone($obj, msg);
+        led($Obj).set(imgMsgError, msg);
+        widDone($Obj, msg);
 
-            break;
-        case false:
-            led($obj).set(imgMsgBlink, msg);
-            widBlockingRequestStep2($obj, glTokList.items);
+        break;
+    case false:
+        led($Obj).set(imgMsgBlink, msg);
+        widBlockingRequestStep2($Obj, glTokList.items);
 
-            break;
-        case undefined:
-            msg = gMsg.someAvailable;
+        break;
+    case undefined:
+        msg = gMsg.someAvailable;
 
-            led($obj).set(imgMsgError, msg);
-            widDone($obj, msg);
+        led($Obj).set(imgMsgError, msg);
+        widDone($Obj, msg);
 
-            break;
-        default:
-                if (!widIsRawTokens())
-                    return widDone($obj, gMsg.badTokens);
+        break;
+    default:
+        if (!widIsRawTokens())
+            return widDone($Obj, gMsg.badTokens);
 
-            if (!widIsPassword())
-                return widDone($obj, gMsg.emptyPassword);
+        if (!widIsPassword())
+            return widDone($Obj, gMsg.emptyPassword);
 
-            var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
-            var extCb = function ()
-            {
-                widPreBlockingRequestStep2($obj);
-            }
+        var tok = engGetTokens(widGetRawTokens(), gCurrentDB.hash);
+        var extCb = function () {
+            widPreBlockingRequestStep2($Obj);
+        }
 
-            led($obj).set(imgMsgBlink, msg);
-            widFillOutTokList($obj, tok, extCb);
+        led($Obj).set(imgMsgBlink, msg);
+        widFillOutTokList($Obj, tok, extCb);
 
-            break;
+        break;
     }
 }
 
-function widBlockingRequestStep2($obj, items)
-{
+function widBlockingRequestStep2($Obj, items) {
     var n0,
-        n1,
-        k2,
-        g1,
-        k3,
-        g2,
-        o1,
-        s,
-        line;
+    n1,
+    k2,
+    g1,
+    k3,
+    g2,
+    o1,
+    s,
+    line;
 
-    for (var i = 0; i < items.length; i++)
-    {
-        if (items[i].status === 3)
-        {
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].status === 3) {
             s = items[i].s;
             n0 = items[i].n;
             k2 = engGetKey(n0 + 2, s, gPassword, gCurrentDB.magic, gCurrentDB.hash);
@@ -1725,7 +1565,7 @@ function widBlockingRequestStep2($obj, items)
             if (0)
                 line = s + ' ' + g1 + ' ' + o1 + '\n';
 
-            closestTextArea($obj).add(line);
+            closestTextArea($Obj).add(line);
 
         }
 
@@ -1736,38 +1576,36 @@ function widBlockingRequestStep2($obj, items)
     var msg = gMsg.nonexistentTokens;
     var img = imgMsgError;
 
-    if (closestTextArea($obj).val().length > 0)
-    {
-        var mergedKeys = $(widGetClosestTextarea($obj)).val().replace(/\s/g, '');
+    if (closestTextArea($Obj).val().length > 0) {
+        var mergedKeys = $(widGetClosestTextarea($Obj)).val().replace(/\s/g, '');
         line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '124151';
 
         if (0)
             line = engGetHash(mergedKeys, 's22').substring(0, 4) + ' ' + gCurrentDB.altname + ' ' + '24151';
 
-        closestTextArea($obj).add(line);
+        closestTextArea($Obj).add(line);
 
         msg = gMsg.ok;
         img = imgMsgOk;
     }
 
-    led($obj).set(img, msg);
-    widDone($obj, msg);
+    led($Obj).set(img, msg);
+    widDone($Obj, msg);
 }
 
-function widPreBlockingAcceptStep1($obj, click)
-{
-    led($obj).clear();
+function widPreBlockingAcceptStep1($Obj, click) {
+    led($Obj).clear();
 
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
 
     if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
+        return widDone($Obj, gMsg.badKeys);
 
     if (!widIsPassword())
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
 
     glCmdList.clear();
     glTokList.clear();
@@ -1777,21 +1615,19 @@ function widPreBlockingAcceptStep1($obj, click)
     tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingAcceptStep1);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widBlockingAcceptStep1);
 }
 
-function widBlockingAcceptStep1($obj, titleRecord)
-{
+function widBlockingAcceptStep1($Obj, titleRecord) {
     var n1,
-        s,
-        k1,
-        g1,
-        o1,
-        addCmd;
+    s,
+    k1,
+    g1,
+    o1,
+    addCmd;
     var enc = $('#input_tokens_encrypt').prop('checked');
 
-    for (var i = 0; i < titleRecord.length; i++)
-    {
+    for (var i = 0; i < titleRecord.length; i++) {
         n1 = titleRecord[i].n1;
         s = titleRecord[i].s;
         k1 = titleRecord[i].k1;
@@ -1800,7 +1636,7 @@ function widBlockingAcceptStep1($obj, titleRecord)
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
-        if ( enc )
+        if (enc)
             addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
@@ -1810,28 +1646,26 @@ function widBlockingAcceptStep1($obj, titleRecord)
 
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);
 }
 
-function widPreBlockingAcceptStep2($obj, click)
-{
-    led($obj).clear();
+function widPreBlockingAcceptStep2($Obj, click) {
+    led($Obj).clear();
 
-    var rawAsgmtKeys = widGetClosestTextarea($obj).val();
+    var rawAsgmtKeys = widGetClosestTextarea($Obj).val();
 
     if (!engIsAsgmtKeys(rawAsgmtKeys))
-        return widDone($obj, gMsg.badKeys);
+        return widDone($Obj, gMsg.badKeys);
 
     if (!widIsPassword())
-        return widDone($obj, gMsg.emptyPassword);
+        return widDone($Obj, gMsg.emptyPassword);
 
     if (widGetRawTokens().length > 0 && (typeof click == 'undefined'))
-        return widContinueButtonClick(widGetClosestContinueButton($obj));
+        return widContinueButtonClick(widGetClosestContinueButton($Obj));
 
     glCmdList.clear();
     glTokList.clear();
@@ -1841,21 +1675,19 @@ function widPreBlockingAcceptStep2($obj, click)
     tok = engGetDnOrRawList(engGetDnList(AsgmtKeys), engGetRawList(tok), gCurrentDB.hash);
 
     widShowOrderedTokensNames(tok);
-    widUpgradeAsgmtKeys($obj, asgmtKeys, widBlockingAcceptStep2);
+    widUpgradeAsgmtKeys($Obj, asgmtKeys, widBlockingAcceptStep2);
 }
 
-function widBlockingAcceptStep2($obj, titleRecord)
-{
+function widBlockingAcceptStep2($Obj, titleRecord) {
     var n1,
-        s,
-        k1,
-        g1,
-        o1,
-        addCmd;
+    s,
+    k1,
+    g1,
+    o1,
+    addCmd;
     var enc = $('#input_tokens_encrypt').prop('checked');
 
-    for (var i = 0; i < titleRecord.length; i++)
-    {
+    for (var i = 0; i < titleRecord.length; i++) {
         n1 = titleRecord[i].n1;
         s = titleRecord[i].s;
         k1 = titleRecord[i].k1;
@@ -1864,7 +1696,7 @@ function widBlockingAcceptStep2($obj, titleRecord)
 
         addCmd = 'add * ' + gCurrentDB.name + ' ' + n1 + ' ' + s + ' ' + k1 + ' ' + g1 + ' ' + o1;
 
-        if ( enc )
+        if (enc)
             addCmd = '#' + engGetCipher(addCmd);
 
         glCmdList.items[i] = {};
@@ -1873,9 +1705,8 @@ function widBlockingAcceptStep2($obj, titleRecord)
         glCmdList.items[i].raw = '';
     }
 
-    var cb = function (cbData, cmdIdx, progress)
-    {
-        cbTokensUpdate(cbData, cmdIdx, progress, $obj);
+    var cb = function (cbData, cmdIdx, progress) {
+        cbTokensUpdate(cbData, cmdIdx, progress, $Obj);
     }
 
     engRunCmdList(glCmdList, cb);

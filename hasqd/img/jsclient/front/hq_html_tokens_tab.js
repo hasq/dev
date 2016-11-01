@@ -1,7 +1,6 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
-function widGetHTMLTokensTabs()
-{
+function widGetHTMLTokensTabs() {
     var r = '';
     var tabs = [];
     var item;
@@ -35,8 +34,7 @@ function widGetHTMLTokensTabs()
     return r;
 }
 
-function widGetHTMLTokensTabBody(tabs)
-{
+function widGetHTMLTokensTabBody(tabs) {
     var r = '';
 
     r += '<table >\n';
@@ -63,8 +61,7 @@ function widGetHTMLTokensTabBody(tabs)
     return r;
 }
 
-function widGetHTMLTokensInitialData()
-{
+function widGetHTMLTokensInitialData() {
     var r = '';
 
     r += '<table id="table_tokens_init_data">\n';
@@ -119,8 +116,7 @@ function widGetHTMLTokensInitialData()
     return r;
 }
 
-function widGetHTMLTokensProgressbar()
-{
+function widGetHTMLTokensProgressbar() {
     var r = '';
     r += '<div id="div_progressbar_main">\n';
     r += '<div id="div_progressbar_label">\n';
@@ -129,16 +125,13 @@ function widGetHTMLTokensProgressbar()
     return r;
 }
 
-function widGetHTMLTokensLog()
-{
+function widGetHTMLTokensLog() {
     var r = '';
     r += '<div id="div_tokens_log">&nbsp</div>\n';
     return r;
 }
 
-
-function widGetHTMLTokensCreateTab()
-{
+function widGetHTMLTokensCreateTab() {
     var r = '';
     r += '<table id="table_create_tab" class="wrap">\n';
     r += '<tr>\n';
@@ -151,8 +144,7 @@ function widGetHTMLTokensCreateTab()
     return r;
 }
 
-function widGetHTMLTokensVerifyTab()
-{
+function widGetHTMLTokensVerifyTab() {
     var r = '';
     r += '<table class="wrap">';
     r += '<tr>';
@@ -172,7 +164,7 @@ function widGetHTMLTokensVerifyTab()
     r += '<div id="div_table_verify">\n';
     r += '<table id="table_verify" border="1">\n';
     r += '<tr>\n';
-    r +='<th>Status</th><th>Raw name</th><th>Hash</th><th>Last rec. N</th><th>Data</th>\n';
+    r += '<th>Status</th><th>Raw name</th><th>Hash</th><th>Last rec. N</th><th>Data</th>\n';
     r += '</tr>\n';
     r += '</table>\n';
     r += '</div>\n';
@@ -181,8 +173,7 @@ function widGetHTMLTokensVerifyTab()
     return r;
 }
 
-function widGetHTMLTokensDataTab()
-{
+function widGetHTMLTokensDataTab() {
     var r = '';
 
     r += '<table class="wrap">\n';
@@ -210,8 +201,7 @@ function widGetHTMLTokensDataTab()
     return r;
 }
 
-function widGetHTMLTokensSendTab()
-{
+function widGetHTMLTokensSendTab() {
     var r = '';
     r += '<div id="div_tokens_send">\n';
     r += '<h3>Scenario 1: Simple send</h3>\n';
@@ -227,8 +217,7 @@ function widGetHTMLTokensSendTab()
     return r;
 }
 
-function widGetHTMLTokensSS1()
-{
+function widGetHTMLTokensSS1() {
     var r = '';
     r += '<div id="div_ss1">';
     r += '<table class="wrap">\n';
@@ -252,8 +241,7 @@ function widGetHTMLTokensSS1()
     return r;
 }
 
-function widGetHTMLTokensSS2()
-{
+function widGetHTMLTokensSS2() {
     var r = '';
     r += '<div id="div_ss2">';
     r += '<table class="wrap">\n';
@@ -280,8 +268,7 @@ function widGetHTMLTokensSS2()
     return r;
 }
 
-function widGetHTMLTokensSS3()
-{
+function widGetHTMLTokensSS3() {
     var r = '';
     r += '<div id="div_ss3">\n';
 
@@ -325,8 +312,7 @@ function widGetHTMLTokensSS3()
     return r;
 }
 
-function widGetHTMLTokensSS4()
-{
+function widGetHTMLTokensSS4() {
     var r = '';
     r += '<div id="div_ss4">\n';
 
@@ -376,8 +362,7 @@ function widGetHTMLTokensSS4()
     return r;
 }
 
-function widTokensReceiveTab()
-{
+function widTokensReceiveTab() {
     var r = '';
     r += '<div id="div_tokens_receive">\n';
     r += '<h3>Scenario 1: Simple receive</h3>\n';
@@ -393,8 +378,7 @@ function widTokensReceiveTab()
     return r;
 }
 
-function widGetHTMLTokensRS1()
-{
+function widGetHTMLTokensRS1() {
     var r = '';
     r += '<div id="div_rs1">';
     r += '<table class="wrap">\n';
@@ -422,9 +406,7 @@ function widGetHTMLTokensRS1()
     return r;
 }
 
-
-function widGetHTMLTokensRS2()
-{
+function widGetHTMLTokensRS2() {
     var r = '';
     r += '<div id="div_rs2">\n';
     r += '<table class="wrap">\n';
@@ -451,8 +433,7 @@ function widGetHTMLTokensRS2()
     return r;
 }
 
-function widGetHTMLTokensRS3()
-{
+function widGetHTMLTokensRS3() {
     var r = '';
     r += '<div id="div_rs3">\n';
     r += '<table class="wrap">\n';
@@ -500,8 +481,7 @@ function widGetHTMLTokensRS3()
     return r;
 }
 
-function widGetHTMLTokensRS4()
-{
+function widGetHTMLTokensRS4() {
     var r = '';
     r += '<div id="div_rs4">\n';
 

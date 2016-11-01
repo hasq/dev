@@ -2,65 +2,59 @@
 
 var gClientTitle = getHostName().name;
 var gClientLink = getHostName().link;
-var glDataBase = {};
+var gDataBase = {};
 var gCurrentDB = {}; //The object which contains selected database properties
-var glHashCalcHash = ''; // Current calc hash-function
+var gHashCalcHash = ''; // Current calc hash-function
 var gPassword = ''; // The specified password
 var gSkc = null;
 var gIv = null;
 var gSalt = null;
 var gCiferHash = 's22';
-
 var hasqLogo = HasqLogo('span_logo');
-var preloadImg = new Array();
+var preloadImg = [];
 
-var glCmdList =
-{
+var glCmdList = {
     items: [],
     idx: 0,
     counter: 100,
-    clear: function ()
-    {
+    clear: function () {
         this.items.length = 0;
         this.idx = 0;
         this.counter = 100;
     }
-}
-
-var glTokList =
-{
+};
+var glTokList = {
     fit: false,
     unfit: false,
     items: [],
-    add: function (item)
-    {
+    add: function (item) {
         this.items[this.items.length] = item;
-        if (item.fit) this.fit = true;
-        if (item.unfit) this.unfit = true;
+        if (item.fit)
+            this.fit = true;
+        if (item.unfit)
+            this.unfit = true;
     },
-    clear: function ()
-    {
+    clear: function () {
         this.items = [];
         this.fit = false;
         this.unfit = false;
     },
-    state: function ()
-    {
-      //contains only known tokens;
+    status: function () {
+        //contains only known tokens;
         if (this.fit === true && this.unfit === false)
             return true;
 
-     //contains only unknown tokens
+        //contains only unknown tokens
         if (this.fit === false && this.unfit === true)
             return false;
 
-     //contains different tokens
+        //contains different tokens
         if (this.fit === true && this.unfit === true)
             return undefined;
-     //not contains any tokens
+        //not contains any tokens
         return null;
     }
-}
+};
 
 var imgMsgOk = 'img/msg_ok.png';
 var imgMsgWarning = 'img/msg_warning.png';
@@ -84,77 +78,71 @@ var imgLogoFail = 'img/logo_fail.png';
 var imgLogoAnim = 'img/logo_anim.gif';
 
 var allImages = [
-                    imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,
-                    imgPwdDummy, imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng, imgTknNodn,
-                    imgLogoWait, imgLogoFail, imgLogoAnim, imgSkcOn, imgSkcOff
-                ];
+    imgMsgOk, imgMsgWarning, imgMsgError, imgMsgWait, imgMsgBlink,
+    imgPwdDummy, imgPwdOk, imgPwdWrong, imgPwdRcvng, imgPwdSndng,
+    imgTknNodn, imgLogoWait, imgLogoFail, imgLogoAnim, imgSkcOn, imgSkcOff
+];
 
-function docMainWrite()
-{
+function docMainWrite() {
     document.write(docMain());
 }
 
-function docMainInit()
-{
-    $(document).ready(function ()
-    {
+function docMainInit() {
+    $(document).ready(function () {
         doc_init();
     });
 }
 
-function doc_init()
-{
+function doc_init() {
     $('textarea').prop('maxlength', '66435');
-    $('#textarea_tokens_names').prop('maxlength', '16511').prop('placeholder', 'Enter tokens \[raw names\] or hashes here');
+    $('#textarea_tokens_names')
+        .prop('maxlength', '16511')
+        .prop('placeholder', 'Enter tokens \[raw names\] or hashes here');
     $('#input_tokens_password').prop('placeholder', 'Enter a password');
     $('#input_tokens_data').prop('placeholder', 'Enter a new data');
-    $('#input_cmd').prop('placeholder', 'Enter a command').prop('value', 'ping');
+    $('#input_cmd')
+        .prop('placeholder', 'Enter a command')
+        .prop('value', 'ping');
 
-    $('#div_main_tabs').tabs(
-    {
-        activate : function (event, ui)
-        {
-            if (ui.newTab.index() == 3)
-            {
-                if (gCurrentDB.hash != undefined && gCurrentDB.hash != '')
-                {
-                    glHashCalcHash = gCurrentDB.hash;
-                }
-                else
-                {
-                    glHashCalcHash = 'md5';
+    $('#div_main_tabs').tabs({
+        activate: function (event, ui) {
+            if (ui.newTab.index() == 3) {
+                if (gCurrentDB.hash != undefined && gCurrentDB.hash != '') {
+                    gHashCalcHash = gCurrentDB.hash;
+                } else {
+                    gHashCalcHash = 'md5';
                 }
 
-                switch (glHashCalcHash)
-                {
-             case 'md5': //md5
+                switch (gHashCalcHash) {
+                    case 'md5': //md5
                         widHashcalcOninput();
-                 //$('#select_hashcalc').get(0).selectedIndex = 0;
+                        //$('#select_hashcalc').get(0).selectedIndex = 0;
                         $('#select_hashcalc').val(0);
                         break;
-             case 'r16': //r16
+                    case 'r16': //r16
                         widHashcalcOninput();
                         $('#select_hashcalc').val(1);
                         break;
-             case 's22': //s22
+                    case 's22': //s22
                         widHashcalcOninput();
                         $('#select_hashcalc').val(2);
                         break;
-             case 's25': //s25
+                    case 's25': //s25
                         widHashcalcOninput();
                         $('#select_hashcalc').val(3);
                         break;
-             case 'smd': //s25
+                    case 'smd': //s25
                         widHashcalcOninput();
                         $('#select_hashcalc').val(4);
                         break;
-             case 'wrd': //wrd
+                    case 'wrd': //wrd
                         widHashcalcOninput();
                         $('#select_hashcalc').val(5);
                         break;
                     default:
-                            break;
+                        break;
                 }
+                
                 $('#select_hashcalc').selectmenu('refresh');
             }
             return true;
@@ -163,15 +151,21 @@ function doc_init()
 
     $('#div_main_tabs').tabs().tabs('option', 'active', 2);
 
-    $('#database_select').selectmenu(
-    {
-        select: function (event, ui)
-        {
-            var db_table = widGetHTMLDatabaseTraitTable(glDataBase[this.selectedIndex]);
-            var current_db = glDataBase[this.selectedIndex].name + '(' + glDataBase[this.selectedIndex].hash + ')';
-            var pwdCheckBoxIsOn = $('#one_pwd_checkbox').is(':checked') + $('#three_pwd_checkbox').is(':checked');
-            //var pwdCheckBoxIsOn = document.getElementById('one_pwd_checkbox').checked + document.getElementById('three_pwd_checkbox').checked;
-            gCurrentDB = glDataBase[this.selectedIndex];
+    $('#database_select').selectmenu({
+        select: function (event, ui) {
+            var db_table =
+                widGetHTMLDatabaseTraitTable(gDataBase[this.selectedIndex]);
+            var current_db = gDataBase[this.selectedIndex].name +
+                '(' + gDataBase[this.selectedIndex].hash + ')';
+            var pwdCheckBoxIsOn = $('#one_pwd_checkbox').is(':checked') +
+                $('#three_pwd_checkbox').is(':checked');
+            /*
+            var pwdCheckBoxIsOn =
+                document.getElementById('one_pwd_checkbox').checked +
+                document.getElementById('three_pwd_checkbox').checked;
+            */
+            
+            gCurrentDB = gDataBase[this.selectedIndex];
 
             $('#div_database_table').html(db_table);
             $('#current_db').html(current_db);
@@ -186,47 +180,42 @@ function doc_init()
         }
     });
 
-    $('#select_hashcalc').selectmenu(
-    {
-        select : function (event, ui)
-        {
-            switch (this.selectedIndex)
-            {
-         case 0: //md5
-                    glHashCalcHash = 'md5';
+    $('#select_hashcalc').selectmenu({
+        select: function (event, ui) {
+            switch (this.selectedIndex) {
+                case 0: //md5
+                    gHashCalcHash = 'md5';
                     widHashcalcOninput();
                     break;
-         case 1: //r16
-                    glHashCalcHash = 'r16';
+                case 1: //r16
+                    gHashCalcHash = 'r16';
                     widHashcalcOninput();
                     break;
-         case 2: //s22
-                    glHashCalcHash = 's22';
+                case 2: //s22
+                    gHashCalcHash = 's22';
                     widHashcalcOninput();
                     break;
-         case 3: //s25
-                    glHashCalcHash = 's25';
+                case 3: //s25
+                    gHashCalcHash = 's25';
                     widHashcalcOninput();
                     break;
-         case 4: //smd
-                    glHashCalcHash = 'smd';
+                case 4: //smd
+                    gHashCalcHash = 'smd';
                     widHashcalcOninput();
                     break;
-         case 5: //wrd
-                    glHashCalcHash = 'wrd';
+                case 5: //wrd
+                    gHashCalcHash = 'wrd';
                     widHashcalcOninput();
                     break;
                 default:
-                        break;
+                break;
             }
         }
     });
 
-    $('#select_records_history').selectmenu(
-    {
+    $('#select_records_history').selectmenu({
         disabled: true,
-        select: function(event, data)
-        {
+        select: function (event, data) {
             var d = +this.options[this.selectedIndex].text;
             widTokensHistorySelect(d);
         }
@@ -235,49 +224,39 @@ function doc_init()
     $('button').button();
 
     var cmdinputHints = [
-                            'ping',
-                            'info db',
-                            'info sys',
-                            'info id'
-                        ];
+        'ping',
+        'info db',
+        'info sys',
+        'info id'
+    ];
 
-    $('#input_cmd').autocomplete(
-    {
-        source : cmdinputHints
+    $('#input_cmd').autocomplete({
+        source: cmdinputHints
     });
 
     var progressbar = $('#div_progressbar_main');
     var progressbarLabel = $('#div_progressbar_label');
 
-    progressbar.progressbar(
-    {
-        value : 0,
-        change: function (event, ui)
-        {
+    progressbar.progressbar({
+        value: 0,
+        change: function (event, ui) {
             var val = progressbar.progressbar('value');
-            if (val > 0)
-            {
+            if (val > 0) {
                 progressbarLabel.text(val + '%');
-            }
-            else
-            {
+            } else {
                 progressbarLabel.text('');
                 progressbar.progressbar('value', 0);
             }
         },
-        complete: function (event, ui)
-        {
+        complete: function (event, ui) {
             progressbarLabel.text('Complete!');
         }
     });
 
-    $('#div_tokens_tabs').tabs(
-    {
-        activate : function (event, ui)
-        {
+    $('#div_tokens_tabs').tabs({
+        activate: function (event, ui) {
             widShowProgressbar(0);
-            switch (ui.newTab.index())
-            {
+            switch (ui.newTab.index()) {
                 case 0:
                     widShowTokensLog('Create');
                     break;
@@ -294,7 +273,7 @@ function doc_init()
                     widShowTokensLog('Keys generation for Receiver');
                     break;
                 default:
-                        widShowTokensLog('&nbsp');
+                    widShowTokensLog('&nbsp');
                     break;
             }
         }
@@ -302,53 +281,59 @@ function doc_init()
 
     $('#div_tokens_tabs').tabs().tabs('option', 'active', 0);
 
-    $('#div_add_range_accordion').accordion(
-    {
-        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-        active : 'false',
-        heightStyle : 'content',
-        collapsible : 'true',
-        header : 'h3',
+    $('#div_add_range_accordion').accordion({
+        icons: {
+            "header": "ui-icon-plus",
+            "activeHeader": "ui-icon-minus"
+        },
+        active: 'false',
+        heightStyle: 'content',
+        collapsible: 'true',
+        header: 'h3',
     });
 
-    $('#div_tokens_send').accordion(
-    {
-        icons:
-        {
+    $('#div_tokens_send').accordion({
+        icons: {
             'header': 'ui-icon-plus',
             'activeHeader': 'ui-icon-minus'
         },
-        active : 0,
-        heightStyle : 'content',
-        collapsible : 'true',
-        header : 'h3',
+        active: 0,
+        heightStyle: 'content',
+        collapsible: 'true',
+        header: 'h3',
     });
 
-    $('#div_tokens_receive').accordion(
-    {
-        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-        active : 0,
-        heightStyle : 'content',
-        collapsible : 'true',
-        header : 'h3',
+    $('#div_tokens_receive').accordion({
+        icons: {
+            'header': 'ui-icon-plus',
+            'activeHeader': 'ui-icon-minus'
+        },
+        active: 0,
+        heightStyle: 'content',
+        collapsible: 'true',
+        header: 'h3',
     });
 
-    $('#main_help_accordion').accordion(
-    {
-        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
-        active : 'false',
-        heightStyle : 'content',
-        collapsible : 'true',
-        header : 'h3',
+    $('#main_help_accordion').accordion({
+        icons: {
+            'header': 'ui-icon-plus',
+            'activeHeader': 'ui-icon-minus'
+        },
+        active: 'false',
+        heightStyle: 'content',
+        collapsible: 'true',
+        header: 'h3',
     });
 
-    $('#tokens_tab_help_accordion').accordion(
-    {
-        icons: { 'header': 'ui-icon-plus', 'activeHeader': 'ui-icon-minus' },
-        active : 'false',
-        heightStyle : 'content',
-        collapsible : 'false',
-        header : 'h2',
+    $('#tokens_tab_help_accordion').accordion({
+        icons: {
+            'header': 'ui-icon-plus',
+            'activeHeader': 'ui-icon-minus'
+        },
+        active: 'false',
+        heightStyle: 'content',
+        collapsible: 'false',
+        header: 'h2',
     });
 
     $('.td-warning').hide();
@@ -370,8 +355,7 @@ function doc_init()
     setTimeout(widRefreshButtonClick, 2000);
 }
 
-function docMain()
-{
+function docMain() {
     var tabs = [];
     var item;
 

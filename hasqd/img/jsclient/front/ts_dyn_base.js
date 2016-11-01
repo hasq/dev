@@ -1,5 +1,8 @@
 // Hasq Technology Pty Ltd (C) 2013-2016
 
+'use strict';
+
+
 function textArea($textarea) {
     return {
         add: function (data) {
@@ -108,19 +111,19 @@ function widModalWindow(msg, func) {
 
     esc = function (e) {
         e.keyCode == 27 && click();
-    }
+    };
 
     $Window.click(function () {
         click();
-    });
+    })
 
     $(document).keyup(function (event) {
         esc(event);
-    });
+    })
 
     $(window).on('beforeunload', function () {
         return gMsg.askExit;
-    });
+    })
 
     $Window.css('display', 'block');
     $Window.find('p').html(msg);
@@ -149,7 +152,7 @@ function widSetDefaultDb(hash) {
         } else {
             widModalWindow(gMsg.badDataBase);
         }
-    }
+    };
 
     engNcInfoDb(cb);
 }
@@ -487,6 +490,7 @@ function widLoadFiles(files) {
         }
 
         widTurnOnFileButton();
+
         $FileInp.click(function () {
             var tok = engGetTokObj('');
 
@@ -503,7 +507,7 @@ function widLoadFiles(files) {
         gNonValid = false;
         widTokenTextRO(true);
         widReloadTokInfo(tok, 0, true);
-    }
+    };
 
     var progress = function (data) {
         console.log(data + '%');
@@ -604,7 +608,7 @@ function widGetLastRecord(tok, delay) {
                 : '';
 
         widPasswordOninput();
-    }
+    };
 
     return widRequestLast(cb, tok.s, delay);
 }
@@ -728,7 +732,7 @@ function widCreateButtonClick() {
     cb1 = function (resp) {
         resp !== HASQD_RESP.OK && widModalWindow(HASQD_RESP[resp]);
         widReloadTokInfo(tok);
-    }
+    };
 
     cb0 = function (resp) {
         if (resp === HASQD_RESP.OK) {
@@ -741,7 +745,7 @@ function widCreateButtonClick() {
             : widModalWindow(gMsg.unexpected + HASQD_RESP[resp]);
 
         widReloadTokInfo(tok);
-    }
+    };
 
     fmd = engGetDataToRec(tok.raw);
 
@@ -842,7 +846,7 @@ function widSetDataButtonClick() {
     var cb = function (resp, jobId) {
         resp !== HASQD_RESP.OK && widModalWindow(HASQD_RESP[resp]);
         widReloadTokInfo(tok);
-    }
+    };
 
     engNcAdd(cb, gCurrentDB.name, rec, dt);
 }
@@ -939,7 +943,6 @@ function widTabButtonClick($Obj, tabId) {
             f = function () {
                 return widSearchTab().show()
             };
-            break;
     }
 
     switch (gTokInfo.status) {
@@ -1205,7 +1208,7 @@ function widSearchRawTok(dn) {
         asgmtKeysTok.raw = engGetTokNameFromZ(asgmtKeysTok.s, tokName, gCurrentDB.hash);
 
         return widReloadTokInfo(asgmtKeysTok, 0, false);
-    }
+    };
 
     wrapWaitForTok(tok);
     engNcRecordZero(cb, tok.s);
@@ -1260,7 +1263,7 @@ function widReceiveKey(keys) {
         }
 
         widTokensTakeover(engGetNumberedAsgmtKeys(keys, [record]));
-    }
+    };
 
     widRequestLast(cb, keys[0].s, 0);
 }
@@ -1308,7 +1311,7 @@ function widInstantReceive(keys) {
 
         $('#textarea_receive_keys').val('');
         widReloadTokInfo(keys);
-    }
+    };
 
     var addCb0 = function (resp, keys) {
         if (resp === HASQD_RESP.OK) {
@@ -1317,7 +1320,7 @@ function widInstantReceive(keys) {
 
         widModalWindow(HASQD_RESP[resp]);
         widReloadTokInfo(keys);
-    }
+    };
 
     engNcAdd(addCb0, gCurrentDB.name, keys, null);
 }
@@ -1331,7 +1334,7 @@ function widBlockingReceive(keys) {
         $('#textarea_receive_keys').val('');
 
         widReloadTokInfo(keys);
-    }
+    };
 
     engNcAdd(cb, gCurrentDB.name, keys, null);
 }
@@ -1464,26 +1467,26 @@ function widHideOnclick() {
 var widSearchProgress = {};
 
 widSearchProgress.button = function (on) {
-    (on) 
+    (on)
         ? $('#button_search').html(imgBtnStop)
         : $('#button_search').html(imgBtnStart);
 
     return;
-}
+};
 
 widSearchProgress.block = function (txt, lnk) {
     var n = lnk.match(/\d+(?=\.)/g);
     var x = 'Block <a href="/file ' + lnk + '" target="_blank">' +
         txt.substr(2) + '-' + n + '</a>';
-        
+
     $('#span_current_slice').html(x);
-    
+
     return;
-}
+};
 
 widSearchProgress.refresh = function () {
     widWalletRefresh();
-}
+};
 
 function widWalletRefresh() {
     var str = widSearchUpdate();
@@ -1525,7 +1528,7 @@ function widSearchUpdate() {
         var x = w[i];
         var xs = x.s;
         var xn = '' + x.n + ' ';
-        
+
         if (x.raw != "") {
             xs = engGetDataToRec(x.raw);
         }
@@ -1533,13 +1536,11 @@ function widSearchUpdate() {
         xs = '<button class="search-dn" onclick="widDnSelect(\''
              + window.btoa(xs) + '\')">' + xs + '</button>';
 
-        ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
-
         if (x.status > 0 && x.status < 4) {
             t[x.status] += xs + ' <span class="span-search-dn">' + xn +
                 '</span>' + '\n';
         }
-        
+
         n[x.status]++;
     }
 
@@ -1552,7 +1553,7 @@ function widSearchUpdate() {
 function widDnSelect(b64) {
     var fmd = window.atob(b64);
     var raw = engGetDataFromRec(fmd);
-    
+
     widReloadTokInfo(engGetTokObj(raw));
 }
 
@@ -1566,7 +1567,7 @@ function widRequestLast(extCb, tok, delay) {
         }
 
         extCb(resp, record);
-    }
+    };
 
     return engNcDeferredLast(cb, tok, delay);
 }
