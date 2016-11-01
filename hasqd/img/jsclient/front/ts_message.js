@@ -27,7 +27,8 @@ var gMsg = {
     fileZero: 'File is empty',
     fail: 'Server refused connection',
     unexpected: 'Unexpected server reply : ',
-    unknownError: 'Unknown error!\nContact Hasq team, please!'
+    unknownError: 'Unknown error!\nContact Hasq team, please!',
+    askExit: 'Do you realy wont to leave this page?'
 };
 
 var gTooltip = {

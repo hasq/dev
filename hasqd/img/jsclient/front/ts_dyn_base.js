@@ -3,12 +3,12 @@
 function textArea($textarea) {
     return {
         add: function (data) {
-            var _this = this;
+            let _this = this;
 
             return _this.val(_this.val() + data);
         },
         clear: function () {
-            var _this = this;
+            let _this = this;
 
             return _this.val('');
         },
@@ -119,7 +119,7 @@ function widModalWindow(msg, func) {
     });
 
     $(window).on('beforeunload', function () {
-        return 'Do you realy wont to leave this page?'
+        return gMsg.askExit;
     });
 
     $Window.css('display', 'block');
@@ -708,14 +708,15 @@ function widCreateButtonClick() {
     // Creates a new token record
     var $PwdInp = $('#input_password');
     var tok = {};
-    var rec0, rec1, addCb0, addCb1, fmd;
+    var rec0, rec1, cb0, cb1, fmd;
+
     tok.s = gTokInfo.s;
     tok.raw = gTokInfo.raw;
 
     if (!widIsPassword())
         return widModalWindow(gMsg.enterMasterKey, function () {
-                $PwdInp.focus()
-            });
+            $PwdInp.focus()
+        });
 
     wrapWaitForTok(tok);
 
@@ -724,32 +725,27 @@ function widCreateButtonClick() {
     rec1 = engGetRecord(1, tok.s, gPassword, null, null, gCurrentDB.magic,
         gCurrentDB.hash);
 
-    addCb1 = function (resp) {
-        if (resp !== HASQD_RESP.OK) {
-            widModalWindow(HASQD_RESP[resp]);
-        }
-
+    cb1 = function (resp) {
+        resp !== HASQD_RESP.OK && widModalWindow(HASQD_RESP[resp]);
         widReloadTokInfo(tok);
     }
 
-    addCb0 = function (resp) {
-        if (resp === HASQD_RESP.OK)
-            return engNcAdd(addCb1, gCurrentDB.name, rec1, null);
+    cb0 = function (resp) {
+        if (resp === HASQD_RESP.OK) {
+            return engNcAdd(cb1, gCurrentDB.name, rec1, null);
+        }
 
         /// FIX 'FAIL'
-        if (resp === 'FAIL') {
-            widModalWindow(gMsg.fail);
-        }
-        else {
-            widModalWindow(gMsg.unexpected + HASQD_RESP[resp]);
-        }
+        (resp === 'FAIL')
+            ? widModalWindow(gMsg.fail)
+            : widModalWindow(gMsg.unexpected + HASQD_RESP[resp]);
 
         widReloadTokInfo(tok);
     }
 
     fmd = engGetDataToRec(tok.raw);
 
-    engNcZ(addCb0, gCurrentDB.name, rec0, fmd);
+    engNcZ(cb0, gCurrentDB.name, rec0, fmd);
 }
 
 function widSetDataTab() {
@@ -773,7 +769,7 @@ function widSetDataTab() {
             $Tabs.tabs('option', 'active', 2);
         },
         val: function (data) {
-            if (typeof(data) !== 'undefined' && typeof(data) !== 'null') {
+            if (!['undefined', 'null'].includes(typeof(data))) {
                 widShowTokenDataLength(data);
 
                 return $Textarea.val(data);
@@ -1177,12 +1173,13 @@ function widReceiveTextareaOninput($Obj) {
     var keys = $Obj.val();
 
     if (engIsAsgmtKeys(keys)) {
-        var dn = engGetParsedAsgmtKeys(keys)[0].s;
+        let dn = engGetParsedAsgmtKeys(keys)[0].s;
 
-        if (!Boolean(gTokInfo.raw) || dn !== engGetHash(gTokInfo.raw, gCurrentDB.hash)){
+        if (!Boolean(gTokInfo.raw) || dn !== engGetHash(gTokInfo.raw, gCurrentDB.hash)) {
             return widSearchRawTok(dn);
         } else {
-            var tok = {};
+            let tok = {};
+
             tok.s = dn;
             tok.raw = gTokInfo.raw || '';
             widReloadTokInfo(tok, 0);
@@ -1195,22 +1192,22 @@ function widReceiveTextareaOninput($Obj) {
 function widSearchRawTok(dn) {
     var $TokName = $('#textarea_token_name');
     var tok = engGetTokObj(dn);
-
-    wrapWaitForTok(tok);
-
     var cb = function (resp, rec) {
+        let asgmtKeysTok, tokName;
 
-        if (resp !== HASQD_RESP.OK && resp !== HASQD_RESP.NO_RECS)
+        if (resp !== HASQD_RESP.OK && resp !== HASQD_RESP.NO_RECS) {
             widModalWindow(HASQD_RESP[resp]);
+        }
 
-        var asgmtKeysTok = {};
+        asgmtKeysTok = {};
+        tokName = (rec === null) ? tok.s : rec.d;
         asgmtKeysTok.s = (rec === null) ? tok.s : rec.s;
-        var sOrD = (rec === null) ? tok.s : rec.d;
-        asgmtKeysTok.raw = engGetTokNameFromZ(AsgmtKeysTok.s, sOrD, gCurrentDB.hash);
+        asgmtKeysTok.raw = engGetTokNameFromZ(asgmtKeysTok.s, tokName, gCurrentDB.hash);
 
-        return widReloadTokInfo(AsgmtKeysTok, 0, false);
+        return widReloadTokInfo(asgmtKeysTok, 0, false);
     }
 
+    wrapWaitForTok(tok);
     engNcRecordZero(cb, tok.s);
 }
 
@@ -1230,15 +1227,15 @@ function widReceiveButtonClick() {
                 $PwdInp.focus()
         });
     }
-    
+
     keys = $Keys.val();
-    
+
     if (!engIsAsgmtKeys(keys)) {
         return widModalWindow(gMsg.badAsgmtKeys, function () {
             $Keys.focus()
         });
     }
-    
+
     asgmtKeys = engGetParsedAsgmtKeys(keys);
     tokName = $TokName.val();
     asgmtKeys[0].raw = (Boolean(gTokInfo.raw) && asgmtKeys[0].s ===
@@ -1255,7 +1252,7 @@ function widReceiveButtonClick() {
 
 function widReceiveKey(keys) {
     var cb = function (resp, record) {
-        if (resp !== HASQD_RESP.OK){
+        if (resp !== HASQD_RESP.OK) {
             return widModalWindow(HASQD_RESP[resp]);
         }
         if (record === null) {
@@ -1305,17 +1302,18 @@ function widTokensTakeover(keys) {
 
 function widInstantReceive(keys) {
     var addCb1 = function (resp) {
-        if (resp !== HASQD_RESP.OK)
+        if (resp !== HASQD_RESP.OK) {
             widModalWindow(HASQD_RESP[resp]);
+        }
 
         $('#textarea_receive_keys').val('');
-
         widReloadTokInfo(keys);
     }
 
     var addCb0 = function (resp, keys) {
-        if (resp === HASQD_RESP.OK)
+        if (resp === HASQD_RESP.OK) {
             return engNcAdd(addCb1, gCurrentDB.name, keys, null);
+        }
 
         widModalWindow(HASQD_RESP[resp]);
         widReloadTokInfo(keys);
@@ -1326,8 +1324,9 @@ function widInstantReceive(keys) {
 
 function widBlockingReceive(keys) {
     var cb = function (resp) {
-        if (resp !== HASQD_RESP.OK)
+        if (resp !== HASQD_RESP.OK) {
             widModalWindow(HASQD_RESP[resp]);
+        }
 
         $('#textarea_receive_keys').val('');
 
@@ -1341,7 +1340,8 @@ function widSearchTab() {
     var $Table = $('#table_search_tab');
     var $Button = $('#button_search');
     var $Tabs = $('#div_tabs');
-    var retObj = {
+
+    return {
         disable: function (comm) {
             (comm)
                 ? $Button.addClass('button-disabled')
@@ -1357,8 +1357,6 @@ function widSearchTab() {
             return ($Tabs.tabs('option', 'active') === 5) ? true : false;
         }
     }
-
-    return retObj;
 }
 
 function widWelcomeTab() {
@@ -1400,47 +1398,57 @@ function widSearchButtonClick() {
 function widSearchResultsTabsClick($Obj, tabId) {
     var $Tabs = $('#div_search_result_tabs');
     var $AllButtons = $('#td_search_tabs_buttons button');
-
-    if ($Obj.hasClass('search-tabs-buttons-active'))
+/*
+    if ($Obj.hasClass('search-tabs-buttons-active')) {
         widHideOnclick();
+    }
+ */
+    $Obj.hasClass('search-tabs-buttons-active') && widHideOnclick();
 
     $Tabs.tabs('option', 'active', tabId);
     $AllButtons.addClass('search-tabs-buttons')
-    .removeClass('search-tabs-buttons-active');
+        .removeClass('search-tabs-buttons-active');
     $Obj.addClass('search-tabs-buttons-active')
-    .removeClass('search-tabs-buttons');
+        .removeClass('search-tabs-buttons');
 
 }
 
 function widSetDivOverflowSize() {
     var $Results = $('#td_search_results');
     var $Div = $('.div-overflow');
-    var pdnLeft = +$Results.css('padding-left').replace(/[px]/g, '');
-    var pdnRight = +$Results.css('padding-right').replace(/[px]/g, '');
+    var pdnLeft = +$Results
+        .css('padding-left')
+        .replace(/[px]/g, '');
+    var pdnRight = +$Results
+        .css('padding-right')
+        .replace(/[px]/g, '');
     var tdWidth = $Results.innerWidth() - pdnLeft - pdnRight;
     var divWidth = $Div.innerWidth();
     $Div.css('max-width', tdWidth + 'px');
 }
 
 function widHideOnclick() {
-    $Obj = $('.td-visible, .td-hidden');
-    $Obj.toggleClass('td-visible td-hidden');
+    var $Obj = $('.td-visible, .td-hidden');
     var $Inits = $('#td_search_inits');
     var $Results = $('#td_search_results');
-    $Div = $('.div-overflow');
+    var $Div = $('.div-overflow');
     var tdWidth = $Results.innerWidth();
     var initsWidth = $Inits.innerWidth();
     var pdnLeft = +$Inits.css('padding-left').replace(/[px]/g, '');
     var pdnRight = +$Inits.css('padding-right').replace(/[px]/g, '');
 
+    $Obj.toggleClass('td-visible td-hidden');
+
     if ($Obj.hasClass('td-visible')) {
+        let decW = tdWidth - initsWidth - pdnLeft - pdnRight;
+
         $Inits.css('display', 'inline-block');
-        var decW = tdWidth - initsWidth - pdnLeft - pdnRight;
         $Div.innerWidth(decW);
         $Obj.html('>');
     } else {
+        let incW = tdWidth + initsWidth;
+
         $Inits.css('display', 'none');
-        var incW = tdWidth + initsWidth;
         $Div.innerWidth('100%');
         $Obj.html('<');
     }
@@ -1456,10 +1464,9 @@ function widHideOnclick() {
 var widSearchProgress = {};
 
 widSearchProgress.button = function (on) {
-    if (on)
-        $('#button_search').html(imgBtnStop);
-    else
-        $('#button_search').html(imgBtnStart);
+    (on) 
+        ? $('#button_search').html(imgBtnStop)
+        : $('#button_search').html(imgBtnStart);
 
     return;
 }
@@ -1468,7 +1475,9 @@ widSearchProgress.block = function (txt, lnk) {
     var n = lnk.match(/\d+(?=\.)/g);
     var x = 'Block <a href="/file ' + lnk + '" target="_blank">' +
         txt.substr(2) + '-' + n + '</a>';
+        
     $('#span_current_slice').html(x);
+    
     return;
 }
 
@@ -1478,60 +1487,59 @@ widSearchProgress.refresh = function () {
 
 function widWalletRefresh() {
     var str = widSearchUpdate();
+    var $Onhold = $('#span_search_onhold');
+    var $Expected = $('#span_search_expected');
 
     // update widgit only if required
     function update(o, newstr) {
         var oldstr = o.html();
 
-        if (newstr.length != oldstr.length || newstr != oldstr)
+        if (newstr.length != oldstr.length || newstr != oldstr) {
             o.html(newstr);
+        }
     }
 
     update($('#div_mine_search_results'), str.text[1]);
     update($('#div_onhold_search_results'), str.text[2]);
     update($('#div_expected_search_results'), str.text[3]);
-
     update($('#span_search_mine'), '(' +
         engGetNumberLevel(str.number[1]) + ')');
 
-    var $Onhold = $('#span_search_onhold');
+    (str.number[2] > 0)
+        ? update($Onhold, '(' + str.number[2] + ')')
+        : update($Onhold, '');
 
-    if (str.number[2] > 0)
-        update($Onhold, '(' + str.number[2] + ')');
-    else
-        update($Onhold, '');
-
-    var $Expected = $('#span_search_expected');
-
-    if (str.number[3] > 0)
-        update($Expected, '(' + str.number[3] + ')');
-    else
-        update($Expected, '');
+    (str.number[3] > 0)
+        ? update($Expected, '(' + str.number[3] + ')')
+        : update($Expected, '');
 
     return;
 }
 
 function widSearchUpdate() {
     var w = gWallet;
-
     var t = ["", "", "", "", ""];
     var n = [0, 0, 0, 0, 0];
 
-    for (var i in w) {
+    for (let i in w) {
         var x = w[i];
         var xs = x.s;
-        if (x.raw != "")
+        var xn = '' + x.n + ' ';
+        
+        if (x.raw != "") {
             xs = engGetDataToRec(x.raw);
+        }
 
         xs = '<button class="search-dn" onclick="widDnSelect(\''
              + window.btoa(xs) + '\')">' + xs + '</button>';
 
-        var xn = '' + x.n + ' ';
         ///for ( var i = 0; i < 2 - xn.length; i++ ) xn += ' ';
 
-        if (x.status > 0 && x.status < 4)
+        if (x.status > 0 && x.status < 4) {
             t[x.status] += xs + ' <span class="span-search-dn">' + xn +
-            '</span>' + '\n';
+                '</span>' + '\n';
+        }
+        
         n[x.status]++;
     }
 
@@ -1544,6 +1552,7 @@ function widSearchUpdate() {
 function widDnSelect(b64) {
     var fmd = window.atob(b64);
     var raw = engGetDataFromRec(fmd);
+    
     widReloadTokInfo(engGetTokObj(raw));
 }
 

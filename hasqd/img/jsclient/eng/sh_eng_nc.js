@@ -7,8 +7,9 @@ function engNcInfoDb(extCb)
         var resp = engGetResponseHeader(data);
         var db = [];
 
-        if (resp === HASQD_RESP.OK)
+        if (resp === HASQD_RESP.OK) {
             db = engGetParsedInfoDb(data);
+        }
 
         extCb(resp, db);
     }
