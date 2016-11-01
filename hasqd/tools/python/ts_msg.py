@@ -23,7 +23,7 @@ def get_msg(*data):
         "file_rerr": "Couldn't read file:",
         "job_err": "Incorrect job id",
         "help_data": "<data>",
-        "help_jid": "<Job id>",
+        "help_jid": "<JobID>",
         "help_keys": "(keys|@file|-)",
         "help_meth": "(instant|onhold|release)",
         "help_pwd": "(password|-)",
