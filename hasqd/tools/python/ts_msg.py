@@ -8,7 +8,7 @@ JOB_QUEUED = "JOB_QUEUED"
 
 def get_msg(*data):
     msg = {
-        "akey_ent": "Enter assignment key:",
+        "akey_ent": "Enter assignment key: ",
         "akey_err": "Incorrect keys!",
         "data_empt": "No data",
         "data_err0": "Data not changed!",
@@ -29,7 +29,7 @@ def get_msg(*data):
         "help_pwd": "<password|->",
         "help_tok": "<token name|@file>",
         "mkey_empt": "Master key is empty.",
-        "mkey_ent": "Enter master key:",
+        "mkey_ent": "Enter master key: ",
         "mkey_bad": "Password Bad",
         "mkey_wng": "Wrong password for token",
         "mkey_ok": "Password Ok",
