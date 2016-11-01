@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 import sys
 import urllib2
 import ts_cnf

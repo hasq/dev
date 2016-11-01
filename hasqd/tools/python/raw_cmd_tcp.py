@@ -21,6 +21,6 @@ try:
     resp = s.recv(buffer_size)
     s.close()
 except:
-    print("Error: Unreachable server " + ts_cnf.HOST + ":" + str(ts_cnf.TCP_PORT))    
+    print("Error: Unreachable server " + ts_cnf.HOST + ":" + str(ts_cnf.TCP_PORT))
 else:
     print("Server reply: " + resp)
