@@ -1,3 +1,5 @@
+[A] (om) PVS
+[A] (om) poschitat' rabochie chasy dlja ab
 
 [A] (om) bank console
 [A] (om) napisat specifikacii protokola bank
