@@ -1,3 +1,6 @@
+Python scripts working with Hasq server
+=======================================
+
 | File               | Description                                              |
 |--------------------|----------------------------------------------------------|
 |**job_check.py**    | Check job; job ID is issued on adding a new record       |
