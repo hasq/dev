@@ -1,15 +1,14 @@
 [A] (om) PVS
-[A] (om) poschitat' rabochie chasy dlja ab
+DONE [A] (om) poschitat' rabochie chasy dlja ab
 
 [A] (om) bank console
 [A] (om) napisat specifikacii protokola bank
 [B] (om) bank mobile
+[A] (ab) client update on python scripts - check
 
 [A] bank gui - javascript 
 	library of useful tools
 	maket - prototype
-DONE [A] Klientskie skripty na Python
-DONE [A] (om) skripty na Python proverit'
 [AB] Bitcoin pogonjat
 [AB] Klientskie skripty na Ruby (posle pythona)
 [A] (ab) anons dobavlenija scriptov na Python
