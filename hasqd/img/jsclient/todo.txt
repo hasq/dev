@@ -1,1 +1,2 @@
-[A] HqClnt - mobile version - tolko rasdvinut na vsju shirinu
+[A] ispravit' funkciju otkrytija failov
+[A] ispravit' funkciju parsinga assignment keys

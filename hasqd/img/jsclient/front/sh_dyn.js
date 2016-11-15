@@ -42,7 +42,7 @@ function preload(container)
 {
     if (document.images)
     {
-        for (i = 0; i < container.length; i++)
+        for (let i = 0; i < container.length; i++)
         {
             preloadImg[i] = new Image();
             preloadImg[i].onload = function ()  {};

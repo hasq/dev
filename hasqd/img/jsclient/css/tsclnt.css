@@ -1359,10 +1359,8 @@ textarea::-moz-placeholder {
 (max-width: 900px) {
     body {
         width: 95%;
-        background: #FEFEFA
+        background: #FEFEFA;
         /*url("../img/bgfon.png")*/
-
-        ;
     }
 
     /* Title area */
