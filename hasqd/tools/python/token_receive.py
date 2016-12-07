@@ -78,6 +78,10 @@ elif sys.argv[2] != "-":
     raw_key = ts_lib.get_clear_data(sys.argv[2])
 else:
     raw_key = raw_input(ts_msg.get_msg("akey_ent"))
+# try:
+#    return raw_input(msg)
+# except NameError:
+#    return input(msg)
 
 if not ts_lib.is_asgmt_key(raw_key):
     msg = ts_msg.get_msg("msg_err", "akey_err")
