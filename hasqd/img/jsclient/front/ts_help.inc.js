@@ -3,6 +3,10 @@
 'use strict';
 
 function gHelp(x) {
+	return gHelp_1(x)+gHelp_2(x)+gHelp_3(x)+gHelp_4(x)+gHelp_5(x);
+}
+
+function gHelp_1(x) {
     var r = '';
 
     if (x == 'span_password_pic') {
@@ -14,7 +18,15 @@ function gHelp(x) {
     } else if (x == 'span_shield') {
         INCLUDEFILE
         txt/ts_shield.htm
-    } else if (x == 'span_token_lock') {
+    }
+    
+    return r;
+}
+
+function gHelp_2(x) {
+    var r = '';
+
+    if (x == 'span_token_lock') {
         INCLUDEFILE
         txt/ts_yellow_lock.htm
     } else if (x == 'token_hash') {
@@ -23,7 +35,15 @@ function gHelp(x) {
     } else if (x == 'token_name') {
         INCLUDEFILE
         txt/ts_token_name.htm
-    } else if (x == 'master_key') {
+    }
+    
+    return r;
+}
+
+function gHelp_3(x) {
+    var r = '';
+
+    if (x == 'master_key') {
         INCLUDEFILE
         txt/ts_master_key.htm
     } else if (x == 'token_data') {
@@ -32,7 +52,15 @@ function gHelp(x) {
     } else if (x == 'create_new_token') {
         INCLUDEFILE
         txt/ts_create_new_token.htm
-    } else if (x == 'show_keys') {
+    }
+    
+    return r;
+}
+
+function gHelp_4(x) {
+    var r = '';
+
+    if (x == 'show_keys') {
         INCLUDEFILE
         txt/ts_show_keys.htm
     } else if (x == 'paste_keys') {
@@ -41,7 +69,15 @@ function gHelp(x) {
     } else if (x == 'search_for_tokens') {
         INCLUDEFILE
         txt/ts_search_for_tokens.htm
-    } else if (x == 'span_password_zxcvbn') {
+    }
+    
+    return r;
+}
+
+function gHelp_5(x) {
+    var r = '';
+
+    if (x == 'span_password_zxcvbn') {
         INCLUDEFILE
         txt/ts_zxcvbn.htm
     } else if (x == 'span_data_length') {
