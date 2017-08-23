@@ -1,0 +1,14 @@
+
+Using Hasq technology within military environment.
+Hasq technology provides a specific mathematical method of linking database records. In the simplest approximation it can be seen as a history-immutable distributed database with elements that can be securely controlled by untrusting parties.
+The benefits of using Hasq comparing to any other solution involving database are 1) no signatures (paper or electronic) are required; 2) the history of records is immutable. The latter property makes Hasq similar to Blockchain, however Hasq has the following advantages: 1) simplicity; 2) robustness of the algorithm and software; 3) trivial quality assurance; 4) fast performance, 5) low setup and running costs.
+Possible military applications of Hasq technology.
+1 Passing authority
+A commander owns an electronic “badge” (electronic object managed by Hasq system). The badge authorises the commander to issue orders. The subordinate personnel when receiving an order know exactly that the order comes from the commander because the order is attached to the badge. The commander may pass his badge to another person. If done so, the commander loses the ability to give orders, but the new person holding the badge gains the authority to give orders. The orders also get recorded into an immutable database, so it is possible to track down all orders details if required.
+2 Logistics
+2a) Hasq allows participants to have electronic identities that can take obligatory type of records. When distributing material goods one person responsible for a particular inventory item can pass their responsibility to another person in the distribution chain.
+2b) Same as in 1. Transferring responsibility does not require trust to the person to whom the transfer occurs. For example, a head of a warehouse can securely pass the authority to accept goods to another person without notification and without compromising the overall security.
+3 Inventory management
+3a) Same as 2a except that inventory responsibility is passed arbitrary, not on the distribution chain.
+3b) The responsible person for a particular item can be enforced to be aware of the location of the item. This can be achieved by an automatic system that triggers an alarm if the location of the item is not in agreement with the specified rules. For example, a vehicle may have a GPS sensor that periodically sends its position to the system; the system checks that the position is within the allowed range of the location specified by the responsible person. If not, an alarm is triggered which can also be sent to a higher person in the chain of the command.
+
