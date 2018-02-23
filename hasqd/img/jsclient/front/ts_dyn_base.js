@@ -1527,6 +1527,9 @@ function widSearchUpdate() {
     for (let i in w) {
         var x = w[i];
         var xs = x.s;
+
+        if( x.s == gTokInfo.s ) widShowPwdInfo(x.status);
+
         var xn = '' + x.n + ' ';
 
         if (x.raw != "") {
