@@ -220,13 +220,13 @@ function updateGWalletOnLast(lr, raw) {
         r.s = lr.s;
         r.n = lr.n;
         r.raw = '';
-        r.state = 0;
+        r.status = 0;
         gWallet[lr.s] = r;
     }
 
     w = gWallet[lr.s];
     w.n = lr.n;
-    w.state = st;
+    w.status = st;
 
     if (w.s == engGetHash(raw, gCurrentDB.hash)) {
         w.raw = raw;
