@@ -8,7 +8,7 @@ LD=ld
 RANLIB=ranlibXXX
 STRIP=strip
 
-OPT=-WX -W4 -nologo -EHsc -Ox -D_CRT_SECURE_NO_DEPRECATE=1 /wd4355 /wd4127 /wd4702 /wd4100 /wd4290 -D_USING_V110_SDK71_=1
+OPT=-WX -W4 -nologo -EHsc -Ox -D_CRT_SECURE_NO_DEPRECATE=1 /wd4355 /wd4127 /wd4702 /wd4100 /wd4290 /wd4589 -D_USING_V110_SDK71_=1
 #4355 'this' used in base member initializer list
 #4127 conditional expression is constant
 #4244 possible loss of data
@@ -16,6 +16,7 @@ OPT=-WX -W4 -nologo -EHsc -Ox -D_CRT_SECURE_NO_DEPRECATE=1 /wd4355 /wd4127 /wd47
 #4309 trucation of constant value
 #4702 unreachable code
 #4290 C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+#4589 gl_protocol.h Constructor of abstract class 'gl::Http_base' ignores initializer for virtual base class 'gl::Protocol'
 
 OPTC=$(OPT)
 

@@ -141,8 +141,7 @@ class Protocol
 class Http_base : virtual public Protocol
 {
     protected:
-        ///Http_base(Side s): Protocol(s) {}
-        Http_base(Side s){}
+        Http_base(Side s): Protocol(s) {}
 
         static string httpHeaderHead(const char * mime);
         static string httpHeader(size_t sz, const char * mime);
