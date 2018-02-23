@@ -605,9 +605,9 @@ void Agent::sorti()
         // save file
         {
             std::ofstream of(path.c_str(), std::ios::binary );
-            for ( std::map<gl::intint, string>::iterator i = content.begin();
-                    i != content.end(); i++ )
-                of << (i->second) << '\n';
+            for ( std::map<gl::intint, string>::iterator j = content.begin();
+                    j != content.end(); j++ )
+                of << (j->second) << '\n';
         }
 next:;
     } // next file
