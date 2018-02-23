@@ -204,6 +204,20 @@ function searchCacheAddSlice(name, data)
     while ( c.slices.length > c.maxSlices ) c.slices.shift();
 }
 
+function search_skip_date(so)
+{
+    var t = gSkipRanges;
+
+    var name = so.name();
+    for( var j in t )
+    {
+        var i = t[j];
+        if( name <= i[0] && name >= i[1] ) return true;
+    }
+
+    return false;
+}
+
 function searchGetFile(data)
 {
     if (!gSearch.isOn)
@@ -223,6 +237,7 @@ function searchGetFile(data)
         }
 
         o.sliceDate.previous();
+	while ( search_skip_date(o.sliceDate) ) o.sliceDate.previous();
         o.number = 0;
 
         if ( +o.sliceDate.y4 < 2016 ) processDone();
