@@ -555,7 +555,7 @@ function widGetHTMLLogArea() {
     r += '<div id="div_log_area" >&nbsp</div>\n';
     r += '</tr>\n';
     r += '</table>\n';
-    r += '<td class="td-subscribe" style="width: 160px;"/>\n';
+    r += '<td class="td-subscribe" style="width: 180px;"/>\n';
     r += '<a href="http://hasq.org">' +
         'Hasq&nbsp;Technology&nbsp;\u00A9&nbsp;2016-2018</a>\n';
     r += '</tr>\n';
