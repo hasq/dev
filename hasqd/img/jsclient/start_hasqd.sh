@@ -1,7 +1,14 @@
 #!/bin/sh
 # Hasq Technology Pty Ltd (C) 2013-2015
 
-PLAT=${PLAT:-msc}
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     PLAT=unx;;
+    CYGWIN*)    PLAT=msc;;
+    *)          PLAT="unknown:${unameOut}"
+esac
+
+# PLAT=${PLAT:-msc}
 bin=_bin_${PLAT}
 
 #comm="../../src/$bin/hasqd webdir=home tcp_port=13151 dprn=1 dpul=1 dced=1 dwkr=1 cycle=10000 zlim=10"

@@ -1,7 +1,14 @@
 #!/bin/bash
 
 counter=0
-PLAT=${PLAT:-msc}
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     PLAT=unx;;
+    CYGWIN*)    PLAT=msc;;
+    *)          PLAT="unknown:${unameOut}"
+esac
+
 bin=_bin_${PLAT}
 zdb="../../src/$bin/zdb"
 
