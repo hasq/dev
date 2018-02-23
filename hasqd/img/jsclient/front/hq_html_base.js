@@ -129,7 +129,7 @@ function widGetHTMLLogArea() {
                     }
                     r += '</table>\n';
                 }
-                r += '<td class="td-subscribe" style="width: 160px;"/>\n';
+                r += '<td class="td-subscribe" style="width: 230px;"/>\n';
                 r += '<a href="http://hasq.org">Hasq Technology&nbsp;\u00A9&nbsp;2016</a>\n';
             }
             r += '</tr>\n';
