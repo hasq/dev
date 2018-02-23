@@ -37,7 +37,7 @@ function engSearchStart(fromDate, toDate, progr)
         for (var i in w)
         {
             var x = w[i];
-            if ( x.status == 0 )
+            //if ( x.status == 0 ) - check all tokens
                 searchValidate1(x.s);
         }
     };
