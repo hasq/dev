@@ -15,6 +15,10 @@ using std::string;
 namespace os
 {
 
+class Cout;
+const Cout & operator<<(const Cout & o, const char *);
+
+
 struct Oref
 {
     std::ostringstream so;
@@ -49,7 +53,7 @@ class Cout
             ++ref->ref;
         }
 
-        friend const Cout & operator<<(const Cout & o, const char *);
+        friend const Cout & (::os::operator<<)(const Cout & o, const char *);
         friend const Cout & operator<<(const Cout & o, void *);
         friend const Cout & operator<<(const Cout & o, const Flush & f);
         friend const Cout & operator<<(const Cout & o, const string & s);
