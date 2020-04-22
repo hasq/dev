@@ -276,7 +276,7 @@ catch (gl::Exception e)
 {
     std::cout << "Error: " << e.str() << '\n';
 }
-catch (std::exception e)
+catch (std::exception & e)
 {
     std::cout << "Error (std): " << e.what() << '\n';
 }
