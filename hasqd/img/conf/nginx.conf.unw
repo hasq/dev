@@ -14,7 +14,7 @@ http {
 
     server {
        listen 80;
-       server_name localhost;
+       server_name tokenswap.hasq.org ts.hasq.org;
           location / {
              proxy_redirect          off;
              proxy_set_header        Host            $host;
@@ -24,12 +24,12 @@ http {
              proxy_pass http://127.0.0.1:13131;
           }
           location /home/ {
-             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice;
+             root  /home/dev/dev/trunk/hasqd/img/jsclient/slice;
              index index.html;
           }
           location /smd.db/ {
              autoindex on;
-             root  /home/dev/dev.git/trunk/hasqd/img/jsclient/slice;
+             root  /home/dev/dev/trunk/hasqd/img/jsclient/slice;
              index index.html;
           }
     }
@@ -38,7 +38,8 @@ http {
 #
     server {
         listen       443;
-        server_name  localhost;
+#        server_name  localhost;
+       server_name tokenswap.hasq.org ts.hasq.org;
 
         ssl                  on;
         ssl_certificate      /etc/nginx/ssl/tokenswap.crt;
@@ -59,4 +60,31 @@ http {
     	    proxy_pass http://127.0.0.1:13131;
         }
     }
- }
+
+    server {
+       listen 80;
+       server_name svn.hasq.org;
+          location / {
+             proxy_pass http://10.1.1.117:80;
+          }
+    }
+
+    server {
+       listen 80;
+       listen 443;
+       server_name svn.hasq.org;
+          location / {
+             proxy_pass http://10.1.1.117:443;
+          }
+    }
+
+    server {
+       listen 80 default_server;
+#       listen 443 default_server;
+       server_name _;
+          location / {
+             root  /home/oleg/html;
+             index index.html;
+          }
+    }
+}
