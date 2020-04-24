@@ -37,19 +37,19 @@ http {
 #HTTPS server
 #
     server {
-        listen       443;
+        listen       443 ssl;
 #        server_name  localhost;
        server_name tokenswap.hasq.org ts.hasq.org;
 
-        ssl                  on;
-        ssl_certificate      /etc/nginx/ssl/tokenswap.crt;
-        ssl_certificate_key  /etc/nginx/ssl/tokenswap.key;
+#        ssl                  on;
+#        ssl_certificate      /etc/nginx/ssl/tokenswap.crt;
+#        ssl_certificate_key  /etc/nginx/ssl/tokenswap.key;
 
         ssl_session_timeout  5m;
 
-        ssl_protocols  SSLv2 SSLv3 TLSv1;
-        ssl_ciphers  HIGH:!aNULL:!MD5;
-        ssl_prefer_server_ciphers   on;
+#        ssl_protocols  SSLv2 SSLv3 TLSv1;
+#        ssl_ciphers  HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers   on;
 
         location / {
             proxy_redirect          off;
