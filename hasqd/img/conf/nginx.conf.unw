@@ -79,7 +79,7 @@ http {
 
     server {
        listen 80 default_server;
-#       listen 443 default_server;
+       listen 443 default_server;
        server_name _;
           location / {
              root  /home/oleg/data/html;
