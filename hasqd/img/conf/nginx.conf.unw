@@ -44,7 +44,6 @@ http {
 #        ssl                  on;
         ssl_certificate      /etc/nginx/ssl/tokenswap.crt;
         ssl_certificate_key  /etc/nginx/ssl/tokenswap.key;
-
         ssl_session_timeout  5m;
 
 #        ssl_protocols  SSLv2 SSLv3 TLSv1;
@@ -80,6 +79,11 @@ http {
     server {
        listen 80 default_server;
        listen 443 default_server;
+
+        ssl_certificate      /etc/nginx/ssl/tokenswap.crt;
+        ssl_certificate_key  /etc/nginx/ssl/tokenswap.key;
+        ssl_session_timeout  5m;
+
        server_name _;
           location / {
              root  /home/oleg/data/html;
