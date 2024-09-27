@@ -116,46 +116,46 @@ wxviewer.exe: $(WX)/lib/vc_lib/wxbase28.lib $O/wxviewer.obj $O/draw.obj \
 	$(obj_sg) $(VSRC)/*.h $(VSRC)/*.cpp
 	link $(NOSTATICLIB) $O/wxviewer.obj $O/draw.obj $O/draw2.obj $O/cmdex.obj \
 	$(obj) $(obj_pu) $(obj_sg) $(obj_db) $(obj_gl) $(obj_os) $(obj_osw) \
-	$(obj_ma) $(cobj_ma) /LIBPATH:$(LIBPATH) $(LIBS)
+	$(obj_ma) $(cobj_ma) -LIBPATH:$(LIBPATH) $(LIBS)
 
 $O/wxviewer.obj: wxviewer.cpp wxviewer.h $(VSRC)/*.h
-	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $O/draw.obj: draw.cpp wxviewer.h $(VSRC)/*.h
-	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $O/draw2.obj: draw2.cpp wxviewer.h $(VSRC)/*.h
-	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $O/cmdex.obj: cmdex.cpp wxviewer.h $(VSRC)/*.h
-	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) -I $(VSRC)/ $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj): $O/%.obj:$(VSRC)/%.cpp $(VSRC)/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_pu): $O/%.obj:$(HSRC)/pu/%.cpp $(HSRC)/pu/*.h $(HSRC)/db/*.h $(HSRC)/gl/*.h $(HSRC)/os/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_sg): $O/%.obj:$(HSRC)/sg/%.cpp $(HSRC)/sg/*.h $(HSRC)/db/*.h $(HSRC)/gl/*.h $(HSRC)/os/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_db): $O/%.obj:$(HSRC)/db/%.cpp $(HSRC)/db/*.h $(HSRC)/gl/*.h $(HSRC)/os/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_gl): $O/%.obj:$(HSRC)/gl/%.cpp  $(HSRC)/gl/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_os): $O/%.obj:$(HSRC)/os/%.cpp  $(HSRC)/os/*.h $(HSRC)/gl/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_osw): $O/%.obj:$(HSRC)/os/msc/%.cpp  $(HSRC)/os/*.h $(HSRC)/gl/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(obj_ma): $O/%.obj:$(HSRC)/ma/%.cpp  $(HSRC)/ma/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(cobj_ma): $O/%.obj:$(HSRC)/ma/%.c  $(HSRC)/ma/*.h
-	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< /Fo$@
+	cl -c $(OPT) $(INC) $(STATICLIB) $(DYNAMICLIB) $(UNICODE) $< -Fo$@
 
 $(WX)/lib/vc_lib/wxbase28.lib:
 	make -f buildwx.mak

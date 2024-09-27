@@ -179,7 +179,7 @@ int os::ac::ProcessLocal_Impl::getCode() const
 string os::ac::ProcessLocal_Impl::getId() const
 {
     ostr os;
-    os << "0x" << std::hex << ((int)pi.hProcess);
+    os << "0x" << std::hex << (pi.hProcess);
     return os.str();
 }
 

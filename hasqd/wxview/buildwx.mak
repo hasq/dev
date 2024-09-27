@@ -30,7 +30,7 @@ $(WX)/lib/vc_lib/wxbase28.lib: $(WX)
 	cd $(WX)/build/msw && env -u MAKE -u MAKEFLAGS nmake -f makefile.vc BUILD=release
 
 $(WX):  $(WXNAME).fcl
-	fcl3 extr $(WXNAME).fcl
+	fcl extr $(WXNAME).fcl
 	touch $(WX)
 
 $(WXNAME).fcl: $(WXNAME).fcl.bz2
