@@ -21,7 +21,7 @@ void client(const string & m)
 
     gl::ProtHq http(gl::ProtHq::Client);
 
-    os::net::TcpClient tcpClient(&http, linkTcp, nl);
+    os::net::TcpClient tcpClient(&http, linkTcp, nl, nullptr);
     //os::net::Multicast udpClient(linkUdp);
 
     tcpClient.send_msg(m);

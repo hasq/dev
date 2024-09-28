@@ -197,7 +197,7 @@ int Repo::find(void * p)
     size_t i = idx0;
     while (1)
     {
-        if ( v[i].p == p ) return i;
+        if ( v[i].p == p ) return static_cast<int>(i);
         if ( ++i == MEM_MGR_SIZE ) i = 0;
         if ( i == idx0 ) break;
     }

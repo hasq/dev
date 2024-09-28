@@ -119,20 +119,7 @@ class TcpClient : public TcpSocket
 {
         void init(gl::intint tryTime);
 
-        /*///
-            struct X
-            {
-                IpAddr addr;
-                bool proxy;
-                X(IpAddr a): addr(a), proxy(false) {}
-            };
-
-            X proxy(const gl::Protocol * p, IpAddr il);
-            X x;
-        */
-
     public:
-        ///struct ProxyData { string remote, auth64; };
 
         TcpClient(const gl::Protocol * p, IpAddr il,
                   gl::NetworkLimits nl, const gl::ProxyData * px);

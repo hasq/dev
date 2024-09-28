@@ -7,13 +7,13 @@ O=$(TRG)
 
 GLDIR=$(SRC)gl
 GLLIB=$(GLDIR)/$O/htgllib$(LEXT)
-MADIR=$(SRC)math
+MADIR=$(SRC)ma
 MALIB=$(MADIR)/$O/htmalib$(LEXT)
 OSDIR=$(SRC)os
 OSLIB=$(OSDIR)/$O/htoslib$(LEXT)
 DBDIR=$(SRC)db
 DBLIB=$(DBDIR)/$O/htdblib$(LEXT)
-SGDIR=$(SRC)/sgl
+SGDIR=$(SRC)/sg
 SGLIB=$(SGDIR)/$O/htsglib$(LEXT)
 
 
