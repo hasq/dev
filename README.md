@@ -76,3 +76,4 @@ Release 0.3.1, build 1463 (hasq)
 
    - DB Wizard utility added (wizdb)
    - minor changes to Hasq_CLO.pdf
+
